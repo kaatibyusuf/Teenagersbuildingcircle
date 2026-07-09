@@ -9,6 +9,25 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600;700&family=Amiri&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<style>
+  .enroll-group { padding: 56px 0; border-bottom: 1px solid rgba(15,15,17,0.08); }
+  .enroll-group:last-of-type { border-bottom: none; }
+  .enroll-group-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 28px; }
+  .enroll-group-head .g-icon { width: 34px; height: 34px; border-radius: 50%; background: var(--ink); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .enroll-group-head .g-icon svg { width: 17px; height: 17px; stroke: var(--yellow); }
+  .enroll-group-head h2 { font-size: 22px; }
+  .enroll-group-head .g-link { font-size: 13px; font-weight: 600; color: var(--ink-soft); border-bottom: 1px solid rgba(15,15,17,0.2); margin-left: auto; align-self: center; }
+  .enroll-group-head .g-link:hover { color: var(--ink); border-color: var(--ink); }
+
+  .account-standalone {
+    max-width: 480px; margin: 48px auto 0;
+    background: var(--night); border: 1px solid var(--yellow);
+    padding: 40px 36px;
+  }
+  .account-standalone h2 { color: var(--parchment); font-size: 22px; margin-bottom: 10px; }
+  .account-standalone p.a-copy { font-size: 14px; color: #B8B8BB; margin-bottom: 24px; line-height: 1.55; }
+  .account-standalone .modal-note { color: #8A8A8E; }
+</style>
 </head>
 <body>
 
@@ -22,11 +41,12 @@
     </div>
     <div class="nav-links">
       <a href="index.html">Home</a>
-      <a href="pillars.html" style="color: var(--yellow);">Pillars</a>
-      <a href="how-it-works.html">How It Works</a>
-      <a href="pricing.html">Pricing</a>
+      <a href="teenagers-building-circle.html">Teenagers Circle</a>
+      <a href="madrasah.html">Madrasah</a>
+      <a href="academy.html">Academy</a>
+      <a href="skills-school.html">Skills School</a>
       <a href="faq.html">FAQ</a>
-      <a href="enroll.html" class="nav-cta">Register</a>
+      <a href="enroll.html" class="nav-cta" style="color: var(--yellow);">Enroll</a>
     </div>
     <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
       <span></span><span></span><span></span>
@@ -36,133 +56,137 @@
 
 <header class="page-header">
   <div class="wrap">
-    <h1>Four pillars. One teenager, built whole.</h1>
-    <p class="lede">Every student in the Circle moves through all four at once, deen, educational development, skills, and personal development, each placed individually by the diagnostic assessment rather than by age. Here is exactly what each pillar covers, how it's taught, and what a term inside it actually looks like.</p>
+    <h1>Choose what you're enrolling for.</h1>
+    <p class="lede">Every Himaayah Schools plan is listed below with what it actually includes. Pick the one that fits, send payment to the account further down, then continue to registration and tell us which one you chose.</p>
   </div>
 </header>
 
 <section>
   <div class="wrap">
 
-    <div class="detail-row reveal">
-      <div class="detail-copy">
-        <span class="pillar-tag"><span class="dot"></span>Pillar One</span>
-        <h2>Deen</h2>
-        <p>Deen is the foundation everything else in the Circle is built on. Students study aqeedah, the fiqh of worship appropriate to their age, seerah, adab, and work on their Qur'an through memorisation and tajweed. Every ruling and every piece of aqeedah is taught with its evidence, so a student understands why they believe and practise what they do, not only that they must.</p>
-        <p>Fiqh matters are taught according to the Maliki madhab, and where scholars differ, that difference is shown honestly rather than presented as settled.</p>
-        <ul class="check-list">
-          <li>Aqeedah grounded in evidence, not rote statements</li>
-          <li>Fiqh of salah, purification, fasting, and zakah</li>
-          <li>Seerah studied for its lessons, not just its events</li>
-          <li>Qur'an memorisation and tajweed, tracked individually</li>
-        </ul>
+    <div class="enroll-group reveal">
+      <div class="enroll-group-head">
+        <div class="g-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/></svg></div>
+        <h2>Teenagers Building Circle</h2>
+        <a href="teenagers-building-circle.html" class="g-link">Full details →</a>
       </div>
-      <div class="detail-visual">
-        <p class="visual-arabic">وَتَزَوَّدُوا فَإِنَّ خَيْرَ الزَّادِ التَّقْوَىٰ</p>
-        <p class="visual-quote">"And take provision, but indeed, the best provision is fear of Allah."
-          <span class="src">Al-Baqarah, 2:197</span>
-        </p>
+      <div class="pillars-grid">
+        <div class="pillar-card">
+          <span class="num">₦40,000 / mo</span>
+          <h3>Full Programme</h3>
+          <p>All four pillars, deen, educational development, skills, and personal development, plus the diagnostic assessment, live weekly sessions, and a dedicated Slack workspace. For teenagers aged 13–19.</p>
+        </div>
       </div>
     </div>
 
-    <div class="detail-row reverse reveal">
-      <div class="detail-copy">
-        <span class="pillar-tag"><span class="dot"></span>Pillar Two</span>
-        <h2>Educational Development</h2>
-        <p>This pillar strengthens the academic foundation every teenager needs, regardless of what they go on to study. Sessions cover reading comprehension, writing, study skills, numeracy, and critical thinking. A student who is already strong is pushed into research and independent study rather than left to coast; a student who is behind is brought up steadily rather than rushed.</p>
-        <p>Placement here comes directly from the diagnostic assessment, so no student sits through material far above or far below where they actually are.</p>
-        <ul class="check-list">
-          <li>Reading comprehension and vocabulary building</li>
-          <li>Structured writing, from paragraphs to full essays</li>
-          <li>Numeracy from basic fluency through introductory algebra</li>
-          <li>Study skills, exam technique, and independent research</li>
-        </ul>
+    <div class="enroll-group reveal">
+      <div class="enroll-group-head">
+        <div class="g-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-0.5z"/></svg></div>
+        <h2>Madrasah</h2>
+        <a href="madrasah.html" class="g-link">Full details →</a>
       </div>
-      <div class="detail-visual">
-        <div class="visual-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V4H6.5A2.5 2.5 0 0 0 4 6.5v13z"/><path d="M4 6.5V19"/></svg>
+      <div class="pillars-grid">
+        <div class="pillar-card">
+          <span class="num">₦12,000 / mo</span>
+          <h3>Hifdh Only — Group</h3>
+          <p>Qur'an memorisation and tajweed, four classes weekly, in a small group setting with a dedicated hifdh teacher.</p>
         </div>
-        <table class="mini-syllabus">
-          <tr><th>Wk</th><th>Foundational</th><th>Advanced</th></tr>
-          <tr><td class="wk">01</td><td>Study skills basics</td><td>Research &amp; source evaluation</td></tr>
-          <tr><td class="wk">02</td><td>Sentence structure</td><td>Essay structure &amp; thesis</td></tr>
-          <tr><td class="wk">03</td><td>Vocabulary building</td><td>Critical text analysis</td></tr>
-          <tr><td class="wk">04</td><td>Arithmetic fluency</td><td>Introductory algebra</td></tr>
-        </table>
+        <div class="pillar-card">
+          <span class="num">₦20,000 / mo</span>
+          <h3>Full Madrasah — Group</h3>
+          <p>Hifdh and tajweed alongside core Islamic studies, aqeedah, fiqh, and seerah, four classes weekly in a group setting.</p>
+        </div>
+        <div class="pillar-card">
+          <span class="num">₦20,000 / mo</span>
+          <h3>Hifdh Only — Personal</h3>
+          <p>One-on-one Qur'an memorisation and tajweed, four classes weekly, paced entirely to the student.</p>
+        </div>
+        <div class="pillar-card">
+          <span class="num">₦35,000 / mo</span>
+          <h3>Full Madrasah — Personal</h3>
+          <p>Hifdh and Islamic studies combined, taught one-on-one, four classes weekly.</p>
+        </div>
       </div>
     </div>
 
-    <div class="detail-row reveal">
-      <div class="detail-copy">
-        <span class="pillar-tag"><span class="dot"></span>Pillar Three</span>
-        <h2>Skills Acquisition</h2>
-        <p>This pillar builds practical, transferable ability: writing and communication, basic digital literacy, an introduction to entrepreneurial and financial thinking, and structured ways of solving problems. Every session favours output over theory, a lesson on writing ends with the student having written something, not merely having heard about writing.</p>
-        <p>The intent is that a student leaves the Circle able to produce something of real value, not only able to recite what they were taught.</p>
-        <ul class="check-list">
-          <li>Professional writing and communication</li>
-          <li>Digital literacy and online safety</li>
-          <li>Budgeting and basic financial thinking</li>
-          <li>Structured problem-solving frameworks</li>
-        </ul>
+    <div class="enroll-group reveal">
+      <div class="enroll-group-head">
+        <div class="g-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/></svg></div>
+        <h2>Academy</h2>
+        <a href="academy.html" class="g-link">Full details →</a>
       </div>
-      <div class="detail-visual">
-        <div class="visual-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      <div class="pillars-grid">
+        <div class="pillar-card">
+          <span class="num">₦10,000 / mo</span>
+          <h3>UTME</h3>
+          <p>Tutorials aligned to the UTME syllabus and its computer-based test format, with regular timed practice.</p>
         </div>
-        <table class="mini-syllabus">
-          <tr><th>Wk</th><th>Foundational</th><th>Advanced</th></tr>
-          <tr><td class="wk">01</td><td>Typing &amp; basic digital tools</td><td>Spreadsheets &amp; data</td></tr>
-          <tr><td class="wk">03</td><td>Basic budgeting</td><td>Business plan fundamentals</td></tr>
-          <tr><td class="wk">05</td><td>Online safety basics</td><td>Cybersecurity awareness</td></tr>
-          <tr><td class="wk">08</td><td>Intro to entrepreneurship</td><td>Building a mini business plan</td></tr>
-        </table>
+        <div class="pillar-card">
+          <span class="num">₦10,000 / mo</span>
+          <h3>Post-UTME</h3>
+          <p>Institution-specific preparation for the second-stage screening exam, once a UTME result is in hand.</p>
+        </div>
+        <div class="pillar-card">
+          <span class="num">₦10,000 / mo</span>
+          <h3>A-Levels</h3>
+          <p>Subject-focused tutorials building toward the depth and independent analysis A-Level exams require.</p>
+        </div>
+        <div class="pillar-card">
+          <span class="num">₦10,000 / mo</span>
+          <h3>O-Levels</h3>
+          <p>Core subject tutorials covering the WAEC and NECO syllabus, with steady exam-technique practice.</p>
+        </div>
       </div>
     </div>
 
-    <div class="detail-row reverse reveal">
-      <div class="detail-copy">
-        <span class="pillar-tag"><span class="dot"></span>Pillar Four</span>
-        <h2>Personal Development</h2>
-        <p>This pillar shapes character directly: self-discipline, emotional regulation, goal-setting, and confidence in speech and leadership. Three habits sit at its centre and are reinforced every single week rather than taught once and left behind: reading, time management, and internet decorum.</p>
-        <p>A student is taught to plan their week around their salah rather than fitting salah around everything else, to build an appetite for reading rather than treating it as an obligation, and to carry themselves well in digital spaces most adults were never taught to navigate either.</p>
-        <ul class="check-list">
-          <li>A rotating reading list with personal reflection each week</li>
-          <li>Weekly time-management planning, reviewed with a facilitator</li>
-          <li>Islamic etiquette applied specifically to online conduct</li>
-          <li>Confidence, goal-setting, and emotional self-regulation</li>
-        </ul>
+    <div class="enroll-group reveal">
+      <div class="enroll-group-head">
+        <div class="g-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+        <h2>Skills School</h2>
+        <a href="skills-school.html" class="g-link">Full details →</a>
       </div>
-      <div class="detail-visual">
-        <div class="visual-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg>
+      <div class="pillars-grid">
+        <div class="pillar-card">
+          <span class="num">₦25,000 one-time</span>
+          <h3>Public Speaking</h3>
+          <p>A one-month course building confidence, structure, and presence in speech, for a single one-time fee.</p>
         </div>
-        <p class="visual-quote">"They will remember whether you showed up, whether you noticed them, and whether you meant what you taught."
-          <span class="src">From the Facilitator's Handbook</span>
-        </p>
+        <div class="pillar-card">
+          <span class="num">₦35,000 one-time</span>
+          <h3>Graphic Design</h3>
+          <p>A one-time-fee course covering design fundamentals and hands-on project work, from concept to finished output.</p>
+        </div>
+        <div class="pillar-card">
+          <span class="num">₦80,000 / 2 mo</span>
+          <h3>Data Analysis</h3>
+          <p>A deeper two-month course in practical data analysis, billed once for the full two-month course.</p>
+        </div>
       </div>
     </div>
 
   </div>
 </section>
 
-<section class="how" style="padding-top:64px;">
-  <div class="wrap reveal">
-    <div class="section-head">
-      <p class="eyebrow">Behind Every Pillar</p>
-      <h2>Taught by a facilitator who knows your child</h2>
-      <p>Each pillar is led by a facilitator selected for competence in that subject and for the character to mentor a teenager honestly, not by a recorded course.</p>
+<section class="how">
+  <div class="wrap">
+    <div class="account-standalone reveal">
+      <p class="eyebrow on-dark" style="margin-bottom:10px;">Step 1</p>
+      <h2>Send Payment</h2>
+      <p class="a-copy">Pay for the plan you've chosen above to the account below.</p>
+      <div class="account-box">
+        <div class="account-row"><span>Account Name</span><b>Himaayah Ltd</b></div>
+        <div class="account-row"><span>Account Number</span><b>0127584920<button class="copy-btn" data-copy="0127584920">Copy</button></b></div>
+        <div class="account-row"><span>Bank</span><b>Wema Bank</b></div>
+      </div>
+      <p class="modal-note">Payments are usually confirmed within a few hours.</p>
     </div>
-    <div class="facilitator-note">
-      <b>Placement first, always.</b> Before a student sits in any pillar's first live session, the diagnostic assessment has already told their facilitator exactly where to begin, and where each of the other three pillars stands too. A student can be Advanced in one pillar and Foundational in another, and the Circle is built to hold both at once.
-    </div>
-  </div>
-</section>
 
-<section id="register" class="cta-band">
-  <div class="wrap reveal">
-    <h2>See how it comes together week to week</h2>
-    <p>The four pillars run on one recurring weekly rhythm, delivered live over Slack.</p>
-    <a href="how-it-works.html" class="btn btn-primary">See the Weekly Schedule</a>
+    <div class="account-standalone reveal" style="margin-top:24px; text-align:center;">
+      <p class="eyebrow on-dark" style="margin-bottom:10px; justify-content:center; display:flex;">Step 2</p>
+      <h2>Complete Registration</h2>
+      <p class="a-copy">Once payment is sent, continue to the registration form and tell us which programme and plan you chose, along with your details.</p>
+      <a id="continueToRegisterPage" href="https://docs.google.com/forms/d/e/1FAIpQLSfAeWdbBg1oYPyFIAmxOvJaXQm6Q43lbYUuQFirXBZMaPuCyw/viewform?usp=header" class="btn btn-primary" style="width:100%; text-align:center;">Continue to Registration</a>
+    </div>
   </div>
 </section>
 
@@ -178,36 +202,24 @@
       </div>
       <div class="footer-cols">
         <div class="footer-col">
-          <h4>Programme</h4>
-          <a href="pillars.html">The Four Pillars</a>
-          <a href="how-it-works.html">How It Works</a>
-          <a href="pricing.html">Pricing</a>
-        </div>
-        <div class="footer-col">
-          <h4>Get Started</h4>
-          <a href="enroll.html">Register</a>
-          <a href="faq.html">Parent FAQ</a>
+          <h4>Programmes</h4>
+          <a href="teenagers-building-circle.html">Teenagers Building Circle</a>
+          <a href="madrasah.html">Madrasah</a>
+          <a href="academy.html">Academy</a>
+          <a href="skills-school.html">Skills School</a>
         </div>
         <div class="footer-col">
           <h4>Contact</h4>
           <span>himaayahschools@gmail.com</span>
           <span>Ilorin, Nigeria</span>
         </div>
-        <div class="footer-col">
-          <h4>Other Programmes</h4>
-          <a href="madrasah.html">Madrasah</a>
-          <a href="academy.html">Academy</a>
-          <a href="skills-school.html">Skills School</a>
-        </div>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 Himaayah Schools.</span>
+      <span>© 2026 Himaayah Schools. Kaatib Yusuf Foundation.</span>
     </div>
   </div>
 </footer>
-
 <script src="script.js"></script>
-
 </body>
 </html>
