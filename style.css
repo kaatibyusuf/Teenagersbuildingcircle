@@ -74,7 +74,7 @@
     backdrop-filter: blur(6px);
     border-bottom: 1px solid rgba(255, 187, 0, 0.25);
   }
-  .site-nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+  .site-nav .wrap { position: relative; display: flex; align-items: center; justify-content: space-between; height: 72px; }
   .brand { display: flex; flex-direction: row; align-items: center; gap: 11px; }
   .brand img { height: 32px; width: auto; }
   .brand .text { display: flex; flex-direction: column; line-height: 1.1; }
@@ -94,6 +94,26 @@
     transition: background 0.2s;
   }
   .nav-cta:hover { background: var(--yellow-deep); }
+
+  .nav-toggle {
+    display: none;
+    position: relative;
+    width: 26px; height: 20px;
+    flex-shrink: 0;
+    z-index: 110;
+  }
+  .nav-toggle span {
+    position: absolute; left: 0; width: 100%; height: 2px;
+    background: var(--parchment);
+    border-radius: 2px;
+    transition: transform 0.25s ease, opacity 0.2s ease, top 0.25s ease;
+  }
+  .nav-toggle span:nth-child(1) { top: 0; }
+  .nav-toggle span:nth-child(2) { top: 9px; }
+  .nav-toggle span:nth-child(3) { top: 18px; }
+  .nav-toggle.open span:nth-child(1) { top: 9px; transform: rotate(45deg); }
+  .nav-toggle.open span:nth-child(2) { opacity: 0; }
+  .nav-toggle.open span:nth-child(3) { top: 9px; transform: rotate(-45deg); }
 
   /* ---------- Hero ---------- */
   .hero {
@@ -342,7 +362,39 @@
     .day-col { border-bottom: 1px solid rgba(15,15,17,0.12); }
   }
   @media (max-width: 640px) {
-    .nav-links { display: none; }
+    .nav-toggle { display: block; }
+    .nav-links {
+      position: absolute;
+      top: 100%; left: 0; right: 0;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
+      background: var(--night);
+      border-bottom: 1px solid rgba(255,187,0,0.2);
+      padding: 0 28px;
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: max-height 0.35s ease, opacity 0.25s ease, padding 0.35s ease;
+    }
+    .nav-links.open {
+      max-height: 420px;
+      opacity: 1;
+      padding: 10px 28px 22px;
+    }
+    .nav-links a {
+      width: 100%;
+      padding: 13px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      font-size: 15px;
+    }
+    a.nav-cta {
+      width: 100%;
+      text-align: center;
+      margin-top: 14px;
+      border-bottom: none;
+      padding: 12px 20px;
+    }
     .pillars-grid { grid-template-columns: 1fr; }
     .steps { grid-template-columns: 1fr; }
     .schedule-strip { grid-template-columns: repeat(2, 1fr); }

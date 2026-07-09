@@ -17,6 +17,37 @@
   revealEls.forEach(function (el) { io.observe(el); });
 })();
 
+// ---------- Mobile hamburger menu ----------
+(function () {
+  var toggle = document.querySelector('.nav-toggle');
+  var links = document.querySelector('.nav-links');
+  if (!toggle || !links) return;
+
+  function closeMenu() {
+    links.classList.remove('open');
+    toggle.classList.remove('open');
+    toggle.setAttribute('aria-expanded', 'false');
+  }
+
+  function toggleMenu() {
+    var isOpen = links.classList.toggle('open');
+    toggle.classList.toggle('open', isOpen);
+    toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  }
+
+  toggle.addEventListener('click', toggleMenu);
+
+  // Close the menu once any nav link is actually followed
+  links.querySelectorAll('a').forEach(function (a) {
+    a.addEventListener('click', closeMenu);
+  });
+
+  // Close if the viewport is resized back up to desktop width
+  window.addEventListener('resize', function () {
+    if (window.innerWidth > 640) closeMenu();
+  });
+})();
+
 // ---------- Payment / Registration modal ----------
 (function () {
   var REGISTRATION_URL = "https://docs.google.com/forms/d/e/1FAIpQLSfAeWdbBg1oYPyFIAmxOvJaXQm6Q43lbYUuQFirXBZMaPuCyw/viewform?usp=header";
