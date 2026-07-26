@@ -67,6 +67,7 @@
     font-family: var(--display); font-weight: 700; font-size: 15px; color: var(--night);
     flex-shrink: 0;
   }
+  .brand .text { display: flex; flex-direction: column; line-height: 1.1; }
   .brand .mark { font-family: var(--display); font-size: 18px; font-weight: 600; color: var(--parchment); letter-spacing: 0.02em; }
   .nav-links { display: flex; align-items: center; gap: 32px; }
   .nav-links a { font-size: 14px; color: #C7C7CA; transition: color 0.2s; }
@@ -364,7 +365,9 @@
   <div class="wrap">
     <div class="brand">
       <span class="crest">HS</span>
-      <span class="mark">Himaayah Schools</span>
+      <div class="text">
+        <span class="mark">Himaayah Schools</span>
+      </div>
     </div>
     <div class="nav-links">
       <a href="index.html">Home</a>
