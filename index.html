@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -354,6 +355,88 @@
     max-width: 50ch; margin: 0 auto; text-align: center; color: var(--ink);
   }
 
+  /* =========================================================
+     TESTIMONIALS — hover cards, dark accent on interaction
+  ========================================================= */
+  .testimonials { background: var(--parchment); }
+  .testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    align-items: stretch;
+  }
+  .testimonial-card {
+    position: relative;
+    background: var(--parchment-dim);
+    border: 1px solid rgba(15,15,17,0.1);
+    border-radius: var(--radius);
+    padding: 32px 28px 26px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    isolation: isolate;
+    transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), box-shadow 0.35s ease, background 0.35s ease, border-color 0.3s ease;
+  }
+  .testimonial-card::before {
+    content: '';
+    position: absolute; inset: 0 0 auto 0; height: 4px;
+    background: var(--yellow);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+  }
+  .testimonial-card:hover, .testimonial-card:focus-within {
+    transform: translateY(-8px);
+    background: var(--night);
+    border-color: var(--night);
+    box-shadow: 0 26px 50px -20px rgba(15,15,17,0.45);
+  }
+  .testimonial-card:hover::before, .testimonial-card:focus-within::before {
+    transform: scaleX(1);
+  }
+  .testimonial-quote-badge {
+    width: 38px; height: 38px; border-radius: 50%;
+    background: var(--yellow);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 18px;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+    flex-shrink: 0;
+  }
+  .testimonial-quote-badge svg { width: 17px; height: 17px; color: var(--ink); }
+  .testimonial-body {
+    font-size: 14.5px;
+    color: var(--ink-soft);
+    line-height: 1.7;
+    flex-grow: 1;
+    margin-bottom: 24px;
+    transition: color 0.35s ease;
+  }
+  .testimonial-card:hover .testimonial-body, .testimonial-card:focus-within .testimonial-body {
+    color: #D6D6D8;
+  }
+  .testimonial-foot {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(15,15,17,0.1);
+    transition: border-color 0.35s ease;
+  }
+  .testimonial-card:hover .testimonial-foot, .testimonial-card:focus-within .testimonial-foot {
+    border-top-color: rgba(255,187,0,0.3);
+  }
+  .testimonial-name {
+    font-family: var(--display); font-size: 15px; font-weight: 600; color: var(--ink);
+    transition: color 0.35s ease;
+  }
+  .testimonial-card:hover .testimonial-name, .testimonial-card:focus-within .testimonial-name {
+    color: var(--parchment);
+  }
+  .testimonial-score {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
+    color: var(--night); background: var(--yellow);
+    padding: 5px 10px; border-radius: 2px; white-space: nowrap;
+    flex-shrink: 0;
+  }
+
   /* ---------- Final CTA ---------- */
   .cta-band {
     background: radial-gradient(ellipse at 50% 0%, var(--night-soft), var(--night) 70%);
@@ -379,6 +462,7 @@
   /* ---------- Responsive ---------- */
   @media (max-width: 980px) {
     .program-grid { grid-template-columns: repeat(2, 1fr); }
+    .testimonial-grid { grid-template-columns: repeat(2, 1fr); }
   }
   @media (max-width: 640px) {
     .nav-toggle { display: block; }
@@ -394,6 +478,7 @@
     a.nav-cta { width: 100%; text-align: center; margin-top: 14px; border-bottom: none; padding: 12px 20px; }
     section { padding: 64px 0; }
     .program-grid { grid-template-columns: 1fr; }
+    .testimonial-grid { grid-template-columns: 1fr; }
     .program-dossier { position: static; transform: none !important; border-top: 1px solid rgba(255,187,0,0.35); }
     .program-caption { transform: none !important; }
     .hero-moon-wrap { width: 90px; height: 90px; top: 5%; right: 6%; }
@@ -626,6 +711,53 @@
 <section class="fork">
   <div class="wrap reveal">
     <blockquote>Every Himaayah programme is built on the conviction that a young person given real structure and real mentorship will rise to meet it. <span class="accent">That is the standard behind all four.</span></blockquote>
+  </div>
+</section>
+
+<section class="testimonials">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Student Voices <span class="arabic">أصوات الطلاب</span></span>
+      <h2>What our students say.</h2>
+      <p>Real results from students of our academy who trusted the process, stayed disciplined, and put in the work alongside their teachers.</p>
+    </div>
+
+    <div class="testimonial-grid">
+
+      <article class="testimonial-card reveal" tabindex="0">
+        <span class="testimonial-quote-badge">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9.5 6C6.5 6 4 8.5 4 11.5c0 2.8 2 5 4.5 5 .3 0 .5 0 .8-.1-.5 1.6-1.8 2.9-3.3 3.6v1.9c3.3-.8 6-3.7 6-7.7V11.5C12 8.5 12.5 6 9.5 6zm10 0c-3 0-5.5 2.5-5.5 5.5 0 2.8 2 5 4.5 5 .3 0 .5 0 .8-.1-.5 1.6-1.8 2.9-3.3 3.6v1.9c3.3-.8 6-3.7 6-7.7V11.5C22 8.5 22.5 6 19.5 6z"/></svg>
+        </span>
+        <p class="testimonial-body">Joining this academy was one of the best decisions I made while preparing for my exams. The constant tests, daily reviews, and disciplined learning approach kept me consistent and challenged me to do better every day. The tutors are amazing, MashaAllah. May Almighty Allah bless them abundantly for their patience, dedication, and genuine commitment to seeing every student succeed. I'm truly grateful for all the support, guidance, and encouragement I received throughout my time here. I would gladly recommend this academy to anyone seeking not just academic success, but also discipline, consistency, and a learning environment that inspires growth. Thank you for being part of my journey.</p>
+        <div class="testimonial-foot">
+          <span class="testimonial-name">Saheed Faizah Morenikeji</span>
+          <span class="testimonial-score">UTME 278</span>
+        </div>
+      </article>
+
+      <article class="testimonial-card reveal" tabindex="0">
+        <span class="testimonial-quote-badge">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9.5 6C6.5 6 4 8.5 4 11.5c0 2.8 2 5 4.5 5 .3 0 .5 0 .8-.1-.5 1.6-1.8 2.9-3.3 3.6v1.9c3.3-.8 6-3.7 6-7.7V11.5C12 8.5 12.5 6 9.5 6zm10 0c-3 0-5.5 2.5-5.5 5.5 0 2.8 2 5 4.5 5 .3 0 .5 0 .8-.1-.5 1.6-1.8 2.9-3.3 3.6v1.9c3.3-.8 6-3.7 6-7.7V11.5C22 8.5 22.5 6 19.5 6z"/></svg>
+        </span>
+        <p class="testimonial-body">Alhamdulillah, Himaayah Academy is the best place I will recommend for anyone preparing for the next UTME who is willing to learn. As for me, I had no prior knowledge of my department subjects. But with the help of Allah and my amazing and dedicated teachers, I was able to have my score. All my teachers are amazing, calm and dedicated. They all made my journey easier. May Allah continue to ease their affairs and also bless them abundantly. Jazakumullahu khayran Sirs and Mas.</p>
+        <div class="testimonial-foot">
+          <span class="testimonial-name">Adeyemo Ameenah</span>
+          <span class="testimonial-score">UTME 294</span>
+        </div>
+      </article>
+
+      <article class="testimonial-card reveal" tabindex="0">
+        <span class="testimonial-quote-badge">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9.5 6C6.5 6 4 8.5 4 11.5c0 2.8 2 5 4.5 5 .3 0 .5 0 .8-.1-.5 1.6-1.8 2.9-3.3 3.6v1.9c3.3-.8 6-3.7 6-7.7V11.5C12 8.5 12.5 6 9.5 6zm10 0c-3 0-5.5 2.5-5.5 5.5 0 2.8 2 5 4.5 5 .3 0 .5 0 .8-.1-.5 1.6-1.8 2.9-3.3 3.6v1.9c3.3-.8 6-3.7 6-7.7V11.5C22 8.5 22.5 6 19.5 6z"/></svg>
+        </span>
+        <p class="testimonial-body">At Himaayah Academy, I didn't just learn about academics, I learnt resilience, discipline, and also how to manage my fears. It taught me things I didn't know in ways I haven't seen before. It gave me teachers that stood by me despite my failures, and friends who are now dear to my heart. For that, I'm grateful, Himaayah Academy.</p>
+        <div class="testimonial-foot">
+          <span class="testimonial-name">Hafsah Sheriff Oyinkansola</span>
+          <span class="testimonial-score">UTME 299</span>
+        </div>
+      </article>
+
+    </div>
   </div>
 </section>
 
