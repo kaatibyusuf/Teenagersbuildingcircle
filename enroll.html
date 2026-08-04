@@ -212,6 +212,7 @@
   }
   .course-dossier li:first-child { border-top: none; }
   .course-dossier li::before { content: ''; position: absolute; left: 0; top: 12px; width: 5px; height: 5px; background: var(--gold); border-radius: 1px; }
+  .course-dossier .dossier-actions { display: flex; gap: 8px; flex-wrap: wrap; }
   .course-dossier .dossier-cta {
     display: inline-flex; align-items: center; gap: 8px;
     font-size: 12px; font-weight: 600; letter-spacing: 0.02em; color: var(--night);
@@ -220,6 +221,12 @@
   }
   .course-dossier .dossier-cta:hover { background: var(--yellow-deep); gap: 12px; }
   .course-dossier .dossier-cta svg { width: 13px; height: 13px; }
+  .course-dossier .dossier-cta.card-pay {
+    background: transparent; color: var(--gold-light); border: 1px solid rgba(255,187,0,0.5);
+  }
+  .course-dossier .dossier-cta.card-pay:hover { background: rgba(255,187,0,0.1); color: var(--gold-light); }
+  .course-dossier .dossier-cta.card-pay[disabled] { opacity: 0.55; cursor: wait; }
+  .course-dossier .pay-error { font-size: 11.5px; color: #FF8A8A; margin-top: 8px; display: none; }
 
   .course-footline { display: flex; justify-content: space-between; align-items: center; padding: 13px 18px; background: var(--white); border-top: 1px solid rgba(15,15,17,0.08); gap: 8px; }
   .course-footline .duration { font-size: 12px; color: var(--ink-soft); }
@@ -251,6 +258,16 @@
   .step-card h3 { color: var(--parchment); font-size: 21px; margin-bottom: 10px; }
   .step-card p.s-copy { font-size: 14px; color: #B8B8BB; margin-bottom: 22px; line-height: 1.6; }
 
+  .payment-tabs { display: flex; gap: 8px; margin-bottom: 20px; }
+  .payment-tab {
+    flex: 1; text-align: center; font-size: 12.5px; font-weight: 600; letter-spacing: 0.02em;
+    padding: 10px 12px; border: 1px solid rgba(255,187,0,0.25); border-radius: var(--radius);
+    color: #B8B8BB; transition: background 0.2s, color 0.2s, border-color 0.2s;
+  }
+  .payment-tab[aria-selected="true"] { background: var(--yellow); color: var(--night); border-color: var(--yellow); }
+  .payment-panel { display: none; }
+  .payment-panel.active { display: block; }
+
   .account-box { border: 1px solid rgba(255,187,0,0.25); background: rgba(255,187,0,0.04); }
   .account-row { display: flex; align-items: center; justify-content: space-between; padding: 13px 16px; font-size: 13.5px; border-bottom: 1px solid rgba(255,187,0,0.14); }
   .account-row:last-child { border-bottom: none; }
@@ -262,6 +279,20 @@
   .modal-note { color: #8A8A8E; font-size: 12.5px; margin-top: 16px; }
   .step-card .btn { width: 100%; text-align: center; margin-top: 4px; }
 
+  .card-select { margin-bottom: 14px; }
+  .card-select label { display: block; font-size: 12px; color: #9E9EA3; margin-bottom: 6px; }
+  .card-select select {
+    width: 100%; padding: 11px 12px; font-size: 13.5px; font-family: var(--body); color: var(--parchment);
+    background: var(--night-soft); border: 1px solid rgba(255,187,0,0.3); border-radius: var(--radius);
+  }
+  .card-select input[type="email"] {
+    width: 100%; padding: 11px 12px; font-size: 13.5px; font-family: var(--body); color: var(--parchment);
+    background: var(--night-soft); border: 1px solid rgba(255,187,0,0.3); border-radius: var(--radius); margin-top: 10px;
+  }
+  .pay-status { font-size: 12.5px; margin-top: 12px; display: none; }
+  .pay-status.error { color: #FF8A8A; }
+  .pay-status.info { color: var(--gold-light); }
+
   @media (max-width: 820px) { .steps-grid { grid-template-columns: 1fr; } }
 
   /* ---------- Buttons ---------- */
@@ -269,6 +300,7 @@
   .btn:hover { transform: translateY(-1px); }
   .btn-primary { background: var(--yellow); color: var(--ink); }
   .btn-primary:hover { background: var(--yellow-deep); }
+  .btn-primary[disabled] { opacity: 0.6; cursor: wait; transform: none; }
 
   /* ---------- Footer ---------- */
   footer { background: var(--night); color: #8A8A8E; padding: 56px 0 32px; font-size: 13.5px; }
@@ -330,10 +362,10 @@
 <header class="page-header">
   <div class="wrap">
     <h1>Choose what you're enrolling for.</h1>
-    <p class="lede">Every Himaayah Schools plan is listed below with what it actually includes. Hover a plan to open its full details, send payment to the account provided, then register.</p>
+    <p class="lede">Every Himaayah Schools plan is listed below with what it actually includes. Hover a plan to open its full details, pay by bank transfer or card, then register.</p>
     <div class="header-steps">
       <span class="chip"><b>1</b> Pick a plan below</span>
-      <span class="chip"><b>2</b> Send payment</span>
+      <span class="chip"><b>2</b> Pay by transfer or card</span>
       <span class="chip"><b>3</b> Complete registration</span>
     </div>
   </div>
@@ -371,9 +403,13 @@
               <li>Live weekly sessions with a dedicated Slack workspace</li>
               <li>Progress check-ins built around each pillar</li>
             </ul>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfRJvIK7bNGLbly1gM74RkPLIsQS62bwKTNswnpw7ZbNQwVBw/viewform?usp=header" target="_blank" rel="noopener" class="dossier-cta">Enroll in this plan
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            </a>
+            <div class="dossier-actions">
+              <a href="https://docs.google.com/forms/d/e/1FAIpQLSfRJvIK7bNGLbly1gM74RkPLIsQS62bwKTNswnpw7ZbNQwVBw/viewform?usp=header" target="_blank" rel="noopener" class="dossier-cta">Enroll in this plan
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </a>
+              <button type="button" class="dossier-cta card-pay" data-product-id="prod_cbd46cdefa0e4d75a31c" data-plan-name="Teenagers Building Circle — Full Programme" data-amount="40000" data-currency="NGN" data-billing="recurring">Pay with card</button>
+            </div>
+            <p class="pay-error"></p>
           </div>
           <div class="course-footline">
             <span class="duration">Billed <b>monthly</b>, ₦40,000</span>
@@ -414,9 +450,13 @@
               <li>Small group setting with a dedicated hifdh teacher</li>
               <li>Four classes weekly</li>
             </ul>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdyusyD5ABwlvMJznxVLHTO1w5zIopwhw1jRZRNvukX8zVFKw/viewform?usp=header" target="_blank" rel="noopener" class="dossier-cta">Enroll
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            </a>
+            <div class="dossier-actions">
+              <a href="https://docs.google.com/forms/d/e/1FAIpQLSdyusyD5ABwlvMJznxVLHTO1w5zIopwhw1jRZRNvukX8zVFKw/viewform?usp=header" target="_blank" rel="noopener" class="dossier-cta">Enroll
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </a>
+              <button type="button" class="dossier-cta card-pay" data-product-id="prod_1518dd1ab1ba4cfea0e8" data-plan-name="Madrasah — Hifdh Only (Group)" data-amount="12000" data-currency="NGN" data-billing="recurring">Pay with card</button>
+            </div>
+            <p class="pay-error"></p>
           </div>
           <div class="course-footline">
             <span class="duration">Monthly, <b>₦12,000</b></span>
@@ -443,9 +483,13 @@
               <li>Core Islamic studies: aqeedah, fiqh, seerah</li>
               <li>Four classes weekly, group setting</li>
             </ul>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdyusyD5ABwlvMJznxVLHTO1w5zIopwhw1jRZRNvukX8zVFKw/viewform?usp=header" target="_blank" rel="noopener" class="dossier-cta">Enroll
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            </a>
+            <div class="dossier-actions">
+              <a href="https://docs.google.com/forms/d/e/1FAIpQLSdyusyD5ABwlvMJznxVLHTO1w5zIopwhw1jRZRNvukX8zVFKw/viewform?usp=header" target="_blank" rel="noopener" class="dossier-cta">Enroll
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </a>
+              <button type="button" class="dossier-cta card-pay" data-product-id="prod_88d2bf8aefd145569c32" data-plan-name="Madrasah — Full Madrasah (Group)" data-amount="20000" data-currency="NGN" data-billing="recurring">Pay with card</button>
+            </div>
+            <p class="pay-error"></p>
           </div>
           <div class="course-footline">
             <span class="duration">Monthly, <b>₦20,000</b></span>
@@ -472,9 +516,13 @@
               <li>Pace set entirely to the student</li>
               <li>Four classes weekly</li>
             </ul>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdyusyD5ABwlvMJznxVLHTO1w5zIopwhw1jRZRNvukX8zVFKw/viewform?usp=header" target="_blank" rel="noopener" class="dossier-cta">Enroll
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            </a>
+            <div class="dossier-actions">
+              <a href="https://docs.google.com/forms/d/e/1FAIpQLSdyusyD5ABwlvMJznxVLHTO1w5zIopwhw1jRZRNvukX8zVFKw/viewform?usp=header" target="_blank" rel="noopener" class="dossier-cta">Enroll
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </a>
+              <button type="button" class="dossier-cta card-pay" data-product-id="prod_1debd07326f34dd2bc53" data-plan-name="Madrasah — Hifdh Only (Personal)" data-amount="20000" data-currency="NGN" data-billing="recurring">Pay with card</button>
+            </div>
+            <p class="pay-error"></p>
           </div>
           <div class="course-footline">
             <span class="duration">Monthly, <b>₦20,000</b></span>
@@ -501,9 +549,13 @@
               <li>Taught entirely one-on-one</li>
               <li>Four classes weekly</li>
             </ul>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdyusyD5ABwlvMJznxVLHTO1w5zIopwhw1jRZRNvukX8zVFKw/viewform?usp=header" target="_blank" rel="noopener" class="dossier-cta">Enroll
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            </a>
+            <div class="dossier-actions">
+              <a href="https://docs.google.com/forms/d/e/1FAIpQLSdyusyD5ABwlvMJznxVLHTO1w5zIopwhw1jRZRNvukX8zVFKw/viewform?usp=header" target="_blank" rel="noopener" class="dossier-cta">Enroll
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </a>
+              <button type="button" class="dossier-cta card-pay" data-product-id="prod_fe2428f2c1f647118abc" data-plan-name="Madrasah — Full Madrasah (Personal)" data-amount="35000" data-currency="NGN" data-billing="recurring">Pay with card</button>
+            </div>
+            <p class="pay-error"></p>
           </div>
           <div class="course-footline">
             <span class="duration">Monthly, <b>₦35,000</b></span>
@@ -530,9 +582,13 @@
               <li>Group setting with a dedicated hifdh teacher</li>
               <li>Structured monthly milestones and regular revision</li>
             </ul>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdyusyD5ABwlvMJznxVLHTO1w5zIopwhw1jRZRNvukX8zVFKw/viewform?usp=header" target="_blank" rel="noopener" class="dossier-cta">Enroll
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            </a>
+            <div class="dossier-actions">
+              <a href="https://docs.google.com/forms/d/e/1FAIpQLSdyusyD5ABwlvMJznxVLHTO1w5zIopwhw1jRZRNvukX8zVFKw/viewform?usp=header" target="_blank" rel="noopener" class="dossier-cta">Enroll
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </a>
+              <button type="button" class="dossier-cta card-pay" data-product-id="prod_330d0eede3bf4a4bb39a" data-plan-name="Madrasah — One-Year Hifdh" data-amount="19000" data-currency="NGN" data-billing="recurring">Pay with card</button>
+            </div>
+            <p class="pay-error"></p>
           </div>
           <div class="course-footline">
             <span class="duration">Monthly, <b>₦19,000</b></span>
@@ -574,9 +630,13 @@
               <li>Practice in the computer-based test format</li>
               <li>Regular timed mock exams</li>
             </ul>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdcRa7rKlhjIpt7pyHp8lxXaVxE9Yt5hfqKgya4DG-hB2LllQ/viewform?usp=header" target="_blank" rel="noopener" class="dossier-cta">Enroll
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            </a>
+            <div class="dossier-actions">
+              <a href="https://docs.google.com/forms/d/e/1FAIpQLSdcRa7rKlhjIpt7pyHp8lxXaVxE9Yt5hfqKgya4DG-hB2LllQ/viewform?usp=header" target="_blank" rel="noopener" class="dossier-cta">Enroll
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </a>
+              <button type="button" class="dossier-cta card-pay" data-product-id="prod_6de197ce78fe4f049970" data-plan-name="Academy — UTME" data-amount="10000" data-currency="NGN" data-billing="recurring">Pay with card</button>
+            </div>
+            <p class="pay-error"></p>
           </div>
           <div class="course-footline">
             <span class="duration">Monthly, <b>₦10,000</b></span>
@@ -603,9 +663,13 @@
               <li>Begins once a UTME result is in hand</li>
               <li>Focused screening-exam practice</li>
             </ul>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdcRa7rKlhjIpt7pyHp8lxXaVxE9Yt5hfqKgya4DG-hB2LllQ/viewform?usp=header" target="_blank" rel="noopener" class="dossier-cta">Enroll
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            </a>
+            <div class="dossier-actions">
+              <a href="https://docs.google.com/forms/d/e/1FAIpQLSdcRa7rKlhjIpt7pyHp8lxXaVxE9Yt5hfqKgya4DG-hB2LllQ/viewform?usp=header" target="_blank" rel="noopener" class="dossier-cta">Enroll
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </a>
+              <button type="button" class="dossier-cta card-pay" data-product-id="prod_5273f7bb1f1249f6b164" data-plan-name="Academy — Post-UTME" data-amount="10000" data-currency="NGN" data-billing="recurring">Pay with card</button>
+            </div>
+            <p class="pay-error"></p>
           </div>
           <div class="course-footline">
             <span class="duration">Monthly, <b>₦10,000</b></span>
@@ -632,9 +696,13 @@
               <li>Builds toward independent analytical writing</li>
               <li>Regular assessed practice</li>
             </ul>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdcRa7rKlhjIpt7pyHp8lxXaVxE9Yt5hfqKgya4DG-hB2LllQ/viewform?usp=header" target="_blank" rel="noopener" class="dossier-cta">Enroll
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            </a>
+            <div class="dossier-actions">
+              <a href="https://docs.google.com/forms/d/e/1FAIpQLSdcRa7rKlhjIpt7pyHp8lxXaVxE9Yt5hfqKgya4DG-hB2LllQ/viewform?usp=header" target="_blank" rel="noopener" class="dossier-cta">Enroll
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </a>
+              <button type="button" class="dossier-cta card-pay" data-product-id="prod_eea22ca104b6496aace8" data-plan-name="Academy — A-Levels" data-amount="10000" data-currency="NGN" data-billing="recurring">Pay with card</button>
+            </div>
+            <p class="pay-error"></p>
           </div>
           <div class="course-footline">
             <span class="duration">Monthly, <b>₦10,000</b></span>
@@ -661,9 +729,13 @@
               <li>Steady exam-technique practice</li>
               <li>Regular progress checks</li>
             </ul>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdcRa7rKlhjIpt7pyHp8lxXaVxE9Yt5hfqKgya4DG-hB2LllQ/viewform?usp=header" target="_blank" rel="noopener" class="dossier-cta">Enroll
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            </a>
+            <div class="dossier-actions">
+              <a href="https://docs.google.com/forms/d/e/1FAIpQLSdcRa7rKlhjIpt7pyHp8lxXaVxE9Yt5hfqKgya4DG-hB2LllQ/viewform?usp=header" target="_blank" rel="noopener" class="dossier-cta">Enroll
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </a>
+              <button type="button" class="dossier-cta card-pay" data-product-id="prod_16d184d1f3f64de98c98" data-plan-name="Academy — O-Levels" data-amount="10000" data-currency="NGN" data-billing="recurring">Pay with card</button>
+            </div>
+            <p class="pay-error"></p>
           </div>
           <div class="course-footline">
             <span class="duration">Monthly, <b>₦10,000</b></span>
@@ -705,9 +777,13 @@
               <li>Controlling nerves, pacing, and voice under pressure</li>
               <li>Closing week: a graded talk in front of a live audience</li>
             </ul>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfKBlaMxEzd_AxpmWiZhtR55GLKFnETw8WK4VXIINd7n3LN5Q/viewform?usp=header" target="_blank" rel="noopener" class="dossier-cta">Enroll
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            </a>
+            <div class="dossier-actions">
+              <a href="https://docs.google.com/forms/d/e/1FAIpQLSfKBlaMxEzd_AxpmWiZhtR55GLKFnETw8WK4VXIINd7n3LN5Q/viewform?usp=header" target="_blank" rel="noopener" class="dossier-cta">Enroll
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </a>
+              <button type="button" class="dossier-cta card-pay" data-product-id="prod_f6fa17539a43498782c0" data-plan-name="Skills School — Public Speaking" data-amount="25000" data-currency="NGN" data-billing="one_time">Pay with card</button>
+            </div>
+            <p class="pay-error"></p>
           </div>
           <div class="course-footline">
             <span class="duration">Billed <b>once</b>, ₦25,000</span>
@@ -734,9 +810,13 @@
               <li>Hands-on practice in industry-standard software</li>
               <li>A small portfolio: logo, poster, and a social kit</li>
             </ul>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfKBlaMxEzd_AxpmWiZhtR55GLKFnETw8WK4VXIINd7n3LN5Q/viewform?usp=header" target="_blank" rel="noopener" class="dossier-cta">Enroll
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            </a>
+            <div class="dossier-actions">
+              <a href="https://docs.google.com/forms/d/e/1FAIpQLSfKBlaMxEzd_AxpmWiZhtR55GLKFnETw8WK4VXIINd7n3LN5Q/viewform?usp=header" target="_blank" rel="noopener" class="dossier-cta">Enroll
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </a>
+              <button type="button" class="dossier-cta card-pay" data-product-id="prod_bad801192e5c47ffae03" data-plan-name="Skills School — Graphic Design" data-amount="35000" data-currency="NGN" data-billing="one_time">Pay with card</button>
+            </div>
+            <p class="pay-error"></p>
           </div>
           <div class="course-footline">
             <span class="duration">Billed <b>once</b>, ₦35,000</span>
@@ -763,9 +843,13 @@
               <li>Spreadsheets, queries, and dashboard fundamentals</li>
               <li>Final project: a dashboard built from your own dataset</li>
             </ul>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfKBlaMxEzd_AxpmWiZhtR55GLKFnETw8WK4VXIINd7n3LN5Q/viewform?usp=header" target="_blank" rel="noopener" class="dossier-cta">Enroll
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            </a>
+            <div class="dossier-actions">
+              <a href="https://docs.google.com/forms/d/e/1FAIpQLSfKBlaMxEzd_AxpmWiZhtR55GLKFnETw8WK4VXIINd7n3LN5Q/viewform?usp=header" target="_blank" rel="noopener" class="dossier-cta">Enroll
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </a>
+              <button type="button" class="dossier-cta card-pay" data-product-id="prod_0a4ba5e2488546b4aa8c" data-plan-name="Skills School — Data Analysis" data-amount="80000" data-currency="NGN" data-billing="recurring">Pay with card</button>
+            </div>
+            <p class="pay-error"></p>
           </div>
           <div class="course-footline">
             <span class="duration">Billed every <b>2 months</b>, ₦80,000</span>
@@ -786,20 +870,39 @@
     <div class="section-head reveal">
       <span class="eyebrow">How to enroll</span>
       <h2>Two steps, once you've picked a plan.</h2>
-      <p>Send payment for the plan above, then tell us which one you chose along with your details.</p>
+      <p>Pay for the plan above by bank transfer or card, then tell us which one you chose along with your details.</p>
     </div>
 
     <div class="steps-grid">
       <div class="step-card reveal">
         <span class="step-num">1</span>
-        <h3>Send Payment</h3>
-        <p class="s-copy">Pay for the plan you've chosen above to the account below. Payments are usually confirmed within a few hours.</p>
-        <div class="account-box">
-          <div class="account-row"><span>Account Name</span><b>Himaayah Ltd</b></div>
-          <div class="account-row"><span>Account Number</span><b>0127584920<button class="copy-btn" data-copy="0127584920">Copy</button></b></div>
-          <div class="account-row"><span>Bank</span><b>Wema Bank</b></div>
+        <h3>Pay</h3>
+        <p class="s-copy">Pay for the plan you've chosen above. Bank transfers are usually confirmed within a few hours; card payments confirm instantly.</p>
+
+        <div class="payment-tabs" role="tablist">
+          <button type="button" class="payment-tab" role="tab" aria-selected="true" data-panel="panel-transfer">Bank Transfer</button>
+          <button type="button" class="payment-tab" role="tab" aria-selected="false" data-panel="panel-card">Pay by Card</button>
         </div>
-        <p class="modal-note">Keep your payment receipt handy for registration.</p>
+
+        <div class="payment-panel active" id="panel-transfer">
+          <div class="account-box">
+            <div class="account-row"><span>Account Name</span><b>Himaayah Ltd</b></div>
+            <div class="account-row"><span>Account Number</span><b>0127584920<button class="copy-btn" data-copy="0127584920">Copy</button></b></div>
+            <div class="account-row"><span>Bank</span><b>Wema Bank</b></div>
+          </div>
+          <p class="modal-note">Keep your payment receipt handy for registration.</p>
+        </div>
+
+        <div class="payment-panel" id="panel-card">
+          <div class="card-select">
+            <label for="planSelect">Which plan are you paying for?</label>
+            <select id="planSelect"></select>
+            <input type="email" id="payerEmail" placeholder="Email for your receipt" required>
+          </div>
+          <button type="button" id="cardPayBtn" class="btn btn-primary">Continue to card payment</button>
+          <p class="pay-status" id="cardPayStatus"></p>
+          <p class="modal-note">You'll be redirected to a secure checkout page to complete payment, then straight to registration.</p>
+        </div>
       </div>
 
       <div class="step-card reveal">
@@ -895,6 +998,120 @@
       }
     });
   });
+
+  // ---------------------------------------------------------------
+  // Card payments (Bachs) — collects each plan's data-* attributes
+  // from the course cards so there's one source of truth for pricing.
+  // Every "Pay with card" click hits /api/create-checkout (a
+  // serverless function you deploy alongside this page) which talks
+  // to Bachs with your secret key and returns a hosted checkout URL.
+  // ---------------------------------------------------------------
+  const PLANS = Array.from(document.querySelectorAll('.card-pay')).map((btn) => ({
+    productId: btn.getAttribute('data-product-id'),
+    name: btn.getAttribute('data-plan-name'),
+    amount: btn.getAttribute('data-amount'),
+    currency: btn.getAttribute('data-currency'),
+    billing: btn.getAttribute('data-billing'),
+  }));
+
+  async function startCheckout(plan, email, triggerBtn, statusEl) {
+    if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
+      if (statusEl) {
+        statusEl.textContent = 'Enter a valid email first.';
+        statusEl.className = statusEl.className.replace('pay-error', '') || 'pay-status';
+        statusEl.classList.add('error');
+        statusEl.style.display = 'block';
+      }
+      return;
+    }
+    const originalLabel = triggerBtn.textContent;
+    triggerBtn.disabled = true;
+    triggerBtn.textContent = 'Redirecting…';
+    if (statusEl) statusEl.style.display = 'none';
+    try {
+      const res = await fetch('/api/create-checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          productId: plan.productId,
+          planName: plan.name,
+          amount: plan.amount,
+          currency: plan.currency,
+          billing: plan.billing,
+          email,
+        }),
+      });
+      if (!res.ok) throw new Error('Checkout could not be started.');
+      const data = await res.json();
+      if (!data.url) throw new Error('No checkout URL returned.');
+      window.location.href = data.url;
+    } catch (err) {
+      triggerBtn.disabled = false;
+      triggerBtn.textContent = originalLabel;
+      if (statusEl) {
+        statusEl.textContent = 'Something went wrong starting checkout. Please try again or use bank transfer.';
+        statusEl.classList.add('error');
+        statusEl.style.display = 'block';
+      }
+    }
+  }
+
+  // Per-card "Pay with card" buttons (inside each course dossier)
+  document.querySelectorAll('.course-card').forEach((card) => {
+    const btn = card.querySelector('.card-pay');
+    const errorEl = card.querySelector('.pay-error');
+    if (!btn) return;
+    btn.addEventListener('click', () => {
+      const email = window.prompt('Email address for your receipt:');
+      if (email === null) return;
+      const plan = {
+        productId: btn.getAttribute('data-product-id'),
+        name: btn.getAttribute('data-plan-name'),
+        amount: btn.getAttribute('data-amount'),
+        currency: btn.getAttribute('data-currency'),
+        billing: btn.getAttribute('data-billing'),
+      };
+      startCheckout(plan, email.trim(), btn, errorEl);
+    });
+  });
+
+  // "Pay by Card" tab in the how-to-enroll section
+  const planSelect = document.getElementById('planSelect');
+  if (planSelect) {
+    PLANS.forEach((plan) => {
+      const opt = document.createElement('option');
+      opt.value = plan.productId;
+      opt.textContent = `${plan.name} — ₦${Number(plan.amount).toLocaleString()}`;
+      planSelect.appendChild(opt);
+    });
+  }
+
+  const tabs = document.querySelectorAll('.payment-tab');
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      tabs.forEach((t) => t.setAttribute('aria-selected', 'false'));
+      tab.setAttribute('aria-selected', 'true');
+      document.querySelectorAll('.payment-panel').forEach((p) => p.classList.remove('active'));
+      document.getElementById(tab.getAttribute('data-panel')).classList.add('active');
+    });
+  });
+
+  const cardPayBtn = document.getElementById('cardPayBtn');
+  if (cardPayBtn) {
+    cardPayBtn.addEventListener('click', () => {
+      const plan = PLANS.find((p) => p.productId === planSelect.value);
+      const email = document.getElementById('payerEmail').value.trim();
+      const statusEl = document.getElementById('cardPayStatus');
+      statusEl.className = 'pay-status';
+      if (!plan) {
+        statusEl.textContent = 'Choose a plan first.';
+        statusEl.classList.add('error');
+        statusEl.style.display = 'block';
+        return;
+      }
+      startCheckout(plan, email, cardPayBtn, statusEl);
+    });
+  }
 </script>
 </body>
 </html>
