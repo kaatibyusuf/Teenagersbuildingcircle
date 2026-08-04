@@ -5,35 +5,42 @@
 // calls this endpoint with the plan the person picked, and gets back a
 // hosted checkout URL to redirect to.
 //
-// SETUP (one-time):
-//   1. npm install @bachs/sdk   (run this in the project root, next to /api)
-//   2. In the Vercel project settings, add an environment variable:
-//        BACHS_KEY = sk_live_...   (or sk_sandbox_... while testing)
-//   3. Product IDs for all 13 plans are already wired into enroll.html's
-//      data-product-id attributes, and each button's data-billing
-//      ("recurring" or "one_time") flows through into the `billing` field
-//      below via billingMode.
-//   4. Double-check the field names below (`product`, `billing`, `tax`,
-//      `settlement`, `customer_email`, `success_url`, `metadata`) against
-//      docs.bachs.io/api-reference — I've built this from the checkout
-//      example Bachs shows on their homepage plus standard hosted-checkout
-//      conventions, but I could not load their full API reference to
-//      confirm every field name or the exact enum values 'billing' expects
-//      ('subscription' vs 'one_time' is my best guess — verify against
-//      the dashboard products you created). Test one real transaction in
-//      sandbox mode before going live.
+// IMPORTANT: this calls Bachs' REST API directly with fetch, not the
+// "@bachs/sdk" npm package. That package (as of writing) is an empty
+// placeholder that just reserves the name on npm — `module.exports = {}` —
+// so `new Bachs(...)` can never work. The code sample on bachs.io's
+// homepage is ahead of what's actually published. This version is built
+// from Bachs' real, published OpenAPI spec at
+// https://docs.bachs.io/api-reference/payments/create-checkout-session
+// which I fetched and confirmed directly.
 //
-// SUCCESS FLOW:
-//   After payment, Bachs should redirect the customer to SUCCESS_URL
-//   below. Point that at your registration form (or a small "thank you,
-//   now register" page) so the two steps stay connected.
-
-import Bachs from '@bachs/sdk';
-
-const bachs = new Bachs({ key: process.env.BACHS_KEY });
+// If you've already run `npm install @bachs/sdk`, it's safe to remove:
+//   npm uninstall @bachs/sdk
+// This file has no dependency on it anymore.
+//
+// SETUP (one-time):
+//   1. In the Vercel project settings, add an environment variable:
+//        BACHS_KEY = sk_sandbox_...   (swap for sk_live_... when you go live)
+//      The base URL below is picked automatically from the key prefix, so
+//      going live really is just swapping this one value.
+//   2. All 13 product IDs are already wired into enroll.html's
+//      data-product-id attributes.
+//   3. Per Bachs' docs, sandbox works fully even while your account is
+//      still under verification review — no need to wait for that to test.
 
 const REGISTRATION_FORM_URL =
   'https://docs.google.com/forms/d/e/1FAIpQLSfAeWdbBg1oYPyFIAmxOvJaXQm6Q43lbYUuQFirXBZMaPuCyw/viewform?usp=header';
+
+// Bachs docs: production is api.bachs.io with sk_live_ keys, sandbox is
+// sandbox-api.bachs.io with sk_sandbox_ keys. Pick the base URL from
+// whichever key you've set as BACHS_KEY, so no separate "mode" toggle to
+// remember — one env var controls everything.
+function bachsBaseUrl() {
+  const key = process.env.BACHS_KEY || '';
+  return key.startsWith('sk_live_')
+    ? 'https://api.bachs.io'
+    : 'https://sandbox-api.bachs.io';
+}
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -41,7 +48,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { productId, planName, amount, currency, billing, email } = req.body || {};
+  const { productId, planName, amount, currency, email, name } = req.body || {};
 
   if (!productId || !email) {
     return res.status(400).json({ error: 'Missing productId or email' });
@@ -49,29 +56,44 @@ export default async function handler(req, res) {
   if (!/^\S+@\S+\.\S+$/.test(email)) {
     return res.status(400).json({ error: 'Invalid email' });
   }
-  // billing comes from the button's data-billing attribute on the page:
-  // 'recurring' for the monthly/every-2-month plans, 'one_time' for
-  // Public Speaking and Graphic Design. Falls back to 'one_time' only if
-  // something upstream forgot to set it.
-  const billingMode = billing === 'recurring' ? 'subscription' : 'one_time'; // TODO verify Bachs' actual enum values for this field
+  if (!process.env.BACHS_KEY) {
+    console.error('BACHS_KEY is not set');
+    return res.status(500).json({ error: 'Payments are not configured yet' });
+  }
 
   try {
-    const session = await bachs.checkout.create({
-      product: productId,           // the Bachs product ID for this plan
-      billing: billingMode,
-      customer_email: email,        // TODO verify field name in Bachs docs
-      tax: 'auto',
-      settlement: 'NGN',
-      success_url: REGISTRATION_FORM_URL,  // TODO verify field name; confirm Bachs supports a redirect on success
-      metadata: {
-        plan_name: planName,
-        amount,
-        currency,
-        source: 'himaayah-schools-enroll-page',
+    const response = await fetch(`${bachsBaseUrl()}/v1/checkout-sessions`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${process.env.BACHS_KEY}`,
       },
+      body: JSON.stringify({
+        // Bachs requires name + email for a new customer (see
+        // NewCustomerRequest in their spec). We only collect email on the
+        // page today, so name falls back to the email if not supplied.
+        customer: { email, name: name || email },
+        product_cart: [{ product_id: productId, quantity: 1 }],
+        success_url: REGISTRATION_FORM_URL,
+        cancel_url: 'https://himaayahschools.com/enroll.html', // TODO: replace with your real domain once it's live
+        reference: `himaayah-${productId}-${Date.now()}`,
+        metadata: {
+          plan_name: planName,
+          amount,
+          currency,
+          source: 'himaayah-schools-enroll-page',
+        },
+      }),
     });
 
-    return res.status(200).json({ url: session.url || session.checkout_url });
+    const data = await response.json();
+
+    if (!response.ok) {
+      console.error('Bachs checkout error:', data);
+      return res.status(502).json({ error: data.detail || 'Could not create checkout session' });
+    }
+
+    return res.status(200).json({ url: data.checkout_url });
   } catch (err) {
     console.error('Bachs checkout error:', err);
     return res.status(500).json({ error: 'Could not create checkout session' });

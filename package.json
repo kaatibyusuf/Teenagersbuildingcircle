@@ -1,8 +1,5 @@
 {
   "name": "himaayah-schools-site",
   "private": true,
-  "version": "1.0.0",
-  "dependencies": {
-    "@bachs/sdk": "^0.0.1"
-  }
+  "version": "1.0.0"
 }

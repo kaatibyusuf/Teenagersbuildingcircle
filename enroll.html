@@ -285,7 +285,7 @@
     width: 100%; padding: 11px 12px; font-size: 13.5px; font-family: var(--body); color: var(--parchment);
     background: var(--night-soft); border: 1px solid rgba(255,187,0,0.3); border-radius: var(--radius);
   }
-  .card-select input[type="email"] {
+  .card-select input[type="email"], .card-select input[type="text"] {
     width: 100%; padding: 11px 12px; font-size: 13.5px; font-family: var(--body); color: var(--parchment);
     background: var(--night-soft); border: 1px solid rgba(255,187,0,0.3); border-radius: var(--radius); margin-top: 10px;
   }
@@ -897,6 +897,7 @@
           <div class="card-select">
             <label for="planSelect">Which plan are you paying for?</label>
             <select id="planSelect"></select>
+            <input type="text" id="payerName" placeholder="Full name" required style="margin-top: 10px;">
             <input type="email" id="payerEmail" placeholder="Email for your receipt" required>
           </div>
           <button type="button" id="cardPayBtn" class="btn btn-primary">Continue to card payment</button>
@@ -1014,7 +1015,7 @@
     billing: btn.getAttribute('data-billing'),
   }));
 
-  async function startCheckout(plan, email, triggerBtn, statusEl) {
+  async function startCheckout(plan, name, email, triggerBtn, statusEl) {
     if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
       if (statusEl) {
         statusEl.textContent = 'Enter a valid email first.';
@@ -1037,7 +1038,7 @@
           planName: plan.name,
           amount: plan.amount,
           currency: plan.currency,
-          billing: plan.billing,
+          name,
           email,
         }),
       });
@@ -1062,6 +1063,8 @@
     const errorEl = card.querySelector('.pay-error');
     if (!btn) return;
     btn.addEventListener('click', () => {
+      const name = window.prompt('Full name:');
+      if (name === null) return;
       const email = window.prompt('Email address for your receipt:');
       if (email === null) return;
       const plan = {
@@ -1069,9 +1072,8 @@
         name: btn.getAttribute('data-plan-name'),
         amount: btn.getAttribute('data-amount'),
         currency: btn.getAttribute('data-currency'),
-        billing: btn.getAttribute('data-billing'),
       };
-      startCheckout(plan, email.trim(), btn, errorEl);
+      startCheckout(plan, name.trim(), email.trim(), btn, errorEl);
     });
   });
 
@@ -1100,6 +1102,7 @@
   if (cardPayBtn) {
     cardPayBtn.addEventListener('click', () => {
       const plan = PLANS.find((p) => p.productId === planSelect.value);
+      const name = document.getElementById('payerName').value.trim();
       const email = document.getElementById('payerEmail').value.trim();
       const statusEl = document.getElementById('cardPayStatus');
       statusEl.className = 'pay-status';
@@ -1109,7 +1112,13 @@
         statusEl.style.display = 'block';
         return;
       }
-      startCheckout(plan, email, cardPayBtn, statusEl);
+      if (!name) {
+        statusEl.textContent = 'Enter your full name first.';
+        statusEl.classList.add('error');
+        statusEl.style.display = 'block';
+        return;
+      }
+      startCheckout(plan, name, email, cardPayBtn, statusEl);
     });
   }
 </script>
