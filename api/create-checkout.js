@@ -23,8 +23,11 @@
 //        BACHS_KEY = sk_sandbox_...   (swap for sk_live_... when you go live)
 //      The base URL below is picked automatically from the key prefix, so
 //      going live really is just swapping this one value.
-//   2. All 13 product IDs are already wired into enroll.html's
-//      data-product-id attributes.
+//   2. Each plan carries BOTH a live and a sandbox product ID
+//      (data-product-id-live / data-product-id-sandbox on the buttons in
+//      enroll.html), because Bachs keeps separate product catalogs per
+//      environment. This function picks whichever matches BACHS_KEY
+//      automatically — nothing to change here when you go live.
 //   3. Per Bachs' docs, sandbox works fully even while your account is
 //      still under verification review — no need to wait for that to test.
 
@@ -48,7 +51,10 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { productId, planName, amount, currency, email, name } = req.body || {};
+  const { productIdLive, productIdSandbox, planName, amount, currency, email, name } = req.body || {};
+
+  const usingLive = (process.env.BACHS_KEY || '').startsWith('sk_live_');
+  const productId = usingLive ? productIdLive : productIdSandbox;
 
   if (!productId || !email) {
     return res.status(400).json({ error: 'Missing productId or email' });
