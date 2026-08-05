@@ -41,7 +41,6 @@
   .site-nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     background: rgba(15,15,17,0.92); backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--line);
   }
   .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 74px; }
   .brand { display: flex; align-items: center; gap: 10px; }
@@ -58,7 +57,7 @@
   .nav-toggle { display: none; }
 
   @media (max-width: 980px) {
-    .nav-links { position: absolute; top: 74px; left: 0; right: 0; background: var(--onyx); flex-direction: column; align-items: stretch; gap: 0; border-bottom: 1px solid var(--line); max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+    .nav-links { position: absolute; top: 74px; left: 0; right: 0; background: var(--onyx); flex-direction: column; align-items: stretch; gap: 0; max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
     .nav-links.open { max-height: 340px; }
     .nav-links a:not(.nav-cta) { padding: 16px 28px; border-bottom: 1px solid rgba(255,255,255,0.06); }
     .nav-cta { margin: 14px 28px; text-align: center; }
@@ -123,17 +122,14 @@
   @media (max-width: 900px) { .testi-row { grid-template-columns: 1fr; } }
 
   .testi-card { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 26px; display: flex; flex-direction: column; }
-  .testi-top { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
-  .monogram {
-    width: 42px; height: 42px; border-radius: 50%; background: rgba(255,187,0,0.1); border: 1px solid rgba(255,187,0,0.4);
-    display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; color: var(--gold); flex-shrink: 0;
-  }
+  .testi-top { display: flex; align-items: baseline; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+  .testi-name { font-weight: 700; font-size: 15px; color: var(--white); }
   .testi-badge { font-size: 12px; font-weight: 700; color: var(--gold); }
   .stars { display: flex; gap: 2px; margin-bottom: 14px; }
   .stars svg { filter: drop-shadow(0 0 4px rgba(255,187,0,0.5)); }
   .testi-card blockquote { font-size: 14px; color: var(--gray); line-height: 1.65; }
 
-  footer { border-top: 1px solid var(--line); padding: 56px 0 30px; font-size: 13.5px; color: var(--gray-dim); }
+  footer { padding: 56px 0 30px; font-size: 13.5px; color: var(--gray-dim); }
   .footer-top { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 40px; margin-bottom: 40px; }
   .footer-brand { max-width: 300px; }
   .footer-brand-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
@@ -150,7 +146,7 @@
   .footer-col h4 { font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
   .footer-col a, .footer-col span { display: block; margin-bottom: 9px; color: var(--gray-dim); transition: color 0.2s; }
   .footer-col a:hover { color: var(--gold); }
-  .footer-bottom { border-top: 1px solid var(--line); padding-top: 20px; }
+  .footer-bottom { padding-top: 20px; }
   @media (max-width: 640px) { .footer-top { flex-direction: column; } .footer-cols { gap: 32px; } }
 </style>
 </head>
@@ -282,8 +278,8 @@
 
       <div class="testi-card">
         <div class="testi-top">
-          <div class="monogram">AY</div>
-          <div class="testi-badge">315 in JAMB</div>
+          <span class="testi-name">Ameenah</span>
+          <span class="testi-badge">294 in UTME</span>
         </div>
         <div class="stars">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="#FFBB00"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
@@ -292,13 +288,15 @@
           <svg width="16" height="16" viewBox="0 0 24 24" fill="#FFBB00"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="#FFBB00"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
         </div>
-        <blockquote>"The mock exams were harder than the real thing. Walked in confident and walked out with a score I didn't think was possible."</blockquote>
+        <blockquote>"Alhamdulillah, Himaayah Academy is the best place I will recommend for any who is preparing for the next utme and he or she is willing to learn. As for me, I had no prior knowledge of my department subjects. But with the help of Allah and my amazing and dedicated teachers, I was able to have my score.
+
+All my teachers are amazing, calm and dedicated. They all made my journey easier. May Allah continue to ease their affairs and also bless them abundantly."</blockquote>
       </div>
 
       <div class="testi-card">
         <div class="testi-top">
-          <div class="monogram">KO</div>
-          <div class="testi-badge">5 A's in WAEC</div>
+          <span class="testi-name">Hafsah</span>
+          <span class="testi-badge">299 in UTME</span>
         </div>
         <div class="stars">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="#FFBB00"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
@@ -307,13 +305,13 @@
           <svg width="16" height="16" viewBox="0 0 24 24" fill="#FFBB00"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="#FFBB00"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
         </div>
-        <blockquote>"Small class sizes meant the teacher actually knew what I was struggling with. That's the whole difference."</blockquote>
+        <blockquote>"At himaayah academy, I didn't just learn about academics, I learnt resilience, discipline and also how to manage my fears. It taught me things I didn't know in ways I haven't seen before. It gave me teachers that stood by me despite my failures. And friends who are now dear to my heart. For that, I'm grateful Himaayah Academy."</blockquote>
       </div>
 
       <div class="testi-card">
         <div class="testi-top">
-          <div class="monogram">FB</div>
-          <div class="testi-badge">Skill Academy Graduate</div>
+          <span class="testi-name">Hussainah</span>
+          <span class="testi-badge">319 in UTME, 2026</span>
         </div>
         <div class="stars">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="#FFBB00"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
@@ -322,7 +320,7 @@
           <svg width="16" height="16" viewBox="0 0 24 24" fill="#FFBB00"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="#FFBB00"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
         </div>
-        <blockquote>"Built a portfolio I actually use now. Graphic Design here was worth more than a lot of paid courses I tried first."</blockquote>
+        <blockquote>"The journey was very overwhelming though, we thank ALlāh Almighty for helping and strengthening me through it. The academy was very helpful and strategic. Everything was structured to make sure everyone puts in his or her all and strive for the best. From daily most important academic task (DMIAT), to the reading club, to the brainstorming sessions to the daily CBT quizzes, it was a whole lot. It was inspiring. I describe it as inspiring, because it makes one know what's next. It sets the path. I say a big thank you to the academy and may ALlāh make it bloom and be known world wide."</blockquote>
       </div>
 
     </div>

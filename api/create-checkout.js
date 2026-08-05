@@ -31,8 +31,17 @@
 //   3. Per Bachs' docs, sandbox works fully even while your account is
 //      still under verification review — no need to wait for that to test.
 
-const REGISTRATION_FORM_URL =
-  'https://docs.google.com/forms/d/e/1FAIpQLSfAeWdbBg1oYPyFIAmxOvJaXQm6Q43lbYUuQFirXBZMaPuCyw/viewform?usp=header';
+// After a successful card payment, Bachs redirects the customer to
+// success_url. Registration data is already saved (the wizard calls
+// /api/submit-registration before it calls this endpoint), so this just
+// needs to land them on a simple confirmation page — no Google Form
+// involved anymore. Built from the request's own host so it's always
+// correct, whether you're on a Vercel preview URL or a real domain.
+function thankYouUrl(req) {
+  const host = req.headers.host;
+  const protocol = host?.includes('localhost') ? 'http' : 'https';
+  return `${protocol}://${host}/thank-you.html`;
+}
 
 // Bachs docs: production is api.bachs.io with sk_live_ keys, sandbox is
 // sandbox-api.bachs.io with sk_sandbox_ keys. Pick the base URL from
@@ -80,8 +89,8 @@ export default async function handler(req, res) {
         // page today, so name falls back to the email if not supplied.
         customer: { email, name: name || email },
         product_cart: [{ product_id: productId, quantity: 1 }],
-        success_url: REGISTRATION_FORM_URL,
-        cancel_url: 'https://himaayahschools.com/enroll.html', // TODO: replace with your real domain once it's live
+        success_url: thankYouUrl(req),
+        cancel_url: `${thankYouUrl(req).split('/thank-you.html')[0]}/enroll.html`,
         reference: `himaayah-${productId}-${Date.now()}`,
         metadata: {
           plan_name: planName,

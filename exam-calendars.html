@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam Calendars — Himaayah Schools</title>
+<meta name="description" content="How UTME, WAEC/NECO, A-Levels, and Post-UTME timing typically works, and how to stay ahead of registration windows.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --onyx: #0F0F11; --card: #1A1A1E; --line: rgba(255, 187, 0, 0.16);
+    --gold: #FFBB00; --gold-deep: #E0AC00; --white: #FFFFFF; --gray: #E2E8F0; --gray-dim: #7C828C;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', -apple-system, sans-serif; background: var(--onyx); color: var(--white); -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; border: none; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+  @media (prefers-reduced-motion: reduce) { * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; } }
+
+  .site-nav { position: sticky; top: 0; z-index: 100; background: rgba(15,15,17,0.94); backdrop-filter: blur(10px); }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 76px; }
+  .brand { display: flex; align-items: center; gap: 11px; font-weight: 800; font-size: 17px; letter-spacing: -0.01em; }
+  .brand .crest { width: 28px; height: 34px; flex-shrink: 0; }
+  .nav-links { display: flex; align-items: center; gap: 30px; }
+  .nav-links a:not(.nav-cta) { font-size: 14px; font-weight: 500; color: var(--gray); transition: color 0.2s; }
+  .nav-links a:not(.nav-cta):hover { color: var(--gold); }
+  .nav-cta { background: var(--gold); color: var(--onyx); font-weight: 700; font-size: 13.5px; padding: 11px 22px; border-radius: 4px; transition: background 0.2s, box-shadow 0.2s; }
+  .nav-cta:hover { background: var(--gold-deep); box-shadow: 0 0 24px rgba(255,187,0,0.32); }
+  .nav-toggle { display: none; }
+  @media (max-width: 900px) {
+    .nav-links { position: absolute; top: 76px; left: 0; right: 0; background: var(--onyx); flex-direction: column; align-items: stretch; gap: 0; border-bottom: 1px solid var(--line); max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+    .nav-links.open { max-height: 340px; }
+    .nav-links a:not(.nav-cta) { padding: 16px 28px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .nav-cta { margin: 14px 28px; text-align: center; }
+    .nav-toggle { display: block; background: none; width: 24px; height: 18px; position: relative; }
+    .nav-toggle span { position: absolute; left: 0; width: 100%; height: 2px; background: var(--white); }
+    .nav-toggle span:nth-child(1) { top: 0; } .nav-toggle span:nth-child(2) { top: 8px; } .nav-toggle span:nth-child(3) { top: 16px; }
+  }
+
+  .hero { padding: 90px 0 60px; text-align: center; }
+  .hero h1 { font-size: clamp(30px, 4.4vw, 46px); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 16px; }
+  .hero p { font-size: 15.5px; color: var(--gray); max-width: 56ch; margin: 0 auto; line-height: 1.6; }
+
+  .notice { max-width: 760px; margin: 0 auto 50px; padding: 16px 20px; border: 1px solid rgba(255,187,0,0.35); background: rgba(255,187,0,0.05); border-radius: 8px; font-size: 13px; color: var(--gray); text-align: center; }
+  .notice b { color: var(--gold); }
+
+  .timeline { padding: 0 0 100px; }
+  .timeline-grid { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 2px; background: var(--line); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+  .timeline-row { background: var(--card); padding: 22px 24px; display: grid; grid-template-columns: 140px 1fr; gap: 18px; align-items: start; }
+  @media (max-width: 560px) { .timeline-row { grid-template-columns: 1fr; } }
+  .timeline-exam { font-weight: 700; font-size: 15px; color: var(--gold); }
+  .timeline-body h3 { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .timeline-body p { font-size: 13px; color: var(--gray); line-height: 1.6; }
+
+  .cta-band { padding: 0 0 100px; text-align: center; }
+  .cta-band h2 { font-size: clamp(22px, 2.8vw, 28px); font-weight: 800; margin-bottom: 12px; }
+  .cta-band p { color: var(--gray); font-size: 14px; margin-bottom: 24px; max-width: 54ch; margin-left: auto; margin-right: auto; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px; font-size: 14px; font-weight: 700; border-radius: 4px; background: var(--gold); color: var(--onyx); transition: background 0.2s, box-shadow 0.2s; }
+  .btn:hover { background: var(--gold-deep); box-shadow: 0 0 26px rgba(255,187,0,0.3); }
+
+  footer { padding: 56px 0 30px; font-size: 13.5px; color: var(--gray-dim); }
+  .footer-top { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 40px; margin-bottom: 40px; }
+  .footer-brand { max-width: 300px; }
+  .footer-brand-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .footer-mark { font-weight: 800; font-size: 17px; color: var(--white); }
+  .footer-brand p { margin-bottom: 18px; line-height: 1.6; }
+  .footer-social { display: flex; gap: 10px; }
+  .footer-social a { width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; color: var(--gray-dim); transition: border-color 0.2s, color 0.2s; }
+  .footer-social a:hover { border-color: var(--gold); color: var(--gold); }
+  .footer-cols { display: flex; gap: 52px; flex-wrap: wrap; }
+  .footer-col h4 { font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
+  .footer-col a, .footer-col span { display: block; margin-bottom: 9px; color: var(--gray-dim); transition: color 0.2s; }
+  .footer-col a:hover { color: var(--gold); }
+  .footer-bottom { padding-top: 20px; }
+  @media (max-width: 640px) { .footer-top { flex-direction: column; } .footer-cols { gap: 32px; } }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="index.html">
+      <svg class="crest" viewBox="0 0 377.21 459.6"><path fill="#FFBB00" d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>
+      Himaayah Schools
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="academy.html#courses">Our Programs</a>
+      <a href="exam-calendars.html">Exam Calendars</a>
+      <a href="success-stories.html">Success Stories</a>
+      <a href="enroll.html?programme=academy" class="nav-cta">Start Prep Now</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <h1>Exam Calendars</h1>
+    <p>Registration and sitting windows shift a little each year, set by the exam bodies themselves — not by us. Here's the general rhythm, and how to get the exact confirmed dates.</p>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="notice">
+    <b>Exact dates change year to year.</b> The windows below are the typical pattern, not confirmed 2026 dates. Email us at <a href="mailto:himaayahschools@gmail.com" style="color: var(--gold);">himaayahschools@gmail.com</a> for the current confirmed calendar.
+  </div>
+</div>
+
+<section class="timeline">
+  <div class="wrap">
+    <div class="timeline-grid">
+
+      <div class="timeline-row">
+        <div class="timeline-exam">UTME (JAMB)</div>
+        <div class="timeline-body">
+          <h3>Registration, then a CBT sitting a few months later</h3>
+          <p>Registration typically opens early in the year, with the exam itself sitting a few months after. Our UTME track runs year-round so you're not starting prep once the registration window opens.</p>
+        </div>
+      </div>
+
+      <div class="timeline-row">
+        <div class="timeline-exam">WAEC / NECO</div>
+        <div class="timeline-body">
+          <h3>Registration in the first quarter, exams mid-year</h3>
+          <p>WAEC and NECO registration for SS3 students usually opens early in the year, with the exams themselves sitting mid-year. School-based candidates register through their school; private candidates register directly.</p>
+        </div>
+      </div>
+
+      <div class="timeline-row">
+        <div class="timeline-exam">A-Levels (IJMB/JUPEB)</div>
+        <div class="timeline-body">
+          <h3>Session-based, not a single fixed date</h3>
+          <p>IJMB and JUPEB run on an academic-session calendar rather than a single exam day — registration and program start dates vary by affiliated institution.</p>
+        </div>
+      </div>
+
+      <div class="timeline-row">
+        <div class="timeline-exam">Post-UTME</div>
+        <div class="timeline-body">
+          <h3>Set by each institution, after UTME results are out</h3>
+          <p>Every institution sets its own Post-UTME/screening date once JAMB releases results — there's no single national date. We follow announcements per institution as they come out.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="wrap">
+    <h2>Don't wait for the deadline to prepare.</h2>
+    <p>By the time registration opens, our students are already months into structured prep. Start now, whichever exam is ahead of you.</p>
+    <a href="enroll.html?programme=academy" class="btn">Start Prep Now</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-brand-row">
+          <svg width="24" height="29" viewBox="0 0 377.21 459.6"><path fill="#FFBB00" d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>
+          <span class="footer-mark">Himaayah Schools</span>
+        </div>
+        <p>Raising the next generation with deen, knowledge, and purpose.</p>
+        <div class="footer-social">
+          <a href="https://instagram.com/himaayahschools" target="_blank" rel="noopener" aria-label="Himaayah Schools on Instagram">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="https://x.com/himaayahschools" target="_blank" rel="noopener" aria-label="Himaayah Schools on X">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.24 2H21.5l-7.3 8.34L22.8 22h-6.73l-5.27-6.9L4.7 22H1.4l7.8-8.92L1 2h6.9l4.76 6.3L18.24 2zm-1.18 18h1.86L7.03 3.9H5.03L17.06 20z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h4>Programmes</h4>
+          <a href="teenagers-building-circle.html">Teenagers Building Circle</a>
+          <a href="madrasah.html">Madrasah</a>
+          <a href="academy.html">Academy</a>
+          <a href="skills-school.html">Skills School</a>
+        </div>
+        <div class="footer-col">
+          <h4>Site</h4>
+          <a href="index.html">Home</a>
+          <a href="faq.html">FAQ</a>
+          <a href="enroll.html">Enroll</a>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <a href="mailto:himaayahschools@gmail.com">himaayahschools@gmail.com</a>
+          <span>Ilorin, Nigeria</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Himaayah Schools.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle?.addEventListener('click', () => navLinks.classList.toggle('open'));
+</script>
+</body>
+</html>

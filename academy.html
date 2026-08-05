@@ -40,7 +40,6 @@
   .site-nav {
     position: sticky; top: 0; z-index: 100;
     background: rgba(15,15,17,0.94); backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--line);
   }
   .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 76px; }
   .brand { display: flex; align-items: center; gap: 11px; font-weight: 800; font-size: 17px; letter-spacing: -0.01em; }
@@ -127,7 +126,7 @@
   }
   .course-cta:hover { background: var(--gold); color: var(--onyx); box-shadow: 0 0 22px rgba(255,187,0,0.25); }
 
-  footer { border-top: 1px solid var(--line); padding: 56px 0 30px; font-size: 13.5px; color: var(--gray-dim); }
+  footer { padding: 56px 0 30px; font-size: 13.5px; color: var(--gray-dim); }
   .footer-top { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 40px; margin-bottom: 40px; }
   .footer-brand { max-width: 300px; }
   .footer-brand-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
@@ -144,7 +143,7 @@
   .footer-col h4 { font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
   .footer-col a, .footer-col span { display: block; margin-bottom: 9px; color: var(--gray-dim); transition: color 0.2s; }
   .footer-col a:hover { color: var(--gold); }
-  .footer-bottom { border-top: 1px solid var(--line); padding-top: 20px; }
+  .footer-bottom { padding-top: 20px; }
   @media (max-width: 640px) { .footer-top { flex-direction: column; } .footer-cols { gap: 32px; } }
 </style>
 </head>
@@ -158,8 +157,8 @@
     </a>
     <div class="nav-links" id="navLinks">
       <a href="#courses">Our Programs</a>
-      <a href="faq.html">Exam Calendars</a>
-      <a href="index.html">Success Stories</a>
+      <a href="exam-calendars.html">Exam Calendars</a>
+      <a href="success-stories.html">Success Stories</a>
       <a href="enroll.html?programme=academy" class="nav-cta">Start Prep Now</a>
     </div>
     <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">

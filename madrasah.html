@@ -43,7 +43,6 @@
   .site-nav {
     position: sticky; top: 0; z-index: 100;
     background: rgba(15,15,17,0.95); backdrop-filter: blur(8px);
-    border-bottom: 1px solid var(--line);
     background-image:
       linear-gradient(rgba(15,15,17,0.95), rgba(15,15,17,0.95)),
       repeating-conic-gradient(from 45deg,
@@ -104,6 +103,29 @@
   @media (max-width: 980px) { .course-grid { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 640px) { .course-grid { grid-template-columns: 1fr; } }
 
+  /* ---------- Class-level cards ---------- */
+  .classes { padding: 20px 0 110px; }
+  .class-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  @media (max-width: 980px) { .class-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 640px) { .class-grid { grid-template-columns: 1fr; } }
+
+  .class-card {
+    background: var(--onyx-soft); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 24px; transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), border-color 0.3s ease;
+  }
+  .class-card:hover { transform: translateY(-4px); border-color: rgba(255,187,0,0.4); }
+  .class-level {
+    display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--gold-light); border: 1px solid rgba(255,187,0,0.4); padding: 4px 10px; border-radius: 999px; margin-bottom: 14px;
+  }
+  .class-card h3 { font-size: 18px; margin-bottom: 10px; }
+  .class-desc { font-size: 13px; color: var(--silver); line-height: 1.6; margin-bottom: 16px; }
+  .subject-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .subject-tag {
+    font-size: 11px; font-weight: 600; color: var(--silver); background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08); padding: 4px 9px; border-radius: 999px;
+  }
+
   .course-card {
     background: var(--onyx-soft); border: 1px solid var(--line); border-radius: var(--radius);
     overflow: hidden; display: flex; flex-direction: column;
@@ -139,7 +161,7 @@
   }
 
   /* ---------- Footer ---------- */
-  footer { border-top: 1px solid var(--line); padding: 56px 0 30px; font-size: 13.5px; color: var(--silver-dim); }
+  footer { padding: 56px 0 30px; font-size: 13.5px; color: var(--silver-dim); }
   .footer-top { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 40px; margin-bottom: 40px; }
   .footer-brand { max-width: 300px; }
   .footer-brand-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
@@ -156,7 +178,7 @@
   .footer-col h4 { font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
   .footer-col a, .footer-col span { display: block; margin-bottom: 9px; color: var(--silver-dim); transition: color 0.2s; }
   .footer-col a:hover { color: var(--gold); }
-  .footer-bottom { border-top: 1px solid var(--line); padding-top: 20px; }
+  .footer-bottom { padding-top: 20px; }
   @media (max-width: 640px) { .footer-top { flex-direction: column; } .footer-cols { gap: 32px; } }
 </style>
 </head>
@@ -171,6 +193,7 @@
     <div class="nav-links" id="navLinks">
       <a href="index.html">Home</a>
       <a href="#courses">Our Courses</a>
+      <a href="#classes">Our Classes</a>
       <a href="index.html#about">About Us</a>
       <a href="enroll.html?programme=madrasah" class="nav-cta">Enroll Now</a>
     </div>
@@ -267,6 +290,97 @@
           <p class="desc">A focused 12-month track to complete Qur'an memorisation, with structured monthly milestones and regular revision.</p>
           <div class="course-meta"><span>4 classes / week</span><b>₦19,000/mo</b></div>
           <a href="enroll.html?programme=madrasah&amp;plan=hifdh-1yr" class="course-cta">View Details &amp; Enroll</a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section class="classes" id="classes">
+  <div class="wrap">
+    <div class="courses-head">
+      <h2>Our Classes</h2>
+      <p>Five class levels, Tamheediyyah through Raabi'ah Ibtidaaiyyah — each one building on the last, across the same core subjects.</p>
+    </div>
+
+    <div class="class-grid">
+
+      <article class="class-card">
+        <span class="class-level">Level 1</span>
+        <h3>Tamheediyyah</h3>
+        <p class="class-desc">Foundation level — first exposure to Arabic letters, basic recitation, and the earliest Islamic concepts.</p>
+        <div class="subject-tags">
+          <span class="subject-tag">Hadeeth</span>
+          <span class="subject-tag">Tawheed</span>
+          <span class="subject-tag">Arabiyyah</span>
+          <span class="subject-tag">Tajweed</span>
+          <span class="subject-tag">Seerah</span>
+          <span class="subject-tag">+ more</span>
+        </div>
+      </article>
+
+      <article class="class-card">
+        <span class="class-level">Level 2</span>
+        <h3>Ula Ibtidaaiyyah</h3>
+        <p class="class-desc">Primary 1 — building reading fluency and introducing grammar fundamentals alongside continued memorisation.</p>
+        <div class="subject-tags">
+          <span class="subject-tag">Hadeeth</span>
+          <span class="subject-tag">Tawheed</span>
+          <span class="subject-tag">Arabiyyah</span>
+          <span class="subject-tag">Sarf</span>
+          <span class="subject-tag">Nahw</span>
+          <span class="subject-tag">Tajweed</span>
+          <span class="subject-tag">Seerah</span>
+          <span class="subject-tag">+ more</span>
+        </div>
+      </article>
+
+      <article class="class-card">
+        <span class="class-level">Level 3</span>
+        <h3>Thaniyah Ibtidaaiyyah</h3>
+        <p class="class-desc">Primary 2 — deeper grammar (sarf and nahw) and a wider hadeeth and seerah foundation.</p>
+        <div class="subject-tags">
+          <span class="subject-tag">Hadeeth</span>
+          <span class="subject-tag">Tawheed</span>
+          <span class="subject-tag">Arabiyyah</span>
+          <span class="subject-tag">Sarf</span>
+          <span class="subject-tag">Nahw</span>
+          <span class="subject-tag">Tajweed</span>
+          <span class="subject-tag">Seerah</span>
+          <span class="subject-tag">+ more</span>
+        </div>
+      </article>
+
+      <article class="class-card">
+        <span class="class-level">Level 4</span>
+        <h3>Thaalithah Ibtidaaiyyah</h3>
+        <p class="class-desc">Primary 3 — more independent reading and writing in Arabic, with grammar applied rather than just studied.</p>
+        <div class="subject-tags">
+          <span class="subject-tag">Hadeeth</span>
+          <span class="subject-tag">Tawheed</span>
+          <span class="subject-tag">Arabiyyah</span>
+          <span class="subject-tag">Sarf</span>
+          <span class="subject-tag">Nahw</span>
+          <span class="subject-tag">Tajweed</span>
+          <span class="subject-tag">Seerah</span>
+          <span class="subject-tag">+ more</span>
+        </div>
+      </article>
+
+      <article class="class-card">
+        <span class="class-level">Level 5</span>
+        <h3>Raabi'ah Ibtidaaiyyah</h3>
+        <p class="class-desc">Primary 4 — the most advanced level, consolidating everything before a student moves on.</p>
+        <div class="subject-tags">
+          <span class="subject-tag">Hadeeth</span>
+          <span class="subject-tag">Tawheed</span>
+          <span class="subject-tag">Arabiyyah</span>
+          <span class="subject-tag">Sarf</span>
+          <span class="subject-tag">Nahw</span>
+          <span class="subject-tag">Tajweed</span>
+          <span class="subject-tag">Seerah</span>
+          <span class="subject-tag">+ more</span>
         </div>
       </article>
 
