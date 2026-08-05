@@ -4,688 +4,252 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Academy — Himaayah Schools</title>
-<meta name="description" content="UTME, Post-UTME, A-Levels and O-Levels tutorials at Himaayah Schools Academy — 90% success rate in the 2026 UTME.">
-<link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAP8UlEQVR4nOVbeXhUVZb/nXvfq6rUkmKPCAgEUAFnhlZR8HMkUUSdnlaHNhHc0G6F9puRaUQdW9qphM/loxX5lBbFvRVRknbAZXBtK4CCC4KKQRbJAhGyb7WkUvXePfPHqwpJyFJZwJb5fV/9U1Xv3nt+99xz7lkecBzADPL7oXEeZLufqMdjxcfhXjx7QsEM4jzI9kKvWpw27PB6+4JPHk+93TcDGvsgOh3D+o3eW+a9ev+rKVePx3h7uzlkf5Oh9eVhZhDyLYGIYAIwAWDtg8PSpqY3zvLazKtTB1fPCgdEI0lxQU4BzJyczhefY42JzSvxzQCXUfDtx8UrG2psb1WHtbdW5nu3EB0Jt5pbIh9ANhQB3Bc5eoTOdvplX9qwfa85rqt5S88PvStreQsxfwUOvy/r8pZ4xwItO9z1+PH/vPOwNz38ngzwTjB/LDiwURZXrLc9tesvzstuuPQfXe3WZGkGH6dj0iI0txX6+T+cMvSHVx1zqt7U8sLvymr+lJi3gflvYPajuekjEfl0hfsiAPD7kte2xH83rXBf1PShaGI/olwA5s/AvElwYKMsqdhge/qbl5xXLL6hb2R0+qcW9c5qUW8AwOo7hw+ZcXbdJYM96t+cNvMSp0cNgWQgAsCACQZDgOEQeuFuxy1nzQ+/xH5olAkjWQIAy/hRJozvnnHePHli5EVEVVQZEEJAwAYBO4BmgWCIDoab5fvVjdqGJ98Zs3lV/u5gazKQDyALiqjjY3IMAXHmRGuhn/WNHDTjjJqLB7rN2U7dnOn0qKGthVYMCECAQABiSCW9aI/tgXHzmu/n1dBpAWI9Eb5lLfFni1+2Lx1zRvR+NHKMAZ0ABYYCtSUjFKKDoaj8oD6krX/ubylbHnmhJtCGDBxLRBsC8vIgs7MtwVfdftrAzAurLh7kMme7beZMZ6oaBslAM4CYJTQAIajVGAoGBkL7sci2duSc2PXsZ40yYaL3RorYD0mZZBx+XX91eHr0OtTBgGhznI4lI0oIBcWhYLP8sDakrX/x41GbHnlhb6C9jG0I4DxIyob5xj2DRk6fHrrb6zSynE41HHp8pzsTOrEKBVN4IasP61tn/HFCZmHhbhMdMN5TJDRy8uRJctMD+/1DTo1doBpgCnHMHaNzMkLiUEOTtu7TranLsx+tKk/I2kIAMwQR1I6nnP9y+rjmF11ecxiauhe6lfBKuCAa67WSvA8GTZu/srJC/TcE5UL1RfgWEnwQYinUM3cMS8ueVftZ6hg=" alt="Icon fallback"/>
+<meta name="description" content="Academy at Himaayah Schools: UTME, Post-UTME, A-Levels, and O-Levels exam preparation. Structured tutorials, timed practice, and real results.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
   :root {
+    --onyx: #0F0F11;
+    --card: #1A1A1E;
+    --line: rgba(255, 187, 0, 0.16);
     --gold: #FFBB00;
-    --gold-light: #FFBB00;
-    --yellow-deep: #E0AC00;
-    --night: #0F0F11;
-    --night-soft: #1D1D20;
-    --parchment: #FFFFFF;
-    --parchment-dim: #F3F3F1;
-    --ink: #16161A;
-    --ink-soft: #55555C;
+    --gold-deep: #E0AC00;
     --white: #FFFFFF;
-    --yellow: #FFBB00;
-    --yellow-dim: rgba(255, 187, 0, 0.14);
-    --display: 'Spectral', Georgia, serif;
-    --body: 'Inter', -apple-system, sans-serif;
-    --radius: 2px;
+    --gray: #E2E8F0;
+    --gray-dim: #7C828C;
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
   body {
-    font-family: var(--body);
-    color: var(--ink);
-    background: var(--parchment);
-    line-height: 1.6;
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--onyx); color: var(--white);
     -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
   }
-  img, svg { display: block; max-width: 100%; }
   a { color: inherit; text-decoration: none; }
-  ul { list-style: none; }
-  button { font-family: inherit; cursor: pointer; border: none; background: none; }
-
-  .wrap { max-width: 1140px; margin: 0 auto; padding: 0 28px; }
-  h1, h2, h3 { font-family: var(--display); font-weight: 600; letter-spacing: -0.01em; }
+  button { font-family: inherit; cursor: pointer; border: none; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
 
   a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
   @media (prefers-reduced-motion: reduce) {
-    * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+    * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
   }
 
   /* ---------- Nav ---------- */
   .site-nav {
     position: sticky; top: 0; z-index: 100;
-    background: rgba(15, 15, 17, 0.96);
-    backdrop-filter: blur(6px);
-    border-bottom: 1px solid rgba(255, 187, 0, 0.25);
+    background: rgba(15,15,17,0.94); backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
   }
-  .site-nav .wrap { position: relative; display: flex; align-items: center; justify-content: space-between; height: 72px; }
-  .brand { display: flex; flex-direction: row; align-items: center; gap: 11px; }
-  .brand .crest {
-    width: 32px; height: 32px; border-radius: 3px;
-    background: linear-gradient(150deg, var(--gold), var(--yellow-deep));
-    display: flex; align-items: center; justify-content: center;
-    font-family: var(--display); font-weight: 700; font-size: 15px; color: var(--night);
-    flex-shrink: 0;
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 76px; }
+  .brand { display: flex; align-items: center; gap: 11px; font-weight: 800; font-size: 17px; letter-spacing: -0.01em; }
+  .brand .crest { width: 28px; height: 34px; flex-shrink: 0; }
+  .nav-links { display: flex; align-items: center; gap: 30px; }
+  .nav-links a:not(.nav-cta) { font-size: 14px; font-weight: 500; color: var(--gray); transition: color 0.2s; }
+  .nav-links a:not(.nav-cta):hover { color: var(--gold); }
+  .nav-cta {
+    background: var(--gold); color: var(--onyx); font-weight: 700; font-size: 13.5px;
+    padding: 11px 22px; border-radius: 4px; transition: background 0.2s, box-shadow 0.2s;
   }
-  .brand .text { display: flex; flex-direction: column; line-height: 1.1; }
-  .brand .mark { font-family: var(--display); font-size: 18px; font-weight: 600; color: var(--parchment); letter-spacing: 0.02em; }
-  .brand .sub { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold-light); margin-top: 3px; }
-  .nav-links { display: flex; align-items: center; gap: 32px; }
-  .nav-links a { font-size: 14px; color: #C7C7CA; transition: color 0.2s; }
-  .nav-links a:hover { color: var(--gold-light); }
-  a.nav-cta {
-    background: var(--gold); color: var(--night); font-weight: 600; font-size: 13px;
-    padding: 10px 20px; border-radius: var(--radius); letter-spacing: 0.02em; transition: background 0.2s;
-  }
-  .nav-cta:hover { background: var(--yellow-deep); }
-  .nav-toggle { display: none; position: relative; width: 26px; height: 20px; flex-shrink: 0; z-index: 110; }
-  .nav-toggle span { position: absolute; left: 0; width: 100%; height: 2px; background: var(--parchment); border-radius: 2px; transition: transform 0.25s ease, opacity 0.2s ease, top 0.25s ease; }
-  .nav-toggle span:nth-child(1) { top: 0; }
-  .nav-toggle span:nth-child(2) { top: 9px; }
-  .nav-toggle span:nth-child(3) { top: 18px; }
-  .nav-toggle.open span:nth-child(1) { top: 9px; transform: rotate(45deg); }
-  .nav-toggle.open span:nth-child(2) { opacity: 0; }
-  .nav-toggle.open span:nth-child(3) { top: 9px; transform: rotate(-45deg); }
+  .nav-cta:hover { background: var(--gold-deep); box-shadow: 0 0 24px rgba(255,187,0,0.32); }
+  .nav-toggle { display: none; }
 
-  /* ---------- Page header ---------- */
-  .page-header {
-    background: radial-gradient(ellipse at 25% 20%, var(--night-soft), var(--night) 70%);
-    color: var(--parchment);
-    padding: 76px 0 64px;
-    position: relative;
-    overflow: hidden;
-  }
-  .page-header::before {
-    content: '';
-    position: absolute; inset: -40% -10% auto auto;
-    width: 480px; height: 480px;
-    background: radial-gradient(circle, rgba(255,187,0,0.16), transparent 70%);
-    animation: drift 16s ease-in-out infinite;
-    pointer-events: none;
-  }
-  @keyframes drift {
-    0%, 100% { transform: translate(0, 0); }
-    50% { transform: translate(-30px, 40px); }
-  }
-  .page-header .breadcrumb { font-size: 13px; color: #8A8A8E; margin-bottom: 18px; position: relative; z-index: 1; }
-  .page-header .breadcrumb a { color: #C7C7CA; }
-  .page-header .breadcrumb a:hover { color: var(--yellow); }
-  .page-header .eyebrow {
-    font-size: 12px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold-light);
-    display: inline-flex; align-items: center; gap: 8px;
-    opacity: 0; animation: fadeUp 0.7s ease forwards;
-  }
-  .page-header .eyebrow::before { content: ''; width: 6px; height: 6px; background: var(--gold); border-radius: 1px; }
-  .page-header h1 {
-    font-size: clamp(32px, 4.4vw, 50px); line-height: 1.14; margin: 16px 0 16px; max-width: 24ch;
-    position: relative; z-index: 1;
-    opacity: 0; animation: fadeUp 0.7s ease 0.1s forwards;
-  }
-  .page-header p.lede {
-    font-size: 16.5px; color: #B8B8BB; max-width: 60ch;
-    opacity: 0; animation: fadeUp 0.7s ease 0.2s forwards;
-  }
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
-  .page-header .header-badges { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; position: relative; z-index: 1; }
-  .header-badge {
-    display: flex; align-items: center; gap: 8px;
-    border: 1px solid rgba(255,187,0,.35);
-    background: rgba(255,187,0,.07);
-    padding: 8px 14px; border-radius: var(--radius);
-    font-size: 13px; color: #E9E9EA;
-    opacity: 0; animation: fadeUp 0.7s ease 0.3s forwards;
-  }
-  .header-badge b { color: var(--gold-light); font-weight: 700; }
-
-  /* ---------- Sections ---------- */
-  section { padding: 88px 0; }
-  .section-head { max-width: 640px; margin: 0 auto 52px; text-align: center; }
-  .section-head .eyebrow {
-    font-size: 12px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink);
-    display: inline-flex; align-items: center; gap: 8px; justify-content: center;
-  }
-  .section-head .eyebrow::before { content: ''; width: 6px; height: 6px; background: var(--yellow); border-radius: 1px; }
-  .section-head h2 { font-size: clamp(26px, 3.4vw, 36px); margin-top: 12px; color: var(--ink); }
-  .section-head p { color: var(--ink-soft); margin-top: 14px; font-size: 16px; }
-
-  /* ---------- Reveal on scroll ---------- */
-  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
-  .reveal.in { opacity: 1; transform: translateY(0); }
-
-  /* =========================================================
-     COURSE CARDS — "the dossier"
-     A course photo + a sealed record tab. On hover/focus the
-     tab lifts and a syllabus dossier slides up from beneath
-     the photo, like pulling a file from a folder.
-  ========================================================= */
-  .courses-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 24px;
-  }
-  .course-card {
-    position: relative;
-    background: var(--night);
-    border: 1px solid rgba(15,15,17,0.12);
-    overflow: hidden;
-    isolation: isolate;
-    transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), box-shadow 0.35s ease;
-  }
-  .course-card:hover, .course-card:focus-within {
-    transform: translateY(-6px);
-    box-shadow: 0 24px 48px -18px rgba(15,15,17,0.4);
-  }
-
-  .course-photo-frame {
-    position: relative;
-    aspect-ratio: 4 / 3.4;
-    overflow: hidden;
-  }
-  .course-photo-frame img {
-    width: 100%; height: 100%; object-fit: cover;
-    transform: scale(1.02);
-    transition: transform 0.7s cubic-bezier(0.16,1,0.3,1), filter 0.5s ease;
-    filter: grayscale(28%) contrast(1.04);
-  }
-  .course-card:hover .course-photo-frame img,
-  .course-card:focus-within .course-photo-frame img {
-    transform: scale(1.12);
-    filter: grayscale(0%) contrast(1.04);
-  }
-  .course-photo-frame::after {
-    content: '';
-    position: absolute; inset: 0;
-    background: linear-gradient(180deg, rgba(15,15,17,0.05) 0%, rgba(15,15,17,0.8) 100%);
-    pointer-events: none;
-  }
-
-  .course-price-tag {
-    position: absolute; top: 14px; left: 14px; z-index: 3;
-    font-family: var(--display); font-size: 11.5px; font-weight: 600; color: var(--ink);
-    background: var(--yellow);
-    padding: 5px 10px;
-    letter-spacing: 0.02em;
-    box-shadow: 0 6px 14px rgba(0,0,0,0.25);
-  }
-  .course-index {
-    position: absolute; top: 14px; right: 14px; z-index: 3;
-    width: 28px; height: 28px; border-radius: 50%;
-    background: rgba(15,15,17,0.55);
-    border: 1px solid rgba(255,187,0,0.5);
-    color: var(--gold-light);
-    display: flex; align-items: center; justify-content: center;
-    font-family: var(--display); font-size: 11.5px; font-weight: 600;
-    backdrop-filter: blur(3px);
-  }
-
-  .course-caption {
-    position: absolute; left: 18px; right: 18px; bottom: 16px; z-index: 3;
-    color: var(--parchment);
-    transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
-  }
-  .course-card:hover .course-caption, .course-card:focus-within .course-caption { transform: translateY(-6px); }
-  .course-caption h3 { font-size: 19px; margin-bottom: 4px; }
-  .course-caption .meta { font-size: 11.5px; color: var(--gold-light); letter-spacing: 0.04em; text-transform: uppercase; }
-
-  /* The dossier / overlay that slides up on hover */
-  .course-dossier {
-    position: absolute; inset: auto 0 0 0; z-index: 4;
-    background: var(--night-soft);
-    border-top: 1px solid rgba(255,187,0,0.35);
-    padding: 20px 18px 22px;
-    transform: translateY(calc(100% - 0px));
-    transition: transform 0.45s cubic-bezier(0.16,1,0.3,1);
-    max-height: 100%;
-    overflow: hidden;
-  }
-  .course-card:hover .course-dossier,
-  .course-card:focus-within .course-dossier {
-    transform: translateY(0);
-  }
-  .course-dossier .dossier-label {
-    font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--gold-light); margin-bottom: 11px; display: flex; align-items: center; gap: 8px;
-  }
-  .course-dossier .dossier-label::before { content: ''; width: 14px; height: 1px; background: var(--gold); }
-  .course-dossier ul { margin-bottom: 14px; }
-  .course-dossier li {
-    font-size: 12.5px; color: #D6D6D8; padding: 5px 0 5px 16px; position: relative;
-    border-top: 1px solid rgba(255,255,255,0.07);
-  }
-  .course-dossier li:first-child { border-top: none; }
-  .course-dossier li::before {
-    content: ''; position: absolute; left: 0; top: 12px;
-    width: 5px; height: 5px; background: var(--gold); border-radius: 1px;
-  }
-  .course-dossier .dossier-cta {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-size: 12px; font-weight: 600; letter-spacing: 0.02em; color: var(--night);
-    background: var(--yellow); padding: 8px 14px; border-radius: var(--radius);
-    transition: background 0.2s, gap 0.2s;
-  }
-  .course-dossier .dossier-cta:hover { background: var(--yellow-deep); gap: 12px; }
-  .course-dossier .dossier-cta svg { width: 12px; height: 12px; }
-
-  /* Under-card: a compact stat strip beneath every course photo, always visible */
-  .course-footline {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 13px 16px; background: var(--white);
-    border-top: 1px solid rgba(15,15,17,0.08);
-  }
-  .course-footline .duration { font-size: 11.5px; color: var(--ink-soft); }
-  .course-footline .duration b { color: var(--ink); font-weight: 600; }
-  .course-footline .peek {
-    font-size: 10.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
-    color: var(--ink); display: inline-flex; align-items: center; gap: 6px;
-  }
-  .course-footline .peek svg { width: 12px; height: 12px; transition: transform 0.3s ease; }
-  .course-card:hover .course-footline .peek svg,
-  .course-card:focus-within .course-footline .peek svg { transform: translateY(-3px); }
-
-  @media (max-width: 980px) {
-    .courses-grid { grid-template-columns: repeat(2, 1fr); }
-  }
-  @media (max-width: 640px) {
-    .courses-grid { grid-template-columns: 1fr; }
-    .course-photo-frame { aspect-ratio: 16 / 10; }
-  }
-
-  /* ---------- Stat band (90% success rate) ---------- */
-  .stat-band {
-    background: var(--night);
-    color: var(--parchment);
-    position: relative;
-    overflow: hidden;
-  }
-  .stat-band::before {
-    content: '';
-    position: absolute; inset: 0;
-    background:
-      radial-gradient(circle at 15% 30%, rgba(255,187,0,.10), transparent 45%),
-      radial-gradient(circle at 85% 70%, rgba(255,187,0,.08), transparent 45%);
-    pointer-events: none;
-  }
-  .stat-band .wrap { position: relative; display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 56px; align-items: center; }
-  .stat-headline .eyebrow { margin-bottom: 16px; color: var(--gold-light); font-size: 12px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 8px; }
-  .stat-headline .eyebrow::before { content: ''; width: 6px; height: 6px; background: var(--gold); border-radius: 1px; }
-  .stat-headline h2 { font-size: clamp(24px,3vw,32px); color: var(--parchment); margin-bottom: 14px; line-height: 1.25; }
-  .stat-headline p { font-size: 15px; color: #B8B8BB; max-width: 44ch; }
-  .stat-figures { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.1); }
-  .stat-cell { background: var(--night-soft); padding: 30px 22px; text-align: center; }
-  .stat-cell .figure { font-family: var(--display); font-size: clamp(34px,4.4vw,48px); color: var(--gold-light); line-height: 1; }
-  .stat-cell .figure sup { font-size: .4em; top: -1.1em; }
-  .stat-cell .cap { font-size: 12px; letter-spacing: .04em; color: #B8B8BB; margin-top: 10px; text-transform: uppercase; }
-
-  /* ---------- Reviews / testimonials ---------- */
-  .reviews { background: var(--parchment-dim); }
-  .review-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 22px; }
-  .review-card {
-    background: var(--white);
-    border: 1px solid rgba(15,15,17,.08);
-    padding: 30px 26px;
-    display: flex; flex-direction: column;
-    position: relative;
-    transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), box-shadow 0.35s ease;
-  }
-  .review-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px -20px rgba(15,15,17,.25); }
-  .review-card .stars { display: flex; gap: 3px; margin-bottom: 16px; }
-  .review-card .stars svg { width: 14px; height: 14px; fill: var(--yellow); stroke: none; }
-  .review-card .quote {
-    font-family: var(--display); font-style: italic; font-size: 15.5px; line-height: 1.6;
-    color: var(--ink); flex: 1; margin-bottom: 22px;
-  }
-  .review-card .student { display: flex; align-items: center; gap: 12px; border-top: 1px solid rgba(15,15,17,.08); padding-top: 18px; }
-  .student .avatar {
-    width: 42px; height: 42px; border-radius: 50%;
-    background: var(--yellow-dim); border: 1px solid rgba(255,187,0,.4);
-    display: flex; align-items: center; justify-content: center;
-    font-family: var(--display); font-weight: 600; font-size: 15px; color: var(--yellow-deep);
-    flex-shrink: 0;
-  }
-  .student .who { line-height: 1.35; }
-  .student .name { font-size: 14px; font-weight: 600; color: var(--ink); }
-  .student .meta { font-size: 12px; color: var(--ink-soft); margin-top: 2px; }
-  .review-card .score-tag {
-    position: absolute; top: -11px; right: 22px;
-    background: var(--ink); color: var(--yellow);
-    font-size: 11px; font-weight: 700; letter-spacing: .03em;
-    padding: 5px 10px; border-radius: 2px;
-  }
-  .reviews-note { text-align: center; margin-top: 32px; font-size: 13px; color: var(--ink-soft); }
-
-  /* ---------- Final CTA ---------- */
-  .cta-band {
-    background: radial-gradient(ellipse at 50% 0%, var(--night-soft), var(--night) 70%);
-    color: var(--parchment); text-align: center;
-    border-top: 1px solid rgba(255,187,0,.15);
-  }
-  .cta-band h2 { color: var(--parchment); font-size: clamp(24px,3vw,32px); margin-bottom: 16px; }
-  .cta-band p { color: #B8B8BB; margin-bottom: 30px; }
-  .btn {
-    display: inline-block; padding: 14px 26px; font-size: 14px; font-weight: 600;
-    border-radius: var(--radius); letter-spacing: .01em;
-    transition: transform .15s ease, background .2s, border-color .2s;
-  }
-  .btn:hover { transform: translateY(-1px); }
-  .btn-primary { background: var(--yellow); color: var(--ink); }
-  .btn-primary:hover { background: var(--yellow-deep); }
-
-  /* ---------- Footer ---------- */
-  footer { background: var(--night); color: #8A8A8E; padding: 56px 0 32px; font-size: 13.5px; }
-  .footer-top { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 32px; margin-bottom: 36px; }
-  .footer-brand-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-  .footer-brand-row .crest {
-    width: 28px; height: 28px; border-radius: 3px;
-    background: linear-gradient(150deg, var(--gold), var(--yellow-deep));
-    display: flex; align-items: center; justify-content: center;
-    font-family: var(--display); font-weight: 700; font-size: 13px; color: var(--night);
-    flex-shrink: 0;
-  }
-  .footer-brand .mark { font-family: var(--display); font-size: 20px; color: var(--parchment); }
-  .footer-brand p { max-width: 32ch; margin-top: 10px; }
-  .footer-cols { display: flex; gap: 56px; flex-wrap: wrap; }
-  .footer-col h4 { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--gold-light); margin-bottom: 14px; }
-  .footer-col a, .footer-col span { display: block; margin-bottom: 9px; color: #A8A8AC; }
-  .footer-col a:hover { color: var(--gold-light); }
-  .footer-bottom { border-top: 1px solid rgba(255,255,255,.1); padding-top: 22px; }
-
-  /* ---------- Responsive ---------- */
   @media (max-width: 900px) {
-    .stat-band .wrap { grid-template-columns: 1fr; }
-    .review-grid { grid-template-columns: repeat(2,1fr); }
+    .nav-links { position: absolute; top: 76px; left: 0; right: 0; background: var(--onyx); flex-direction: column; align-items: stretch; gap: 0; border-bottom: 1px solid var(--line); max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+    .nav-links.open { max-height: 300px; }
+    .nav-links a:not(.nav-cta) { padding: 16px 28px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .nav-cta { margin: 14px 28px; text-align: center; }
+    .nav-toggle { display: block; background: none; width: 24px; height: 18px; position: relative; }
+    .nav-toggle span { position: absolute; left: 0; width: 100%; height: 2px; background: var(--white); }
+    .nav-toggle span:nth-child(1) { top: 0; }
+    .nav-toggle span:nth-child(2) { top: 8px; }
+    .nav-toggle span:nth-child(3) { top: 16px; }
   }
-  @media (max-width: 640px) {
-    .nav-toggle { display: block; }
-    .nav-links {
-      position: absolute; top: 100%; left: 0; right: 0;
-      flex-direction: column; align-items: flex-start; gap: 0;
-      background: var(--night); border-bottom: 1px solid rgba(255,187,0,.2);
-      padding: 0 28px; max-height: 0; overflow: hidden; opacity: 0;
-      transition: max-height .35s ease, opacity .25s ease, padding .35s ease;
-    }
-    .nav-links.open { max-height: 420px; opacity: 1; padding: 10px 28px 22px; }
-    .nav-links a { width: 100%; padding: 13px 0; border-bottom: 1px solid rgba(255,255,255,.08); font-size: 15px; }
-    a.nav-cta { width: 100%; text-align: center; margin-top: 14px; border-bottom: none; padding: 12px 20px; }
-    .stat-figures { grid-template-columns: 1fr; }
-    .review-grid { grid-template-columns: 1fr; }
-    section { padding: 64px 0; }
-    .course-dossier { position: static; transform: none !important; border-top: 1px solid rgba(255,187,0,.35); }
-    .course-caption { transform: none !important; }
+
+  /* ---------- Hero ---------- */
+  .hero { position: relative; padding: 92px 0 76px; text-align: center; overflow: hidden; }
+  .hero::before {
+    content: ''; position: absolute; top: -25%; left: 50%; transform: translateX(-50%);
+    width: 1000px; height: 520px; background: radial-gradient(ellipse, rgba(255,187,0,0.1), transparent 68%);
+    pointer-events: none;
   }
+  .hero-inner { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
+  .hero h1 { font-size: clamp(30px, 4.6vw, 50px); font-weight: 800; line-height: 1.12; letter-spacing: -0.02em; margin-bottom: 18px; }
+  .hero p { font-size: 16px; color: var(--gray); line-height: 1.65; max-width: 56ch; margin: 0 auto 34px; }
+  .hero-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 26px; font-size: 14.5px; font-weight: 700; border-radius: 4px; transition: background 0.2s, box-shadow 0.2s, color 0.2s, border-color 0.2s; }
+  .btn-primary { background: var(--gold); color: var(--onyx); }
+  .btn-primary:hover { background: var(--gold-deep); box-shadow: 0 0 26px rgba(255,187,0,0.3); }
+  .btn-outline { border: 1px solid var(--line); color: var(--white); }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+  .stat-row { display: flex; justify-content: center; gap: 40px; margin-top: 44px; flex-wrap: wrap; }
+  .stat b { display: block; font-size: 26px; font-weight: 800; color: var(--gold); }
+  .stat span { font-size: 12px; color: var(--gray-dim); letter-spacing: 0.02em; }
+
+  /* ---------- Course grid ---------- */
+  .courses { padding: 20px 0 110px; }
+  .courses-head { text-align: center; max-width: 600px; margin: 0 auto 46px; }
+  .courses-head h2 { font-size: clamp(24px, 3vw, 32px); font-weight: 800; margin-bottom: 10px; letter-spacing: -0.01em; }
+  .courses-head p { color: var(--gray); font-size: 14.5px; }
+
+  .course-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+  @media (max-width: 1080px) { .course-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .course-grid { grid-template-columns: 1fr; } }
+
+  .course-card {
+    background: var(--card); border: 1px solid var(--line); border-radius: 6px;
+    overflow: hidden; display: flex; flex-direction: column;
+    transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .course-card:hover { transform: translateY(-4px); border-color: var(--gold); box-shadow: 0 0 30px -8px rgba(255,187,0,0.2); }
+
+  .course-visual { aspect-ratio: 1/1; background: var(--onyx); position: relative; overflow: hidden; }
+  .course-visual svg { width: 100%; height: 100%; }
+
+  .course-body { padding: 20px 20px 22px; display: flex; flex-direction: column; flex: 1; }
+  .course-tags { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
+  .tag {
+    font-size: 9.5px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
+    padding: 4px 9px; border-radius: 999px; border: 1px solid var(--line); color: var(--gold); white-space: nowrap;
+  }
+
+  .course-body h3 { font-size: 17px; font-weight: 700; margin-bottom: 6px; letter-spacing: -0.005em; }
+  .course-body .focus { font-size: 12px; color: var(--gray-dim); margin-bottom: 14px; line-height: 1.5; }
+  .course-meta { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--gray-dim); margin-bottom: 16px; }
+  .course-meta b { color: var(--gold); font-size: 14px; font-weight: 700; }
+
+  .course-cta {
+    display: block; text-align: center; padding: 11px 14px; font-size: 12.5px; font-weight: 700;
+    border-radius: 4px; background: transparent; border: 1px solid var(--gold); color: var(--gold);
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  }
+  .course-cta:hover { background: var(--gold); color: var(--onyx); box-shadow: 0 0 22px rgba(255,187,0,0.25); }
+
+  footer { border-top: 1px solid var(--line); padding: 56px 0 30px; font-size: 13.5px; color: var(--gray-dim); }
+  .footer-top { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 40px; margin-bottom: 40px; }
+  .footer-brand { max-width: 300px; }
+  .footer-brand-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .footer-mark { font-weight: 800; font-size: 17px; color: var(--white); }
+  .footer-brand p { margin-bottom: 18px; line-height: 1.6; }
+  .footer-social { display: flex; gap: 10px; }
+  .footer-social a {
+    width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: center; color: var(--gray-dim);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .footer-social a:hover { border-color: var(--gold); color: var(--gold); }
+  .footer-cols { display: flex; gap: 52px; flex-wrap: wrap; }
+  .footer-col h4 { font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
+  .footer-col a, .footer-col span { display: block; margin-bottom: 9px; color: var(--gray-dim); transition: color 0.2s; }
+  .footer-col a:hover { color: var(--gold); }
+  .footer-bottom { border-top: 1px solid var(--line); padding-top: 20px; }
+  @media (max-width: 640px) { .footer-top { flex-direction: column; } .footer-cols { gap: 32px; } }
 </style>
 </head>
 <body>
 
 <nav class="site-nav">
-  <div class="wrap">
-    <div class="brand">
-      <span class="crest">HS</span>
-      <div class="text">
-        <span class="mark">Himaayah Schools</span>
-        <span class="sub">Academy</span>
-      </div>
-    </div>
+  <div class="wrap nav-inner">
+    <a class="brand" href="index.html">
+      <svg class="crest" viewBox="0 0 377.21 459.6"><path fill="#FFBB00" d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>
+      Himaayah Schools
+    </a>
     <div class="nav-links" id="navLinks">
-      <a href="index.html">Home</a>
-      <a href="teenagers-building-circle.html">Teenagers Circle</a>
-      <a href="madrasah.html">Madrasah</a>
-      <a href="skills-school.html">Skills School</a>
-      <a href="faq.html">FAQ</a>
-      <a href="enroll.html" class="nav-cta">Enroll</a>
-      <a href="contact.html" class="nav-cta">Contact Us</a>
+      <a href="#courses">Our Programs</a>
+      <a href="faq.html">Exam Calendars</a>
+      <a href="index.html">Success Stories</a>
+      <a href="enroll.html?programme=academy" class="nav-cta">Start Prep Now</a>
     </div>
-    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
       <span></span><span></span><span></span>
     </button>
   </div>
 </nav>
 
-<header class="page-header">
-  <div class="wrap">
-    <h1>Exam preparation that actually targets the exam.</h1>
-    <p class="lede">UTME, Post-UTME, A-Levels, and O-Levels tutorials taught by tutors who teach to the exam's actual structure. Hover a track below to open its full syllabus.</p>
-    <div class="header-badges">
-      <span class="header-badge"><b>90%</b>&nbsp;success rate — 2025 UTME</span>
-      <span class="header-badge">Weekly timed practice</span>
-      <span class="header-badge">Small tutorial groups</span>
+<header class="hero">
+  <div class="wrap hero-inner">
+    <h1>Crack Your Exams on the First Attempt</h1>
+    <p>Structured tutorials and timed practice for UTME, WAEC, NECO, and A-Levels — IJMB, JUPEB, and Cambridge — aligned to each exam's real format.</p>
+    <div class="hero-actions">
+      <a href="enroll.html?programme=academy" class="btn btn-primary">Start Prep Now</a>
+      <a href="#courses" class="btn btn-outline">See Programs</a>
+    </div>
+    <div class="stat-row">
+      <div class="stat"><b>4</b><span>Exam Tracks</span></div>
+      <div class="stat"><b>4×</b><span>Classes / Week</span></div>
+      <div class="stat"><b>1:1</b><span>Institution-Specific Coaching</span></div>
     </div>
   </div>
 </header>
 
-<section>
+<section class="courses" id="courses">
   <div class="wrap">
-    <div class="section-head reveal">
-      <h2>Current Tracks</h2>
-      <p>Each track runs its own weekly tutorial sessions, focused entirely on the demands of that specific exam.</p>
+    <div class="courses-head">
+      <h2>Four tracks, one exam-day standard.</h2>
+      <p>Pick the exam ahead of you — each track is built around its actual format, not a generic syllabus.</p>
     </div>
 
-    <div class="courses-grid">
+    <div class="course-grid">
 
-      <!-- Track 1: UTME -->
-      <article class="course-card reveal">
-        <div class="course-photo-frame">
-          <img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=700&q=80" alt="Students seated at desks writing a computer-based exam.">
-          <span class="course-price-tag">₦10,000 / mo</span>
-          <span class="course-index">01</span>
-          <div class="course-caption">
-            <h3>UTME</h3>
-            <span class="meta">Weekly cohort</span>
-          </div>
+      <!-- UTME -->
+      <article class="course-card">
+        <div class="course-visual">
+          <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=700&q=80" alt="A student's hand filling in a multiple-choice answer sheet with a pencil." style="width:100%;height:100%;object-fit:cover;">
         </div>
-        <div class="course-dossier" tabindex="0">
-          <span class="dossier-label">Inside the track</span>
-          <ul>
-            <li>Full coverage of the JAMB UTME syllabus, subject by subject</li>
-            <li>Regular practice on the actual computer-based test format</li>
-            <li>Weekly timed mock exams under real exam conditions</li>
-            <li>Score tracking so every weak area gets targeted revision</li>
-          </ul>
-          <a href="enroll.html" class="dossier-cta">Enquire about this track
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </a>
-        </div>
-        <div class="course-footline">
-          <span class="duration">Billed <b>monthly</b>, ₦10,000</span>
-          <span class="peek">Syllabus
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
-          </span>
+        <div class="course-body">
+          <div class="course-tags"><span class="tag">CBT Simulator</span><span class="tag">Live Classes</span></div>
+          <h3>UTME (JAMB) Prep</h3>
+          <p class="focus">Full 4-Subject JAMB Combination</p>
+          <div class="course-meta"><span>Access · 1 month</span><b>₦10,000</b></div>
+          <a href="enroll.html?programme=academy&amp;plan=utme" class="course-cta">Enroll &amp; Get Access</a>
         </div>
       </article>
 
-      <!-- Track 2: Post-UTME -->
-      <article class="course-card reveal">
-        <div class="course-photo-frame">
-          <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=700&q=80" alt="A university lecture hall filled with students during a screening exercise.">
-          <span class="course-price-tag">₦10,000 / mo</span>
-          <span class="course-index">02</span>
-          <div class="course-caption">
-            <h3>Post-UTME</h3>
-            <span class="meta">Institution-specific</span>
-          </div>
+      <!-- O-Levels -->
+      <article class="course-card">
+        <div class="course-visual">
+          <img src="https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=700&q=80" alt="Notebooks and a calculator arranged on a study table." style="width:100%;height:100%;object-fit:cover;">
         </div>
-        <div class="course-dossier" tabindex="0">
-          <span class="dossier-label">Inside the track</span>
-          <ul>
-            <li>Preparation tailored to your target institution's screening format</li>
-            <li>Past-question drills specific to the department applied for</li>
-            <li>Aptitude and reasoning practice alongside subject revision</li>
-            <li>Guidance on admission cut-off marks and choice of course</li>
-          </ul>
-          <a href="enroll.html" class="dossier-cta">Enquire about this track
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </a>
-        </div>
-        <div class="course-footline">
-          <span class="duration">Billed <b>monthly</b>, ₦10,000</span>
-          <span class="peek">Syllabus
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
-          </span>
+        <div class="course-body">
+          <div class="course-tags"><span class="tag">Live Classes</span><span class="tag">WAEC · NECO</span></div>
+          <h3>O-Levels Prep</h3>
+          <p class="focus">Core WAEC/NECO Subject Combination</p>
+          <div class="course-meta"><span>Access · 1 month</span><b>₦10,000</b></div>
+          <a href="enroll.html?programme=academy&amp;plan=olevels" class="course-cta">Enroll &amp; Get Access</a>
         </div>
       </article>
 
-      <!-- Track 3: A-Levels -->
-      <article class="course-card reveal">
-        <div class="course-photo-frame">
-          <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=700&q=80" alt="A student writing in a notebook beside an open textbook, working through an advanced problem.">
-          <span class="course-price-tag">₦10,000 / mo</span>
-          <span class="course-index">03</span>
-          <div class="course-caption">
-            <h3>A-Levels</h3>
-            <span class="meta">JUPEB · IJMB</span>
-          </div>
+      <!-- A-Levels -->
+      <article class="course-card">
+        <div class="course-visual">
+          <img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=700&q=80" alt="A pair of glasses resting on an open textbook." style="width:100%;height:100%;object-fit:cover;">
         </div>
-        <div class="course-dossier" tabindex="0">
-          <span class="dossier-label">Inside the track</span>
-          <ul>
-            <li>Subject-focused tutorials for JUPEB and IJMB programmes</li>
-            <li>Emphasis on the depth and independent analysis A-Levels demand</li>
-            <li>Essay technique and structured written-answer practice</li>
-            <li>Direct-entry guidance for the institution you're aiming for</li>
-          </ul>
-          <a href="enroll.html" class="dossier-cta">Enquire about this track
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </a>
-        </div>
-        <div class="course-footline">
-          <span class="duration">Billed <b>monthly</b>, ₦10,000</span>
-          <span class="peek">Syllabus
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
-          </span>
+        <div class="course-body">
+          <div class="course-tags"><span class="tag">Live Classes</span><span class="tag">IJMB · JUPEB</span></div>
+          <h3>A-Levels Prep</h3>
+          <p class="focus">IJMB / JUPEB / Cambridge A-Level Track</p>
+          <div class="course-meta"><span>Access · 1 month</span><b>₦10,000</b></div>
+          <a href="enroll.html?programme=academy&amp;plan=alevels" class="course-cta">Enroll &amp; Get Access</a>
         </div>
       </article>
 
-      <!-- Track 4: O-Levels -->
-      <article class="course-card reveal">
-        <div class="course-photo-frame">
-          <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=700&q=80" alt="A small group of secondary school students studying together at a table.">
-          <span class="course-price-tag">₦10,000 / mo</span>
-          <span class="course-index">04</span>
-          <div class="course-caption">
-            <h3>O-Levels</h3>
-            <span class="meta">WAEC · NECO</span>
-          </div>
+      <!-- Post-UTME -->
+      <article class="course-card">
+        <div class="course-visual">
+          <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=700&q=80" alt="A stack of admission and application documents on a desk." style="width:100%;height:100%;object-fit:cover;">
         </div>
-        <div class="course-dossier" tabindex="0">
-          <span class="dossier-label">Inside the track</span>
-          <ul>
-            <li>Core subject tutorials covering the full WAEC and NECO syllabus</li>
-            <li>Steady exam-technique practice across theory and objectives</li>
-            <li>Past-question walkthroughs marked to the real grading rubric</li>
-            <li>Progress reports shared with parents each month</li>
-          </ul>
-          <a href="enroll.html" class="dossier-cta">Enquire about this track
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </a>
-        </div>
-        <div class="course-footline">
-          <span class="duration">Billed <b>monthly</b>, ₦10,000</span>
-          <span class="peek">Syllabus
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
-          </span>
+        <div class="course-body">
+          <div class="course-tags"><span class="tag">Live Classes</span><span class="tag">Institution-Specific</span></div>
+          <h3>Post-UTME Masterclass</h3>
+          <p class="focus">Screening-Exam Practice, Tailored to Your Institution</p>
+          <div class="course-meta"><span>Access · 1 month</span><b>₦10,000</b></div>
+          <a href="enroll.html?programme=academy&amp;plan=postutme" class="course-cta">Enroll &amp; Get Access</a>
         </div>
       </article>
 
     </div>
-  </div>
-</section>
-
-<section class="stat-band">
-  <div class="wrap reveal">
-    <div class="stat-headline">
-      <h2>90% of our UTME tutorial students passed and gained admission last year.</h2>
-      <p>Nine in every ten students who sat weekly UTME tutorials with us last session scored above their target cutoff and secured a place at their first-choice institution.</p>
-    </div>
-    <div class="stat-figures">
-      <div class="stat-cell">
-        <div class="figure">90<sup>%</sup></div>
-        <div class="cap">2025 UTME success rate</div>
-      </div>
-      <div class="stat-cell">
-        <div class="figure">200<sup>+</sup></div>
-        <div class="cap">Average tutorial-student score</div>
-      </div>
-      <div class="stat-cell">
-        <div class="figure">7<sup>x</sup></div>
-        <div class="cap">Weekly timed practice sessions</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="reviews">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <h2>Straight from students who sat the UTME with us</h2>
-      <p>Real results from our 2056 UTME tutorial cohort — now settled into their first year at university.</p>
-    </div>
-    <div class="review-grid">
-      <div class="review-card reveal">
-        <span class="score-tag">312 UTME</span>
-        <div class="stars" aria-hidden="true">
-          <svg viewBox="0 0 20 20"><polygon points="10,1 12.6,7 19,7.6 14,12 15.5,18.5 10,15 4.5,18.5 6,12 1,7.6 7.4,7"/></svg>
-          <svg viewBox="0 0 20 20"><polygon points="10,1 12.6,7 19,7.6 14,12 15.5,18.5 10,15 4.5,18.5 6,12 1,7.6 7.4,7"/></svg>
-          <svg viewBox="0 0 20 20"><polygon points="10,1 12.6,7 19,7.6 14,12 15.5,18.5 10,15 4.5,18.5 6,12 1,7.6 7.4,7"/></svg>
-          <svg viewBox="0 0 20 20"><polygon points="10,1 12.6,7 19,7.6 14,12 15.5,18.5 10,15 4.5,18.5 6,12 1,7.6 7.4,7"/></svg>
-          <svg viewBox="0 0 20 20"><polygon points="10,1 12.6,7 19,7.6 14,12 15.5,18.5 10,15 4.5,18.5 6,12 1,7.6 7.4,7"/></svg>
-        </div>
-        <p class="quote">"The timed practice every week was what changed things for me. By exam day the CBT format felt routine, not stressful. I scored far above what I needed for Medicine."</p>
-        <div class="student">
-          <div class="avatar">AB</div>
-          <div class="who">
-            <div class="name">Aisha B.</div>
-            <div class="meta">Admitted — Medicine, University of Ilorin</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="review-card reveal">
-        <span class="score-tag">298 UTME</span>
-        <div class="stars" aria-hidden="true">
-          <svg viewBox="0 0 20 20"><polygon points="10,1 12.6,7 19,7.6 14,12 15.5,18.5 10,15 4.5,18.5 6,12 1,7.6 7.4,7"/></svg>
-          <svg viewBox="0 0 20 20"><polygon points="10,1 12.6,7 19,7.6 14,12 15.5,18.5 10,15 4.5,18.5 6,12 1,7.6 7.4,7"/></svg>
-          <svg viewBox="0 0 20 20"><polygon points="10,1 12.6,7 19,7.6 14,12 15.5,18.5 10,15 4.5,18.5 6,12 1,7.6 7.4,7"/></svg>
-          <svg viewBox="0 0 20 20"><polygon points="10,1 12.6,7 19,7.6 14,12 15.5,18.5 10,15 4.5,18.5 6,12 1,7.6 7.4,7"/></svg>
-          <svg viewBox="0 0 20 20"><polygon points="10,1 12.6,7 19,7.6 14,12 15.5,18.5 10,15 4.5,18.5 6,12 1,7.6 7.4,7"/></svg>
-        </div>
-        <p class="quote">"Small groups meant the tutor actually knew where each of us was struggling. My weakest subject became my strongest by the time I sat the exam."</p>
-        <div class="student">
-          <div class="avatar">YM</div>
-          <div class="who">
-            <div class="name">Yusuf M.</div>
-            <div class="meta">Admitted — Computer Engineering, UNILAG</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="review-card reveal">
-        <span class="score-tag">305 UTME</span>
-        <div class="stars" aria-hidden="true">
-          <svg viewBox="0 0 20 20"><polygon points="10,1 12.6,7 19,7.6 14,12 15.5,18.5 10,15 4.5,18.5 6,12 1,7.6 7.4,7"/></svg>
-          <svg viewBox="0 0 20 20"><polygon points="10,1 12.6,7 19,7.6 14,12 15.5,18.5 10,15 4.5,18.5 6,12 1,7.6 7.4,7"/></svg>
-          <svg viewBox="0 0 20 20"><polygon points="10,1 12.6,7 19,7.6 14,12 15.5,18.5 10,15 4.5,18.5 6,12 1,7.6 7.4,7"/></svg>
-          <svg viewBox="0 0 20 20"><polygon points="10,1 12.6,7 19,7.6 14,12 15.5,18.5 10,15 4.5,18.5 6,12 1,7.6 7.4,7"/></svg>
-          <svg viewBox="0 0 20 20"><polygon points="10,1 12.6,7 19,7.6 14,12 15.5,18.5 10,15 4.5,18.5 6,12 1,7.6 7.4,7"/></svg>
-        </div>
-        <p class="quote">"I went in for Post-UTME prep after my UTME tutorials here and was already ahead of the room. Both exams felt like an extension of our weekly sessions."</p>
-        <div class="student">
-          <div class="avatar">KF</div>
-          <div class="who">
-            <div class="name">Khadijah F.</div>
-            <div class="meta">Admitted — Accounting, University of Lagos</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <p class="reviews-note reveal">Scores and outcomes shared with student permission — Himaayah Schools 2026 UTME cohort.</p>
-  </div>
-</section>
-
-<section id="enroll" class="cta-band">
-  <div class="wrap reveal">
-    <h2>Begin at the Academy</h2>
-    <p>Tell us which exam your child is preparing for.</p>
-    <a href="enroll.html" class="btn btn-primary">Enquire to Enroll</a>
   </div>
 </section>
 
@@ -694,27 +258,37 @@
     <div class="footer-top">
       <div class="footer-brand">
         <div class="footer-brand-row">
-          <span class="crest">HS</span>
-          <span class="mark">Himaayah Schools</span>
+          <svg width="24" height="29" viewBox="0 0 377.21 459.6"><path fill="#FFBB00" d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>
+          <span class="footer-mark">Himaayah Schools</span>
         </div>
         <p>Raising the next generation with deen, knowledge, and purpose.</p>
+        <div class="footer-social">
+          <a href="https://instagram.com/himaayahschools" target="_blank" rel="noopener" aria-label="Himaayah Schools on Instagram">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="https://x.com/himaayahschools" target="_blank" rel="noopener" aria-label="Himaayah Schools on X">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.24 2H21.5l-7.3 8.34L22.8 22h-6.73l-5.27-6.9L4.7 22H1.4l7.8-8.92L1 2h6.9l4.76 6.3L18.24 2zm-1.18 18h1.86L7.03 3.9H5.03L17.06 20z"/></svg>
+          </a>
+        </div>
       </div>
       <div class="footer-cols">
         <div class="footer-col">
-          <h4>Himaayah Programmes</h4>
+          <h4>Programmes</h4>
           <a href="teenagers-building-circle.html">Teenagers Building Circle</a>
           <a href="madrasah.html">Madrasah</a>
+          <a href="academy.html">Academy</a>
           <a href="skills-school.html">Skills School</a>
         </div>
         <div class="footer-col">
-          <h4>Academy</h4>
-          <a href="#enroll">Enroll</a>
+          <h4>Site</h4>
+          <a href="index.html">Home</a>
           <a href="faq.html">FAQ</a>
+          <a href="enroll.html">Enroll</a>
         </div>
         <div class="footer-col">
           <h4>Contact</h4>
-          <span>himaayahschools@gmail.com</span>
-          <span>Lagos, Nigeria</span>
+          <a href="mailto:himaayahschools@gmail.com">himaayahschools@gmail.com</a>
+          <span>Ilorin, Nigeria</span>
         </div>
       </div>
     </div>
@@ -725,42 +299,9 @@
 </footer>
 
 <script>
-  // Mobile nav toggle
-  var navToggle = document.getElementById('navToggle');
-  var navLinks = document.getElementById('navLinks');
-  if (navToggle && navLinks) {
-    navToggle.addEventListener('click', function () {
-      var isOpen = navLinks.classList.toggle('open');
-      navToggle.classList.toggle('open', isOpen);
-      navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-    });
-    navLinks.querySelectorAll('a').forEach(function (a) {
-      a.addEventListener('click', function () {
-        navLinks.classList.remove('open');
-        navToggle.classList.remove('open');
-        navToggle.setAttribute('aria-expanded', 'false');
-      });
-    });
-  }
-
-  // Reveal-on-scroll
-  var revealEls = document.querySelectorAll('.reveal');
-  if ('IntersectionObserver' in window) {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('in');
-          io.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.15 });
-    revealEls.forEach(function (el, i) {
-      el.style.transitionDelay = (i % 4) * 0.07 + 's';
-      io.observe(el);
-    });
-  } else {
-    revealEls.forEach(function (el) { el.classList.add('in'); });
-  }
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle?.addEventListener('click', () => navLinks.classList.toggle('open'));
 </script>
 </body>
 </html>

@@ -4,982 +4,620 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Enroll — Himaayah Schools</title>
-<meta name="description" content="Enroll in Himaayah Schools: Teenagers Building Circle, Madrasah, Academy, or Skills School. See what each plan includes, send payment, then register.">
+<meta name="description" content="Enroll in Himaayah Schools: tell us about the student, choose a programme, then pay by transfer or card.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
   :root {
-    --gold: #FFBB00;
-    --gold-light: #FFBB00;
-    --yellow-deep: #E0AC00;
     --night: #0F0F11;
-    --night-soft: #1D1D20;
-    --parchment: #FFFFFF;
-    --parchment-dim: #F3F3F1;
-    --ink: #16161A;
-    --ink-soft: #55555C;
+    --night-soft: #1A1A1D;
+    --night-line: rgba(255, 187, 0, 0.16);
+    --gold: #FFBB00;
+    --gold-deep: #E0AC00;
     --white: #FFFFFF;
-    --yellow: #FFBB00;
-    --yellow-dim: rgba(255, 187, 0, 0.14);
-    --display: 'Spectral', Georgia, serif;
-    --body: 'Inter', -apple-system, sans-serif;
-    --radius: 2px;
+    --ink-soft: #B8B8BB;
+    --ink-dim: #86868C;
+    --error: #FF6B6B;
+    --radius: 6px;
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
   body {
-    font-family: var(--body);
-    color: var(--ink);
-    background: var(--parchment);
-    line-height: 1.6;
+    font-family: 'Inter', -apple-system, sans-serif;
+    color: var(--white);
+    background: var(--night);
     -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
   }
-  img, svg { display: block; max-width: 100%; }
   a { color: inherit; text-decoration: none; }
-  ul { list-style: none; }
-  button { font-family: inherit; cursor: pointer; border: none; background: none; }
+  button { font-family: inherit; cursor: pointer; border: none; }
+  input, select { font-family: inherit; }
 
-  .wrap { max-width: 1140px; margin: 0 auto; padding: 0 28px; }
-  h1, h2, h3 { font-family: var(--display); font-weight: 600; letter-spacing: -0.01em; }
-
-  a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
+    outline: 2px solid var(--gold); outline-offset: 2px;
+  }
   @media (prefers-reduced-motion: reduce) {
-    * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+    * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
   }
 
-  /* ---------- Nav ---------- */
-  .site-nav {
-    position: sticky; top: 0; z-index: 100;
-    background: rgba(15, 15, 17, 0.96);
-    backdrop-filter: blur(6px);
-    border-bottom: 1px solid rgba(255, 187, 0, 0.25);
-  }
-  .site-nav .wrap { position: relative; display: flex; align-items: center; justify-content: space-between; height: 72px; }
-  .brand { display: flex; flex-direction: row; align-items: center; gap: 11px; }
-  .brand .crest {
-    width: 32px; height: 32px; border-radius: 3px;
-    background: linear-gradient(150deg, var(--gold), var(--yellow-deep));
-    display: flex; align-items: center; justify-content: center;
-    font-family: var(--display); font-weight: 700; font-size: 15px; color: var(--night);
-    flex-shrink: 0;
-  }
-  .brand .text { display: flex; flex-direction: column; line-height: 1.1; }
-  .brand .mark { font-family: var(--display); font-size: 18px; font-weight: 600; color: var(--parchment); letter-spacing: 0.02em; }
-  .nav-links { display: flex; align-items: center; gap: 32px; }
-  .nav-links a { font-size: 14px; color: #C7C7CA; transition: color 0.2s; }
-  .nav-links a:hover { color: var(--gold-light); }
-  a.nav-cta {
-    background: var(--gold); color: var(--night); font-weight: 600; font-size: 13px;
-    padding: 10px 20px; border-radius: var(--radius); letter-spacing: 0.02em; transition: background 0.2s;
-  }
-  .nav-cta:hover { background: var(--yellow-deep); }
-  .nav-toggle { display: none; position: relative; width: 26px; height: 20px; flex-shrink: 0; z-index: 110; }
-  .nav-toggle span { position: absolute; left: 0; width: 100%; height: 2px; background: var(--parchment); border-radius: 2px; transition: transform 0.25s ease, opacity 0.2s ease, top 0.25s ease; }
-  .nav-toggle span:nth-child(1) { top: 0; }
-  .nav-toggle span:nth-child(2) { top: 9px; }
-  .nav-toggle span:nth-child(3) { top: 18px; }
-  .nav-toggle.open span:nth-child(1) { top: 9px; transform: rotate(45deg); }
-  .nav-toggle.open span:nth-child(2) { opacity: 0; }
-  .nav-toggle.open span:nth-child(3) { top: 9px; transform: rotate(-45deg); }
+  /* ---------- Split screen ---------- */
+  .split { display: flex; min-height: 100vh; }
 
-  /* ---------- Page header ---------- */
-  .page-header {
-    background: radial-gradient(ellipse at 25% 20%, var(--night-soft), var(--night) 70%);
-    color: var(--parchment);
-    padding: 76px 0 64px;
-    position: relative;
-    overflow: hidden;
+  /* ---------- Left: hero ---------- */
+  .hero {
+    flex: 0 0 42%; position: relative; min-height: 100vh;
+    background:
+      linear-gradient(180deg, rgba(15,15,17,0.35) 0%, rgba(15,15,17,0.92) 100%),
+      url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1400&q=80') center/cover;
+    display: flex; flex-direction: column; justify-content: space-between;
+    padding: 44px 48px;
   }
-  .page-header::before {
-    content: '';
-    position: absolute; inset: -40% -10% auto auto;
-    width: 480px; height: 480px;
-    background: radial-gradient(circle, rgba(255,187,0,0.16), transparent 70%);
-    animation: drift 16s ease-in-out infinite;
-    pointer-events: none;
+  .hero-top a { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; font-size: 16px; }
+  .hero-top .crest { width: 26px; height: 32px; flex-shrink: 0; }
+  .hero-mid h1 {
+    font-size: clamp(30px, 3.2vw, 44px); font-weight: 800; line-height: 1.1; letter-spacing: -0.02em;
+    margin-bottom: 16px; max-width: 12ch;
   }
-  @keyframes drift {
-    0%, 100% { transform: translate(0, 0); }
-    50% { transform: translate(-30px, 40px); }
+  .hero-mid h1 span { color: var(--gold); }
+  .hero-mid p { font-size: 16px; color: var(--ink-soft); max-width: 38ch; line-height: 1.6; }
+  .hero-roadmap { display: flex; flex-direction: column; gap: 16px; }
+  .hero-roadmap .r-item { display: flex; align-items: center; gap: 14px; font-size: 14px; color: var(--ink-soft); }
+  .hero-roadmap .r-num {
+    width: 26px; height: 26px; border-radius: 50%; border: 1px solid rgba(255,187,0,0.4);
+    display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--gold);
+    flex-shrink: 0; transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
   }
-  .page-header h1 {
-    font-size: clamp(32px, 4.4vw, 50px); line-height: 1.14; margin: 16px 0 16px; max-width: 24ch;
-    position: relative; z-index: 1;
-    opacity: 0; animation: fadeUp 0.7s ease 0.1s forwards;
-  }
-  .page-header p.lede {
-    font-size: 16.5px; color: #B8B8BB; max-width: 60ch;
-    opacity: 0; animation: fadeUp 0.7s ease 0.2s forwards;
-  }
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  .hero-roadmap .r-item.done .r-num { background: var(--gold); color: var(--night); border-color: var(--gold); }
+  .hero-roadmap .r-item.active { color: var(--white); font-weight: 600; }
+  .hero-roadmap .r-item.active .r-num { border-color: var(--gold); box-shadow: 0 0 0 4px rgba(255,187,0,0.15); }
 
-  .header-steps { display: flex; gap: 14px; margin-top: 30px; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.7s ease 0.3s forwards; }
-  .header-steps .chip {
-    display: flex; align-items: center; gap: 9px;
-    border: 1px solid rgba(255,187,0,0.3); background: rgba(255,187,0,0.06);
-    padding: 9px 14px; border-radius: var(--radius); font-size: 12.5px; color: #D6D6D8;
-  }
-  .header-steps .chip b { color: var(--gold-light); font-family: var(--display); }
-
-  /* ---------- Sections ---------- */
-  section { padding: 88px 0; }
-  .section-head { max-width: 680px; margin: 0 auto 44px; }
-  .section-head .eyebrow {
-    font-size: 12px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink);
-    display: inline-flex; align-items: center; gap: 8px;
-  }
-  .section-head .eyebrow::before { content: ''; width: 6px; height: 6px; background: var(--yellow); border-radius: 1px; }
-  .section-head h2 { font-size: clamp(24px, 3vw, 32px); margin-top: 12px; color: var(--ink); }
-  .section-head p { color: var(--ink-soft); margin-top: 12px; font-size: 15.5px; max-width: 62ch; }
-  .section-head .g-link {
-    display: inline-flex; align-items: center; gap: 6px; margin-top: 14px;
-    font-size: 13px; font-weight: 600; color: var(--ink-soft); border-bottom: 1px solid rgba(15,15,17,0.2);
-  }
-  .section-head .g-link:hover { color: var(--ink); border-color: var(--ink); }
-  .section-head .g-link svg { width: 12px; height: 12px; }
-
-  .program-group { border-top: 1px solid rgba(15,15,17,0.08); padding-top: 64px; margin-top: 64px; }
-  .program-group:first-of-type { border-top: none; padding-top: 0; margin-top: 0; }
-
-  /* ---------- Reveal on scroll ---------- */
-  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
-  .reveal.in { opacity: 1; transform: translateY(0); }
-
-  /* Course cards */
-  .courses-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
-  .courses-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
-  .courses-grid.cols-1 { grid-template-columns: 1fr; max-width: 380px; }
-
-  .course-card {
-    position: relative; background: var(--night); border: 1px solid rgba(15,15,17,0.12);
-    overflow: hidden; isolation: isolate;
-    transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), box-shadow 0.35s ease;
-  }
-  .course-card:hover, .course-card:focus-within { transform: translateY(-6px); box-shadow: 0 24px 48px -18px rgba(15,15,17,0.4); }
-
-  .course-photo-frame { position: relative; aspect-ratio: 4 / 3; overflow: hidden; }
-  .course-photo-frame img {
-    width: 100%; height: 100%; object-fit: cover; transform: scale(1.02);
-    transition: transform 0.7s cubic-bezier(0.16,1,0.3,1), filter 0.5s ease;
-    filter: grayscale(28%) contrast(1.04);
-  }
-  .course-card:hover .course-photo-frame img,
-  .course-card:focus-within .course-photo-frame img { transform: scale(1.12); filter: grayscale(0%) contrast(1.04); }
-  .course-photo-frame::after {
-    content: ''; position: absolute; inset: 0;
-    background: linear-gradient(180deg, rgba(15,15,17,0.05) 0%, rgba(15,15,17,0.78) 100%);
-    pointer-events: none;
-  }
-
-  .course-price-tag {
-    position: absolute; top: 16px; left: 16px; z-index: 3;
-    font-family: var(--display); font-size: 12px; font-weight: 600; color: var(--ink);
-    background: var(--yellow); padding: 5px 11px; letter-spacing: 0.02em;
-    box-shadow: 0 6px 14px rgba(0,0,0,0.25);
-  }
-  .course-tag {
-    position: absolute; top: 16px; right: 16px; z-index: 3;
-    font-size: 10.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
-    background: rgba(15,15,17,0.55); border: 1px solid rgba(255,187,0,0.5); color: var(--gold-light);
-    padding: 6px 10px; border-radius: var(--radius); backdrop-filter: blur(3px);
-  }
-
-  .course-caption { position: absolute; left: 20px; right: 20px; bottom: 18px; z-index: 3; color: var(--parchment); transition: transform 0.4s cubic-bezier(0.16,1,0.3,1); }
-  .course-card:hover .course-caption, .course-card:focus-within .course-caption { transform: translateY(-6px); }
-  .course-caption h3 { font-size: 20px; margin-bottom: 4px; }
-  .course-caption .meta { font-size: 12px; color: var(--gold-light); letter-spacing: 0.04em; text-transform: uppercase; }
-
-  .course-dossier {
-    position: absolute; inset: auto 0 0 0; z-index: 4; background: var(--night-soft);
-    border-top: 1px solid rgba(255,187,0,0.35); padding: 20px 20px 22px;
-    transform: translateY(calc(100% - 0px)); transition: transform 0.45s cubic-bezier(0.16,1,0.3,1);
-    max-height: 100%; overflow: hidden;
-  }
-  .course-card:hover .course-dossier, .course-card:focus-within .course-dossier { transform: translateY(0); }
-  .course-dossier .dossier-label {
-    font-size: 10.5px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--gold-light); margin-bottom: 11px; display: flex; align-items: center; gap: 8px;
-  }
-  .course-dossier .dossier-label::before { content: ''; width: 14px; height: 1px; background: var(--gold); }
-  .course-dossier ul { margin-bottom: 15px; }
-  .course-dossier li {
-    font-size: 12.5px; color: #D6D6D8; padding: 5px 0 5px 18px; position: relative;
-    border-top: 1px solid rgba(255,255,255,0.07);
-  }
-  .course-dossier li:first-child { border-top: none; }
-  .course-dossier li::before { content: ''; position: absolute; left: 0; top: 12px; width: 5px; height: 5px; background: var(--gold); border-radius: 1px; }
-  .course-dossier .dossier-actions { display: flex; gap: 8px; flex-wrap: wrap; }
-  .course-dossier .dossier-cta {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-size: 12px; font-weight: 600; letter-spacing: 0.02em; color: var(--night);
-    background: var(--yellow); padding: 8px 15px; border-radius: var(--radius);
-    transition: background 0.2s, gap 0.2s;
-  }
-  .course-dossier .dossier-cta:hover { background: var(--yellow-deep); gap: 12px; }
-  .course-dossier .dossier-cta svg { width: 13px; height: 13px; }
-  .course-dossier .dossier-cta.card-pay {
-    background: transparent; color: var(--gold-light); border: 1px solid rgba(255,187,0,0.5);
-  }
-  .course-dossier .dossier-cta.card-pay:hover { background: rgba(255,187,0,0.1); color: var(--gold-light); }
-  .course-dossier .dossier-cta.card-pay[disabled] { opacity: 0.55; cursor: wait; }
-  .course-dossier .pay-error { font-size: 11.5px; color: #FF8A8A; margin-top: 8px; display: none; }
-
-  .course-footline { display: flex; justify-content: space-between; align-items: center; padding: 13px 18px; background: var(--white); border-top: 1px solid rgba(15,15,17,0.08); gap: 8px; }
-  .course-footline .duration { font-size: 12px; color: var(--ink-soft); }
-  .course-footline .duration b { color: var(--ink); font-weight: 600; }
-  .course-footline .peek { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink); display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0; }
-  .course-footline .peek svg { width: 12px; height: 12px; transition: transform 0.3s ease; }
-  .course-card:hover .course-footline .peek svg, .course-card:focus-within .course-footline .peek svg { transform: translateY(-3px); }
-
-  @media (max-width: 980px) { .courses-grid.cols-4 { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 900px) {
-    .courses-grid { grid-template-columns: 1fr; }
-    .courses-grid.cols-4 { grid-template-columns: 1fr; }
-    .courses-grid.cols-1 { max-width: none; }
-    .course-photo-frame { aspect-ratio: 16 / 10; }
+    .split { flex-direction: column; }
+    .hero { flex: none; min-height: 260px; padding: 28px 24px; }
+    .hero-mid h1 { max-width: none; }
+    .hero-roadmap { display: none; }
   }
 
-  /* ---------- How it works ---------- */
-  .how { background: radial-gradient(ellipse at 50% 0%, var(--night-soft), var(--night) 70%); color: var(--parchment); position: relative; overflow: hidden; }
-  .how::before { content: ''; position: absolute; inset: auto auto -20% -10%; width: 420px; height: 420px; background: radial-gradient(circle, rgba(255,187,0,0.1), transparent 70%); pointer-events: none; }
-  .how .section-head .eyebrow { color: var(--gold-light); }
-  .how .section-head .eyebrow::before { background: var(--gold); }
-  .how .section-head h2 { color: var(--parchment); }
-  .how .section-head p { color: #B8B8BB; }
+  /* ---------- Right: form ---------- */
+  .form-panel { flex: 1; display: flex; flex-direction: column; min-height: 100vh; }
+  .form-panel-inner { max-width: 480px; width: 100%; margin: 0 auto; padding: 44px 28px 60px; flex: 1; }
 
-  .steps-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: stretch; }
-  .step-card { background: var(--night-soft); border: 1px solid rgba(255,187,0,0.22); padding: 34px 32px; position: relative; transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), border-color 0.3s ease; }
-  .step-card:hover { transform: translateY(-4px); border-color: rgba(255,187,0,0.5); }
-  .step-card .step-num { font-family: var(--display); font-size: 13px; font-weight: 600; color: var(--night); background: var(--yellow); width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 18px; }
-  .step-card h3 { color: var(--parchment); font-size: 21px; margin-bottom: 10px; }
-  .step-card p.s-copy { font-size: 14px; color: #B8B8BB; margin-bottom: 22px; line-height: 1.6; }
-
-  .payment-tabs { display: flex; gap: 8px; margin-bottom: 20px; }
-  .payment-tab {
-    flex: 1; text-align: center; font-size: 12.5px; font-weight: 600; letter-spacing: 0.02em;
-    padding: 10px 12px; border: 1px solid rgba(255,187,0,0.25); border-radius: var(--radius);
-    color: #B8B8BB; transition: background 0.2s, color 0.2s, border-color 0.2s;
+  .wizard-footer {
+    max-width: 480px; width: 100%; margin: 0 auto; padding: 0 28px 32px;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    border-top: 1px solid var(--night-line); padding-top: 20px;
+    font-size: 12px; color: var(--ink-dim);
   }
-  .payment-tab[aria-selected="true"] { background: var(--yellow); color: var(--night); border-color: var(--yellow); }
-  .payment-panel { display: none; }
-  .payment-panel.active { display: block; }
+  .wizard-footer a { color: var(--ink-dim); }
+  .wizard-footer a:hover { color: var(--gold); }
+  .wizard-footer-social { display: flex; gap: 8px; }
+  .wizard-footer-social a {
+    width: 28px; height: 28px; border-radius: 6px; border: 1px solid var(--night-line);
+    display: flex; align-items: center; justify-content: center; color: var(--ink-dim);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .wizard-footer-social a:hover { border-color: var(--gold); color: var(--gold); }
 
-  .account-box { border: 1px solid rgba(255,187,0,0.25); background: rgba(255,187,0,0.04); }
-  .account-row { display: flex; align-items: center; justify-content: space-between; padding: 13px 16px; font-size: 13.5px; border-bottom: 1px solid rgba(255,187,0,0.14); }
+  .stepper { display: flex; align-items: center; gap: 8px; margin-bottom: 36px; }
+  .stepper .dash { flex: 1; height: 3px; background: var(--night-line); border-radius: 2px; overflow: hidden; }
+  .stepper .dash i { display: block; height: 100%; width: 0%; background: var(--gold); transition: width 0.35s ease; }
+  .stepper .dash.done i { width: 100%; }
+  .stepper .dash.active i { width: 50%; }
+  .stepper .s-label { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-dim); white-space: nowrap; }
+
+  .step { display: none; }
+  .step.active { display: block; animation: fadeIn 0.35s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  .step h2 { font-size: 24px; font-weight: 800; margin-bottom: 8px; letter-spacing: -0.01em; }
+  .step > p.step-sub { font-size: 14px; color: var(--ink-soft); margin-bottom: 28px; }
+
+  .field { margin-bottom: 18px; }
+  .field label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 7px; }
+  .field .req { color: var(--gold); }
+  .field input, .field select {
+    width: 100%; padding: 13px 14px; font-size: 14px; color: var(--white);
+    background: var(--night-soft); border: 1px solid var(--night-line); border-radius: var(--radius);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .field input::placeholder { color: var(--ink-dim); }
+  .field input:focus, .field select:focus {
+    border-color: var(--gold); box-shadow: 0 0 0 3px rgba(255,187,0,0.14); outline: none;
+  }
+  .field.error input, .field.error select { border-color: var(--error); box-shadow: 0 0 0 3px rgba(255,107,107,0.14); }
+  .field .err-msg { font-size: 12px; color: var(--error); margin-top: 6px; display: none; }
+  .field.error .err-msg { display: block; }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 520px) { .field-row { grid-template-columns: 1fr; } }
+
+  /* ---------- Step 2: programme + plan ---------- */
+  .prog-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 22px; }
+  .prog-pill {
+    padding: 9px 16px; font-size: 13px; font-weight: 600; border-radius: 999px;
+    border: 1px solid var(--night-line); color: var(--ink-soft); background: transparent;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+  }
+  .prog-pill[aria-pressed="true"] { background: var(--gold); color: var(--night); border-color: var(--gold); }
+
+  .plan-options { display: flex; flex-direction: column; gap: 10px; }
+  .plan-opt {
+    border: 1px solid var(--night-line); border-radius: var(--radius); background: var(--night-soft);
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .plan-opt.selected { border-color: var(--gold); background: rgba(255,187,0,0.06); }
+  .plan-opt-head { display: flex; align-items: center; gap: 14px; padding: 14px 16px; cursor: pointer; }
+  .plan-opt-radio {
+    width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--ink-dim); flex-shrink: 0; position: relative;
+    transition: border-color 0.2s;
+  }
+  .plan-opt.selected .plan-opt-radio { border-color: var(--gold); }
+  .plan-opt.selected .plan-opt-radio::after {
+    content: ''; position: absolute; inset: 3px; border-radius: 50%; background: var(--gold);
+  }
+  .plan-opt-name { flex: 1; font-size: 14.5px; font-weight: 600; }
+  .plan-opt-name small { display: block; font-weight: 400; color: var(--ink-dim); font-size: 12px; margin-top: 2px; }
+  .plan-opt-price { font-size: 14px; font-weight: 700; color: var(--gold); white-space: nowrap; }
+  .plan-opt-toggle { font-size: 11px; color: var(--ink-dim); padding: 0 16px 14px 48px; cursor: pointer; display: inline-block; }
+  .plan-opt-details { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; padding: 0 16px; }
+  .plan-opt-details.open { max-height: 200px; padding-bottom: 14px; }
+  .plan-opt-details ul { list-style: none; padding-left: 48px; }
+  .plan-opt-details li { font-size: 12.5px; color: var(--ink-soft); padding-left: 12px; position: relative; margin-bottom: 4px; }
+  .plan-opt-details li::before { content: ''; position: absolute; left: 0; top: 7px; width: 4px; height: 4px; background: var(--gold); border-radius: 50%; }
+
+  /* ---------- Step 3: payment ---------- */
+  .pay-summary {
+    border: 1px solid var(--night-line); border-radius: var(--radius); padding: 16px; margin-bottom: 22px;
+    background: var(--night-soft); font-size: 13.5px;
+  }
+  .pay-summary .row { display: flex; justify-content: space-between; padding: 5px 0; color: var(--ink-soft); }
+  .pay-summary .row b { color: var(--white); font-weight: 600; }
+  .pay-tabs { display: flex; gap: 8px; margin-bottom: 18px; }
+  .pay-tab {
+    flex: 1; text-align: center; font-size: 13px; font-weight: 600; padding: 11px; border-radius: var(--radius);
+    border: 1px solid var(--night-line); color: var(--ink-soft); background: transparent;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+  }
+  .pay-tab[aria-selected="true"] { background: var(--gold); color: var(--night); border-color: var(--gold); }
+  .pay-view { display: none; }
+  .pay-view.active { display: block; }
+
+  .account-box { border: 1px solid var(--night-line); border-radius: var(--radius); background: rgba(255,187,0,0.04); margin-bottom: 14px; overflow: hidden; }
+  .account-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 15px; font-size: 13.5px; border-bottom: 1px solid var(--night-line); }
   .account-row:last-child { border-bottom: none; }
-  .account-row span { color: #9E9EA3; }
-  .account-row b { color: var(--parchment); font-family: var(--display); font-weight: 600; display: inline-flex; align-items: center; gap: 10px; }
-  .copy-btn { font-size: 10.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--gold-light); border: 1px solid rgba(255,187,0,0.4); padding: 3px 9px; border-radius: var(--radius); transition: background 0.2s, color 0.2s; }
-  .copy-btn:hover { background: var(--yellow); color: var(--night); }
-  .copy-btn.copied { background: var(--yellow); color: var(--night); }
-  .modal-note { color: #8A8A8E; font-size: 12.5px; margin-top: 16px; }
-  .step-card .btn { width: 100%; text-align: center; margin-top: 4px; }
-
-  .card-select { margin-bottom: 14px; }
-  .card-select label { display: block; font-size: 12px; color: #9E9EA3; margin-bottom: 6px; }
-  .card-select select {
-    width: 100%; padding: 11px 12px; font-size: 13.5px; font-family: var(--body); color: var(--parchment);
-    background: var(--night-soft); border: 1px solid rgba(255,187,0,0.3); border-radius: var(--radius);
+  .account-row span { color: var(--ink-dim); }
+  .account-row b { font-weight: 700; display: inline-flex; align-items: center; gap: 8px; }
+  .copy-btn {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--gold);
+    border: 1px solid rgba(255,187,0,0.4); padding: 3px 8px; border-radius: 4px; background: transparent;
+    transition: background 0.2s, color 0.2s;
   }
-  .card-select input[type="email"], .card-select input[type="text"] {
-    width: 100%; padding: 11px 12px; font-size: 13.5px; font-family: var(--body); color: var(--parchment);
-    background: var(--night-soft); border: 1px solid rgba(255,187,0,0.3); border-radius: var(--radius); margin-top: 10px;
-  }
-  .pay-status { font-size: 12.5px; margin-top: 12px; display: none; }
-  .pay-status.error { color: #FF8A8A; }
-  .pay-status.info { color: var(--gold-light); }
-
-  @media (max-width: 820px) { .steps-grid { grid-template-columns: 1fr; } }
+  .copy-btn:hover, .copy-btn.copied { background: var(--gold); color: var(--night); }
 
   /* ---------- Buttons ---------- */
-  .btn { display: inline-block; padding: 14px 26px; font-size: 14px; font-weight: 600; border-radius: var(--radius); letter-spacing: 0.01em; transition: transform 0.15s ease, background 0.2s, border-color 0.2s; }
-  .btn:hover { transform: translateY(-1px); }
-  .btn-primary { background: var(--yellow); color: var(--ink); }
-  .btn-primary:hover { background: var(--yellow-deep); }
-  .btn-primary[disabled] { opacity: 0.6; cursor: wait; transform: none; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 15px 20px; font-size: 14.5px; font-weight: 700; border-radius: var(--radius); transition: background 0.2s, box-shadow 0.2s, opacity 0.2s, transform 0.1s; }
+  .btn-primary { background: var(--gold); color: var(--night); }
+  .btn-primary:hover { background: var(--gold-deep); box-shadow: 0 0 24px rgba(255,187,0,0.25); }
+  .btn-primary:active { transform: scale(0.99); }
+  .btn-primary[disabled] { opacity: 0.55; cursor: wait; box-shadow: none; }
+  .btn-secondary { background: transparent; border: 1px solid var(--night-line); color: var(--white); margin-top: 10px; }
+  .btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
+  .step-actions { display: flex; flex-direction: column; margin-top: 8px; }
 
-  /* ---------- Footer ---------- */
-  footer { background: var(--night); color: #8A8A8E; padding: 56px 0 32px; font-size: 13.5px; }
-  .footer-top { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 32px; margin-bottom: 36px; }
-  .footer-brand-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-  .footer-brand-row .crest { width: 28px; height: 28px; border-radius: 3px; background: linear-gradient(150deg, var(--gold), var(--yellow-deep)); display: flex; align-items: center; justify-content: center; font-family: var(--display); font-weight: 700; font-size: 13px; color: var(--night); flex-shrink: 0; }
-  .footer-brand .mark { font-family: var(--display); font-size: 20px; color: var(--parchment); }
-  .footer-brand p { max-width: 32ch; margin-top: 10px; }
-  .footer-cols { display: flex; gap: 56px; flex-wrap: wrap; }
-  .footer-col h4 { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold-light); margin-bottom: 14px; }
-  .footer-col a, .footer-col span { display: block; margin-bottom: 9px; color: #A8A8AC; }
-  .footer-col a:hover { color: var(--gold-light); }
-  .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 22px; }
+  .form-status { font-size: 13px; margin-top: 12px; display: none; }
+  .form-status.error { color: var(--error); }
+  .form-status.info { color: var(--gold); }
+  .form-note { font-size: 12px; color: var(--ink-dim); margin-top: 14px; line-height: 1.6; }
 
-  /* ---------- Responsive ---------- */
-  @media (max-width: 640px) {
-    .nav-toggle { display: block; }
-    .nav-links {
-      position: absolute; top: 100%; left: 0; right: 0;
-      flex-direction: column; align-items: flex-start; gap: 0;
-      background: var(--night); border-bottom: 1px solid rgba(255,187,0,0.2);
-      padding: 0 28px; max-height: 0; overflow: hidden; opacity: 0;
-      transition: max-height 0.35s ease, opacity 0.25s ease, padding 0.35s ease;
-    }
-    .nav-links.open { max-height: 420px; opacity: 1; padding: 10px 28px 22px; }
-    .nav-links a { width: 100%; padding: 13px 0; border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 15px; }
-    a.nav-cta { width: 100%; text-align: center; margin-top: 14px; border-bottom: none; padding: 12px 20px; }
-    section { padding: 64px 0; }
-    .course-dossier { position: static; transform: none !important; border-top: 1px solid rgba(255,187,0,0.35); }
-    .course-caption { transform: none !important; }
+  /* ---------- Confirmation ---------- */
+  .confirm-icon {
+    width: 56px; height: 56px; border-radius: 50%; background: rgba(255,187,0,0.12); border: 1px solid rgba(255,187,0,0.4);
+    display: flex; align-items: center; justify-content: center; margin-bottom: 20px; color: var(--gold);
   }
 </style>
 </head>
 <body>
 
-<nav class="site-nav">
-  <div class="wrap">
-    <div class="brand">
-      <span class="crest">HS</span>
-      <div class="text">
-        <span class="mark">Himaayah Schools</span>
-      </div>
-    </div>
-    <div class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="teenagers-building-circle.html">Teenagers Circle</a>
-      <a href="madrasah.html">Madrasah</a>
-      <a href="academy.html">Academy</a>
-      <a href="skills-school.html">Skills School</a>
-      <a href="faq.html">FAQ</a>
-      <a href="enroll.html" class="nav-cta" style="color: var(--night);">Enroll</a>
-    </div>
-    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-</nav>
+<div class="split">
 
-<header class="page-header">
-  <div class="wrap">
-    <h1>Choose what you're enrolling for.</h1>
-    <p class="lede">Every Himaayah Schools plan is listed below with what it actually includes. Hover a plan to open its full details, pay by bank transfer or card, then register.</p>
-    <div class="header-steps">
-      <span class="chip"><b>1</b> Pick a plan below</span>
-      <span class="chip"><b>2</b> Pay by transfer or card</span>
-      <span class="chip"><b>3</b> Complete registration</span>
+  <!-- ================= Left: hero ================= -->
+  <div class="hero">
+    <div class="hero-top">
+      <a href="index.html">
+        <svg class="crest" viewBox="0 0 377.21 459.6"><path fill="#FFBB00" d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>
+        Himaayah Schools
+      </a>
+    </div>
+    <div class="hero-mid">
+      <h1>Empowering <span>Tomorrow's</span> Leaders</h1>
+      <p>Deen, education, and practical skills. One enrollment, whichever programme fits your child or yourself.</p>
+    </div>
+    <div class="hero-roadmap" id="heroRoadmap">
+      <div class="r-item active" data-for="1"><span class="r-num">1</span> Tell us about the student</div>
+      <div class="r-item" data-for="2"><span class="r-num">2</span> Choose a programme</div>
+      <div class="r-item" data-for="3"><span class="r-num">3</span> Pay & you're enrolled</div>
     </div>
   </div>
-</header>
 
-<section>
-  <div class="wrap">
+  <!-- ================= Right: form ================= -->
+  <div class="form-panel">
+    <div class="form-panel-inner">
 
-    <!-- ================= Teenagers Building Circle ================= -->
-    <div class="program-group">
-      <div class="section-head reveal">
-        <span class="eyebrow">Teenagers Building Circle</span>
-        <h2>One programme, four pillars, ages 13–19.</h2>
-        <p>Deen, educational development, skills, and personal development — bundled with the diagnostic assessment, live weekly sessions, and a dedicated Slack workspace.</p>
-        <a href="teenagers-building-circle.html" class="g-link">Full programme details
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </a>
+      <div class="stepper" id="stepper">
+        <span class="s-label">1</span>
+        <div class="dash active" data-dash="1"><i></i></div>
+        <div class="dash" data-dash="2"><i></i></div>
+        <span class="s-label">3</span>
       </div>
-      <div class="courses-grid cols-1">
-        <article class="course-card reveal">
-          <div class="course-photo-frame">
-            <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=900&q=80" alt="An open notebook, pen, and a warm desk lamp arranged on a wooden study table.">
-            <span class="course-price-tag">₦40,000 / mo</span>
-            <span class="course-tag">Ages 13–19</span>
-            <div class="course-caption">
-              <h3>Full Programme</h3>
-              <span class="meta">Weekly cohort · Slack workspace</span>
-            </div>
-          </div>
-          <div class="course-dossier" tabindex="0">
-            <span class="dossier-label">What's included</span>
-            <ul>
-              <li>All four pillars: deen, educational development, skills, personal development</li>
-              <li>A diagnostic assessment before the cohort begins</li>
-              <li>Live weekly sessions with a dedicated Slack workspace</li>
-              <li>Progress check-ins built around each pillar</li>
-            </ul>
-            <div class="dossier-actions">
-              <a href="https://docs.google.com/forms/d/e/1FAIpQLSfRJvIK7bNGLbly1gM74RkPLIsQS62bwKTNswnpw7ZbNQwVBw/viewform?usp=header" target="_blank" rel="noopener" class="dossier-cta">Enroll in this plan
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-              </a>
-              <button type="button" class="dossier-cta card-pay" data-product-id-live="prod_cbd46cdefa0e4d75a31c" data-product-id-sandbox="prod_4be17e80bcc74b9f8e3a" data-plan-name="Teenagers Building Circle — Full Programme" data-amount="40000" data-currency="NGN" data-billing="recurring">Pay with card</button>
-            </div>
-            <p class="pay-error"></p>
-          </div>
-          <div class="course-footline">
-            <span class="duration">Billed <b>monthly</b>, ₦40,000</span>
-            <span class="peek">Details
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
-            </span>
-          </div>
-        </article>
-      </div>
-    </div>
 
-    <!-- ================= Madrasah ================= -->
-    <div class="program-group">
-      <div class="section-head reveal">
-        <span class="eyebrow">Madrasah</span>
-        <h2>Qur'an and Islamic studies, group or personal.</h2>
-        <p>Hifdh, tajweed, aqeedah, fiqh, and seerah — taught four classes a week, either in a small group or entirely one-on-one.</p>
-        <a href="madrasah.html" class="g-link">Full programme details
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </a>
-      </div>
-      <div class="courses-grid cols-4">
+      <!-- ---------- Step 1: Student Information ---------- -->
+      <form class="step active" id="step1" data-step="1" novalidate>
+        <h2>Student Information</h2>
+        <p class="step-sub">Who's enrolling, and who we should contact.</p>
 
-        <article class="course-card reveal">
-          <div class="course-photo-frame">
-            <img src="https://images.unsplash.com/photo-1616422840391-fa670d4b2ae7?auto=format&fit=crop&w=900&q=80" alt="An open Qur'an resting on a wooden stand.">
-            <span class="course-price-tag">₦12,000 / mo</span>
-            <span class="course-tag">Group</span>
-            <div class="course-caption">
-              <h3>Hifdh Only</h3>
-              <span class="meta">4 classes weekly</span>
-            </div>
-          </div>
-          <div class="course-dossier" tabindex="0">
-            <span class="dossier-label">What's included</span>
-            <ul>
-              <li>Qur'an memorisation and tajweed</li>
-              <li>Small group setting with a dedicated hifdh teacher</li>
-              <li>Four classes weekly</li>
-            </ul>
-            <div class="dossier-actions">
-              <a href="https://docs.google.com/forms/d/e/1FAIpQLSdyusyD5ABwlvMJznxVLHTO1w5zIopwhw1jRZRNvukX8zVFKw/viewform?usp=header" target="_blank" rel="noopener" class="dossier-cta">Enroll
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-              </a>
-              <button type="button" class="dossier-cta card-pay" data-product-id-live="prod_1518dd1ab1ba4cfea0e8" data-product-id-sandbox="prod_f6d40928f10a42c8a5fe" data-plan-name="Madrasah — Hifdh Only (Group)" data-amount="12000" data-currency="NGN" data-billing="recurring">Pay with card</button>
-            </div>
-            <p class="pay-error"></p>
-          </div>
-          <div class="course-footline">
-            <span class="duration">Monthly, <b>₦12,000</b></span>
-            <span class="peek">Details
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
-            </span>
-          </div>
-        </article>
-
-        <article class="course-card reveal">
-          <div class="course-photo-frame">
-            <img src="https://images.unsplash.com/photo-1744521671444-75cef74bfff9?auto=format&fit=crop&w=900&q=80" alt="Ornate mosque interior with intricate wooden screens and arches.">
-            <span class="course-price-tag">₦20,000 / mo</span>
-            <span class="course-tag">Group</span>
-            <div class="course-caption">
-              <h3>Full Madrasah</h3>
-              <span class="meta">4 classes weekly</span>
-            </div>
-          </div>
-          <div class="course-dossier" tabindex="0">
-            <span class="dossier-label">What's included</span>
-            <ul>
-              <li>Hifdh and tajweed</li>
-              <li>Core Islamic studies: aqeedah, fiqh, seerah</li>
-              <li>Four classes weekly, group setting</li>
-            </ul>
-            <div class="dossier-actions">
-              <a href="https://docs.google.com/forms/d/e/1FAIpQLSdyusyD5ABwlvMJznxVLHTO1w5zIopwhw1jRZRNvukX8zVFKw/viewform?usp=header" target="_blank" rel="noopener" class="dossier-cta">Enroll
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-              </a>
-              <button type="button" class="dossier-cta card-pay" data-product-id-live="prod_88d2bf8aefd145569c32" data-product-id-sandbox="prod_2adf6149f52b4e85a427" data-plan-name="Madrasah — Full Madrasah (Group)" data-amount="20000" data-currency="NGN" data-billing="recurring">Pay with card</button>
-            </div>
-            <p class="pay-error"></p>
-          </div>
-          <div class="course-footline">
-            <span class="duration">Monthly, <b>₦20,000</b></span>
-            <span class="peek">Details
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
-            </span>
-          </div>
-        </article>
-
-        <article class="course-card reveal">
-          <div class="course-photo-frame">
-            <img src="https://images.unsplash.com/photo-1624862762003-8b04581301aa?auto=format&fit=crop&w=900&q=80" alt="A single open book resting on a wooden desk, lit softly from the side.">
-            <span class="course-price-tag">₦20,000 / mo</span>
-            <span class="course-tag">Personal</span>
-            <div class="course-caption">
-              <h3>Hifdh Only</h3>
-              <span class="meta">4 classes weekly</span>
-            </div>
-          </div>
-          <div class="course-dossier" tabindex="0">
-            <span class="dossier-label">What's included</span>
-            <ul>
-              <li>One-on-one Qur'an memorisation and tajweed</li>
-              <li>Pace set entirely to the student</li>
-              <li>Four classes weekly</li>
-            </ul>
-            <div class="dossier-actions">
-              <a href="https://docs.google.com/forms/d/e/1FAIpQLSdyusyD5ABwlvMJznxVLHTO1w5zIopwhw1jRZRNvukX8zVFKw/viewform?usp=header" target="_blank" rel="noopener" class="dossier-cta">Enroll
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-              </a>
-              <button type="button" class="dossier-cta card-pay" data-product-id-live="prod_1debd07326f34dd2bc53" data-product-id-sandbox="prod_d2a0efd2bed64f96aa61" data-plan-name="Madrasah — Hifdh Only (Personal)" data-amount="20000" data-currency="NGN" data-billing="recurring">Pay with card</button>
-            </div>
-            <p class="pay-error"></p>
-          </div>
-          <div class="course-footline">
-            <span class="duration">Monthly, <b>₦20,000</b></span>
-            <span class="peek">Details
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
-            </span>
-          </div>
-        </article>
-
-        <article class="course-card reveal">
-          <div class="course-photo-frame">
-            <img src="https://images.unsplash.com/photo-1638271676156-f40fbfda17f0?auto=format&fit=crop&w=900&q=80" alt="Close-up of Arabic script on a page, warm light falling across the writing.">
-            <span class="course-price-tag">₦35,000 / mo</span>
-            <span class="course-tag">Personal</span>
-            <div class="course-caption">
-              <h3>Full Madrasah</h3>
-              <span class="meta">4 classes weekly</span>
-            </div>
-          </div>
-          <div class="course-dossier" tabindex="0">
-            <span class="dossier-label">What's included</span>
-            <ul>
-              <li>Hifdh and Islamic studies combined</li>
-              <li>Taught entirely one-on-one</li>
-              <li>Four classes weekly</li>
-            </ul>
-            <div class="dossier-actions">
-              <a href="https://docs.google.com/forms/d/e/1FAIpQLSdyusyD5ABwlvMJznxVLHTO1w5zIopwhw1jRZRNvukX8zVFKw/viewform?usp=header" target="_blank" rel="noopener" class="dossier-cta">Enroll
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-              </a>
-              <button type="button" class="dossier-cta card-pay" data-product-id-live="prod_fe2428f2c1f647118abc" data-product-id-sandbox="prod_84b3e07142ee45b1801d" data-plan-name="Madrasah — Full Madrasah (Personal)" data-amount="35000" data-currency="NGN" data-billing="recurring">Pay with card</button>
-            </div>
-            <p class="pay-error"></p>
-          </div>
-          <div class="course-footline">
-            <span class="duration">Monthly, <b>₦35,000</b></span>
-            <span class="peek">Details
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
-            </span>
-          </div>
-        </article>
-
-        <article class="course-card reveal">
-          <div class="course-photo-frame">
-            <img src="https://images.unsplash.com/photo-1589995635011-078e0bb91d11?auto=format&fit=crop&w=900&q=80" alt="A student in white attire seated on the floor, reciting quietly from an open Qur'an.">
-            <span class="course-price-tag">₦19,000 / mo</span>
-            <span class="course-tag">12 months</span>
-            <div class="course-caption">
-              <h3>One-Year Hifdh</h3>
-              <span class="meta">4 classes weekly</span>
-            </div>
-          </div>
-          <div class="course-dossier" tabindex="0">
-            <span class="dossier-label">What's included</span>
-            <ul>
-              <li>A focused 12-month Qur'an memorisation track</li>
-              <li>Group setting with a dedicated hifdh teacher</li>
-              <li>Structured monthly milestones and regular revision</li>
-            </ul>
-            <div class="dossier-actions">
-              <a href="https://docs.google.com/forms/d/e/1FAIpQLSdyusyD5ABwlvMJznxVLHTO1w5zIopwhw1jRZRNvukX8zVFKw/viewform?usp=header" target="_blank" rel="noopener" class="dossier-cta">Enroll
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-              </a>
-              <button type="button" class="dossier-cta card-pay" data-product-id-live="prod_330d0eede3bf4a4bb39a" data-product-id-sandbox="prod_f9d8a4e440074dca896b" data-plan-name="Madrasah — One-Year Hifdh" data-amount="19000" data-currency="NGN" data-billing="recurring">Pay with card</button>
-            </div>
-            <p class="pay-error"></p>
-          </div>
-          <div class="course-footline">
-            <span class="duration">Monthly, <b>₦19,000</b></span>
-            <span class="peek">Details
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
-            </span>
-          </div>
-        </article>
-
-      </div>
-    </div>
-
-    <!-- ================= Academy ================= -->
-    <div class="program-group">
-      <div class="section-head reveal">
-        <span class="eyebrow">Academy</span>
-        <h2>Exam preparation, from O-Levels to Post-UTME.</h2>
-        <p>Tutorials aligned to each exam's real format, with regular timed practice — UTME, Post-UTME, A-Levels, and O-Levels.</p>
-        <a href="academy.html" class="g-link">Full programme details
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </a>
-      </div>
-      <div class="courses-grid cols-4">
-
-        <article class="course-card reveal">
-          <div class="course-photo-frame">
-            <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=900&q=80" alt="A student's hand filling in a multiple-choice answer sheet with a pencil.">
-            <span class="course-price-tag">₦10,000 / mo</span>
-            <span class="course-tag">CBT format</span>
-            <div class="course-caption">
-              <h3>UTME</h3>
-              <span class="meta">Timed practice</span>
-            </div>
-          </div>
-          <div class="course-dossier" tabindex="0">
-            <span class="dossier-label">What's included</span>
-            <ul>
-              <li>Tutorials aligned to the UTME syllabus</li>
-              <li>Practice in the computer-based test format</li>
-              <li>Regular timed mock exams</li>
-            </ul>
-            <div class="dossier-actions">
-              <a href="https://docs.google.com/forms/d/e/1FAIpQLSdcRa7rKlhjIpt7pyHp8lxXaVxE9Yt5hfqKgya4DG-hB2LllQ/viewform?usp=header" target="_blank" rel="noopener" class="dossier-cta">Enroll
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-              </a>
-              <button type="button" class="dossier-cta card-pay" data-product-id-live="prod_6de197ce78fe4f049970" data-product-id-sandbox="prod_9f7f11caa6ae4375a03f" data-plan-name="Academy — UTME" data-amount="10000" data-currency="NGN" data-billing="recurring">Pay with card</button>
-            </div>
-            <p class="pay-error"></p>
-          </div>
-          <div class="course-footline">
-            <span class="duration">Monthly, <b>₦10,000</b></span>
-            <span class="peek">Details
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
-            </span>
-          </div>
-        </article>
-
-        <article class="course-card reveal">
-          <div class="course-photo-frame">
-            <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=900&q=80" alt="A stack of admission and application documents on a desk.">
-            <span class="course-price-tag">₦10,000 / mo</span>
-            <span class="course-tag">Institution-specific</span>
-            <div class="course-caption">
-              <h3>Post-UTME</h3>
-              <span class="meta">Second-stage screening</span>
-            </div>
-          </div>
-          <div class="course-dossier" tabindex="0">
-            <span class="dossier-label">What's included</span>
-            <ul>
-              <li>Preparation tailored to the specific institution</li>
-              <li>Begins once a UTME result is in hand</li>
-              <li>Focused screening-exam practice</li>
-            </ul>
-            <div class="dossier-actions">
-              <a href="https://docs.google.com/forms/d/e/1FAIpQLSdcRa7rKlhjIpt7pyHp8lxXaVxE9Yt5hfqKgya4DG-hB2LllQ/viewform?usp=header" target="_blank" rel="noopener" class="dossier-cta">Enroll
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-              </a>
-              <button type="button" class="dossier-cta card-pay" data-product-id-live="prod_5273f7bb1f1249f6b164" data-product-id-sandbox="prod_e2a70d3ed18d4b8ba203" data-plan-name="Academy — Post-UTME" data-amount="10000" data-currency="NGN" data-billing="recurring">Pay with card</button>
-            </div>
-            <p class="pay-error"></p>
-          </div>
-          <div class="course-footline">
-            <span class="duration">Monthly, <b>₦10,000</b></span>
-            <span class="peek">Details
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
-            </span>
-          </div>
-        </article>
-
-        <article class="course-card reveal">
-          <div class="course-photo-frame">
-            <img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=900&q=80" alt="A pair of glasses resting on an open textbook.">
-            <span class="course-price-tag">₦10,000 / mo</span>
-            <span class="course-tag">Subject-focused</span>
-            <div class="course-caption">
-              <h3>A-Levels</h3>
-              <span class="meta">Independent analysis</span>
-            </div>
-          </div>
-          <div class="course-dossier" tabindex="0">
-            <span class="dossier-label">What's included</span>
-            <ul>
-              <li>Subject-focused tutorials by depth, not breadth</li>
-              <li>Builds toward independent analytical writing</li>
-              <li>Regular assessed practice</li>
-            </ul>
-            <div class="dossier-actions">
-              <a href="https://docs.google.com/forms/d/e/1FAIpQLSdcRa7rKlhjIpt7pyHp8lxXaVxE9Yt5hfqKgya4DG-hB2LllQ/viewform?usp=header" target="_blank" rel="noopener" class="dossier-cta">Enroll
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-              </a>
-              <button type="button" class="dossier-cta card-pay" data-product-id-live="prod_eea22ca104b6496aace8" data-product-id-sandbox="prod_b80ca29cd9a741038fbc" data-plan-name="Academy — A-Levels" data-amount="10000" data-currency="NGN" data-billing="recurring">Pay with card</button>
-            </div>
-            <p class="pay-error"></p>
-          </div>
-          <div class="course-footline">
-            <span class="duration">Monthly, <b>₦10,000</b></span>
-            <span class="peek">Details
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
-            </span>
-          </div>
-        </article>
-
-        <article class="course-card reveal">
-          <div class="course-photo-frame">
-            <img src="https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=900&q=80" alt="Notebooks and a calculator arranged on a study table.">
-            <span class="course-price-tag">₦10,000 / mo</span>
-            <span class="course-tag">WAEC · NECO</span>
-            <div class="course-caption">
-              <h3>O-Levels</h3>
-              <span class="meta">Exam technique</span>
-            </div>
-          </div>
-          <div class="course-dossier" tabindex="0">
-            <span class="dossier-label">What's included</span>
-            <ul>
-              <li>Core subject tutorials on the WAEC and NECO syllabus</li>
-              <li>Steady exam-technique practice</li>
-              <li>Regular progress checks</li>
-            </ul>
-            <div class="dossier-actions">
-              <a href="https://docs.google.com/forms/d/e/1FAIpQLSdcRa7rKlhjIpt7pyHp8lxXaVxE9Yt5hfqKgya4DG-hB2LllQ/viewform?usp=header" target="_blank" rel="noopener" class="dossier-cta">Enroll
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-              </a>
-              <button type="button" class="dossier-cta card-pay" data-product-id-live="prod_16d184d1f3f64de98c98" data-product-id-sandbox="prod_4a954043f4f14a1abb87" data-plan-name="Academy — O-Levels" data-amount="10000" data-currency="NGN" data-billing="recurring">Pay with card</button>
-            </div>
-            <p class="pay-error"></p>
-          </div>
-          <div class="course-footline">
-            <span class="duration">Monthly, <b>₦10,000</b></span>
-            <span class="peek">Details
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
-            </span>
-          </div>
-        </article>
-
-      </div>
-    </div>
-
-    <!-- ================= Skills School ================= -->
-    <div class="program-group">
-      <div class="section-head reveal">
-        <span class="eyebrow">Skills School</span>
-        <h2>Practical skills that produce something real.</h2>
-        <p>Each course ends with the student able to actually do the thing, not just describe it — Public Speaking, Graphic Design, and Data Analysis.</p>
-        <a href="skills-school.html" class="g-link">Full programme details
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </a>
-      </div>
-      <div class="courses-grid">
-
-        <article class="course-card reveal">
-          <div class="course-photo-frame">
-            <img src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=900&q=80" alt="A podium and microphone set up before a small seated audience.">
-            <span class="course-price-tag">₦25,000 one-time</span>
-            <span class="course-tag">4 weeks</span>
-            <div class="course-caption">
-              <h3>Public Speaking</h3>
-              <span class="meta">Weekly cohort</span>
-            </div>
-          </div>
-          <div class="course-dossier" tabindex="0">
-            <span class="dossier-label">Inside the course</span>
-            <ul>
-              <li>Structuring a talk so an audience remembers the point</li>
-              <li>Controlling nerves, pacing, and voice under pressure</li>
-              <li>Closing week: a graded talk in front of a live audience</li>
-            </ul>
-            <div class="dossier-actions">
-              <a href="https://docs.google.com/forms/d/e/1FAIpQLSfKBlaMxEzd_AxpmWiZhtR55GLKFnETw8WK4VXIINd7n3LN5Q/viewform?usp=header" target="_blank" rel="noopener" class="dossier-cta">Enroll
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-              </a>
-              <button type="button" class="dossier-cta card-pay" data-product-id-live="prod_f6fa17539a43498782c0" data-product-id-sandbox="prod_0db88a060ba7464cb18e" data-plan-name="Skills School — Public Speaking" data-amount="25000" data-currency="NGN" data-billing="one_time">Pay with card</button>
-            </div>
-            <p class="pay-error"></p>
-          </div>
-          <div class="course-footline">
-            <span class="duration">Billed <b>once</b>, ₦25,000</span>
-            <span class="peek">Syllabus
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
-            </span>
-          </div>
-        </article>
-
-        <article class="course-card reveal">
-          <div class="course-photo-frame">
-            <img src="https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&w=900&q=80" alt="A designer's monitor displaying a colourful gradient composition mid-edit.">
-            <span class="course-price-tag">₦35,000 one-time</span>
-            <span class="course-tag">6 weeks</span>
-            <div class="course-caption">
-              <h3>Graphic Design</h3>
-              <span class="meta">Project-based</span>
-            </div>
-          </div>
-          <div class="course-dossier" tabindex="0">
-            <span class="dossier-label">Inside the course</span>
-            <ul>
-              <li>Layout, colour, and type fundamentals for real client work</li>
-              <li>Hands-on practice in industry-standard software</li>
-              <li>A small portfolio: logo, poster, and a social kit</li>
-            </ul>
-            <div class="dossier-actions">
-              <a href="https://docs.google.com/forms/d/e/1FAIpQLSfKBlaMxEzd_AxpmWiZhtR55GLKFnETw8WK4VXIINd7n3LN5Q/viewform?usp=header" target="_blank" rel="noopener" class="dossier-cta">Enroll
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-              </a>
-              <button type="button" class="dossier-cta card-pay" data-product-id-live="prod_bad801192e5c47ffae03" data-product-id-sandbox="prod_0fcee9e3af2e4d5797f8" data-plan-name="Skills School — Graphic Design" data-amount="35000" data-currency="NGN" data-billing="one_time">Pay with card</button>
-            </div>
-            <p class="pay-error"></p>
-          </div>
-          <div class="course-footline">
-            <span class="duration">Billed <b>once</b>, ₦35,000</span>
-            <span class="peek">Syllabus
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
-            </span>
-          </div>
-        </article>
-
-        <article class="course-card reveal">
-          <div class="course-photo-frame">
-            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=900&q=80" alt="Charts and performance graphs displayed across a laptop screen.">
-            <span class="course-price-tag">₦80,000 / 2 mo</span>
-            <span class="course-tag">8 weeks</span>
-            <div class="course-caption">
-              <h3>Data Analysis</h3>
-              <span class="meta">Two-month billing</span>
-            </div>
-          </div>
-          <div class="course-dossier" tabindex="0">
-            <span class="dossier-label">Inside the course</span>
-            <ul>
-              <li>Cleaning and organising real, messy datasets</li>
-              <li>Spreadsheets, queries, and dashboard fundamentals</li>
-              <li>Final project: a dashboard built from your own dataset</li>
-            </ul>
-            <div class="dossier-actions">
-              <a href="https://docs.google.com/forms/d/e/1FAIpQLSfKBlaMxEzd_AxpmWiZhtR55GLKFnETw8WK4VXIINd7n3LN5Q/viewform?usp=header" target="_blank" rel="noopener" class="dossier-cta">Enroll
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-              </a>
-              <button type="button" class="dossier-cta card-pay" data-product-id-live="prod_0a4ba5e2488546b4aa8c" data-product-id-sandbox="prod_0161d06903fb4680a671" data-plan-name="Skills School — Data Analysis" data-amount="80000" data-currency="NGN" data-billing="recurring">Pay with card</button>
-            </div>
-            <p class="pay-error"></p>
-          </div>
-          <div class="course-footline">
-            <span class="duration">Billed every <b>2 months</b>, ₦80,000</span>
-            <span class="peek">Syllabus
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
-            </span>
-          </div>
-        </article>
-
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<section id="register" class="how">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <span class="eyebrow">How to enroll</span>
-      <h2>Two steps, once you've picked a plan.</h2>
-      <p>Pay for the plan above by bank transfer or card, then tell us which one you chose along with your details.</p>
-    </div>
-
-    <div class="steps-grid">
-      <div class="step-card reveal">
-        <span class="step-num">1</span>
-        <h3>Pay</h3>
-        <p class="s-copy">Pay for the plan you've chosen above. Bank transfers are usually confirmed within a few hours; card payments confirm instantly.</p>
-
-        <div class="payment-tabs" role="tablist">
-          <button type="button" class="payment-tab" role="tab" aria-selected="true" data-panel="panel-transfer">Bank Transfer</button>
-          <button type="button" class="payment-tab" role="tab" aria-selected="false" data-panel="panel-card">Pay by Card</button>
+        <div class="field" data-field="studentName">
+          <label>Full name <span class="req">*</span></label>
+          <input type="text" name="studentName" placeholder="Student's full name" autocomplete="name">
+          <p class="err-msg">Enter the student's full name.</p>
         </div>
 
-        <div class="payment-panel active" id="panel-transfer">
+        <div class="field-row">
+          <div class="field" data-field="dob">
+            <label>Date of birth <span class="req">*</span></label>
+            <input type="date" name="dob">
+            <p class="err-msg">Enter a date of birth.</p>
+          </div>
+          <div class="field" data-field="gradeLevel">
+            <label>Grade level <span class="req">*</span></label>
+            <select name="gradeLevel">
+              <option value="">Select one</option>
+              <option>Primary 1–6</option>
+              <option>JSS 1–3</option>
+              <option>SS 1–3</option>
+              <option>Not currently in school / Adult learner</option>
+            </select>
+            <p class="err-msg">Select a grade level.</p>
+          </div>
+        </div>
+
+        <div class="field" data-field="kinName">
+          <label>Next of kin — full name <span class="req">*</span></label>
+          <input type="text" name="kinName" placeholder="Parent or guardian's full name" autocomplete="name">
+          <p class="err-msg">Enter next of kin's full name.</p>
+        </div>
+
+        <div class="field-row">
+          <div class="field" data-field="kinRelationship">
+            <label>Relationship <span class="req">*</span></label>
+            <select name="kinRelationship">
+              <option value="">Select one</option>
+              <option>Parent</option>
+              <option>Guardian</option>
+              <option>Sibling</option>
+              <option>Other</option>
+            </select>
+            <p class="err-msg">Select a relationship.</p>
+          </div>
+          <div class="field" data-field="kinPhone">
+            <label>Phone number <span class="req">*</span></label>
+            <input type="tel" name="kinPhone" placeholder="+234..." autocomplete="tel">
+            <p class="err-msg">Enter a phone number.</p>
+          </div>
+        </div>
+
+        <div class="field" data-field="kinEmail">
+          <label>Email <span class="req">*</span></label>
+          <input type="email" name="kinEmail" placeholder="For enrollment updates and payment receipts" autocomplete="email">
+          <p class="err-msg">Enter a valid email address.</p>
+        </div>
+
+        <div class="step-actions">
+          <button type="button" class="btn btn-primary" data-next>Save & Continue</button>
+        </div>
+      </form>
+
+      <!-- ---------- Step 2: Programme & Plan ---------- -->
+      <form class="step" id="step2" data-step="2" novalidate>
+        <h2>Choose a Programme</h2>
+        <p class="step-sub">Pick the programme, then the plan inside it.</p>
+
+        <div class="prog-pills" id="progPills"></div>
+        <div class="plan-options" id="planOptions"></div>
+        <p class="err-msg" data-field="plan" style="display:none; color: var(--error); font-size: 12px; margin-top: 10px;">Select a plan to continue.</p>
+
+        <div class="step-actions">
+          <button type="button" class="btn btn-primary" data-next>Save & Continue</button>
+          <button type="button" class="btn btn-secondary" data-back>Back</button>
+        </div>
+      </form>
+
+      <!-- ---------- Step 3: Payment ---------- -->
+      <div class="step" id="step3" data-step="3">
+        <h2>Pay & Enroll</h2>
+        <p class="step-sub">Last step — pay by transfer or card, then you're in.</p>
+
+        <div class="pay-summary" id="paySummary"></div>
+
+        <div class="pay-tabs" role="tablist">
+          <button type="button" class="pay-tab" role="tab" aria-selected="true" data-pay-tab="transfer">Bank Transfer</button>
+          <button type="button" class="pay-tab" role="tab" aria-selected="false" data-pay-tab="card">Pay by Card</button>
+        </div>
+
+        <div class="pay-view active" data-pay-view="transfer">
           <div class="account-box">
             <div class="account-row"><span>Account Name</span><b>Himaayah Ltd</b></div>
-            <div class="account-row"><span>Account Number</span><b>0127584920<button class="copy-btn" data-copy="0127584920">Copy</button></b></div>
+            <div class="account-row"><span>Account Number</span><b>0127584920<button class="copy-btn" data-copy="0127584920" type="button">Copy</button></b></div>
             <div class="account-row"><span>Bank</span><b>Wema Bank</b></div>
           </div>
-          <p class="modal-note">Keep your payment receipt handy for registration.</p>
-        </div>
-
-        <div class="payment-panel" id="panel-card">
-          <div class="card-select">
-            <label for="planSelect">Which plan are you paying for?</label>
-            <select id="planSelect"></select>
-            <input type="text" id="payerName" placeholder="Full name" required style="margin-top: 10px;">
-            <input type="email" id="payerEmail" placeholder="Email for your receipt" required>
+          <div class="step-actions">
+            <button type="button" class="btn btn-primary" id="submitTransferBtn">I've sent the transfer — Submit</button>
           </div>
-          <button type="button" id="cardPayBtn" class="btn btn-primary">Continue to card payment</button>
-          <p class="pay-status" id="cardPayStatus"></p>
-          <p class="modal-note">You'll be redirected to a secure checkout page to complete payment, then straight to registration.</p>
+          <p class="form-status" id="transferStatus"></p>
+          <p class="form-note">Payments are usually confirmed within a few hours. Submitting saves your enrollment now — no need to wait.</p>
+        </div>
+
+        <div class="pay-view" data-pay-view="card">
+          <div class="step-actions">
+            <button type="button" class="btn btn-primary" id="submitCardBtn">Continue to Card Payment</button>
+          </div>
+          <p class="form-status" id="cardStatus"></p>
+          <p class="form-note">You'll be redirected to a secure checkout page. Your receipt goes to the email from step 1.</p>
+        </div>
+
+        <div class="step-actions">
+          <button type="button" class="btn btn-secondary" data-back>Back</button>
         </div>
       </div>
 
-      <div class="step-card reveal">
-        <span class="step-num">2</span>
-        <h3>Complete Registration</h3>
-        <p class="s-copy">Once payment is sent, continue to the registration form and tell us which programme and plan you chose, along with your details.</p>
-        <a id="continueToRegisterPage" href="https://docs.google.com/forms/d/e/1FAIpQLSfAeWdbBg1oYPyFIAmxOvJaXQm6Q43lbYUuQFirXBZMaPuCyw/viewform?usp=header" class="btn btn-primary">Continue to Registration</a>
-        <p class="modal-note">Registration takes about two minutes to complete.</p>
+      <!-- ---------- Confirmation ---------- -->
+      <div class="step" id="stepDone">
+        <div class="confirm-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+        </div>
+        <h2 id="doneTitle">You're enrolled.</h2>
+        <p class="step-sub" id="doneSub">We've saved your enrollment. Keep an eye on your email for next steps.</p>
       </div>
-    </div>
-  </div>
-</section>
 
-<footer>
-  <div class="wrap">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <div class="footer-brand-row">
-          <span class="crest">HS</span>
-          <span class="mark">Himaayah Schools</span>
-        </div>
-        <p>Raising the next generation with deen, knowledge, and purpose.</p>
-      </div>
-      <div class="footer-cols">
-        <div class="footer-col">
-          <h4>Programmes</h4>
-          <a href="teenagers-building-circle.html">Teenagers Building Circle</a>
-          <a href="madrasah.html">Madrasah</a>
-          <a href="academy.html">Academy</a>
-          <a href="skills-school.html">Skills School</a>
-        </div>
-        <div class="footer-col">
-          <h4>Contact</h4>
-          <span>himaayahschools@gmail.com</span>
-          <span>Ilorin, Nigeria</span>
-        </div>
-      </div>
     </div>
-    <div class="footer-bottom">
-      <span>© 2026 Himaayah Schools.</span>
-    </div>
+    <footer class="wizard-footer">
+      <div class="wizard-footer-social">
+        <a href="https://instagram.com/himaayahschools" target="_blank" rel="noopener" aria-label="Himaayah Schools on Instagram">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="https://x.com/himaayahschools" target="_blank" rel="noopener" aria-label="Himaayah Schools on X">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M18.24 2H21.5l-7.3 8.34L22.8 22h-6.73l-5.27-6.9L4.7 22H1.4l7.8-8.92L1 2h6.9l4.76 6.3L18.24 2zm-1.18 18h1.86L7.03 3.9H5.03L17.06 20z"/></svg>
+        </a>
+      </div>
+      <span>© 2026 Himaayah Schools · <a href="mailto:himaayahschools@gmail.com">himaayahschools@gmail.com</a></span>
+    </footer>
   </div>
-</footer>
+</div>
 
 <script>
-  // Mobile nav toggle
-  const navToggle = document.querySelector('.nav-toggle');
-  const navLinks = document.querySelector('.nav-links');
-  if (navToggle && navLinks) {
-    navToggle.addEventListener('click', () => {
-      const open = navLinks.classList.toggle('open');
-      navToggle.classList.toggle('open', open);
-      navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  // =================================================================
+  // Data: programmes and plans. Same 13 plans and Bachs product IDs
+  // as before — just organized for a compact wizard step instead of
+  // a full card grid.
+  // =================================================================
+  const PROGRAMMES = [
+    {
+      id: 'circle', name: 'Teenagers Building Circle',
+      plans: [
+        { name: 'Teenagers Building Circle — Full Programme', tag: 'Ages 13–19', amount: 40000, period: '/mo',
+          bullets: ['All four pillars: deen, educational development, skills, personal development', 'Live weekly sessions with a dedicated Slack workspace'],
+          productIdLive: 'prod_cbd46cdefa0e4d75a31c', productIdSandbox: 'prod_4be17e80bcc74b9f8e3a' },
+      ],
+    },
+    {
+      id: 'madrasah', name: 'Madrasah',
+      plans: [
+        { name: 'Madrasah — Hifdh Only (Group)', tag: 'Group', amount: 12000, period: '/mo',
+          bullets: ['Qur\u2019an memorisation and tajweed', 'Small group setting, four classes weekly'],
+          productIdLive: 'prod_1518dd1ab1ba4cfea0e8', productIdSandbox: 'prod_f6d40928f10a42c8a5fe' },
+        { name: 'Madrasah — Full Madrasah (Group)', tag: 'Group', amount: 20000, period: '/mo',
+          bullets: ['Hifdh and tajweed plus aqeedah, fiqh, seerah', 'Four classes weekly, group setting'],
+          productIdLive: 'prod_88d2bf8aefd145569c32', productIdSandbox: 'prod_2adf6149f52b4e85a427' },
+        { name: 'Madrasah — Hifdh Only (Personal)', tag: 'Personal', amount: 20000, period: '/mo',
+          bullets: ['One-on-one Qur\u2019an memorisation and tajweed', 'Pace set entirely to the student'],
+          productIdLive: 'prod_1debd07326f34dd2bc53', productIdSandbox: 'prod_d2a0efd2bed64f96aa61' },
+        { name: 'Madrasah — Full Madrasah (Personal)', tag: 'Personal', amount: 35000, period: '/mo',
+          bullets: ['Hifdh and Islamic studies combined', 'Taught entirely one-on-one'],
+          productIdLive: 'prod_fe2428f2c1f647118abc', productIdSandbox: 'prod_84b3e07142ee45b1801d' },
+        { name: 'Madrasah — One-Year Hifdh', tag: '12 months', amount: 19000, period: '/mo',
+          bullets: ['Focused 12-month Qur\u2019an memorisation track', 'Structured monthly milestones and revision'],
+          productIdLive: 'prod_330d0eede3bf4a4bb39a', productIdSandbox: 'prod_f9d8a4e440074dca896b' },
+      ],
+    },
+    {
+      id: 'academy', name: 'Academy',
+      plans: [
+        { name: 'Academy — UTME', tag: 'CBT format', amount: 10000, period: '/mo',
+          bullets: ['Tutorials aligned to the UTME syllabus', 'Regular timed mock exams'],
+          productIdLive: 'prod_6de197ce78fe4f049970', productIdSandbox: 'prod_9f7f11caa6ae4375a03f' },
+        { name: 'Academy — Post-UTME', tag: 'Institution-specific', amount: 10000, period: '/mo',
+          bullets: ['Preparation tailored to the specific institution', 'Focused screening-exam practice'],
+          productIdLive: 'prod_5273f7bb1f1249f6b164', productIdSandbox: 'prod_e2a70d3ed18d4b8ba203' },
+        { name: 'Academy — A-Levels', tag: 'Subject-focused', amount: 10000, period: '/mo',
+          bullets: ['Subject-focused tutorials by depth, not breadth', 'Builds toward independent analytical writing'],
+          productIdLive: 'prod_eea22ca104b6496aace8', productIdSandbox: 'prod_b80ca29cd9a741038fbc' },
+        { name: 'Academy — O-Levels', tag: 'WAEC · NECO', amount: 10000, period: '/mo',
+          bullets: ['Core subject tutorials on the WAEC and NECO syllabus', 'Steady exam-technique practice'],
+          productIdLive: 'prod_16d184d1f3f64de98c98', productIdSandbox: 'prod_4a954043f4f14a1abb87' },
+      ],
+    },
+    {
+      id: 'skills', name: 'Skills School',
+      plans: [
+        { name: 'Skills School — Public Speaking', tag: '4 weeks · one-time', amount: 25000, period: '',
+          bullets: ['Structuring a talk so an audience remembers the point', 'Closing week: a graded talk in front of a live audience'],
+          productIdLive: 'prod_f6fa17539a43498782c0', productIdSandbox: 'prod_0db88a060ba7464cb18e' },
+        { name: 'Skills School — Graphic Design', tag: '6 weeks · one-time', amount: 35000, period: '',
+          bullets: ['Layout, colour, and type fundamentals for real client work', 'A small portfolio: logo, poster, social kit'],
+          productIdLive: 'prod_bad801192e5c47ffae03', productIdSandbox: 'prod_0fcee9e3af2e4d5797f8' },
+        { name: 'Skills School — Data Analysis', tag: '8 weeks', amount: 80000, period: '/2mo',
+          bullets: ['Cleaning and organising real, messy datasets', 'Final project: a dashboard built from your own dataset'],
+          productIdLive: 'prod_0a4ba5e2488546b4aa8c', productIdSandbox: 'prod_0161d06903fb4680a671' },
+      ],
+    },
+  ];
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const requestedProgramme = urlParams.get('programme');
+  const initialProgrammeId = PROGRAMMES.some((p) => p.id === requestedProgramme)
+    ? requestedProgramme
+    : PROGRAMMES[0].id;
+
+  const state = {
+    step: 1,
+    student: {},
+    programmeId: initialProgrammeId,
+    plan: null,
+  };
+
+  // ---------------------------------------------------------------
+  // Step navigation
+  // ---------------------------------------------------------------
+  const steps = document.querySelectorAll('.step');
+  const stepper = document.getElementById('stepper');
+  const heroRoadmap = document.getElementById('heroRoadmap');
+
+  function showStep(n) {
+    if (n === 'Done') {
+      steps.forEach((s) => s.classList.remove('active'));
+      document.getElementById('stepDone').classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    state.step = n;
+    steps.forEach((s) => s.classList.toggle('active', s.dataset.step === String(n)));
+    stepper.querySelectorAll('.dash').forEach((d) => {
+      const dn = Number(d.dataset.dash);
+      d.classList.toggle('done', dn < n);
+      d.classList.toggle('active', dn === n);
     });
+    stepper.querySelectorAll('.s-label')[0].textContent = Math.min(n, 3);
+    heroRoadmap.querySelectorAll('.r-item').forEach((r) => {
+      const rn = Number(r.dataset.for);
+      r.classList.toggle('done', rn < n);
+      r.classList.toggle('active', rn === n);
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  // Reveal-on-scroll
-  const revealEls = document.querySelectorAll('.reveal');
-  if ('IntersectionObserver' in window) {
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('in');
-          io.unobserve(entry.target);
-        }
+  function validateStep(stepEl) {
+    let ok = true;
+    stepEl.querySelectorAll('[data-field]').forEach((field) => {
+      const input = field.querySelector('input, select');
+      if (!input) return;
+      const valid = input.type === 'email'
+        ? /^\S+@\S+\.\S+$/.test(input.value.trim())
+        : input.value.trim().length > 0;
+      field.classList.toggle('error', !valid);
+      if (!valid) ok = false;
+    });
+    return ok;
+  }
+
+  document.getElementById('step1').querySelector('[data-next]').addEventListener('click', () => {
+    const stepEl = document.getElementById('step1');
+    if (!validateStep(stepEl)) return;
+    const data = new FormData(stepEl);
+    state.student = Object.fromEntries(data.entries());
+    showStep(2);
+  });
+
+  document.getElementById('step2').querySelector('[data-next]').addEventListener('click', () => {
+    const errMsg = document.querySelector('[data-field="plan"]');
+    if (!state.plan) { errMsg.style.display = 'block'; return; }
+    errMsg.style.display = 'none';
+    renderPaySummary();
+    showStep(3);
+  });
+
+  document.querySelectorAll('[data-back]').forEach((btn) => {
+    btn.addEventListener('click', () => showStep(state.step - 1));
+  });
+
+  // ---------------------------------------------------------------
+  // Step 2: programme pills + plan options
+  // ---------------------------------------------------------------
+  const progPills = document.getElementById('progPills');
+  const planOptions = document.getElementById('planOptions');
+
+  function renderProgPills() {
+    progPills.innerHTML = '';
+    PROGRAMMES.forEach((p) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'prog-pill';
+      btn.textContent = p.name;
+      btn.setAttribute('aria-pressed', String(p.id === state.programmeId));
+      btn.addEventListener('click', () => {
+        state.programmeId = p.id;
+        state.plan = null;
+        renderProgPills();
+        renderPlanOptions();
       });
-    }, { threshold: 0.12 });
-    revealEls.forEach((el, i) => {
-      el.style.transitionDelay = (i % 4) * 0.06 + 's';
-      io.observe(el);
+      progPills.appendChild(btn);
     });
-  } else {
-    revealEls.forEach((el) => el.classList.add('in'));
   }
 
-  // Copy account number
+  function renderPlanOptions() {
+    const programme = PROGRAMMES.find((p) => p.id === state.programmeId);
+    planOptions.innerHTML = '';
+    programme.plans.forEach((plan, i) => {
+      const wrap = document.createElement('div');
+      wrap.className = 'plan-opt';
+      wrap.innerHTML = `
+        <div class="plan-opt-head">
+          <div class="plan-opt-radio"></div>
+          <div class="plan-opt-name">${plan.name.split('—').pop().trim()}<small>${plan.tag}</small></div>
+          <div class="plan-opt-price">\u20a6${plan.amount.toLocaleString()}${plan.period}</div>
+        </div>
+        <span class="plan-opt-toggle" data-toggle>Show details</span>
+        <div class="plan-opt-details" data-details>
+          <ul>${plan.bullets.map((b) => `<li>${b}</li>`).join('')}</ul>
+        </div>
+      `;
+      wrap.querySelector('.plan-opt-head').addEventListener('click', () => {
+        state.plan = plan;
+        planOptions.querySelectorAll('.plan-opt').forEach((el) => el.classList.remove('selected'));
+        wrap.classList.add('selected');
+      });
+      wrap.querySelector('[data-toggle]').addEventListener('click', (e) => {
+        e.stopPropagation();
+        const details = wrap.querySelector('[data-details]');
+        const open = details.classList.toggle('open');
+        e.target.textContent = open ? 'Hide details' : 'Show details';
+      });
+      planOptions.appendChild(wrap);
+    });
+  }
+
+  renderProgPills();
+  renderPlanOptions();
+
+  // ---------------------------------------------------------------
+  // Step 3: payment
+  // ---------------------------------------------------------------
+  function renderPaySummary() {
+    const s = state.student;
+    document.getElementById('paySummary').innerHTML = `
+      <div class="row"><span>Student</span><b>${s.studentName || ''}</b></div>
+      <div class="row"><span>Plan</span><b>${state.plan.name}</b></div>
+      <div class="row"><span>Amount</span><b>\u20a6${state.plan.amount.toLocaleString()}${state.plan.period}</b></div>
+      <div class="row"><span>Receipt to</span><b>${s.kinEmail || ''}</b></div>
+    `;
+  }
+
+  document.querySelectorAll('.pay-tab').forEach((tab) => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.pay-tab').forEach((t) => t.setAttribute('aria-selected', String(t === tab)));
+      document.querySelectorAll('.pay-view').forEach((v) => {
+        v.classList.toggle('active', v.dataset.payView === tab.dataset.payTab);
+      });
+    });
+  });
+
   document.querySelectorAll('.copy-btn').forEach((btn) => {
     btn.addEventListener('click', () => {
       const val = btn.getAttribute('data-copy');
@@ -987,142 +625,100 @@
         const original = btn.textContent;
         btn.textContent = 'Copied';
         btn.classList.add('copied');
-        setTimeout(() => {
-          btn.textContent = original;
-          btn.classList.remove('copied');
-        }, 1600);
+        setTimeout(() => { btn.textContent = original; btn.classList.remove('copied'); }, 1600);
       };
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(val).then(finish).catch(finish);
-      } else {
-        finish();
-      }
+      if (navigator.clipboard?.writeText) navigator.clipboard.writeText(val).then(finish).catch(finish);
+      else finish();
     });
   });
 
   // ---------------------------------------------------------------
-  // Card payments (Bachs) — collects each plan's data-* attributes
-  // from the course cards so there's one source of truth for pricing.
-  // Every "Pay with card" click hits /api/create-checkout (a
-  // serverless function you deploy alongside this page) which talks
-  // to Bachs with your secret key and returns a hosted checkout URL.
+  // Submission: writes to Google Sheets via /api/submit-registration,
+  // then either shows the confirmation step (bank transfer) or
+  // creates a Bachs checkout session and redirects (card).
   // ---------------------------------------------------------------
-  const PLANS = Array.from(document.querySelectorAll('.card-pay')).map((btn) => ({
-    productIdLive: btn.getAttribute('data-product-id-live'),
-    productIdSandbox: btn.getAttribute('data-product-id-sandbox'),
-    name: btn.getAttribute('data-plan-name'),
-    amount: btn.getAttribute('data-amount'),
-    currency: btn.getAttribute('data-currency'),
-  }));
+  async function submitRegistration(paymentMethod, status) {
+    const s = state.student;
+    const payload = {
+      studentName: s.studentName,
+      dob: s.dob,
+      gradeLevel: s.gradeLevel,
+      kinName: s.kinName,
+      kinRelationship: s.kinRelationship,
+      kinPhone: s.kinPhone,
+      kinEmail: s.kinEmail,
+      programme: PROGRAMMES.find((p) => p.id === state.programmeId).name,
+      planName: state.plan.name,
+      amount: state.plan.amount,
+      currency: 'NGN',
+      paymentMethod,
+      status,
+    };
+    const res = await fetch('/api/submit-registration', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) throw new Error('Could not save registration');
+    return payload;
+  }
 
-  async function startCheckout(plan, name, email, triggerBtn, statusEl) {
-    if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
-      if (statusEl) {
-        statusEl.textContent = 'Enter a valid email first.';
-        statusEl.className = statusEl.className.replace('pay-error', '') || 'pay-status';
-        statusEl.classList.add('error');
-        statusEl.style.display = 'block';
-      }
-      return;
-    }
-    const originalLabel = triggerBtn.textContent;
-    triggerBtn.disabled = true;
-    triggerBtn.textContent = 'Redirecting…';
-    if (statusEl) statusEl.style.display = 'none';
+  const submitTransferBtn = document.getElementById('submitTransferBtn');
+  submitTransferBtn.addEventListener('click', async () => {
+    const statusEl = document.getElementById('transferStatus');
+    statusEl.style.display = 'none';
+    submitTransferBtn.disabled = true;
+    submitTransferBtn.textContent = 'Submitting…';
     try {
+      await submitRegistration('bank_transfer', 'pending_bank_transfer');
+      document.getElementById('doneTitle').textContent = 'Registration received.';
+      document.getElementById('doneSub').textContent =
+        `We've saved ${state.student.studentName}'s enrollment for ${state.plan.name}. Once your transfer is confirmed (usually within a few hours), you're fully enrolled.`;
+      showStep('Done');
+    } catch (err) {
+      submitTransferBtn.disabled = false;
+      submitTransferBtn.textContent = "I've sent the transfer — Submit";
+      statusEl.textContent = 'Something went wrong saving your registration. Please try again.';
+      statusEl.classList.add('error');
+      statusEl.style.display = 'block';
+    }
+  });
+
+  const submitCardBtn = document.getElementById('submitCardBtn');
+  submitCardBtn.addEventListener('click', async () => {
+    const statusEl = document.getElementById('cardStatus');
+    statusEl.style.display = 'none';
+    submitCardBtn.disabled = true;
+    submitCardBtn.textContent = 'Redirecting…';
+    try {
+      await submitRegistration('card', 'pending_card_payment');
       const res = await fetch('/api/create-checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          productIdLive: plan.productIdLive,
-          productIdSandbox: plan.productIdSandbox,
-          planName: plan.name,
-          amount: plan.amount,
-          currency: plan.currency,
-          name,
-          email,
+          productIdLive: state.plan.productIdLive,
+          productIdSandbox: state.plan.productIdSandbox,
+          planName: state.plan.name,
+          amount: state.plan.amount,
+          currency: 'NGN',
+          name: state.student.kinName,
+          email: state.student.kinEmail,
         }),
       });
       if (!res.ok) throw new Error('Checkout could not be started.');
-      const data = await res.json();
-      if (!data.url) throw new Error('No checkout URL returned.');
-      window.location.href = data.url;
+      const checkoutData = await res.json();
+      if (!checkoutData.url) throw new Error('No checkout URL returned.');
+      window.location.href = checkoutData.url;
     } catch (err) {
-      triggerBtn.disabled = false;
-      triggerBtn.textContent = originalLabel;
-      if (statusEl) {
-        statusEl.textContent = 'Something went wrong starting checkout. Please try again or use bank transfer.';
-        statusEl.classList.add('error');
-        statusEl.style.display = 'block';
-      }
+      submitCardBtn.disabled = false;
+      submitCardBtn.textContent = 'Continue to Card Payment';
+      statusEl.textContent = 'Something went wrong. Please try again or use bank transfer.';
+      statusEl.classList.add('error');
+      statusEl.style.display = 'block';
     }
-  }
-
-  // Per-card "Pay with card" buttons (inside each course dossier)
-  document.querySelectorAll('.course-card').forEach((card) => {
-    const btn = card.querySelector('.card-pay');
-    const errorEl = card.querySelector('.pay-error');
-    if (!btn) return;
-    btn.addEventListener('click', () => {
-      const name = window.prompt('Full name:');
-      if (name === null) return;
-      const email = window.prompt('Email address for your receipt:');
-      if (email === null) return;
-      const plan = {
-        productIdLive: btn.getAttribute('data-product-id-live'),
-        productIdSandbox: btn.getAttribute('data-product-id-sandbox'),
-        name: btn.getAttribute('data-plan-name'),
-        amount: btn.getAttribute('data-amount'),
-        currency: btn.getAttribute('data-currency'),
-      };
-      startCheckout(plan, name.trim(), email.trim(), btn, errorEl);
-    });
   });
 
-  // "Pay by Card" tab in the how-to-enroll section
-  const planSelect = document.getElementById('planSelect');
-  if (planSelect) {
-    PLANS.forEach((plan) => {
-      const opt = document.createElement('option');
-      opt.value = plan.name;
-      opt.textContent = `${plan.name} — ₦${Number(plan.amount).toLocaleString()}`;
-      planSelect.appendChild(opt);
-    });
-  }
-
-  const tabs = document.querySelectorAll('.payment-tab');
-  tabs.forEach((tab) => {
-    tab.addEventListener('click', () => {
-      tabs.forEach((t) => t.setAttribute('aria-selected', 'false'));
-      tab.setAttribute('aria-selected', 'true');
-      document.querySelectorAll('.payment-panel').forEach((p) => p.classList.remove('active'));
-      document.getElementById(tab.getAttribute('data-panel')).classList.add('active');
-    });
-  });
-
-  const cardPayBtn = document.getElementById('cardPayBtn');
-  if (cardPayBtn) {
-    cardPayBtn.addEventListener('click', () => {
-      const plan = PLANS.find((p) => p.name === planSelect.value);
-      const name = document.getElementById('payerName').value.trim();
-      const email = document.getElementById('payerEmail').value.trim();
-      const statusEl = document.getElementById('cardPayStatus');
-      statusEl.className = 'pay-status';
-      if (!plan) {
-        statusEl.textContent = 'Choose a plan first.';
-        statusEl.classList.add('error');
-        statusEl.style.display = 'block';
-        return;
-      }
-      if (!name) {
-        statusEl.textContent = 'Enter your full name first.';
-        statusEl.classList.add('error');
-        statusEl.style.display = 'block';
-        return;
-      }
-      startCheckout(plan, name, email, cardPayBtn, statusEl);
-    });
-  }
+  // (confirmation step is handled directly inside showStep above)
 </script>
 </body>
 </html>
