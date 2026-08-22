@@ -11,8 +11,8 @@
 
 <style>
   :root {
-    --onyx: #0F0F11; --card: #1A1A1E; --line: rgba(255, 187, 0, 0.16);
-    --gold: #FFBB00; --gold-deep: #E0AC00; --white: #FFFFFF; --gray: #E2E8F0; --gray-dim: #7C828C;
+    --onyx: #06263B; --card: #0F3A5C; --line: rgba(133, 204, 255, 0.16);
+    --gold: #85CCFF; --gold-deep: #5CB8F5; --white: #FFFFFF; --gray: #E2E8F0; --gray-dim: #7FA8C7;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
@@ -23,7 +23,7 @@
   a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
   @media (prefers-reduced-motion: reduce) { * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; } }
 
-  .site-nav { position: sticky; top: 0; z-index: 100; background: rgba(15,15,17,0.94); backdrop-filter: blur(10px); }
+  .site-nav { position: sticky; top: 0; z-index: 100; background: rgba(6,38,59,0.94); backdrop-filter: blur(10px); }
   .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 76px; }
   .brand { display: flex; align-items: center; gap: 11px; font-weight: 800; font-size: 17px; letter-spacing: -0.01em; }
   .brand .crest { width: 28px; height: 34px; flex-shrink: 0; }
@@ -31,7 +31,7 @@
   .nav-links a:not(.nav-cta) { font-size: 14px; font-weight: 500; color: var(--gray); transition: color 0.2s; }
   .nav-links a:not(.nav-cta):hover { color: var(--gold); }
   .nav-cta { background: var(--gold); color: var(--onyx); font-weight: 700; font-size: 13.5px; padding: 11px 22px; border-radius: 4px; transition: background 0.2s, box-shadow 0.2s; }
-  .nav-cta:hover { background: var(--gold-deep); box-shadow: 0 0 24px rgba(255,187,0,0.32); }
+  .nav-cta:hover { background: var(--gold-deep); box-shadow: 0 0 24px rgba(133,204,255,0.32); }
   .nav-toggle { display: none; }
   @media (max-width: 900px) {
     .nav-links { position: absolute; top: 76px; left: 0; right: 0; background: var(--onyx); flex-direction: column; align-items: stretch; gap: 0; border-bottom: 1px solid var(--line); max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
@@ -47,7 +47,7 @@
   .hero h1 { font-size: clamp(30px, 4.4vw, 46px); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 16px; }
   .hero p { font-size: 15.5px; color: var(--gray); max-width: 56ch; margin: 0 auto; line-height: 1.6; }
 
-  .notice { max-width: 760px; margin: 0 auto 50px; padding: 16px 20px; border: 1px solid rgba(255,187,0,0.35); background: rgba(255,187,0,0.05); border-radius: 8px; font-size: 13px; color: var(--gray); text-align: center; }
+  .notice { max-width: 760px; margin: 0 auto 50px; padding: 16px 20px; border: 1px solid rgba(133,204,255,0.35); background: rgba(133,204,255,0.05); border-radius: 8px; font-size: 13px; color: var(--gray); text-align: center; }
   .notice b { color: var(--gold); }
 
   .timeline { padding: 0 0 100px; }
@@ -62,7 +62,7 @@
   .cta-band h2 { font-size: clamp(22px, 2.8vw, 28px); font-weight: 800; margin-bottom: 12px; }
   .cta-band p { color: var(--gray); font-size: 14px; margin-bottom: 24px; max-width: 54ch; margin-left: auto; margin-right: auto; }
   .btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px; font-size: 14px; font-weight: 700; border-radius: 4px; background: var(--gold); color: var(--onyx); transition: background 0.2s, box-shadow 0.2s; }
-  .btn:hover { background: var(--gold-deep); box-shadow: 0 0 26px rgba(255,187,0,0.3); }
+  .btn:hover { background: var(--gold-deep); box-shadow: 0 0 26px rgba(133,204,255,0.3); }
 
   footer { padding: 56px 0 30px; font-size: 13.5px; color: var(--gray-dim); }
   .footer-top { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 40px; margin-bottom: 40px; }
@@ -86,7 +86,7 @@
 <nav class="site-nav">
   <div class="wrap nav-inner">
     <a class="brand" href="index.html">
-      <svg class="crest" viewBox="0 0 377.21 459.6"><path fill="#FFBB00" d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>
+      <svg class="crest" viewBox="0 0 377.21 459.6"><path fill="#85CCFF" d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>
       Himaayah Schools
     </a>
     <div class="nav-links" id="navLinks">
@@ -167,7 +167,7 @@
     <div class="footer-top">
       <div class="footer-brand">
         <div class="footer-brand-row">
-          <svg width="24" height="29" viewBox="0 0 377.21 459.6"><path fill="#FFBB00" d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>
+          <svg width="24" height="29" viewBox="0 0 377.21 459.6"><path fill="#85CCFF" d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>
           <span class="footer-mark">Himaayah Schools</span>
         </div>
         <p>Raising the next generation with deen, knowledge, and purpose.</p>

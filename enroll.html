@@ -11,14 +11,14 @@
 
 <style>
   :root {
-    --night: #0F0F11;
-    --night-soft: #1A1A1D;
-    --night-line: rgba(255, 187, 0, 0.16);
-    --gold: #FFBB00;
-    --gold-deep: #E0AC00;
+    --night: #094570;
+    --night-soft: #0B5488;
+    --night-line: rgba(133, 204, 255, 0.20);
+    --gold: #85CCFF;
+    --gold-deep: #5FB4EF;
     --white: #FFFFFF;
-    --ink-soft: #B8B8BB;
-    --ink-dim: #86868C;
+    --ink-soft: #C9DCEC;
+    --ink-dim: #8FB4D1;
     --error: #FF6B6B;
     --radius: 6px;
   }
@@ -47,7 +47,7 @@
   .hero {
     flex: 0 0 42%; position: relative; min-height: 100vh;
     background:
-      linear-gradient(180deg, rgba(15,15,17,0.35) 0%, rgba(15,15,17,0.92) 100%),
+      linear-gradient(180deg, rgba(9,69,112,0.35) 0%, rgba(9,69,112,0.92) 100%),
       url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1400&q=80') center/cover;
     display: flex; flex-direction: column; justify-content: space-between;
     padding: 44px 48px;
@@ -63,13 +63,13 @@
   .hero-roadmap { display: flex; flex-direction: column; gap: 16px; }
   .hero-roadmap .r-item { display: flex; align-items: center; gap: 14px; font-size: 14px; color: var(--ink-soft); }
   .hero-roadmap .r-num {
-    width: 26px; height: 26px; border-radius: 50%; border: 1px solid rgba(255,187,0,0.4);
+    width: 26px; height: 26px; border-radius: 50%; border: 1px solid rgba(133,204,255,0.45);
     display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--gold);
     flex-shrink: 0; transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
   }
   .hero-roadmap .r-item.done .r-num { background: var(--gold); color: var(--night); border-color: var(--gold); }
   .hero-roadmap .r-item.active { color: var(--white); font-weight: 600; }
-  .hero-roadmap .r-item.active .r-num { border-color: var(--gold); box-shadow: 0 0 0 4px rgba(255,187,0,0.15); }
+  .hero-roadmap .r-item.active .r-num { border-color: var(--gold); box-shadow: 0 0 0 4px rgba(133,204,255,0.18); }
 
   @media (max-width: 900px) {
     .split { flex-direction: column; }
@@ -122,7 +122,7 @@
   }
   .field input::placeholder { color: var(--ink-dim); }
   .field input:focus, .field select:focus {
-    border-color: var(--gold); box-shadow: 0 0 0 3px rgba(255,187,0,0.14); outline: none;
+    border-color: var(--gold); box-shadow: 0 0 0 3px rgba(133,204,255,0.16); outline: none;
   }
   .field.error input, .field.error select { border-color: var(--error); box-shadow: 0 0 0 3px rgba(255,107,107,0.14); }
   .field .err-msg { font-size: 12px; color: var(--error); margin-top: 6px; display: none; }
@@ -144,7 +144,7 @@
     border: 1px solid var(--night-line); border-radius: var(--radius); background: var(--night-soft);
     transition: border-color 0.2s, background 0.2s;
   }
-  .plan-opt.selected { border-color: var(--gold); background: rgba(255,187,0,0.06); }
+  .plan-opt.selected { border-color: var(--gold); background: rgba(133,204,255,0.08); }
   .plan-opt-head { display: flex; align-items: center; gap: 14px; padding: 14px 16px; cursor: pointer; }
   .plan-opt-radio {
     width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--ink-dim); flex-shrink: 0; position: relative;
@@ -181,14 +181,14 @@
   .pay-view { display: none; }
   .pay-view.active { display: block; }
 
-  .account-box { border: 1px solid var(--night-line); border-radius: var(--radius); background: rgba(255,187,0,0.04); margin-bottom: 14px; overflow: hidden; }
+  .account-box { border: 1px solid var(--night-line); border-radius: var(--radius); background: rgba(133,204,255,0.06); margin-bottom: 14px; overflow: hidden; }
   .account-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 15px; font-size: 13.5px; border-bottom: 1px solid var(--night-line); }
   .account-row:last-child { border-bottom: none; }
   .account-row span { color: var(--ink-dim); }
   .account-row b { font-weight: 700; display: inline-flex; align-items: center; gap: 8px; }
   .copy-btn {
     font-size: 10px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--gold);
-    border: 1px solid rgba(255,187,0,0.4); padding: 3px 8px; border-radius: 4px; background: transparent;
+    border: 1px solid rgba(133,204,255,0.45); padding: 3px 8px; border-radius: 4px; background: transparent;
     transition: background 0.2s, color 0.2s;
   }
   .copy-btn:hover, .copy-btn.copied { background: var(--gold); color: var(--night); }
@@ -196,7 +196,7 @@
   /* ---------- Buttons ---------- */
   .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 15px 20px; font-size: 14.5px; font-weight: 700; border-radius: var(--radius); transition: background 0.2s, box-shadow 0.2s, opacity 0.2s, transform 0.1s; }
   .btn-primary { background: var(--gold); color: var(--night); }
-  .btn-primary:hover { background: var(--gold-deep); box-shadow: 0 0 24px rgba(255,187,0,0.25); }
+  .btn-primary:hover { background: var(--gold-deep); box-shadow: 0 0 24px rgba(133,204,255,0.28); }
   .btn-primary:active { transform: scale(0.99); }
   .btn-primary[disabled] { opacity: 0.55; cursor: wait; box-shadow: none; }
   .btn-secondary { background: transparent; border: 1px solid var(--night-line); color: var(--white); margin-top: 10px; }
@@ -210,7 +210,7 @@
 
   /* ---------- Confirmation ---------- */
   .confirm-icon {
-    width: 56px; height: 56px; border-radius: 50%; background: rgba(255,187,0,0.12); border: 1px solid rgba(255,187,0,0.4);
+    width: 56px; height: 56px; border-radius: 50%; background: rgba(133,204,255,0.14); border: 1px solid rgba(133,204,255,0.45);
     display: flex; align-items: center; justify-content: center; margin-bottom: 20px; color: var(--gold);
   }
 </style>
@@ -223,7 +223,7 @@
   <div class="hero">
     <div class="hero-top">
       <a href="index.html">
-        <svg class="crest" viewBox="0 0 377.21 459.6"><path fill="#FFBB00" d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>
+        <svg class="crest" viewBox="0 0 377.21 459.6"><path fill="#85CCFF" d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>
         Himaayah Schools
       </a>
     </div>
