@@ -6,6 +6,8 @@
 <title>Exam Calendars — Himaayah Schools</title>
 <meta name="description" content="UTME, Post-UTME, WAEC, NECO, IJMB and JUPEB dates in one place, with each date marked as confirmed or expected.">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20377.21%20459.6%22%3E%3Cpath%20fill=%22%23094570%22%20d=%22M0.14%20280.14c4.28%2C65.12%2098.42%2C133.97%20163.39%2C172.42%2015.86%2C9.39%2034.24%2C9.39%2050.11%2C-0.01%2052.97%2C-31.37%20159.02%2C-102.63%20163.43%2C-172.41l-376.92%200zm302.67%20-162.41l74.4%20105.8%200%20-126.48c0%2C-20.52%20-11.85%2C-38.03%20-30.9%2C-45.66l-125.46%20-50.22%2081.96%20116.56zm-228.42%200l82.79%20-117.73%20-126.49%2051.28c-18.95%2C7.68%20-30.7%2C25.13%20-30.7%2C45.57l0%20126.67%2074.4%20-105.8zm114.21%20-8.75c35.22%2C0%2063.77%2C28.55%2063.77%2C63.77%200%2C35.22%20-28.55%2C63.77%20-63.77%2C63.77%20-35.22%2C0%20-63.77%2C-28.55%20-63.77%2C-63.77%200%2C-35.22%2028.55%2C-63.77%2063.77%2C-63.77z%22/%3E%3C/svg%3E">
+<link rel="canonical" href="https://www.himaayahschools.com/exam-calendars.html">
+<meta property="og:url" content="https://www.himaayahschools.com/exam-calendars.html">
 <meta name="theme-color" content="#094570">
 <meta property="og:site_name" content="Himaayah Schools">
 <meta property="og:type" content="website">
@@ -149,6 +151,103 @@
   .wa-menu a:hover { background: #F1F7FC; }
   @keyframes waIn { from { opacity: 0; transform: translateY(8px); } }
   @media (max-width: 600px) { .wa-fab span { display: none; } .wa-fab { padding: 15px; } }
+
+  /* Month calendar */
+  .cal-layout { display: grid; grid-template-columns: 1.35fr .65fr; gap: 28px; align-items: start; margin-bottom: 64px; }
+  @media (max-width: 960px) { .cal-layout { grid-template-columns: 1fr; } }
+  .cal-card { background: #fff; border: 1px solid var(--line); border-radius: var(--r-lg); padding: 28px; box-shadow: 0 30px 60px -40px rgba(6,47,77,.35); }
+  .cal-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 20px; }
+  .cal-head h2 { font-family: var(--display); font-size: clamp(22px, 3vw, 30px); letter-spacing: -.02em; color: var(--deep); text-align: center; flex: 1; }
+  .nav-btn { width: 44px; height: 44px; border-radius: 50%; background: var(--wash); color: var(--ink); display: grid; place-items: center; transition: background .2s, color .2s, opacity .2s; }
+  .nav-btn:hover:not(:disabled) { background: var(--ink); color: #fff; } .nav-btn:disabled { opacity: .35; cursor: not-allowed; }
+  .today-btn { padding: 11px 18px; border-radius: 999px; background: var(--wash); color: var(--ink); font-size: 13.5px; font-weight: 600; transition: background .2s, color .2s; }
+  .today-btn:hover { background: var(--ink); color: #fff; }
+  .dow, .days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+  .dow span { text-align: center; font-size: 12px; font-weight: 700; color: var(--muted); padding-bottom: 8px; }
+  .day { position: relative; aspect-ratio: 1 / 1; min-height: 44px; border-radius: 14px; background: var(--wash); display: flex; align-items: flex-start; justify-content: flex-start; padding: 8px 9px; font-size: 14px; font-weight: 600; color: var(--deep); transition: transform .15s, box-shadow .2s; border: 2px solid transparent; }
+  .day:hover:not(.pad) { transform: translateY(-2px); box-shadow: 0 0 0 2px var(--sky-d); }
+  .day.pad { background: transparent; cursor: default; }
+  .day.confirmed { background: #DFF3E6; color: #1C6B3A; } .day.expected { background: #FFF1D6; color: #8A5A00; }
+  .day.check { background: #E2EEFA; color: var(--ink); } .day.past { background: #E4EAF0; color: #4C6478; }
+  .day.exact { border-color: currentColor; } .day.approx { border: 2px dashed currentColor; }
+  .day.today::after { content: ''; position: absolute; left: 50%; bottom: 6px; width: 6px; height: 6px; margin-left: -3px; border-radius: 50%; background: var(--sky-d); }
+  .day.sel { box-shadow: 0 0 0 3px var(--ink); transform: translateY(-2px); }
+  .day .star { position: absolute; top: 6px; right: 7px; font-size: 13px; line-height: 1; }
+  .cal-key { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); }
+  .cal-key span { display: inline-flex; align-items: center; gap: 8px; }
+  .cal-key i { width: 18px; height: 18px; border-radius: 6px; display: inline-block; }
+  .side { display: grid; gap: 20px; position: sticky; top: 100px; }
+  @media (max-width: 960px) { .side { position: static; } }
+  .sel-panel { background: var(--ink); color: #fff; border-radius: var(--r-lg); padding: 28px; min-height: 180px; }
+  .sel-panel .d { font-size: 13.5px; color: var(--sky); font-weight: 600; margin-bottom: 8px; }
+  .sel-panel h3 { font-family: var(--display); font-size: 24px; line-height: 1.15; margin-bottom: 8px; }
+  .sel-panel p { color: rgba(255,255,255,.78); font-size: 15px; }
+  .sel-panel .ev + .ev { margin-top: 18px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,.2); }
+  .sel-panel .pill { display: inline-block; margin-bottom: 10px; }
+  .notable { background: var(--wash); border-radius: var(--r-lg); padding: 24px; }
+  .notable h3 { font-family: var(--display); font-size: 20px; color: var(--deep); margin-bottom: 12px; }
+  .notable ul { list-style: none; display: grid; gap: 8px; }
+  .notable button { width: 100%; text-align: left; display: grid; gap: 2px; background: #fff; border-radius: 16px; padding: 14px 16px; transition: box-shadow .2s, transform .2s; }
+  .notable button:hover, .notable button.on { box-shadow: 0 0 0 2px var(--ink); transform: translateX(3px); }
+  .notable b { font-size: 14.5px; color: var(--deep); } .notable span { font-size: 13px; color: var(--muted); }
+  .tba-title { font-family: var(--display); font-weight: 700; font-size: clamp(26px, 3.2vw, 38px); letter-spacing: -.02em; color: var(--deep); margin-bottom: 6px; }
+  .tba-sub { color: var(--muted); margin-bottom: 22px; max-width: 62ch; }
+  .tba { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 14px; margin-bottom: 40px; }
+  .tba div { background: var(--wash); border-radius: 22px; padding: 22px 24px; }
+  .tba h3 { font-size: 16.5px; color: var(--deep); margin-bottom: 4px; } .tba p { font-size: 14px; color: var(--muted); margin-bottom: 12px; }
+  .empty-note { font-size: 14px; color: var(--muted); }
+
+  /* ---- Circular, blue, animated days ---- */
+  .days { gap: 8px; }
+  .day { border-radius: 50%; align-items: center; justify-content: center; padding: 0; font-size: 15px; background: var(--wash); border: 2px solid transparent; transition: transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s, background .25s; }
+  .day:hover:not(.pad) { transform: scale(1.14); box-shadow: 0 10px 22px -8px rgba(9,69,112,.55); z-index: 2; }
+  .day.confirmed { background: var(--ink); color: #fff; }
+  .day.expected  { background: var(--sky); color: var(--deep); }
+  .day.check     { background: #DCEBFA; color: var(--ink); }
+  .day.past      { background: #E4ECF3; color: #6A8196; }
+  .day.exact  { border-color: transparent; }
+  .day.approx { border: 2px dashed var(--ink); }
+  .day.past.approx { border-color: #8CA3B6; }
+  .day.sel { transform: scale(1.12); box-shadow: 0 0 0 3px #fff, 0 0 0 5px var(--ink); z-index: 3; }
+  .day.sel::before { content: ''; position: absolute; inset: -5px; border-radius: 50%; border: 2px solid var(--ink); animation: ping 1.8s ease-out infinite; pointer-events: none; }
+  .day.today { box-shadow: 0 0 0 2px var(--sky-d) inset; }
+  .day.today::after { bottom: 7px; background: var(--sky-d); animation: dot 1.6s ease-in-out infinite; }
+  .day.confirmed.today::after { background: var(--sky); }
+  .day .star { top: 3px; right: 9px; font-size: 12px; animation: twinkle 2.4s ease-in-out infinite; }
+  .day.enter { animation: dayIn .55s cubic-bezier(.2,.8,.2,1) backwards; animation-delay: calc(var(--i, 0) * 16ms); }
+  @keyframes dayIn { from { opacity: 0; transform: scale(.2); } }
+  @keyframes ping { from { opacity: .7; transform: scale(1); } to { opacity: 0; transform: scale(1.45); } }
+  @keyframes twinkle { 0%, 100% { transform: scale(1) rotate(0); opacity: .75; } 50% { transform: scale(1.4) rotate(18deg); opacity: 1; } }
+  @keyframes dot { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.7); } }
+  @media (max-width: 520px) { .days, .dow { gap: 4px; } .day { font-size: 13px; } .day .star { right: 5px; top: 1px; font-size: 10px; } }
+  .cal-key i { border-radius: 50%; }
+
+  /* Blue status pills (match the calendar) */
+  .pill.confirmed { background: var(--ink); color: #fff; }
+  .pill.expected  { background: var(--sky); color: var(--deep); }
+  .pill.check     { background: #DCEBFA; color: var(--ink); }
+  .pill.past      { background: #E4ECF3; color: #5B7388; }
+
+  /* ---- Compact calendar ---- */
+  .cal-layout { grid-template-columns: minmax(0, 440px) minmax(0, 1fr); gap: 24px; }
+  @media (max-width: 960px) { .cal-layout { grid-template-columns: minmax(0, 1fr); } .cal-card { max-width: 480px; } }
+  .cal-card { padding: 18px 18px 16px; border-radius: 26px; }
+  .cal-head { margin-bottom: 14px; gap: 8px; }
+  .cal-head h2 { font-size: 19px; }
+  .nav-btn { width: 36px; height: 36px; } .nav-btn svg { width: 15px; height: 15px; }
+  .today-btn { padding: 8px 13px; font-size: 12px; }
+  .dow, .days { gap: 5px; }
+  .dow span { font-size: 10.5px; padding-bottom: 6px; }
+  .day { width: 100%; max-width: 42px; justify-self: center; min-height: 0; font-size: 13px; }
+  .day:hover:not(.pad) { transform: scale(1.1); }
+  .day.sel { transform: scale(1.08); box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--ink); }
+  .day .star { top: 0; right: 6px; font-size: 9px; }
+  .day.today { box-shadow: 0 0 0 1.5px var(--sky-d) inset; }
+  .day.today::after { bottom: 5px; width: 4px; height: 4px; margin-left: -2px; }
+  .cal-key { gap: 6px 14px; margin-top: 14px; padding-top: 12px; font-size: 11.5px; }
+  .cal-key i { width: 13px; height: 13px; }
+  .sel-panel { padding: 22px; min-height: 0; } .sel-panel h3 { font-size: 20px; }
+  .notable { padding: 20px; }
 </style>
 </head>
 <body>
@@ -170,6 +269,7 @@
           <a href="skills-school.html">Skills School</a>
         </div>
       </div>
+      <a href="about.html">About</a>
       <a href="success-stories.html">Success Stories</a>
       <a href="faq.html">FAQ</a>
       <a href="contact.html">Contact</a>
@@ -211,7 +311,34 @@
       <button class="chip" type="button" aria-pressed="false" data-f="olevel">WAEC / NECO</button>
       <button class="chip" type="button" aria-pressed="false" data-f="alevel">IJMB / JUPEB</button>
     </div>
-    <div id="groups"></div>
+
+    <div class="cal-layout">
+      <div class="cal-card">
+        <div class="cal-head">
+          <button class="nav-btn" id="prevM" type="button" aria-label="Previous month"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button>
+          <h2 id="monthTitle" aria-live="polite"></h2>
+          <button class="today-btn" id="todayBtn" type="button">Next event</button>
+          <button class="nav-btn" id="nextM" type="button" aria-label="Next month"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+        </div>
+        <div class="dow" aria-hidden="true"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div>
+        <div class="days" id="calGrid"></div>
+        <div class="cal-key">
+          <span><b>★</b> Notable date</span>
+          <span><i style="background:var(--sky)"></i> Exact date</span>
+          <span><i style="border:2px dashed var(--ink);background:var(--sky)"></i> Expected window</span>
+          <span><i style="background:var(--wash);box-shadow:0 0 0 2px var(--sky-d) inset"></i> Today</span>
+        </div>
+      </div>
+      <aside class="side">
+        <div class="sel-panel" id="selPanel" aria-live="polite"></div>
+        <div class="notable"><h3>★ Notable dates</h3><ul id="notableList"></ul></div>
+      </aside>
+    </div>
+
+    <h2 class="tba-title">Dates still to be announced</h2>
+    <p class="tba-sub">These boards and schools have not released dates yet. They will appear on the calendar once they do.</p>
+    <div class="tba" id="tba"></div>
+
     <div class="notice">
       Dates change. Always confirm with the exam body before you register or travel: <a href="https://www.jamb.gov.ng" target="_blank" rel="noopener">JAMB</a>, <a href="https://www.waecdirect.org" target="_blank" rel="noopener">WAEC</a>, <a href="https://neco.gov.ng" target="_blank" rel="noopener">NECO</a>. We update this page when new notices are released.
     </div>
@@ -252,6 +379,7 @@
         </div>
         <div class="f-col"><h4>Site</h4>
           <a href="index.html">Home</a>
+          <a href="about.html">About</a>
           <a href="exam-calendars.html">Exam Calendars</a>
           <a href="faq.html">FAQ</a>
           <a href="contact.html">Contact</a>
@@ -271,51 +399,105 @@
 </footer>
 
 <script>
-  /* ==== EDIT HERE: one object per date. status: confirmed | expected | check | past ==== */
-  const GROUPS = [
-    { id: 'utme', title: 'UTME 2027', blurb: 'JAMB has not yet released the 2027 timetable. These windows follow the 2026 pattern and will be updated once JAMB announces dates (watch from November 2026).', rows: [
-      { when: 'Late Jan 2027', title: 'UTME registration opens', note: '2026 registration opened on 26 January.', status: 'expected' },
-      { when: 'Late Mar 2027', title: 'Mock UTME', note: '2026 mock held on 28 March.', status: 'expected' },
-      { when: 'Mid–late Apr 2027', title: 'Main UTME', note: '2026 main exam ran 16–25 April; results came out 7 May.', status: 'expected' },
-      { when: 'From Nov 2026', title: 'Official 2027 timetable', note: 'JAMB has said the full timetable is yet to be released.', status: 'check' },
-    ]},
-    { id: 'post', title: 'Post-UTME', blurb: 'Every institution sets its own screening dates, usually after UTME results. Check your school\u2019s portal and our Post-UTME Masterclass is tailored to your institution.', rows: [
-      { when: 'Set by each school', title: 'Post-UTME screening', note: 'Dates differ by university and polytechnic.', status: 'check' },
-    ]},
-    { id: 'olevel', title: 'WAEC & NECO', blurb: 'Timetables are released by each board shortly before the exam season. Confirm your subject dates on the official notice.', rows: [
-      { when: 'To be announced', title: 'WAEC WASSCE (school candidates)', note: 'Typically runs in the first half of the year.', status: 'check' },
-      { when: 'To be announced', title: 'NECO SSCE (internal)', note: 'Typically runs in the middle of the year.', status: 'check' },
-    ]},
-    { id: 'alevel', title: 'IJMB & JUPEB', blurb: 'A-Level programmes publish their schedules per session. Ask us if you are unsure which route fits your course.', rows: [
-      { when: 'To be announced', title: 'IJMB final examinations', note: 'Dates follow the programme\u2019s session calendar.', status: 'check' },
-      { when: 'To be announced', title: 'JUPEB final examinations', note: 'Dates follow the programme\u2019s session calendar.', status: 'check' },
-    ]},
-    { id: 'utme', title: 'UTME 2026 (for reference)', blurb: 'The cycle just completed, useful for seeing how the year runs.', rows: [
-      { when: '26 Jan – 28 Feb 2026', title: 'Registration', note: '', status: 'past' },
-      { when: '28 Mar 2026', title: 'Mock UTME', note: '', status: 'past' },
-      { when: '16–25 Apr 2026', title: 'Main UTME', note: '', status: 'past' },
-      { when: '7 May 2026', title: 'Results released', note: '', status: 'past' },
-    ]},
+  /* ==== EDIT HERE ====
+   EVENTS: one object per date or window on the calendar.
+     start / end : 'YYYY-MM-DD' (same day for a single date)
+     status      : confirmed | expected | check | past
+     approx      : true when only the rough window is known (shown dashed); 'when' is the label to display
+     notable     : true to mark with a star and list under "Notable dates"
+   TBA: boards with no dates yet. Move one into EVENTS once its dates are released. */
+  const EVENTS = [
+    { g: 'utme', title: 'UTME registration opens', start: '2027-01-20', end: '2027-01-31', status: 'expected', approx: true, when: 'Late Jan 2027', notable: true, note: '2026 registration opened on 26 January. JAMB has not yet announced the 2027 date.' },
+    { g: 'utme', title: 'Mock UTME', start: '2027-03-22', end: '2027-03-31', status: 'expected', approx: true, when: 'Late Mar 2027', notable: true, note: 'The 2026 mock was held on 28 March.' },
+    { g: 'utme', title: 'Main UTME', start: '2027-04-12', end: '2027-04-30', status: 'expected', approx: true, when: 'Mid to late Apr 2027', notable: true, note: 'The 2026 exam ran 16 to 25 April, with results on 7 May.' },
+    { g: 'utme', title: 'JAMB 2027 timetable expected', start: '2026-11-01', end: '2026-11-30', status: 'check', approx: true, when: 'From Nov 2026', notable: false, note: 'JAMB has said the full timetable is yet to be released. Watch from November.' },
+    { g: 'utme', title: 'UTME 2026 registration', start: '2026-01-26', end: '2026-02-28', status: 'past', when: '26 Jan to 28 Feb 2026', notable: false, note: 'Completed.' },
+    { g: 'utme', title: 'Mock UTME 2026', start: '2026-03-28', end: '2026-03-28', status: 'past', when: '28 Mar 2026', notable: false, note: 'Completed.' },
+    { g: 'utme', title: 'Main UTME 2026', start: '2026-04-16', end: '2026-04-25', status: 'past', when: '16 to 25 Apr 2026', notable: true, note: 'Completed.' },
+    { g: 'utme', title: 'UTME 2026 results released', start: '2026-05-07', end: '2026-05-07', status: 'past', when: '7 May 2026', notable: true, note: 'Completed.' },
+  ];
+  const TBA = [
+    { g: 'post', title: 'Post-UTME screening', note: 'Every university and polytechnic sets its own dates, usually after UTME results. Check your school\u2019s portal. Our Post-UTME Masterclass is tailored to your institution.' },
+    { g: 'olevel', title: 'WAEC WASSCE (school candidates)', note: 'Timetable released by WAEC shortly before the exam season.' },
+    { g: 'olevel', title: 'NECO SSCE (internal)', note: 'Timetable released by NECO shortly before the exam season.' },
+    { g: 'alevel', title: 'IJMB final examinations', note: 'Dates follow the programme\u2019s session calendar.' },
+    { g: 'alevel', title: 'JUPEB final examinations', note: 'Dates follow the programme\u2019s session calendar.' },
   ];
   const LABEL = { confirmed: 'Confirmed', expected: 'Expected', check: 'To be announced', past: 'Completed' };
+  const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const MIN = { y: 2026, m: 0 }, MAX = { y: 2027, m: 11 };
 
-  const mount = document.getElementById('groups');
-  mount.innerHTML = GROUPS.map((g) => `
-    <section class="group" data-g="${g.id}">
-      <h2>${g.title}</h2><p>${g.blurb}</p>
-      <div class="rows">${g.rows.map((r, i) => `
-        <div class="row" style="animation-delay:${i * 70}ms">
-          <div class="when">${r.when}</div>
-          <div><h3>${r.title}</h3>${r.note ? `<p>${r.note}</p>` : ''}</div>
-          <span class="pill ${r.status}">${LABEL[r.status]}</span>
-        </div>`).join('')}</div>
-    </section>`).join('');
+  const pad = (n) => String(n).padStart(2, '0');
+  const key = (y, m, d) => `${y}-${pad(m + 1)}-${pad(d)}`;
+  const fmt = (k) => { const [y, m, d] = k.split('-').map(Number); return new Date(y, m - 1, d).toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }); };
+  const now = new Date(), todayKey = key(now.getFullYear(), now.getMonth(), now.getDate());
+  let filter = 'all', sel = null, view = { y: 2027, m: 0 }, lastMk = '';
+
+  const visible = () => EVENTS.filter((e) => filter === 'all' || e.g === filter);
+  const upcomingNotable = () => visible().filter((e) => e.notable && e.end >= todayKey).sort((a, b) => a.start.localeCompare(b.start))[0]
+    || visible().filter((e) => e.notable).sort((a, b) => b.start.localeCompare(a.start))[0];
+  const goTo = (k) => { const [y, m] = k.split('-').map(Number); view = { y, m: m - 1 }; sel = k; render(); };
+
+  const grid = document.getElementById('calGrid'), title = document.getElementById('monthTitle');
+  const prevB = document.getElementById('prevM'), nextB = document.getElementById('nextM');
+
+  function render() {
+    const { y, m } = view, evs = visible(), mk = y + '-' + m, changed = mk !== lastMk; lastMk = mk;
+    title.textContent = `${MONTHS[m]} ${y}`;
+    prevB.disabled = y === MIN.y && m === MIN.m; nextB.disabled = y === MAX.y && m === MAX.m;
+    const offset = (new Date(y, m, 1).getDay() + 6) % 7, count = new Date(y, m + 1, 0).getDate();
+    let h = '';
+    for (let i = 0; i < offset; i++) h += '<div class="day pad" aria-hidden="true"></div>';
+    for (let d = 1; d <= count; d++) {
+      const k = key(y, m, d), on = evs.filter((e) => e.start <= k && k <= e.end);
+      const top = on.find((e) => e.status !== 'past') || on[0];
+      const cls = ['day']; if (changed) cls.push('enter'); if (top) { cls.push(top.status, top.approx ? 'approx' : 'exact'); }
+      if (k === todayKey) cls.push('today'); if (k === sel) cls.push('sel');
+      const star = on.some((e) => e.notable) ? '<span class="star" aria-hidden="true">\u2605</span>' : '';
+      const label = `${fmt(k)}${on.length ? ': ' + on.map((e) => e.title).join(', ') : ''}`;
+      h += `<button type="button" class="${cls.join(' ')}" style="--i:${offset + d}" data-k="${k}" aria-label="${label}" aria-pressed="${k === sel}">${d}${star}</button>`;
+    }
+    grid.innerHTML = h;
+    grid.querySelectorAll('.day[data-k]').forEach((b) => b.addEventListener('click', () => { sel = b.dataset.k; render(); }));
+    renderPanel(); renderNotable();
+  }
+
+  function renderPanel() {
+    const p = document.getElementById('selPanel');
+    if (!sel) { p.innerHTML = '<div class="d">Select a date</div><p>Tap any day on the calendar, or pick a notable date, to see what is happening.</p>'; return; }
+    const on = visible().filter((e) => e.start <= sel && sel <= e.end);
+    if (!on.length) { p.innerHTML = `<div class="d">${fmt(sel)}</div><h3>No exam dates today</h3><p>Nothing is scheduled for this day. Use the arrows or the notable dates to find the next one.</p>`; return; }
+    p.innerHTML = on.map((e) => `<div class="ev"><div class="d">${fmt(sel)}</div><span class="pill ${e.status}">${LABEL[e.status]}</span>
+      <h3>${e.title}</h3><p>${e.approx ? '<b>' + e.when + '</b> (expected window, not an exact day). ' : e.start !== e.end ? e.when + '. ' : ''}${e.note || ''}</p></div>`).join('');
+  }
+
+  function renderNotable() {
+    const list = visible().filter((e) => e.notable).sort((a, b) => a.start.localeCompare(b.start));
+    const ul = document.getElementById('notableList');
+    ul.innerHTML = list.length ? list.map((e) => `<li><button type="button" data-k="${e.start}" class="${sel && e.start <= sel && sel <= e.end ? 'on' : ''}"><b>${e.title}</b><span>${e.when} \u00b7 ${LABEL[e.status]}</span></button></li>`).join('')
+      : '<li class="empty-note">No dates have been announced for this exam yet. See the list below.</li>';
+    ul.querySelectorAll('button').forEach((b) => b.addEventListener('click', () => goTo(b.dataset.k)));
+  }
+
+  function renderTBA() {
+    const items = TBA.filter((t) => filter === 'all' || t.g === filter);
+    document.getElementById('tba').innerHTML = items.map((t) => `<div><h3>${t.title}</h3><p>${t.note}</p><span class="pill check">To be announced</span></div>`).join('')
+      || '<p class="empty-note">Everything for this exam is on the calendar above.</p>';
+  }
+
+  prevB.addEventListener('click', () => { view = view.m === 0 ? { y: view.y - 1, m: 11 } : { y: view.y, m: view.m - 1 }; render(); });
+  nextB.addEventListener('click', () => { view = view.m === 11 ? { y: view.y + 1, m: 0 } : { y: view.y, m: view.m + 1 }; render(); });
+  document.getElementById('todayBtn').addEventListener('click', () => { const e = upcomingNotable(); if (e) goTo(e.start); });
 
   const chips = document.querySelectorAll('.chip');
   chips.forEach((c) => c.addEventListener('click', () => {
     chips.forEach((x) => x.setAttribute('aria-pressed', String(x === c)));
-    document.querySelectorAll('.group').forEach((g) => g.classList.toggle('hidden', c.dataset.f !== 'all' && g.dataset.g !== c.dataset.f));
+    filter = c.dataset.f; renderTBA();
+    const e = upcomingNotable(); if (e) goTo(e.start); else { sel = null; render(); }
   }));
+
+  renderTBA();
+  const first = upcomingNotable(); if (first) goTo(first.start); else render();
 
   const t = document.getElementById('navToggle'), l = document.getElementById('navLinks');
   t.addEventListener('click', () => { const o = l.classList.toggle('open'); t.setAttribute('aria-expanded', o); });

@@ -6,6 +6,8 @@
 <title>Madrasah — Himaayah Schools</title>
 <meta name="description" content="Madrasah at Himaayah Schools: Qur'an memorisation, tajweed, and Islamic studies in group or personal classes, four times a week.">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20377.21%20459.6%22%3E%3Cpath%20fill=%22%23094570%22%20d=%22M0.14%20280.14c4.28%2C65.12%2098.42%2C133.97%20163.39%2C172.42%2015.86%2C9.39%2034.24%2C9.39%2050.11%2C-0.01%2052.97%2C-31.37%20159.02%2C-102.63%20163.43%2C-172.41l-376.92%200zm302.67%20-162.41l74.4%20105.8%200%20-126.48c0%2C-20.52%20-11.85%2C-38.03%20-30.9%2C-45.66l-125.46%20-50.22%2081.96%20116.56zm-228.42%200l82.79%20-117.73%20-126.49%2051.28c-18.95%2C7.68%20-30.7%2C25.13%20-30.7%2C45.57l0%20126.67%2074.4%20-105.8zm114.21%20-8.75c35.22%2C0%2063.77%2C28.55%2063.77%2C63.77%200%2C35.22%20-28.55%2C63.77%20-63.77%2C63.77%20-35.22%2C0%20-63.77%2C-28.55%20-63.77%2C-63.77%200%2C-35.22%2028.55%2C-63.77%2063.77%2C-63.77z%22/%3E%3C/svg%3E">
+<link rel="canonical" href="https://www.himaayahschools.com/madrasah.html">
+<meta property="og:url" content="https://www.himaayahschools.com/madrasah.html">
 <meta name="theme-color" content="#094570">
 <meta property="og:site_name" content="Himaayah Schools">
 <meta property="og:type" content="website">
@@ -205,6 +207,7 @@
           <a href="skills-school.html">Skills School</a>
         </div>
       </div>
+      <a href="about.html">About</a>
       <a href="success-stories.html">Success Stories</a>
       <a href="faq.html">FAQ</a>
       <a href="contact.html">Contact</a>
@@ -328,6 +331,7 @@
         </div>
         <div class="f-col"><h4>Site</h4>
           <a href="index.html">Home</a>
+          <a href="about.html">About</a>
           <a href="exam-calendars.html">Exam Calendars</a>
           <a href="faq.html">FAQ</a>
           <a href="contact.html">Contact</a>
@@ -357,8 +361,14 @@
   }));
 
   const LEVELS = [
-    { n: 'Rawdah', tag: 'Start here', intro: 'For those who can\u2019t read and write at all.', reqs: [] },
-    { n: 'Tamheedi', tag: 'Start here', intro: 'For those who are just starting madrasah.', reqs: [] },
+    { n: 'Rawdah', tag: 'Open entry', note: 'No minimum score. A short placement conversation instead.', goal: 'Read and write the Arabic letters, and begin the basics of worship', intro: 'For those who can\u2019t read and write at all. Nothing is assumed, and we start from the very first letter.', reqs: [
+      'No prior Arabic reading or writing is needed.', 'Be ready to learn the Arabic letters from the beginning: their names, sounds and shapes.',
+      'Be able to sit and follow a teacher for a full class. Younger students should have a parent or guardian nearby.',
+      'Commit to all four classes each week and a little practice every day.', 'Take a short placement conversation with a teacher, so we know this is the right starting point.' ] },
+    { n: 'Tamheedi', tag: 'Open entry', note: 'No minimum score. A short placement check instead.', goal: 'Confident letters and words, and the first steps in memorisation', intro: 'For those who are just starting madrasah. The bridge between knowing nothing and the first Ibtidā\u2019iyyah level.', reqs: [
+      'Be just beginning formal madrasah studies.', 'Recognise some Arabic letters, or be ready to learn them quickly alongside the class.',
+      'Be able to listen to a teacher and repeat short phrases and duʿāʾ.', 'Have begun, or be ready to begin, the basics of wuḍūʾ and ṣalāh.',
+      'Commit to all four classes each week and to revising at home.', 'Take a short placement check, so we put the student at the right level: Tamheedi or Awwal Ibtidā\u2019iyyah.' ] },
     { n: 'Awwal Ibtidā\u2019iyyah', s: 75, goal: 'Basic Arabic + basic Islamic knowledge', reqs: [
       'Recognise and pronounce the Arabic letters correctly.', 'Read simple Arabic words.', 'Write the Arabic letters and simple words.',
       'Have basic knowledge of Ṣalāh, Ṭahārah and Islamic manners.', 'Show the ability and readiness to begin formal Arabic and Islamic studies.' ] },
@@ -380,7 +390,7 @@
     const v = LEVELS[i];
     tabsEl.querySelectorAll('.tab').forEach((b, j) => b.setAttribute('aria-selected', String(j === i)));
     panel.innerHTML = `<div class="lvl">
-      <div class="score">${v.s ? `<b>${v.s}%</b><span>Minimum admission score</span>` : `<b style="font-size:40px">${v.tag}</b><span>Entry level</span>`}
+      <div class="score">${v.s ? `<b>${v.s}%</b><span>Minimum admission score</span>` : `<b style="font-size:40px">${v.tag}</b><span>${v.note || 'Entry level'}</span>`}
         ${v.goal ? `<div class="goal">${v.goal}</div>` : ''}</div>
       <div><h3>${v.n}</h3>
         ${v.intro ? `<p class="intro">${v.intro}</p>` : '<p class="intro">A student must meet all of the following:</p>'}
