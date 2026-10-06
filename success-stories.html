@@ -5,382 +5,376 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Success Stories — Himaayah Schools</title>
 <meta name="description" content="Real results from Himaayah Academy: UTME success rates, scores, and the students behind them.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20377.21%20459.6%22%3E%3Cpath%20fill=%22%23094570%22%20d=%22M0.14%20280.14c4.28%2C65.12%2098.42%2C133.97%20163.39%2C172.42%2015.86%2C9.39%2034.24%2C9.39%2050.11%2C-0.01%2052.97%2C-31.37%20159.02%2C-102.63%20163.43%2C-172.41l-376.92%200zm302.67%20-162.41l74.4%20105.8%200%20-126.48c0%2C-20.52%20-11.85%2C-38.03%20-30.9%2C-45.66l-125.46%20-50.22%2081.96%20116.56zm-228.42%200l82.79%20-117.73%20-126.49%2051.28c-18.95%2C7.68%20-30.7%2C25.13%20-30.7%2C45.57l0%20126.67%2074.4%20-105.8zm114.21%20-8.75c35.22%2C0%2063.77%2C28.55%2063.77%2C63.77%200%2C35.22%20-28.55%2C63.77%20-63.77%2C63.77%20-35.22%2C0%20-63.77%2C-28.55%20-63.77%2C-63.77%200%2C-35.22%2028.55%2C-63.77%2063.77%2C-63.77z%22/%3E%3C/svg%3E">
+<meta name="theme-color" content="#094570">
+<meta property="og:site_name" content="Himaayah Schools">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Success Stories — Himaayah Schools">
+<meta property="og:description" content="Real results from Himaayah Academy: UTME success rates, scores, and the students behind them.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('js');</script>
 <style>
   :root {
-    --onyx: #06263B;
-    --card: #0F3A5C;
-    --line: rgba(133, 204, 255, 0.16);
-    --gold: #85CCFF;
-    --gold-deep: #5CB8F5;
-    --white: #FFFFFF;
-    --gray: #E2E8F0;
-    --gray-dim: #7FA8C7;
+    --deep: #062F4D; --ink: #094570; --sky: #85CCFF; --sky-d: #3E97D9;
+    --wash: #F1F7FC; --white: #fff; --text: #0E2A3D; --muted: #55697B;
+    --line: rgba(9,69,112,.12); --r-lg: 32px;
+    --display: 'Bricolage Grotesque', 'Inter', sans-serif;
+    --ease: cubic-bezier(.2,.7,.2,1);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
-  body {
-    font-family: 'Inter', -apple-system, sans-serif;
-    background: var(--onyx); color: var(--white);
-    -webkit-font-smoothing: antialiased;
-  }
+  body { font-family: 'Inter', -apple-system, sans-serif; color: var(--text); background: var(--white); -webkit-font-smoothing: antialiased; line-height: 1.6; overflow-x: hidden; }
   a { color: inherit; text-decoration: none; }
-  button { font-family: inherit; cursor: pointer; border: none; }
-  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+  button { font-family: inherit; cursor: pointer; border: none; background: none; }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 28px; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--sky-d); outline-offset: 3px; }
 
-  a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
-  @media (prefers-reduced-motion: reduce) {
-    * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
-  }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 15px 28px; font-size: 15px; font-weight: 600; border-radius: 999px; transition: background .2s, color .2s; }
+  .btn-ink { background: var(--ink); color: #fff; } .btn-ink:hover { background: var(--deep); }
 
-  /* ---------- Nav ---------- */
-  .site-nav { position: sticky; top: 0; z-index: 100; background: rgba(6,38,59,0.94); backdrop-filter: blur(10px); }
-  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 76px; }
-  .brand { display: flex; align-items: center; gap: 11px; font-weight: 800; font-size: 17px; letter-spacing: -0.01em; }
-  .brand .crest { width: 28px; height: 34px; flex-shrink: 0; }
+  /* Nav */
+  .nav { position: fixed; top: 16px; left: 0; right: 0; z-index: 100; padding: 0 20px; }
+  .nav-pill { max-width: 1200px; margin: 0 auto; height: 64px; padding: 0 12px 0 22px; display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,.94); backdrop-filter: blur(14px); border-radius: 999px; box-shadow: 0 8px 30px -12px rgba(6,47,77,.35); }
+  .brand { display: flex; align-items: center; gap: 10px; font-family: var(--display); font-weight: 700; font-size: 18px; color: var(--ink); }
   .nav-links { display: flex; align-items: center; gap: 30px; }
-  .nav-links a:not(.nav-cta) { font-size: 14px; font-weight: 500; color: var(--gray); transition: color 0.2s; }
-  .nav-links a:not(.nav-cta):hover { color: var(--gold); }
-  .nav-cta { background: var(--gold); color: var(--onyx); font-weight: 700; font-size: 13.5px; padding: 11px 22px; border-radius: 4px; transition: background 0.2s, box-shadow 0.2s; }
-  .nav-cta:hover { background: var(--gold-deep); box-shadow: 0 0 24px rgba(133,204,255,0.32); }
-  .nav-toggle { display: none; }
-
+  .nav-links a:not(.btn) { font-size: 14px; font-weight: 500; color: var(--muted); transition: color .2s; }
+  .nav-links a:not(.btn):hover { color: var(--ink); }
+  .nav-links .btn { padding: 11px 22px; font-size: 14px; }
+  .nav-toggle { display: none; width: 44px; height: 44px; border-radius: 50%; position: relative; }
+  .nav-toggle span { position: absolute; left: 13px; right: 13px; height: 2px; background: var(--ink); }
+  .nav-toggle span:nth-child(1) { top: 16px; } .nav-toggle span:nth-child(2) { top: 21px; } .nav-toggle span:nth-child(3) { top: 26px; }
   @media (max-width: 900px) {
-    .nav-links { position: absolute; top: 76px; left: 0; right: 0; background: var(--onyx); flex-direction: column; align-items: stretch; gap: 0; border-bottom: 1px solid var(--line); max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
-    .nav-links.open { max-height: 340px; }
-    .nav-links a:not(.nav-cta) { padding: 16px 28px; border-bottom: 1px solid rgba(255,255,255,0.06); }
-    .nav-cta { margin: 14px 28px; text-align: center; }
-    .nav-toggle { display: block; background: none; width: 24px; height: 18px; position: relative; }
-    .nav-toggle span { position: absolute; left: 0; width: 100%; height: 2px; background: var(--white); }
-    .nav-toggle span:nth-child(1) { top: 0; }
-    .nav-toggle span:nth-child(2) { top: 8px; }
-    .nav-toggle span:nth-child(3) { top: 16px; }
+    .nav-toggle { display: block; }
+    .nav-links { position: absolute; top: 76px; left: 20px; right: 20px; flex-direction: column; align-items: stretch; gap: 0; background: #fff; border-radius: 24px; padding: 8px 20px 20px; box-shadow: 0 20px 40px -16px rgba(6,47,77,.4); display: none; }
+    .nav-links.open { display: flex; }
+    .nav-links a:not(.btn) { padding: 15px 0; border-bottom: 1px solid var(--line); }
+    .nav-links .btn { margin-top: 16px; }
   }
 
-  /* ---------- Hero ---------- */
-  .hero { position: relative; padding: 100px 0 70px; text-align: center; overflow: hidden; }
-  .hero::before {
-    content: ''; position: absolute; top: -25%; left: 50%; transform: translateX(-50%);
-    width: 1000px; height: 560px; background: radial-gradient(ellipse, rgba(133,204,255,0.12), transparent 68%);
-    pointer-events: none;
-  }
-  .hero-inner { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; }
-  .hero h1 { font-size: clamp(32px, 4.8vw, 54px); font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 16px; }
-  .hero p { font-size: 16px; color: var(--gray); line-height: 1.65; max-width: 54ch; margin: 0 auto; }
+  /* Hero */
+  .hero { padding: 100px 16px 0; }
+  .hero-frame { position: relative; max-width: 1400px; margin: 0 auto; border-radius: 40px; overflow: hidden; background: var(--ink); color: #fff; padding: 96px 64px 80px; text-align: center; }
+  .hero-frame::before { content: ''; position: absolute; left: 50%; top: -220px; width: 760px; height: 760px; margin-left: -380px; border-radius: 50%; background: radial-gradient(circle, rgba(133,204,255,.3), transparent 68%); animation: drift 9s ease-in-out infinite alternate; }
+  @keyframes drift { to { transform: translate(60px, 40px) scale(1.12); } }
+  .hero-copy { position: relative; max-width: 720px; margin: 0 auto; }
+  .hero h1 { font-family: var(--display); font-weight: 700; font-size: clamp(38px, 6vw, 72px); line-height: 1.04; letter-spacing: -.025em; margin-bottom: 20px; }
+  .hero p { font-size: 17px; color: rgba(255,255,255,.82); }
+  @media (max-width: 700px) { .hero-frame { padding: 64px 24px 56px; border-radius: 28px; } }
 
-  /* ---------- Stats ---------- */
-  .stats { padding: 20px 0 90px; }
+  /* Stats */
+  .stats { padding: 24px 0 100px; margin-top: -56px; position: relative; z-index: 2; }
   .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-  @media (max-width: 900px) { .stat-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 960px) { .stat-grid { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 520px) { .stat-grid { grid-template-columns: 1fr; } }
+  .stat { background: #fff; border: 1px solid var(--line); border-radius: var(--r-lg); padding: 32px 28px; box-shadow: 0 24px 50px -30px rgba(6,47,77,.45); overflow: hidden; position: relative; }
+  .stat::after { content: ''; position: absolute; left: 0; bottom: 0; height: 4px; width: 100%; background: var(--sky); transform: scaleX(0); transform-origin: left; transition: transform 1.2s var(--ease) .3s; }
+  .stat.in::after { transform: scaleX(var(--fill, .9)); }
+  .stat b { display: block; font-family: var(--display); font-size: clamp(44px, 5vw, 62px); line-height: 1; letter-spacing: -.03em; color: var(--ink); }
+  .stat strong { display: block; margin-top: 12px; color: var(--deep); font-size: 16px; }
+  .stat span { display: block; font-size: 13.5px; color: var(--muted); margin-top: 4px; }
 
-  .stat-card {
-    background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 30px 22px;
-    text-align: center; position: relative; overflow: hidden;
-    transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), border-color 0.3s ease;
+  /* Spotlight */
+  .spotlight { padding: 0 16px 100px; }
+  .spot-box { max-width: 1400px; margin: 0 auto; border-radius: 40px; background: var(--wash); padding: 72px 64px; display: grid; grid-template-columns: auto 1fr; gap: 56px; align-items: center; }
+  .badge { position: relative; width: 190px; height: 190px; border-radius: 50%; background: var(--ink); color: #fff; display: grid; place-content: center; text-align: center; }
+  .badge::before, .badge::after { content: ''; position: absolute; inset: 0; border-radius: 50%; border: 2px solid var(--sky-d); animation: ring 3s ease-out infinite; }
+  .badge::after { animation-delay: 1.5s; }
+  @keyframes ring { from { transform: scale(1); opacity: .7; } to { transform: scale(1.5); opacity: 0; } }
+  .badge b { font-family: var(--display); font-size: 62px; line-height: 1; color: var(--sky); }
+  .badge span { font-size: 13px; color: rgba(255,255,255,.75); }
+  .spot-box h2 { font-family: var(--display); font-weight: 700; font-size: clamp(26px, 3.4vw, 40px); line-height: 1.12; letter-spacing: -.02em; color: var(--deep); margin: 8px 0 16px; }
+  .spot-box .k { font-size: 14px; font-weight: 600; color: var(--sky-d); }
+  .spot-box p { color: var(--muted); max-width: 58ch; }
+  .spot-box p + p { margin-top: 12px; }
+  @media (max-width: 800px) { .spot-box { grid-template-columns: 1fr; padding: 48px 28px; border-radius: 28px; gap: 40px; justify-items: center; text-align: center; } }
+
+  /* Testimonials */
+  .voices { padding: 0 0 110px; }
+  .section-head { margin-bottom: 44px; }
+  .section-head h2 { font-family: var(--display); font-weight: 700; font-size: clamp(30px, 4vw, 46px); line-height: 1.1; letter-spacing: -.02em; color: var(--deep); margin-bottom: 10px; }
+  .section-head p { color: var(--muted); }
+  .voice-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 900px) { .voice-row { grid-template-columns: 1fr; } }
+  .voice { background: var(--wash); border-radius: var(--r-lg); padding: 34px; display: flex; flex-direction: column; gap: 22px; transition: transform .4s var(--ease), background .3s, box-shadow .4s; }
+  .voice:hover { transform: translateY(-8px) rotate(-.6deg); background: #fff; box-shadow: 0 30px 60px -30px rgba(6,47,77,.45); }
+  .voice header { display: flex; align-items: center; gap: 14px; }
+  .avatar { width: 48px; height: 48px; border-radius: 50%; background: var(--ink); color: var(--sky); font-family: var(--display); font-weight: 700; font-size: 19px; display: grid; place-items: center; }
+  .voice b { display: block; font-size: 15px; color: var(--deep); line-height: 1.3; }
+  .voice small { font-size: 13px; font-weight: 600; color: var(--sky-d); }
+  .stars { display: flex; gap: 3px; }
+  .stars svg { width: 17px; height: 17px; fill: var(--sky-d); }
+  .voice blockquote { font-size: 15.5px; line-height: 1.7; }
+
+  /* CTA */
+  .cta { padding: 0 16px 24px; }
+  .cta-box { max-width: 1400px; margin: 0 auto; border-radius: 40px; padding: 90px 28px; text-align: center; background: var(--ink); color: #fff; }
+  .cta-box h2 { font-family: var(--display); font-weight: 700; font-size: clamp(30px, 4.4vw, 54px); line-height: 1.08; letter-spacing: -.02em; max-width: 14em; margin: 0 auto 16px; }
+  .cta-box p { color: rgba(255,255,255,.75); max-width: 46ch; margin: 0 auto 30px; }
+  .cta-box .btn { background: var(--sky); color: var(--deep); } .cta-box .btn:hover { background: #fff; }
+
+  /* Footer */
+  footer.site { background: var(--deep); color: rgba(255,255,255,.65); border-radius: 40px 40px 0 0; margin: 40px 16px 0; padding: 70px 0 28px; font-size: 14px; }
+  .f-top { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 44px; margin-bottom: 48px; }
+  .f-brand { max-width: 320px; } .f-brand .brand { color: #fff; margin-bottom: 14px; } .f-brand p { margin-bottom: 20px; }
+  .social { display: flex; gap: 10px; }
+  .social a { width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,.2); display: grid; place-items: center; transition: background .2s, color .2s; }
+  .social a:hover { background: var(--sky); color: var(--deep); }
+  .f-cols { display: flex; gap: 60px; flex-wrap: wrap; }
+  .f-col h4 { font-family: var(--display); font-size: 16px; color: #fff; margin-bottom: 14px; }
+  .f-col a, .f-col span { display: block; margin-bottom: 9px; transition: color .2s; } .f-col a:hover { color: var(--sky); }
+  .f-bottom { padding-top: 22px; border-top: 1px solid rgba(255,255,255,.12); }
+
+  /* ===== Scroll animation (staggered) ===== */
+  .js .reveal { opacity: 0; transform: translateY(36px) scale(.97); transition: opacity .8s var(--ease), transform .8s var(--ease); transition-delay: calc(var(--i, 0) * 120ms); }
+  .js .reveal.in { opacity: 1; transform: none; }
+  .js .voice.reveal.in { transition: opacity .8s var(--ease) calc(var(--i, 0) * 140ms), transform .4s var(--ease), background .3s, box-shadow .4s; }
+  .js .stars svg { opacity: 0; transform: scale(0) rotate(-40deg); }
+  .js .in .stars svg { animation: pop .5s var(--ease) forwards; animation-delay: calc(var(--i, 0) * 140ms + 400ms + var(--s) * 90ms); }
+  @keyframes pop { to { opacity: 1; transform: none; } }
+  .hero-copy > * { animation: rise .8s var(--ease) both; } .hero-copy > *:nth-child(2) { animation-delay: .12s; }
+  @keyframes rise { from { opacity: 0; transform: translateY(22px); } }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
+    .js .reveal, .js .stars svg { opacity: 1; transform: none; }
+    .stat::after { transform: scaleX(var(--fill, .9)); }
   }
-  .stat-card::before {
-    content: ''; position: absolute; top: -40%; left: 50%; transform: translateX(-50%);
-    width: 200px; height: 160px; background: radial-gradient(ellipse, rgba(133,204,255,0.15), transparent 70%);
-    pointer-events: none;
+
+  /* Always-visible home button */
+  .home-fab { position: fixed; left: 20px; bottom: 20px; z-index: 90; display: inline-flex; align-items: center; gap: 8px; padding: 13px 20px 13px 16px; border-radius: 999px; background: #062F4D; color: #fff; font-size: 14px; font-weight: 600; box-shadow: 0 12px 30px -10px rgba(6,47,77,.6); transition: background .2s, transform .2s; }
+  .home-fab:hover { background: #094570; transform: translateY(-2px); }
+  .home-fab:focus-visible { outline: 2px solid #85CCFF; outline-offset: 3px; }
+
+  /* Programmes dropdown */
+  .dd { position: relative; }
+  .dd-btn { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 500; color: var(--muted); transition: color .2s; }
+  .dd-btn svg { transition: transform .25s; }
+  .dd:hover .dd-btn, .dd:focus-within .dd-btn, .dd.cur .dd-btn { color: var(--ink); }
+  .dd.cur .dd-btn, .nav-links a[aria-current="page"] { font-weight: 600; }
+  .dd:hover .dd-btn svg, .dd.open .dd-btn svg { transform: rotate(180deg); }
+  .dd-menu { position: absolute; top: 100%; left: -18px; min-width: 270px; padding: 24px 10px 10px; opacity: 0; visibility: hidden; transform: translateY(6px); transition: opacity .2s, transform .2s, visibility .2s; }
+  .dd-menu::before { content: ''; position: absolute; inset: 14px 0 0 0; background: #fff; border-radius: 22px; box-shadow: 0 24px 50px -20px rgba(6,47,77,.45); z-index: -1; }
+  .dd:hover .dd-menu, .dd:focus-within .dd-menu, .dd.open .dd-menu { opacity: 1; visibility: visible; transform: none; }
+  .dd-menu a { display: block; padding: 12px 16px; border-radius: 14px; font-size: 14.5px; font-weight: 500; color: var(--text); }
+  .dd-menu a:hover, .dd-menu a[aria-current="page"] { background: var(--wash); color: var(--ink); }
+  @media (max-width: 900px) {
+    .dd-btn { padding: 15px 0; width: 100%; border-bottom: 1px solid var(--line); justify-content: space-between; }
+    .dd-menu { position: static; opacity: 1; visibility: visible; transform: none; padding: 0 0 0 14px; display: none; }
+    .dd-menu::before { display: none; }
+    .dd.open .dd-menu { display: block; }
+    .dd:hover .dd-menu { display: none; } .dd.open:hover .dd-menu { display: block; }
   }
-  .stat-card:hover { transform: translateY(-4px); border-color: rgba(133,204,255,0.4); }
-  .stat-num {
-    font-size: clamp(38px, 5vw, 52px); font-weight: 800; color: var(--gold); letter-spacing: -0.02em;
-    position: relative; z-index: 1; text-shadow: 0 0 30px rgba(133,204,255,0.3);
-  }
-  .stat-label { font-size: 13px; color: var(--gray); font-weight: 600; margin-top: 6px; position: relative; z-index: 1; }
-  .stat-sub { font-size: 11.5px; color: var(--gray-dim); margin-top: 4px; position: relative; z-index: 1; }
 
-  /* ---------- Featured story ---------- */
-  .spotlight { padding: 20px 0 100px; }
-  .spotlight-card {
-    background: linear-gradient(135deg, var(--card) 0%, #0A2D47 100%);
-    border: 1px solid rgba(133,204,255,0.35); border-radius: 14px;
-    padding: 48px; display: grid; grid-template-columns: auto 1fr; gap: 32px; align-items: center;
-    position: relative; overflow: hidden;
-  }
-  .spotlight-card::after {
-    content: ''; position: absolute; top: -30%; right: -10%; width: 400px; height: 400px;
-    background: radial-gradient(circle, rgba(133,204,255,0.1), transparent 70%); pointer-events: none;
-  }
-  @media (max-width: 700px) { .spotlight-card { grid-template-columns: 1fr; padding: 32px; text-align: center; } }
-
-  .spotlight-badge {
-    width: 88px; height: 88px; border-radius: 50%; background: rgba(133,204,255,0.12); border: 2px solid var(--gold);
-    display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0;
-    box-shadow: 0 0 40px rgba(133,204,255,0.25); margin: 0 auto;
-  }
-  .spotlight-badge b { font-size: 22px; font-weight: 800; color: var(--gold); line-height: 1; }
-  .spotlight-badge span { font-size: 9px; color: var(--gray-dim); text-transform: uppercase; letter-spacing: 0.04em; margin-top: 2px; }
-
-  .spotlight-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
-  .spotlight-content h2 { font-size: clamp(20px, 2.6vw, 26px); font-weight: 800; margin-bottom: 12px; }
-  .spotlight-content p { font-size: 14.5px; color: var(--gray); line-height: 1.7; }
-  .spotlight-content p + p { margin-top: 10px; }
-
-  /* ---------- Testimonials ---------- */
-  .testimonials { padding: 0 0 110px; }
-  .testimonials-head { text-align: center; max-width: 560px; margin: 0 auto 44px; }
-  .testimonials-head h2 { font-size: clamp(22px, 2.8vw, 28px); font-weight: 800; margin-bottom: 10px; letter-spacing: -0.01em; }
-  .testimonials-head p { color: var(--gray); font-size: 14px; }
-  .testi-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
-  @media (max-width: 900px) { .testi-row { grid-template-columns: 1fr; } }
-  .testi-card { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 26px; display: flex; flex-direction: column; }
-  .testi-top { display: flex; align-items: baseline; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
-  .testi-name { font-weight: 700; font-size: 15px; color: var(--white); }
-  .testi-badge { font-size: 12px; font-weight: 700; color: var(--gold); }
-  .stars { display: flex; gap: 2px; margin-bottom: 14px; }
-  .stars svg { filter: drop-shadow(0 0 4px rgba(133,204,255,0.5)); }
-  .testi-card blockquote { font-size: 13.5px; color: var(--gray); line-height: 1.65; }
-
-  /* ---------- CTA ---------- */
-  .cta-band { padding: 0 0 100px; text-align: center; }
-  .cta-band h2 { font-size: clamp(22px, 2.8vw, 30px); font-weight: 800; margin-bottom: 14px; }
-  .cta-band p { color: var(--gray); font-size: 14.5px; margin-bottom: 26px; }
-  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 15px 30px; font-size: 14.5px; font-weight: 700; border-radius: 4px; background: var(--gold); color: var(--onyx); transition: background 0.2s, box-shadow 0.2s; }
-  .btn:hover { background: var(--gold-deep); box-shadow: 0 0 28px rgba(133,204,255,0.32); }
-
-  footer { padding: 56px 0 30px; font-size: 13.5px; color: var(--gray-dim); }
-  .footer-top { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 40px; margin-bottom: 40px; }
-  .footer-brand { max-width: 300px; }
-  .footer-brand-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
-  .footer-mark { font-weight: 800; font-size: 17px; color: var(--white); }
-  .footer-brand p { margin-bottom: 18px; line-height: 1.6; }
-  .footer-social { display: flex; gap: 10px; }
-  .footer-social a { width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; color: var(--gray-dim); transition: border-color 0.2s, color 0.2s; }
-  .footer-social a:hover { border-color: var(--gold); color: var(--gold); }
-  .footer-cols { display: flex; gap: 52px; flex-wrap: wrap; }
-  .footer-col h4 { font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
-  .footer-col a, .footer-col span { display: block; margin-bottom: 9px; color: var(--gray-dim); transition: color 0.2s; }
-  .footer-col a:hover { color: var(--gold); }
-  .footer-bottom { padding-top: 20px; }
-  @media (max-width: 640px) { .footer-top { flex-direction: column; } .footer-cols { gap: 32px; } }
+  /* WhatsApp chat widget */
+  .wa-widget { position: fixed; right: 20px; bottom: 20px; z-index: 90; display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
+  .wa-fab { display: inline-flex; align-items: center; gap: 10px; padding: 14px 20px 14px 16px; border-radius: 999px; background: #128C4B; color: #fff; font-size: 14px; font-weight: 600; box-shadow: 0 12px 30px -10px rgba(18,140,75,.7); transition: background .2s, transform .2s; }
+  .wa-fab:hover { background: #0E6F3B; transform: translateY(-2px); }
+  .wa-fab:focus-visible, .wa-menu a:focus-visible { outline: 2px solid #85CCFF; outline-offset: 3px; }
+  .wa-menu { display: none; flex-direction: column; gap: 6px; background: #fff; border-radius: 22px; padding: 10px; box-shadow: 0 24px 50px -16px rgba(6,47,77,.5); min-width: 250px; animation: waIn .25s ease both; }
+  .wa-widget.open .wa-menu { display: flex; }
+  .wa-menu a { display: flex; flex-direction: column; padding: 12px 16px; border-radius: 14px; font-size: 14px; font-weight: 600; color: #062F4D; }
+  .wa-menu a small { font-weight: 500; color: #55697B; font-size: 13px; }
+  .wa-menu a:hover { background: #F1F7FC; }
+  @keyframes waIn { from { opacity: 0; transform: translateY(8px); } }
+  @media (max-width: 600px) { .wa-fab span { display: none; } .wa-fab { padding: 15px; } }
 </style>
 </head>
 <body>
 
-<nav class="site-nav">
-  <div class="wrap nav-inner">
+<nav class="nav">
+  <div class="nav-pill">
     <a class="brand" href="index.html">
-      <svg class="crest" viewBox="0 0 377.21 459.6"><path fill="#85CCFF" d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>
+      <svg width="24" height="30" viewBox="0 0 377.21 459.6" aria-hidden="true"><path fill="#094570" d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>
       Himaayah Schools
     </a>
     <div class="nav-links" id="navLinks">
-      <a href="academy.html#courses">Our Programs</a>
-      <a href="exam-calendars.html">Exam Calendars</a>
-      <a href="success-stories.html">Success Stories</a>
-      <a href="enroll.html?programme=academy" class="nav-cta">Start Prep Now</a>
+      <div class="dd">
+        <button type="button" class="dd-btn" aria-haspopup="true" aria-expanded="false">Programmes
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="dd-menu">
+          <a href="teenagers-building-circle.html">Teenagers Building Circle</a>
+          <a href="madrasah.html">Madrasah</a>
+          <a href="academy.html">Academy</a>
+          <a href="skills-school.html">Skills School</a>
+        </div>
+      </div>
+      <a href="success-stories.html" aria-current="page">Success Stories</a>
+      <a href="faq.html">FAQ</a>
+      <a href="contact.html">Contact</a>
+      <a href="enroll.html" class="btn btn-ink">Enroll Now</a>
     </div>
-    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
-      <span></span><span></span><span></span>
-    </button>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
 </nav>
 
+<a class="home-fab" href="index.html" aria-label="Back to home">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+  Home
+</a>
+
+
 <header class="hero">
-  <div class="wrap hero-inner">
-    <h1>Real Results, Real Students</h1>
-    <p>Numbers only mean something when they come from real cohorts. Here's what Himaayah Academy students have actually done.</p>
+  <div class="hero-frame">
+    <div class="hero-copy">
+      <h1>Real results, real students.</h1>
+      <p>Numbers only mean something when they come from real cohorts. Here's what Himaayah Academy students have actually done.</p>
+    </div>
   </div>
 </header>
 
 <section class="stats">
   <div class="wrap">
     <div class="stat-grid">
-
-      <div class="stat-card">
-        <div class="stat-num" data-count="90" data-suffix="%">0%</div>
-        <div class="stat-label">Success Rate</div>
-        <div class="stat-sub">In our indigenous UTME programme</div>
-      </div>
-
-      <div class="stat-card">
-        <div class="stat-num" data-count="98" data-suffix="%">0%</div>
-        <div class="stat-label">Scored 200+</div>
-        <div class="stat-sub">Of students in the programme</div>
-      </div>
-
-      <div class="stat-card">
-        <div class="stat-num" data-count="90" data-suffix="%">0%</div>
-        <div class="stat-label">2026 Success Rate</div>
-        <div class="stat-sub">This year's cohort</div>
-      </div>
-
-      <div class="stat-card">
-        <div class="stat-num" data-count="90" data-suffix="%">0%</div>
-        <div class="stat-label">Now Admitted</div>
-        <div class="stat-sub">Of 2025 UTME writers, into their desired course</div>
-      </div>
-
+      <div class="stat reveal" style="--i:0;--fill:.9"><b data-count="90" data-suffix="%">90%</b><strong>Success rate</strong><span>In our indigenous UTME programme</span></div>
+      <div class="stat reveal" style="--i:1;--fill:.98"><b data-count="98" data-suffix="%">98%</b><strong>Scored 200+</strong><span>Of students in the programme</span></div>
+      <div class="stat reveal" style="--i:2;--fill:.9"><b data-count="90" data-suffix="%">90%</b><strong>2026 success rate</strong><span>This year's cohort</span></div>
+      <div class="stat reveal" style="--i:3;--fill:.9"><b data-count="90" data-suffix="%">90%</b><strong>Now admitted</strong><span>Of 2025 UTME writers, into their desired course</span></div>
     </div>
   </div>
 </section>
 
 <section class="spotlight">
-  <div class="wrap">
-    <div class="spotlight-card">
-      <div class="spotlight-badge">
-        <b>299</b>
-        <span>UTME</span>
-      </div>
-      <div class="spotlight-content">
-        <div class="spotlight-eyebrow">Featured Story</div>
-        <h2>From Sciences to Arts — First Attempt, 299.</h2>
-        <p>One of our students switched from a science combination to Arts and still scored 299 in her first attempt at UTME — no repeat sitting, no prior background in the new subjects.</p>
-        <p>It's the kind of result that isn't about talent alone — it's what happens when the structure around a student actually adapts to where they're starting from, not where a syllabus assumes they are.</p>
-      </div>
+  <div class="spot-box reveal">
+    <div class="badge"><b>299</b><span>UTME score</span></div>
+    <div>
+      <span class="k">Featured story</span>
+      <h2>From Sciences to Arts. First attempt, 299.</h2>
+      <p>One of our students switched from a science combination to Arts and still scored 299 in her first attempt at UTME, with no repeat sitting and no prior background in the new subjects.</p>
+      <p>It's the kind of result that isn't about talent alone. It's what happens when the structure around a student adapts to where they're starting from, not where a syllabus assumes they are.</p>
     </div>
   </div>
 </section>
 
-<section class="testimonials">
+<section class="voices">
   <div class="wrap">
-    <div class="testimonials-head">
+    <div class="section-head reveal">
       <h2>In their own words.</h2>
       <p>Direct from students who sat UTME through the Academy.</p>
     </div>
-
-    <div class="testi-row">
-
-      <div class="testi-card">
-        <div class="testi-top">
-          <span class="testi-name">Ameenah</span>
-          <span class="testi-badge">294 in UTME</span>
-        </div>
-        <div class="stars">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="#85CCFF"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="#85CCFF"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="#85CCFF"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="#85CCFF"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="#85CCFF"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-        </div>
+    <div class="voice-row">
+      <figure class="voice reveal" style="--i:0">
+        <header><span class="avatar">A</span><div><b>Ameenah</b><small>294 in UTME</small></div></header>
+        <div class="stars" aria-label="5 out of 5 stars"></div>
         <blockquote>"Alhamdulillah, Himaayah Academy is the best place I will recommend for anyone preparing for the next UTME. I had no prior knowledge of my department subjects, but with the help of Allah and my dedicated teachers, I was able to have my score."</blockquote>
-      </div>
-
-      <div class="testi-card">
-        <div class="testi-top">
-          <span class="testi-name">Hafsah</span>
-          <span class="testi-badge">299 in UTME</span>
-        </div>
-        <div class="stars">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="#85CCFF"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="#85CCFF"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="#85CCFF"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="#85CCFF"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="#85CCFF"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-        </div>
+      </figure>
+      <figure class="voice reveal" style="--i:1">
+        <header><span class="avatar">H</span><div><b>Hafsah</b><small>299 in UTME</small></div></header>
+        <div class="stars" aria-label="5 out of 5 stars"></div>
         <blockquote>"At Himaayah Academy, I didn't just learn about academics — I learnt resilience, discipline, and how to manage my fears. It gave me teachers that stood by me despite my failures, and friends who are now dear to my heart."</blockquote>
-      </div>
-
-      <div class="testi-card">
-        <div class="testi-top">
-          <span class="testi-name">Hussainah</span>
-          <span class="testi-badge">319 in UTME, 2026</span>
-        </div>
-        <div class="stars">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="#85CCFF"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="#85CCFF"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="#85CCFF"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="#85CCFF"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="#85CCFF"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-        </div>
+      </figure>
+      <figure class="voice reveal" style="--i:2">
+        <header><span class="avatar">H</span><div><b>Hussainah</b><small>319 in UTME, 2026</small></div></header>
+        <div class="stars" aria-label="5 out of 5 stars"></div>
         <blockquote>"The academy was very helpful and strategic. Everything was structured to make sure everyone puts in their all — from daily tasks to the reading club, to brainstorming sessions, to daily CBT quizzes. It sets the path."</blockquote>
-      </div>
-
+      </figure>
     </div>
   </div>
 </section>
 
-<section class="cta-band">
-  <div class="wrap">
+<section class="cta">
+  <div class="cta-box reveal">
     <h2>Your result starts with a first step.</h2>
-    <p>Same structure, same teachers, same standard — for whichever exam is ahead of you.</p>
-    <a href="enroll.html?programme=academy" class="btn">Start Prep Now</a>
+    <p>Same structure, same teachers, same standard, for whichever exam is ahead of you.</p>
+    <a href="enroll.html?programme=academy" class="btn">Start prep now</a>
   </div>
 </section>
 
-<footer>
+<footer class="site">
   <div class="wrap">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <div class="footer-brand-row">
-          <svg width="24" height="29" viewBox="0 0 377.21 459.6"><path fill="#85CCFF" d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>
-          <span class="footer-mark">Himaayah Schools</span>
-        </div>
+    <div class="f-top">
+      <div class="f-brand">
+        <a class="brand" href="index.html">
+          <svg width="24" height="30" viewBox="0 0 377.21 459.6" aria-hidden="true"><path fill="#85CCFF" d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>
+          Himaayah Schools
+        </a>
         <p>Raising the next generation with deen, knowledge, and purpose.</p>
-        <div class="footer-social">
-          <a href="https://instagram.com/himaayahschools" target="_blank" rel="noopener" aria-label="Himaayah Schools on Instagram">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
-          </a>
-          <a href="https://x.com/himaayahschools" target="_blank" rel="noopener" aria-label="Himaayah Schools on X">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.24 2H21.5l-7.3 8.34L22.8 22h-6.73l-5.27-6.9L4.7 22H1.4l7.8-8.92L1 2h6.9l4.76 6.3L18.24 2zm-1.18 18h1.86L7.03 3.9H5.03L17.06 20z"/></svg>
-          </a>
+        <div class="social">
+          <a href="https://instagram.com/himaayahschools" target="_blank" rel="noopener" aria-label="Himaayah Schools on Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg></a>
+          <a href="https://x.com/himaayahschools" target="_blank" rel="noopener" aria-label="Himaayah Schools on X"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.24 2H21.5l-7.3 8.34L22.8 22h-6.73l-5.27-6.9L4.7 22H1.4l7.8-8.92L1 2h6.9l4.76 6.3L18.24 2zm-1.18 18h1.86L7.03 3.9H5.03L17.06 20z"/></svg></a>
         </div>
       </div>
-      <div class="footer-cols">
-        <div class="footer-col">
-          <h4>Programmes</h4>
+      <div class="f-cols">
+        <div class="f-col"><h4>Programmes</h4>
           <a href="teenagers-building-circle.html">Teenagers Building Circle</a>
           <a href="madrasah.html">Madrasah</a>
           <a href="academy.html">Academy</a>
           <a href="skills-school.html">Skills School</a>
         </div>
-        <div class="footer-col">
-          <h4>Site</h4>
+        <div class="f-col"><h4>Site</h4>
           <a href="index.html">Home</a>
           <a href="faq.html">FAQ</a>
+          <a href="contact.html">Contact</a>
+          <a href="policies.html">Policies</a>
           <a href="enroll.html">Enroll</a>
         </div>
-        <div class="footer-col">
-          <h4>Contact</h4>
+        <div class="f-col"><h4>Contact</h4>
           <a href="mailto:himaayahschools@gmail.com">himaayahschools@gmail.com</a>
+          <a href="tel:+2348066043320">+234 806 604 3320</a>
+          <a href="tel:+2347025842849">+234 702 584 2849</a>
           <span>Ilorin, Nigeria</span>
         </div>
       </div>
     </div>
-    <div class="footer-bottom">
-      <span>© 2026 Himaayah Schools.</span>
-    </div>
+    <div class="f-bottom">© 2026 Himaayah Schools.</div>
   </div>
 </footer>
 
 <script>
-  const navToggle = document.getElementById('navToggle');
-  const navLinks = document.getElementById('navLinks');
-  navToggle?.addEventListener('click', () => navLinks.classList.toggle('open'));
+  const t = document.getElementById('navToggle'), l = document.getElementById('navLinks');
+  t.addEventListener('click', () => { const o = l.classList.toggle('open'); t.setAttribute('aria-expanded', o); });
 
-  // Count-up animation for stats, triggered once each enters view
-  const statEls = document.querySelectorAll('.stat-num');
+  // Build the five stars for each testimonial
+  const star = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>';
+  document.querySelectorAll('.stars').forEach((el) => {
+    el.innerHTML = star.repeat(5);
+    el.querySelectorAll('svg').forEach((s, i) => s.style.setProperty('--s', i));
+  });
+
+  // Staggered reveal + count-up for stats
   const countUp = (el) => {
-    const target = Number(el.dataset.count);
-    const suffix = el.dataset.suffix || '';
-    const duration = 1400;
-    const start = performance.now();
-    function tick(now) {
-      const progress = Math.min((now - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      el.textContent = Math.round(eased * target) + suffix;
-      if (progress < 1) requestAnimationFrame(tick);
-    }
+    const end = +el.dataset.count, suf = el.dataset.suffix || '', t0 = performance.now();
+    const tick = (n) => { const p = Math.min((n - t0) / 1500, 1); el.textContent = Math.round((1 - Math.pow(1 - p, 3)) * end) + suf; if (p < 1) requestAnimationFrame(tick); };
     requestAnimationFrame(tick);
   };
-  if ('IntersectionObserver' in window) {
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          countUp(entry.target);
-          io.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.4 });
-    statEls.forEach((el) => io.observe(el));
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const items = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window && !reduce) {
+    const io = new IntersectionObserver((es) => es.forEach((e) => {
+      if (!e.isIntersecting) return;
+      e.target.classList.add('in');
+      const n = e.target.querySelector('[data-count]');
+      if (n) countUp(n);
+      io.unobserve(e.target);
+    }), { threshold: .2, rootMargin: '0px 0px -40px 0px' });
+    items.forEach((el) => io.observe(el));
   } else {
-    statEls.forEach((el) => { el.textContent = el.dataset.count + (el.dataset.suffix || ''); });
+    items.forEach((el) => el.classList.add('in'));
   }
+  (function () {
+    const dd = document.querySelector('.dd'); if (!dd) return;
+    const b = dd.querySelector('.dd-btn');
+    b.addEventListener('click', () => { const o = dd.classList.toggle('open'); b.setAttribute('aria-expanded', o); });
+  })();
+</script>
+
+<div class="wa-widget" id="waWidget">
+  <div class="wa-menu" id="waMenu">
+    <a href="https://wa.me/2348066043320?text=Assalaamu%20alaykum.%20I%27d%20like%20to%20ask%20about%20Himaayah%20Schools." target="_blank" rel="noopener">Chat on WhatsApp <small>+234 806 604 3320</small></a>
+    <a href="https://wa.me/2347025842849?text=Assalaamu%20alaykum.%20I%27d%20like%20to%20ask%20about%20Himaayah%20Schools." target="_blank" rel="noopener">Chat on WhatsApp <small>+234 702 584 2849</small></a>
+  </div>
+  <button type="button" class="wa-fab" id="waBtn" aria-expanded="false" aria-controls="waMenu" aria-label="Chat with us on WhatsApp">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.7-5.2A8.5 8.5 0 1 1 21 11.5z"/></svg>
+    <span>Chat with us</span>
+  </button>
+</div>
+<script>
+  (function () {
+    const w = document.getElementById('waWidget'), b = document.getElementById('waBtn');
+    b.addEventListener('click', () => { const o = w.classList.toggle('open'); b.setAttribute('aria-expanded', o); });
+    document.addEventListener('click', (e) => { if (!w.contains(e.target)) { w.classList.remove('open'); b.setAttribute('aria-expanded', 'false'); } });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { w.classList.remove('open'); b.setAttribute('aria-expanded', 'false'); b.focus(); } });
+  })();
 </script>
 </body>
 </html>

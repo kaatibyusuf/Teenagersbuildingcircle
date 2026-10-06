@@ -4,461 +4,396 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Himaayah Schools — Academic Excellence & Future Skills</title>
-<meta name="description" content="Himaayah Schools: UTME, O-Levels, A-Levels, Skill Academy, Teenagers Building Circle, and Madrasah — one academy, every path.">
+<meta name="description" content="Himaayah Schools: UTME, O-Levels, A-Levels, Skills School, Teenagers Building Circle, and Madrasah — one academy, every path.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20377.21%20459.6%22%3E%3Cpath%20fill=%22%23094570%22%20d=%22M0.14%20280.14c4.28%2C65.12%2098.42%2C133.97%20163.39%2C172.42%2015.86%2C9.39%2034.24%2C9.39%2050.11%2C-0.01%2052.97%2C-31.37%20159.02%2C-102.63%20163.43%2C-172.41l-376.92%200zm302.67%20-162.41l74.4%20105.8%200%20-126.48c0%2C-20.52%20-11.85%2C-38.03%20-30.9%2C-45.66l-125.46%20-50.22%2081.96%20116.56zm-228.42%200l82.79%20-117.73%20-126.49%2051.28c-18.95%2C7.68%20-30.7%2C25.13%20-30.7%2C45.57l0%20126.67%2074.4%20-105.8zm114.21%20-8.75c35.22%2C0%2063.77%2C28.55%2063.77%2C63.77%200%2C35.22%20-28.55%2C63.77%20-63.77%2C63.77%20-35.22%2C0%20-63.77%2C-28.55%20-63.77%2C-63.77%200%2C-35.22%2028.55%2C-63.77%2063.77%2C-63.77z%22/%3E%3C/svg%3E">
+<meta name="theme-color" content="#094570">
+<meta property="og:site_name" content="Himaayah Schools">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Himaayah Schools — Academic Excellence & Future Skills">
+<meta property="og:description" content="Himaayah Schools: UTME, O-Levels, A-Levels, Skills School, Teenagers Building Circle, and Madrasah — one academy, every path.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+  /* ===== Himaayah design system (reuse :root + nav + footer on every page) ===== */
   :root {
-    --ink: #094570;
-    --ink-deep: #062F4D;
-    --ink-soft: #4F7089;
-    --paper: #FBF9F4;
-    --card: #FFFFFF;
-    --sky: #85CCFF;
-    --sky-deep: #3E97D9;
-    --sky-wash: #EAF4FC;
-    --line: rgba(9, 69, 112, 0.16);
-    --line-deep: rgba(255, 255, 255, 0.14);
-    --text: #0E2A3D;
-    --text-muted: #4C6478;
-    --cream: #F3EEE2;
+    --deep: #062F4D; --ink: #094570; --sky: #85CCFF; --sky-d: #3E97D9;
+    --wash: #F1F7FC; --white: #fff; --text: #0E2A3D; --muted: #55697B;
+    --line: rgba(9,69,112,.12); --r-lg: 32px; --r-md: 20px;
+    --display: 'Bricolage Grotesque', 'Inter', sans-serif;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
-  body {
-    font-family: 'Inter', -apple-system, sans-serif;
-    background: var(--paper); color: var(--text);
-    -webkit-font-smoothing: antialiased;
-  }
+  body { font-family: 'Inter', -apple-system, sans-serif; color: var(--text); background: var(--white); -webkit-font-smoothing: antialiased; line-height: 1.6; }
   a { color: inherit; text-decoration: none; }
   img { display: block; max-width: 100%; }
   button { font-family: inherit; cursor: pointer; border: none; background: none; }
-  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
-  .serif { font-family: 'Fraunces', Georgia, serif; }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 28px; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--sky-d); outline-offset: 3px; }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition-duration: .001ms !important; scroll-behavior: auto !important; } }
 
-  a:focus-visible, button:focus-visible { outline: 2px solid var(--sky-deep); outline-offset: 3px; }
-  @media (prefers-reduced-motion: reduce) {
-    * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 15px 28px; font-size: 15px; font-weight: 600; border-radius: 999px; transition: background .2s, color .2s, border-color .2s; }
+  .btn-sky { background: var(--sky); color: var(--deep); } .btn-sky:hover { background: #fff; }
+  .btn-ink { background: var(--ink); color: #fff; } .btn-ink:hover { background: var(--deep); }
+  .btn-ghost { border: 1px solid rgba(255,255,255,.5); color: #fff; } .btn-ghost:hover { background: rgba(255,255,255,.14); }
+
+  /* ===== Nav: floating pill ===== */
+  .nav { position: fixed; top: 16px; left: 0; right: 0; z-index: 100; padding: 0 20px; }
+  .nav-pill { max-width: 1200px; margin: 0 auto; height: 64px; padding: 0 12px 0 22px; display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,.94); backdrop-filter: blur(14px); border-radius: 999px; box-shadow: 0 8px 30px -12px rgba(6,47,77,.35); }
+  .brand { display: flex; align-items: center; gap: 10px; font-family: var(--display); font-weight: 700; font-size: 18px; color: var(--ink); }
+  .nav-links { display: flex; align-items: center; gap: 30px; }
+  .nav-links a:not(.btn) { font-size: 14px; font-weight: 500; color: var(--muted); transition: color .2s; }
+  .nav-links a:not(.btn):hover { color: var(--ink); }
+  .nav-links .btn { padding: 11px 22px; font-size: 14px; }
+  .nav-toggle { display: none; width: 44px; height: 44px; border-radius: 50%; position: relative; }
+  .nav-toggle span { position: absolute; left: 13px; right: 13px; height: 2px; background: var(--ink); }
+  .nav-toggle span:nth-child(1) { top: 16px; } .nav-toggle span:nth-child(2) { top: 21px; } .nav-toggle span:nth-child(3) { top: 26px; }
+  @media (max-width: 900px) {
+    .nav-toggle { display: block; }
+    .nav-links { position: absolute; top: 76px; left: 20px; right: 20px; flex-direction: column; align-items: stretch; gap: 0; background: #fff; border-radius: 24px; padding: 8px 20px 20px; box-shadow: 0 20px 40px -16px rgba(6,47,77,.4); display: none; }
+    .nav-links.open { display: flex; }
+    .nav-links a:not(.btn) { padding: 15px 0; border-bottom: 1px solid var(--line); }
+    .nav-links .btn { margin-top: 16px; justify-content: center; }
   }
 
-  .reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.7s ease, transform 0.7s ease; }
-  .reveal.in { opacity: 1; transform: translateY(0); }
-  @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; } }
+  /* ===== Hero ===== */
+  .hero { padding: 100px 16px 0; }
+  .hero-frame { position: relative; max-width: 1400px; margin: 0 auto; min-height: 640px; border-radius: 40px; overflow: hidden; display: flex; align-items: flex-end; padding: 64px;
+    background: linear-gradient(180deg, rgba(6,47,77,.25) 0%, rgba(6,47,77,.92) 100%), url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=2000&q=80') center/cover; color: #fff; }
+  .hero-copy { max-width: 760px; }
+  .hero h1 { font-family: var(--display); font-weight: 700; font-size: clamp(38px, 6vw, 72px); line-height: 1.04; letter-spacing: -.025em; margin-bottom: 22px; }
+  .hero p { font-size: 17px; color: rgba(255,255,255,.82); max-width: 52ch; margin-bottom: 34px; }
+  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+  .hero-stats { position: absolute; right: 48px; bottom: 64px; display: flex; flex-direction: column; gap: 12px; }
+  .chip { background: rgba(255,255,255,.12); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,.22); border-radius: 20px; padding: 14px 22px; min-width: 190px; }
+  .chip b { display: block; font-family: var(--display); font-size: 28px; line-height: 1.1; color: var(--sky); }
+  .chip span { font-size: 13px; color: rgba(255,255,255,.8); }
+  @media (max-width: 1000px) { .hero-stats { display: none; } }
+  @media (max-width: 600px) { .hero-frame { padding: 32px 24px; min-height: 560px; border-radius: 28px; } }
 
-  .eyebrow {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-size: 11.5px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
-    color: var(--sky-deep);
+  /* ===== Statement ===== */
+  .statement { padding: 110px 0 90px; }
+  .statement p { font-family: var(--display); font-weight: 500; font-size: clamp(24px, 3.4vw, 40px); line-height: 1.28; letter-spacing: -.015em; color: var(--ink); max-width: 28em; }
+  .statement p span { color: #8FA6B8; }
+
+  /* ===== Programmes ===== */
+  .section-head { display: flex; align-items: end; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-bottom: 40px; }
+  .section-head h2 { font-family: var(--display); font-weight: 700; font-size: clamp(30px, 4vw, 46px); line-height: 1.1; letter-spacing: -.02em; color: var(--deep); max-width: 14em; }
+  .section-head p { color: var(--muted); max-width: 40ch; font-size: 15px; }
+  .programmes { padding-bottom: 110px; }
+  .grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 20px; }
+  .card { position: relative; border-radius: var(--r-lg); overflow: hidden; min-height: 320px; display: flex; align-items: flex-end; color: #fff; grid-column: span 2; isolation: isolate; }
+  .card.wide { grid-column: span 3; min-height: 380px; }
+  .card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; transition: transform .6s ease; }
+  .card::after { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(6,47,77,0) 30%, rgba(6,47,77,.92) 100%); }
+  .card:hover img { transform: scale(1.05); }
+  .card-body { padding: 28px; width: 100%; display: flex; align-items: end; justify-content: space-between; gap: 16px; }
+  .card h3 { font-family: var(--display); font-size: 24px; line-height: 1.15; letter-spacing: -.01em; margin-bottom: 6px; }
+  .card p { font-size: 13.5px; color: rgba(255,255,255,.8); }
+  .card .go { flex-shrink: 0; width: 46px; height: 46px; border-radius: 50%; background: var(--sky); color: var(--deep); display: grid; place-items: center; transition: transform .25s; }
+  .card:hover .go { transform: rotate(-45deg); }
+  @media (max-width: 960px) { .card, .card.wide { grid-column: span 3; } }
+  @media (max-width: 620px) { .card, .card.wide { grid-column: span 6; min-height: 280px; } }
+
+  /* ===== Results ===== */
+  .results { background: var(--ink); color: #fff; border-radius: 40px; margin: 0 16px; padding: 90px 0; }
+  .results .section-head h2 { color: #fff; } .results .section-head p { color: rgba(255,255,255,.7); }
+  .stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .stat { border-top: 1px solid rgba(255,255,255,.22); padding-top: 22px; }
+  .stat b { display: block; font-family: var(--display); font-size: clamp(44px, 6vw, 72px); line-height: 1; letter-spacing: -.03em; color: var(--sky); }
+  .stat span { display: block; margin-top: 10px; font-size: 14px; color: rgba(255,255,255,.75); max-width: 20ch; }
+  @media (max-width: 760px) { .stat-row { grid-template-columns: repeat(2, 1fr); gap: 36px 20px; } }
+
+  /* ===== Testimonials ===== */
+  .voices { padding: 110px 0; }
+  .voice-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .voice { background: var(--wash); border-radius: var(--r-lg); padding: 34px; display: flex; flex-direction: column; justify-content: space-between; gap: 28px; }
+  .voice blockquote { font-size: 16px; line-height: 1.7; color: var(--text); }
+  .voice footer { display: flex; align-items: center; gap: 14px; }
+  .avatar { width: 46px; height: 46px; border-radius: 50%; background: var(--ink); color: var(--sky); font-family: var(--display); font-weight: 700; display: grid; place-items: center; font-size: 18px; }
+  .voice b { display: block; font-size: 15px; color: var(--deep); }
+  .voice small { font-size: 13px; color: var(--sky-d); font-weight: 600; }
+  @media (max-width: 900px) { .voice-row { grid-template-columns: 1fr; } }
+
+  /* ===== CTA ===== */
+  .cta { padding: 0 16px 24px; }
+  .cta-box { max-width: 1400px; margin: 0 auto; border-radius: 40px; padding: 90px 28px; text-align: center; background: var(--wash); }
+  .cta-box h2 { font-family: var(--display); font-weight: 700; font-size: clamp(30px, 4.4vw, 54px); line-height: 1.08; letter-spacing: -.02em; color: var(--deep); max-width: 15em; margin: 0 auto 16px; }
+  .cta-box p { color: var(--muted); max-width: 46ch; margin: 0 auto 30px; }
+
+  /* ===== Footer ===== */
+  footer.site { background: var(--deep); color: rgba(255,255,255,.65); border-radius: 40px 40px 0 0; margin: 40px 16px 0; padding: 70px 0 28px; font-size: 14px; }
+  .f-top { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 44px; margin-bottom: 48px; }
+  .f-brand { max-width: 320px; }
+  .f-brand .brand { color: #fff; margin-bottom: 14px; }
+  .f-brand p { margin-bottom: 20px; }
+  .social { display: flex; gap: 10px; }
+  .social a { width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,.2); display: grid; place-items: center; transition: background .2s, color .2s; }
+  .social a:hover { background: var(--sky); color: var(--deep); }
+  .f-cols { display: flex; gap: 60px; flex-wrap: wrap; }
+  .f-col h4 { font-family: var(--display); font-size: 16px; color: #fff; margin-bottom: 14px; }
+  .f-col a, .f-col span { display: block; margin-bottom: 9px; transition: color .2s; }
+  .f-col a:hover { color: var(--sky); }
+  .f-bottom { padding-top: 22px; border-top: 1px solid rgba(255,255,255,.12); }
+
+  /* single orchestrated reveal: hero only */
+  .hero-copy > * { animation: rise .8s cubic-bezier(.2,.7,.2,1) both; }
+  .hero-copy > *:nth-child(2) { animation-delay: .12s; } .hero-copy > *:nth-child(3) { animation-delay: .24s; }
+  @keyframes rise { from { opacity: 0; transform: translateY(22px); } }
+
+  /* Always-visible home button */
+  .home-fab { position: fixed; left: 20px; bottom: 20px; z-index: 90; display: inline-flex; align-items: center; gap: 8px; padding: 13px 20px 13px 16px; border-radius: 999px; background: #062F4D; color: #fff; font-size: 14px; font-weight: 600; box-shadow: 0 12px 30px -10px rgba(6,47,77,.6); transition: background .2s, transform .2s; }
+  .home-fab:hover { background: #094570; transform: translateY(-2px); }
+  .home-fab:focus-visible { outline: 2px solid #85CCFF; outline-offset: 3px; }
+
+  /* Programmes dropdown */
+  .dd { position: relative; }
+  .dd-btn { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 500; color: var(--muted); transition: color .2s; }
+  .dd-btn svg { transition: transform .25s; }
+  .dd:hover .dd-btn, .dd:focus-within .dd-btn { color: var(--ink); }
+  .dd:hover .dd-btn svg, .dd.open .dd-btn svg { transform: rotate(180deg); }
+  .dd-menu { position: absolute; top: 100%; left: -18px; min-width: 270px; padding: 24px 10px 10px; opacity: 0; visibility: hidden; transform: translateY(6px); transition: opacity .2s, transform .2s, visibility .2s; }
+  .dd-menu::before { content: ''; position: absolute; inset: 14px 0 0 0; background: #fff; border-radius: 22px; box-shadow: 0 24px 50px -20px rgba(6,47,77,.45); z-index: -1; }
+  .dd:hover .dd-menu, .dd:focus-within .dd-menu, .dd.open .dd-menu { opacity: 1; visibility: visible; transform: none; }
+  .dd-menu a { display: block; padding: 12px 16px; border-radius: 14px; font-size: 14.5px; font-weight: 500; color: var(--text); }
+  .dd-menu a:hover { background: var(--wash); color: var(--ink); }
+  @media (max-width: 900px) {
+    .dd-btn { padding: 15px 0; width: 100%; border-bottom: 1px solid var(--line); justify-content: space-between; }
+    .dd-menu { position: static; opacity: 1; visibility: visible; transform: none; padding: 0 0 0 14px; display: none; }
+    .dd-menu::before { display: none; }
+    .dd.open .dd-menu { display: block; }
+    .dd:hover .dd-menu { display: none; } .dd.open:hover .dd-menu { display: block; }
   }
-  .eyebrow::before { content: ''; width: 16px; height: 1px; background: var(--sky-deep); }
 
-  /* ---------- Nav ---------- */
-  .site-nav {
-    position: sticky; top: 0; z-index: 100;
-    background: rgba(251,249,244,0.92); backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--line);
-  }
-  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 78px; }
-  .brand { display: flex; align-items: center; gap: 11px; }
-  .brand svg { flex-shrink: 0; }
-  .brand span { font-family: 'Fraunces', serif; font-weight: 600; font-size: 18px; letter-spacing: -0.01em; color: var(--ink); }
-  .nav-links { display: flex; align-items: center; gap: 34px; }
-  .nav-links a:not(.nav-cta) { font-size: 13.5px; font-weight: 500; color: var(--text-muted); transition: color 0.2s; white-space: nowrap; }
-  .nav-links a:not(.nav-cta):hover { color: var(--ink); }
-  .nav-cta {
-    background: var(--ink); color: var(--paper); font-weight: 600; font-size: 13.5px;
-    padding: 11px 22px; border-radius: 2px; letter-spacing: 0.01em; transition: background 0.2s;
-  }
-  .nav-cta:hover { background: var(--ink-deep); }
-  .nav-toggle { display: none; }
-
-  @media (max-width: 980px) {
-    .nav-links { position: absolute; top: 78px; left: 0; right: 0; background: var(--paper); flex-direction: column; align-items: stretch; gap: 0; border-bottom: 1px solid var(--line); max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
-    .nav-links.open { max-height: 360px; }
-    .nav-links a:not(.nav-cta) { padding: 16px 28px; border-bottom: 1px solid var(--line); }
-    .nav-cta { margin: 14px 28px; text-align: center; }
-    .nav-toggle { display: block; width: 24px; height: 18px; position: relative; }
-    .nav-toggle span { position: absolute; left: 0; width: 100%; height: 2px; background: var(--ink); }
-    .nav-toggle span:nth-child(1) { top: 0; }
-    .nav-toggle span:nth-child(2) { top: 8px; }
-    .nav-toggle span:nth-child(3) { top: 16px; }
-  }
-
-  /* ---------- Hero ---------- */
-  .hero { position: relative; padding: 92px 0 84px; overflow: hidden; border-bottom: 1px solid var(--line); }
-  .hero-crest {
-    position: absolute; top: 50%; right: -6%; transform: translateY(-50%);
-    width: 620px; height: 756px; opacity: 0.05; pointer-events: none;
-  }
-  .hero-inner { position: relative; z-index: 1; max-width: 640px; }
-  .hero-badge {
-    display: inline-flex; align-items: center; gap: 9px; padding: 7px 14px 7px 7px;
-    border: 1px solid var(--line); border-radius: 999px; margin-bottom: 26px; background: var(--card);
-  }
-  .hero-badge .dot { width: 24px; height: 24px; border-radius: 50%; background: var(--sky-wash); display: flex; align-items: center; justify-content: center; }
-  .hero-badge span { font-size: 12px; font-weight: 600; color: var(--ink); letter-spacing: 0.01em; }
-
-  .hero h1 { font-family: 'Fraunces', serif; font-weight: 600; font-size: clamp(34px, 4.6vw, 54px); line-height: 1.08; letter-spacing: -0.015em; color: var(--ink); margin-bottom: 22px; }
-  .hero h1 em { font-style: italic; font-weight: 500; color: var(--sky-deep); }
-  .hero p.sub { font-size: 16.5px; color: var(--text-muted); line-height: 1.7; max-width: 50ch; margin-bottom: 36px; }
-  .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 40px; }
-  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 15px 26px; font-size: 14px; font-weight: 600; border-radius: 2px; transition: background 0.2s, color 0.2s, border-color 0.2s; }
-  .btn-primary { background: var(--ink); color: var(--paper); }
-  .btn-primary:hover { background: var(--ink-deep); }
-  .btn-outline { border: 1px solid var(--ink); color: var(--ink); }
-  .btn-outline:hover { background: var(--ink); color: var(--paper); }
-
-  .hero-trust { display: flex; gap: 28px; flex-wrap: wrap; padding-top: 28px; border-top: 1px solid var(--line); }
-  .hero-trust div { font-size: 12px; color: var(--text-muted); }
-  .hero-trust b { display: block; font-family: 'Fraunces', serif; font-weight: 600; font-size: 20px; color: var(--ink); }
-
-  /* ---------- Catalog ---------- */
-  .catalog-section { padding: 90px 0 100px; border-bottom: 1px solid var(--line); }
-  .section-head { max-width: 640px; margin-bottom: 46px; }
-  .section-head h2 { font-family: 'Fraunces', serif; font-weight: 600; font-size: clamp(26px, 3vw, 36px); letter-spacing: -0.01em; color: var(--ink); margin: 12px 0 12px; }
-  .section-head p { color: var(--text-muted); font-size: 15px; line-height: 1.6; }
-
-  .catalog { border-top: 1px solid var(--line); }
-  .catalog-row {
-    display: grid; grid-template-columns: 56px 120px 1fr auto; gap: 26px; align-items: center;
-    padding: 26px 0; border-bottom: 1px solid var(--line);
-    transition: background 0.25s ease;
-  }
-  .catalog-row:hover { background: var(--sky-wash); }
-  .catalog-num { font-family: 'Fraunces', serif; font-size: 15px; font-weight: 500; color: var(--sky-deep); }
-  .catalog-thumb { position: relative; width: 120px; height: 84px; overflow: hidden; border-radius: 2px; flex-shrink: 0; }
-  .catalog-thumb img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(0.5) contrast(1.08); }
-  .catalog-thumb::after { content: ''; position: absolute; inset: 0; background: var(--ink); opacity: 0.22; mix-blend-mode: multiply; }
-  .catalog-text h3 { font-family: 'Fraunces', serif; font-size: 19px; font-weight: 600; color: var(--ink); margin-bottom: 6px; letter-spacing: -0.005em; }
-  .catalog-text p { font-size: 13px; color: var(--text-muted); }
-  .catalog-text .tags { font-size: 11.5px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--sky-deep); }
-  .catalog-link {
-    display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px;
-    border: 1px solid var(--line); border-radius: 50%; color: var(--ink); transition: background 0.2s, border-color 0.2s, transform 0.2s;
-  }
-  .catalog-row:hover .catalog-link { background: var(--ink); color: var(--paper); border-color: var(--ink); transform: translateX(3px); }
-
-  @media (max-width: 760px) {
-    .catalog-row { grid-template-columns: 1fr; gap: 12px; }
-    .catalog-thumb { width: 100%; height: 150px; order: -1; }
-    .catalog-link { position: absolute; margin-top: -46px; margin-left: calc(100% - 38px); }
-    .catalog-row { position: relative; }
-  }
-
-  /* ---------- Ledger / stats ---------- */
-  .ledger { padding: 76px 0; background: var(--ink); border-bottom: 1px solid var(--line-deep); }
-  .ledger-head { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 40px; }
-  .ledger-head h2 { font-family: 'Fraunces', serif; font-weight: 600; font-size: clamp(22px, 2.6vw, 28px); color: var(--paper); }
-  .ledger-head .eyebrow { color: var(--sky); }
-  .ledger-head .eyebrow::before { background: var(--sky); }
-  .ledger-row { display: grid; grid-template-columns: repeat(4, 1fr); }
-  .ledger-cell { padding: 0 24px; border-left: 1px solid var(--line-deep); }
-  .ledger-cell:first-child { padding-left: 0; border-left: none; }
-  .ledger-num { font-family: 'Fraunces', serif; font-weight: 600; font-size: clamp(34px, 4vw, 46px); color: var(--sky); letter-spacing: -0.01em; }
-  .ledger-label { font-size: 13px; color: rgba(255,255,255,0.72); margin-top: 6px; }
-  @media (max-width: 760px) { .ledger-row { grid-template-columns: repeat(2, 1fr); gap: 28px 0; } .ledger-cell:nth-child(3) { border-left: none; } .ledger-cell { border-left: 1px solid var(--line-deep); padding-left: 24px; } .ledger-cell:nth-child(odd) { border-left: none; padding-left: 0; } }
-
-  /* ---------- Testimonials ---------- */
-  .testimonials { padding: 96px 0 100px; }
-  .testimonials .section-head { margin-left: auto; margin-right: auto; text-align: center; }
-  .testi-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 42px; }
-  @media (max-width: 900px) { .testi-row { grid-template-columns: 1fr; gap: 48px; } }
-
-  .testi-card { border-top: 2px solid var(--ink); padding-top: 22px; }
-  .testi-mark { font-family: 'Fraunces', serif; font-size: 46px; line-height: 1; color: var(--sky-deep); margin-bottom: 4px; }
-  .testi-card blockquote { font-family: 'Fraunces', serif; font-style: italic; font-size: 16px; color: var(--text); line-height: 1.65; margin-bottom: 20px; }
-  .testi-attr { display: flex; align-items: baseline; gap: 10px; font-size: 12.5px; }
-  .testi-attr b { font-family: 'Inter'; font-weight: 700; font-size: 13.5px; color: var(--ink); text-transform: none; letter-spacing: 0; }
-  .testi-attr span { color: var(--sky-deep); font-weight: 600; }
-
-  /* ---------- CTA ---------- */
-  .cta-band { padding: 0 0 110px; }
-  .cta-box {
-    border: 1px solid var(--line); border-radius: 4px; padding: 56px; text-align: center;
-    background: var(--card); position: relative;
-  }
-  .cta-box::before, .cta-box::after {
-    content: ''; position: absolute; width: 10px; height: 10px; border: 1px solid var(--ink); opacity: 0.5;
-  }
-  .cta-box::before { top: -1px; left: -1px; border-right: none; border-bottom: none; }
-  .cta-box::after { bottom: -1px; right: -1px; border-left: none; border-top: none; }
-  .cta-box h2 { font-family: 'Fraunces', serif; font-weight: 600; font-size: clamp(24px, 2.8vw, 32px); color: var(--ink); margin-bottom: 14px; }
-  .cta-box p { color: var(--text-muted); font-size: 14.5px; margin-bottom: 28px; max-width: 52ch; margin-left: auto; margin-right: auto; }
-
-  /* ---------- Footer ---------- */
-  footer { background: var(--ink-deep); padding: 58px 0 30px; font-size: 13.5px; color: rgba(255,255,255,0.6); }
-  .footer-top { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 40px; margin-bottom: 40px; }
-  .footer-brand { max-width: 300px; }
-  .footer-brand-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
-  .footer-mark { font-family: 'Fraunces', serif; font-weight: 600; font-size: 18px; color: var(--paper); }
-  .footer-brand p { margin-bottom: 18px; line-height: 1.6; }
-  .footer-social { display: flex; gap: 10px; }
-  .footer-social a {
-    width: 34px; height: 34px; border-radius: 2px; border: 1px solid var(--line-deep);
-    display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.6);
-    transition: border-color 0.2s, color 0.2s;
-  }
-  .footer-social a:hover { border-color: var(--sky); color: var(--sky); }
-  .footer-cols { display: flex; gap: 52px; flex-wrap: wrap; }
-  .footer-col h4 { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--sky); margin-bottom: 14px; }
-  .footer-col a, .footer-col span { display: block; margin-bottom: 9px; color: rgba(255,255,255,0.6); transition: color 0.2s; }
-  .footer-col a:hover { color: var(--paper); }
-  .footer-bottom { padding-top: 20px; border-top: 1px solid var(--line-deep); }
-  @media (max-width: 640px) { .footer-top { flex-direction: column; } .footer-cols { gap: 32px; } }
+  /* WhatsApp chat widget */
+  .wa-widget { position: fixed; right: 20px; bottom: 20px; z-index: 90; display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
+  .wa-fab { display: inline-flex; align-items: center; gap: 10px; padding: 14px 20px 14px 16px; border-radius: 999px; background: #128C4B; color: #fff; font-size: 14px; font-weight: 600; box-shadow: 0 12px 30px -10px rgba(18,140,75,.7); transition: background .2s, transform .2s; }
+  .wa-fab:hover { background: #0E6F3B; transform: translateY(-2px); }
+  .wa-fab:focus-visible, .wa-menu a:focus-visible { outline: 2px solid #85CCFF; outline-offset: 3px; }
+  .wa-menu { display: none; flex-direction: column; gap: 6px; background: #fff; border-radius: 22px; padding: 10px; box-shadow: 0 24px 50px -16px rgba(6,47,77,.5); min-width: 250px; animation: waIn .25s ease both; }
+  .wa-widget.open .wa-menu { display: flex; }
+  .wa-menu a { display: flex; flex-direction: column; padding: 12px 16px; border-radius: 14px; font-size: 14px; font-weight: 600; color: #062F4D; }
+  .wa-menu a small { font-weight: 500; color: #55697B; font-size: 13px; }
+  .wa-menu a:hover { background: #F1F7FC; }
+  @keyframes waIn { from { opacity: 0; transform: translateY(8px); } }
+  @media (max-width: 600px) { .wa-fab span { display: none; } .wa-fab { padding: 15px; } }
 </style>
 </head>
 <body>
 
-<nav class="site-nav">
-  <div class="wrap nav-inner">
+<a class="home-fab" href="index.html" aria-label="Back to home">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+  Home
+</a>
+
+
+<nav class="nav">
+  <div class="nav-pill">
     <a class="brand" href="index.html">
-      <svg width="26" height="32" viewBox="0 0 377.21 459.6"><path fill="#094570" d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>
-      <span>Himaayah Schools</span>
+      <svg width="24" height="30" viewBox="0 0 377.21 459.6" aria-hidden="true"><path fill="#094570" d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>
+      Himaayah Schools
     </a>
     <div class="nav-links" id="navLinks">
-      <a href="academy.html#courses">Programmes</a>
-      <a href="exam-calendars.html">Exam Calendars</a>
-      <a href="success-stories.html">Success Stories</a>
-      <a href="#testimonials">Testimonials</a>
-      <a href="enroll.html" class="nav-cta">Enroll Now</a>
-    </div>
-    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-</nav>
-
-<header class="hero">
-  <svg class="hero-crest" viewBox="0 0 377.21 459.6" aria-hidden="true"><path fill="#094570" d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>
-  <div class="wrap hero-inner">
-    <div class="hero-badge">
-      <span class="dot">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#094570" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5V6a2 2 0 0 1 2-2h13v13H6a2 2 0 0 0-2 2.5z"/><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H19"/></svg>
-      </span>
-    </div>
-    <h1>Raising scholars who lead with <em>deen</em> and discipline.</h1>
-    <p class="sub">One academy, six programmes. Qur'an memorization to top UTME scores. Structured instruction, close mentorship, and a standard of rigor students can see in the results.</p>
-    <div class="hero-actions">
-      <a href="academy.html#courses" class="btn btn-primary">View the Programmes</a>
-      <a href="academy.html" class="btn btn-outline">Book a Free CBT Mock Test</a>
-    </div>
-    <div class="hero-trust">
-      <div><b>90%</b>UTME success rate</div>
-      <div><b>6</b>programmes, one standard</div>
-      <div><b>2</b>years of teaching, deepened yearly</div>
-    </div>
-  </div>
-</header>
-
-<section class="catalog-section" id="tracks">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <span class="eyebrow">Programme Catalog</span>
-      <h2>Six paths, one academy.</h2>
-      <p>Exam prep, advanced levels, practical skills, teenage development, and Islamic studies — each with its own instructors and outcomes. Pick where you're starting.</p>
-    </div>
-
-    <div class="catalog">
-
-      <article class="catalog-row reveal">
-        <div class="catalog-num">I.</div>
-        <div class="catalog-thumb"><img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=400&q=80" alt="A student's hand filling in a multiple-choice answer sheet with a pencil."></div>
-        <div class="catalog-text">
-          <h3>UTME / Post-UTME</h3>
-          <p class="tags">CBT Simulator · Live Classes</p>
-        </div>
-        <a href="academy.html" class="catalog-link" aria-label="View UTME / Post-UTME schedule"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-      </article>
-
-      <article class="catalog-row reveal">
-        <div class="catalog-num">II.</div>
-        <div class="catalog-thumb"><img src="https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=400&q=80" alt="Notebooks and a calculator arranged on a study table."></div>
-        <div class="catalog-text">
-          <h3>O-Levels (WAEC/NECO)</h3>
-          <p class="tags">Live Classes · WAEC · NECO</p>
-        </div>
-        <a href="academy.html" class="catalog-link" aria-label="View O-Levels schedule"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-      </article>
-
-      <article class="catalog-row reveal">
-        <div class="catalog-num">III.</div>
-        <div class="catalog-thumb"><img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=400&q=80" alt="A pair of glasses resting on an open textbook."></div>
-        <div class="catalog-text">
-          <h3>A-Levels (IJMB/JUPEB)</h3>
-          <p class="tags">Live Classes · IJMB · JUPEB</p>
-        </div>
-        <a href="academy.html" class="catalog-link" aria-label="View A-Levels schedule"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-      </article>
-
-      <article class="catalog-row reveal">
-        <div class="catalog-num">IV.</div>
-        <div class="catalog-thumb"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=400&q=80" alt="Charts and performance graphs displayed across a laptop screen."></div>
-        <div class="catalog-text">
-          <h3>Skill Academy</h3>
-          <p class="tags">Project-Based · Certificate</p>
-        </div>
-        <a href="skills-school.html" class="catalog-link" aria-label="View Skill Academy schedule"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-      </article>
-
-      <article class="catalog-row reveal">
-        <div class="catalog-num">V.</div>
-        <div class="catalog-thumb"><img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=400&q=80" alt="An open notebook, pen, and a warm desk lamp arranged on a wooden study table."></div>
-        <div class="catalog-text">
-          <h3>Teenagers Building Circle</h3>
-          <p class="tags">Ages 13–19 · Weekly Cohort</p>
-        </div>
-        <a href="teenagers-building-circle.html" class="catalog-link" aria-label="View Teenagers Building Circle schedule"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-      </article>
-
-      <article class="catalog-row reveal">
-        <div class="catalog-num">VI.</div>
-        <div class="catalog-thumb"><img src="https://images.unsplash.com/photo-1616422840391-fa670d4b2ae7?auto=format&fit=crop&w=400&q=80" alt="An open Qur'an resting on a wooden stand."></div>
-        <div class="catalog-text">
-          <h3>Madrasah</h3>
-          <p class="tags">Group · Personal · 4×/Week</p>
-        </div>
-        <a href="madrasah.html" class="catalog-link" aria-label="View Madrasah schedule"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-      </article>
-
-    </div>
-  </div>
-</section>
-
-<section class="ledger">
-  <div class="wrap">
-    <div class="ledger-head reveal">
-      <span class="eyebrow">Report Card</span>
-      <h2>Results, on the record.</h2>
-    </div>
-    <div class="ledger-row reveal">
-      <div class="ledger-cell">
-        <div class="ledger-num">90%</div>
-        <div class="ledger-label">UTME success rate</div>
-      </div>
-      <div class="ledger-cell">
-        <div class="ledger-num">98%</div>
-        <div class="ledger-label">Scored 200+ in UTME</div>
-      </div>
-      <div class="ledger-cell">
-        <div class="ledger-num">90%</div>
-        <div class="ledger-label">2026 cohort success rate</div>
-      </div>
-      <div class="ledger-cell">
-        <div class="ledger-num">90%</div>
-        <div class="ledger-label">Now admitted, into their desired course</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="testimonials" id="testimonials">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <span class="eyebrow">In Their Own Words</span>
-      <h2>Testimonials, not promises.</h2>
-      <p>Direct from students who sat their exams through the Academy.</p>
-    </div>
-
-    <div class="testi-row">
-
-      <div class="testi-card reveal">
-        <div class="testi-mark">"</div>
-        <blockquote>Alhamdulillah, Himaayah Academy is the best place I will recommend for anyone preparing for the next UTME. I had no prior knowledge of my department subjects, but with the help of Allah and my dedicated teachers, I was able to have my score.</blockquote>
-        <div class="testi-attr"><b>Ameenah</b><span>294 in UTME</span></div>
-      </div>
-
-      <div class="testi-card reveal">
-        <div class="testi-mark">"</div>
-        <blockquote>At Himaayah Academy, I didn't just learn about academics — I learnt resilience, discipline, and how to manage my fears. It gave me teachers that stood by me despite my failures, and friends who are now dear to my heart.</blockquote>
-        <div class="testi-attr"><b>Hafsah</b><span>299 in UTME</span></div>
-      </div>
-
-      <div class="testi-card reveal">
-        <div class="testi-mark">"</div>
-        <blockquote>The academy was very helpful and strategic. Everything was structured to make sure everyone puts in their all — from daily tasks to the reading club, to brainstorming sessions, to daily CBT quizzes. It sets the path.</blockquote>
-        <div class="testi-attr"><b>Hussainah</b><span>319 in UTME, 2026</span></div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<section class="cta-band">
-  <div class="wrap">
-    <div class="cta-box reveal">
-      <span class="eyebrow">Admissions Notice</span>
-      <h2 style="margin-top:14px;">Your seat in the next cohort is open.</h2>
-      <p>Same structure, same teachers, same standard — for whichever exam or skill is ahead of you.</p>
-      <a href="enroll.html" class="btn btn-primary">Enroll Now</a>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="wrap">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <div class="footer-brand-row">
-          <svg width="24" height="29" viewBox="0 0 377.21 459.6"><path fill="#85CCFF" d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>
-          <span class="footer-mark">Himaayah Schools</span>
-        </div>
-        <p>Raising the next generation with deen, knowledge, and purpose.</p>
-        <div class="footer-social">
-          <a href="https://instagram.com/himaayahschools" target="_blank" rel="noopener" aria-label="Himaayah Schools on Instagram">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
-          </a>
-          <a href="https://x.com/himaayahschools" target="_blank" rel="noopener" aria-label="Himaayah Schools on X">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.24 2H21.5l-7.3 8.34L22.8 22h-6.73l-5.27-6.9L4.7 22H1.4l7.8-8.92L1 2h6.9l4.76 6.3L18.24 2zm-1.18 18h1.86L7.03 3.9H5.03L17.06 20z"/></svg>
-          </a>
-        </div>
-      </div>
-      <div class="footer-cols">
-        <div class="footer-col">
-          <h4>Programmes</h4>
+      <div class="dd">
+        <button type="button" class="dd-btn" aria-haspopup="true" aria-expanded="false">Programmes
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="dd-menu">
           <a href="teenagers-building-circle.html">Teenagers Building Circle</a>
           <a href="madrasah.html">Madrasah</a>
           <a href="academy.html">Academy</a>
           <a href="skills-school.html">Skills School</a>
         </div>
-        <div class="footer-col">
-          <h4>Site</h4>
+      </div>
+      <a href="success-stories.html">Success Stories</a>
+      <a href="faq.html">FAQ</a>
+      <a href="contact.html">Contact</a>
+      <a href="enroll.html" class="btn btn-ink">Enroll Now</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-frame">
+    <div class="hero-copy">
+      <h1>Raising scholars who lead with deen and discipline.</h1>
+      <p>One academy, four programmes. From Qur'an memorisation to top UTME scores, with structured teaching, close mentorship, and a standard students can see in their results.</p>
+      <div class="hero-actions">
+        <a href="academy.html#courses" class="btn btn-sky">View the programmes</a>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLScfToSyajwBUybYdXDSXtFT3vF9bWzG7ICw0DL7hXPBR7_UsA/viewform?usp=header" target="_blank" rel="noopener" class="btn btn-ghost">Book a free CBT mock test</a>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="chip"><b>90%</b><span>UTME success rate</span></div>
+      <div class="chip"><b>4</b><span>programmes, one standard</span></div>
+      <div class="chip"><b>2 years</b><span>of teaching, deepened yearly</span></div>
+    </div>
+  </div>
+</header>
+
+<section class="statement">
+  <div class="wrap">
+    <p>We teach for the exam hall and for life. <span>Faith, knowledge, and practical skill, taught in one place by teachers who stay with every student through the failures and the wins.</span></p>
+  </div>
+</section>
+
+<section class="programmes" id="tracks">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Four programmes, six paths. Start where you are.</h2>
+      <p>Exam prep, advanced levels, practical skills, teenage development, and Islamic studies, each with its own instructors and outcomes.</p>
+    </div>
+    <div class="grid">
+      <a class="card wide" href="academy.html" aria-label="UTME and Post-UTME">
+        <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1000&q=80" alt="A student's hand filling in a multiple-choice answer sheet with a pencil.">
+        <div class="card-body"><div><h3>UTME / Post-UTME</h3><p>CBT simulator and live classes</p></div><span class="go"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+      </a>
+      <a class="card wide" href="madrasah.html" aria-label="Madrasah">
+        <img src="https://images.unsplash.com/photo-1616422840391-fa670d4b2ae7?auto=format&fit=crop&w=1000&q=80" alt="An open Qur'an resting on a wooden stand.">
+        <div class="card-body"><div><h3>Madrasah</h3><p>Group or personal, four classes a week</p></div><span class="go"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+      </a>
+      <a class="card" href="academy.html" aria-label="O-Levels">
+        <img src="https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=700&q=80" alt="Notebooks and a calculator arranged on a study table.">
+        <div class="card-body"><div><h3>O-Levels</h3><p>WAEC and NECO live classes</p></div><span class="go"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+      </a>
+      <a class="card" href="academy.html" aria-label="A-Levels">
+        <img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=700&q=80" alt="A pair of glasses resting on an open textbook.">
+        <div class="card-body"><div><h3>A-Levels</h3><p>IJMB and JUPEB live classes</p></div><span class="go"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+      </a>
+      <a class="card" href="skills-school.html" aria-label="Skills School">
+        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=700&q=80" alt="Charts and performance graphs displayed across a laptop screen.">
+        <div class="card-body"><div><h3>Skills School</h3><p>Project-based, with certificate</p></div><span class="go"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+      </a>
+      <a class="card wide" href="teenagers-building-circle.html" style="grid-column: span 6; min-height: 300px;" aria-label="Teenagers Building Circle">
+        <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1400&q=80" alt="An open notebook, pen, and a warm desk lamp on a wooden study table.">
+        <div class="card-body"><div><h3>Teenagers Building Circle</h3><p>Ages 13 to 19, weekly cohort</p></div><span class="go"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="results">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Results, on the record.</h2>
+      <p>What our UTME students have achieved so far.</p>
+    </div>
+    <div class="stat-row">
+      <div class="stat"><b data-count="90" data-suffix="%">90%</b><span>UTME success rate</span></div>
+      <div class="stat"><b data-count="98" data-suffix="%">98%</b><span>scored 200+ in UTME</span></div>
+      <div class="stat"><b data-count="90" data-suffix="%">90%</b><span>2026 cohort success rate</span></div>
+      <div class="stat"><b data-count="90" data-suffix="%">90%</b><span>now admitted into their desired course</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="voices" id="voices">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Testimonials, not promises.</h2>
+      <p>Direct from students who sat their exams through the Academy.</p>
+    </div>
+    <div class="voice-row">
+      <figure class="voice">
+        <blockquote>Alhamdulillah, Himaayah Academy is the best place I will recommend for anyone preparing for the next UTME. I had no prior knowledge of my department subjects, but with the help of Allah and my dedicated teachers, I was able to have my score.</blockquote>
+        <footer><span class="avatar">A</span><div><b>Ameenah</b><small>294 in UTME</small></div></footer>
+      </figure>
+      <figure class="voice">
+        <blockquote>At Himaayah Academy, I didn't just learn about academics — I learnt resilience, discipline, and how to manage my fears. It gave me teachers that stood by me despite my failures, and friends who are now dear to my heart.</blockquote>
+        <footer><span class="avatar">H</span><div><b>Hafsah</b><small>299 in UTME</small></div></footer>
+      </figure>
+      <figure class="voice">
+        <blockquote>The academy was very helpful and strategic. Everything was structured to make sure everyone puts in their all — from daily tasks to the reading club, to brainstorming sessions, to daily CBT quizzes. It sets the path.</blockquote>
+        <footer><span class="avatar">H</span><div><b>Hussainah</b><small>319 in UTME, 2026</small></div></footer>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="cta-box">
+    <h2>Your seat in the next cohort is open.</h2>
+    <p>Same structure, same teachers, same standard, for whichever exam or skill is ahead of you.</p>
+    <a href="enroll.html" class="btn btn-ink">Enroll now</a>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="f-top">
+      <div class="f-brand">
+        <a class="brand" href="index.html">
+          <svg width="24" height="30" viewBox="0 0 377.21 459.6" aria-hidden="true"><path fill="#85CCFF" d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>
+          Himaayah Schools
+        </a>
+        <p>Raising the next generation with deen, knowledge, and purpose.</p>
+        <div class="social">
+          <a href="https://instagram.com/himaayahschools" target="_blank" rel="noopener" aria-label="Himaayah Schools on Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg></a>
+          <a href="https://x.com/himaayahschools" target="_blank" rel="noopener" aria-label="Himaayah Schools on X"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.24 2H21.5l-7.3 8.34L22.8 22h-6.73l-5.27-6.9L4.7 22H1.4l7.8-8.92L1 2h6.9l4.76 6.3L18.24 2zm-1.18 18h1.86L7.03 3.9H5.03L17.06 20z"/></svg></a>
+        </div>
+      </div>
+      <div class="f-cols">
+        <div class="f-col"><h4>Programmes</h4>
+          <a href="teenagers-building-circle.html">Teenagers Building Circle</a>
+          <a href="madrasah.html">Madrasah</a>
+          <a href="academy.html">Academy</a>
+          <a href="skills-school.html">Skills School</a>
+        </div>
+        <div class="f-col"><h4>Site</h4>
           <a href="index.html">Home</a>
           <a href="faq.html">FAQ</a>
+          <a href="contact.html">Contact</a>
+          <a href="policies.html">Policies</a>
           <a href="enroll.html">Enroll</a>
         </div>
-        <div class="footer-col">
-          <h4>Contact</h4>
+        <div class="f-col"><h4>Contact</h4>
           <a href="mailto:himaayahschools@gmail.com">himaayahschools@gmail.com</a>
+          <a href="tel:+2348066043320">+234 806 604 3320</a>
+          <a href="tel:+2347025842849">+234 702 584 2849</a>
           <span>Ilorin, Nigeria</span>
         </div>
       </div>
     </div>
-    <div class="footer-bottom">
-      <span>© 2026 Himaayah Schools.</span>
-    </div>
+    <div class="f-bottom">© 2026 Himaayah Schools.</div>
   </div>
 </footer>
 
 <script>
-  const navToggle = document.getElementById('navToggle');
-  const navLinks = document.getElementById('navLinks');
-  navToggle?.addEventListener('click', () => navLinks.classList.toggle('open'));
+  const t = document.getElementById('navToggle'), l = document.getElementById('navLinks');
+  t.addEventListener('click', () => { const o = l.classList.toggle('open'); t.setAttribute('aria-expanded', o); });
+  const dd = document.querySelector('.dd'), ddb = dd.querySelector('.dd-btn');
+  ddb.addEventListener('click', () => { const o = dd.classList.toggle('open'); ddb.setAttribute('aria-expanded', o); });
 
-  if ('IntersectionObserver' in window) {
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('in');
-          io.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12 });
-    document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
-  } else {
-    document.querySelectorAll('.reveal').forEach((el) => el.classList.add('in'));
+  // Count-up on the results band (the one scroll-triggered moment)
+  const nums = document.querySelectorAll('[data-count]');
+  const run = (el) => {
+    const end = +el.dataset.count, s = el.dataset.suffix || '', t0 = performance.now();
+    const tick = (n) => { const p = Math.min((n - t0) / 1300, 1); el.textContent = Math.round((1 - Math.pow(1 - p, 3)) * end) + s; if (p < 1) requestAnimationFrame(tick); };
+    requestAnimationFrame(tick);
+  };
+  if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { run(e.target); io.unobserve(e.target); } }), { threshold: .5 });
+    nums.forEach((n) => io.observe(n));
   }
+</script>
+
+<div class="wa-widget" id="waWidget">
+  <div class="wa-menu" id="waMenu">
+    <a href="https://wa.me/2348066043320?text=Assalaamu%20alaykum.%20I%27d%20like%20to%20ask%20about%20Himaayah%20Schools." target="_blank" rel="noopener">Chat on WhatsApp <small>+234 806 604 3320</small></a>
+    <a href="https://wa.me/2347025842849?text=Assalaamu%20alaykum.%20I%27d%20like%20to%20ask%20about%20Himaayah%20Schools." target="_blank" rel="noopener">Chat on WhatsApp <small>+234 702 584 2849</small></a>
+  </div>
+  <button type="button" class="wa-fab" id="waBtn" aria-expanded="false" aria-controls="waMenu" aria-label="Chat with us on WhatsApp">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.7-5.2A8.5 8.5 0 1 1 21 11.5z"/></svg>
+    <span>Chat with us</span>
+  </button>
+</div>
+<script>
+  (function () {
+    const w = document.getElementById('waWidget'), b = document.getElementById('waBtn');
+    b.addEventListener('click', () => { const o = w.classList.toggle('open'); b.setAttribute('aria-expanded', o); });
+    document.addEventListener('click', (e) => { if (!w.contains(e.target)) { w.classList.remove('open'); b.setAttribute('aria-expanded', 'false'); } });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { w.classList.remove('open'); b.setAttribute('aria-expanded', 'false'); b.focus(); } });
+  })();
 </script>
 </body>
 </html>

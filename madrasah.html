@@ -4,470 +4,421 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Madrasah — Himaayah Schools</title>
-<meta name="description" content="Madrasah at Himaayah Schools: Qur'an memorisation, tajweed, aqeedah, fiqh, and seerah — group or one-on-one. Explore courses and enroll.">
+<meta name="description" content="Madrasah at Himaayah Schools: Qur'an memorisation, tajweed, and Islamic studies in group or personal classes, four times a week.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20377.21%20459.6%22%3E%3Cpath%20fill=%22%23094570%22%20d=%22M0.14%20280.14c4.28%2C65.12%2098.42%2C133.97%20163.39%2C172.42%2015.86%2C9.39%2034.24%2C9.39%2050.11%2C-0.01%2052.97%2C-31.37%20159.02%2C-102.63%20163.43%2C-172.41l-376.92%200zm302.67%20-162.41l74.4%20105.8%200%20-126.48c0%2C-20.52%20-11.85%2C-38.03%20-30.9%2C-45.66l-125.46%20-50.22%2081.96%20116.56zm-228.42%200l82.79%20-117.73%20-126.49%2051.28c-18.95%2C7.68%20-30.7%2C25.13%20-30.7%2C45.57l0%20126.67%2074.4%20-105.8zm114.21%20-8.75c35.22%2C0%2063.77%2C28.55%2063.77%2C63.77%200%2C35.22%20-28.55%2C63.77%20-63.77%2C63.77%20-35.22%2C0%20-63.77%2C-28.55%20-63.77%2C-63.77%200%2C-35.22%2028.55%2C-63.77%2063.77%2C-63.77z%22/%3E%3C/svg%3E">
+<meta name="theme-color" content="#094570">
+<meta property="og:site_name" content="Himaayah Schools">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Madrasah — Himaayah Schools">
+<meta property="og:description" content="Madrasah at Himaayah Schools: Qur'an memorisation, tajweed, and Islamic studies in group or personal classes, four times a week.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;0,700;1,500;1,600&family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --ink: #094570;
-    --ink-deep: #062F4D;
-    --paper: #FBF9F4;
-    --card: #FFFFFF;
-    --sky: #85CCFF;
-    --sky-deep: #3E97D9;
-    --sky-wash: #EAF4FC;
-    --line: rgba(9, 69, 112, 0.16);
-    --line-deep: rgba(255, 255, 255, 0.14);
-    --text: #0E2A3D;
-    --text-muted: #4C6478;
+    --deep: #062F4D; --ink: #094570; --sky: #85CCFF; --sky-d: #3E97D9;
+    --wash: #F1F7FC; --white: #fff; --text: #0E2A3D; --muted: #55697B;
+    --line: rgba(9,69,112,.12); --r-lg: 32px;
+    --display: 'Bricolage Grotesque', 'Inter', sans-serif;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
-  body {
-    font-family: 'Inter', -apple-system, sans-serif;
-    background: var(--paper); color: var(--text);
-    -webkit-font-smoothing: antialiased;
-  }
+  body { font-family: 'Inter', -apple-system, sans-serif; color: var(--text); background: var(--white); -webkit-font-smoothing: antialiased; line-height: 1.6; }
   a { color: inherit; text-decoration: none; }
   img { display: block; max-width: 100%; }
   button { font-family: inherit; cursor: pointer; border: none; background: none; }
-  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
-  .serif { font-family: 'Fraunces', Georgia, serif; }
-  .arabic { font-family: 'Amiri', serif; }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 28px; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--sky-d); outline-offset: 3px; }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition-duration: .001ms !important; scroll-behavior: auto !important; } }
 
-  a:focus-visible, button:focus-visible { outline: 2px solid var(--sky-deep); outline-offset: 3px; }
-  @media (prefers-reduced-motion: reduce) {
-    * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 15px 28px; font-size: 15px; font-weight: 600; border-radius: 999px; transition: background .2s, color .2s, border-color .2s; }
+  .btn-sky { background: var(--sky); color: var(--deep); } .btn-sky:hover { background: #fff; }
+  .btn-ink { background: var(--ink); color: #fff; } .btn-ink:hover { background: var(--deep); }
+  .btn-ghost { border: 1px solid rgba(255,255,255,.5); color: #fff; } .btn-ghost:hover { background: rgba(255,255,255,.14); }
+
+  /* Nav */
+  .nav { position: fixed; top: 16px; left: 0; right: 0; z-index: 100; padding: 0 20px; }
+  .nav-pill { max-width: 1200px; margin: 0 auto; height: 64px; padding: 0 12px 0 22px; display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,.94); backdrop-filter: blur(14px); border-radius: 999px; box-shadow: 0 8px 30px -12px rgba(6,47,77,.35); }
+  .brand { display: flex; align-items: center; gap: 10px; font-family: var(--display); font-weight: 700; font-size: 18px; color: var(--ink); }
+  .nav-links { display: flex; align-items: center; gap: 30px; }
+  .nav-links a:not(.btn) { font-size: 14px; font-weight: 500; color: var(--muted); transition: color .2s; }
+  .nav-links a:not(.btn):hover { color: var(--ink); }
+  .nav-links .btn { padding: 11px 22px; font-size: 14px; }
+  .nav-toggle { display: none; width: 44px; height: 44px; border-radius: 50%; position: relative; }
+  .nav-toggle span { position: absolute; left: 13px; right: 13px; height: 2px; background: var(--ink); }
+  .nav-toggle span:nth-child(1) { top: 16px; } .nav-toggle span:nth-child(2) { top: 21px; } .nav-toggle span:nth-child(3) { top: 26px; }
+  @media (max-width: 900px) {
+    .nav-toggle { display: block; }
+    .nav-links { position: absolute; top: 76px; left: 20px; right: 20px; flex-direction: column; align-items: stretch; gap: 0; background: #fff; border-radius: 24px; padding: 8px 20px 20px; box-shadow: 0 20px 40px -16px rgba(6,47,77,.4); display: none; }
+    .nav-links.open { display: flex; }
+    .nav-links a:not(.btn) { padding: 15px 0; border-bottom: 1px solid var(--line); }
+    .nav-links .btn { margin-top: 16px; }
   }
 
-  .reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.7s ease, transform 0.7s ease; }
-  .reveal.in { opacity: 1; transform: translateY(0); }
-  @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; } }
+  /* Hero */
+  .hero { padding: 100px 16px 0; }
+  .hero-frame { position: relative; max-width: 1400px; margin: 0 auto; min-height: 600px; border-radius: 40px; overflow: hidden; display: flex; align-items: flex-end; padding: 64px; color: #fff;
+    background: linear-gradient(180deg, rgba(6,47,77,.2) 0%, rgba(6,47,77,.93) 100%), url('https://images.unsplash.com/photo-1616422840391-fa670d4b2ae7?auto=format&fit=crop&w=2000&q=80') center/cover; }
+  .hero-copy { max-width: 760px; }
+  .hero h1 { font-family: var(--display); font-weight: 700; font-size: clamp(38px, 6vw, 72px); line-height: 1.04; letter-spacing: -.025em; margin-bottom: 22px; }
+  .hero p { font-size: 17px; color: rgba(255,255,255,.82); max-width: 52ch; margin-bottom: 34px; }
+  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+  .hero-copy > * { animation: rise .8s cubic-bezier(.2,.7,.2,1) both; }
+  .hero-copy > *:nth-child(2) { animation-delay: .12s; } .hero-copy > *:nth-child(3) { animation-delay: .24s; }
+  @keyframes rise { from { opacity: 0; transform: translateY(22px); } }
+  @media (max-width: 600px) { .hero-frame { padding: 32px 24px; min-height: 520px; border-radius: 28px; } }
 
-  .eyebrow {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-size: 11.5px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
-    color: var(--sky-deep);
-  }
-  .eyebrow::before { content: ''; width: 16px; height: 1px; background: var(--sky-deep); }
+  /* Plans */
+  .plans { padding: 110px 0 60px; }
+  .section-head { display: flex; align-items: end; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-bottom: 36px; }
+  .section-head h2 { font-family: var(--display); font-weight: 700; font-size: clamp(30px, 4vw, 46px); line-height: 1.1; letter-spacing: -.02em; color: var(--deep); max-width: 14em; }
+  .seg { display: inline-flex; background: var(--wash); border-radius: 999px; padding: 5px; }
+  .seg button { padding: 12px 26px; border-radius: 999px; font-size: 14.5px; font-weight: 600; color: var(--muted); transition: background .2s, color .2s; }
+  .seg button[aria-selected="true"] { background: var(--ink); color: #fff; }
+  .mode-note { color: var(--muted); font-size: 15px; margin-bottom: 28px; max-width: 60ch; }
+  .plan-grid { display: none; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .plan-grid.active { display: grid; animation: rise .5s ease both; }
+  @media (max-width: 800px) { .plan-grid.active { grid-template-columns: 1fr; } }
+  .plan { background: var(--wash); border-radius: var(--r-lg); padding: 36px; display: flex; flex-direction: column; gap: 16px; }
+  .plan.featured { background: var(--ink); color: #fff; }
+  .plan h3 { font-family: var(--display); font-size: 28px; line-height: 1.15; letter-spacing: -.01em; color: var(--deep); }
+  .plan.featured h3 { color: #fff; }
+  .plan ul { list-style: none; display: grid; gap: 10px; flex: 1; }
+  .plan li { display: flex; gap: 12px; font-size: 15px; color: var(--muted); }
+  .plan.featured li { color: rgba(255,255,255,.8); }
+  .plan li::before { content: ''; flex-shrink: 0; width: 18px; height: 18px; margin-top: 3px; border-radius: 50%; background: var(--sky) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23062F4D' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12l4 4 8-8'/%3E%3C/svg%3E") center/12px no-repeat; }
+  .plan-foot { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding-top: 20px; border-top: 1px solid var(--line); }
+  .plan.featured .plan-foot { border-color: rgba(255,255,255,.2); }
+  .price b { font-family: var(--display); font-size: 34px; line-height: 1.1; color: var(--ink); }
+  .plan.featured .price b { color: var(--sky); }
+  .price span { font-size: 14px; color: var(--muted); }
+  .plan.featured .price span { color: rgba(255,255,255,.7); }
 
-  /* ---------- Nav ---------- */
-  .site-nav {
-    position: sticky; top: 0; z-index: 100;
-    background: rgba(251,249,244,0.92); backdrop-filter: blur(10px);
-    background-image:
-      linear-gradient(rgba(251,249,244,0.92), rgba(251,249,244,0.92)),
-      repeating-conic-gradient(from 45deg, rgba(9,69,112,0.045) 0deg 45deg, transparent 45deg 90deg);
-    background-size: auto, 46px 46px;
-    border-bottom: 1px solid var(--line);
-  }
-  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 78px; }
-  .brand { display: flex; align-items: center; gap: 11px; }
-  .brand .crest { width: 26px; height: 32px; flex-shrink: 0; }
-  .brand span { font-family: 'Fraunces', serif; font-weight: 600; font-size: 18px; letter-spacing: -0.01em; color: var(--ink); }
-  .nav-links { display: flex; align-items: center; gap: 34px; }
-  .nav-links a:not(.nav-cta) { font-size: 13.5px; font-weight: 500; color: var(--text-muted); transition: color 0.2s; }
-  .nav-links a:not(.nav-cta):hover { color: var(--ink); }
-  .nav-cta {
-    background: var(--ink); color: var(--paper); font-weight: 600; font-size: 13.5px;
-    padding: 11px 22px; border-radius: 2px; transition: background 0.2s;
-  }
-  .nav-cta:hover { background: var(--ink-deep); }
-  .nav-toggle { display: none; }
+  /* One-year */
+  .year { padding: 0 16px 110px; }
+  .year-box { max-width: 1400px; margin: 0 auto; border-radius: 40px; background: var(--deep); color: #fff; padding: 72px 64px; display: grid; grid-template-columns: 1.2fr .8fr; gap: 48px; align-items: center; }
+  .year-box h2 { font-family: var(--display); font-weight: 700; font-size: clamp(30px, 4vw, 46px); line-height: 1.1; letter-spacing: -.02em; margin-bottom: 14px; }
+  .year-box p { color: rgba(255,255,255,.75); max-width: 46ch; }
+  .year-card { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.18); border-radius: 28px; padding: 32px; }
+  .year-card .price b { color: var(--sky); font-size: 40px; } .year-card .price span { color: rgba(255,255,255,.7); }
+  .year-card ul { list-style: none; margin: 18px 0 24px; display: grid; gap: 8px; font-size: 15px; color: rgba(255,255,255,.8); }
+  .year-card .btn { width: 100%; }
+  @media (max-width: 900px) { .year-box { grid-template-columns: 1fr; padding: 48px 28px; border-radius: 28px; } }
 
-  @media (max-width: 780px) {
-    .nav-links { position: absolute; top: 78px; left: 0; right: 0; background: var(--paper); flex-direction: column; align-items: stretch; gap: 0; border-bottom: 1px solid var(--line); max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
-    .nav-links.open { max-height: 320px; }
-    .nav-links a:not(.nav-cta) { padding: 16px 28px; border-bottom: 1px solid var(--line); }
-    .nav-cta { margin: 14px 28px; text-align: center; }
-    .nav-toggle { display: block; width: 24px; height: 18px; position: relative; }
-    .nav-toggle span { position: absolute; left: 0; width: 100%; height: 2px; background: var(--ink); }
-    .nav-toggle span:nth-child(1) { top: 0; }
-    .nav-toggle span:nth-child(2) { top: 8px; }
-    .nav-toggle span:nth-child(3) { top: 16px; }
-  }
+  /* Footer */
+  footer.site { background: var(--deep); color: rgba(255,255,255,.65); border-radius: 40px 40px 0 0; margin: 0 16px; padding: 70px 0 28px; font-size: 14px; border-top: 1px solid rgba(255,255,255,.08); }
+  .f-top { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 44px; margin-bottom: 48px; }
+  .f-brand { max-width: 320px; } .f-brand .brand { color: #fff; margin-bottom: 14px; } .f-brand p { margin-bottom: 20px; }
+  .social { display: flex; gap: 10px; }
+  .social a { width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,.2); display: grid; place-items: center; transition: background .2s, color .2s; }
+  .social a:hover { background: var(--sky); color: var(--deep); }
+  .f-cols { display: flex; gap: 60px; flex-wrap: wrap; }
+  .f-col h4 { font-family: var(--display); font-size: 16px; color: #fff; margin-bottom: 14px; }
+  .f-col a, .f-col span { display: block; margin-bottom: 9px; transition: color .2s; } .f-col a:hover { color: var(--sky); }
+  .f-bottom { padding-top: 22px; border-top: 1px solid rgba(255,255,255,.12); }
 
-  /* ---------- Hero ---------- */
-  .hero { position: relative; padding: 96px 0 84px; overflow: hidden; text-align: center; border-bottom: 1px solid var(--line); }
-  .hero::before {
-    content: '\0639\0644\0645'; /* عِلم — "knowledge" */
-    font-family: 'Amiri', serif; font-weight: 700;
-    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-    font-size: min(46vw, 480px); color: rgba(9,69,112,0.05); line-height: 1; z-index: 0;
-    pointer-events: none; white-space: nowrap;
-  }
-  .hero-inner { position: relative; z-index: 1; max-width: 720px; margin: 0 auto; }
-  .hero-badge {
-    display: inline-flex; align-items: center; gap: 9px; padding: 7px 14px 7px 7px;
-    border: 1px solid var(--line); border-radius: 999px; margin-bottom: 26px; background: var(--card);
-  }
-  .hero-badge .dot { width: 24px; height: 24px; border-radius: 50%; background: var(--sky-wash); display: flex; align-items: center; justify-content: center; font-family: 'Amiri', serif; font-size: 13px; color: var(--ink); }
-  .hero-badge span:last-child { font-size: 12px; font-weight: 600; color: var(--ink); }
+  /* Always-visible home button */
+  .home-fab { position: fixed; left: 20px; bottom: 20px; z-index: 90; display: inline-flex; align-items: center; gap: 8px; padding: 13px 20px 13px 16px; border-radius: 999px; background: #062F4D; color: #fff; font-size: 14px; font-weight: 600; box-shadow: 0 12px 30px -10px rgba(6,47,77,.6); transition: background .2s, transform .2s; }
+  .home-fab:hover { background: #094570; transform: translateY(-2px); }
+  .home-fab:focus-visible { outline: 2px solid #85CCFF; outline-offset: 3px; }
 
-  .hero h1 { font-family: 'Fraunces', serif; font-weight: 600; font-size: clamp(32px, 4.8vw, 50px); line-height: 1.1; letter-spacing: -0.015em; color: var(--ink); margin-bottom: 20px; }
-  .hero h1 em { font-style: italic; font-weight: 500; color: var(--sky-deep); }
-  .hero p { font-size: 16px; color: var(--text-muted); line-height: 1.7; max-width: 58ch; margin: 0 auto 34px; }
-  .hero-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
-  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 15px 26px; font-size: 14px; font-weight: 600; border-radius: 2px; transition: background 0.2s, color 0.2s, border-color 0.2s; }
-  .btn-primary { background: var(--ink); color: var(--paper); }
-  .btn-primary:hover { background: var(--ink-deep); }
-  .btn-outline { border: 1px solid var(--ink); color: var(--ink); }
-  .btn-outline:hover { background: var(--ink); color: var(--paper); }
+  /* Classes & requirements */
+  .classes { padding: 0 0 110px; }
+  .class-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 56px; }
+  @media (max-width: 1000px) { .class-cards { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .class-cards { grid-template-columns: 1fr; } }
+  .cc { background: var(--wash); border-radius: 24px; padding: 28px; }
+  .cc b { display: block; font-family: var(--display); font-size: 22px; line-height: 1.15; color: var(--deep); margin-bottom: 8px; }
+  .cc span { font-size: 14.5px; color: var(--muted); }
+  .ladder-title { font-family: var(--display); font-weight: 700; font-size: clamp(24px, 3vw, 34px); letter-spacing: -.02em; color: var(--deep); margin-bottom: 8px; }
+  .ladder-sub { color: var(--muted); margin-bottom: 24px; max-width: 62ch; }
+  .tabs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 20px; scrollbar-width: thin; }
+  .tab { flex-shrink: 0; padding: 12px 20px; border-radius: 999px; background: var(--wash); color: var(--muted); font-size: 14.5px; font-weight: 600; transition: background .2s, color .2s; }
+  .tab:hover { color: var(--ink); }
+  .tab[aria-selected="true"] { background: var(--ink); color: #fff; }
+  .lvl { display: grid; grid-template-columns: 280px 1fr; gap: 48px; background: var(--wash); border-radius: var(--r-lg); padding: 44px; animation: rise .45s cubic-bezier(.2,.7,.2,1) both; }
+  @media (max-width: 800px) { .lvl { grid-template-columns: 1fr; gap: 28px; padding: 30px 24px; } }
+  .lvl .score b { display: block; font-family: var(--display); font-size: 72px; line-height: 1; letter-spacing: -.03em; color: var(--ink); }
+  .lvl .score span { font-size: 14px; color: var(--muted); }
+  .lvl .goal { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--line); font-size: 14.5px; color: var(--deep); font-weight: 600; }
+  .lvl h3 { font-family: var(--display); font-size: 28px; line-height: 1.15; color: var(--deep); margin-bottom: 6px; }
+  .lvl .intro { color: var(--muted); margin-bottom: 18px; }
+  .lvl ul { list-style: none; display: grid; gap: 12px; }
+  .lvl li { display: flex; gap: 12px; font-size: 15.5px; color: var(--text); }
+  .lvl li::before { content: ''; flex-shrink: 0; width: 20px; height: 20px; margin-top: 3px; border-radius: 50%; background: var(--sky) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23062F4D' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12l4 4 8-8'/%3E%3C/svg%3E") center/13px no-repeat; }
+  .lvl .strict { margin-top: 20px; background: var(--ink); color: #fff; border-radius: 16px; padding: 14px 18px; font-size: 14.5px; }
+  .plan-note { font-size: 13.5px; background: rgba(133,204,255,.18); border-radius: 14px; padding: 10px 14px; color: #fff; }
+  .journey { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: 28px; font-size: 13.5px; color: var(--muted); }
+  .journey i { font-style: normal; padding: 6px 12px; border-radius: 999px; background: #fff; border: 1px solid var(--line); }
+  .journey i.on { background: var(--ink); color: #fff; border-color: var(--ink); }
 
-  /* ---------- Course catalog ---------- */
-  .courses { padding: 90px 0 100px; border-bottom: 1px solid var(--line); }
-  .section-head { max-width: 640px; margin-bottom: 46px; }
-  .section-head h2 { font-family: 'Fraunces', serif; font-weight: 600; font-size: clamp(26px, 3vw, 34px); letter-spacing: -0.01em; color: var(--ink); margin: 12px 0 12px; }
-  .section-head p { color: var(--text-muted); font-size: 15px; line-height: 1.6; }
-
-  .catalog { border-top: 1px solid var(--line); }
-  .catalog-row {
-    display: grid; grid-template-columns: 48px 120px 1fr 176px; gap: 24px; align-items: center;
-    padding: 26px 0; border-bottom: 1px solid var(--line); transition: background 0.25s ease;
-  }
-  .catalog-row:hover { background: var(--sky-wash); }
-  .catalog-num { font-family: 'Fraunces', serif; font-size: 15px; font-weight: 500; color: var(--sky-deep); }
-  .catalog-thumb { position: relative; width: 120px; height: 88px; overflow: hidden; border-radius: 2px; flex-shrink: 0; }
-  .catalog-thumb img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(0.5) contrast(1.08); }
-  .catalog-thumb::after { content: ''; position: absolute; inset: 0; background: var(--ink); opacity: 0.22; mix-blend-mode: multiply; }
-  .catalog-text h3 { font-family: 'Fraunces', serif; font-size: 18.5px; font-weight: 600; color: var(--ink); margin-bottom: 7px; letter-spacing: -0.005em; }
-  .catalog-text p { font-size: 13px; color: var(--text-muted); line-height: 1.55; max-width: 46ch; }
-  .catalog-meta { text-align: right; }
-  .catalog-tag { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--sky-deep); border: 1px solid var(--line); padding: 4px 9px; border-radius: 999px; margin-bottom: 10px; }
-  .catalog-price { font-family: 'Fraunces', serif; font-weight: 600; font-size: 17px; color: var(--ink); margin-bottom: 3px; }
-  .catalog-cadence { font-size: 11.5px; color: var(--text-muted); margin-bottom: 12px; }
-  .catalog-cta { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 700; color: var(--ink); border-bottom: 1px solid var(--ink); padding-bottom: 1px; }
-
-  @media (max-width: 820px) {
-    .catalog-row { grid-template-columns: 1fr; gap: 14px; }
-    .catalog-thumb { width: 100%; height: 160px; order: -1; }
-    .catalog-meta { text-align: left; }
-  }
-
-  /* ---------- Class levels ---------- */
-  .classes { padding: 90px 0 110px; }
-  .class-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
-  @media (max-width: 980px) { .class-grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 640px) { .class-grid { grid-template-columns: 1fr; } }
-
-  .class-card { background: var(--card); border: 1px solid var(--line); border-top: 2px solid var(--ink); padding: 24px; transition: box-shadow 0.25s ease; }
-  .class-card:hover { box-shadow: 0 14px 30px -18px rgba(9,69,112,0.25); }
-  .class-level {
-    display: inline-flex; align-items: baseline; gap: 6px; font-family: 'Fraunces', serif; font-weight: 600;
-    font-size: 13px; color: var(--sky-deep); margin-bottom: 12px;
-  }
-  .class-card h3 { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600; color: var(--ink); margin-bottom: 10px; }
-  .class-desc { font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-bottom: 16px; }
-  .subject-tags { display: flex; flex-wrap: wrap; gap: 6px; }
-  .subject-tag {
-    font-size: 11px; font-weight: 600; color: var(--ink); background: var(--sky-wash);
-    padding: 4px 9px; border-radius: 999px;
+  /* Programmes dropdown */
+  .dd { position: relative; }
+  .dd-btn { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 500; color: var(--muted); transition: color .2s; }
+  .dd-btn svg { transition: transform .25s; }
+  .dd:hover .dd-btn, .dd:focus-within .dd-btn, .dd.cur .dd-btn { color: var(--ink); }
+  .dd.cur .dd-btn, .nav-links a[aria-current="page"] { font-weight: 600; }
+  .dd:hover .dd-btn svg, .dd.open .dd-btn svg { transform: rotate(180deg); }
+  .dd-menu { position: absolute; top: 100%; left: -18px; min-width: 270px; padding: 24px 10px 10px; opacity: 0; visibility: hidden; transform: translateY(6px); transition: opacity .2s, transform .2s, visibility .2s; }
+  .dd-menu::before { content: ''; position: absolute; inset: 14px 0 0 0; background: #fff; border-radius: 22px; box-shadow: 0 24px 50px -20px rgba(6,47,77,.45); z-index: -1; }
+  .dd:hover .dd-menu, .dd:focus-within .dd-menu, .dd.open .dd-menu { opacity: 1; visibility: visible; transform: none; }
+  .dd-menu a { display: block; padding: 12px 16px; border-radius: 14px; font-size: 14.5px; font-weight: 500; color: var(--text); }
+  .dd-menu a:hover, .dd-menu a[aria-current="page"] { background: var(--wash); color: var(--ink); }
+  @media (max-width: 900px) {
+    .dd-btn { padding: 15px 0; width: 100%; border-bottom: 1px solid var(--line); justify-content: space-between; }
+    .dd-menu { position: static; opacity: 1; visibility: visible; transform: none; padding: 0 0 0 14px; display: none; }
+    .dd-menu::before { display: none; }
+    .dd.open .dd-menu { display: block; }
+    .dd:hover .dd-menu { display: none; } .dd.open:hover .dd-menu { display: block; }
   }
 
-  /* ---------- Footer ---------- */
-  footer { background: var(--ink-deep); padding: 58px 0 30px; font-size: 13.5px; color: rgba(255,255,255,0.6); }
-  .footer-top { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 40px; margin-bottom: 40px; }
-  .footer-brand { max-width: 300px; }
-  .footer-brand-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
-  .footer-mark { font-family: 'Fraunces', serif; font-weight: 600; font-size: 18px; color: var(--paper); }
-  .footer-brand p { margin-bottom: 18px; line-height: 1.6; }
-  .footer-social { display: flex; gap: 10px; }
-  .footer-social a {
-    width: 34px; height: 34px; border-radius: 2px; border: 1px solid var(--line-deep);
-    display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.6);
-    transition: border-color 0.2s, color 0.2s;
-  }
-  .footer-social a:hover { border-color: var(--sky); color: var(--sky); }
-  .footer-cols { display: flex; gap: 52px; flex-wrap: wrap; }
-  .footer-col h4 { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--sky); margin-bottom: 14px; }
-  .footer-col a, .footer-col span { display: block; margin-bottom: 9px; color: rgba(255,255,255,0.6); transition: color 0.2s; }
-  .footer-col a:hover { color: var(--paper); }
-  .footer-bottom { padding-top: 20px; border-top: 1px solid var(--line-deep); }
-  @media (max-width: 640px) { .footer-top { flex-direction: column; } .footer-cols { gap: 32px; } }
+  /* WhatsApp chat widget */
+  .wa-widget { position: fixed; right: 20px; bottom: 20px; z-index: 90; display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
+  .wa-fab { display: inline-flex; align-items: center; gap: 10px; padding: 14px 20px 14px 16px; border-radius: 999px; background: #128C4B; color: #fff; font-size: 14px; font-weight: 600; box-shadow: 0 12px 30px -10px rgba(18,140,75,.7); transition: background .2s, transform .2s; }
+  .wa-fab:hover { background: #0E6F3B; transform: translateY(-2px); }
+  .wa-fab:focus-visible, .wa-menu a:focus-visible { outline: 2px solid #85CCFF; outline-offset: 3px; }
+  .wa-menu { display: none; flex-direction: column; gap: 6px; background: #fff; border-radius: 22px; padding: 10px; box-shadow: 0 24px 50px -16px rgba(6,47,77,.5); min-width: 250px; animation: waIn .25s ease both; }
+  .wa-widget.open .wa-menu { display: flex; }
+  .wa-menu a { display: flex; flex-direction: column; padding: 12px 16px; border-radius: 14px; font-size: 14px; font-weight: 600; color: #062F4D; }
+  .wa-menu a small { font-weight: 500; color: #55697B; font-size: 13px; }
+  .wa-menu a:hover { background: #F1F7FC; }
+  @keyframes waIn { from { opacity: 0; transform: translateY(8px); } }
+  @media (max-width: 600px) { .wa-fab span { display: none; } .wa-fab { padding: 15px; } }
 </style>
 </head>
 <body>
 
-<nav class="site-nav">
-  <div class="wrap nav-inner">
+<nav class="nav">
+  <div class="nav-pill">
     <a class="brand" href="index.html">
-      <svg class="crest" viewBox="0 0 377.21 459.6"><path fill="#094570" d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>
-      <span>Himaayah Schools</span>
+      <svg width="24" height="30" viewBox="0 0 377.21 459.6" aria-hidden="true"><path fill="#094570" d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>
+      Himaayah Schools
     </a>
     <div class="nav-links" id="navLinks">
-      <a href="index.html">Home</a>
-      <a href="#courses">Our Courses</a>
-      <a href="#classes">Our Classes</a>
-      <a href="index.html#about">About Us</a>
-      <a href="enroll.html?programme=madrasah" class="nav-cta">Enroll Now</a>
+      <div class="dd cur">
+        <button type="button" class="dd-btn" aria-haspopup="true" aria-expanded="false">Programmes
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="dd-menu">
+          <a href="teenagers-building-circle.html">Teenagers Building Circle</a>
+          <a href="madrasah.html" aria-current="page">Madrasah</a>
+          <a href="academy.html">Academy</a>
+          <a href="skills-school.html">Skills School</a>
+        </div>
+      </div>
+      <a href="success-stories.html">Success Stories</a>
+      <a href="faq.html">FAQ</a>
+      <a href="contact.html">Contact</a>
+      <a href="enroll.html?programme=madrasah" class="btn btn-ink">Enroll Now</a>
     </div>
-    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
-      <span></span><span></span><span></span>
-    </button>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
 </nav>
 
+<a class="home-fab" href="index.html" aria-label="Back to home">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+  Home
+</a>
+
+
 <header class="hero">
-  <div class="hero-inner">
-    <div class="hero-badge">
-      <span class="dot arabic">ع</span>
-      <span>Qur'an · Tajweed · Islamic Studies</span>
-    </div>
-    <h1>Preserving Knowledge, <em>Inspiring Faith</em></h1>
-    <p>A structured path through Qur'an memorisation, tajweed, aqeedah, fiqh, and seerah — taught four classes a week, in a small group or entirely one-on-one, at a pace that respects the student.</p>
-    <div class="hero-actions">
-      <a href="enroll.html?programme=madrasah" class="btn btn-primary">Enroll Now</a>
-      <a href="#courses" class="btn btn-outline">View Courses</a>
+  <div class="hero-frame">
+    <div class="hero-copy">
+      <h1>Learn the Qur'an with care, structure, and a teacher who knows your pace.</h1>
+      <p>Qur'an memorisation and tajweed, with Islamic studies alongside. Choose a small group or one-on-one, four classes every week.</p>
+      <div class="hero-actions">
+        <a href="#plans" class="btn btn-sky">See the plans</a>
+        <a href="enroll.html?programme=madrasah" class="btn btn-ghost">Enroll now</a>
+      </div>
     </div>
   </div>
 </header>
 
-<section class="courses" id="courses">
+<section class="plans" id="plans">
   <div class="wrap">
-    <div class="section-head reveal">
-      <span class="eyebrow">Course Catalog</span>
-      <h2>Five paths, one foundation.</h2>
-      <p>Every course builds from the same core — correct recitation and real understanding — shaped to fit how much time a student has, and whether they learn best alongside others or one-on-one.</p>
+    <div class="section-head">
+      <h2>Pick how you want to learn.</h2>
+      <div class="seg" role="tablist" aria-label="Class format">
+        <button type="button" role="tab" aria-selected="true" data-mode="group">Group</button>
+        <button type="button" role="tab" aria-selected="false" data-mode="personal">Personal</button>
+      </div>
     </div>
 
-    <div class="catalog">
-
-      <article class="catalog-row reveal">
-        <div class="catalog-num">I.</div>
-        <div class="catalog-thumb"><img src="https://images.unsplash.com/photo-1616422840391-fa670d4b2ae7?auto=format&fit=crop&w=400&q=80" alt="An open Qur'an resting on a wooden stand."></div>
-        <div class="catalog-text">
-          <h3>Hifdh Only</h3>
-          <p>Qur'an memorisation and tajweed in a small group, with a dedicated hifdh teacher guiding pace and revision.</p>
-        </div>
-        <div class="catalog-meta">
-          <span class="catalog-tag">Group</span>
-          <div class="catalog-price">₦12,000</div>
-          <div class="catalog-cadence">/mo · 4 classes/wk</div>
-          <a href="enroll.html?programme=madrasah&amp;plan=hifdh-group" class="catalog-cta">Enroll &rarr;</a>
-        </div>
+    <div class="plan-grid active" data-grid="group">
+      <article class="plan">
+        <h3>Hifdh Only</h3>
+        <ul><li>Qur'an memorisation and tajweed, with murajaah built in</li><li>Small group setting, four classes weekly, with tests and exams</li></ul>
+        <div class="plan-foot"><div class="price"><b>₦12,000</b> <span>/ month</span></div><a href="enroll.html?programme=madrasah&amp;plan=hifdh-group" class="btn btn-ink">Enroll now</a></div>
       </article>
-
-      <article class="catalog-row reveal">
-        <div class="catalog-num">II.</div>
-        <div class="catalog-thumb"><img src="https://images.unsplash.com/photo-1744521671444-75cef74bfff9?auto=format&fit=crop&w=400&q=80" alt="Ornate mosque interior with intricate wooden screens and arches."></div>
-        <div class="catalog-text">
-          <h3>Full Madrasah</h3>
-          <p>Hifdh and tajweed alongside aqeedah, fiqh, and seerah — a complete Islamic studies foundation, taught in a group setting.</p>
-        </div>
-        <div class="catalog-meta">
-          <span class="catalog-tag">Group</span>
-          <div class="catalog-price">₦20,000</div>
-          <div class="catalog-cadence">/mo · 4 classes/wk</div>
-          <a href="enroll.html?programme=madrasah&amp;plan=full-group" class="catalog-cta">Enroll &rarr;</a>
-        </div>
+      <article class="plan featured">
+        <h3>Full Madrasah</h3>
+        <ul><li>Hifdh and tajweed taught with Tawheed, fiqh, Arabiyyah, Ṣarf, Naḥw and seerah</li><li>Four classes weekly, group setting</li></ul>
+        <p class="plan-note">Completed your hifdh elsewhere? You pay ₦15,000 a month.</p>
+        <div class="plan-foot"><div class="price"><b>₦20,000</b> <span>/ month</span></div><a href="enroll.html?programme=madrasah&amp;plan=full-group" class="btn btn-sky">Enroll now</a></div>
       </article>
+    </div>
 
-      <article class="catalog-row reveal">
-        <div class="catalog-num">III.</div>
-        <div class="catalog-thumb"><img src="https://images.unsplash.com/photo-1638271676156-f40fbfda17f0?auto=format&fit=crop&w=400&q=80" alt="Close-up of Arabic calligraphy on a page, warm light falling across the writing."></div>
-        <div class="catalog-text">
-          <h3>Hifdh Only — Personal</h3>
-          <p>One-on-one Qur'an memorisation and tajweed, with the pace set entirely to the student rather than a cohort.</p>
-        </div>
-        <div class="catalog-meta">
-          <span class="catalog-tag">Personal</span>
-          <div class="catalog-price">₦20,000</div>
-          <div class="catalog-cadence">/mo · 4 classes/wk</div>
-          <a href="enroll.html?programme=madrasah&amp;plan=hifdh-personal" class="catalog-cta">Enroll &rarr;</a>
-        </div>
+    <div class="plan-grid" data-grid="personal">
+      <article class="plan">
+        <h3>Hifdh Only</h3>
+        <ul><li>One-on-one Qur'an memorisation and tajweed</li><li>Pace set entirely to the student</li></ul>
+        <div class="plan-foot"><div class="price"><b>₦20,000</b> <span>/ month</span></div><a href="enroll.html?programme=madrasah&amp;plan=hifdh-personal" class="btn btn-ink">Enroll now</a></div>
       </article>
-
-      <article class="catalog-row reveal">
-        <div class="catalog-num">IV.</div>
-        <div class="catalog-thumb"><img src="https://images.unsplash.com/photo-1624862762003-8b04581301aa?auto=format&fit=crop&w=400&q=80" alt="A single open book resting on a wooden desk, lit softly from the side."></div>
-        <div class="catalog-text">
-          <h3>Full Madrasah — Personal</h3>
-          <p>The complete Madrasah curriculum — hifdh and Islamic studies combined — taught entirely one-on-one.</p>
-        </div>
-        <div class="catalog-meta">
-          <span class="catalog-tag">Personal</span>
-          <div class="catalog-price">₦35,000</div>
-          <div class="catalog-cadence">/mo · 4 classes/wk</div>
-          <a href="enroll.html?programme=madrasah&amp;plan=full-personal" class="catalog-cta">Enroll &rarr;</a>
-        </div>
+      <article class="plan featured">
+        <h3>Full Madrasah</h3>
+        <ul><li>Hifdh and Islamic studies combined</li><li>Taught entirely one-on-one</li></ul>
+        <div class="plan-foot"><div class="price"><b>₦35,000</b> <span>/ month</span></div><a href="enroll.html?programme=madrasah&amp;plan=full-personal" class="btn btn-sky">Enroll now</a></div>
       </article>
+    </div>
+  </div>
+</section>
 
-      <article class="catalog-row reveal">
-        <div class="catalog-num">V.</div>
-        <div class="catalog-thumb"><img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=400&q=80" alt="An open notebook, pen, and a warm desk lamp arranged on a wooden study table."></div>
-        <div class="catalog-text">
-          <h3>One-Year Hifdh</h3>
-          <p>A focused 12-month track to complete Qur'an memorisation, with structured monthly milestones and regular revision.</p>
-        </div>
-        <div class="catalog-meta">
-          <span class="catalog-tag">12 months</span>
-          <div class="catalog-price">₦19,000</div>
-          <div class="catalog-cadence">/mo · 4 classes/wk</div>
-          <a href="enroll.html?programme=madrasah&amp;plan=hifdh-1yr" class="catalog-cta">Enroll &rarr;</a>
-        </div>
-      </article>
-
+<section class="year" id="one-year">
+  <div class="year-box">
+    <div>
+      <h2>Want a clear finish line? Take the one-year Hifdh.</h2>
+      <p>A focused 12-month Qur'an memorisation track, with a milestone to reach and revise every month.</p>
+    </div>
+    <div class="year-card">
+      <div class="price"><b>₦19,000</b> <span>/ month · 12 months</span></div>
+      <ul><li>Focused 12-month memorisation track</li><li>Structured monthly milestones and revision</li></ul>
+      <a href="enroll.html?programme=madrasah&amp;plan=one-year" class="btn btn-sky">Enroll now</a>
     </div>
   </div>
 </section>
 
 <section class="classes" id="classes">
   <div class="wrap">
-    <div class="section-head reveal">
-      <span class="eyebrow">Class Levels</span>
-      <h2>Five levels, one progression.</h2>
-      <p>Tamheediyyah through Raabi'ah Ibtidaaiyyah — each level building on the last, across the same core subjects.</p>
+    <div class="section-head">
+      <h2>The classes we offer, and what each one asks of you.</h2>
     </div>
-
-    <div class="class-grid">
-
-      <article class="class-card reveal">
-        <div class="class-level">Level I</div>
-        <h3>Tamheediyyah</h3>
-        <p class="class-desc">Foundation level — first exposure to Arabic letters, basic recitation, and the earliest Islamic concepts.</p>
-        <div class="subject-tags">
-          <span class="subject-tag">Hadeeth</span>
-          <span class="subject-tag">Tawheed</span>
-          <span class="subject-tag">Arabiyyah</span>
-          <span class="subject-tag">Tajweed</span>
-          <span class="subject-tag">Seerah</span>
-          <span class="subject-tag">+ more</span>
-        </div>
-      </article>
-
-      <article class="class-card reveal">
-        <div class="class-level">Level II</div>
-        <h3>Ula Ibtidaaiyyah</h3>
-        <p class="class-desc">Primary 1 — building reading fluency and introducing grammar fundamentals alongside continued memorisation.</p>
-        <div class="subject-tags">
-          <span class="subject-tag">Hadeeth</span>
-          <span class="subject-tag">Tawheed</span>
-          <span class="subject-tag">Arabiyyah</span>
-          <span class="subject-tag">Sarf</span>
-          <span class="subject-tag">Nahw</span>
-          <span class="subject-tag">Tajweed</span>
-          <span class="subject-tag">Seerah</span>
-          <span class="subject-tag">+ more</span>
-        </div>
-      </article>
-
-      <article class="class-card reveal">
-        <div class="class-level">Level III</div>
-        <h3>Thaniyah Ibtidaaiyyah</h3>
-        <p class="class-desc">Primary 2 — deeper grammar (sarf and nahw) and a wider hadeeth and seerah foundation.</p>
-        <div class="subject-tags">
-          <span class="subject-tag">Hadeeth</span>
-          <span class="subject-tag">Tawheed</span>
-          <span class="subject-tag">Arabiyyah</span>
-          <span class="subject-tag">Sarf</span>
-          <span class="subject-tag">Nahw</span>
-          <span class="subject-tag">Tajweed</span>
-          <span class="subject-tag">Seerah</span>
-          <span class="subject-tag">+ more</span>
-        </div>
-      </article>
-
-      <article class="class-card reveal">
-        <div class="class-level">Level IV</div>
-        <h3>Thaalithah Ibtidaaiyyah</h3>
-        <p class="class-desc">Primary 3 — more independent reading and writing in Arabic, with grammar applied rather than just studied.</p>
-        <div class="subject-tags">
-          <span class="subject-tag">Hadeeth</span>
-          <span class="subject-tag">Tawheed</span>
-          <span class="subject-tag">Arabiyyah</span>
-          <span class="subject-tag">Sarf</span>
-          <span class="subject-tag">Nahw</span>
-          <span class="subject-tag">Tajweed</span>
-          <span class="subject-tag">Seerah</span>
-          <span class="subject-tag">+ more</span>
-        </div>
-      </article>
-
-      <article class="class-card reveal">
-        <div class="class-level">Level V</div>
-        <h3>Raabi'ah Ibtidaaiyyah</h3>
-        <p class="class-desc">Primary 4 — the most advanced level, consolidating everything before a student moves on.</p>
-        <div class="subject-tags">
-          <span class="subject-tag">Hadeeth</span>
-          <span class="subject-tag">Tawheed</span>
-          <span class="subject-tag">Arabiyyah</span>
-          <span class="subject-tag">Sarf</span>
-          <span class="subject-tag">Nahw</span>
-          <span class="subject-tag">Tajweed</span>
-          <span class="subject-tag">Seerah</span>
-          <span class="subject-tag">+ more</span>
-        </div>
-      </article>
-
+    <div class="class-cards">
+      <div class="cc"><b>Rawdah</b><span>For those who can't read and write at all.</span></div>
+      <div class="cc"><b>Tamheedi</b><span>For those who are just starting madrasah.</span></div>
+      <div class="cc"><b>Awwal to Rābiʿah Ibtidāʾiyyah</b><span>Four levels building Arabic, memorisation and Islamic knowledge step by step.</span></div>
+      <div class="cc"><b>Awwal to Thāniy Iʿdādiyyah</b><span>For students who already have a serious Arabic and Islamic foundation.</span></div>
     </div>
+    <h2 class="ladder-title">Admission requirements by level</h2>
+    <p class="ladder-sub">Each level has a minimum admission score and a set of things a student must already know. Pick a level to see its requirements.</p>
+    <div class="tabs" id="lvlTabs" role="tablist" aria-label="Class level"></div>
+    <div id="lvlPanel" role="tabpanel"></div>
+    <div class="journey" id="journey" aria-label="Progression"></div>
   </div>
 </section>
 
-<footer>
+<footer class="site">
   <div class="wrap">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <div class="footer-brand-row">
-          <svg width="24" height="29" viewBox="0 0 377.21 459.6"><path fill="#85CCFF" d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>
-          <span class="footer-mark">Himaayah Schools</span>
-        </div>
+    <div class="f-top">
+      <div class="f-brand">
+        <a class="brand" href="index.html">
+          <svg width="24" height="30" viewBox="0 0 377.21 459.6" aria-hidden="true"><path fill="#85CCFF" d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>
+          Himaayah Schools
+        </a>
         <p>Raising the next generation with deen, knowledge, and purpose.</p>
-        <div class="footer-social">
-          <a href="https://instagram.com/himaayahschools" target="_blank" rel="noopener" aria-label="Himaayah Schools on Instagram">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
-          </a>
-          <a href="https://x.com/himaayahschools" target="_blank" rel="noopener" aria-label="Himaayah Schools on X">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.24 2H21.5l-7.3 8.34L22.8 22h-6.73l-5.27-6.9L4.7 22H1.4l7.8-8.92L1 2h6.9l4.76 6.3L18.24 2zm-1.18 18h1.86L7.03 3.9H5.03L17.06 20z"/></svg>
-          </a>
+        <div class="social">
+          <a href="https://instagram.com/himaayahschools" target="_blank" rel="noopener" aria-label="Himaayah Schools on Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg></a>
+          <a href="https://x.com/himaayahschools" target="_blank" rel="noopener" aria-label="Himaayah Schools on X"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.24 2H21.5l-7.3 8.34L22.8 22h-6.73l-5.27-6.9L4.7 22H1.4l7.8-8.92L1 2h6.9l4.76 6.3L18.24 2zm-1.18 18h1.86L7.03 3.9H5.03L17.06 20z"/></svg></a>
         </div>
       </div>
-      <div class="footer-cols">
-        <div class="footer-col">
-          <h4>Programmes</h4>
+      <div class="f-cols">
+        <div class="f-col"><h4>Programmes</h4>
           <a href="teenagers-building-circle.html">Teenagers Building Circle</a>
           <a href="madrasah.html">Madrasah</a>
           <a href="academy.html">Academy</a>
           <a href="skills-school.html">Skills School</a>
         </div>
-        <div class="footer-col">
-          <h4>Site</h4>
+        <div class="f-col"><h4>Site</h4>
           <a href="index.html">Home</a>
+          <a href="exam-calendars.html">Exam Calendars</a>
           <a href="faq.html">FAQ</a>
+          <a href="contact.html">Contact</a>
+          <a href="policies.html">Policies</a>
           <a href="enroll.html">Enroll</a>
         </div>
-        <div class="footer-col">
-          <h4>Contact</h4>
+        <div class="f-col"><h4>Contact</h4>
           <a href="mailto:himaayahschools@gmail.com">himaayahschools@gmail.com</a>
+          <a href="tel:+2348066043320">+234 806 604 3320</a>
+          <a href="tel:+2347025842849">+234 702 584 2849</a>
           <span>Ilorin, Nigeria</span>
         </div>
       </div>
     </div>
-    <div class="footer-bottom">
-      <span>© 2026 Himaayah Schools.</span>
-    </div>
+    <div class="f-bottom">© 2026 Himaayah Schools.</div>
   </div>
 </footer>
 
 <script>
-  const navToggle = document.getElementById('navToggle');
-  const navLinks = document.getElementById('navLinks');
-  navToggle?.addEventListener('click', () => navLinks.classList.toggle('open'));
+  const t = document.getElementById('navToggle'), l = document.getElementById('navLinks');
+  t.addEventListener('click', () => { const o = l.classList.toggle('open'); t.setAttribute('aria-expanded', o); });
 
-  if ('IntersectionObserver' in window) {
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('in');
-          io.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12 });
-    document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
-  } else {
-    document.querySelectorAll('.reveal').forEach((el) => el.classList.add('in'));
+  const tabs = document.querySelectorAll('.seg button'), grids = document.querySelectorAll('.plan-grid');
+  tabs.forEach((b) => b.addEventListener('click', () => {
+    tabs.forEach((x) => x.setAttribute('aria-selected', String(x === b)));
+    grids.forEach((g) => g.classList.toggle('active', g.dataset.grid === b.dataset.mode));
+  }));
+
+  const LEVELS = [
+    { n: 'Rawdah', tag: 'Start here', intro: 'For those who can\u2019t read and write at all.', reqs: [] },
+    { n: 'Tamheedi', tag: 'Start here', intro: 'For those who are just starting madrasah.', reqs: [] },
+    { n: 'Awwal Ibtidā\u2019iyyah', s: 75, goal: 'Basic Arabic + basic Islamic knowledge', reqs: [
+      'Recognise and pronounce the Arabic letters correctly.', 'Read simple Arabic words.', 'Write the Arabic letters and simple words.',
+      'Have basic knowledge of Ṣalāh, Ṭahārah and Islamic manners.', 'Show the ability and readiness to begin formal Arabic and Islamic studies.' ] },
+    { n: 'Thāniyah Ibtidā\u2019iyyah', s: 80, goal: 'Foundational reading + basic memorisation', reqs: [
+      'Have memorised 10 Hadeeth of an-Nawawī.', 'Have basic familiarity with short Islamic texts and adhkār.', 'Recognise and read Arabic letters and words.',
+      'Write simple Arabic words.', 'Show a basic understanding of Islamic manners, worship and creed.' ] },
+    { n: 'Thālithah Ibtidā\u2019iyyah', s: 85, goal: 'Developing Arabic + more memorisation', reqs: [
+      'Have memorised 15 Hadeeth of an-Nawawī.', 'Know the basic principles of al-Uṣūl ath-Thalāthah. Completing the book is an added advantage, as our students have completed it at this stage.',
+      'Have completed the introductory portion of Durūs al-Lughah al-ʿArabiyyah.', 'Read Arabic with reasonable fluency.', 'Write simple Arabic words and sentences.' ] },
+    { n: 'Rābiʿah Ibtidā\u2019iyyah', s: 90, goal: 'Strong foundation + substantial memorisation', reqs: [
+      'Have memorised 20 Hadeeth of an-Nawawī.', 'Have memorised al-Uṣūl ath-Thalāthah.', 'Have completed the first series of Durūs al-Lughah al-ʿArabiyyah.',
+      'Read Arabic fluently.', 'Write basic Arabic sentences correctly.' ] },
+    { n: 'Awwal Iʿdādiyyah', s: 90, goal: '90% + serious pre-existing Arabic and Islamic foundation', strict: 'These requirements are non-negotiable, because the Iʿdādiyyah curriculum is built on the assumption that students already possess this foundation.', reqs: [
+      'Have memorised the Forty Aḥādīth of an-Nawawī.', 'Have memorised al-Uṣūl ath-Thalāthah of Shaykh Muḥammad ibn ʿAbd al-Wahhāb.', 'Have memorised Lāmiyyah of Ibn Taymiyyah.',
+      'Have memorised the prescribed Dīwān of Imām ash-Shāfiʿī.', 'Have completed both series of Durūs al-Lughah al-ʿArabiyyah.', 'Read and write Arabic well.' ] },
+  ];
+  const tabsEl = document.getElementById('lvlTabs'), panel = document.getElementById('lvlPanel'), journey = document.getElementById('journey');
+  function showLevel(i) {
+    const v = LEVELS[i];
+    tabsEl.querySelectorAll('.tab').forEach((b, j) => b.setAttribute('aria-selected', String(j === i)));
+    panel.innerHTML = `<div class="lvl">
+      <div class="score">${v.s ? `<b>${v.s}%</b><span>Minimum admission score</span>` : `<b style="font-size:40px">${v.tag}</b><span>Entry level</span>`}
+        ${v.goal ? `<div class="goal">${v.goal}</div>` : ''}</div>
+      <div><h3>${v.n}</h3>
+        ${v.intro ? `<p class="intro">${v.intro}</p>` : '<p class="intro">A student must meet all of the following:</p>'}
+        ${v.reqs.length ? `<ul>${v.reqs.map((r) => `<li>${r}</li>`).join('')}</ul>` : ''}
+        ${v.strict ? `<div class="strict">${v.strict}</div>` : ''}</div></div>`;
+    journey.innerHTML = LEVELS.map((l, j) => `<i class="${j === i ? 'on' : ''}">${l.n}</i>`).join(' → ');
   }
+  LEVELS.forEach((v, i) => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'tab'; b.setAttribute('role', 'tab'); b.textContent = v.n;
+    b.addEventListener('click', () => showLevel(i));
+    tabsEl.appendChild(b);
+  });
+  showLevel(2);
+  (function () {
+    const dd = document.querySelector('.dd'); if (!dd) return;
+    const b = dd.querySelector('.dd-btn');
+    b.addEventListener('click', () => { const o = dd.classList.toggle('open'); b.setAttribute('aria-expanded', o); });
+  })();
+</script>
+
+<div class="wa-widget" id="waWidget">
+  <div class="wa-menu" id="waMenu">
+    <a href="https://wa.me/2348066043320?text=Assalaamu%20alaykum.%20I%27d%20like%20to%20ask%20about%20Himaayah%20Schools." target="_blank" rel="noopener">Chat on WhatsApp <small>+234 806 604 3320</small></a>
+    <a href="https://wa.me/2347025842849?text=Assalaamu%20alaykum.%20I%27d%20like%20to%20ask%20about%20Himaayah%20Schools." target="_blank" rel="noopener">Chat on WhatsApp <small>+234 702 584 2849</small></a>
+  </div>
+  <button type="button" class="wa-fab" id="waBtn" aria-expanded="false" aria-controls="waMenu" aria-label="Chat with us on WhatsApp">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.7-5.2A8.5 8.5 0 1 1 21 11.5z"/></svg>
+    <span>Chat with us</span>
+  </button>
+</div>
+<script>
+  (function () {
+    const w = document.getElementById('waWidget'), b = document.getElementById('waBtn');
+    b.addEventListener('click', () => { const o = w.classList.toggle('open'); b.setAttribute('aria-expanded', o); });
+    document.addEventListener('click', (e) => { if (!w.contains(e.target)) { w.classList.remove('open'); b.setAttribute('aria-expanded', 'false'); } });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { w.classList.remove('open'); b.setAttribute('aria-expanded', 'false'); b.focus(); } });
+  })();
 </script>
 </body>
 </html>

@@ -5,240 +5,185 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Enroll — Himaayah Schools</title>
 <meta name="description" content="Enroll in Himaayah Schools: tell us about the student, choose a programme, then pay by transfer or card.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20377.21%20459.6%22%3E%3Cpath%20fill=%22%23094570%22%20d=%22M0.14%20280.14c4.28%2C65.12%2098.42%2C133.97%20163.39%2C172.42%2015.86%2C9.39%2034.24%2C9.39%2050.11%2C-0.01%2052.97%2C-31.37%20159.02%2C-102.63%20163.43%2C-172.41l-376.92%200zm302.67%20-162.41l74.4%20105.8%200%20-126.48c0%2C-20.52%20-11.85%2C-38.03%20-30.9%2C-45.66l-125.46%20-50.22%2081.96%20116.56zm-228.42%200l82.79%20-117.73%20-126.49%2051.28c-18.95%2C7.68%20-30.7%2C25.13%20-30.7%2C45.57l0%20126.67%2074.4%20-105.8zm114.21%20-8.75c35.22%2C0%2063.77%2C28.55%2063.77%2C63.77%200%2C35.22%20-28.55%2C63.77%20-63.77%2C63.77%20-35.22%2C0%20-63.77%2C-28.55%20-63.77%2C-63.77%200%2C-35.22%2028.55%2C-63.77%2063.77%2C-63.77z%22/%3E%3C/svg%3E">
+<meta name="theme-color" content="#094570">
+<meta property="og:site_name" content="Himaayah Schools">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Enroll — Himaayah Schools">
+<meta property="og:description" content="Enroll in Himaayah Schools: tell us about the student, choose a programme, then pay by transfer or card.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --night: #094570;
-    --night-soft: #0B5488;
-    --night-line: rgba(133, 204, 255, 0.20);
-    --gold: #85CCFF;
-    --gold-deep: #5FB4EF;
-    --white: #FFFFFF;
-    --ink-soft: #C9DCEC;
-    --ink-dim: #8FB4D1;
-    --error: #FF6B6B;
-    --radius: 6px;
+    --deep: #062F4D; --ink: #094570; --sky: #85CCFF; --sky-d: #3E97D9;
+    --wash: #F1F7FC; --white: #fff; --text: #0E2A3D; --muted: #55697B;
+    --line: rgba(9,69,112,.16); --error: #D64545;
+    --display: 'Bricolage Grotesque', 'Inter', sans-serif;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: 'Inter', -apple-system, sans-serif;
-    color: var(--white);
-    background: var(--night);
-    -webkit-font-smoothing: antialiased;
-  }
+  body { font-family: 'Inter', -apple-system, sans-serif; color: var(--text); background: #fff; -webkit-font-smoothing: antialiased; line-height: 1.55; }
   a { color: inherit; text-decoration: none; }
-  button { font-family: inherit; cursor: pointer; border: none; }
+  button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
   input, select { font-family: inherit; }
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--sky-d); outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition-duration: .001ms !important; } }
 
-  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
-    outline: 2px solid var(--gold); outline-offset: 2px;
-  }
-  @media (prefers-reduced-motion: reduce) {
-    * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
-  }
+  .split { display: flex; min-height: 100vh; padding: 16px; gap: 16px; }
 
-  /* ---------- Split screen ---------- */
-  .split { display: flex; min-height: 100vh; }
-
-  /* ---------- Left: hero ---------- */
-  .hero {
-    flex: 0 0 42%; position: relative; min-height: 100vh;
-    background:
-      linear-gradient(180deg, rgba(9,69,112,0.35) 0%, rgba(9,69,112,0.92) 100%),
-      url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1400&q=80') center/cover;
-    display: flex; flex-direction: column; justify-content: space-between;
-    padding: 44px 48px;
-  }
-  .hero-top a { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; font-size: 16px; }
-  .hero-top .crest { width: 26px; height: 32px; flex-shrink: 0; }
-  .hero-mid h1 {
-    font-size: clamp(30px, 3.2vw, 44px); font-weight: 800; line-height: 1.1; letter-spacing: -0.02em;
-    margin-bottom: 16px; max-width: 12ch;
-  }
-  .hero-mid h1 span { color: var(--gold); }
-  .hero-mid p { font-size: 16px; color: var(--ink-soft); max-width: 38ch; line-height: 1.6; }
-  .hero-roadmap { display: flex; flex-direction: column; gap: 16px; }
-  .hero-roadmap .r-item { display: flex; align-items: center; gap: 14px; font-size: 14px; color: var(--ink-soft); }
-  .hero-roadmap .r-num {
-    width: 26px; height: 26px; border-radius: 50%; border: 1px solid rgba(133,204,255,0.45);
-    display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--gold);
-    flex-shrink: 0; transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
-  }
-  .hero-roadmap .r-item.done .r-num { background: var(--gold); color: var(--night); border-color: var(--gold); }
-  .hero-roadmap .r-item.active { color: var(--white); font-weight: 600; }
-  .hero-roadmap .r-item.active .r-num { border-color: var(--gold); box-shadow: 0 0 0 4px rgba(133,204,255,0.18); }
-
+  /* Left panel */
+  .hero { flex: 0 0 42%; position: sticky; top: 16px; height: calc(100vh - 32px); border-radius: 40px; color: #fff; padding: 44px 48px; display: flex; flex-direction: column; justify-content: space-between;
+    background: linear-gradient(180deg, rgba(6,47,77,.35) 0%, rgba(6,47,77,.94) 100%), url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1400&q=80') center/cover; }
+  .hero-top a { display: inline-flex; align-items: center; gap: 10px; font-family: var(--display); font-weight: 700; font-size: 18px; }
+  .hero-top .crest { width: 24px; height: 30px; }
+  .hero-mid h1 { font-family: var(--display); font-weight: 700; font-size: clamp(32px, 3.6vw, 52px); line-height: 1.05; letter-spacing: -.025em; margin-bottom: 16px; max-width: 12ch; }
+  .hero-mid h1 span { color: var(--sky); }
+  .hero-mid p { font-size: 16px; color: rgba(255,255,255,.8); max-width: 38ch; }
+  .hero-roadmap { display: flex; flex-direction: column; gap: 14px; }
+  .r-item { display: flex; align-items: center; gap: 14px; font-size: 15px; color: rgba(255,255,255,.65); transition: color .25s; }
+  .r-num { width: 32px; height: 32px; border-radius: 50%; border: 1px solid rgba(255,255,255,.4); display: grid; place-items: center; font-size: 13px; font-weight: 700; flex-shrink: 0; transition: background .25s, color .25s, border-color .25s; }
+  .r-item.done .r-num { background: var(--sky); color: var(--deep); border-color: var(--sky); }
+  .r-item.active { color: #fff; font-weight: 600; }
+  .r-item.active .r-num { border-color: var(--sky); box-shadow: 0 0 0 5px rgba(133,204,255,.22); }
   @media (max-width: 900px) {
-    .split { flex-direction: column; }
-    .hero { flex: none; min-height: 260px; padding: 28px 24px; }
-    .hero-mid h1 { max-width: none; }
+    .split { flex-direction: column; padding: 12px; }
+    .hero { flex: none; position: static; height: auto; min-height: 280px; padding: 28px 24px; border-radius: 28px; gap: 40px; }
     .hero-roadmap { display: none; }
+    .hero-mid h1 { max-width: none; }
   }
 
-  /* ---------- Right: form ---------- */
-  .form-panel { flex: 1; display: flex; flex-direction: column; min-height: 100vh; }
-  .form-panel-inner { max-width: 480px; width: 100%; margin: 0 auto; padding: 44px 28px 60px; flex: 1; }
-
-  .wizard-footer {
-    max-width: 480px; width: 100%; margin: 0 auto; padding: 0 28px 32px;
-    display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
-    padding-top: 20px;
-    font-size: 12px; color: var(--ink-dim);
-  }
-  .wizard-footer a { color: var(--ink-dim); }
-  .wizard-footer a:hover { color: var(--gold); }
+  /* Form panel */
+  .form-panel { flex: 1; display: flex; flex-direction: column; min-height: calc(100vh - 32px); }
+  .form-panel-inner { max-width: 500px; width: 100%; margin: 0 auto; padding: 40px 12px 40px; flex: 1; }
+  .wizard-footer { max-width: 500px; width: 100%; margin: 0 auto; padding: 20px 12px 8px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-size: 12.5px; color: var(--muted); }
+  .wizard-footer a:hover { color: var(--ink); }
   .wizard-footer-social { display: flex; gap: 8px; }
-  .wizard-footer-social a {
-    width: 28px; height: 28px; border-radius: 6px; border: 1px solid var(--night-line);
-    display: flex; align-items: center; justify-content: center; color: var(--ink-dim);
-    transition: border-color 0.2s, color 0.2s;
-  }
-  .wizard-footer-social a:hover { border-color: var(--gold); color: var(--gold); }
+  .wizard-footer-social a { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--line); display: grid; place-items: center; transition: background .2s, color .2s; }
+  .wizard-footer-social a:hover { background: var(--ink); color: #fff; }
 
-  .stepper { display: flex; align-items: center; gap: 8px; margin-bottom: 36px; }
-  .stepper .dash { flex: 1; height: 3px; background: var(--night-line); border-radius: 2px; overflow: hidden; }
-  .stepper .dash i { display: block; height: 100%; width: 0%; background: var(--gold); transition: width 0.35s ease; }
-  .stepper .dash.done i { width: 100%; }
-  .stepper .dash.active i { width: 50%; }
-  .stepper .s-label { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-dim); white-space: nowrap; }
+  .stepper { display: flex; align-items: center; gap: 10px; margin-bottom: 40px; }
+  .stepper .dash { flex: 1; height: 5px; background: var(--wash); border-radius: 3px; overflow: hidden; }
+  .stepper .dash i { display: block; height: 100%; width: 0; background: var(--ink); border-radius: 3px; transition: width .4s ease; }
+  .stepper .dash.done i { width: 100%; } .stepper .dash.active i { width: 50%; }
+  .stepper .s-label { font-size: 13px; font-weight: 700; color: var(--ink); background: var(--wash); width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; }
 
   .step { display: none; }
-  .step.active { display: block; animation: fadeIn 0.35s ease; }
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-
-  .step h2 { font-size: 24px; font-weight: 800; margin-bottom: 8px; letter-spacing: -0.01em; }
-  .step > p.step-sub { font-size: 14px; color: var(--ink-soft); margin-bottom: 28px; }
+  .step.active { display: block; animation: fadeIn .4s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } }
+  .step h2 { font-family: var(--display); font-weight: 700; font-size: 34px; line-height: 1.1; letter-spacing: -.02em; color: var(--deep); margin-bottom: 8px; }
+  .step > p.step-sub { font-size: 15px; color: var(--muted); margin-bottom: 30px; }
 
   .field { margin-bottom: 18px; }
-  .field label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 7px; }
-  .field .req { color: var(--gold); }
-  .field input, .field select {
-    width: 100%; padding: 13px 14px; font-size: 14px; color: var(--white);
-    background: var(--night-soft); border: 1px solid var(--night-line); border-radius: var(--radius);
-    transition: border-color 0.2s, box-shadow 0.2s;
-  }
-  .field input::placeholder { color: var(--ink-dim); }
-  .field input:focus, .field select:focus {
-    border-color: var(--gold); box-shadow: 0 0 0 3px rgba(133,204,255,0.16); outline: none;
-  }
-  .field.error input, .field.error select { border-color: var(--error); box-shadow: 0 0 0 3px rgba(255,107,107,0.14); }
-  .field .err-msg { font-size: 12px; color: var(--error); margin-top: 6px; display: none; }
+  .field label { display: block; font-size: 13.5px; font-weight: 600; color: var(--deep); margin-bottom: 7px; }
+  .field .req { color: var(--sky-d); }
+  .field input, .field select { width: 100%; padding: 15px 18px; font-size: 15px; color: var(--text); background: var(--wash); border: 1.5px solid transparent; border-radius: 16px; transition: border-color .2s, background .2s, box-shadow .2s; }
+  .field input::placeholder { color: #8DA0B0; }
+  .field input:focus, .field select:focus { background: #fff; border-color: var(--ink); box-shadow: 0 0 0 4px rgba(133,204,255,.35); outline: none; }
+  .field.error input, .field.error select { border-color: var(--error); background: #FFF5F5; }
+  .field .err-msg { font-size: 12.5px; color: var(--error); margin-top: 6px; display: none; }
   .field.error .err-msg { display: block; }
   .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
   @media (max-width: 520px) { .field-row { grid-template-columns: 1fr; } }
 
-  /* ---------- Step 2: programme + plan ---------- */
+  /* Step 2 */
   .prog-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 22px; }
-  .prog-pill {
-    padding: 9px 16px; font-size: 13px; font-weight: 600; border-radius: 999px;
-    border: 1px solid var(--night-line); color: var(--ink-soft); background: transparent;
-    transition: background 0.2s, color 0.2s, border-color 0.2s;
-  }
-  .prog-pill[aria-pressed="true"] { background: var(--gold); color: var(--night); border-color: var(--gold); }
+  .prog-pill { padding: 10px 18px; font-size: 14px; font-weight: 600; border-radius: 999px; background: var(--wash); color: var(--muted); transition: background .2s, color .2s; }
+  .prog-pill:hover { color: var(--ink); }
+  .prog-pill[aria-pressed="true"] { background: var(--ink); color: #fff; }
+  .plan-options { display: flex; flex-direction: column; gap: 12px; }
+  .plan-opt { border: 1.5px solid var(--line); border-radius: 20px; background: #fff; transition: border-color .2s, background .2s, box-shadow .2s; }
+  .plan-opt:hover { border-color: var(--sky-d); }
+  .plan-opt.selected { border-color: var(--ink); background: var(--wash); box-shadow: 0 0 0 3px rgba(133,204,255,.35); }
+  .plan-opt-head { display: flex; align-items: center; gap: 14px; padding: 18px 20px; cursor: pointer; }
+  .plan-opt-radio { width: 22px; height: 22px; border-radius: 50%; border: 2px solid #A9BBCA; flex-shrink: 0; position: relative; transition: border-color .2s; }
+  .plan-opt.selected .plan-opt-radio { border-color: var(--ink); }
+  .plan-opt.selected .plan-opt-radio::after { content: ''; position: absolute; inset: 3px; border-radius: 50%; background: var(--ink); }
+  .plan-opt-name { flex: 1; font-size: 15.5px; font-weight: 600; color: var(--deep); }
+  .plan-opt-name small { display: block; font-weight: 400; color: var(--muted); font-size: 13px; margin-top: 1px; }
+  .plan-opt-price { font-family: var(--display); font-size: 17px; font-weight: 700; color: var(--ink); white-space: nowrap; }
+  .plan-opt-toggle { font-size: 12.5px; font-weight: 600; color: var(--sky-d); padding: 0 20px 16px 56px; cursor: pointer; display: inline-block; }
+  .plan-opt-details { max-height: 0; overflow: hidden; transition: max-height .3s ease; padding: 0 20px; }
+  .plan-opt-details.open { max-height: 220px; padding-bottom: 16px; }
+  .plan-opt-details ul { list-style: none; padding-left: 36px; }
+  .plan-opt-details li { font-size: 13.5px; color: var(--muted); padding-left: 14px; position: relative; margin-bottom: 5px; }
+  .plan-opt-details li::before { content: ''; position: absolute; left: 0; top: 9px; width: 5px; height: 5px; background: var(--sky-d); border-radius: 50%; }
 
-  .plan-options { display: flex; flex-direction: column; gap: 10px; }
-  .plan-opt {
-    border: 1px solid var(--night-line); border-radius: var(--radius); background: var(--night-soft);
-    transition: border-color 0.2s, background 0.2s;
-  }
-  .plan-opt.selected { border-color: var(--gold); background: rgba(133,204,255,0.08); }
-  .plan-opt-head { display: flex; align-items: center; gap: 14px; padding: 14px 16px; cursor: pointer; }
-  .plan-opt-radio {
-    width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--ink-dim); flex-shrink: 0; position: relative;
-    transition: border-color 0.2s;
-  }
-  .plan-opt.selected .plan-opt-radio { border-color: var(--gold); }
-  .plan-opt.selected .plan-opt-radio::after {
-    content: ''; position: absolute; inset: 3px; border-radius: 50%; background: var(--gold);
-  }
-  .plan-opt-name { flex: 1; font-size: 14.5px; font-weight: 600; }
-  .plan-opt-name small { display: block; font-weight: 400; color: var(--ink-dim); font-size: 12px; margin-top: 2px; }
-  .plan-opt-price { font-size: 14px; font-weight: 700; color: var(--gold); white-space: nowrap; }
-  .plan-opt-toggle { font-size: 11px; color: var(--ink-dim); padding: 0 16px 14px 48px; cursor: pointer; display: inline-block; }
-  .plan-opt-details { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; padding: 0 16px; }
-  .plan-opt-details.open { max-height: 200px; padding-bottom: 14px; }
-  .plan-opt-details ul { list-style: none; padding-left: 48px; }
-  .plan-opt-details li { font-size: 12.5px; color: var(--ink-soft); padding-left: 12px; position: relative; margin-bottom: 4px; }
-  .plan-opt-details li::before { content: ''; position: absolute; left: 0; top: 7px; width: 4px; height: 4px; background: var(--gold); border-radius: 50%; }
-
-  /* ---------- Step 3: payment ---------- */
-  .pay-summary {
-    border: 1px solid var(--night-line); border-radius: var(--radius); padding: 16px; margin-bottom: 22px;
-    background: var(--night-soft); font-size: 13.5px;
-  }
-  .pay-summary .row { display: flex; justify-content: space-between; padding: 5px 0; color: var(--ink-soft); }
-  .pay-summary .row b { color: var(--white); font-weight: 600; }
-  .pay-tabs { display: flex; gap: 8px; margin-bottom: 18px; }
-  .pay-tab {
-    flex: 1; text-align: center; font-size: 13px; font-weight: 600; padding: 11px; border-radius: var(--radius);
-    border: 1px solid var(--night-line); color: var(--ink-soft); background: transparent;
-    transition: background 0.2s, color 0.2s, border-color 0.2s;
-  }
-  .pay-tab[aria-selected="true"] { background: var(--gold); color: var(--night); border-color: var(--gold); }
-  .pay-view { display: none; }
-  .pay-view.active { display: block; }
-
-  .account-box { border: 1px solid var(--night-line); border-radius: var(--radius); background: rgba(133,204,255,0.06); margin-bottom: 14px; overflow: hidden; }
-  .account-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 15px; font-size: 13.5px; border-bottom: 1px solid var(--night-line); }
+  /* Step 3 */
+  .pay-summary { border-radius: 20px; padding: 20px 22px; margin-bottom: 24px; background: var(--wash); font-size: 14.5px; }
+  .pay-summary .row { display: flex; justify-content: space-between; gap: 16px; padding: 6px 0; color: var(--muted); }
+  .pay-summary .row b { color: var(--deep); font-weight: 600; text-align: right; }
+  .pay-tabs { display: flex; gap: 6px; padding: 5px; background: var(--wash); border-radius: 999px; margin-bottom: 20px; }
+  .pay-tab { flex: 1; text-align: center; font-size: 14px; font-weight: 600; padding: 12px; border-radius: 999px; color: var(--muted); transition: background .2s, color .2s; }
+  .pay-tab[aria-selected="true"] { background: var(--ink); color: #fff; }
+  .pay-view { display: none; } .pay-view.active { display: block; }
+  .account-box { border: 1.5px solid var(--line); border-radius: 20px; margin-bottom: 16px; overflow: hidden; }
+  .account-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 15px 20px; font-size: 14.5px; border-bottom: 1px solid var(--line); }
   .account-row:last-child { border-bottom: none; }
-  .account-row span { color: var(--ink-dim); }
-  .account-row b { font-weight: 700; display: inline-flex; align-items: center; gap: 8px; }
-  .copy-btn {
-    font-size: 10px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--gold);
-    border: 1px solid rgba(133,204,255,0.45); padding: 3px 8px; border-radius: 4px; background: transparent;
-    transition: background 0.2s, color 0.2s;
-  }
-  .copy-btn:hover, .copy-btn.copied { background: var(--gold); color: var(--night); }
+  .account-row span { color: var(--muted); }
+  .account-row b { font-weight: 700; color: var(--deep); display: inline-flex; align-items: center; gap: 10px; }
+  .copy-btn { font-size: 12px; font-weight: 700; color: var(--ink); background: var(--wash); padding: 6px 12px; border-radius: 999px; transition: background .2s, color .2s; }
+  .copy-btn:hover, .copy-btn.copied { background: var(--ink); color: #fff; }
 
-  /* ---------- Buttons ---------- */
-  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 15px 20px; font-size: 14.5px; font-weight: 700; border-radius: var(--radius); transition: background 0.2s, box-shadow 0.2s, opacity 0.2s, transform 0.1s; }
-  .btn-primary { background: var(--gold); color: var(--night); }
-  .btn-primary:hover { background: var(--gold-deep); box-shadow: 0 0 24px rgba(133,204,255,0.28); }
-  .btn-primary:active { transform: scale(0.99); }
-  .btn-primary[disabled] { opacity: 0.55; cursor: wait; box-shadow: none; }
-  .btn-secondary { background: transparent; border: 1px solid var(--night-line); color: var(--white); margin-top: 10px; }
-  .btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
-  .step-actions { display: flex; flex-direction: column; margin-top: 8px; }
-
-  .form-status { font-size: 13px; margin-top: 12px; display: none; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 17px 22px; font-size: 15.5px; font-weight: 600; border-radius: 999px; transition: background .2s, border-color .2s, opacity .2s, transform .1s; }
+  .btn-primary { background: var(--ink); color: #fff; } .btn-primary:hover { background: var(--deep); } .btn-primary:active { transform: scale(.99); }
+  .btn-primary[disabled] { opacity: .55; cursor: wait; }
+  .btn-secondary { border: 1.5px solid var(--line); color: var(--deep); margin-top: 10px; } .btn-secondary:hover { border-color: var(--ink); }
+  .step-actions { display: flex; flex-direction: column; margin-top: 10px; }
+  .form-status { font-size: 13.5px; margin-top: 12px; display: none; }
   .form-status.error { color: var(--error); }
-  .form-status.info { color: var(--gold); }
-  .form-note { font-size: 12px; color: var(--ink-dim); margin-top: 14px; line-height: 1.6; }
+  .form-note { font-size: 13px; color: var(--muted); margin-top: 14px; line-height: 1.6; }
 
-  /* ---------- Confirmation ---------- */
-  .confirm-icon {
-    width: 56px; height: 56px; border-radius: 50%; background: rgba(133,204,255,0.14); border: 1px solid rgba(133,204,255,0.45);
-    display: flex; align-items: center; justify-content: center; margin-bottom: 20px; color: var(--gold);
-  }
+  .confirm-icon { width: 64px; height: 64px; border-radius: 50%; background: var(--sky); color: var(--deep); display: grid; place-items: center; margin-bottom: 22px; animation: pop .6s cubic-bezier(.2,.7,.2,1) both; }
+  @keyframes pop { from { transform: scale(0); } }
+
+  /* Always-visible home button */
+  .home-fab { position: fixed; left: 20px; bottom: 20px; z-index: 90; display: inline-flex; align-items: center; gap: 8px; padding: 13px 20px 13px 16px; border-radius: 999px; background: #062F4D; color: #fff; font-size: 14px; font-weight: 600; box-shadow: 0 12px 30px -10px rgba(6,47,77,.6); transition: background .2s, transform .2s; }
+  .home-fab:hover { background: #094570; transform: translateY(-2px); }
+  .home-fab:focus-visible { outline: 2px solid #85CCFF; outline-offset: 3px; }
+  .home-fab { left: auto; right: 20px; }
+
+  /* WhatsApp payment confirmation */
+  .pay-steps { list-style: none; counter-reset: n; display: grid; gap: 10px; margin-bottom: 18px; }
+  .pay-steps li { counter-increment: n; display: flex; gap: 14px; align-items: flex-start; font-size: 14.5px; color: var(--muted); }
+  .pay-steps li::before { content: counter(n); flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: var(--ink); color: #fff; font-weight: 700; font-size: 13px; display: grid; place-items: center; }
+  .pay-steps li b { color: var(--deep); }
+  .wa-label { font-size: 13.5px; font-weight: 600; color: var(--deep); margin: 22px 0 10px; }
+  .wa-grid { display: grid; gap: 10px; }
+  .btn-wa { background: #128C4B; color: #fff; } .btn-wa:hover { background: #0E6F3B; }
+  .btn-wa small { font-weight: 500; opacity: .85; }
+  .msg-preview { margin-top: 18px; background: var(--wash); border-radius: 18px; padding: 16px 18px; font-size: 13px; line-height: 1.6; color: var(--muted); white-space: pre-wrap; max-height: 190px; overflow: auto; }
+  .msg-title { font-size: 12.5px; font-weight: 700; color: var(--ink); margin-top: 20px; }
+  .done-actions { display: grid; gap: 10px; margin-top: 8px; }
 </style>
 </head>
 <body>
 
+
+<a class="home-fab" href="index.html" aria-label="Back to home">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+  Home
+</a>
+
 <div class="split">
 
-  <!-- ================= Left: hero ================= -->
   <div class="hero">
     <div class="hero-top">
       <a href="index.html">
-        <svg class="crest" viewBox="0 0 377.21 459.6"><path fill="#85CCFF" d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>
+        <svg class="crest" viewBox="0 0 377.21 459.6" aria-hidden="true"><path fill="#85CCFF" d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>
         Himaayah Schools
       </a>
     </div>
     <div class="hero-mid">
-      <h1>Empowering <span>Tomorrow's</span> Leaders</h1>
+      <h1>Empowering <span>tomorrow's</span> leaders.</h1>
       <p>Deen, education, and practical skills — one enrollment, whichever programme fits your child or yourself.</p>
     </div>
     <div class="hero-roadmap" id="heroRoadmap">
       <div class="r-item active" data-for="1"><span class="r-num">1</span> Tell us about the student</div>
       <div class="r-item" data-for="2"><span class="r-num">2</span> Choose a programme</div>
-      <div class="r-item" data-for="3"><span class="r-num">3</span> Pay & you're enrolled</div>
+      <div class="r-item" data-for="3"><span class="r-num">3</span> Pay & confirm on WhatsApp</div>
     </div>
   </div>
 
-  <!-- ================= Right: form ================= -->
   <div class="form-panel">
     <div class="form-panel-inner">
 
@@ -249,9 +194,8 @@
         <span class="s-label">3</span>
       </div>
 
-      <!-- ---------- Step 1: Student Information ---------- -->
       <form class="step active" id="step1" data-step="1" novalidate>
-        <h2>Student Information</h2>
+        <h2>Student information</h2>
         <p class="step-sub">Who's enrolling, and who we should contact.</p>
 
         <div class="field" data-field="studentName">
@@ -259,7 +203,6 @@
           <input type="text" name="studentName" placeholder="Student's full name" autocomplete="name">
           <p class="err-msg">Enter the student's full name.</p>
         </div>
-
         <div class="field-row">
           <div class="field" data-field="dob">
             <label>Date of birth <span class="req">*</span></label>
@@ -280,13 +223,11 @@
             <p class="err-msg">Select a grade level.</p>
           </div>
         </div>
-
         <div class="field" data-field="kinName">
           <label>Next of kin — full name <span class="req">*</span></label>
           <input type="text" name="kinName" placeholder="Parent or guardian's full name" autocomplete="name">
           <p class="err-msg">Enter next of kin's full name.</p>
         </div>
-
         <div class="field-row">
           <div class="field" data-field="kinRelationship">
             <label>Relationship <span class="req">*</span></label>
@@ -305,101 +246,83 @@
             <p class="err-msg">Enter a phone number.</p>
           </div>
         </div>
-
         <div class="field" data-field="kinEmail">
           <label>Email <span class="req">*</span></label>
           <input type="email" name="kinEmail" placeholder="For enrollment updates and payment receipts" autocomplete="email">
           <p class="err-msg">Enter a valid email address.</p>
         </div>
-
         <div class="step-actions">
           <button type="button" class="btn btn-primary" data-next>Save & Continue</button>
         </div>
       </form>
 
-      <!-- ---------- Step 2: Programme & Plan ---------- -->
       <form class="step" id="step2" data-step="2" novalidate>
-        <h2>Choose a Programme</h2>
+        <h2>Choose a programme</h2>
         <p class="step-sub">Pick the programme, then the plan inside it.</p>
-
         <div class="prog-pills" id="progPills"></div>
         <div class="plan-options" id="planOptions"></div>
-        <p class="err-msg" data-field="plan" style="display:none; color: var(--error); font-size: 12px; margin-top: 10px;">Select a plan to continue.</p>
-
+        <p class="err-msg" data-field="plan" style="display:none; color: var(--error); font-size: 13px; margin-top: 10px;">Select a plan to continue.</p>
         <div class="step-actions">
           <button type="button" class="btn btn-primary" data-next>Save & Continue</button>
           <button type="button" class="btn btn-secondary" data-back>Back</button>
         </div>
       </form>
 
-      <!-- ---------- Step 3: Payment ---------- -->
       <div class="step" id="step3" data-step="3">
-        <h2>Pay & Enroll</h2>
-        <p class="step-sub">Last step — pay by transfer or card, then you're in.</p>
+        <h2>Pay &amp; confirm on WhatsApp</h2>
+        <p class="step-sub">Pay by bank transfer, then send us your receipt on WhatsApp. That's how we confirm your place.</p>
 
         <div class="pay-summary" id="paySummary"></div>
 
-        <div class="pay-tabs" role="tablist">
-          <button type="button" class="pay-tab" role="tab" aria-selected="true" data-pay-tab="transfer">Bank Transfer</button>
-          <button type="button" class="pay-tab" role="tab" aria-selected="false" data-pay-tab="card">Pay by Card</button>
+        <ol class="pay-steps">
+          <li><span><b>Transfer the amount</b> above to this account.</span></li>
+          <li><span><b>Tap WhatsApp</b> below. Your message is already written for this plan.</span></li>
+          <li><span><b>Attach your receipt</b> in the chat and send.</span></li>
+        </ol>
+
+        <div class="account-box">
+          <div class="account-row"><span>Account Name</span><b>Himaayah Ltd</b></div>
+          <div class="account-row"><span>Account Number</span><b>0127584920<button class="copy-btn" data-copy="0127584920" type="button">Copy</button></b></div>
+          <div class="account-row"><span>Bank</span><b>Wema Bank</b></div>
         </div>
 
-        <div class="pay-view active" data-pay-view="transfer">
-          <div class="account-box">
-            <div class="account-row"><span>Account Name</span><b>Himaayah Ltd</b></div>
-            <div class="account-row"><span>Account Number</span><b>0127584920<button class="copy-btn" data-copy="0127584920" type="button">Copy</button></b></div>
-            <div class="account-row"><span>Bank</span><b>Wema Bank</b></div>
-          </div>
-          <div class="step-actions">
-            <button type="button" class="btn btn-primary" id="submitTransferBtn">I've sent the transfer — Submit</button>
-          </div>
-          <p class="form-status" id="transferStatus"></p>
-          <p class="form-note">Payments are usually confirmed within a few hours. Submitting saves your enrollment now — no need to wait.</p>
+        <p class="wa-label">I've paid. Send my receipt on WhatsApp:</p>
+        <div class="wa-grid">
+          <a class="btn btn-wa" id="waLink1" target="_blank" rel="noopener">Send on WhatsApp <small>· +234 806 604 3320</small></a>
+          <a class="btn btn-wa" id="waLink2" target="_blank" rel="noopener">Send on WhatsApp <small>· +234 702 584 2849</small></a>
         </div>
+        <button type="button" class="btn btn-secondary" id="copyMsgBtn">Copy the message instead</button>
 
-        <div class="pay-view" data-pay-view="card">
-          <div class="step-actions">
-            <button type="button" class="btn btn-primary" id="submitCardBtn">Continue to Card Payment</button>
-          </div>
-          <p class="form-status" id="cardStatus"></p>
-          <p class="form-note">You'll be redirected to a secure checkout page. Your receipt goes to the email from step 1.</p>
-        </div>
+        <p class="msg-title">Your message</p>
+        <div class="msg-preview" id="msgPreview"></div>
+        <p class="form-note">Pay first, then send. Please attach your receipt before you press send. Payments are usually confirmed within a few hours.</p>
 
         <div class="step-actions">
           <button type="button" class="btn btn-secondary" data-back>Back</button>
         </div>
       </div>
 
-      <!-- ---------- Confirmation ---------- -->
       <div class="step" id="stepDone">
         <div class="confirm-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
         </div>
         <h2 id="doneTitle">You're enrolled.</h2>
-        <p class="step-sub" id="doneSub">We've saved your enrollment. Keep an eye on your email for next steps.</p>
+        <p class="step-sub" id="doneSub">Send your receipt on WhatsApp so we can confirm your place.</p>
+        <div class="done-actions" id="doneActions"></div>
       </div>
 
     </div>
     <footer class="wizard-footer">
       <div class="wizard-footer-social">
-        <a href="https://instagram.com/himaayahschools" target="_blank" rel="noopener" aria-label="Himaayah Schools on Instagram">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
-        </a>
-        <a href="https://x.com/himaayahschools" target="_blank" rel="noopener" aria-label="Himaayah Schools on X">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M18.24 2H21.5l-7.3 8.34L22.8 22h-6.73l-5.27-6.9L4.7 22H1.4l7.8-8.92L1 2h6.9l4.76 6.3L18.24 2zm-1.18 18h1.86L7.03 3.9H5.03L17.06 20z"/></svg>
-        </a>
+        <a href="https://instagram.com/himaayahschools" target="_blank" rel="noopener" aria-label="Himaayah Schools on Instagram"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg></a>
+        <a href="https://x.com/himaayahschools" target="_blank" rel="noopener" aria-label="Himaayah Schools on X"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M18.24 2H21.5l-7.3 8.34L22.8 22h-6.73l-5.27-6.9L4.7 22H1.4l7.8-8.92L1 2h6.9l4.76 6.3L18.24 2zm-1.18 18h1.86L7.03 3.9H5.03L17.06 20z"/></svg></a>
       </div>
-      <span>© 2026 Himaayah Schools · <a href="mailto:himaayahschools@gmail.com">himaayahschools@gmail.com</a></span>
+      <span>© 2026 Himaayah Schools · <a href="policies.html" target="_blank" rel="noopener">Refund &amp; privacy policies</a> · <a href="mailto:himaayahschools@gmail.com">himaayahschools@gmail.com</a></span>
     </footer>
   </div>
 </div>
 
 <script>
-  // =================================================================
-  // Data: programmes and plans. Same 13 plans and Bachs product IDs
-  // as before — just organized for a compact wizard step instead of
-  // a full card grid.
-  // =================================================================
   const PROGRAMMES = [
     {
       id: 'circle', name: 'Teenagers Building Circle',
@@ -464,20 +387,27 @@
 
   const urlParams = new URLSearchParams(window.location.search);
   const requestedProgramme = urlParams.get('programme');
-  const initialProgrammeId = PROGRAMMES.some((p) => p.id === requestedProgramme)
-    ? requestedProgramme
-    : PROGRAMMES[0].id;
-
-  const state = {
-    step: 1,
-    student: {},
-    programmeId: initialProgrammeId,
-    plan: null,
+  // Plan slugs used in links from the Academy, Skills School and Madrasah pages
+  const PLAN_SLUGS = {
+    'utme': 'Academy \u2014 UTME', 'postutme': 'Academy \u2014 Post-UTME',
+    'alevels': 'Academy \u2014 A-Levels', 'olevels': 'Academy \u2014 O-Levels',
+    'public-speaking': 'Skills School \u2014 Public Speaking',
+    'graphic-design': 'Skills School \u2014 Graphic Design',
+    'data-analysis': 'Skills School \u2014 Data Analysis',
+    'hifdh-group': 'Madrasah \u2014 Hifdh Only (Group)',
+    'full-group': 'Madrasah \u2014 Full Madrasah (Group)',
+    'hifdh-personal': 'Madrasah \u2014 Hifdh Only (Personal)',
+    'full-personal': 'Madrasah \u2014 Full Madrasah (Personal)',
+    'one-year': 'Madrasah \u2014 One-Year Hifdh',
   };
+  const requestedPlanName = PLAN_SLUGS[urlParams.get('plan')];
+  const planProgramme = requestedPlanName ? PROGRAMMES.find((p) => p.plans.some((pl) => pl.name === requestedPlanName)) : null;
+  const initialPlan = planProgramme ? planProgramme.plans.find((pl) => pl.name === requestedPlanName) : null;
+  const initialProgrammeId = planProgramme
+    ? planProgramme.id
+    : (PROGRAMMES.some((p) => p.id === requestedProgramme) ? requestedProgramme : PROGRAMMES[0].id);
+  const state = { step: 1, student: {}, programmeId: initialProgrammeId, plan: initialPlan };
 
-  // ---------------------------------------------------------------
-  // Step navigation
-  // ---------------------------------------------------------------
   const steps = document.querySelectorAll('.step');
   const stepper = document.getElementById('stepper');
   const heroRoadmap = document.getElementById('heroRoadmap');
@@ -510,9 +440,7 @@
     stepEl.querySelectorAll('[data-field]').forEach((field) => {
       const input = field.querySelector('input, select');
       if (!input) return;
-      const valid = input.type === 'email'
-        ? /^\S+@\S+\.\S+$/.test(input.value.trim())
-        : input.value.trim().length > 0;
+      const valid = input.type === 'email' ? /^\S+@\S+\.\S+$/.test(input.value.trim()) : input.value.trim().length > 0;
       field.classList.toggle('error', !valid);
       if (!valid) ok = false;
     });
@@ -539,9 +467,6 @@
     btn.addEventListener('click', () => showStep(state.step - 1));
   });
 
-  // ---------------------------------------------------------------
-  // Step 2: programme pills + plan options
-  // ---------------------------------------------------------------
   const progPills = document.getElementById('progPills');
   const planOptions = document.getElementById('planOptions');
 
@@ -566,9 +491,9 @@
   function renderPlanOptions() {
     const programme = PROGRAMMES.find((p) => p.id === state.programmeId);
     planOptions.innerHTML = '';
-    programme.plans.forEach((plan, i) => {
+    programme.plans.forEach((plan) => {
       const wrap = document.createElement('div');
-      wrap.className = 'plan-opt';
+      wrap.className = 'plan-opt' + (state.plan && state.plan.name === plan.name ? ' selected' : '');
       wrap.innerHTML = `
         <div class="plan-opt-head">
           <div class="plan-opt-radio"></div>
@@ -598,17 +523,14 @@
   renderProgPills();
   renderPlanOptions();
 
-  // ---------------------------------------------------------------
-  // Step 3: payment
-  // ---------------------------------------------------------------
   function renderPaySummary() {
     const s = state.student;
     document.getElementById('paySummary').innerHTML = `
       <div class="row"><span>Student</span><b>${s.studentName || ''}</b></div>
       <div class="row"><span>Plan</span><b>${state.plan.name}</b></div>
-      <div class="row"><span>Amount</span><b>\u20a6${state.plan.amount.toLocaleString()}${state.plan.period}</b></div>
-      <div class="row"><span>Receipt to</span><b>${s.kinEmail || ''}</b></div>
+      <div class="row"><span>Amount to pay</span><b>${amountText(state.plan)}</b></div>
     `;
+    preparePayment();
   }
 
   document.querySelectorAll('.pay-tab').forEach((tab) => {
@@ -634,93 +556,82 @@
     });
   });
 
-  // ---------------------------------------------------------------
-  // Submission: writes to Google Sheets via /api/submit-registration,
-  // then either shows the confirmation step (bank transfer) or
-  // creates a Bachs checkout session and redirects (card).
-  // ---------------------------------------------------------------
-  async function submitRegistration(paymentMethod, status) {
-    const s = state.student;
-    const payload = {
-      studentName: s.studentName,
-      dob: s.dob,
-      gradeLevel: s.gradeLevel,
-      kinName: s.kinName,
-      kinRelationship: s.kinRelationship,
-      kinPhone: s.kinPhone,
-      kinEmail: s.kinEmail,
-      programme: PROGRAMMES.find((p) => p.id === state.programmeId).name,
-      planName: state.plan.name,
-      amount: state.plan.amount,
-      currency: 'NGN',
-      paymentMethod,
-      status,
-    };
-    const res = await fetch('/api/submit-registration', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    });
-    if (!res.ok) throw new Error('Could not save registration');
-    return payload;
+  // =================================================================
+  // Payment: no payment API yet. The student pays by bank transfer,
+  // then sends a pre-written WhatsApp message (with their details and
+  // plan) to either school line. To bring back card payment and saved
+  // registrations later, restore /api/submit-registration and
+  // /api/create-checkout calls here.
+  // =================================================================
+  const WA_NUMBERS = ['2348066043320', '2347025842849'];
+
+  function amountText(plan) {
+    const per = plan.period === '/mo' ? ' per month' : plan.period === '/2mo' ? ' every 2 months' : ' (one-time)';
+    return '\u20a6' + plan.amount.toLocaleString() + per;
   }
 
-  const submitTransferBtn = document.getElementById('submitTransferBtn');
-  submitTransferBtn.addEventListener('click', async () => {
-    const statusEl = document.getElementById('transferStatus');
-    statusEl.style.display = 'none';
-    submitTransferBtn.disabled = true;
-    submitTransferBtn.textContent = 'Submitting…';
-    try {
-      await submitRegistration('bank_transfer', 'pending_bank_transfer');
-      document.getElementById('doneTitle').textContent = 'Registration received.';
-      document.getElementById('doneSub').textContent =
-        `We've saved ${state.student.studentName}'s enrollment for ${state.plan.name}. Once your transfer is confirmed (usually within a few hours), you're fully enrolled.`;
-      showStep('Done');
-    } catch (err) {
-      submitTransferBtn.disabled = false;
-      submitTransferBtn.textContent = "I've sent the transfer — Submit";
-      statusEl.textContent = 'Something went wrong saving your registration. Please try again.';
-      statusEl.classList.add('error');
-      statusEl.style.display = 'block';
-    }
+  function buildMessage() {
+    const s = state.student;
+    const programme = PROGRAMMES.find((p) => p.id === state.programmeId).name;
+    return [
+      "Assalaamu alaykum warahmatullah. I have just paid for enrollment at Himaayah Schools.",
+      '',
+      'PAYMENT',
+      'Programme: ' + programme,
+      'Plan: ' + state.plan.name,
+      'Amount paid: ' + amountText(state.plan),
+      'Paid to: Himaayah Ltd, Wema Bank, 0127584920',
+      '',
+      'STUDENT',
+      'Name: ' + s.studentName,
+      'Date of birth: ' + s.dob,
+      'Grade level: ' + s.gradeLevel,
+      '',
+      'NEXT OF KIN',
+      'Name: ' + s.kinName + ' (' + s.kinRelationship + ')',
+      'Phone: ' + s.kinPhone,
+      'Email: ' + s.kinEmail,
+      '',
+      'My payment receipt is attached. Please confirm my enrollment. Jazakumullahu khayran.',
+    ].join('\n');
+  }
+
+  function waLink(number) {
+    return 'https://wa.me/' + number + '?text=' + encodeURIComponent(buildMessage());
+  }
+
+  function preparePayment() {
+    document.getElementById('msgPreview').textContent = buildMessage();
+    WA_NUMBERS.forEach((num, i) => {
+      const a = document.getElementById('waLink' + (i + 1));
+      a.href = waLink(num);
+    });
+  }
+
+  // After the WhatsApp tab opens, move this page to a reminder screen
+  [1, 2].forEach((i) => {
+    document.getElementById('waLink' + i).addEventListener('click', () => {
+      setTimeout(showWhatsAppDone, 500);
+    });
   });
 
-  const submitCardBtn = document.getElementById('submitCardBtn');
-  submitCardBtn.addEventListener('click', async () => {
-    const statusEl = document.getElementById('cardStatus');
-    statusEl.style.display = 'none';
-    submitCardBtn.disabled = true;
-    submitCardBtn.textContent = 'Redirecting…';
-    try {
-      await submitRegistration('card', 'pending_card_payment');
-      const res = await fetch('/api/create-checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          productIdLive: state.plan.productIdLive,
-          productIdSandbox: state.plan.productIdSandbox,
-          planName: state.plan.name,
-          amount: state.plan.amount,
-          currency: 'NGN',
-          name: state.student.kinName,
-          email: state.student.kinEmail,
-        }),
-      });
-      if (!res.ok) throw new Error('Checkout could not be started.');
-      const checkoutData = await res.json();
-      if (!checkoutData.url) throw new Error('No checkout URL returned.');
-      window.location.href = checkoutData.url;
-    } catch (err) {
-      submitCardBtn.disabled = false;
-      submitCardBtn.textContent = 'Continue to Card Payment';
-      statusEl.textContent = 'Something went wrong. Please try again or use bank transfer.';
-      statusEl.classList.add('error');
-      statusEl.style.display = 'block';
-    }
-  });
+  function showWhatsAppDone() {
+    document.getElementById('doneTitle').textContent = 'One last step.';
+    document.getElementById('doneSub').textContent =
+      'WhatsApp should have opened with your message ready. Attach your payment receipt and press send, and we\u2019ll confirm ' +
+      (state.student.studentName ? state.student.studentName + '\u2019s' : 'your') + ' place, usually within a few hours.';
+    document.getElementById('doneActions').innerHTML = WA_NUMBERS.map((num) =>
+      `<a class="btn btn-wa" href="${waLink(num)}" target="_blank" rel="noopener">Open WhatsApp again <small>\u00b7 +${num.replace(/^234(\d{3})(\d{3})(\d{4})$/, '234 $1 $2 $3')}</small></a>`
+    ).join('') + '<a class="btn btn-secondary" href="index.html">Back to Himaayah Schools</a>';
+    showStep('Done');
+  }
 
-  // (confirmation step is handled directly inside showStep above)
+  document.getElementById('copyMsgBtn').addEventListener('click', (e) => {
+    const btn = e.currentTarget, text = buildMessage();
+    const finish = () => { btn.textContent = 'Message copied'; setTimeout(() => { btn.textContent = 'Copy the message instead'; }, 1800); };
+    if (navigator.clipboard?.writeText) navigator.clipboard.writeText(text).then(finish).catch(finish);
+    else finish();
+  });
 </script>
 </body>
 </html>

@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Skills School — Himaayah Schools</title>
-<meta name="description" content="Skills School at Himaayah Schools: Public Speaking, Graphic Design, and Data Analysis. Practical courses that end with something real. Explore and enroll.">
+<title>Policies — Himaayah Schools</title>
+<meta name="description" content="Himaayah Schools terms, refund policy, plan changes, conduct, and privacy policy.">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20377.21%20459.6%22%3E%3Cpath%20fill=%22%23094570%22%20d=%22M0.14%20280.14c4.28%2C65.12%2098.42%2C133.97%20163.39%2C172.42%2015.86%2C9.39%2034.24%2C9.39%2050.11%2C-0.01%2052.97%2C-31.37%20159.02%2C-102.63%20163.43%2C-172.41l-376.92%200zm302.67%20-162.41l74.4%20105.8%200%20-126.48c0%2C-20.52%20-11.85%2C-38.03%20-30.9%2C-45.66l-125.46%20-50.22%2081.96%20116.56zm-228.42%200l82.79%20-117.73%20-126.49%2051.28c-18.95%2C7.68%20-30.7%2C25.13%20-30.7%2C45.57l0%20126.67%2074.4%20-105.8zm114.21%20-8.75c35.22%2C0%2063.77%2C28.55%2063.77%2C63.77%200%2C35.22%20-28.55%2C63.77%20-63.77%2C63.77%20-35.22%2C0%20-63.77%2C-28.55%20-63.77%2C-63.77%200%2C-35.22%2028.55%2C-63.77%2063.77%2C-63.77z%22/%3E%3C/svg%3E">
 <meta name="theme-color" content="#094570">
 <meta property="og:site_name" content="Himaayah Schools">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Skills School — Himaayah Schools">
-<meta property="og:description" content="Skills School at Himaayah Schools: Public Speaking, Graphic Design, and Data Analysis. Practical courses that end with something real. Explore and enroll.">
+<meta property="og:title" content="Policies — Himaayah Schools">
+<meta property="og:description" content="Himaayah Schools terms, refund policy, plan changes, conduct, and privacy policy.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -22,14 +22,12 @@
     --display: 'Bricolage Grotesque', 'Inter', sans-serif;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body { font-family: 'Inter', -apple-system, sans-serif; color: var(--text); background: var(--white); -webkit-font-smoothing: antialiased; line-height: 1.6; }
+  html { scroll-behavior: smooth; scroll-padding-top: 110px; }
+  body { font-family: 'Inter', -apple-system, sans-serif; color: var(--text); background: var(--white); -webkit-font-smoothing: antialiased; line-height: 1.7; }
   a { color: inherit; text-decoration: none; }
-  img { display: block; max-width: 100%; }
-  button, input { font-family: inherit; }
-  button { cursor: pointer; border: none; background: none; }
+  button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
   .wrap { max-width: 1200px; margin: 0 auto; padding: 0 28px; }
-  a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid var(--sky-d); outline-offset: 3px; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--sky-d); outline-offset: 3px; }
   @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition-duration: .001ms !important; scroll-behavior: auto !important; } }
 
   .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 15px 28px; font-size: 15px; font-weight: 600; border-radius: 999px; transition: background .2s, color .2s; }
@@ -54,44 +52,48 @@
     .nav-links .btn { margin-top: 16px; }
   }
 
+  .home-fab { position: fixed; left: 20px; bottom: 20px; z-index: 90; display: inline-flex; align-items: center; gap: 8px; padding: 13px 20px 13px 16px; border-radius: 999px; background: #062F4D; color: #fff; font-size: 14px; font-weight: 600; box-shadow: 0 12px 30px -10px rgba(6,47,77,.6); transition: background .2s, transform .2s; }
+  .home-fab:hover { background: #094570; transform: translateY(-2px); }
+
   /* Hero */
   .hero { padding: 100px 16px 0; }
-  .hero-frame { position: relative; max-width: 1400px; margin: 0 auto; border-radius: 40px; overflow: hidden; color: #fff; padding: 96px 64px 80px;
-    background: linear-gradient(100deg, rgba(6,47,77,.96) 35%, rgba(6,47,77,.55) 100%), url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=2000&q=80') center/cover; }
-  .hero-copy { max-width: 700px; }
-  .hero h1 { font-family: var(--display); font-weight: 700; font-size: clamp(38px, 6vw, 72px); line-height: 1.04; letter-spacing: -.025em; margin-bottom: 22px; }
-  .hero p { font-size: 17px; color: rgba(255,255,255,.82); max-width: 52ch; margin-bottom: 34px; }
-  .hero-copy > * { animation: rise .8s cubic-bezier(.2,.7,.2,1) both; }
-  .hero-copy > *:nth-child(2) { animation-delay: .12s; } .hero-copy > *:nth-child(3) { animation-delay: .24s; }
+  .hero-frame { position: relative; max-width: 1400px; margin: 0 auto; border-radius: 40px; overflow: hidden; background: var(--ink); color: #fff; padding: 80px 64px 64px; }
+  .hero-frame::before { content: ''; position: absolute; right: -80px; top: -80px; width: 460px; height: 460px; border-radius: 50%; background: radial-gradient(circle, rgba(133,204,255,.28), transparent 68%); }
+  .hero-copy { position: relative; max-width: 760px; animation: rise .8s cubic-bezier(.2,.7,.2,1) both; }
+  .hero h1 { font-family: var(--display); font-weight: 700; font-size: clamp(38px, 5.6vw, 64px); line-height: 1.05; letter-spacing: -.025em; margin-bottom: 18px; }
+  .hero p { font-size: 17px; color: rgba(255,255,255,.82); max-width: 56ch; }
+  .hero small { display: block; margin-top: 22px; font-size: 13.5px; color: rgba(255,255,255,.65); }
   @keyframes rise { from { opacity: 0; transform: translateY(22px); } }
-  .search { display: flex; align-items: center; gap: 12px; max-width: 500px; background: #fff; border-radius: 999px; padding: 6px 8px 6px 22px; color: var(--muted); }
-  .search:focus-within { box-shadow: 0 0 0 4px rgba(133,204,255,.4); }
-  .search input { flex: 1; min-width: 0; border: none; outline: none; background: none; font-size: 15px; color: var(--text); padding: 12px 0; }
-  .search .count { font-size: 13px; font-weight: 600; color: var(--ink); background: var(--wash); padding: 10px 16px; border-radius: 999px; white-space: nowrap; }
-  @media (max-width: 700px) { .hero-frame { padding: 56px 24px 48px; border-radius: 28px; } }
+  @media (max-width: 700px) { .hero-frame { padding: 52px 24px 44px; border-radius: 28px; } }
 
-  /* Courses */
-  .courses { padding: 110px 0; }
-  .section-head { margin-bottom: 44px; }
-  .section-head h2 { font-family: var(--display); font-weight: 700; font-size: clamp(30px, 4vw, 46px); line-height: 1.1; letter-spacing: -.02em; color: var(--deep); max-width: 14em; }
-  .course-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-  @media (max-width: 980px) { .course-grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 640px) { .course-grid { grid-template-columns: 1fr; } }
-  .course { background: var(--wash); border-radius: var(--r-lg); overflow: hidden; display: flex; flex-direction: column; }
-  .course.hidden { display: none; }
-  .course-img { aspect-ratio: 4/3; overflow: hidden; }
-  .course-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease; }
-  .course:hover .course-img img { transform: scale(1.05); }
-  .course-body { padding: 28px; display: flex; flex-direction: column; gap: 14px; flex: 1; }
-  .tags { display: flex; gap: 8px; flex-wrap: wrap; }
-  .tag { font-size: 12.5px; font-weight: 600; padding: 6px 14px; border-radius: 999px; background: #fff; color: var(--ink); }
-  .course h3 { font-family: var(--display); font-size: 25px; line-height: 1.15; letter-spacing: -.01em; color: var(--deep); }
-  .course .desc { color: var(--muted); font-size: 14.5px; flex: 1; }
-  .course-foot { padding-top: 18px; border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 16px; }
-  .price b { display: block; font-family: var(--display); font-size: 28px; color: var(--ink); line-height: 1.1; }
-  .price span { font-size: 13px; color: var(--muted); }
-  .no-results { display: none; text-align: center; padding: 60px 0; color: var(--muted); }
-  .no-results.show { display: block; }
+  /* Highlights */
+  .highlights { padding: 64px 0 20px; }
+  .hl-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  @media (max-width: 800px) { .hl-grid { grid-template-columns: 1fr; } }
+  .hl { background: var(--wash); border-radius: 24px; padding: 26px 28px; }
+  .hl b { display: block; font-family: var(--display); font-size: 21px; line-height: 1.2; color: var(--deep); margin-bottom: 6px; }
+  .hl span { font-size: 14.5px; color: var(--muted); }
+  .hl.key { background: var(--ink); } .hl.key b { color: var(--sky); } .hl.key span { color: rgba(255,255,255,.8); }
+
+  /* Document layout */
+  .doc { padding: 56px 0 110px; }
+  .doc-grid { display: grid; grid-template-columns: 260px 1fr; gap: 64px; align-items: start; }
+  @media (max-width: 900px) { .doc-grid { grid-template-columns: 1fr; gap: 28px; } }
+  .toc { position: sticky; top: 110px; display: grid; gap: 2px; }
+  @media (max-width: 900px) { .toc { position: static; display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; } }
+  .toc a { padding: 10px 16px; border-radius: 999px; font-size: 14px; font-weight: 500; color: var(--muted); white-space: nowrap; transition: background .2s, color .2s; }
+  .toc a:hover { color: var(--ink); }
+  .toc a.active { background: var(--ink); color: #fff; }
+  .doc section { padding-bottom: 44px; margin-bottom: 44px; border-bottom: 1px solid var(--line); }
+  .doc section:last-child { border-bottom: none; margin-bottom: 0; }
+  .doc h2 { font-family: var(--display); font-weight: 700; font-size: clamp(26px, 3.2vw, 36px); line-height: 1.12; letter-spacing: -.02em; color: var(--deep); margin-bottom: 16px; }
+  .doc h3 { font-size: 17px; font-weight: 700; color: var(--deep); margin: 22px 0 6px; }
+  .doc p, .doc li { color: var(--muted); font-size: 16px; max-width: 68ch; }
+  .doc p + p { margin-top: 12px; }
+  .doc ul { margin: 10px 0 0 20px; display: grid; gap: 6px; }
+  .doc a:not(.btn) { color: var(--ink); font-weight: 600; border-bottom: 1px solid var(--sky-d); }
+  .callout { background: var(--wash); border-left: 4px solid var(--ink); border-radius: 0 20px 20px 0; padding: 20px 24px; margin-top: 16px; }
+  .callout p { color: var(--deep); font-weight: 500; }
 
   /* Footer */
   footer.site { background: var(--deep); color: rgba(255,255,255,.65); border-radius: 40px 40px 0 0; margin: 0 16px; padding: 70px 0 28px; font-size: 14px; }
@@ -104,11 +106,6 @@
   .f-col h4 { font-family: var(--display); font-size: 16px; color: #fff; margin-bottom: 14px; }
   .f-col a, .f-col span { display: block; margin-bottom: 9px; transition: color .2s; } .f-col a:hover { color: var(--sky); }
   .f-bottom { padding-top: 22px; border-top: 1px solid rgba(255,255,255,.12); }
-
-  /* Always-visible home button */
-  .home-fab { position: fixed; left: 20px; bottom: 20px; z-index: 90; display: inline-flex; align-items: center; gap: 8px; padding: 13px 20px 13px 16px; border-radius: 999px; background: #062F4D; color: #fff; font-size: 14px; font-weight: 600; box-shadow: 0 12px 30px -10px rgba(6,47,77,.6); transition: background .2s, transform .2s; }
-  .home-fab:hover { background: #094570; transform: translateY(-2px); }
-  .home-fab:focus-visible { outline: 2px solid #85CCFF; outline-offset: 3px; }
 
   /* Programmes dropdown */
   .dd { position: relative; }
@@ -146,6 +143,11 @@
 </head>
 <body>
 
+<a class="home-fab" href="index.html" aria-label="Back to home">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+  Home
+</a>
+
 <nav class="nav">
   <div class="nav-pill">
     <a class="brand" href="index.html">
@@ -153,93 +155,148 @@
       Himaayah Schools
     </a>
     <div class="nav-links" id="navLinks">
-      <div class="dd cur">
+      <div class="dd">
         <button type="button" class="dd-btn" aria-haspopup="true" aria-expanded="false">Programmes
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
         <div class="dd-menu">
           <a href="teenagers-building-circle.html">Teenagers Building Circle</a>
           <a href="madrasah.html">Madrasah</a>
           <a href="academy.html">Academy</a>
-          <a href="skills-school.html" aria-current="page">Skills School</a>
+          <a href="skills-school.html">Skills School</a>
         </div>
       </div>
       <a href="success-stories.html">Success Stories</a>
       <a href="faq.html">FAQ</a>
       <a href="contact.html">Contact</a>
-      <a href="enroll.html?programme=skills" class="btn btn-ink">Enroll Now</a>
+      <a href="enroll.html" class="btn btn-ink">Enroll Now</a>
     </div>
     <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
 </nav>
 
-<a class="home-fab" href="index.html" aria-label="Back to home">
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
-  Home
-</a>
-
-
 <header class="hero">
   <div class="hero-frame">
     <div class="hero-copy">
-      <h1>Master the skills of tomorrow.</h1>
-      <p>Practical courses that end with the student able to actually do the thing, not just describe it. Search by topic or browse the full catalog below.</p>
-      <label class="search">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-        <input type="text" id="courseSearch" placeholder="Search courses, e.g. design or data" aria-label="Search courses">
-        <span class="count" id="resultCount" aria-live="polite">3 courses</span>
-      </label>
+      <h1>Clear rules, written plainly.</h1>
+      <p>How enrollment, payment, refunds, plan changes, and your information work at Himaayah Schools, so there are no surprises.</p>
+      <small>Last updated: October 2026</small>
     </div>
   </div>
 </header>
 
-<section class="courses" id="courses">
-  <div class="wrap">
-    <div class="section-head"><h2>Three courses. Each one ends with something real.</h2></div>
-    <div class="course-grid" id="courseGrid">
-
-      <article class="course" data-title="public speaking communication presentation">
-        <div class="course-img"><img src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=800&q=80" alt="A podium and microphone set up before a small seated audience."></div>
-        <div class="course-body">
-          <div class="tags"><span class="tag">Beginner</span><span class="tag">4 weeks</span></div>
-          <h3>Public Speaking</h3>
-          <p class="desc">Structure a talk so an audience remembers the point, and control nerves, pacing, and voice under pressure. Closes with a graded talk in front of a live audience.</p>
-          <div class="course-foot">
-            <div class="price"><b>₦25,000</b><span>Billed once</span></div>
-            <a href="enroll.html?programme=skills&amp;plan=public-speaking" class="btn btn-ink">Enroll now</a>
-          </div>
-        </div>
-      </article>
-
-      <article class="course" data-title="graphic design ux ui visual layout">
-        <div class="course-img"><img src="https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&w=800&q=80" alt="A designer's monitor displaying a colourful gradient composition mid-edit."></div>
-        <div class="course-body">
-          <div class="tags"><span class="tag">Intermediate</span><span class="tag">6 weeks</span></div>
-          <h3>Graphic Design</h3>
-          <p class="desc">Layout, colour, and type fundamentals for real client work, with hands-on practice in industry-standard software. Ends with a small portfolio: logo, poster, social kit.</p>
-          <div class="course-foot">
-            <div class="price"><b>₦35,000</b><span>Billed once</span></div>
-            <a href="enroll.html?programme=skills&amp;plan=graphic-design" class="btn btn-ink">Enroll now</a>
-          </div>
-        </div>
-      </article>
-
-      <article class="course" data-title="data analysis science ai analytics dashboard">
-        <div class="course-img"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80" alt="Charts and performance graphs displayed across a laptop screen."></div>
-        <div class="course-body">
-          <div class="tags"><span class="tag">Advanced</span><span class="tag">8 weeks</span></div>
-          <h3>Data Analysis</h3>
-          <p class="desc">Clean and organise real, messy datasets, then build spreadsheets, queries, and dashboards. Final project: a dashboard built from your own dataset.</p>
-          <div class="course-foot">
-            <div class="price"><b>₦80,000</b><span>Billed every 2 months</span></div>
-            <a href="enroll.html?programme=skills&amp;plan=data-analysis" class="btn btn-ink">Enroll now</a>
-          </div>
-        </div>
-      </article>
-
-    </div>
-    <p class="no-results" id="noResults">No courses match that search. Try a different topic or skill.</p>
+<section class="highlights">
+  <div class="wrap hl-grid">
+    <div class="hl key"><b>Refunds within 2 weeks</b><span>No refund once two weeks have passed since classes started.</span></div>
+    <div class="hl"><b>Change plans by email</b><span>Write to us with your name and current plan.</span></div>
+    <div class="hl"><b>Your data stays with us</b><span>We never sell student or parent information.</span></div>
   </div>
 </section>
+
+<main class="doc">
+  <div class="wrap doc-grid">
+
+    <nav class="toc" id="toc" aria-label="On this page">
+      <a href="#enrollment">Enrollment &amp; payment</a>
+      <a href="#refunds">Refund policy</a>
+      <a href="#changes">Plan changes</a>
+      <a href="#conduct">Conduct &amp; attendance</a>
+      <a href="#results">Results &amp; exam info</a>
+      <a href="#privacy">Privacy</a>
+      <a href="#updates">Updates &amp; contact</a>
+    </nav>
+
+    <div>
+      <!-- CONFIRM: Everything below except the two-week refund rule is a draft. Check each point against how you actually operate, and have a Nigerian lawyer review before relying on it. -->
+
+      <section id="enrollment">
+        <h2>Enrollment &amp; payment</h2>
+        <p>Enrollment is completed in three steps on our <a href="enroll.html">Enroll</a> page: student information, programme and plan, then payment. A place is only confirmed once we have received your payment and your receipt.</p>
+        <h3>How you can pay</h3>
+        <p>By bank transfer to our school account. After paying, send your receipt to us on WhatsApp using the message prepared on the enrollment page, which contains the student's details and the plan paid for. We usually confirm within a few hours.</p>
+        <h3>Billing</h3>
+        <p>Most Madrasah and Academy plans bill monthly. Skills School Public Speaking and Graphic Design are one-time payments, and Data Analysis bills every two months. The exact billing is shown on each plan before you pay. Prices are in Nigerian naira (₦).</p>
+        <h3>Who can enrol</h3>
+        <p>Teenagers Building Circle is for ages 13–19. Other programmes accept school-age students through adult learners, depending on the plan. For students under 18, a parent or guardian must complete the next-of-kin details and agree to these policies.</p>
+      </section>
+
+      <section id="refunds">
+        <h2>Refund policy</h2>
+        <div class="callout"><p>No refund is available two weeks after classes have started.</p></div>
+        <p>In practice, this means:</p>
+        <ul>
+          <li><strong>Before classes start:</strong> you may request a full refund at any time.</li>
+          <li><strong>In the first two weeks of classes:</strong> you may request a refund, and we will process it.</li>
+          <li><strong>After two weeks from the start of classes:</strong> no refund is given, for any reason.</li>
+        </ul>
+        <h3>Recurring plans</h3>
+        <p>The two-week window runs from the day the student's classes first begin. Later monthly payments are not refundable once their billing period has started, so please tell us before your next billing date if you want to stop.</p>
+        <h3>If we cancel</h3>
+        <p>If we cancel a class or cohort and cannot offer a suitable alternative, you will receive a full refund for the affected period.</p>
+        <h3>How to request a refund</h3>
+        <p>Email <a href="mailto:himaayahschools@gmail.com">himaayahschools@gmail.com</a> with the student's name, the plan, and the date and method of payment. Approved refunds are returned to the original payment method.</p>
+        <!-- CONFIRM: add how many working days refunds take (e.g. 7–10 business days) and whether any payment-processing fee is deducted. -->
+      </section>
+
+      <section id="changes">
+        <h2>Plan changes &amp; cancellation</h2>
+        <p>You can change plans at any time. Email <a href="mailto:himaayahschools@gmail.com">himaayahschools@gmail.com</a> with your name and current plan, and we will help you switch. Changes take effect from the next billing period, unless we agree otherwise.</p>
+        <p>To stop a recurring plan, tell us before your next billing date. Cancelling does not trigger a refund for a period that has already started (see the refund policy above).</p>
+        <!-- CONFIRM: whether plan changes mid-month get a price adjustment, and how much notice you need for cancellation. -->
+      </section>
+
+      <section id="conduct">
+        <h2>Conduct &amp; attendance</h2>
+        <p>Himaayah Schools is built on deen, discipline, and respect. We expect all students and parents to:</p>
+        <ul>
+          <li>Treat teachers and classmates with courtesy, in class and in group chats.</li>
+          <li>Attend live sessions on time and complete assigned practice.</li>
+          <li>Keep class links, materials and recordings private, and not share or resell them.</li>
+          <li>Follow Islamic etiquette and the school's guidance during Madrasah and Circle sessions.</li>
+        </ul>
+        <p>We may remove a student from a class or programme for repeated serious misconduct. Where that happens after the two-week refund window, no refund applies.</p>
+        <!-- CONFIRM: any attendance minimums, dress/camera rules, or how you handle make-up classes. -->
+      </section>
+
+      <section id="results">
+        <h2>Results &amp; exam information</h2>
+        <p>The results and testimonials on this site come from real Himaayah Academy students. Individual outcomes depend on a student's effort, attendance and starting point, so we cannot guarantee any particular score, admission, or grade.</p>
+        <p>Exam dates on our <a href="exam-calendars.html">Exam Calendars</a> page are for guidance. Dates marked "expected" are estimates. Always confirm with JAMB, WAEC, NECO, or the relevant institution before registering.</p>
+      </section>
+
+      <section id="privacy">
+        <h2>Privacy</h2>
+        <p>We handle personal information in line with the Nigeria Data Protection Act 2023. This is what that means for you.</p>
+        <h3>What we collect</h3>
+        <ul>
+          <li>Student details: full name, date of birth, grade level.</li>
+          <li>Next-of-kin details: name, relationship, phone number and email.</li>
+          <li>Enrollment details: the programme and plan chosen, and your payment receipt, which you send to us on WhatsApp.</li>
+          <li>If you use our mock-test form, the details you enter there.</li>
+        </ul>
+        <h3>How we use it</h3>
+        <p>To register and teach your child or you, confirm payments, send receipts and class updates, and improve our programmes. We do not sell personal information and do not use it for third-party advertising.</p>
+        <h3>Who sees it</h3>
+        <p>Our teaching and administrative team, and the service providers we rely on to run the school, such as payment processing, email, and the tools we use to store registrations. They may only use your information to provide those services. We may also disclose information when the law requires it.</p>
+        <h3>Children</h3>
+        <p>We collect information about minors only through a parent or guardian's registration, and use it only to teach and support the student.</p>
+        <h3>Photos and testimonials</h3>
+        <p>We will only publish a student's name, score or photo with permission from the student or their parent or guardian.</p>
+        <h3>Keeping and deleting data</h3>
+        <p>We keep records for as long as needed to run the programme and meet our legal and accounting obligations, then delete or anonymise them.</p>
+        <h3>Your rights</h3>
+        <p>You may ask to see, correct or delete the information we hold about you or your child, or object to how we use it. Email us and we will respond promptly.</p>
+        <!-- CONFIRM: retention period, where data is stored, any analytics tools on the site, and the name of your data contact. -->
+      </section>
+
+      <section id="updates">
+        <h2>Updates &amp; contact</h2>
+        <p>We may update these policies from time to time. The date at the top of this page shows when they were last changed. Continuing to use our services after an update means you accept the new version.</p>
+        <h3>Questions?</h3>
+        <p>Email <a href="mailto:himaayahschools@gmail.com">himaayahschools@gmail.com</a> or call <a href="tel:+2348066043320">+234 806 604 3320</a> or <a href="tel:+2347025842849">+234 702 584 2849</a>. We are in Ilorin, Nigeria.</p>
+      </section>
+    </div>
+  </div>
+</main>
 
 <footer class="site">
   <div class="wrap">
@@ -286,21 +343,15 @@
   const t = document.getElementById('navToggle'), l = document.getElementById('navLinks');
   t.addEventListener('click', () => { const o = l.classList.toggle('open'); t.setAttribute('aria-expanded', o); });
 
-  const input = document.getElementById('courseSearch');
-  const cards = Array.from(document.querySelectorAll('.course'));
-  const count = document.getElementById('resultCount');
-  const empty = document.getElementById('noResults');
-  input.addEventListener('input', () => {
-    const q = input.value.trim().toLowerCase();
-    let n = 0;
-    cards.forEach((c) => {
-      const hit = !q || c.dataset.title.includes(q) || c.querySelector('h3').textContent.toLowerCase().includes(q);
-      c.classList.toggle('hidden', !hit);
-      if (hit) n++;
-    });
-    count.textContent = n + (n === 1 ? ' course' : ' courses');
-    empty.classList.toggle('show', n === 0);
-  });
+  // Highlight the section being read in the contents list
+  const links = [...document.querySelectorAll('#toc a')];
+  const secs = links.map((a) => document.querySelector(a.getAttribute('href')));
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((es) => es.forEach((e) => {
+      if (e.isIntersecting) links.forEach((a) => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
+    }), { rootMargin: '-20% 0px -70% 0px' });
+    secs.forEach((s) => io.observe(s));
+  }
   (function () {
     const dd = document.querySelector('.dd'); if (!dd) return;
     const b = dd.querySelector('.dd-btn');

@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Skills School — Himaayah Schools</title>
-<meta name="description" content="Skills School at Himaayah Schools: Public Speaking, Graphic Design, and Data Analysis. Practical courses that end with something real. Explore and enroll.">
+<title>Contact — Himaayah Schools</title>
+<meta name="description" content="Call, WhatsApp, or email Himaayah Schools in Ilorin, Nigeria. We reply to enrollment questions, plan changes, and mock test bookings.">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20377.21%20459.6%22%3E%3Cpath%20fill=%22%23094570%22%20d=%22M0.14%20280.14c4.28%2C65.12%2098.42%2C133.97%20163.39%2C172.42%2015.86%2C9.39%2034.24%2C9.39%2050.11%2C-0.01%2052.97%2C-31.37%20159.02%2C-102.63%20163.43%2C-172.41l-376.92%200zm302.67%20-162.41l74.4%20105.8%200%20-126.48c0%2C-20.52%20-11.85%2C-38.03%20-30.9%2C-45.66l-125.46%20-50.22%2081.96%20116.56zm-228.42%200l82.79%20-117.73%20-126.49%2051.28c-18.95%2C7.68%20-30.7%2C25.13%20-30.7%2C45.57l0%20126.67%2074.4%20-105.8zm114.21%20-8.75c35.22%2C0%2063.77%2C28.55%2063.77%2C63.77%200%2C35.22%20-28.55%2C63.77%20-63.77%2C63.77%20-35.22%2C0%20-63.77%2C-28.55%20-63.77%2C-63.77%200%2C-35.22%2028.55%2C-63.77%2063.77%2C-63.77z%22/%3E%3C/svg%3E">
 <meta name="theme-color" content="#094570">
 <meta property="og:site_name" content="Himaayah Schools">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Skills School — Himaayah Schools">
-<meta property="og:description" content="Skills School at Himaayah Schools: Public Speaking, Graphic Design, and Data Analysis. Practical courses that end with something real. Explore and enroll.">
+<meta property="og:title" content="Contact — Himaayah Schools">
+<meta property="og:description" content="Call, WhatsApp, or email Himaayah Schools in Ilorin, Nigeria. We reply to enrollment questions, plan changes, and mock test bookings.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -25,15 +25,15 @@
   html { scroll-behavior: smooth; }
   body { font-family: 'Inter', -apple-system, sans-serif; color: var(--text); background: var(--white); -webkit-font-smoothing: antialiased; line-height: 1.6; }
   a { color: inherit; text-decoration: none; }
-  img { display: block; max-width: 100%; }
-  button, input { font-family: inherit; }
-  button { cursor: pointer; border: none; background: none; }
+  button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
   .wrap { max-width: 1200px; margin: 0 auto; padding: 0 28px; }
-  a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid var(--sky-d); outline-offset: 3px; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--sky-d); outline-offset: 3px; }
   @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition-duration: .001ms !important; scroll-behavior: auto !important; } }
 
-  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 15px 28px; font-size: 15px; font-weight: 600; border-radius: 999px; transition: background .2s, color .2s; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 14px 24px; font-size: 15px; font-weight: 600; border-radius: 999px; transition: background .2s, color .2s, border-color .2s; }
+  .btn-sky { background: var(--sky); color: var(--deep); } .btn-sky:hover { background: #fff; }
   .btn-ink { background: var(--ink); color: #fff; } .btn-ink:hover { background: var(--deep); }
+  .btn-line { border: 1px solid var(--ink); color: var(--ink); } .btn-line:hover { background: var(--ink); color: #fff; }
 
   /* Nav */
   .nav { position: fixed; top: 16px; left: 0; right: 0; z-index: 100; padding: 0 20px; }
@@ -41,7 +41,7 @@
   .brand { display: flex; align-items: center; gap: 10px; font-family: var(--display); font-weight: 700; font-size: 18px; color: var(--ink); }
   .nav-links { display: flex; align-items: center; gap: 30px; }
   .nav-links a:not(.btn) { font-size: 14px; font-weight: 500; color: var(--muted); transition: color .2s; }
-  .nav-links a:not(.btn):hover { color: var(--ink); }
+  .nav-links a:not(.btn):hover, .nav-links a[aria-current] { color: var(--ink); }
   .nav-links .btn { padding: 11px 22px; font-size: 14px; }
   .nav-toggle { display: none; width: 44px; height: 44px; border-radius: 50%; position: relative; }
   .nav-toggle span { position: absolute; left: 13px; right: 13px; height: 2px; background: var(--ink); }
@@ -54,44 +54,49 @@
     .nav-links .btn { margin-top: 16px; }
   }
 
+  /* Always-visible home button */
+  .home-fab { position: fixed; left: 20px; bottom: 20px; z-index: 90; display: inline-flex; align-items: center; gap: 8px; padding: 13px 20px 13px 16px; border-radius: 999px; background: #062F4D; color: #fff; font-size: 14px; font-weight: 600; box-shadow: 0 12px 30px -10px rgba(6,47,77,.6); transition: background .2s, transform .2s; }
+  .home-fab:hover { background: #094570; transform: translateY(-2px); }
+  .home-fab:focus-visible { outline: 2px solid #85CCFF; outline-offset: 3px; }
+
   /* Hero */
   .hero { padding: 100px 16px 0; }
-  .hero-frame { position: relative; max-width: 1400px; margin: 0 auto; border-radius: 40px; overflow: hidden; color: #fff; padding: 96px 64px 80px;
-    background: linear-gradient(100deg, rgba(6,47,77,.96) 35%, rgba(6,47,77,.55) 100%), url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=2000&q=80') center/cover; }
-  .hero-copy { max-width: 700px; }
+  .hero-frame { position: relative; max-width: 1400px; margin: 0 auto; border-radius: 40px; overflow: hidden; background: var(--ink); color: #fff; padding: 96px 64px 80px; }
+  .hero-frame::before { content: ''; position: absolute; right: -80px; top: -60px; width: 520px; height: 520px; border-radius: 50%; background: radial-gradient(circle, rgba(133,204,255,.28), transparent 68%); }
+  .hero-copy { position: relative; max-width: 760px; }
   .hero h1 { font-family: var(--display); font-weight: 700; font-size: clamp(38px, 6vw, 72px); line-height: 1.04; letter-spacing: -.025em; margin-bottom: 22px; }
-  .hero p { font-size: 17px; color: rgba(255,255,255,.82); max-width: 52ch; margin-bottom: 34px; }
-  .hero-copy > * { animation: rise .8s cubic-bezier(.2,.7,.2,1) both; }
-  .hero-copy > *:nth-child(2) { animation-delay: .12s; } .hero-copy > *:nth-child(3) { animation-delay: .24s; }
+  .hero p { font-size: 17px; color: rgba(255,255,255,.82); max-width: 54ch; }
+  .hero-copy > * { animation: rise .8s cubic-bezier(.2,.7,.2,1) both; } .hero-copy > *:nth-child(2) { animation-delay: .12s; }
   @keyframes rise { from { opacity: 0; transform: translateY(22px); } }
-  .search { display: flex; align-items: center; gap: 12px; max-width: 500px; background: #fff; border-radius: 999px; padding: 6px 8px 6px 22px; color: var(--muted); }
-  .search:focus-within { box-shadow: 0 0 0 4px rgba(133,204,255,.4); }
-  .search input { flex: 1; min-width: 0; border: none; outline: none; background: none; font-size: 15px; color: var(--text); padding: 12px 0; }
-  .search .count { font-size: 13px; font-weight: 600; color: var(--ink); background: var(--wash); padding: 10px 16px; border-radius: 999px; white-space: nowrap; }
-  @media (max-width: 700px) { .hero-frame { padding: 56px 24px 48px; border-radius: 28px; } }
+  @media (max-width: 700px) { .hero-frame { padding: 56px 24px 44px; border-radius: 28px; } }
 
-  /* Courses */
-  .courses { padding: 110px 0; }
-  .section-head { margin-bottom: 44px; }
-  .section-head h2 { font-family: var(--display); font-weight: 700; font-size: clamp(30px, 4vw, 46px); line-height: 1.1; letter-spacing: -.02em; color: var(--deep); max-width: 14em; }
-  .course-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-  @media (max-width: 980px) { .course-grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 640px) { .course-grid { grid-template-columns: 1fr; } }
-  .course { background: var(--wash); border-radius: var(--r-lg); overflow: hidden; display: flex; flex-direction: column; }
-  .course.hidden { display: none; }
-  .course-img { aspect-ratio: 4/3; overflow: hidden; }
-  .course-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease; }
-  .course:hover .course-img img { transform: scale(1.05); }
-  .course-body { padding: 28px; display: flex; flex-direction: column; gap: 14px; flex: 1; }
-  .tags { display: flex; gap: 8px; flex-wrap: wrap; }
-  .tag { font-size: 12.5px; font-weight: 600; padding: 6px 14px; border-radius: 999px; background: #fff; color: var(--ink); }
-  .course h3 { font-family: var(--display); font-size: 25px; line-height: 1.15; letter-spacing: -.01em; color: var(--deep); }
-  .course .desc { color: var(--muted); font-size: 14.5px; flex: 1; }
-  .course-foot { padding-top: 18px; border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 16px; }
-  .price b { display: block; font-family: var(--display); font-size: 28px; color: var(--ink); line-height: 1.1; }
-  .price span { font-size: 13px; color: var(--muted); }
-  .no-results { display: none; text-align: center; padding: 60px 0; color: var(--muted); }
-  .no-results.show { display: block; }
+  /* Contact cards */
+  .reach { padding: 90px 0 70px; }
+  .cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  @media (max-width: 800px) { .cards { grid-template-columns: 1fr; } }
+  .card { background: var(--wash); border-radius: var(--r-lg); padding: 36px; display: flex; flex-direction: column; gap: 14px; transition: transform .3s, box-shadow .3s, background .3s; }
+  .card:hover { background: #fff; transform: translateY(-4px); box-shadow: 0 0 0 1.5px var(--ink), 0 28px 50px -30px rgba(6,47,77,.5); }
+  .card .ic { width: 52px; height: 52px; border-radius: 50%; background: var(--ink); color: var(--sky); display: grid; place-items: center; }
+  .card h2 { font-family: var(--display); font-size: 24px; line-height: 1.15; color: var(--deep); }
+  .card .num { font-family: var(--display); font-size: clamp(26px, 3vw, 34px); font-weight: 700; color: var(--ink); letter-spacing: -.01em; line-height: 1.15; }
+  .card p { color: var(--muted); font-size: 15px; }
+  .card .acts { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 6px; }
+  .wide { grid-column: 1 / -1; flex-direction: row; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px; }
+  .wide .txt { display: flex; flex-direction: column; gap: 6px; }
+  .wide .email { font-family: var(--display); font-size: clamp(22px, 3vw, 32px); font-weight: 700; color: var(--ink); word-break: break-all; }
+
+  /* Find us */
+  .find { padding: 0 0 100px; }
+  .find-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 800px) { .find-grid { grid-template-columns: 1fr; } }
+  .panel { border-radius: var(--r-lg); padding: 40px; }
+  .panel.dark { background: var(--deep); color: #fff; }
+  .panel h2 { font-family: var(--display); font-weight: 700; font-size: clamp(26px, 3vw, 36px); line-height: 1.1; letter-spacing: -.02em; margin-bottom: 12px; }
+  .panel.dark p { color: rgba(255,255,255,.75); margin-bottom: 24px; }
+  .panel.light { background: var(--wash); }
+  .panel.light h2 { color: var(--deep); }
+  .panel.light p { color: var(--muted); margin-bottom: 22px; }
+  .socials { display: flex; gap: 10px; flex-wrap: wrap; }
 
   /* Footer */
   footer.site { background: var(--deep); color: rgba(255,255,255,.65); border-radius: 40px 40px 0 0; margin: 0 16px; padding: 70px 0 28px; font-size: 14px; }
@@ -104,11 +109,6 @@
   .f-col h4 { font-family: var(--display); font-size: 16px; color: #fff; margin-bottom: 14px; }
   .f-col a, .f-col span { display: block; margin-bottom: 9px; transition: color .2s; } .f-col a:hover { color: var(--sky); }
   .f-bottom { padding-top: 22px; border-top: 1px solid rgba(255,255,255,.12); }
-
-  /* Always-visible home button */
-  .home-fab { position: fixed; left: 20px; bottom: 20px; z-index: 90; display: inline-flex; align-items: center; gap: 8px; padding: 13px 20px 13px 16px; border-radius: 999px; background: #062F4D; color: #fff; font-size: 14px; font-weight: 600; box-shadow: 0 12px 30px -10px rgba(6,47,77,.6); transition: background .2s, transform .2s; }
-  .home-fab:hover { background: #094570; transform: translateY(-2px); }
-  .home-fab:focus-visible { outline: 2px solid #85CCFF; outline-offset: 3px; }
 
   /* Programmes dropdown */
   .dd { position: relative; }
@@ -129,19 +129,6 @@
     .dd.open .dd-menu { display: block; }
     .dd:hover .dd-menu { display: none; } .dd.open:hover .dd-menu { display: block; }
   }
-
-  /* WhatsApp chat widget */
-  .wa-widget { position: fixed; right: 20px; bottom: 20px; z-index: 90; display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
-  .wa-fab { display: inline-flex; align-items: center; gap: 10px; padding: 14px 20px 14px 16px; border-radius: 999px; background: #128C4B; color: #fff; font-size: 14px; font-weight: 600; box-shadow: 0 12px 30px -10px rgba(18,140,75,.7); transition: background .2s, transform .2s; }
-  .wa-fab:hover { background: #0E6F3B; transform: translateY(-2px); }
-  .wa-fab:focus-visible, .wa-menu a:focus-visible { outline: 2px solid #85CCFF; outline-offset: 3px; }
-  .wa-menu { display: none; flex-direction: column; gap: 6px; background: #fff; border-radius: 22px; padding: 10px; box-shadow: 0 24px 50px -16px rgba(6,47,77,.5); min-width: 250px; animation: waIn .25s ease both; }
-  .wa-widget.open .wa-menu { display: flex; }
-  .wa-menu a { display: flex; flex-direction: column; padding: 12px 16px; border-radius: 14px; font-size: 14px; font-weight: 600; color: #062F4D; }
-  .wa-menu a small { font-weight: 500; color: #55697B; font-size: 13px; }
-  .wa-menu a:hover { background: #F1F7FC; }
-  @keyframes waIn { from { opacity: 0; transform: translateY(8px); } }
-  @media (max-width: 600px) { .wa-fab span { display: none; } .wa-fab { padding: 15px; } }
 </style>
 </head>
 <body>
@@ -153,20 +140,20 @@
       Himaayah Schools
     </a>
     <div class="nav-links" id="navLinks">
-      <div class="dd cur">
+      <div class="dd">
         <button type="button" class="dd-btn" aria-haspopup="true" aria-expanded="false">Programmes
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
         <div class="dd-menu">
           <a href="teenagers-building-circle.html">Teenagers Building Circle</a>
           <a href="madrasah.html">Madrasah</a>
           <a href="academy.html">Academy</a>
-          <a href="skills-school.html" aria-current="page">Skills School</a>
+          <a href="skills-school.html">Skills School</a>
         </div>
       </div>
       <a href="success-stories.html">Success Stories</a>
       <a href="faq.html">FAQ</a>
-      <a href="contact.html">Contact</a>
-      <a href="enroll.html?programme=skills" class="btn btn-ink">Enroll Now</a>
+      <a href="contact.html" aria-current="page">Contact</a>
+      <a href="enroll.html" class="btn btn-ink">Enroll Now</a>
     </div>
     <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
@@ -177,67 +164,72 @@
   Home
 </a>
 
-
 <header class="hero">
   <div class="hero-frame">
     <div class="hero-copy">
-      <h1>Master the skills of tomorrow.</h1>
-      <p>Practical courses that end with the student able to actually do the thing, not just describe it. Search by topic or browse the full catalog below.</p>
-      <label class="search">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-        <input type="text" id="courseSearch" placeholder="Search courses, e.g. design or data" aria-label="Search courses">
-        <span class="count" id="resultCount" aria-live="polite">3 courses</span>
-      </label>
+      <h1>Talk to a real person.</h1>
+      <p>Questions about a programme, a plan change, a payment, or a mock test? Call, message us on WhatsApp, or send an email. We read every one.</p>
     </div>
   </div>
 </header>
 
-<section class="courses" id="courses">
+<section class="reach">
   <div class="wrap">
-    <div class="section-head"><h2>Three courses. Each one ends with something real.</h2></div>
-    <div class="course-grid" id="courseGrid">
+    <div class="cards">
 
-      <article class="course" data-title="public speaking communication presentation">
-        <div class="course-img"><img src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=800&q=80" alt="A podium and microphone set up before a small seated audience."></div>
-        <div class="course-body">
-          <div class="tags"><span class="tag">Beginner</span><span class="tag">4 weeks</span></div>
-          <h3>Public Speaking</h3>
-          <p class="desc">Structure a talk so an audience remembers the point, and control nerves, pacing, and voice under pressure. Closes with a graded talk in front of a live audience.</p>
-          <div class="course-foot">
-            <div class="price"><b>₦25,000</b><span>Billed once</span></div>
-            <a href="enroll.html?programme=skills&amp;plan=public-speaking" class="btn btn-ink">Enroll now</a>
-          </div>
+      <article class="card">
+        <span class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg></span>
+        <h2>Line 1</h2>
+        <div class="num">+234 806 604 3320</div>
+        <p>Call or message us on WhatsApp.</p>
+        <div class="acts">
+          <a class="btn btn-ink" href="tel:+2348066043320">Call now</a>
+          <a class="btn btn-line" href="https://wa.me/2348066043320" target="_blank" rel="noopener">WhatsApp</a>
         </div>
       </article>
 
-      <article class="course" data-title="graphic design ux ui visual layout">
-        <div class="course-img"><img src="https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&w=800&q=80" alt="A designer's monitor displaying a colourful gradient composition mid-edit."></div>
-        <div class="course-body">
-          <div class="tags"><span class="tag">Intermediate</span><span class="tag">6 weeks</span></div>
-          <h3>Graphic Design</h3>
-          <p class="desc">Layout, colour, and type fundamentals for real client work, with hands-on practice in industry-standard software. Ends with a small portfolio: logo, poster, social kit.</p>
-          <div class="course-foot">
-            <div class="price"><b>₦35,000</b><span>Billed once</span></div>
-            <a href="enroll.html?programme=skills&amp;plan=graphic-design" class="btn btn-ink">Enroll now</a>
-          </div>
+      <article class="card">
+        <span class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg></span>
+        <h2>Line 2</h2>
+        <div class="num">+234 702 584 2849</div>
+        <p>Call or message us on WhatsApp.</p>
+        <div class="acts">
+          <a class="btn btn-ink" href="tel:+2347025842849">Call now</a>
+          <a class="btn btn-line" href="https://wa.me/2347025842849" target="_blank" rel="noopener">WhatsApp</a>
         </div>
       </article>
 
-      <article class="course" data-title="data analysis science ai analytics dashboard">
-        <div class="course-img"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80" alt="Charts and performance graphs displayed across a laptop screen."></div>
-        <div class="course-body">
-          <div class="tags"><span class="tag">Advanced</span><span class="tag">8 weeks</span></div>
-          <h3>Data Analysis</h3>
-          <p class="desc">Clean and organise real, messy datasets, then build spreadsheets, queries, and dashboards. Final project: a dashboard built from your own dataset.</p>
-          <div class="course-foot">
-            <div class="price"><b>₦80,000</b><span>Billed every 2 months</span></div>
-            <a href="enroll.html?programme=skills&amp;plan=data-analysis" class="btn btn-ink">Enroll now</a>
-          </div>
+      <article class="card wide">
+        <div class="txt">
+          <h2>Email</h2>
+          <a class="email" href="mailto:himaayahschools@gmail.com">himaayahschools@gmail.com</a>
+          <p>Best for plan changes: include the student's name and current plan.</p>
         </div>
+        <a class="btn btn-ink" href="mailto:himaayahschools@gmail.com">Send an email</a>
       </article>
 
     </div>
-    <p class="no-results" id="noResults">No courses match that search. Try a different topic or skill.</p>
+  </div>
+</section>
+
+<section class="find">
+  <div class="wrap find-grid">
+    <div class="panel dark">
+      <h2>Based in Ilorin, Nigeria.</h2>
+      <p>Classes run live, so students can join from wherever they are. Follow us for exam updates and student results.</p>
+      <div class="socials">
+        <a class="btn btn-sky" href="https://instagram.com/himaayahschools" target="_blank" rel="noopener">Instagram</a>
+        <a class="btn btn-sky" href="https://x.com/himaayahschools" target="_blank" rel="noopener">X</a>
+      </div>
+    </div>
+    <div class="panel light">
+      <h2>Not sure where to start?</h2>
+      <p>Sit a free CBT mock test to see where you stand, or read the common questions first.</p>
+      <div class="socials">
+        <a class="btn btn-ink" href="https://docs.google.com/forms/d/e/1FAIpQLScfToSyajwBUybYdXDSXtFT3vF9bWzG7ICw0DL7hXPBR7_UsA/viewform?usp=header" target="_blank" rel="noopener">Book a free mock test</a>
+        <a class="btn btn-line" href="faq.html">Read the FAQ</a>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -264,7 +256,6 @@
         </div>
         <div class="f-col"><h4>Site</h4>
           <a href="index.html">Home</a>
-          <a href="exam-calendars.html">Exam Calendars</a>
           <a href="faq.html">FAQ</a>
           <a href="contact.html">Contact</a>
           <a href="policies.html">Policies</a>
@@ -285,45 +276,10 @@
 <script>
   const t = document.getElementById('navToggle'), l = document.getElementById('navLinks');
   t.addEventListener('click', () => { const o = l.classList.toggle('open'); t.setAttribute('aria-expanded', o); });
-
-  const input = document.getElementById('courseSearch');
-  const cards = Array.from(document.querySelectorAll('.course'));
-  const count = document.getElementById('resultCount');
-  const empty = document.getElementById('noResults');
-  input.addEventListener('input', () => {
-    const q = input.value.trim().toLowerCase();
-    let n = 0;
-    cards.forEach((c) => {
-      const hit = !q || c.dataset.title.includes(q) || c.querySelector('h3').textContent.toLowerCase().includes(q);
-      c.classList.toggle('hidden', !hit);
-      if (hit) n++;
-    });
-    count.textContent = n + (n === 1 ? ' course' : ' courses');
-    empty.classList.toggle('show', n === 0);
-  });
   (function () {
     const dd = document.querySelector('.dd'); if (!dd) return;
     const b = dd.querySelector('.dd-btn');
     b.addEventListener('click', () => { const o = dd.classList.toggle('open'); b.setAttribute('aria-expanded', o); });
-  })();
-</script>
-
-<div class="wa-widget" id="waWidget">
-  <div class="wa-menu" id="waMenu">
-    <a href="https://wa.me/2348066043320?text=Assalaamu%20alaykum.%20I%27d%20like%20to%20ask%20about%20Himaayah%20Schools." target="_blank" rel="noopener">Chat on WhatsApp <small>+234 806 604 3320</small></a>
-    <a href="https://wa.me/2347025842849?text=Assalaamu%20alaykum.%20I%27d%20like%20to%20ask%20about%20Himaayah%20Schools." target="_blank" rel="noopener">Chat on WhatsApp <small>+234 702 584 2849</small></a>
-  </div>
-  <button type="button" class="wa-fab" id="waBtn" aria-expanded="false" aria-controls="waMenu" aria-label="Chat with us on WhatsApp">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.7-5.2A8.5 8.5 0 1 1 21 11.5z"/></svg>
-    <span>Chat with us</span>
-  </button>
-</div>
-<script>
-  (function () {
-    const w = document.getElementById('waWidget'), b = document.getElementById('waBtn');
-    b.addEventListener('click', () => { const o = w.classList.toggle('open'); b.setAttribute('aria-expanded', o); });
-    document.addEventListener('click', (e) => { if (!w.contains(e.target)) { w.classList.remove('open'); b.setAttribute('aria-expanded', 'false'); } });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { w.classList.remove('open'); b.setAttribute('aria-expanded', 'false'); b.focus(); } });
   })();
 </script>
 </body>
