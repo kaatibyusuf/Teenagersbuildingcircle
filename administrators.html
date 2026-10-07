@@ -4,37 +4,39 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Our Administrators — Himaayah Schools</title>
-<meta name="description" content="Meet the administrators who lead and run Himaayah Schools in Ilorin.">
+<meta name="description" content="Meet the founder and the administrators who lead and run Himaayah Schools in Ilorin.">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20377.21%20459.6%22%3E%3Cpath%20fill=%22%23094570%22%20d=%22M0.14%20280.14c4.28%2C65.12%2098.42%2C133.97%20163.39%2C172.42%2015.86%2C9.39%2034.24%2C9.39%2050.11%2C-0.01%2052.97%2C-31.37%20159.02%2C-102.63%20163.43%2C-172.41l-376.92%200zm302.67%20-162.41l74.4%20105.8%200%20-126.48c0%2C-20.52%20-11.85%2C-38.03%20-30.9%2C-45.66l-125.46%20-50.22%2081.96%20116.56zm-228.42%200l82.79%20-117.73%20-126.49%2051.28c-18.95%2C7.68%20-30.7%2C25.13%20-30.7%2C45.57l0%20126.67%2074.4%20-105.8zm114.21%20-8.75c35.22%2C0%2063.77%2C28.55%2063.77%2C63.77%200%2C35.22%20-28.55%2C63.77%20-63.77%2C63.77%20-35.22%2C0%20-63.77%2C-28.55%20-63.77%2C-63.77%200%2C-35.22%2028.55%2C-63.77%2063.77%2C-63.77z%22/%3E%3C/svg%3E">
 <link rel="canonical" href="https://www.himaayahschools.com/administrators.html">
-<meta property="og:url" content="https://www.himaayahschools.com/administrators.html">
+<meta name="robots" content="noindex"><!-- Concept preview. Remove this line if you choose this design and rename the file to administrators.html -->
 <meta name="theme-color" content="#094570">
 <meta property="og:site_name" content="Himaayah Schools">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Our Administrators — Himaayah Schools">
-<meta property="og:description" content="Meet the administrators who lead and run Himaayah Schools in Ilorin.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('js');</script>
 <style>
   :root {
     --deep: #062F4D; --ink: #094570; --sky: #85CCFF; --sky-d: #3E97D9;
     --wash: #F1F7FC; --white: #fff; --text: #0E2A3D; --muted: #55697B;
     --line: rgba(9,69,112,.12); --r-lg: 32px;
     --display: 'Bricolage Grotesque', 'Inter', sans-serif;
+    --ease: cubic-bezier(.2,.7,.2,1);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; scroll-padding-top: 110px; }
-  body { font-family: 'Inter', -apple-system, sans-serif; color: var(--text); background: var(--white); -webkit-font-smoothing: antialiased; line-height: 1.7; }
+  body { font-family: 'Inter', -apple-system, sans-serif; color: var(--text); background: var(--white); -webkit-font-smoothing: antialiased; line-height: 1.7; overflow-x: hidden; }
   a { color: inherit; text-decoration: none; }
   button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
   .wrap { max-width: 1200px; margin: 0 auto; padding: 0 28px; }
-  a:focus-visible, button:focus-visible { outline: 2px solid var(--sky-d); outline-offset: 3px; }
-  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition-duration: .001ms !important; scroll-behavior: auto !important; } }
+  a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--sky-d); outline-offset: 3px; }
 
   .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 15px 28px; font-size: 15px; font-weight: 600; border-radius: 999px; transition: background .2s, color .2s; }
   .btn-ink { background: var(--ink); color: #fff; } .btn-ink:hover { background: var(--deep); }
-  .btn-line { border: 1px solid var(--ink); color: var(--ink); } .btn-line:hover { background: var(--ink); color: #fff; }
+  .btn-sky { background: var(--sky); color: var(--deep); } .btn-sky:hover { background: #fff; }
+  .btn-deep { background: var(--deep); color: #fff; } .btn-deep:hover { background: var(--ink); }
+  .btn-ghost { border: 1px solid rgba(255,255,255,.5); color: #fff; } .btn-ghost:hover { background: rgba(255,255,255,.14); }
 
   /* Nav */
   .nav { position: fixed; top: 16px; left: 0; right: 0; z-index: 100; padding: 0 20px; }
@@ -58,64 +60,83 @@
   .home-fab { position: fixed; left: 20px; bottom: 20px; z-index: 90; display: inline-flex; align-items: center; gap: 8px; padding: 13px 20px 13px 16px; border-radius: 999px; background: #062F4D; color: #fff; font-size: 14px; font-weight: 600; box-shadow: 0 12px 30px -10px rgba(6,47,77,.6); transition: background .2s, transform .2s; }
   .home-fab:hover { background: #094570; transform: translateY(-2px); }
 
-  /* Hero */
+  /* Hero: bright sky panel, deep type */
   .hero { padding: 100px 16px 0; }
-  .hero-frame { max-width: 1400px; margin: 0 auto; border-radius: 40px; background: var(--ink); color: #fff; padding: 88px 64px 80px; }
-  .hero-copy { max-width: 760px; animation: rise .8s cubic-bezier(.2,.7,.2,1) both; }
-  .kicker { display: inline-block; font-size: 14px; font-weight: 600; color: var(--sky); margin-bottom: 18px; }
-  .hero h1 { font-family: var(--display); font-weight: 700; font-size: clamp(38px, 5.6vw, 64px); line-height: 1.05; letter-spacing: -.025em; margin-bottom: 18px; }
-  .hero p { font-size: 17px; color: rgba(255,255,255,.82); max-width: 56ch; }
+  .hero-frame { position: relative; max-width: 1400px; margin: 0 auto; border-radius: 40px; overflow: hidden; background: var(--sky); color: var(--deep); padding: 96px 64px 88px; }
+  .hero-crest { position: absolute; right: 40px; bottom: -70px; width: 360px; height: auto; fill: var(--deep); opacity: .09; }
+  .hero-copy { position: relative; max-width: 860px; animation: rise .8s var(--ease) both; }
+  .kicker { display: inline-block; font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 20px; }
+  .hero h1 { font-family: var(--display); font-weight: 700; font-size: clamp(44px, 7.4vw, 96px); line-height: .98; letter-spacing: -.035em; margin-bottom: 24px; }
+  .hero p { font-size: 18px; color: var(--ink); max-width: 46ch; margin-bottom: 30px; }
+  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
   @keyframes rise { from { opacity: 0; transform: translateY(22px); } }
-  @media (max-width: 700px) { .hero-frame { padding: 56px 24px 48px; border-radius: 28px; } }
+  @media (max-width: 900px) { .hero-crest { width: 240px; right: -30px; } }
+  @media (max-width: 700px) { .hero-frame { padding: 60px 24px 56px; border-radius: 28px; } }
 
-  /* Founder */
-  .founder { padding: 96px 0 0; }
-  .f-grid { display: grid; grid-template-columns: 360px 1fr; gap: 64px; align-items: start; }
-  .f-id { position: sticky; top: 100px; }
-  .f-id .ico { width: 72px; height: 72px; color: var(--ink); margin-bottom: 22px; }
-  .f-id .k { font-size: 14px; font-weight: 600; color: var(--sky-d); }
-  .f-id h2 { font-family: var(--display); font-weight: 700; font-size: clamp(34px, 4vw, 48px); line-height: 1.05; letter-spacing: -.02em; color: var(--deep); margin: 6px 0 10px; }
-  .f-id p { color: var(--muted); }
-  .f-bio p { color: var(--muted); font-size: 17px; max-width: 60ch; margin-bottom: 18px; }
-  .f-bio p:first-child { font-size: 21px; line-height: 1.5; color: var(--text); }
-  .nums { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 40px; }
-  .num { background: var(--wash); border-radius: 24px; padding: 26px 28px; }
-  .num b { display: block; font-family: var(--display); font-size: clamp(34px, 4vw, 46px); line-height: 1.05; letter-spacing: -.02em; color: var(--ink); }
-  .num span { display: block; margin-top: 6px; font-size: 14px; color: var(--muted); }
-  @media (max-width: 900px) { .f-grid { grid-template-columns: 1fr; gap: 32px; } .f-id { position: static; } .f-id .ico { width: 56px; height: 56px; } .nums { grid-template-columns: 1fr; } }
+  /* Founder: editorial */
+  .founder { padding: 110px 0 0; }
+  .f-label { font-size: 14px; font-weight: 700; color: var(--sky-d); margin-bottom: 10px; display: block; }
+  .f-name { font-family: var(--display); font-weight: 700; font-size: clamp(48px, 8vw, 104px); line-height: .95; letter-spacing: -.04em; color: var(--deep); margin-bottom: 18px; }
+  .f-role { font-size: 19px; color: var(--muted); margin-bottom: 56px; }
+  .f-grid { display: grid; grid-template-columns: 280px 1fr; gap: 72px; align-items: start; }
+  .f-facts { list-style: none; display: grid; gap: 14px; position: sticky; top: 100px; }
+  .f-facts li { display: flex; gap: 14px; align-items: flex-start; font-size: 15px; color: var(--text); }
+  .f-facts svg { flex-shrink: 0; width: 38px; height: 38px; padding: 9px; border-radius: 12px; background: var(--ink); color: var(--sky); }
+  .f-facts b { display: block; font-size: 13px; font-weight: 600; color: var(--sky-d); line-height: 1.3; }
+  .f-bio { column-count: 2; column-gap: 52px; }
+  .f-bio p { color: var(--muted); font-size: 17px; margin-bottom: 18px; break-inside: avoid-column; }
+  .f-bio p:first-child::first-letter { font-family: var(--display); font-weight: 700; font-size: 4.4em; float: left; line-height: .78; padding: 8px 12px 0 0; color: var(--ink); }
+  .nums { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 72px; }
+  .num b { display: block; font-family: var(--display); font-weight: 700; font-size: clamp(48px, 7vw, 88px); line-height: 1; letter-spacing: -.04em; color: var(--ink); }
+  .num span { display: block; margin-top: 10px; font-size: 15px; color: var(--muted); }
+  .pull { margin-top: 80px; background: var(--wash); border-radius: 40px; padding: 72px 64px; display: grid; grid-template-columns: 90px 1fr; gap: 24px; align-items: start; }
+  .pull .mark { font-family: var(--display); font-weight: 700; font-size: 150px; line-height: .75; color: var(--sky-d); }
+  .pull p { font-family: var(--display); font-weight: 500; font-size: clamp(24px, 3.4vw, 42px); line-height: 1.2; letter-spacing: -.02em; color: var(--deep); max-width: 24em; margin-bottom: 16px; }
+  .pull cite { font-style: normal; font-size: 15px; font-weight: 600; color: var(--ink); }
+  @media (max-width: 900px) {
+    .f-grid { grid-template-columns: 1fr; gap: 36px; } .f-facts { position: static; }
+    .f-bio { column-count: 1; } .nums { grid-template-columns: 1fr; gap: 28px; margin-top: 52px; }
+    .pull { grid-template-columns: 1fr; padding: 44px 28px; border-radius: 28px; gap: 4px; margin-top: 56px; } .pull .mark { font-size: 100px; height: 50px; }
+  }
 
-  /* Quote */
-  .quote { margin: 96px 16px 0; max-width: 1400px; margin-inline: auto; border-radius: 40px; background: var(--deep); color: #fff; padding: 84px 28px; text-align: center; }
-  .quote p { font-family: var(--display); font-weight: 500; font-size: clamp(24px, 3.4vw, 40px); line-height: 1.25; letter-spacing: -.015em; max-width: 26em; margin: 0 auto 18px; }
-  .quote span { color: var(--sky); font-weight: 600; font-size: 15px; }
-  @media (max-width: 700px) { .quote { border-radius: 28px; padding: 56px 24px; } }
-
-  /* Administrators */
-  .team { padding: 96px 0 0; }
+  /* Administrators: directory */
+  .team { padding: 110px 0 0; }
   .team[hidden] { display: none; }
   .team-head { margin-bottom: 36px; }
-  .team-head h2 { font-family: var(--display); font-weight: 700; font-size: clamp(30px, 4vw, 46px); line-height: 1.1; letter-spacing: -.02em; color: var(--deep); margin-bottom: 10px; }
-  .team-head p { color: var(--muted); max-width: 52ch; }
-  .tgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
-  .tcard { background: var(--wash); border-radius: var(--r-lg); padding: 36px; display: flex; flex-direction: column; gap: 8px; transition: transform .35s cubic-bezier(.2,.7,.2,1), background .3s, box-shadow .35s; }
-  .tcard:hover { transform: translateY(-6px); background: #fff; box-shadow: 0 0 0 1.5px var(--ink), 0 30px 50px -34px rgba(6,47,77,.5); }
-  .tcard .ico { width: 56px; height: 56px; color: var(--ink); margin-bottom: 14px; }
-  .tcard .photo { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 24px; margin-bottom: 14px; }
-  .tcard h3 { font-family: var(--display); font-size: 26px; line-height: 1.15; letter-spacing: -.01em; color: var(--deep); }
-  .trole { font-size: 14.5px; font-weight: 600; color: var(--sky-d); }
-  .tcard p { color: var(--muted); font-size: 15.5px; margin-top: 6px; }
-  .tcard p + p { margin-top: 8px; }
+  .team-head h2 { font-family: var(--display); font-weight: 700; font-size: clamp(36px, 5.4vw, 68px); line-height: 1; letter-spacing: -.035em; color: var(--deep); margin-bottom: 12px; }
+  .team-head p { color: var(--muted); font-size: 17px; max-width: 44ch; }
+  .dir { display: grid; gap: 12px; }
+  .row { background: var(--wash); border-radius: 28px; transition: background .25s, box-shadow .3s; }
+  .row:hover, .row[open] { background: #fff; box-shadow: 0 0 0 1.5px var(--ink); }
+  .row summary { list-style: none; display: grid; grid-template-columns: 1fr auto 44px; gap: 24px; align-items: center; padding: 28px 32px; cursor: pointer; }
+  .row summary::-webkit-details-marker { display: none; }
+  .r-name { font-family: var(--display); font-weight: 700; font-size: clamp(26px, 3.6vw, 44px); line-height: 1.05; letter-spacing: -.025em; color: var(--deep); }
+  .r-role { font-size: 15px; font-weight: 600; color: var(--sky-d); text-align: right; }
+  .r-plus { position: relative; width: 44px; height: 44px; border-radius: 50%; background: var(--ink); }
+  .r-plus::before, .r-plus::after { content: ''; position: absolute; left: 13px; right: 13px; top: 50%; height: 2px; margin-top: -1px; background: var(--sky); border-radius: 2px; transition: transform .3s var(--ease); }
+  .r-plus::after { transform: rotate(90deg); }
+  .row[open] .r-plus::after { transform: rotate(0); }
+  .r-body { display: grid; grid-template-columns: 96px 1fr; gap: 28px; padding: 0 32px 34px; }
+  .r-ico { width: 80px; height: 80px; border-radius: 24px; background: var(--ink); color: var(--sky); display: grid; place-items: center; }
+  .r-ico svg { width: 38px; height: 38px; }
+  .r-photo { width: 96px; height: 96px; border-radius: 24px; object-fit: cover; }
+  .r-body p { color: var(--muted); font-size: 17px; max-width: 58ch; }
+  .r-body p + p { margin-top: 10px; }
+  @media (max-width: 700px) {
+    .row summary { grid-template-columns: 1fr 44px; padding: 22px 22px; gap: 8px 16px; } .r-role { grid-row: 2; grid-column: 1; text-align: left; } .r-plus { grid-row: 1 / span 2; grid-column: 2; }
+    .r-body { grid-template-columns: 1fr; padding: 0 22px 26px; gap: 16px; }
+  }
 
-  /* CTA */
-  .cta { padding: 96px 16px 24px; }
-  .cta-box { max-width: 1400px; margin: 0 auto; border-radius: 40px; padding: 80px 28px; text-align: center; background: var(--wash); }
-  .cta-box h2 { font-family: var(--display); font-weight: 700; font-size: clamp(28px, 4vw, 46px); line-height: 1.1; letter-spacing: -.02em; color: var(--deep); max-width: 16em; margin: 0 auto 14px; }
-  .cta-box p { color: var(--muted); max-width: 46ch; margin: 0 auto 28px; }
+  /* Contact */
+  .cta { padding: 110px 16px 24px; }
+  .cta-box { max-width: 1400px; margin: 0 auto; border-radius: 40px; padding: 88px 28px; text-align: center; background: var(--deep); color: #fff; }
+  .cta-box h2 { font-family: var(--display); font-weight: 700; font-size: clamp(32px, 4.8vw, 60px); line-height: 1.04; letter-spacing: -.03em; max-width: 13em; margin: 0 auto 16px; }
+  .cta-box p { color: rgba(255,255,255,.78); max-width: 46ch; margin: 0 auto 30px; }
   .acts { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
   @media (max-width: 700px) { .cta-box { border-radius: 28px; padding: 56px 24px; } }
 
   /* Footer */
-  footer.site { background: var(--deep); color: rgba(255,255,255,.65); border-radius: 40px 40px 0 0; margin: 0 16px; padding: 70px 0 28px; font-size: 14px; }
+  footer.site { background: var(--deep); color: rgba(255,255,255,.65); border-radius: 40px 40px 0 0; margin: 40px 16px 0; padding: 70px 0 28px; font-size: 14px; }
   .f-top { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 44px; margin-bottom: 48px; }
   .f-brand { max-width: 320px; } .f-brand .brand { color: #fff; margin-bottom: 14px; } .f-brand p { margin-bottom: 20px; }
   .social { display: flex; gap: 10px; }
@@ -126,18 +147,25 @@
   .f-col a, .f-col span { display: block; margin-bottom: 9px; transition: color .2s; } .f-col a:hover { color: var(--sky); }
   .f-bottom { padding-top: 22px; border-top: 1px solid rgba(255,255,255,.12); }
 
+  /* Scroll reveal */
+  .js .reveal { opacity: 0; transform: translateY(32px); transition: opacity .8s var(--ease), transform .8s var(--ease); transition-delay: calc(var(--i, 0) * 110ms); }
+  .js .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
+    .js .reveal { opacity: 1; transform: none; }
+  }
+
   /* Programmes dropdown */
   .dd { position: relative; }
   .dd-btn { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 500; color: var(--muted); transition: color .2s; }
   .dd-btn svg { transition: transform .25s; }
-  .dd:hover .dd-btn, .dd:focus-within .dd-btn, .dd.cur .dd-btn { color: var(--ink); }
-  .dd.cur .dd-btn, .nav-links a[aria-current="page"] { font-weight: 600; }
+  .dd:hover .dd-btn, .dd:focus-within .dd-btn { color: var(--ink); }
   .dd:hover .dd-btn svg, .dd.open .dd-btn svg { transform: rotate(180deg); }
   .dd-menu { position: absolute; top: 100%; left: -18px; min-width: 270px; padding: 24px 10px 10px; opacity: 0; visibility: hidden; transform: translateY(6px); transition: opacity .2s, transform .2s, visibility .2s; }
   .dd-menu::before { content: ''; position: absolute; inset: 14px 0 0 0; background: #fff; border-radius: 22px; box-shadow: 0 24px 50px -20px rgba(6,47,77,.45); z-index: -1; }
   .dd:hover .dd-menu, .dd:focus-within .dd-menu, .dd.open .dd-menu { opacity: 1; visibility: visible; transform: none; }
   .dd-menu a { display: block; padding: 12px 16px; border-radius: 14px; font-size: 14.5px; font-weight: 500; color: var(--text); }
-  .dd-menu a:hover, .dd-menu a[aria-current="page"] { background: var(--wash); color: var(--ink); }
+  .dd-menu a:hover { background: var(--wash); color: var(--ink); }
   @media (max-width: 900px) {
     .dd-btn { padding: 15px 0; width: 100%; border-bottom: 1px solid var(--line); justify-content: space-between; }
     .dd-menu { position: static; opacity: 1; visibility: visible; transform: none; padding: 0 0 0 14px; display: none; }
@@ -150,7 +178,6 @@
   .wa-widget { position: fixed; right: 20px; bottom: 20px; z-index: 90; display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
   .wa-fab { display: inline-flex; align-items: center; gap: 10px; padding: 14px 20px 14px 16px; border-radius: 999px; background: #128C4B; color: #fff; font-size: 14px; font-weight: 600; box-shadow: 0 12px 30px -10px rgba(18,140,75,.7); transition: background .2s, transform .2s; }
   .wa-fab:hover { background: #0E6F3B; transform: translateY(-2px); }
-  .wa-fab:focus-visible, .wa-menu a:focus-visible { outline: 2px solid #85CCFF; outline-offset: 3px; }
   .wa-menu { display: none; flex-direction: column; gap: 6px; background: #fff; border-radius: 22px; padding: 10px; box-shadow: 0 24px 50px -16px rgba(6,47,77,.5); min-width: 250px; animation: waIn .25s ease both; }
   .wa-widget.open .wa-menu { display: flex; }
   .wa-menu a { display: flex; flex-direction: column; padding: 12px 16px; border-radius: 14px; font-size: 14px; font-weight: 600; color: #062F4D; }
@@ -161,6 +188,7 @@
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="lg" viewBox="0 0 377.21 459.6"><path d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></symbol></svg>
 
 <a class="home-fab" href="index.html" aria-label="Back to home">
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
@@ -169,10 +197,7 @@
 
 <nav class="nav">
   <div class="nav-pill">
-    <a class="brand" href="index.html">
-      <svg width="24" height="30" viewBox="0 0 377.21 459.6" aria-hidden="true"><path fill="#094570" d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>
-      Himaayah Schools
-    </a>
+    <a class="brand" href="index.html"><svg width="24" height="30" fill="#094570" aria-hidden="true"><use href="#lg"/></svg>Himaayah Schools</a>
     <div class="nav-links" id="navLinks">
       <div class="dd">
         <button type="button" class="dd-btn" aria-haspopup="true" aria-expanded="false">Programmes
@@ -196,57 +221,72 @@
 
 <header class="hero">
   <div class="hero-frame">
+    <svg class="hero-crest" viewBox="0 0 377.21 459.6" aria-hidden="true"><use href="#lg"/></svg>
     <div class="hero-copy">
       <span class="kicker">Founder and administrators</span>
-      <h1>The people behind Himaayah Schools.</h1>
+      <h1>The people behind the school.</h1>
       <p>Meet the founder and the administrators who plan every class, look after every student, and answer for the standard.</p>
+      <div class="hero-actions">
+        <a href="#founder" class="btn btn-deep">The founder</a>
+        <a href="#team" class="btn btn-ghost" style="border-color:var(--deep);color:var(--deep)">The administrators</a>
+      </div>
     </div>
   </div>
 </header>
 
-<section class="founder">
+<section class="founder" id="founder">
   <div class="wrap">
+    <span class="f-label reveal">Founder</span>
+    <h2 class="f-name reveal" style="--i:1">Kaatib Yusuf</h2>
+    <p class="f-role reveal" style="--i:2">Writer, educator, entrepreneur, and systems builder</p>
+
     <div class="f-grid">
-      <div class="f-id">
-        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
-        <span class="k">Founder</span>
-        <h2>Kaatib Yusuf</h2>
-        <p>Founder, Himaayah Schools</p>
-      </div>
-      <div class="f-bio">
+      <ul class="f-facts reveal">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg><div><b>Founder</b>Himaayah Schools</div></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.3h6c0-1 .4-1.8 1-2.3A7 7 0 0 0 12 2z"/></svg><div><b>Founder</b>One Growth</div></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 4h6a4 4 0 0 1 4 4v12a3 3 0 0 0-3-3H2z"/><path d="M22 4h-6a4 4 0 0 0-4 4v12a3 3 0 0 1 3-3h7z"/></svg><div><b>Author</b>Facing The Dreams You Let Die</div></li>
+      </ul>
+      <div class="f-bio reveal" style="--i:1">
         <p>Kaatib Yusuf is a Nigerian writer, educator, entrepreneur, and systems builder whose work sits at the intersection of writing, education, personal development, faith, and human formation.</p>
         <p>He is the founder of Himaayah Schools, an emerging 21st-century institution that brings together Islamic studies, conventional academics, and practical technology education. He also founded One Growth, a personal development organisation that has reached thousands of young people through mentorship, writing, and academic initiatives.</p>
         <p>His book Facing The Dreams You Let Die has reached more than 16,000 readers across four continents. Much of his work asks how knowledge can be matched with the discipline, courage, and moral framework needed to use it well, and he is committed to building institutions that outlive their founders.</p>
-        <div class="nums">
-          <div class="num"><b>16,000+</b><span>readers of his book</span></div>
-          <div class="num"><b>4</b><span>continents reached</span></div>
-          <div class="num"><b>2</b><span>institutions founded</span></div>
-        </div>
+      </div>
+    </div>
+
+    <div class="nums">
+      <div class="num reveal"><b>16,000+</b><span>readers of his book</span></div>
+      <div class="num reveal" style="--i:1"><b>4</b><span>continents reached</span></div>
+      <div class="num reveal" style="--i:2"><b>2</b><span>institutions founded</span></div>
+    </div>
+
+    <div class="pull reveal">
+      <span class="mark" aria-hidden="true">&ldquo;</span>
+      <div>
+        <p>How do we become people capable of carrying the weight of the knowledge, opportunities, relationships, and responsibilities Allah places in our hands?</p>
+        <cite>The question behind Kaatib Yusuf's work</cite>
       </div>
     </div>
   </div>
-</section>
-
-<section class="quote">
-  <p>How do we become people capable of carrying the weight of the knowledge, opportunities, relationships, and responsibilities Allah places in our hands?</p>
-  <span>The question behind Kaatib Yusuf's work</span>
 </section>
 
 <section class="team" id="team" hidden>
   <div class="wrap">
-    <div class="team-head">
+    <div class="team-head reveal">
       <h2>The administrators.</h2>
-      <p>The team that runs the school day to day.</p>
+      <p>The team that runs the school day to day. Select a name to read more.</p>
     </div>
-    <div class="tgrid" id="tgrid"></div>
+    <div class="dir" id="dir"></div>
   </div>
 </section>
 
 <section class="cta">
-  <div class="cta-box">
+  <div class="cta-box reveal">
     <h2>Have a question for the team?</h2>
     <p>Ask us anything about how the school is run, who will be teaching, or which programme fits.</p>
-    <div class="acts"><a class="btn btn-ink" href="contact.html">Contact us</a><a class="btn btn-line" href="about.html">About the school</a></div>
+    <div class="acts">
+      <a class="btn btn-sky" href="contact.html">Contact us</a>
+      <a class="btn btn-ghost" href="https://wa.me/2348066043320?text=Assalaamu%20alaykum.%20I%27d%20like%20to%20ask%20about%20Himaayah%20Schools." target="_blank" rel="noopener">Chat on WhatsApp</a>
+    </div>
   </div>
 </section>
 
@@ -254,10 +294,7 @@
   <div class="wrap">
     <div class="f-top">
       <div class="f-brand">
-        <a class="brand" href="index.html">
-          <svg width="24" height="30" viewBox="0 0 377.21 459.6" aria-hidden="true"><path fill="#85CCFF" d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>
-          Himaayah Schools
-        </a>
+        <a class="brand" href="index.html"><svg width="24" height="30" fill="#85CCFF" aria-hidden="true"><use href="#lg"/></svg>Himaayah Schools</a>
         <p>Raising the next generation with deen, knowledge, and purpose.</p>
         <div class="social">
           <a href="https://instagram.com/himaayahschools" target="_blank" rel="noopener" aria-label="Himaayah Schools on Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg></a>
@@ -303,19 +340,26 @@
      photo  : optional, e.g. 'images/name.jpg' (an outline icon shows if left out)
    Example:
      { name: 'Name Here', role: 'Head of Madrasah', bio: 'Short bio.', photo: 'images/name.jpg' },
-   The founder is shown separately above, so add only the other administrators here. */
+   The founder is shown separately above, so add only the other administrators here.
+   The first person in the list opens by default. */
   const ADMINS = [
     { name: 'Abdullah Adedokun', role: 'Director of Student Affairs', bio: 'Abdullah leads student affairs at Himaayah Schools. He is also a software engineering enthusiast.' },
   ];
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-  const ICON = '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>';
+  const ICON = '<div class="r-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg></div>';
   if (ADMINS.length) {
     document.getElementById('team').hidden = false;
-    document.getElementById('tgrid').innerHTML = ADMINS.map((a) => `<article class="tcard">
-      ${a.photo ? `<img class="photo" src="${esc(a.photo)}" alt="${esc(a.name)}" loading="lazy">` : ICON}
-      <h3>${esc(a.name)}</h3><div class="trole">${esc(a.role)}</div>
-      ${String(a.bio || '').split(/\n\n+/).map((p) => `<p>${esc(p)}</p>`).join('')}</article>`).join('');
+    document.getElementById('dir').innerHTML = ADMINS.map((a, i) => `<details class="row reveal" style="--i:${i}"${i === 0 ? ' open' : ''}>
+      <summary><span class="r-name">${esc(a.name)}</span><span class="r-role">${esc(a.role)}</span><span class="r-plus" aria-hidden="true"></span></summary>
+      <div class="r-body">${a.photo ? `<img class="r-photo" src="${esc(a.photo)}" alt="${esc(a.name)}" loading="lazy">` : ICON}
+      <div>${String(a.bio || '').split(/\n\n+/).map((p) => `<p>${esc(p)}</p>`).join('')}</div></div></details>`).join('');
   }
+
+  const items = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12, rootMargin: '0px 0px -40px 0px' });
+    items.forEach((el) => io.observe(el));
+  } else { items.forEach((el) => el.classList.add('in')); }
 </script>
 
 <div class="wa-widget" id="waWidget">
