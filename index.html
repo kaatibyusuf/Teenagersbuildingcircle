@@ -61,12 +61,13 @@
   /* ===== Hero ===== */
   .hero { padding: 100px 16px 0; }
   .hero-frame { position: relative; max-width: 1400px; margin: 0 auto; min-height: 640px; border-radius: 40px; overflow: hidden; display: flex; align-items: flex-end; padding: 64px;
-    background: linear-gradient(180deg, rgba(6,47,77,.25) 0%, rgba(6,47,77,.92) 100%), url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=2000&q=80') center/cover; color: #fff; }
-  .hero-copy { max-width: 760px; }
+    background: url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=2000&q=80') center/cover; color: #fff; }
+  .hero-frame::before { content: ''; position: absolute; inset: 0; background: rgba(6,47,77,.72); }
+  .hero-copy { position: relative; z-index: 1; max-width: 760px; }
   .hero h1 { font-family: var(--display); font-weight: 700; font-size: clamp(38px, 6vw, 72px); line-height: 1.04; letter-spacing: -.025em; margin-bottom: 22px; }
   .hero p { font-size: 17px; color: rgba(255,255,255,.82); max-width: 52ch; margin-bottom: 34px; }
   .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
-  .hero-stats { position: absolute; right: 48px; bottom: 64px; display: flex; flex-direction: column; gap: 12px; }
+  .hero-stats { position: absolute; z-index: 1; right: 48px; bottom: 64px; display: flex; flex-direction: column; gap: 12px; }
   .chip { background: rgba(255,255,255,.12); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,.22); border-radius: 20px; padding: 14px 22px; min-width: 190px; }
   .chip b { display: block; font-family: var(--display); font-size: 28px; line-height: 1.1; color: var(--sky); }
   .chip span { font-size: 13px; color: rgba(255,255,255,.8); }
@@ -87,7 +88,7 @@
   .card { position: relative; border-radius: var(--r-lg); overflow: hidden; min-height: 320px; display: flex; align-items: flex-end; color: #fff; grid-column: span 2; isolation: isolate; }
   .card.wide { grid-column: span 3; min-height: 380px; }
   .card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; transition: transform .6s ease; }
-  .card::after { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(6,47,77,0) 30%, rgba(6,47,77,.92) 100%); }
+  .card::after { content: ''; position: absolute; inset: 0; z-index: -1; background: rgba(6,47,77,.6); }
   .card:hover img { transform: scale(1.05); }
   .card-body { padding: 28px; width: 100%; display: flex; align-items: end; justify-content: space-between; gap: 16px; }
   .card h3 { font-family: var(--display); font-size: 24px; line-height: 1.15; letter-spacing: -.01em; margin-bottom: 6px; }
@@ -222,7 +223,7 @@
       <h1>Raising scholars who lead with deen and discipline.</h1>
       <p>One academy, four programmes. From Qur'an memorisation to top UTME scores, with structured teaching, close mentorship, and a standard students can see in their results.</p>
       <div class="hero-actions">
-        <a href="academy.html#courses" class="btn btn-sky">View the programmes</a>
+        <a href="programmes.html" class="btn btn-sky">View the programmes</a>
         <a href="https://docs.google.com/forms/d/e/1FAIpQLScfToSyajwBUybYdXDSXtFT3vF9bWzG7ICw0DL7hXPBR7_UsA/viewform?usp=header" target="_blank" rel="noopener" class="btn btn-ghost">Book a free CBT mock test</a>
       </div>
     </div>

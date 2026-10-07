@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Programmes | Himaayah Schools</title>
+<meta name="description" content="Himaayah Schools programmes: Teenagers Building Circle, Madrasah, Academy exam prep, and Skills School. See what each offers and enroll.">
+<link rel="canonical" href="https://www.himaayahschools.com/programmes.html">
+<meta name="theme-color" content="#094570">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--deep:#062F4D;--ink:#094570;--sky:#85CCFF;--sky-d:#3E97D9;--wash:#F1F7FC;--text:#0E2A3D;--muted:#55697B;--line:rgba(9,69,112,.12);--d:'Bricolage Grotesque','Inter',sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;color:var(--text);background:#fff;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}img{display:block;max-width:100%}button{font:inherit;cursor:pointer;border:0;background:none}
+.wrap{max-width:1200px;margin:0 auto;padding:0 28px}
+a:focus-visible,button:focus-visible{outline:2px solid var(--sky-d);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:14px 26px;font-size:15px;font-weight:600;border-radius:999px;transition:background .2s,color .2s}
+.btn-sky{background:var(--sky);color:var(--deep)}.btn-sky:hover{background:#fff}
+.btn-ink{background:var(--ink);color:#fff}.btn-ink:hover{background:var(--deep)}
+.btn-line{border:1px solid var(--ink);color:var(--ink)}.btn-line:hover{background:var(--ink);color:#fff}
+/* nav */
+.nav{position:fixed;top:16px;left:0;right:0;z-index:100;padding:0 20px}
+.pill{max-width:1200px;margin:0 auto;height:64px;padding:0 12px 0 22px;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.94);backdrop-filter:blur(14px);border-radius:999px;box-shadow:0 8px 30px -12px rgba(6,47,77,.35)}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--d);font-weight:700;font-size:18px;color:var(--ink)}
+.links{display:flex;align-items:center;gap:30px}
+.links a:not(.btn),.dd-btn{font-size:14px;font-weight:500;color:var(--muted);transition:color .2s}
+.links a:not(.btn):hover,.dd:hover .dd-btn{color:var(--ink)}.dd.cur .dd-btn{color:var(--ink);font-weight:600}
+.links .btn{padding:11px 22px;font-size:14px}
+.tog{display:none;width:44px;height:44px;position:relative}.tog span{position:absolute;left:13px;right:13px;height:2px;background:var(--ink)}
+.tog span:nth-child(1){top:16px}.tog span:nth-child(2){top:21px}.tog span:nth-child(3){top:26px}
+.dd{position:relative}.dd-btn{display:inline-flex;align-items:center;gap:6px}
+.dd-menu{position:absolute;top:100%;left:-18px;min-width:270px;padding:24px 10px 10px;opacity:0;visibility:hidden;transform:translateY(6px);transition:.2s}
+.dd-menu::before{content:'';position:absolute;inset:14px 0 0;background:#fff;border-radius:22px;box-shadow:0 24px 50px -20px rgba(6,47,77,.45);z-index:-1}
+.dd:hover .dd-menu,.dd:focus-within .dd-menu,.dd.open .dd-menu{opacity:1;visibility:visible;transform:none}
+.dd-menu a{display:block;padding:12px 16px;border-radius:14px;font-size:14.5px;font-weight:500;color:var(--text)}
+.dd-menu a:hover,.dd-menu a[aria-current]{background:var(--wash);color:var(--ink)}
+@media(max-width:900px){.tog{display:block}
+.links{position:absolute;top:76px;left:20px;right:20px;flex-direction:column;align-items:stretch;gap:0;background:#fff;border-radius:24px;padding:8px 20px 20px;box-shadow:0 20px 40px -16px rgba(6,47,77,.4);display:none}
+.links.open{display:flex}.links a:not(.btn){padding:15px 0;border-bottom:1px solid var(--line)}.links .btn{margin-top:16px}
+.dd-btn{padding:15px 0;width:100%;border-bottom:1px solid var(--line);justify-content:space-between}
+.dd-menu{position:static;opacity:1;visibility:visible;transform:none;padding:0 0 0 14px;display:none}.dd-menu::before{display:none}.dd.open .dd-menu{display:block}.dd:hover .dd-menu{display:none}.dd.open:hover .dd-menu{display:block}}
+/* hero */
+.hero{padding:100px 16px 0}
+.hero-frame{max-width:1400px;margin:0 auto;border-radius:40px;background:var(--ink);color:#fff;padding:88px 64px 72px;position:relative;overflow:hidden}
+.hero-copy{position:relative;max-width:760px;animation:rise .8s both}
+@keyframes rise{from{opacity:0;transform:translateY(20px)}}
+.hero h1{font-family:var(--d);font-weight:700;font-size:clamp(36px,6vw,68px);line-height:1.05;letter-spacing:-.025em;margin-bottom:20px}
+.hero p{font-size:17px;color:rgba(255,255,255,.82);max-width:54ch}
+@media(max-width:700px){.hero-frame{padding:52px 24px 44px;border-radius:28px}}
+/* chooser */
+.pick{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:-36px;position:relative;z-index:2;padding:0 8px}
+@media(max-width:1000px){.pick{grid-template-columns:1fr 1fr;margin-top:24px}}@media(max-width:560px){.pick{grid-template-columns:1fr}}
+.pick a{background:#fff;border-radius:24px;padding:22px 24px;box-shadow:0 18px 40px -22px rgba(6,47,77,.45);border:1px solid var(--line);transition:transform .2s,border-color .2s}
+.pick a:hover{transform:translateY(-3px);border-color:var(--sky-d)}
+.pick span{display:block;font-size:13.5px;color:var(--muted)}.pick b{display:block;font-family:var(--d);font-size:19px;line-height:1.25;color:var(--deep)}
+/* programme rows */
+.prog{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;padding:96px 0 0;scroll-margin-top:60px}
+.prog.rev .pimg{order:2}
+@media(max-width:860px){.prog{grid-template-columns:1fr;gap:28px;padding-top:72px}.prog.rev .pimg{order:0}}
+.pimg img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:32px}
+.tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.tag{font-size:12.5px;font-weight:600;padding:6px 14px;border-radius:999px;background:var(--wash);color:var(--ink)}
+.prog h2{font-family:var(--d);font-weight:700;font-size:clamp(28px,3.8vw,42px);line-height:1.1;letter-spacing:-.02em;color:var(--deep);margin-bottom:14px}
+.prog .lead{color:var(--muted);max-width:52ch;margin-bottom:20px}
+.prog ul{list-style:none;display:grid;gap:10px;margin-bottom:24px}
+.prog li{display:flex;gap:12px;font-size:15.5px}
+.prog li::before{content:'';flex-shrink:0;width:18px;height:18px;margin-top:4px;border-radius:50%;background:var(--sky) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23062F4D' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12l4 4 8-8'/%3E%3C/svg%3E") center/12px no-repeat}
+.price{padding:16px 0;border-top:1px solid var(--line);margin-bottom:20px}
+.price b{font-family:var(--d);font-size:30px;color:var(--ink);line-height:1.1}.price span{display:block;font-size:14px;color:var(--muted)}
+.acts{display:flex;gap:12px;flex-wrap:wrap}
+/* cta */
+.cta{margin:110px 16px 0;max-width:1400px;margin-inline:auto;border-radius:40px;background:var(--deep);color:#fff;padding:76px 28px;text-align:center}
+.cta h2{font-family:var(--d);font-size:clamp(28px,4vw,46px);line-height:1.1;max-width:16em;margin:0 auto 14px}.cta p{color:rgba(255,255,255,.75);max-width:46ch;margin:0 auto 28px}
+.cta .acts{justify-content:center}.cta .btn-line{border-color:rgba(255,255,255,.5);color:#fff}.cta .btn-line:hover{background:rgba(255,255,255,.14)}
+/* footer + fabs */
+footer{margin:16px 16px 0;background:var(--deep);color:rgba(255,255,255,.65);border-radius:40px 40px 0 0;padding:64px 0 28px;font-size:14px;border-top:1px solid rgba(255,255,255,.08)}
+.ft{display:flex;justify-content:space-between;flex-wrap:wrap;gap:40px;margin-bottom:44px}.fb{max-width:320px}.fb .brand{color:#fff;margin-bottom:12px}
+.fc{display:flex;gap:56px;flex-wrap:wrap}.fc h4{font-family:var(--d);font-size:16px;color:#fff;margin-bottom:12px}.fc a,.fc span{display:block;margin-bottom:9px}.fc a:hover{color:var(--sky)}
+.fbot{padding-top:20px;border-top:1px solid rgba(255,255,255,.12)}
+.home{position:fixed;left:20px;bottom:20px;z-index:90;display:inline-flex;align-items:center;gap:8px;padding:13px 20px 13px 16px;border-radius:999px;background:var(--deep);color:#fff;font-size:14px;font-weight:600;box-shadow:0 12px 30px -10px rgba(6,47,77,.6)}.home:hover{background:var(--ink)}
+.wa{position:fixed;right:20px;bottom:20px;z-index:90;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.wab{display:inline-flex;align-items:center;gap:10px;padding:14px 20px 14px 16px;border-radius:999px;background:#128C4B;color:#fff;font-size:14px;font-weight:600;box-shadow:0 12px 30px -10px rgba(18,140,75,.7)}.wab:hover{background:#0E6F3B}
+.wam{display:none;flex-direction:column;gap:6px;background:#fff;border-radius:22px;padding:10px;box-shadow:0 24px 50px -16px rgba(6,47,77,.5);min-width:250px}.wa.open .wam{display:flex}
+.wam a{display:flex;flex-direction:column;padding:12px 16px;border-radius:14px;font-size:14px;font-weight:600;color:var(--deep)}.wam small{font-weight:500;color:var(--muted);font-size:13px}.wam a:hover{background:var(--wash)}
+@media(max-width:600px){.wab span{display:none}.wab{padding:15px}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="lg" viewBox="0 0 377.21 459.6"><path d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></symbol></svg>
+
+<nav class="nav"><div class="pill">
+<a class="brand" href="index.html"><svg width="24" height="30" fill="#094570" aria-hidden="true"><use href="#lg"/></svg>Himaayah Schools</a>
+<div class="links" id="links">
+<div class="dd cur"><button type="button" class="dd-btn" aria-haspopup="true" aria-expanded="false">Programmes <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+<div class="dd-menu"><a href="programmes.html" aria-current="page">All programmes</a><a href="teenagers-building-circle.html">Teenagers Building Circle</a><a href="madrasah.html">Madrasah</a><a href="academy.html">Academy</a><a href="skills-school.html">Skills School</a></div></div>
+<a href="about.html">About</a><a href="success-stories.html">Success Stories</a><a href="faq.html">FAQ</a><a href="contact.html">Contact</a>
+<a href="enroll.html" class="btn btn-ink">Enroll Now</a></div>
+<button class="tog" id="tog" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
+</div></nav>
+
+<a class="home" href="index.html" aria-label="Back to home"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Home</a>
+
+<header class="hero"><div class="hero-frame"><div class="hero-copy">
+<h1>Four programmes. One school that raises the whole student.</h1>
+<p>Deen, exams, skills, and character, each with its own classes, schedule, and price. Find the one that fits and enroll in minutes.</p>
+</div></div></header>
+
+<div class="wrap"><nav class="pick" aria-label="Find your programme">
+<a href="#circle"><span>For a teenager aged 13 to 19</span><b>Teenagers Building Circle</b></a>
+<a href="#madrasah"><span>To learn the Qur'an and Islamic studies</span><b>Madrasah</b></a>
+<a href="#academy"><span>To sit an exam</span><b>Academy</b></a>
+<a href="#skills"><span>To learn a practical skill</span><b>Skills School</b></a>
+</nav></div>
+
+<main class="wrap">
+
+<section class="prog" id="circle">
+<div class="pimg"><img src="https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=1000&q=80" alt="Notebooks and a calculator arranged on a study table." loading="lazy"></div>
+<div>
+<div class="tags"><span class="tag">Ages 13 to 19</span><span class="tag">Weekly live cohort</span></div>
+<h2>Teenagers Building Circle</h2>
+<p class="lead">A weekly circle that builds a teenager on four sides at once: deen, educational development, skills, and personal development.</p>
+<ul><li>A diagnostic assessment before the cohort begins</li><li>Live weekly sessions with real facilitators across all four pillars</li><li>A dedicated Slack workspace that keeps the conversation going</li><li>Progress check-ins built around each pillar</li></ul>
+<div class="price"><b>₦40,000</b><span>per month</span></div>
+<div class="acts"><a class="btn btn-ink" href="enroll.html?programme=circle">Enroll now</a><a class="btn btn-line" href="teenagers-building-circle.html">See the circle</a></div>
+</div></section>
+
+<section class="prog rev" id="madrasah">
+<div class="pimg"><img src="https://images.unsplash.com/photo-1616422840391-fa670d4b2ae7?auto=format&fit=crop&w=1000&q=80" alt="An open Qur'an resting on a wooden stand." loading="lazy"></div>
+<div>
+<div class="tags"><span class="tag">School age to adults</span><span class="tag">Group or personal</span></div>
+<h2>Madrasah</h2>
+<p class="lead">Qur'an memorisation and tajweed with Islamic studies alongside, taught live online by a teacher who knows the student's pace.</p>
+<ul><li>Four classes every week, with tests and exams</li><li>Levels from Rawdah, for those starting from the first letter, up to Iʿdādiyyah</li><li>Hifdh Only or Full Madrasah, in a small group or one-on-one</li><li>A one-year Hifdh track for students who want a clear finish line</li></ul>
+<div class="price"><b>From ₦12,000</b><span>per month. One-year Hifdh is ₦19,000 a month for 12 months.</span></div>
+<div class="acts"><a class="btn btn-ink" href="enroll.html?programme=madrasah">Enroll now</a><a class="btn btn-line" href="madrasah.html">See plans and levels</a></div>
+</div></section>
+
+<section class="prog" id="academy">
+<div class="pimg"><img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=1000&q=80" alt="A pair of glasses resting on an open textbook." loading="lazy"></div>
+<div>
+<div class="tags"><span class="tag">UTME · Post-UTME</span><span class="tag">WAEC · NECO · A-Levels</span></div>
+<h2>Academy</h2>
+<p class="lead">Exam preparation built around each exam's real format, so the first attempt can be the one that counts.</p>
+<ul><li>Four tracks: UTME (JAMB), O-Levels, A-Levels (IJMB, JUPEB, Cambridge), and Post-UTME</li><li>Four live classes a week, with timed practice</li><li>A CBT simulator for UTME</li><li>Institution-specific coaching for Post-UTME</li></ul>
+<div class="price"><b>₦10,000</b><span>per track, for 1 month of access</span></div>
+<div class="acts"><a class="btn btn-ink" href="enroll.html?programme=academy">Enroll now</a><a class="btn btn-line" href="academy.html">See the tracks</a></div>
+</div></section>
+
+<section class="prog rev" id="skills">
+<div class="pimg"><img src="https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&w=1000&q=80" alt="A designer's monitor displaying a colourful gradient composition mid-edit." loading="lazy"></div>
+<div>
+<div class="tags"><span class="tag">Beginner to advanced</span><span class="tag">4 to 8 weeks</span></div>
+<h2>Skills School</h2>
+<p class="lead">Practical courses that end with the student able to do the thing, not just describe it.</p>
+<ul><li>Public Speaking: closes with a graded talk in front of a live audience</li><li>Graphic Design: ends with a small portfolio of a logo, poster, and social kit</li><li>Data Analysis: final project is a dashboard built from your own dataset</li></ul>
+<div class="price"><b>From ₦25,000</b><span>Public Speaking ₦25,000, Graphic Design ₦35,000, Data Analysis ₦80,000</span></div>
+<div class="acts"><a class="btn btn-ink" href="enroll.html?programme=skills">Enroll now</a><a class="btn btn-line" href="skills-school.html">Browse the courses</a></div>
+</div></section>
+
+</main>
+
+<section class="cta"><h2>Not sure which programme fits?</h2><p>Message us and we will point you to the right one, and answer any question before you pay.</p>
+<div class="acts"><a class="btn btn-sky" href="https://wa.me/2348066043320?text=Assalaamu%20alaykum.%20I%27d%20like%20help%20choosing%20a%20Himaayah%20Schools%20programme." target="_blank" rel="noopener">Chat on WhatsApp</a><a class="btn btn-line" href="faq.html">Read the FAQ</a></div></section>
+
+<footer><div class="wrap">
+<div class="ft"><div class="fb"><a class="brand" href="index.html"><svg width="24" height="30" fill="#85CCFF" aria-hidden="true"><use href="#lg"/></svg>Himaayah Schools</a><p>Raising the next generation with deen, knowledge, and purpose.</p></div>
+<div class="fc"><div><h4>Programmes</h4><a href="programmes.html">All programmes</a><a href="teenagers-building-circle.html">Teenagers Building Circle</a><a href="madrasah.html">Madrasah</a><a href="academy.html">Academy</a><a href="skills-school.html">Skills School</a></div>
+<div><h4>Site</h4><a href="index.html">Home</a><a href="about.html">About</a><a href="exam-calendars.html">Exam Calendars</a><a href="faq.html">FAQ</a><a href="contact.html">Contact</a><a href="policies.html">Policies</a><a href="enroll.html">Enroll</a></div>
+<div><h4>Contact</h4><a href="mailto:himaayahschools@gmail.com">himaayahschools@gmail.com</a><a href="tel:+2348066043320">+234 806 604 3320</a><a href="tel:+2347025842849">+234 702 584 2849</a><span>Ilorin, Nigeria</span></div></div></div>
+<div class="fbot">© 2026 Himaayah Schools.</div></div></footer>
+
+<div class="wa" id="wa"><div class="wam">
+<a href="https://wa.me/2348066043320?text=Assalaamu%20alaykum.%20I%27d%20like%20to%20ask%20about%20Himaayah%20Schools." target="_blank" rel="noopener">Chat on WhatsApp <small>+234 806 604 3320</small></a>
+<a href="https://wa.me/2347025842849?text=Assalaamu%20alaykum.%20I%27d%20like%20to%20ask%20about%20Himaayah%20Schools." target="_blank" rel="noopener">Chat on WhatsApp <small>+234 702 584 2849</small></a></div>
+<button type="button" class="wab" id="wab" aria-expanded="false" aria-label="Chat with us on WhatsApp"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.7-5.2A8.5 8.5 0 1 1 21 11.5z"/></svg><span>Chat with us</span></button></div>
+
+<script>
+const $=s=>document.querySelector(s);
+$('#tog').onclick=e=>{const o=$('#links').classList.toggle('open');e.currentTarget.setAttribute('aria-expanded',o)};
+const dd=$('.dd');dd.querySelector('.dd-btn').onclick=e=>{const o=dd.classList.toggle('open');e.currentTarget.setAttribute('aria-expanded',o)};
+const w=$('#wa'),wb=$('#wab');wb.onclick=()=>{wb.setAttribute('aria-expanded',w.classList.toggle('open'))};
+document.addEventListener('click',e=>{if(!w.contains(e.target)){w.classList.remove('open');wb.setAttribute('aria-expanded',false)}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){w.classList.remove('open');wb.setAttribute('aria-expanded',false)}});
+</script>
+</body>
+</html>

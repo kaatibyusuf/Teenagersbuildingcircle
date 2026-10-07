@@ -3,432 +3,269 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Madrasah — Himaayah Schools</title>
+<title>Madrasah | Himaayah Schools</title>
 <meta name="description" content="Madrasah at Himaayah Schools: Qur'an memorisation, tajweed, and Islamic studies in group or personal classes, four times a week.">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20377.21%20459.6%22%3E%3Cpath%20fill=%22%23094570%22%20d=%22M0.14%20280.14c4.28%2C65.12%2098.42%2C133.97%20163.39%2C172.42%2015.86%2C9.39%2034.24%2C9.39%2050.11%2C-0.01%2052.97%2C-31.37%20159.02%2C-102.63%20163.43%2C-172.41l-376.92%200zm302.67%20-162.41l74.4%20105.8%200%20-126.48c0%2C-20.52%20-11.85%2C-38.03%20-30.9%2C-45.66l-125.46%20-50.22%2081.96%20116.56zm-228.42%200l82.79%20-117.73%20-126.49%2051.28c-18.95%2C7.68%20-30.7%2C25.13%20-30.7%2C45.57l0%20126.67%2074.4%20-105.8zm114.21%20-8.75c35.22%2C0%2063.77%2C28.55%2063.77%2C63.77%200%2C35.22%20-28.55%2C63.77%20-63.77%2C63.77%20-35.22%2C0%20-63.77%2C-28.55%20-63.77%2C-63.77%200%2C-35.22%2028.55%2C-63.77%2063.77%2C-63.77z%22/%3E%3C/svg%3E">
 <link rel="canonical" href="https://www.himaayahschools.com/madrasah.html">
-<meta property="og:url" content="https://www.himaayahschools.com/madrasah.html">
 <meta name="theme-color" content="#094570">
-<meta property="og:site_name" content="Himaayah Schools">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Madrasah — Himaayah Schools">
-<meta property="og:description" content="Madrasah at Himaayah Schools: Qur'an memorisation, tajweed, and Islamic studies in group or personal classes, four times a week.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --deep: #062F4D; --ink: #094570; --sky: #85CCFF; --sky-d: #3E97D9;
-    --wash: #F1F7FC; --white: #fff; --text: #0E2A3D; --muted: #55697B;
-    --line: rgba(9,69,112,.12); --r-lg: 32px;
-    --display: 'Bricolage Grotesque', 'Inter', sans-serif;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body { font-family: 'Inter', -apple-system, sans-serif; color: var(--text); background: var(--white); -webkit-font-smoothing: antialiased; line-height: 1.6; }
-  a { color: inherit; text-decoration: none; }
-  img { display: block; max-width: 100%; }
-  button { font-family: inherit; cursor: pointer; border: none; background: none; }
-  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 28px; }
-  a:focus-visible, button:focus-visible { outline: 2px solid var(--sky-d); outline-offset: 3px; }
-  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition-duration: .001ms !important; scroll-behavior: auto !important; } }
-
-  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 15px 28px; font-size: 15px; font-weight: 600; border-radius: 999px; transition: background .2s, color .2s, border-color .2s; }
-  .btn-sky { background: var(--sky); color: var(--deep); } .btn-sky:hover { background: #fff; }
-  .btn-ink { background: var(--ink); color: #fff; } .btn-ink:hover { background: var(--deep); }
-  .btn-ghost { border: 1px solid rgba(255,255,255,.5); color: #fff; } .btn-ghost:hover { background: rgba(255,255,255,.14); }
-
-  /* Nav */
-  .nav { position: fixed; top: 16px; left: 0; right: 0; z-index: 100; padding: 0 20px; }
-  .nav-pill { max-width: 1200px; margin: 0 auto; height: 64px; padding: 0 12px 0 22px; display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,.94); backdrop-filter: blur(14px); border-radius: 999px; box-shadow: 0 8px 30px -12px rgba(6,47,77,.35); }
-  .brand { display: flex; align-items: center; gap: 10px; font-family: var(--display); font-weight: 700; font-size: 18px; color: var(--ink); }
-  .nav-links { display: flex; align-items: center; gap: 30px; }
-  .nav-links a:not(.btn) { font-size: 14px; font-weight: 500; color: var(--muted); transition: color .2s; }
-  .nav-links a:not(.btn):hover { color: var(--ink); }
-  .nav-links .btn { padding: 11px 22px; font-size: 14px; }
-  .nav-toggle { display: none; width: 44px; height: 44px; border-radius: 50%; position: relative; }
-  .nav-toggle span { position: absolute; left: 13px; right: 13px; height: 2px; background: var(--ink); }
-  .nav-toggle span:nth-child(1) { top: 16px; } .nav-toggle span:nth-child(2) { top: 21px; } .nav-toggle span:nth-child(3) { top: 26px; }
-  @media (max-width: 900px) {
-    .nav-toggle { display: block; }
-    .nav-links { position: absolute; top: 76px; left: 20px; right: 20px; flex-direction: column; align-items: stretch; gap: 0; background: #fff; border-radius: 24px; padding: 8px 20px 20px; box-shadow: 0 20px 40px -16px rgba(6,47,77,.4); display: none; }
-    .nav-links.open { display: flex; }
-    .nav-links a:not(.btn) { padding: 15px 0; border-bottom: 1px solid var(--line); }
-    .nav-links .btn { margin-top: 16px; }
-  }
-
-  /* Hero */
-  .hero { padding: 100px 16px 0; }
-  .hero-frame { position: relative; max-width: 1400px; margin: 0 auto; min-height: 600px; border-radius: 40px; overflow: hidden; display: flex; align-items: flex-end; padding: 64px; color: #fff;
-    background: linear-gradient(180deg, rgba(6,47,77,.2) 0%, rgba(6,47,77,.93) 100%), url('https://images.unsplash.com/photo-1616422840391-fa670d4b2ae7?auto=format&fit=crop&w=2000&q=80') center/cover; }
-  .hero-copy { max-width: 760px; }
-  .hero h1 { font-family: var(--display); font-weight: 700; font-size: clamp(38px, 6vw, 72px); line-height: 1.04; letter-spacing: -.025em; margin-bottom: 22px; }
-  .hero p { font-size: 17px; color: rgba(255,255,255,.82); max-width: 52ch; margin-bottom: 34px; }
-  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
-  .hero-copy > * { animation: rise .8s cubic-bezier(.2,.7,.2,1) both; }
-  .hero-copy > *:nth-child(2) { animation-delay: .12s; } .hero-copy > *:nth-child(3) { animation-delay: .24s; }
-  @keyframes rise { from { opacity: 0; transform: translateY(22px); } }
-  @media (max-width: 600px) { .hero-frame { padding: 32px 24px; min-height: 520px; border-radius: 28px; } }
-
-  /* Plans */
-  .plans { padding: 110px 0 60px; }
-  .section-head { display: flex; align-items: end; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-bottom: 36px; }
-  .section-head h2 { font-family: var(--display); font-weight: 700; font-size: clamp(30px, 4vw, 46px); line-height: 1.1; letter-spacing: -.02em; color: var(--deep); max-width: 14em; }
-  .seg { display: inline-flex; background: var(--wash); border-radius: 999px; padding: 5px; }
-  .seg button { padding: 12px 26px; border-radius: 999px; font-size: 14.5px; font-weight: 600; color: var(--muted); transition: background .2s, color .2s; }
-  .seg button[aria-selected="true"] { background: var(--ink); color: #fff; }
-  .mode-note { color: var(--muted); font-size: 15px; margin-bottom: 28px; max-width: 60ch; }
-  .plan-grid { display: none; grid-template-columns: repeat(2, 1fr); gap: 24px; }
-  .plan-grid.active { display: grid; animation: rise .5s ease both; }
-  @media (max-width: 800px) { .plan-grid.active { grid-template-columns: 1fr; } }
-  .plan { background: var(--wash); border-radius: var(--r-lg); padding: 36px; display: flex; flex-direction: column; gap: 16px; }
-  .plan.featured { background: var(--ink); color: #fff; }
-  .plan h3 { font-family: var(--display); font-size: 28px; line-height: 1.15; letter-spacing: -.01em; color: var(--deep); }
-  .plan.featured h3 { color: #fff; }
-  .plan ul { list-style: none; display: grid; gap: 10px; flex: 1; }
-  .plan li { display: flex; gap: 12px; font-size: 15px; color: var(--muted); }
-  .plan.featured li { color: rgba(255,255,255,.8); }
-  .plan li::before { content: ''; flex-shrink: 0; width: 18px; height: 18px; margin-top: 3px; border-radius: 50%; background: var(--sky) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23062F4D' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12l4 4 8-8'/%3E%3C/svg%3E") center/12px no-repeat; }
-  .plan-foot { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding-top: 20px; border-top: 1px solid var(--line); }
-  .plan.featured .plan-foot { border-color: rgba(255,255,255,.2); }
-  .price b { font-family: var(--display); font-size: 34px; line-height: 1.1; color: var(--ink); }
-  .plan.featured .price b { color: var(--sky); }
-  .price span { font-size: 14px; color: var(--muted); }
-  .plan.featured .price span { color: rgba(255,255,255,.7); }
-
-  /* One-year */
-  .year { padding: 0 16px 110px; }
-  .year-box { max-width: 1400px; margin: 0 auto; border-radius: 40px; background: var(--deep); color: #fff; padding: 72px 64px; display: grid; grid-template-columns: 1.2fr .8fr; gap: 48px; align-items: center; }
-  .year-box h2 { font-family: var(--display); font-weight: 700; font-size: clamp(30px, 4vw, 46px); line-height: 1.1; letter-spacing: -.02em; margin-bottom: 14px; }
-  .year-box p { color: rgba(255,255,255,.75); max-width: 46ch; }
-  .year-card { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.18); border-radius: 28px; padding: 32px; }
-  .year-card .price b { color: var(--sky); font-size: 40px; } .year-card .price span { color: rgba(255,255,255,.7); }
-  .year-card ul { list-style: none; margin: 18px 0 24px; display: grid; gap: 8px; font-size: 15px; color: rgba(255,255,255,.8); }
-  .year-card .btn { width: 100%; }
-  @media (max-width: 900px) { .year-box { grid-template-columns: 1fr; padding: 48px 28px; border-radius: 28px; } }
-
-  /* Footer */
-  footer.site { background: var(--deep); color: rgba(255,255,255,.65); border-radius: 40px 40px 0 0; margin: 0 16px; padding: 70px 0 28px; font-size: 14px; border-top: 1px solid rgba(255,255,255,.08); }
-  .f-top { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 44px; margin-bottom: 48px; }
-  .f-brand { max-width: 320px; } .f-brand .brand { color: #fff; margin-bottom: 14px; } .f-brand p { margin-bottom: 20px; }
-  .social { display: flex; gap: 10px; }
-  .social a { width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,.2); display: grid; place-items: center; transition: background .2s, color .2s; }
-  .social a:hover { background: var(--sky); color: var(--deep); }
-  .f-cols { display: flex; gap: 60px; flex-wrap: wrap; }
-  .f-col h4 { font-family: var(--display); font-size: 16px; color: #fff; margin-bottom: 14px; }
-  .f-col a, .f-col span { display: block; margin-bottom: 9px; transition: color .2s; } .f-col a:hover { color: var(--sky); }
-  .f-bottom { padding-top: 22px; border-top: 1px solid rgba(255,255,255,.12); }
-
-  /* Always-visible home button */
-  .home-fab { position: fixed; left: 20px; bottom: 20px; z-index: 90; display: inline-flex; align-items: center; gap: 8px; padding: 13px 20px 13px 16px; border-radius: 999px; background: #062F4D; color: #fff; font-size: 14px; font-weight: 600; box-shadow: 0 12px 30px -10px rgba(6,47,77,.6); transition: background .2s, transform .2s; }
-  .home-fab:hover { background: #094570; transform: translateY(-2px); }
-  .home-fab:focus-visible { outline: 2px solid #85CCFF; outline-offset: 3px; }
-
-  /* Classes & requirements */
-  .classes { padding: 0 0 110px; }
-  .class-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 56px; }
-  @media (max-width: 1000px) { .class-cards { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 560px) { .class-cards { grid-template-columns: 1fr; } }
-  .cc { background: var(--wash); border-radius: 24px; padding: 28px; }
-  .cc b { display: block; font-family: var(--display); font-size: 22px; line-height: 1.15; color: var(--deep); margin-bottom: 8px; }
-  .cc span { font-size: 14.5px; color: var(--muted); }
-  .ladder-title { font-family: var(--display); font-weight: 700; font-size: clamp(24px, 3vw, 34px); letter-spacing: -.02em; color: var(--deep); margin-bottom: 8px; }
-  .ladder-sub { color: var(--muted); margin-bottom: 24px; max-width: 62ch; }
-  .tabs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 20px; scrollbar-width: thin; }
-  .tab { flex-shrink: 0; padding: 12px 20px; border-radius: 999px; background: var(--wash); color: var(--muted); font-size: 14.5px; font-weight: 600; transition: background .2s, color .2s; }
-  .tab:hover { color: var(--ink); }
-  .tab[aria-selected="true"] { background: var(--ink); color: #fff; }
-  .lvl { display: grid; grid-template-columns: 280px 1fr; gap: 48px; background: var(--wash); border-radius: var(--r-lg); padding: 44px; animation: rise .45s cubic-bezier(.2,.7,.2,1) both; }
-  @media (max-width: 800px) { .lvl { grid-template-columns: 1fr; gap: 28px; padding: 30px 24px; } }
-  .lvl .score b { display: block; font-family: var(--display); font-size: 72px; line-height: 1; letter-spacing: -.03em; color: var(--ink); }
-  .lvl .score span { font-size: 14px; color: var(--muted); }
-  .lvl .goal { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--line); font-size: 14.5px; color: var(--deep); font-weight: 600; }
-  .lvl h3 { font-family: var(--display); font-size: 28px; line-height: 1.15; color: var(--deep); margin-bottom: 6px; }
-  .lvl .intro { color: var(--muted); margin-bottom: 18px; }
-  .lvl ul { list-style: none; display: grid; gap: 12px; }
-  .lvl li { display: flex; gap: 12px; font-size: 15.5px; color: var(--text); }
-  .lvl li::before { content: ''; flex-shrink: 0; width: 20px; height: 20px; margin-top: 3px; border-radius: 50%; background: var(--sky) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23062F4D' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12l4 4 8-8'/%3E%3C/svg%3E") center/13px no-repeat; }
-  .lvl .strict { margin-top: 20px; background: var(--ink); color: #fff; border-radius: 16px; padding: 14px 18px; font-size: 14.5px; }
-  .plan-note { font-size: 13.5px; background: rgba(133,204,255,.18); border-radius: 14px; padding: 10px 14px; color: #fff; }
-  .journey { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: 28px; font-size: 13.5px; color: var(--muted); }
-  .journey i { font-style: normal; padding: 6px 12px; border-radius: 999px; background: #fff; border: 1px solid var(--line); }
-  .journey i.on { background: var(--ink); color: #fff; border-color: var(--ink); }
-
-  /* Programmes dropdown */
-  .dd { position: relative; }
-  .dd-btn { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 500; color: var(--muted); transition: color .2s; }
-  .dd-btn svg { transition: transform .25s; }
-  .dd:hover .dd-btn, .dd:focus-within .dd-btn, .dd.cur .dd-btn { color: var(--ink); }
-  .dd.cur .dd-btn, .nav-links a[aria-current="page"] { font-weight: 600; }
-  .dd:hover .dd-btn svg, .dd.open .dd-btn svg { transform: rotate(180deg); }
-  .dd-menu { position: absolute; top: 100%; left: -18px; min-width: 270px; padding: 24px 10px 10px; opacity: 0; visibility: hidden; transform: translateY(6px); transition: opacity .2s, transform .2s, visibility .2s; }
-  .dd-menu::before { content: ''; position: absolute; inset: 14px 0 0 0; background: #fff; border-radius: 22px; box-shadow: 0 24px 50px -20px rgba(6,47,77,.45); z-index: -1; }
-  .dd:hover .dd-menu, .dd:focus-within .dd-menu, .dd.open .dd-menu { opacity: 1; visibility: visible; transform: none; }
-  .dd-menu a { display: block; padding: 12px 16px; border-radius: 14px; font-size: 14.5px; font-weight: 500; color: var(--text); }
-  .dd-menu a:hover, .dd-menu a[aria-current="page"] { background: var(--wash); color: var(--ink); }
-  @media (max-width: 900px) {
-    .dd-btn { padding: 15px 0; width: 100%; border-bottom: 1px solid var(--line); justify-content: space-between; }
-    .dd-menu { position: static; opacity: 1; visibility: visible; transform: none; padding: 0 0 0 14px; display: none; }
-    .dd-menu::before { display: none; }
-    .dd.open .dd-menu { display: block; }
-    .dd:hover .dd-menu { display: none; } .dd.open:hover .dd-menu { display: block; }
-  }
-
-  /* WhatsApp chat widget */
-  .wa-widget { position: fixed; right: 20px; bottom: 20px; z-index: 90; display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
-  .wa-fab { display: inline-flex; align-items: center; gap: 10px; padding: 14px 20px 14px 16px; border-radius: 999px; background: #128C4B; color: #fff; font-size: 14px; font-weight: 600; box-shadow: 0 12px 30px -10px rgba(18,140,75,.7); transition: background .2s, transform .2s; }
-  .wa-fab:hover { background: #0E6F3B; transform: translateY(-2px); }
-  .wa-fab:focus-visible, .wa-menu a:focus-visible { outline: 2px solid #85CCFF; outline-offset: 3px; }
-  .wa-menu { display: none; flex-direction: column; gap: 6px; background: #fff; border-radius: 22px; padding: 10px; box-shadow: 0 24px 50px -16px rgba(6,47,77,.5); min-width: 250px; animation: waIn .25s ease both; }
-  .wa-widget.open .wa-menu { display: flex; }
-  .wa-menu a { display: flex; flex-direction: column; padding: 12px 16px; border-radius: 14px; font-size: 14px; font-weight: 600; color: #062F4D; }
-  .wa-menu a small { font-weight: 500; color: #55697B; font-size: 13px; }
-  .wa-menu a:hover { background: #F1F7FC; }
-  @keyframes waIn { from { opacity: 0; transform: translateY(8px); } }
-  @media (max-width: 600px) { .wa-fab span { display: none; } .wa-fab { padding: 15px; } }
+:root{--deep:#062F4D;--ink:#094570;--sky:#85CCFF;--sky-d:#3E97D9;--wash:#F1F7FC;--text:#0E2A3D;--muted:#55697B;--line:rgba(9,69,112,.12);--d:'Bricolage Grotesque','Inter',sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;color:var(--text);background:#fff;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}img{display:block;max-width:100%}button{font:inherit;cursor:pointer;border:0;background:none}
+.wrap{max-width:1200px;margin:0 auto;padding:0 28px}
+a:focus-visible,button:focus-visible{outline:2px solid var(--sky-d);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:15px 28px;font-size:15px;font-weight:600;border-radius:999px;transition:background .2s}
+.btn-sky{background:var(--sky);color:var(--deep)}.btn-sky:hover{background:#fff}
+.btn-ink{background:var(--ink);color:#fff}.btn-ink:hover{background:var(--deep)}
+.btn-ghost{border:1px solid rgba(255,255,255,.5);color:#fff}.btn-ghost:hover{background:rgba(255,255,255,.14)}
+h2.t{font-family:var(--d);font-weight:700;font-size:clamp(28px,4vw,44px);line-height:1.1;letter-spacing:-.02em;color:var(--deep)}
+.sec{padding:96px 0 0}.head{display:flex;align-items:end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:36px}.head p{color:var(--muted);max-width:44ch}
+/* nav */
+.nav{position:fixed;top:16px;left:0;right:0;z-index:100;padding:0 20px}
+.pill{max-width:1200px;margin:0 auto;height:64px;padding:0 12px 0 22px;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.94);backdrop-filter:blur(14px);border-radius:999px;box-shadow:0 8px 30px -12px rgba(6,47,77,.35)}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--d);font-weight:700;font-size:18px;color:var(--ink)}
+.links{display:flex;align-items:center;gap:30px}
+.links a:not(.btn),.dd-btn{font-size:14px;font-weight:500;color:var(--muted);transition:color .2s}
+.links a:not(.btn):hover,.dd:hover .dd-btn{color:var(--ink)}.dd.cur .dd-btn{color:var(--ink);font-weight:600}
+.links .btn{padding:11px 22px;font-size:14px}
+.tog{display:none;width:44px;height:44px;position:relative}.tog span{position:absolute;left:13px;right:13px;height:2px;background:var(--ink)}
+.tog span:nth-child(1){top:16px}.tog span:nth-child(2){top:21px}.tog span:nth-child(3){top:26px}
+.dd{position:relative}.dd-btn{display:inline-flex;align-items:center;gap:6px}
+.dd-menu{position:absolute;top:100%;left:-18px;min-width:270px;padding:24px 10px 10px;opacity:0;visibility:hidden;transform:translateY(6px);transition:.2s}
+.dd-menu::before{content:'';position:absolute;inset:14px 0 0;background:#fff;border-radius:22px;box-shadow:0 24px 50px -20px rgba(6,47,77,.45);z-index:-1}
+.dd:hover .dd-menu,.dd:focus-within .dd-menu,.dd.open .dd-menu{opacity:1;visibility:visible;transform:none}
+.dd-menu a{display:block;padding:12px 16px;border-radius:14px;font-size:14.5px;font-weight:500;color:var(--text)}
+.dd-menu a:hover,.dd-menu a[aria-current]{background:var(--wash);color:var(--ink)}
+@media(max-width:900px){.tog{display:block}
+.links{position:absolute;top:76px;left:20px;right:20px;flex-direction:column;align-items:stretch;gap:0;background:#fff;border-radius:24px;padding:8px 20px 20px;box-shadow:0 20px 40px -16px rgba(6,47,77,.4);display:none}
+.links.open{display:flex}.links a:not(.btn){padding:15px 0;border-bottom:1px solid var(--line)}.links .btn{margin-top:16px}
+.dd-btn{padding:15px 0;width:100%;border-bottom:1px solid var(--line);justify-content:space-between}
+.dd-menu{position:static;opacity:1;visibility:visible;transform:none;padding:0 0 0 14px;display:none}.dd-menu::before{display:none}.dd.open .dd-menu{display:block}.dd:hover .dd-menu{display:none}.dd.open:hover .dd-menu{display:block}}
+/* hero + facts */
+.hero{padding:100px 16px 0}
+.hero-frame{max-width:1400px;margin:0 auto;min-height:620px;border-radius:40px;display:flex;align-items:flex-start;padding:64px 64px 140px;color:#fff;position:relative;background:url('https://images.unsplash.com/photo-1616422840391-fa670d4b2ae7?auto=format&fit=crop&w=2000&q=80') center/cover}
+.hero-frame::before{content:'';position:absolute;inset:0;border-radius:inherit;background:rgba(6,47,77,.74)}
+.hero-copy{position:relative;max-width:760px;align-self:flex-end;animation:rise .8s both}
+@keyframes rise{from{opacity:0;transform:translateY(20px)}}
+.hero h1{font-family:var(--d);font-weight:700;font-size:clamp(36px,6vw,68px);line-height:1.05;letter-spacing:-.025em;margin-bottom:20px}
+.hero p{font-size:17px;color:rgba(255,255,255,.85);max-width:52ch;margin-bottom:30px}
+.acts{display:flex;gap:12px;flex-wrap:wrap}
+.facts{position:relative;z-index:2;max-width:1100px;margin:-72px auto 0;padding:0 20px}
+.facts div{display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border-radius:28px;box-shadow:0 24px 50px -24px rgba(6,47,77,.4);padding:28px 8px}
+.facts p{padding:4px 24px;border-left:1px solid var(--line)}.facts p:first-child{border:0}
+.facts b{display:block;font-family:var(--d);font-size:26px;line-height:1.2;color:var(--ink)}.facts span{font-size:14px;color:var(--muted)}
+@media(max-width:800px){.facts div{grid-template-columns:1fr 1fr;row-gap:18px}.facts p:nth-child(3){border:0}.hero-frame{padding:32px 24px 120px;border-radius:28px}}
+/* about */
+.about{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.about p{color:var(--muted);margin-top:18px;max-width:54ch}
+.about img{border-radius:32px;aspect-ratio:4/3;object-fit:cover;width:100%}
+@media(max-width:860px){.about{grid-template-columns:1fr}}
+/* subjects */
+.subj{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+@media(max-width:1000px){.subj{grid-template-columns:1fr 1fr}}@media(max-width:560px){.subj{grid-template-columns:1fr}}
+.card{background:var(--wash);border-radius:28px;padding:28px;display:flex;flex-direction:column;gap:6px;min-height:190px}
+.card i{font-style:normal;font-size:30px;line-height:1.3;color:var(--ink);direction:rtl;font-family:'Noto Naskh Arabic',serif}
+.card b{font-family:var(--d);font-size:21px;color:var(--deep)}.card span{font-size:14.5px;color:var(--muted)}
+.subj .card{min-height:130px}.card.go{background:var(--ink);color:#fff;justify-content:space-between}.card.go b{color:#fff;font-size:24px}.card.go .btn{align-self:flex-start;padding:12px 22px}
+/* plans */
+.seg{display:inline-flex;background:var(--wash);border-radius:999px;padding:5px}
+.seg button{padding:12px 26px;border-radius:999px;font-size:14.5px;font-weight:600;color:var(--muted)}.seg [aria-selected=true]{background:var(--ink);color:#fff}
+.pg{display:none;grid-template-columns:1fr 1fr;gap:24px}.pg.on{display:grid;animation:rise .5s both}
+@media(max-width:800px){.pg.on{grid-template-columns:1fr}}
+.plan{background:var(--wash);border-radius:32px;padding:36px;display:flex;flex-direction:column;gap:14px}.plan.f{background:var(--ink);color:#fff}
+.plan h3{font-family:var(--d);font-size:28px;color:var(--deep)}.plan.f h3{color:#fff}
+.plan ul{list-style:none;display:grid;gap:10px;flex:1}.plan li{display:flex;gap:12px;font-size:15px;color:var(--muted)}.plan.f li{color:rgba(255,255,255,.82)}
+li::before{content:'';flex-shrink:0;width:18px;height:18px;margin-top:3px;border-radius:50%;background:var(--sky) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23062F4D' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12l4 4 8-8'/%3E%3C/svg%3E") center/12px no-repeat}
+.note{font-size:13.5px;background:rgba(133,204,255,.18);border-radius:14px;padding:10px 14px}
+.foot{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-top:18px;border-top:1px solid var(--line)}.plan.f .foot{border-color:rgba(255,255,255,.2)}
+.price b{font-family:var(--d);font-size:34px;color:var(--ink)}.plan.f .price b,.yc .price b{color:var(--sky)}.price span{font-size:14px;color:var(--muted)}.plan.f .price span,.yc .price span{color:rgba(255,255,255,.7)}
+.year{margin-top:24px;background:var(--deep);color:#fff;border-radius:32px;padding:44px;display:grid;grid-template-columns:1.2fr .8fr;gap:36px;align-items:center}
+.year h3{font-family:var(--d);font-size:clamp(24px,3vw,34px);line-height:1.15;margin-bottom:10px}.year p{color:rgba(255,255,255,.75);max-width:46ch}
+.yc{background:rgba(255,255,255,.08);border-radius:24px;padding:28px}.yc .btn{width:100%;margin-top:16px}
+@media(max-width:800px){.year{grid-template-columns:1fr;padding:30px 24px}}
+/* hadith */
+.had{margin:96px 16px 0;max-width:1400px;margin-inline:auto;border-radius:40px;background:var(--ink);color:#fff;padding:72px 28px;text-align:center}
+.had p{font-family:var(--d);font-size:clamp(22px,3.2vw,36px);line-height:1.3;max-width:26em;margin:0 auto 16px}.had span{color:var(--sky);font-size:15px}
+/* path */
+.path{position:relative;max-width:900px;margin:0 auto;display:grid;gap:28px}
+.path::before{content:'';position:absolute;left:50%;top:10px;bottom:10px;width:2px;background:var(--line)}
+.st{width:calc(50% - 36px);background:var(--wash);border-radius:24px;padding:24px 26px;position:relative}.st:nth-child(even){margin-left:auto}
+.st::after{content:'';position:absolute;top:28px;width:16px;height:16px;border-radius:50%;background:var(--sky);border:4px solid #fff;box-shadow:0 0 0 2px var(--ink);right:-45px}.st:nth-child(even)::after{right:auto;left:-45px}
+.st b{font-family:var(--d);font-size:21px;color:var(--deep);display:block}.st span{font-size:14.5px;color:var(--muted)}
+@media(max-width:700px){.path::before{left:10px}.st,.st:nth-child(even){width:auto;margin:0 0 0 36px}.st::after,.st:nth-child(even)::after{left:-35px;right:auto}}
+/* requirements */
+.tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px;margin:24px 0 16px}
+.tab{flex-shrink:0;padding:12px 20px;border-radius:999px;background:var(--wash);color:var(--muted);font-size:14.5px;font-weight:600}.tab[aria-selected=true]{background:var(--ink);color:#fff}
+.lvl{display:grid;grid-template-columns:260px 1fr;gap:44px;background:var(--wash);border-radius:32px;padding:40px;animation:rise .45s both}
+@media(max-width:800px){.lvl{grid-template-columns:1fr;gap:24px;padding:28px 22px}}
+.lvl .sc b{display:block;font-family:var(--d);font-size:64px;line-height:1;color:var(--ink)}.lvl .sc span{font-size:14px;color:var(--muted)}
+.lvl .goal{margin-top:18px;padding-top:16px;border-top:1px solid var(--line);font-size:14.5px;font-weight:600;color:var(--deep)}
+.lvl h3{font-family:var(--d);font-size:26px;color:var(--deep);margin-bottom:6px}.lvl .in{color:var(--muted);margin-bottom:16px}
+.lvl ul{list-style:none;display:grid;gap:11px}.lvl li{display:flex;gap:12px;font-size:15.5px}
+.strict{margin-top:18px;background:var(--ink);color:#fff;border-radius:16px;padding:14px 18px;font-size:14.5px}
+/* faq */
+.faq{max-width:820px;margin:0 auto}details{border-bottom:1px solid var(--line);padding:20px 0}
+summary{cursor:pointer;font-family:var(--d);font-size:19px;font-weight:600;color:var(--deep);list-style:none;display:flex;justify-content:space-between;gap:16px}
+summary::after{content:'+';font-size:24px;line-height:1;color:var(--sky-d)}details[open] summary::after{content:'\2212'}
+details p{color:var(--muted);margin-top:12px;max-width:62ch}
+/* final cta */
+.cta{margin:96px 16px 0;max-width:1400px;margin-inline:auto;border-radius:40px;background:var(--deep);color:#fff;padding:72px 28px;text-align:center}
+.cta h2{font-family:var(--d);font-size:clamp(28px,4vw,46px);line-height:1.1;max-width:16em;margin:0 auto 14px}.cta p{color:rgba(255,255,255,.75);margin-bottom:28px}
+/* footer + fabs */
+footer{margin:16px 16px 0;background:var(--deep);color:rgba(255,255,255,.65);border-radius:40px 40px 0 0;padding:64px 0 28px;font-size:14px;border-top:1px solid rgba(255,255,255,.08)}
+.ft{display:flex;justify-content:space-between;flex-wrap:wrap;gap:40px;margin-bottom:44px}.fb{max-width:320px}.fb .brand{color:#fff;margin-bottom:12px}
+.fc{display:flex;gap:56px;flex-wrap:wrap}.fc h4{font-family:var(--d);font-size:16px;color:#fff;margin-bottom:12px}.fc a,.fc span{display:block;margin-bottom:9px}.fc a:hover{color:var(--sky)}
+.fbot{padding-top:20px;border-top:1px solid rgba(255,255,255,.12)}
+.home{position:fixed;left:20px;bottom:20px;z-index:90;display:inline-flex;align-items:center;gap:8px;padding:13px 20px 13px 16px;border-radius:999px;background:var(--deep);color:#fff;font-size:14px;font-weight:600;box-shadow:0 12px 30px -10px rgba(6,47,77,.6)}.home:hover{background:var(--ink)}
+.wa{position:fixed;right:20px;bottom:20px;z-index:90;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.wab{display:inline-flex;align-items:center;gap:10px;padding:14px 20px 14px 16px;border-radius:999px;background:#128C4B;color:#fff;font-size:14px;font-weight:600;box-shadow:0 12px 30px -10px rgba(18,140,75,.7)}.wab:hover{background:#0E6F3B}
+.wam{display:none;flex-direction:column;gap:6px;background:#fff;border-radius:22px;padding:10px;box-shadow:0 24px 50px -16px rgba(6,47,77,.5);min-width:250px}.wa.open .wam{display:flex}
+.wam a{display:flex;flex-direction:column;padding:12px 16px;border-radius:14px;font-size:14px;font-weight:600;color:var(--deep)}.wam small{font-weight:500;color:var(--muted);font-size:13px}.wam a:hover{background:var(--wash)}
+@media(max-width:600px){.wab span{display:none}.wab{padding:15px}}
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="lg" viewBox="0 0 377.21 459.6"><path d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></symbol></svg>
 
-<nav class="nav">
-  <div class="nav-pill">
-    <a class="brand" href="index.html">
-      <svg width="24" height="30" viewBox="0 0 377.21 459.6" aria-hidden="true"><path fill="#094570" d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>
-      Himaayah Schools
-    </a>
-    <div class="nav-links" id="navLinks">
-      <div class="dd cur">
-        <button type="button" class="dd-btn" aria-haspopup="true" aria-expanded="false">Programmes
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
-        <div class="dd-menu">
-          <a href="teenagers-building-circle.html">Teenagers Building Circle</a>
-          <a href="madrasah.html" aria-current="page">Madrasah</a>
-          <a href="academy.html">Academy</a>
-          <a href="skills-school.html">Skills School</a>
-        </div>
-      </div>
-      <a href="about.html">About</a>
-      <a href="success-stories.html">Success Stories</a>
-      <a href="faq.html">FAQ</a>
-      <a href="contact.html">Contact</a>
-      <a href="enroll.html?programme=madrasah" class="btn btn-ink">Enroll Now</a>
-    </div>
-    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
-  </div>
-</nav>
+<nav class="nav"><div class="pill">
+<a class="brand" href="index.html"><svg width="24" height="30" fill="#094570" aria-hidden="true"><use href="#lg"/></svg>Himaayah Schools</a>
+<div class="links" id="links">
+<div class="dd cur"><button type="button" class="dd-btn" aria-haspopup="true" aria-expanded="false">Programmes <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+<div class="dd-menu"><a href="teenagers-building-circle.html">Teenagers Building Circle</a><a href="madrasah.html" aria-current="page">Madrasah</a><a href="academy.html">Academy</a><a href="skills-school.html">Skills School</a></div></div>
+<a href="about.html">About</a><a href="success-stories.html">Success Stories</a><a href="faq.html">FAQ</a><a href="contact.html">Contact</a>
+<a href="enroll.html?programme=madrasah" class="btn btn-ink">Enroll Now</a></div>
+<button class="tog" id="tog" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
+</div></nav>
 
-<a class="home-fab" href="index.html" aria-label="Back to home">
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
-  Home
-</a>
+<a class="home" href="index.html" aria-label="Back to home"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Home</a>
 
+<header class="hero"><div class="hero-frame"><div class="hero-copy">
+<h1>Learn the Qur'an with care, structure, and a teacher who knows your pace.</h1>
+<p>Qur'an memorisation and tajweed, with Islamic studies alongside. Choose a small group or one-on-one, four classes every week.</p>
+<div class="acts"><a href="#plans" class="btn btn-sky">See the plans</a><a href="enroll.html?programme=madrasah" class="btn btn-ghost">Enroll now</a></div>
+</div></div></header>
 
-<header class="hero">
-  <div class="hero-frame">
-    <div class="hero-copy">
-      <h1>Learn the Qur'an with care, structure, and a teacher who knows your pace.</h1>
-      <p>Qur'an memorisation and tajweed, with Islamic studies alongside. Choose a small group or one-on-one, four classes every week.</p>
-      <div class="hero-actions">
-        <a href="#plans" class="btn btn-sky">See the plans</a>
-        <a href="enroll.html?programme=madrasah" class="btn btn-ghost">Enroll now</a>
-      </div>
-    </div>
-  </div>
-</header>
+<section class="facts" aria-label="At a glance"><div>
+<p><b>4 classes</b><span>every week</span></p>
+<p><b>Group or personal</b><span>you choose the format</span></p>
+<p><b>From ₦12,000</b><span>billed monthly</span></p>
+<p><b>12 months</b><span>one-year Hifdh track</span></p>
+</div></section>
 
-<section class="plans" id="plans">
-  <div class="wrap">
-    <div class="section-head">
-      <h2>Pick how you want to learn.</h2>
-      <div class="seg" role="tablist" aria-label="Class format">
-        <button type="button" role="tab" aria-selected="true" data-mode="group">Group</button>
-        <button type="button" role="tab" aria-selected="false" data-mode="personal">Personal</button>
-      </div>
-    </div>
+<section class="sec"><div class="wrap about">
+<div><h2 class="t">A madrasah that meets each student where they are.</h2>
+<p>Every student starts at the right level, from learning the first Arabic letter to advanced Iʿdādiyyah studies. Memorisation, tajweed, and the Islamic sciences are taught together, with tests and exams to show progress.</p>
+<p>Learn in a small group, or one-on-one at a pace set entirely to the student. Ages from school age to adults are welcome, depending on the plan.</p></div>
+<img src="https://images.unsplash.com/photo-1616422840391-fa670d4b2ae7?auto=format&fit=crop&w=1000&q=80" alt="An open Qur'an resting on a wooden stand." loading="lazy">
+</div></section>
 
-    <div class="plan-grid active" data-grid="group">
-      <article class="plan">
-        <h3>Hifdh Only</h3>
-        <ul><li>Qur'an memorisation and tajweed, with murajaah built in</li><li>Small group setting, four classes weekly, with tests and exams</li></ul>
-        <div class="plan-foot"><div class="price"><b>₦12,000</b> <span>/ month</span></div><a href="enroll.html?programme=madrasah&amp;plan=hifdh-group" class="btn btn-ink">Enroll now</a></div>
-      </article>
-      <article class="plan featured">
-        <h3>Full Madrasah</h3>
-        <ul><li>Hifdh and tajweed taught with Tawheed, fiqh, Arabiyyah, Ṣarf, Naḥw and seerah</li><li>Four classes weekly, group setting</li></ul>
-        <p class="plan-note">Completed your hifdh elsewhere? You pay ₦15,000 a month.</p>
-        <div class="plan-foot"><div class="price"><b>₦20,000</b> <span>/ month</span></div><a href="enroll.html?programme=madrasah&amp;plan=full-group" class="btn btn-sky">Enroll now</a></div>
-      </article>
-    </div>
+<section class="sec"><div class="wrap">
+<div class="head"><h2 class="t">What you study.</h2><p>Subjects change as a student moves up. Pick a level to see what it covers.</p></div>
+<div class="tabs" id="stabs" role="tablist" aria-label="Subjects by level"></div>
+<div class="subj" id="sgrid" role="tabpanel"></div>
+</div></section>
 
-    <div class="plan-grid" data-grid="personal">
-      <article class="plan">
-        <h3>Hifdh Only</h3>
-        <ul><li>One-on-one Qur'an memorisation and tajweed</li><li>Pace set entirely to the student</li></ul>
-        <div class="plan-foot"><div class="price"><b>₦20,000</b> <span>/ month</span></div><a href="enroll.html?programme=madrasah&amp;plan=hifdh-personal" class="btn btn-ink">Enroll now</a></div>
-      </article>
-      <article class="plan featured">
-        <h3>Full Madrasah</h3>
-        <ul><li>Hifdh and Islamic studies combined</li><li>Taught entirely one-on-one</li></ul>
-        <div class="plan-foot"><div class="price"><b>₦35,000</b> <span>/ month</span></div><a href="enroll.html?programme=madrasah&amp;plan=full-personal" class="btn btn-sky">Enroll now</a></div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<section class="year" id="one-year">
-  <div class="year-box">
-    <div>
-      <h2>Want a clear finish line? Take the one-year Hifdh.</h2>
-      <p>A focused 12-month Qur'an memorisation track, with a milestone to reach and revise every month.</p>
-    </div>
-    <div class="year-card">
-      <div class="price"><b>₦19,000</b> <span>/ month · 12 months</span></div>
-      <ul><li>Focused 12-month memorisation track</li><li>Structured monthly milestones and revision</li></ul>
-      <a href="enroll.html?programme=madrasah&amp;plan=one-year" class="btn btn-sky">Enroll now</a>
-    </div>
-  </div>
-</section>
-
-<section class="classes" id="classes">
-  <div class="wrap">
-    <div class="section-head">
-      <h2>The classes we offer, and what each one asks of you.</h2>
-    </div>
-    <div class="class-cards">
-      <div class="cc"><b>Rawdah</b><span>For those who can't read and write at all.</span></div>
-      <div class="cc"><b>Tamheedi</b><span>For those who are just starting madrasah.</span></div>
-      <div class="cc"><b>Awwal to Rābiʿah Ibtidāʾiyyah</b><span>Four levels building Arabic, memorisation and Islamic knowledge step by step.</span></div>
-      <div class="cc"><b>Awwal to Thāniy Iʿdādiyyah</b><span>For students who already have a serious Arabic and Islamic foundation.</span></div>
-    </div>
-    <h2 class="ladder-title">Admission requirements by level</h2>
-    <p class="ladder-sub">Each level has a minimum admission score and a set of things a student must already know. Pick a level to see its requirements.</p>
-    <div class="tabs" id="lvlTabs" role="tablist" aria-label="Class level"></div>
-    <div id="lvlPanel" role="tabpanel"></div>
-    <div class="journey" id="journey" aria-label="Progression"></div>
-  </div>
-</section>
-
-<footer class="site">
-  <div class="wrap">
-    <div class="f-top">
-      <div class="f-brand">
-        <a class="brand" href="index.html">
-          <svg width="24" height="30" viewBox="0 0 377.21 459.6" aria-hidden="true"><path fill="#85CCFF" d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>
-          Himaayah Schools
-        </a>
-        <p>Raising the next generation with deen, knowledge, and purpose.</p>
-        <div class="social">
-          <a href="https://instagram.com/himaayahschools" target="_blank" rel="noopener" aria-label="Himaayah Schools on Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg></a>
-          <a href="https://x.com/himaayahschools" target="_blank" rel="noopener" aria-label="Himaayah Schools on X"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.24 2H21.5l-7.3 8.34L22.8 22h-6.73l-5.27-6.9L4.7 22H1.4l7.8-8.92L1 2h6.9l4.76 6.3L18.24 2zm-1.18 18h1.86L7.03 3.9H5.03L17.06 20z"/></svg></a>
-        </div>
-      </div>
-      <div class="f-cols">
-        <div class="f-col"><h4>Programmes</h4>
-          <a href="teenagers-building-circle.html">Teenagers Building Circle</a>
-          <a href="madrasah.html">Madrasah</a>
-          <a href="academy.html">Academy</a>
-          <a href="skills-school.html">Skills School</a>
-        </div>
-        <div class="f-col"><h4>Site</h4>
-          <a href="index.html">Home</a>
-          <a href="about.html">About</a>
-          <a href="exam-calendars.html">Exam Calendars</a>
-          <a href="faq.html">FAQ</a>
-          <a href="contact.html">Contact</a>
-          <a href="policies.html">Policies</a>
-          <a href="enroll.html">Enroll</a>
-        </div>
-        <div class="f-col"><h4>Contact</h4>
-          <a href="mailto:himaayahschools@gmail.com">himaayahschools@gmail.com</a>
-          <a href="tel:+2348066043320">+234 806 604 3320</a>
-          <a href="tel:+2347025842849">+234 702 584 2849</a>
-          <span>Ilorin, Nigeria</span>
-        </div>
-      </div>
-    </div>
-    <div class="f-bottom">© 2026 Himaayah Schools.</div>
-  </div>
-</footer>
-
-<script>
-  const t = document.getElementById('navToggle'), l = document.getElementById('navLinks');
-  t.addEventListener('click', () => { const o = l.classList.toggle('open'); t.setAttribute('aria-expanded', o); });
-
-  const tabs = document.querySelectorAll('.seg button'), grids = document.querySelectorAll('.plan-grid');
-  tabs.forEach((b) => b.addEventListener('click', () => {
-    tabs.forEach((x) => x.setAttribute('aria-selected', String(x === b)));
-    grids.forEach((g) => g.classList.toggle('active', g.dataset.grid === b.dataset.mode));
-  }));
-
-  const LEVELS = [
-    { n: 'Rawdah', tag: 'Open entry', note: 'No minimum score. A short placement conversation instead.', goal: 'Read and write the Arabic letters, and begin the basics of worship', intro: 'For those who can\u2019t read and write at all. Nothing is assumed, and we start from the very first letter.', reqs: [
-      'No prior Arabic reading or writing is needed.', 'Be ready to learn the Arabic letters from the beginning: their names, sounds and shapes.',
-      'Be able to sit and follow a teacher for a full class. Younger students should have a parent or guardian nearby.',
-      'Commit to all four classes each week and a little practice every day.', 'Take a short placement conversation with a teacher, so we know this is the right starting point.' ] },
-    { n: 'Tamheedi', tag: 'Open entry', note: 'No minimum score. A short placement check instead.', goal: 'Confident letters and words, and the first steps in memorisation', intro: 'For those who are just starting madrasah. The bridge between knowing nothing and the first Ibtidā\u2019iyyah level.', reqs: [
-      'Be just beginning formal madrasah studies.', 'Recognise some Arabic letters, or be ready to learn them quickly alongside the class.',
-      'Be able to listen to a teacher and repeat short phrases and duʿāʾ.', 'Have begun, or be ready to begin, the basics of wuḍūʾ and ṣalāh.',
-      'Commit to all four classes each week and to revising at home.', 'Take a short placement check, so we put the student at the right level: Tamheedi or Awwal Ibtidā\u2019iyyah.' ] },
-    { n: 'Awwal Ibtidā\u2019iyyah', s: 75, goal: 'Basic Arabic + basic Islamic knowledge', reqs: [
-      'Recognise and pronounce the Arabic letters correctly.', 'Read simple Arabic words.', 'Write the Arabic letters and simple words.',
-      'Have basic knowledge of Ṣalāh, Ṭahārah and Islamic manners.', 'Show the ability and readiness to begin formal Arabic and Islamic studies.' ] },
-    { n: 'Thāniyah Ibtidā\u2019iyyah', s: 80, goal: 'Foundational reading + basic memorisation', reqs: [
-      'Have memorised 10 Hadeeth of an-Nawawī.', 'Have basic familiarity with short Islamic texts and adhkār.', 'Recognise and read Arabic letters and words.',
-      'Write simple Arabic words.', 'Show a basic understanding of Islamic manners, worship and creed.' ] },
-    { n: 'Thālithah Ibtidā\u2019iyyah', s: 85, goal: 'Developing Arabic + more memorisation', reqs: [
-      'Have memorised 15 Hadeeth of an-Nawawī.', 'Know the basic principles of al-Uṣūl ath-Thalāthah. Completing the book is an added advantage, as our students have completed it at this stage.',
-      'Have completed the introductory portion of Durūs al-Lughah al-ʿArabiyyah.', 'Read Arabic with reasonable fluency.', 'Write simple Arabic words and sentences.' ] },
-    { n: 'Rābiʿah Ibtidā\u2019iyyah', s: 90, goal: 'Strong foundation + substantial memorisation', reqs: [
-      'Have memorised 20 Hadeeth of an-Nawawī.', 'Have memorised al-Uṣūl ath-Thalāthah.', 'Have completed the first series of Durūs al-Lughah al-ʿArabiyyah.',
-      'Read Arabic fluently.', 'Write basic Arabic sentences correctly.' ] },
-    { n: 'Awwal Iʿdādiyyah', s: 90, goal: '90% + serious pre-existing Arabic and Islamic foundation', strict: 'These requirements are non-negotiable, because the Iʿdādiyyah curriculum is built on the assumption that students already possess this foundation.', reqs: [
-      'Have memorised the Forty Aḥādīth of an-Nawawī.', 'Have memorised al-Uṣūl ath-Thalāthah of Shaykh Muḥammad ibn ʿAbd al-Wahhāb.', 'Have memorised Lāmiyyah of Ibn Taymiyyah.',
-      'Have memorised the prescribed Dīwān of Imām ash-Shāfiʿī.', 'Have completed both series of Durūs al-Lughah al-ʿArabiyyah.', 'Read and write Arabic well.' ] },
-  ];
-  const tabsEl = document.getElementById('lvlTabs'), panel = document.getElementById('lvlPanel'), journey = document.getElementById('journey');
-  function showLevel(i) {
-    const v = LEVELS[i];
-    tabsEl.querySelectorAll('.tab').forEach((b, j) => b.setAttribute('aria-selected', String(j === i)));
-    panel.innerHTML = `<div class="lvl">
-      <div class="score">${v.s ? `<b>${v.s}%</b><span>Minimum admission score</span>` : `<b style="font-size:40px">${v.tag}</b><span>${v.note || 'Entry level'}</span>`}
-        ${v.goal ? `<div class="goal">${v.goal}</div>` : ''}</div>
-      <div><h3>${v.n}</h3>
-        ${v.intro ? `<p class="intro">${v.intro}</p>` : '<p class="intro">A student must meet all of the following:</p>'}
-        ${v.reqs.length ? `<ul>${v.reqs.map((r) => `<li>${r}</li>`).join('')}</ul>` : ''}
-        ${v.strict ? `<div class="strict">${v.strict}</div>` : ''}</div></div>`;
-    journey.innerHTML = LEVELS.map((l, j) => `<i class="${j === i ? 'on' : ''}">${l.n}</i>`).join(' → ');
-  }
-  LEVELS.forEach((v, i) => {
-    const b = document.createElement('button');
-    b.type = 'button'; b.className = 'tab'; b.setAttribute('role', 'tab'); b.textContent = v.n;
-    b.addEventListener('click', () => showLevel(i));
-    tabsEl.appendChild(b);
-  });
-  showLevel(2);
-  (function () {
-    const dd = document.querySelector('.dd'); if (!dd) return;
-    const b = dd.querySelector('.dd-btn');
-    b.addEventListener('click', () => { const o = dd.classList.toggle('open'); b.setAttribute('aria-expanded', o); });
-  })();
-</script>
-
-<div class="wa-widget" id="waWidget">
-  <div class="wa-menu" id="waMenu">
-    <a href="https://wa.me/2348066043320?text=Assalaamu%20alaykum.%20I%27d%20like%20to%20ask%20about%20Himaayah%20Schools." target="_blank" rel="noopener">Chat on WhatsApp <small>+234 806 604 3320</small></a>
-    <a href="https://wa.me/2347025842849?text=Assalaamu%20alaykum.%20I%27d%20like%20to%20ask%20about%20Himaayah%20Schools." target="_blank" rel="noopener">Chat on WhatsApp <small>+234 702 584 2849</small></a>
-  </div>
-  <button type="button" class="wa-fab" id="waBtn" aria-expanded="false" aria-controls="waMenu" aria-label="Chat with us on WhatsApp">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.7-5.2A8.5 8.5 0 1 1 21 11.5z"/></svg>
-    <span>Chat with us</span>
-  </button>
+<section class="sec" id="plans"><div class="wrap">
+<div class="head"><h2 class="t">Pick how you want to learn.</h2>
+<div class="seg" role="tablist" aria-label="Class format"><button type="button" role="tab" aria-selected="true" data-m="group">Group</button><button type="button" role="tab" aria-selected="false" data-m="personal">Personal</button></div></div>
+<div class="pg on" data-g="group">
+<article class="plan"><h3>Hifdh Only</h3><ul><li>Qur'an memorisation and tajweed, with murajaah built in</li><li>Small group, four classes weekly, with tests and exams</li></ul>
+<div class="foot"><div class="price"><b>₦12,000</b> <span>/ month</span></div><a href="enroll.html?programme=madrasah&amp;plan=hifdh-group" class="btn btn-ink">Enroll now</a></div></article>
+<article class="plan f"><h3>Full Madrasah</h3><ul><li>Hifdh and tajweed taught with Tawheed, fiqh, Arabiyyah, Ṣarf, Naḥw and seerah</li><li>Four classes weekly, group setting</li></ul>
+<p class="note">Completed your hifdh elsewhere? You pay ₦15,000 a month.</p>
+<div class="foot"><div class="price"><b>₦20,000</b> <span>/ month</span></div><a href="enroll.html?programme=madrasah&amp;plan=full-group" class="btn btn-sky">Enroll now</a></div></article>
 </div>
+<div class="pg" data-g="personal">
+<article class="plan"><h3>Hifdh Only</h3><ul><li>One-on-one Qur'an memorisation and tajweed</li><li>Pace set entirely to the student</li></ul>
+<div class="foot"><div class="price"><b>₦20,000</b> <span>/ month</span></div><a href="enroll.html?programme=madrasah&amp;plan=hifdh-personal" class="btn btn-ink">Enroll now</a></div></article>
+<article class="plan f"><h3>Full Madrasah</h3><ul><li>Hifdh and Islamic studies combined</li><li>Taught entirely one-on-one</li></ul>
+<div class="foot"><div class="price"><b>₦35,000</b> <span>/ month</span></div><a href="enroll.html?programme=madrasah&amp;plan=full-personal" class="btn btn-sky">Enroll now</a></div></article>
+</div>
+<div class="year"><div><h3>Want a clear finish line? Take the one-year Hifdh.</h3><p>A focused 12-month Qur'an memorisation track, with a milestone to reach and revise every month.</p></div>
+<div class="yc"><div class="price"><b>₦19,000</b> <span>/ month for 12 months</span></div><a href="enroll.html?programme=madrasah&amp;plan=one-year" class="btn btn-sky">Enroll now</a></div></div>
+</div></section>
+
+<section class="had"><p>Whoever follows a path in pursuit of knowledge, Allah will make easy for him a path to Paradise.</p><span>Ṣaḥīḥ Muslim</span></section>
+
+<section class="sec"><div class="wrap">
+<div class="head"><h2 class="t">Your path through the classes.</h2><p>Start at the level that fits. Each level builds on the one before.</p></div>
+<div class="path">
+<div class="st"><b>Rawdah</b><span>For those who can't read and write at all. We start from the first letter.</span></div>
+<div class="st"><b>Tamheedi</b><span>For those just starting madrasah. The bridge into the first Ibtidāʾiyyah level.</span></div>
+<div class="st"><b>Awwal to Rābiʿah Ibtidāʾiyyah</b><span>Four levels building Arabic, memorisation and Islamic knowledge step by step.</span></div>
+<div class="st"><b>Awwal to Thāniy Iʿdādiyyah</b><span>For students who already have a serious Arabic and Islamic foundation.</span></div>
+</div></div></section>
+
+<section class="sec"><div class="wrap">
+<h2 class="t">Admission requirements by level.</h2>
+<p class="head" style="margin:12px 0 0;color:var(--muted)">Each level has a minimum admission score and things a student must already know. Pick a level to see them.</p>
+<div class="tabs" id="tabs" role="tablist" aria-label="Class level"></div>
+<div id="panel" role="tabpanel"></div>
+</div></section>
+
+<section class="sec"><div class="wrap">
+<div class="head" style="justify-content:center;text-align:center"><h2 class="t">Questions, answered.</h2></div>
+<div class="faq">
+<details><summary>How do I enroll?</summary><p>Choose a plan and select Enroll now. Complete the three enrolment steps, pay by bank transfer, then send your receipt to us on WhatsApp.</p></details>
+<details><summary>How do I pay?</summary><p>Pay by bank transfer and send the receipt on WhatsApp. Card payment is coming soon. Payment is made once a month, in a single payment.</p></details>
+<details><summary>Where are classes held?</summary><p>Classes are held on Google Meet and Telegram.</p></details>
+<details><summary>When will my teacher be assigned?</summary><p>Immediately after payment, a Hifdh student is assigned to a teacher.</p></details>
+<details><summary>How does the madrasah year work?</summary><p>We run two semesters in a year. Each semester is four months.</p></details>
+<details><summary>Who can join?</summary><p>From school age to adults, depending on the plan. Each level lists what a student should already know.</p></details>
+<details><summary>Can I change my plan?</summary><p>Once your payment is confirmed, the plan can't be changed, so choose the plan that fits before you pay. If you are unsure, message us on WhatsApp first.</p></details>
+<details><summary>Can I get a refund?</summary><p>Refunds can't be made after a week of classes.</p></details>
+</div></div></section>
+
+<section class="cta"><h2>Start the Qur'an at the right level, with the right teacher.</h2><p>Pick a plan and enroll today.</p><a href="enroll.html?programme=madrasah" class="btn btn-sky">Enroll now</a></section>
+
+<footer><div class="wrap">
+<div class="ft"><div class="fb"><a class="brand" href="index.html"><svg width="24" height="30" fill="#85CCFF" aria-hidden="true"><use href="#lg"/></svg>Himaayah Schools</a><p>Raising the next generation with deen, knowledge, and purpose.</p></div>
+<div class="fc"><div><h4>Programmes</h4><a href="teenagers-building-circle.html">Teenagers Building Circle</a><a href="madrasah.html">Madrasah</a><a href="academy.html">Academy</a><a href="skills-school.html">Skills School</a></div>
+<div><h4>Site</h4><a href="index.html">Home</a><a href="about.html">About</a><a href="exam-calendars.html">Exam Calendars</a><a href="faq.html">FAQ</a><a href="contact.html">Contact</a><a href="policies.html">Policies</a><a href="enroll.html">Enroll</a></div>
+<div><h4>Contact</h4><a href="mailto:himaayahschools@gmail.com">himaayahschools@gmail.com</a><a href="tel:+2348066043320">+234 806 604 3320</a><a href="tel:+2347025842849">+234 702 584 2849</a><span>Ilorin, Nigeria</span></div></div></div>
+<div class="fbot">© 2026 Himaayah Schools.</div></div></footer>
+
+<div class="wa" id="wa"><div class="wam">
+<a href="https://wa.me/2348066043320?text=Assalaamu%20alaykum.%20I%27d%20like%20to%20ask%20about%20Himaayah%20Schools." target="_blank" rel="noopener">Chat on WhatsApp <small>+234 806 604 3320</small></a>
+<a href="https://wa.me/2347025842849?text=Assalaamu%20alaykum.%20I%27d%20like%20to%20ask%20about%20Himaayah%20Schools." target="_blank" rel="noopener">Chat on WhatsApp <small>+234 702 584 2849</small></a></div>
+<button type="button" class="wab" id="wab" aria-expanded="false" aria-label="Chat with us on WhatsApp"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.7-5.2A8.5 8.5 0 1 1 21 11.5z"/></svg><span>Chat with us</span></button></div>
+
 <script>
-  (function () {
-    const w = document.getElementById('waWidget'), b = document.getElementById('waBtn');
-    b.addEventListener('click', () => { const o = w.classList.toggle('open'); b.setAttribute('aria-expanded', o); });
-    document.addEventListener('click', (e) => { if (!w.contains(e.target)) { w.classList.remove('open'); b.setAttribute('aria-expanded', 'false'); } });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { w.classList.remove('open'); b.setAttribute('aria-expanded', 'false'); b.focus(); } });
-  })();
+const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s);
+$('#tog').onclick=e=>{const o=$('#links').classList.toggle('open');e.currentTarget.setAttribute('aria-expanded',o)};
+const dd=$('.dd');dd.querySelector('.dd-btn').onclick=e=>{const o=dd.classList.toggle('open');e.currentTarget.setAttribute('aria-expanded',o)};
+$$('.seg button').forEach(b=>b.onclick=()=>{$$('.seg button').forEach(x=>x.setAttribute('aria-selected',x===b));$$('.pg').forEach(g=>g.classList.toggle('on',g.dataset.g===b.dataset.m))});
+const L=[
+{n:'Rawdah',tag:'Open entry',note:'No minimum score. A short placement conversation instead.',goal:'Read and write the Arabic letters, and begin the basics of worship',r:['No prior Arabic reading or writing is needed.','Be ready to learn the Arabic letters from the beginning: names, sounds and shapes.','Be able to sit and follow a teacher for a full class. Younger students should have a parent or guardian nearby.','Commit to all four classes each week and a little practice every day.','Take a short placement conversation with a teacher.']},
+{n:'Tamheedi',tag:'Open entry',note:'No minimum score. A short placement check instead.',goal:'Confident letters and words, and the first steps in memorisation',r:['Be just beginning formal madrasah studies.','Recognise some Arabic letters, or be ready to learn them quickly alongside the class.','Listen to a teacher and repeat short phrases and duʿāʾ.','Have begun, or be ready to begin, the basics of wuḍūʾ and ṣalāh.','Commit to all four classes each week and to revising at home.','Take a short placement check, so we place the student at Tamheedi or Awwal Ibtidāʾiyyah.']},
+{n:'Awwal Ibtidāʾiyyah',s:75,goal:'Basic Arabic + basic Islamic knowledge',r:['Recognise and pronounce the Arabic letters correctly.','Read simple Arabic words.','Write the Arabic letters and simple words.','Have basic knowledge of Ṣalāh, Ṭahārah and Islamic manners.','Show the ability and readiness to begin formal Arabic and Islamic studies.']},
+{n:'Thāniyah Ibtidāʾiyyah',s:80,goal:'Foundational reading + basic memorisation',r:['Have memorised 10 Hadeeth of an-Nawawī.','Have basic familiarity with short Islamic texts and adhkār.','Recognise and read Arabic letters and words.','Write simple Arabic words.','Show a basic understanding of Islamic manners, worship and creed.']},
+{n:'Thālithah Ibtidāʾiyyah',s:85,goal:'Developing Arabic + more memorisation',r:['Have memorised 15 Hadeeth of an-Nawawī.','Know the basic principles of al-Uṣūl ath-Thalāthah. Completing the book is an added advantage.','Have completed the introductory portion of Durūs al-Lughah al-ʿArabiyyah.','Read Arabic with reasonable fluency.','Write simple Arabic words and sentences.']},
+{n:'Rābiʿah Ibtidāʾiyyah',s:90,goal:'Strong foundation + substantial memorisation',r:['Have memorised 20 Hadeeth of an-Nawawī.','Have memorised al-Uṣūl ath-Thalāthah.','Have completed the first series of Durūs al-Lughah al-ʿArabiyyah.','Read Arabic fluently.','Write basic Arabic sentences correctly.']},
+{n:'Awwal Iʿdādiyyah',s:90,goal:'90% + serious pre-existing Arabic and Islamic foundation',strict:'These requirements are non-negotiable, because the Iʿdādiyyah curriculum assumes students already have this foundation.',r:['Have memorised the Forty Aḥādīth of an-Nawawī.','Have memorised al-Uṣūl ath-Thalāthah of Shaykh Muḥammad ibn ʿAbd al-Wahhāb.','Have memorised Lāmiyyah of Ibn Taymiyyah.','Have memorised the prescribed Dīwān of Imām ash-Shāfiʿī.','Have completed both series of Durūs al-Lughah al-ʿArabiyyah.','Read and write Arabic well.']}];
+function show(i){const v=L[i];$$('.tab').forEach((b,j)=>b.setAttribute('aria-selected',j===i));
+$('#panel').innerHTML=`<div class="lvl"><div class="sc">${v.s?`<b>${v.s}%</b><span>Minimum admission score</span>`:`<b style="font-size:38px">${v.tag}</b><span>${v.note}</span>`}<div class="goal">${v.goal}</div></div><div><h3>${v.n}</h3><p class="in">A student must meet all of the following:</p><ul>${v.r.map(x=>`<li>${x}</li>`).join('')}</ul>${v.strict?`<div class="strict">${v.strict}</div>`:''}</div></div>`}
+L.forEach((v,i)=>{const b=document.createElement('button');b.type='button';b.className='tab';b.setAttribute('role','tab');b.textContent=v.n;b.onclick=()=>show(i);$('#tabs').appendChild(b)});show(2);
+const A={'Ṣarf':'الصرف','Seerah':'السيرة','Naḥw':'النحو','Hadeeth':'الحديث','Tawheed':'التوحيد','Fiqh':'الفقه','Matn':'المتن','Arabiyyah':'اللغة العربية','Tajweed':'التجويد','Maḥfūẓah':'المحفوظة','Tārīkh':'التاريخ','Muṣṭalaḥ al-Ḥadīth':'مصطلح الحديث','Balāghah':'البلاغة','Qirāʾah':'القراءة','Tafseer':'التفسير','Qawāʿid al-Imlāʾ':'قواعد الإملاء'};
+const SJ=[['Rawdah',['Arabiyyah','Qirāʾah','Hadeeth','Fiqh']],
+['Tamheedi',['Arabiyyah','Qirāʾah','Hadeeth','Fiqh']],
+['Awwal Ibtidāʾiyyah',['Ṣarf','Seerah','Naḥw','Hadeeth','Tafseer','Tawheed','Fiqh','Matn','Arabiyyah','Tajweed']],
+['Thāniyah Ibtidāʾiyyah',['Ṣarf','Seerah','Naḥw','Hadeeth','Tawheed','Fiqh','Matn','Arabiyyah','Tajweed','Maḥfūẓah']],
+['Thālithah Ibtidāʾiyyah',['Ṣarf','Seerah','Naḥw','Hadeeth','Tawheed','Fiqh','Arabiyyah','Tajweed','Maḥfūẓah']],
+['Rābiʿah Ibtidāʾiyyah',['Ṣarf','Seerah','Naḥw','Hadeeth','Tawheed','Fiqh','Arabiyyah','Tajweed','Maḥfūẓah','Qawāʿid al-Imlāʾ']],
+['Awwal Iʿdādiyyah',['Tārīkh','Naḥw','Hadeeth','Muṣṭalaḥ al-Ḥadīth','Tawheed','Fiqh','Balāghah','Tajweed']],
+['Thāniy Iʿdādiyyah',['Tārīkh','Naḥw','Hadeeth','Muṣṭalaḥ al-Ḥadīth','Tawheed','Fiqh','Balāghah','Tajweed','Tafseer']]];
+function showSubj(i){$$('#stabs .tab').forEach((b,j)=>b.setAttribute('aria-selected',j===i));
+$('#sgrid').innerHTML=SJ[i][1].map(x=>`<div class="card"><i lang="ar">${A[x]}</i><b>${x}</b></div>`).join('')+'<div class="card go"><b>Ready to begin?</b><a class="btn btn-sky" href="enroll.html?programme=madrasah">Enroll now</a></div>'}
+SJ.forEach((v,i)=>{const b=document.createElement('button');b.type='button';b.className='tab';b.setAttribute('role','tab');b.textContent=v[0];b.onclick=()=>showSubj(i);$('#stabs').appendChild(b)});showSubj(0);
+const w=$('#wa'),wb=$('#wab');wb.onclick=()=>{wb.setAttribute('aria-expanded',w.classList.toggle('open'))};
+document.addEventListener('click',e=>{if(!w.contains(e.target)){w.classList.remove('open');wb.setAttribute('aria-expanded',false)}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){w.classList.remove('open');wb.setAttribute('aria-expanded',false)}});
 </script>
 </body>
 </html>
