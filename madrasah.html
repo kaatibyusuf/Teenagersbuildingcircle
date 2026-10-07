@@ -145,7 +145,7 @@ footer{margin:16px 16px 0;background:var(--deep);color:rgba(255,255,255,.65);bor
 <a class="home" href="index.html" aria-label="Back to home"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Home</a>
 
 <header class="hero"><div class="hero-frame"><div class="hero-copy">
-<h1>Learn the Qur'an with care, structure, and a teacher who knows your pace.</h1>
+<h1>Learn the Qur'an and deen with care, and structure.</h1>
 <p>Qur'an memorisation and tajweed, with Islamic studies alongside. Choose a small group or one-on-one, four classes every week.</p>
 <div class="acts"><a href="#plans" class="btn btn-sky">See the plans</a><a href="enroll.html?programme=madrasah" class="btn btn-ghost">Enroll now</a></div>
 </div></div></header>
@@ -244,8 +244,8 @@ const L=[
 {n:'Rawdah',tag:'Open entry',note:'No minimum score. A short placement conversation instead.',goal:'Read and write the Arabic letters, and begin the basics of worship',r:['No prior Arabic reading or writing is needed.','Be ready to learn the Arabic letters from the beginning: names, sounds and shapes.','Be able to sit and follow a teacher for a full class. Younger students should have a parent or guardian nearby.','Commit to all four classes each week and a little practice every day.','Take a short placement conversation with a teacher.']},
 {n:'Tamheedi',tag:'Open entry',note:'No minimum score. A short placement check instead.',goal:'Confident letters and words, and the first steps in memorisation',r:['Be just beginning formal madrasah studies.','Recognise some Arabic letters, or be ready to learn them quickly alongside the class.','Listen to a teacher and repeat short phrases and duʿāʾ.','Have begun, or be ready to begin, the basics of wuḍūʾ and ṣalāh.','Commit to all four classes each week and to revising at home.','Take a short placement check, so we place the student at Tamheedi or Awwal Ibtidāʾiyyah.']},
 {n:'Awwal Ibtidāʾiyyah',s:75,goal:'Basic Arabic + basic Islamic knowledge',r:['Recognise and pronounce the Arabic letters correctly.','Read simple Arabic words.','Write the Arabic letters and simple words.','Have basic knowledge of Ṣalāh, Ṭahārah and Islamic manners.','Show the ability and readiness to begin formal Arabic and Islamic studies.']},
-{n:'Thāniyah Ibtidāʾiyyah',s:80,goal:'Foundational reading + basic memorisation',r:['Have memorised 10 Hadeeth of an-Nawawī.','Have basic familiarity with short Islamic texts and adhkār.','Recognise and read Arabic letters and words.','Write simple Arabic words.','Show a basic understanding of Islamic manners, worship and creed.']},
-{n:'Thālithah Ibtidāʾiyyah',s:85,goal:'Developing Arabic + more memorisation',r:['Have memorised 15 Hadeeth of an-Nawawī.','Know the basic principles of al-Uṣūl ath-Thalāthah. Completing the book is an added advantage.','Have completed the introductory portion of Durūs al-Lughah al-ʿArabiyyah.','Read Arabic with reasonable fluency.','Write simple Arabic words and sentences.']},
+{n:'Thāniy Ibtidāʾiyyah',s:80,goal:'Foundational reading + basic memorisation',r:['Have memorised 10 Hadeeth of an-Nawawī.','Have basic familiarity with short Islamic texts and adhkār.','Recognise and read Arabic letters and words.','Write simple Arabic words.','Show a basic understanding of Islamic manners, worship and creed.']},
+{n:'Thālith Ibtidāʾiyyah',s:85,goal:'Developing Arabic + more memorisation',r:['Have memorised 15 Hadeeth of an-Nawawī.','Know the basic principles of al-Uṣūl ath-Thalāthah. Completing the book is an added advantage.','Have completed the introductory portion of Durūs al-Lughah al-ʿArabiyyah.','Read Arabic with reasonable fluency.','Write simple Arabic words and sentences.']},
 {n:'Rābiʿah Ibtidāʾiyyah',s:90,goal:'Strong foundation + substantial memorisation',r:['Have memorised 20 Hadeeth of an-Nawawī.','Have memorised al-Uṣūl ath-Thalāthah.','Have completed the first series of Durūs al-Lughah al-ʿArabiyyah.','Read Arabic fluently.','Write basic Arabic sentences correctly.']},
 {n:'Awwal Iʿdādiyyah',s:90,goal:'90% + serious pre-existing Arabic and Islamic foundation',strict:'These requirements are non-negotiable, because the Iʿdādiyyah curriculum assumes students already have this foundation.',r:['Have memorised the Forty Aḥādīth of an-Nawawī.','Have memorised al-Uṣūl ath-Thalāthah of Shaykh Muḥammad ibn ʿAbd al-Wahhāb.','Have memorised Lāmiyyah of Ibn Taymiyyah.','Have memorised the prescribed Dīwān of Imām ash-Shāfiʿī.','Have completed both series of Durūs al-Lughah al-ʿArabiyyah.','Read and write Arabic well.']}];
 function show(i){const v=L[i];$$('.tab').forEach((b,j)=>b.setAttribute('aria-selected',j===i));
@@ -254,12 +254,12 @@ L.forEach((v,i)=>{const b=document.createElement('button');b.type='button';b.cla
 const A={'Ṣarf':'الصرف','Seerah':'السيرة','Naḥw':'النحو','Hadeeth':'الحديث','Tawheed':'التوحيد','Fiqh':'الفقه','Matn':'المتن','Arabiyyah':'اللغة العربية','Tajweed':'التجويد','Maḥfūẓah':'المحفوظة','Tārīkh':'التاريخ','Muṣṭalaḥ al-Ḥadīth':'مصطلح الحديث','Balāghah':'البلاغة','Qirāʾah':'القراءة','Tafseer':'التفسير','Qawāʿid al-Imlāʾ':'قواعد الإملاء'};
 const SJ=[['Rawdah',['Arabiyyah','Qirāʾah','Hadeeth','Fiqh']],
 ['Tamheedi',['Arabiyyah','Qirāʾah','Hadeeth','Fiqh']],
-['Awwal Ibtidāʾiyyah',['Ṣarf','Seerah','Naḥw','Hadeeth','Tafseer','Tawheed','Fiqh','Matn','Arabiyyah','Tajweed']],
-['Thāniyah Ibtidāʾiyyah',['Ṣarf','Seerah','Naḥw','Hadeeth','Tawheed','Fiqh','Matn','Arabiyyah','Tajweed','Maḥfūẓah']],
-['Thālithah Ibtidāʾiyyah',['Ṣarf','Seerah','Naḥw','Hadeeth','Tawheed','Fiqh','Arabiyyah','Tajweed','Maḥfūẓah']],
-['Rābiʿah Ibtidāʾiyyah',['Ṣarf','Seerah','Naḥw','Hadeeth','Tawheed','Fiqh','Arabiyyah','Tajweed','Maḥfūẓah','Qawāʿid al-Imlāʾ']],
-['Awwal Iʿdādiyyah',['Tārīkh','Naḥw','Hadeeth','Muṣṭalaḥ al-Ḥadīth','Tawheed','Fiqh','Balāghah','Tajweed']],
-['Thāniy Iʿdādiyyah',['Tārīkh','Naḥw','Hadeeth','Muṣṭalaḥ al-Ḥadīth','Tawheed','Fiqh','Balāghah','Tajweed','Tafseer']]];
+['Awwal Ibtidāʾiyyah',['Ṣarf','Seerah','Naḥw','Hadeeth','Tawheed','Fiqh','Matn','Arabiyyah','Tajweed']],
+['Thāniy Ibtidāʾiyyah',['Ṣarf','Seerah','Naḥw','Hadeeth','Tawheed','Fiqh','Matn','Arabiyyah','Tajweed','Maḥfūẓah']],
+['Thālith Ibtidāʾiyyah',['Ṣarf','Seerah','Naḥw','Hadeeth','Tawheed','Fiqh','Arabiyyah','Tajweed','Maḥfūẓah']],
+['Rābiʿah Ibtidāʾiyyah',['Ṣarf','Seerah','Naḥw','Hadeeth','Tawheed','Fiqh','Arabiyyah','Tajweed','Maḥfūẓah','Qawāʿidul-Imlāʾ']],
+['Awwal Iʿdādiyyah',['Tārīkh','Naḥw','Hadeeth','Muṣṭalaḥul-Ḥadīth','Tawheed','Fiqh','Balāghah','Tafseer','Tajweed']],
+['Thāniy Iʿdādiyyah',['Tārīkh','Naḥw','Hadeeth','Muṣṭalaḥul-Ḥadīth','Tawheed','Fiqh','Balāghah','Tajweed','Tafseer']]];
 function showSubj(i){$$('#stabs .tab').forEach((b,j)=>b.setAttribute('aria-selected',j===i));
 $('#sgrid').innerHTML=SJ[i][1].map(x=>`<div class="card"><i lang="ar">${A[x]}</i><b>${x}</b></div>`).join('')+'<div class="card go"><b>Ready to begin?</b><a class="btn btn-sky" href="enroll.html?programme=madrasah">Enroll now</a></div>'}
 SJ.forEach((v,i)=>{const b=document.createElement('button');b.type='button';b.className='tab';b.setAttribute('role','tab');b.textContent=v[0];b.onclick=()=>showSubj(i);$('#stabs').appendChild(b)});showSubj(0);

@@ -78,7 +78,8 @@
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
-  <loc>https://www.himaayahschools.com/administrators.html</loc>
+  <url>
+    <loc>https://www.himaayahschools.com/administrators.html</loc>
     <lastmod>2026-10-06</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
