@@ -60,7 +60,7 @@
   /* Hero */
   .hero { padding: 100px 16px 0; }
   .hero-frame { position: relative; max-width: 1400px; margin: 0 auto; min-height: 600px; border-radius: 40px; overflow: hidden; display: flex; align-items: flex-end; padding: 64px; color: #fff;
-    background: linear-gradient(180deg, rgba(6,47,77,.2) 0%, rgba(6,47,77,.93) 100%), url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=2000&q=80') center/cover; }
+    background: url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=2000&q=80') center/cover; box-shadow: inset 0 0 0 2000px rgba(6,47,77,.66); }
   .hero-copy { max-width: 760px; }
   .hero h1 { font-family: var(--display); font-weight: 700; font-size: clamp(38px, 6vw, 72px); line-height: 1.04; letter-spacing: -.025em; margin-bottom: 22px; }
   .hero p { font-size: 17px; color: rgba(255,255,255,.82); max-width: 52ch; margin-bottom: 34px; }
@@ -80,7 +80,7 @@
   @media (max-width: 560px) { .pillar-grid { grid-template-columns: 1fr; } }
   .pillar { position: relative; border-radius: var(--r-lg); overflow: hidden; min-height: 400px; display: flex; align-items: flex-end; color: #fff; isolation: isolate; }
   .pillar img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; transition: transform .6s ease; }
-  .pillar::after { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(6,47,77,0) 25%, rgba(6,47,77,.94) 100%); }
+  .pillar::after { content: ''; position: absolute; inset: 0; z-index: -1; background: rgba(6,47,77,.58); }
   .pillar:hover img { transform: scale(1.05); }
   .pillar div { padding: 26px; }
   .pillar h3 { font-family: var(--display); font-size: 24px; line-height: 1.15; margin-bottom: 8px; }
@@ -173,6 +173,7 @@
           <a href="skills-school.html">Skills School</a>
         </div>
       </div>
+      <a href="admissions.html">Admissions</a>
       <a href="about.html">About</a>
       <a href="success-stories.html">Success Stories</a>
       <a href="faq.html">FAQ</a>
@@ -214,7 +215,7 @@
         <div><h3>Deen</h3><p>Grounding in faith and practice that holds up outside the classroom, not just inside it.</p></div>
       </article>
       <article class="pillar">
-        <img src="https://images.unsplash.com/photo-1762512346988-045f4d5ad2b3?auto=format&fit=crop&w=700&q=80" alt="Students studying together at a long table in a library.">
+        <img src="https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=700&q=80" alt="Notebooks and a calculator arranged on a study table.">
         <div><h3>Educational Development</h3><p>Study habits and academic footing that carry into every other subject a student takes.</p></div>
       </article>
       <article class="pillar">
@@ -274,6 +275,7 @@
         </div>
         <div class="f-col"><h4>Site</h4>
           <a href="index.html">Home</a>
+          <a href="admissions.html">Admissions</a>
           <a href="about.html">About</a>
           <a href="exam-calendars.html">Exam Calendars</a>
           <a href="faq.html">FAQ</a>
