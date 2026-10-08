@@ -2,5 +2,7 @@ User-agent: *
 Allow: /
 Disallow: /payment-success.html
 Disallow: /404.html
+Disallow: /dashboard.html
+Disallow: /teacher.html
 
 Sitemap: https://www.himaayahschools.com/sitemap.xml

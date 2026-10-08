@@ -41,6 +41,7 @@ h2.t{font-family:var(--d);font-weight:700;font-size:clamp(28px,4vw,44px);line-he
 .dd:hover .dd-menu,.dd:focus-within .dd-menu,.dd.open .dd-menu{opacity:1;visibility:visible;transform:none}
 .dd-menu a{display:block;padding:12px 16px;border-radius:14px;font-size:14.5px;font-weight:500;color:var(--text)}
 .dd-menu a:hover,.dd-menu a[aria-current]{background:var(--wash);color:var(--ink)}
+.dd-r .dd-menu{left:auto;right:-18px;min-width:210px}
 @media(max-width:900px){.tog{display:block}
 .links{position:absolute;top:76px;left:20px;right:20px;flex-direction:column;align-items:stretch;gap:0;background:#fff;border-radius:24px;padding:8px 20px 20px;box-shadow:0 20px 40px -16px rgba(6,47,77,.4);display:none}
 .links.open{display:flex}.links a:not(.btn){padding:15px 0;border-bottom:1px solid var(--line)}.links .btn{margin-top:16px}
@@ -137,7 +138,8 @@ footer{margin:16px 16px 0;background:var(--deep);color:rgba(255,255,255,.65);bor
 <div class="links" id="links">
 <div class="dd cur"><button type="button" class="dd-btn" aria-haspopup="true" aria-expanded="false">Programmes <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
 <div class="dd-menu"><a href="teenagers-building-circle.html">Teenagers Building Circle</a><a href="madrasah.html" aria-current="page">Madrasah</a><a href="academy.html">Academy</a><a href="skills-school.html">Skills School</a></div></div>
-<a href="about.html">About</a><a href="success-stories.html">Success Stories</a><a href="faq.html">FAQ</a><a href="contact.html">Contact</a>
+<a href="about.html">About</a><a href="success-stories.html">Success Stories</a><a href="faq.html">FAQ</a><a href="contact.html">Contact</a><div class="dd dd-r"><button type="button" class="dd-btn" aria-haspopup="true" aria-expanded="false">Login <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+<div class="dd-menu"><a href="dashboard.html">Student login</a><a href="teacher.html">Teacher login</a></div></div>
 <a href="enroll.html?programme=madrasah" class="btn btn-ink">Enroll Now</a></div>
 <button class="tog" id="tog" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </div></nav>
@@ -219,6 +221,7 @@ footer{margin:16px 16px 0;background:var(--deep);color:rgba(255,255,255,.65);bor
 <details><summary>Who can join?</summary><p>From school age to adults, depending on the plan. Each level lists what a student should already know.</p></details>
 <details><summary>Can I change my plan?</summary><p>Once your payment is confirmed, the plan can't be changed, so choose the plan that fits before you pay. If you are unsure, message us on WhatsApp first.</p></details>
 <details><summary>Can I get a refund?</summary><p>Refunds can't be made after a week of classes.</p></details>
+<details><summary>How do I check my progress, payments and assignments?</summary><p>Sign in to the student dashboard with your Student ID and access code. We email these to you once your payment is confirmed.</p></details>
 </div></div></section>
 
 <section class="cta"><h2>Start the Qur'an at the right level, with the right teacher.</h2><p>Pick a plan and enroll today.</p><a href="enroll.html?programme=madrasah" class="btn btn-sky">Enroll now</a></section>
@@ -226,7 +229,7 @@ footer{margin:16px 16px 0;background:var(--deep);color:rgba(255,255,255,.65);bor
 <footer><div class="wrap">
 <div class="ft"><div class="fb"><a class="brand" href="index.html"><svg width="24" height="30" fill="#85CCFF" aria-hidden="true"><use href="#lg"/></svg>Himaayah Schools</a><p>Raising the next generation with deen, knowledge, and purpose.</p></div>
 <div class="fc"><div><h4>Programmes</h4><a href="teenagers-building-circle.html">Teenagers Building Circle</a><a href="madrasah.html">Madrasah</a><a href="academy.html">Academy</a><a href="skills-school.html">Skills School</a><a href="admissions.html">Admissions</a></div>
-<div><h4>Site</h4><a href="index.html">Home</a><a href="about.html">About</a><a href="exam-calendars.html">Exam Calendars</a><a href="faq.html">FAQ</a><a href="contact.html">Contact</a><a href="policies.html">Policies</a><a href="enroll.html">Enroll</a></div>
+<div><h4>Site</h4><a href="index.html">Home</a><a href="about.html">About</a><a href="exam-calendars.html">Exam Calendars</a><a href="faq.html">FAQ</a><a href="contact.html">Contact</a><a href="enroll.html">Enroll</a><a href="dashboard.html">Student Login</a><a href="teacher.html">Teacher Login</a><a href="policies.html">Policies</a><a href="enroll.html">Enroll</a></div>
 <div><h4>Contact</h4><a href="mailto:himaayahschools@gmail.com">himaayahschools@gmail.com</a><a href="tel:+2348066043320">+234 806 604 3320</a><a href="tel:+2347025842849">+234 702 584 2849</a><span>Ilorin, Nigeria</span></div></div></div>
 <div class="fbot">© 2026 Himaayah Schools.</div></div></footer>
 
@@ -238,7 +241,7 @@ footer{margin:16px 16px 0;background:var(--deep);color:rgba(255,255,255,.65);bor
 <script>
 const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s);
 $('#tog').onclick=e=>{const o=$('#links').classList.toggle('open');e.currentTarget.setAttribute('aria-expanded',o)};
-const dd=$('.dd');dd.querySelector('.dd-btn').onclick=e=>{const o=dd.classList.toggle('open');e.currentTarget.setAttribute('aria-expanded',o)};
+$$('.dd').forEach(dd=>dd.querySelector('.dd-btn').onclick=e=>{const o=dd.classList.toggle('open');e.currentTarget.setAttribute('aria-expanded',o);$$('.dd').forEach(x=>{if(x!==dd){x.classList.remove('open');x.querySelector('.dd-btn').setAttribute('aria-expanded',false)}})});
 $$('.seg button').forEach(b=>b.onclick=()=>{$$('.seg button').forEach(x=>x.setAttribute('aria-selected',x===b));$$('.pg').forEach(g=>g.classList.toggle('on',g.dataset.g===b.dataset.m))});
 const L=[
 {n:'Rawdah',tag:'Open entry',note:'No minimum score. A short placement conversation instead.',goal:'Read and write the Arabic letters, and begin the basics of worship',r:['No prior Arabic reading or writing is needed.','Be ready to learn the Arabic letters from the beginning: names, sounds and shapes.','Be able to sit and follow a teacher for a full class. Younger students should have a parent or guardian nearby.','Commit to all four classes each week and a little practice every day.','Take a short placement conversation with a teacher.']},

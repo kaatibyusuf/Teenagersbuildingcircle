@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teacher Dashboard | Himaayah Schools</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#094570">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--deep:#062F4D;--ink:#094570;--sky:#85CCFF;--sky-d:#3E97D9;--wash:#F1F7FC;--text:#0E2A3D;--muted:#55697B;--line:rgba(9,69,112,.12);--d:'Bricolage Grotesque','Inter',sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{font-family:'Inter',sans-serif;color:var(--text);background:var(--wash);line-height:1.55;-webkit-font-smoothing:antialiased;min-height:100vh}
+a{color:inherit;text-decoration:none}button,input,textarea,select{font:inherit}button{cursor:pointer;border:0;background:none}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,summary:focus-visible{outline:2px solid var(--sky-d);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 22px;font-size:14.5px;font-weight:600;border-radius:999px;transition:background .2s,color .2s}
+.btn:disabled{opacity:.6;cursor:default}
+.btn-ink{background:var(--ink);color:#fff}.btn-ink:hover{background:var(--deep)}
+.btn-sky{background:var(--sky);color:var(--deep)}.btn-sky:hover{background:#fff}
+.btn-line{border:1px solid var(--ink);color:var(--ink)}.btn-line:hover{background:var(--ink);color:#fff}
+.btn-sm{padding:8px 16px;font-size:13px}
+.top{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.top div{max-width:1200px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--d);font-weight:700;font-size:18px;color:var(--ink)}
+.top nav{display:flex;gap:10px;align-items:center}.top .btn{padding:10px 18px;font-size:13.5px}
+.wrap{max-width:1200px;margin:0 auto;padding:24px}
+/* login */
+.login{min-height:calc(100vh - 62px);display:grid;place-items:center;padding:24px}
+.lbox{width:100%;max-width:440px;background:#fff;border-radius:32px;padding:40px;box-shadow:0 30px 60px -40px rgba(6,47,77,.5)}
+.lbox h1{font-family:var(--d);font-size:34px;line-height:1.08;letter-spacing:-.02em;color:var(--deep);margin-bottom:8px}.lbox>p{color:var(--muted);margin-bottom:24px;font-size:15px}
+.f{margin-bottom:14px}.f label,.fl{display:block;font-size:13px;font-weight:600;color:var(--deep);margin-bottom:6px}
+.in,.f input{width:100%;padding:12px 14px;border-radius:14px;border:1.5px solid transparent;background:var(--wash);font-size:14.5px}
+.f input{padding:14px 16px;font-size:15px}
+.in:focus,.f input:focus{outline:none;border-color:var(--ink);background:#fff}
+textarea.in{resize:vertical}
+.err{color:#B42318;font-size:13.5px;min-height:20px;margin:4px 0 10px}.lbox .btn{width:100%}
+.demo{background:var(--wash);border-radius:14px;padding:10px 14px;font-size:13px;color:var(--deep);margin-bottom:16px}
+/* layout */
+.greet{background:var(--ink);color:#fff;border-radius:32px;padding:32px 40px;display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap}
+.greet small{color:var(--sky);font-weight:600;font-size:14px}.greet h1{font-family:var(--d);font-size:clamp(26px,3.6vw,40px);line-height:1.08;letter-spacing:-.02em;margin:4px 0 12px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}.chips span{font-size:13px;font-weight:600;padding:7px 14px;border-radius:999px;background:rgba(255,255,255,.14)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:16px 0}
+.tabs button{padding:11px 20px;border-radius:999px;background:#fff;color:var(--muted);font-weight:600;font-size:14px;transition:background .2s,color .2s}
+.tabs button:hover{color:var(--ink)}.tabs button[aria-selected=true]{background:var(--ink);color:#fff}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+.c{background:#fff;border-radius:28px;padding:28px;grid-column:span 6;animation:up .4s cubic-bezier(.2,.7,.2,1) backwards}
+.c.w12{grid-column:span 12}.c.w8{grid-column:span 8}.c.w4{grid-column:span 4}
+@media(max-width:1000px){.c,.c.w8,.c.w4{grid-column:span 12}}@media(max-width:700px){.greet{padding:26px 22px}.c{padding:22px}}
+@keyframes up{from{opacity:0;transform:translateY(14px)}}
+.c h2{font-family:var(--d);font-size:20px;color:var(--deep);margin-bottom:6px}.c>.sub{margin-bottom:14px}
+.sub{color:var(--muted);font-size:14px}.k{font-size:12.5px;font-weight:700;color:var(--sky-d);margin-bottom:4px}
+.pill{display:inline-block;font-size:12.5px;font-weight:700;padding:5px 12px;border-radius:999px;white-space:nowrap}
+.p-ink{background:var(--ink);color:#fff}.p-sky{background:var(--sky);color:var(--deep)}.p-red{background:#FEE4E2;color:#B42318}.p-wash{background:var(--wash);color:var(--muted)}.p-dash{background:#fff;color:var(--ink);border:1.5px dashed var(--ink)}
+.lnk{color:var(--ink);font-weight:600;border-bottom:1px solid var(--sky-d)}
+.empty{color:var(--muted);font-size:14px}
+/* forms */
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.row3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media(max-width:640px){.row2,.row3{grid-template-columns:1fr}}
+.frm{display:grid;gap:12px;margin-top:6px}
+.frm .btn{justify-self:start}
+.inline{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.inline .in{flex:1;min-width:120px}
+/* attendance */
+.alist{display:grid;gap:8px;margin:12px 0 16px;max-height:520px;overflow:auto}
+.arow{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 14px;background:var(--wash);border-radius:16px;flex-wrap:wrap}
+.arow b{display:block;color:var(--deep);font-size:14.5px}.arow small{color:var(--muted);font-size:12.5px}
+.segb{display:flex;gap:4px;flex-wrap:wrap}
+.segb button{padding:7px 12px;border-radius:999px;background:#fff;font-size:12.5px;font-weight:600;color:var(--muted)}
+.segb button.on{background:var(--ink);color:#fff}
+.bar2{display:flex;gap:10px;align-items:end;flex-wrap:wrap;margin-top:10px}.bar2>div{min-width:170px}
+.pick{display:grid;gap:6px;margin:10px 0 14px;max-height:240px;overflow:auto}
+.pick label{display:flex;gap:10px;align-items:center;font-size:14px;padding:8px 12px;background:var(--wash);border-radius:12px;cursor:pointer}
+.pick input{width:17px;height:17px;accent-color:var(--ink)}
+/* lists */
+.list{list-style:none;display:grid;gap:8px}
+.list li{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:11px 14px;background:var(--wash);border-radius:14px;font-size:14px}
+.list li button{color:var(--ink);font-weight:600;font-size:13px}
+details.box{background:var(--wash);border-radius:20px;margin-top:10px}
+details.box[open]{background:#fff;box-shadow:0 0 0 1.5px var(--ink)}
+details.box>summary{list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 18px;cursor:pointer}
+details.box>summary::-webkit-details-marker{display:none}
+details.box>summary b{display:block;color:var(--deep);font-size:15px}details.box>summary small{color:var(--muted);font-size:12.5px}
+.sum-r{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.body{padding:2px 18px 18px;display:grid;gap:18px}
+.sec h3{font-family:var(--d);font-size:16px;color:var(--deep);margin-bottom:8px}
+.surs{display:grid;gap:6px;margin-bottom:10px}
+.sr{display:flex;gap:8px;align-items:center;padding:6px 6px 6px 14px;background:var(--wash);border-radius:12px;font-size:14px}
+.sr span{flex:1;font-weight:600;color:var(--deep)}.sr select{width:auto;padding:7px 10px}
+.x{width:30px;height:30px;border-radius:50%;background:#fff;color:#B42318;font-weight:700}
+.mj{display:grid;grid-template-columns:130px 1fr;gap:8px;margin-bottom:6px}
+.chipl{display:flex;gap:6px;flex-wrap:wrap}.chipl span{font-size:12.5px;font-weight:600;padding:5px 10px;border-radius:999px;background:var(--wash);color:var(--muted)}
+.mrow{padding:12px 14px;background:var(--wash);border-radius:16px;display:grid;gap:8px}
+.mh{display:flex;justify-content:space-between;align-items:center;gap:10px}.mh b{color:var(--deep);font-size:14.5px}
+.mine{background:#fff;border-radius:12px;padding:10px 12px;font-size:14px}.mine p{margin-top:4px}
+table{width:100%;border-collapse:collapse;font-size:14px}th{text-align:left;color:var(--muted);font-size:12.5px;padding:8px 6px}td{padding:10px 6px;border-top:1px solid var(--line)}
+.scores{display:grid;gap:8px;margin:8px 0}.scores div{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 8px 8px 14px;background:var(--wash);border-radius:14px;font-size:14px}.scores input{width:100px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--deep);color:#fff;padding:12px 22px;border-radius:999px;font-size:14px;font-weight:600;z-index:100;box-shadow:0 14px 30px -10px rgba(6,47,77,.6);max-width:90vw;text-align:center}
+.toast.bad{background:#B42318}
+.foot{text-align:center;color:var(--muted);font-size:12.5px;padding:28px 0 40px}
+</style>
+</head>
+<body>
+<header class="top"><div>
+<a class="brand" href="index.html"><svg width="22" height="27" viewBox="0 0 377.21 459.6" fill="#094570" aria-hidden="true"><path d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>Himaayah Schools</a>
+<nav><a class="btn btn-line" href="index.html">Home</a><button class="btn btn-ink" id="out" hidden>Log out</button></nav>
+</div></header>
+
+<main id="login" class="login"><form class="lbox" id="lf" novalidate>
+<h1>Teacher login</h1><p>Sign in with the Teacher ID and access code the school gave you.</p>
+<div class="demo" id="demoNote" hidden><b>Demo mode.</b> Use ID <b>DEMO</b> and code <b>demo</b> to try it with sample data.</div>
+<div class="f"><label for="tid">Teacher ID</label><input id="tid" autocomplete="username" autocapitalize="characters" placeholder="e.g. T-001" required></div>
+<div class="f"><label for="tcode">Access code</label><input id="tcode" type="password" autocomplete="current-password" required></div>
+<div class="err" id="err" role="alert"></div>
+<button class="btn btn-ink" id="go" type="submit">Sign in</button>
+</form></main>
+
+<main id="app" class="wrap" hidden></main>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script>
+/* ===== SETTINGS =====
+   Same web app URL as dashboard.html. While it is empty the page runs in DEMO mode. */
+const API_URL = 'https://script.google.com/macros/s/AKfycbzC4W9ovvvyKoJGFXCL8E7g0sfyAXWxuaHvcO2yqiw7xPpYaDpC-_p4lj6q9BMEjka9/exec';
+
+const $ = (id) => document.getElementById(id);
+const esc = (t) => String(t ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const safeUrl = (u) => /^https?:\/\//i.test(String(u ?? '').trim());
+const fdate = (iso, t) => { const d = new Date(iso); return isNaN(d) ? esc(iso) : d.toLocaleDateString('en-GB', {weekday:'short', day:'numeric', month:'short'}) + (t ? ', ' + d.toLocaleTimeString('en-GB', {hour:'2-digit', minute:'2-digit'}) : ''); };
+const ATT = ['Present', 'Late', 'Absent', 'Excused'];
+const HST = ['Memorised', 'Revising', 'In progress', 'Not started'];
+const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+const TABS = [['today', 'Today'], ['students', 'Students'], ['assignments', 'Assignments'], ['results', 'Results'], ['account', 'Account']];
+let D = null;
+const S = { tab: 'today', date: '', marks: {}, sel: {}, openStu: {}, openAsg: {}, q: '' };
+
+/* ---------- talking to the school server ---------- */
+const creds = () => { try { return JSON.parse(sessionStorage.getItem('ht') || 'null') || {}; } catch (e) { return {}; } };
+async function api(action, extra) {
+  const c = creds();
+  if (!API_URL) return demoApi(c, action, extra || {});
+  const r = await fetch(API_URL, { method: 'POST', body: JSON.stringify(Object.assign({ action, id: c.id, code: c.code }, extra || {})) });
+  return r.json();
+}
+let toastT;
+function toast(msg, bad) {
+  const t = $('toast'); t.textContent = msg; t.className = 'toast' + (bad ? ' bad' : ''); t.hidden = false;
+  clearTimeout(toastT); toastT = setTimeout(() => { t.hidden = true; }, bad ? 5000 : 3000);
+}
+let busy = false;
+async function act(action, extra, okMsg, btn) {
+  if (busy) return false;
+  busy = true; const old = btn && btn.textContent; if (btn) { btn.disabled = true; btn.textContent = 'Saving…'; }
+  try {
+    const d = await api(action, extra);
+    if (d.ok) { D = d; if (okMsg) toast(okMsg); render(); return true; }
+    toast(d.error || 'Could not save. Please try again.', true);
+  } catch (e) { toast('Could not reach the school server. Please try again.', true); }
+  finally { busy = false; if (btn && document.contains(btn)) { btn.disabled = false; btn.textContent = old; } }
+  return false;
+}
+
+/* ---------- small view helpers ---------- */
+const stuName = (id) => (D.students.find((s) => s.StudentID === id) || {}).Name || id;
+const attPct = (s) => s.AttendanceTotal ? Math.round(100 * s.AttendancePresent / s.AttendanceTotal) + '%' : 'No data';
+const stCls = { 'To do': 'p-sky', 'Overdue': 'p-red', 'Submitted': 'p-dash', 'Marked': 'p-ink' };
+const opts = (list, cur) => list.map((x) => `<option${x === cur ? ' selected' : ''}>${esc(x)}</option>`).join('');
+const pick = (cls, students, checked) => `<div class="pick">${students.map((s) => `<label><input type="checkbox" class="${cls}" value="${esc(s.StudentID)}"${checked && checked[s.StudentID] ? ' checked' : ''}> ${esc(s.Name)} <span class="sub">${esc(s.Level || '')}</span></label>`).join('')}</div>`;
+const toMark = () => D.assignments.reduce((n, a) => n + a.Rows.filter((r) => r.Status === 'Submitted').length, 0);
+
+/* ---------- views ---------- */
+function vToday() {
+  const date = S.date || D.today, saved = {};
+  D.attendance.filter((a) => a.Date === date).forEach((a) => { saved[a.StudentID] = a.Status; });
+  const marks = Object.assign({}, saved, S.marks);
+  const queue = [];
+  D.assignments.forEach((a) => a.Rows.forEach((r) => { if (r.Status === 'Submitted') queue.push({ a, r }); }));
+  return `<div class="grid">
+  <article class="c w8"><h2>Attendance</h2><p class="sub">Choose a status for each student, then save. You can come back and correct a day.</p>
+    <div class="bar2"><div><label class="fl" for="attDate">Date</label><input class="in" type="date" id="attDate" value="${esc(date)}" max="${esc(D.today)}"></div><button class="btn btn-line btn-sm" data-act="allPresent" type="button">Mark everyone present</button></div>
+    ${D.students.length ? `<div class="alist">${D.students.map((s) => `<div class="arow"><div><b>${esc(s.Name)}</b><small>${esc(s.Level || 'No level yet')} · ${attPct(s)}</small></div><div class="segb" data-id="${esc(s.StudentID)}">${ATT.map((x) => `<button type="button" data-act="att" data-v="${x}" class="${marks[s.StudentID] === x ? 'on' : ''}">${x}</button>`).join('')}</div></div>`).join('')}</div>
+    <button class="btn btn-ink" data-act="saveAtt" type="button">Save attendance</button>` : '<p class="empty" style="margin-top:12px">No students are assigned to you yet.</p>'}
+  </article>
+  <div class="c w4" style="display:grid;gap:16px;align-content:start;padding:0;background:none;box-shadow:none">
+    <article class="c" style="grid-column:auto"><h2>Needs marking</h2>${queue.length ? `<ul class="list">${queue.slice(0, 8).map((q) => `<li><span><b>${esc(q.r.Name)}</b><br><span class="sub">${esc(q.a.Title)}</span></span><button data-act="goMark" data-a="${esc(q.a.AssignmentID)}" type="button">Open</button></li>`).join('')}</ul>` : '<p class="empty">Nothing is waiting for you. Well done.</p>'}</article>
+    <article class="c" style="grid-column:auto"><h2>Next class</h2><p class="sub">Set the time and link for several students at once.</p>
+      <form class="frm" data-form="class">${pick('cls', D.students, S.sel)}
+      <div><label class="fl" for="ncw">Date and time</label><input class="in" type="datetime-local" id="ncw" name="nextClass"></div>
+      <div><label class="fl" for="ncl">Class link (optional)</label><input class="in" type="url" id="ncl" name="link" placeholder="https://meet.google.com/..."></div>
+      <div class="inline"><button class="btn btn-ink" type="submit">Save class</button><button class="btn btn-line btn-sm" data-act="selAll" type="button">Select all</button></div></form></article>
+  </div></div>`;
+}
+
+function vStudent(s) {
+  const hif = D.hifdh.filter((h) => h.StudentID === s.StudentID), mj = D.murajaah.filter((m) => m.StudentID === s.StudentID);
+  const res = D.results.filter((r) => r.StudentID === s.StudentID).slice(0, 5), att = D.attendance.filter((a) => a.StudentID === s.StudentID).slice(0, 8);
+  const others = D.students.filter((x) => x.StudentID !== s.StudentID);
+  const flag = s.PaymentStatus === 'Overdue' ? '<span class="pill p-red">Payment overdue</span>' : s.PaymentStatus === 'Due' ? '<span class="pill p-sky">Payment due soon</span>' : '';
+  return `<details class="box stu" data-id="${esc(s.StudentID)}" data-name="${esc((s.Name + ' ' + s.StudentID).toLowerCase())}"${S.openStu[s.StudentID] ? ' open' : ''}>
+  <summary><div><b>${esc(s.Name)}</b><small>${esc(s.StudentID)} · ${esc(s.Level || 'No level yet')} · Attendance ${attPct(s)} · Juz ${s.Juz}</small></div><div class="sum-r">${flag}</div></summary>
+  <div class="body">
+    <section class="sec"><h3>Progress</h3><form class="frm" data-form="student" data-id="${esc(s.StudentID)}"><div class="row3">
+      <div><label class="fl">Juz memorised (0 to 30)</label><input class="in" name="juz" type="number" min="0" max="30" step="1" value="${s.Juz}"></div>
+      <div><label class="fl">Current surah</label><input class="in" name="currentSurah" maxlength="40" value="${esc(s.CurrentSurah || '')}"></div>
+      <div><label class="fl">Ayah</label><input class="in" name="currentAyah" type="number" min="1" max="286" value="${esc(s.CurrentAyah || '')}"></div></div>
+      <button class="btn btn-ink btn-sm" type="submit">Save progress</button></form></section>
+    <section class="sec"><h3>Surahs</h3><div class="surs">${hif.map((h) => `<div class="sr"><span>${esc(h.Surah)}</span><select class="in" data-act="hst" data-id="${esc(s.StudentID)}" data-surah="${esc(h.Surah)}">${opts(HST, h.Status)}</select><button class="x" type="button" data-act="hrm" data-id="${esc(s.StudentID)}" data-surah="${esc(h.Surah)}" aria-label="Remove ${esc(h.Surah)}">×</button></div>`).join('') || '<p class="empty">No surahs recorded yet.</p>'}</div>
+      <form class="inline" data-form="hifdh" data-id="${esc(s.StudentID)}"><input class="in" name="surah" maxlength="40" placeholder="Add a surah, e.g. Al-Mulk" required><select class="in" name="status" style="flex:0 0 auto;width:auto">${opts(HST, 'In progress')}</select><button class="btn btn-ink btn-sm" type="submit">Add</button></form></section>
+    <section class="sec"><h3>This week's murajaah</h3><form class="frm" data-form="murajaah" data-id="${esc(s.StudentID)}">
+      ${[0, 1, 2, 3, 4, 5, 6].map((i) => `<div class="mj"><select class="in" name="day${i}"><option value=""></option>${DAYS.map((d) => `<option${mj[i] && mj[i].Day === d ? ' selected' : ''}>${d}</option>`).join('')}</select><input class="in" name="portion${i}" maxlength="120" placeholder="Portion to revise" value="${esc(mj[i] ? mj[i].Portion : '')}"></div>`).join('')}
+      ${others.length ? `<details><summary class="lnk" style="cursor:pointer;display:inline-block">Also apply to other students</summary>${pick('also', others)}</details>` : ''}
+      <button class="btn btn-ink btn-sm" type="submit">Save plan</button></form></section>
+    <section class="sec"><h3>Recent</h3><div class="chipl">${res.map((r) => `<span>${esc(r.Subject)} ${esc(r.Score)}/${esc(r.OutOf)}</span>`).join('')}${att.map((a) => `<span>${fdate(a.Date)}: ${esc(a.Status)}</span>`).join('') || ''}${!res.length && !att.length ? '<span>Nothing yet</span>' : ''}</div></section>
+    ${s.Wa ? `<p><a class="lnk" href="https://wa.me/${esc(s.Wa)}" target="_blank" rel="noopener">Message on WhatsApp</a></p>` : ''}
+  </div></details>`;
+}
+function vStudents() {
+  return `<article class="c w12"><h2>My students</h2><p class="sub">${D.students.length} student${D.students.length === 1 ? '' : 's'}. Open a name to update their progress, surahs and weekly plan.</p>
+  <input class="in" id="q" type="search" placeholder="Search by name or ID" value="${esc(S.q)}" style="max-width:340px">
+  <div id="stulist">${D.students.map(vStudent).join('') || '<p class="empty" style="margin-top:12px">No students are assigned to you yet.</p>'}</div></article>`;
+}
+
+function vAssignment(a) {
+  const mark = (r) => `<div class="mrow"><div class="mh"><b>${esc(r.Name)}</b><span class="pill ${stCls[r.Status] || 'p-sky'}">${esc(r.Status)}</span></div>
+    ${r.Submission ? `<div class="mine"><div class="k">Submitted ${fdate(r.Submission.Submitted, true)}${r.Submission.Late ? ' (late)' : ''}</div>${r.Submission.Note ? `<p>${esc(r.Submission.Note)}</p>` : ''}${safeUrl(r.Submission.Link) ? `<p><a class="lnk" href="${esc(r.Submission.Link)}" target="_blank" rel="noopener">Open their link</a></p>` : ''}</div>
+      <form class="inline" data-form="mark" data-a="${esc(a.AssignmentID)}" data-s="${esc(r.StudentID)}"><input class="in" name="score" type="number" step="any" min="0"${a.MaxScore ? ` max="${esc(a.MaxScore)}"` : ''} value="${esc(r.Submission.Score)}" placeholder="Score${a.MaxScore ? ' out of ' + esc(a.MaxScore) : ''}" style="max-width:150px"><input class="in" name="feedback" maxlength="1000" value="${esc(r.Submission.Feedback || '')}" placeholder="Feedback for the student"><button class="btn btn-ink btn-sm" type="submit">Save mark</button>${r.Status === 'Marked' ? `<button class="btn btn-line btn-sm" type="button" data-act="unmark" data-a="${esc(a.AssignmentID)}" data-s="${esc(r.StudentID)}">Take mark off</button>` : ''}</form>` : '<p class="sub">Not submitted yet.</p>'}</div>`;
+  return `<details class="box asg" data-id="${esc(a.AssignmentID)}"${S.openAsg[a.AssignmentID] ? ' open' : ''}><summary><div><b>${esc(a.Title)}</b><small>${esc(a.Subject || 'Assignment')}${a.Due ? ' · Due ' + fdate(a.Due) : ''} · ${a.Counts.submitted} of ${a.Counts.assigned} submitted · ${a.Counts.marked} marked</small></div><div class="sum-r">${a.Active ? '' : '<span class="pill p-wash">Archived</span>'}</div></summary>
+  <div class="body">${a.Instructions ? `<p>${esc(a.Instructions)}</p>` : ''}${safeUrl(a.Link) ? `<p><a class="lnk" href="${esc(a.Link)}" target="_blank" rel="noopener">Open the resource</a></p>` : ''}
+    <div class="inline"><button class="btn btn-line btn-sm" type="button" data-act="archive" data-a="${esc(a.AssignmentID)}" data-v="${a.Active ? '0' : '1'}">${a.Active ? 'Archive (hide from students)' : 'Restore'}</button></div>
+    ${a.Rows.map(mark).join('') || '<p class="empty">No students yet.</p>'}</div></details>`;
+}
+function vAssignments() {
+  const admin = D.teacher.Role === 'Admin';
+  return `<div class="grid"><article class="c w12"><h2>Post an assignment</h2>
+  <form class="frm" data-form="assignment">
+    <div class="row2"><div><label class="fl">Title</label><input class="in" name="title" maxlength="120" required></div><div><label class="fl">Subject</label><input class="in" name="subject" maxlength="40" placeholder="e.g. Tajweed"></div></div>
+    <div><label class="fl">Instructions</label><textarea class="in" name="instructions" rows="3" maxlength="1500"></textarea></div>
+    <div class="row3"><div><label class="fl">Due date</label><input class="in" type="date" name="due"></div><div><label class="fl">Maximum score</label><input class="in" type="number" name="maxScore" min="1" max="1000" placeholder="e.g. 20"></div><div><label class="fl">Link (optional)</label><input class="in" type="url" name="link" placeholder="https://..."></div></div>
+    <div><label class="fl">Give it to</label><select class="in" name="scope" id="scope"><option value="mine">All my students</option><option value="students">Choose students</option>${admin ? '<option value="level">A whole level</option><option value="all">Every student</option>' : ''}</select></div>
+    <div id="scopeStu" hidden>${pick('asgstu', D.students)}</div>
+    ${admin ? `<div id="scopeLvl" hidden><label class="fl">Level</label><select class="in" name="level">${opts(D.levels)}</select></div>` : ''}
+    <button class="btn btn-ink" type="submit">Post assignment</button></form></article>
+  <article class="c w12"><h2>Assignments</h2><p class="sub">Open one to see who has submitted and to mark it.</p>${D.assignments.map(vAssignment).join('') || '<p class="empty">You have not posted any assignments yet.</p>'}</article></div>`;
+}
+
+function vResults() {
+  const rows = D.results.slice(0, 15);
+  return `<div class="grid"><article class="c w8"><h2>Enter results</h2><p class="sub">Fill in the test once, then a score for each student. Leave a score empty to skip that student.</p>
+  <form class="frm" data-form="results">
+    <div class="row2"><div><label class="fl">Subject</label><input class="in" name="subject" maxlength="60" placeholder="e.g. Tajweed" required></div><div><label class="fl">Type</label><select class="in" name="type"><option>Test</option><option>Exam</option><option>Hifdh test</option></select></div></div>
+    <div class="row2"><div><label class="fl">Date</label><input class="in" type="date" name="date" value="${esc(D.today)}" max="${esc(D.today)}"></div><div><label class="fl">Out of</label><input class="in" type="number" name="outOf" min="1" max="1000" value="20"></div></div>
+    <div class="scores">${D.students.map((s) => `<div><span>${esc(s.Name)}</span><input class="in score" type="number" step="any" min="0" data-id="${esc(s.StudentID)}" aria-label="Score for ${esc(s.Name)}"></div>`).join('') || '<p class="empty">No students yet.</p>'}</div>
+    <button class="btn btn-ink" type="submit">Save results</button></form></article>
+  <article class="c w4"><h2>Recent</h2>${rows.length ? `<table><tbody>${rows.map((r) => `<tr><td>${esc(stuName(r.StudentID))}<br><span class="sub">${esc(r.Subject)} · ${fdate(r.Date)}</span></td><td style="text-align:right"><b>${esc(r.Score)}/${esc(r.OutOf)}</b></td></tr>`).join('')}</tbody></table>` : '<p class="empty">No results yet.</p>'}</article></div>`;
+}
+
+function vAccount() {
+  return `<article class="c w12" style="max-width:560px"><h2>Your account</h2><p class="sub">${esc(D.teacher.Name)} · ${esc(D.teacher.TeacherID)} · ${esc(D.teacher.Role)}</p>
+  <form class="frm" data-form="password"><div><label class="fl" for="np">New access code (8 characters or more)</label><input class="in" id="np" name="newCode" type="password" autocomplete="new-password" minlength="8" maxlength="40"></div>
+  <div><label class="fl" for="np2">Type it again</label><input class="in" id="np2" name="again" type="password" autocomplete="new-password"></div>
+  <button class="btn btn-ink" type="submit">Change my code</button></form></article>`;
+}
+
+const VIEWS = { today: vToday, students: vStudents, assignments: vAssignments, results: vResults, account: vAccount };
+function render() {
+  const t = D.teacher, n = toMark();
+  $('app').innerHTML = `<section class="greet"><div><small>Assalaamu alaykum</small><h1>${esc(t.Name)}</h1>
+    <div class="chips"><span>${esc(t.Role)}</span><span>${D.students.length} student${D.students.length === 1 ? '' : 's'}</span><span>${n} to mark</span></div></div></section>
+  <nav class="tabs" role="tablist" aria-label="Sections">${TABS.map(([k, l]) => `<button role="tab" type="button" data-act="tab" data-t="${k}" aria-selected="${S.tab === k}">${l}${k === 'assignments' && n ? ' (' + n + ')' : ''}</button>`).join('')}</nav>
+  <div id="view">${VIEWS[S.tab]()}</div>
+  <p class="foot">${API_URL ? '' : 'Demo mode: sample data, nothing is saved. '}You only see the students assigned to you.</p>`;
+  applyFilter();
+}
+function applyFilter() {
+  const q = S.q.trim().toLowerCase();
+  document.querySelectorAll('.stu').forEach((el) => { el.hidden = !!q && el.dataset.name.indexOf(q) < 0; });
+}
+
+/* ---------- events ---------- */
+const app = $('app');
+app.addEventListener('click', async (e) => {
+  const b = e.target.closest('[data-act]'); if (!b) return;
+  const a = b.dataset.act;
+  if (a === 'tab') { S.tab = b.dataset.t; render(); window.scrollTo(0, 0); }
+  else if (a === 'att') { const id = b.parentElement.dataset.id; S.marks[id] = b.dataset.v; b.parentElement.querySelectorAll('button').forEach((x) => x.classList.toggle('on', x === b)); }
+  else if (a === 'allPresent') { D.students.forEach((s) => { S.marks[s.StudentID] = 'Present'; }); document.querySelectorAll('.segb').forEach((g) => g.querySelectorAll('button').forEach((x) => x.classList.toggle('on', x.dataset.v === 'Present'))); }
+  else if (a === 'saveAtt') {
+    const marks = Object.keys(S.marks).map((id) => ({ studentId: id, status: S.marks[id] }));
+    if (!marks.length) return toast('Choose a status for at least one student.', true);
+    if (await act('teacher_attendance', { date: S.date || D.today, marks }, 'Attendance saved.', b)) S.marks = {};
+  }
+  else if (a === 'selAll') { const boxes = [...document.querySelectorAll('.cls')], all = boxes.every((x) => x.checked); boxes.forEach((x) => { x.checked = !all; }); }
+  else if (a === 'goMark') { S.tab = 'assignments'; S.openAsg[b.dataset.a] = true; render(); const el = [...document.querySelectorAll('.asg')].find((x) => x.dataset.id === b.dataset.a); if (el) el.scrollIntoView(); }
+  else if (a === 'hrm') { if (confirm('Remove ' + b.dataset.surah + '?')) act('teacher_hifdh', { studentId: b.dataset.id, surah: b.dataset.surah, remove: true }, 'Surah removed.'); }
+  else if (a === 'archive') act('teacher_assignment_active', { assignmentId: b.dataset.a, active: b.dataset.v === '1' }, b.dataset.v === '1' ? 'Assignment restored.' : 'Assignment archived.', b);
+  else if (a === 'unmark') act('teacher_mark', { assignmentId: b.dataset.a, studentId: b.dataset.s, score: '', feedback: '' }, 'Mark taken off.', b);
+});
+app.addEventListener('change', (e) => {
+  const t = e.target;
+  if (t.id === 'attDate') { S.date = t.value; S.marks = {}; render(); }
+  else if (t.dataset.act === 'hst') act('teacher_hifdh', { studentId: t.dataset.id, surah: t.dataset.surah, status: t.value }, 'Saved.');
+  else if (t.id === 'scope') { $('scopeStu').hidden = t.value !== 'students'; if ($('scopeLvl')) $('scopeLvl').hidden = t.value !== 'level'; }
+  else if (t.classList.contains('cls')) { S.sel[t.value] = t.checked; }
+});
+app.addEventListener('input', (e) => { if (e.target.id === 'q') { S.q = e.target.value; applyFilter(); } });
+document.addEventListener('toggle', (e) => {
+  const d = e.target; if (!d.classList) return;
+  if (d.classList.contains('stu')) S.openStu[d.dataset.id] = d.open;
+  if (d.classList.contains('asg')) S.openAsg[d.dataset.id] = d.open;
+}, true);
+const checked = (cls) => [...document.querySelectorAll('.' + cls + ':checked')].map((x) => x.value);
+app.addEventListener('submit', (e) => {
+  const f = e.target.closest('form[data-form]'); if (!f) return;
+  e.preventDefault();
+  const k = f.dataset.form, v = (n) => f.elements[n] ? f.elements[n].value : '', btn = f.querySelector('button[type=submit]');
+  if (k === 'student') act('teacher_student', { studentId: f.dataset.id, juz: v('juz'), currentSurah: v('currentSurah'), currentAyah: v('currentAyah') }, 'Progress saved.', btn);
+  else if (k === 'hifdh') act('teacher_hifdh', { studentId: f.dataset.id, surah: v('surah'), status: v('status') }, 'Surah saved.', btn);
+  else if (k === 'murajaah') {
+    const plan = [0, 1, 2, 3, 4, 5, 6].map((i) => ({ day: v('day' + i), portion: v('portion' + i) })).filter((x) => x.day && x.portion);
+    act('teacher_murajaah', { studentIds: [f.dataset.id].concat(checked('also')), plan }, 'Weekly plan saved.', btn);
+  }
+  else if (k === 'class') {
+    const ids = checked('cls'); if (!ids.length) return toast('Choose at least one student.', true);
+    if (!v('nextClass') && !v('link')) return toast('Enter a date and time, or a link.', true);
+    act('teacher_class', { studentIds: ids, nextClass: v('nextClass'), link: v('link') }, 'Class saved.', btn);
+  }
+  else if (k === 'results') {
+    const scores = [...f.querySelectorAll('.score')].map((x) => ({ studentId: x.dataset.id, score: x.value })).filter((x) => x.score !== '');
+    if (!scores.length) return toast('Enter at least one score.', true);
+    act('teacher_results', { subject: v('subject'), type: v('type'), date: v('date'), outOf: v('outOf'), scores }, 'Results saved.', btn);
+  }
+  else if (k === 'assignment') {
+    const scope = v('scope');
+    if (scope === 'students' && !checked('asgstu').length) return toast('Choose at least one student.', true);
+    act('teacher_assignment', { title: v('title'), subject: v('subject'), instructions: v('instructions'), due: v('due'), maxScore: v('maxScore'), link: v('link'), scope, studentIds: checked('asgstu'), level: v('level') }, 'Assignment posted.', btn);
+  }
+  else if (k === 'mark') act('teacher_mark', { assignmentId: f.dataset.a, studentId: f.dataset.s, score: v('score'), feedback: v('feedback') }, 'Mark saved.', btn);
+  else if (k === 'password') {
+    if (v('newCode').length < 8) return toast('Your new code must be at least 8 characters.', true);
+    if (v('newCode') !== v('again')) return toast('The two codes do not match.', true);
+    const code = v('newCode');
+    act('teacher_password', { newCode: code }, 'Code changed.', btn).then((ok) => { if (ok) sessionStorage.setItem('ht', JSON.stringify({ id: creds().id, code })); });
+  }
+});
+
+/* ---------- login ---------- */
+function showApp() { $('login').hidden = true; app.hidden = false; $('out').hidden = false; render(); window.scrollTo(0, 0); }
+async function signIn(id, code, silent) {
+  const btn = $('go'), err = $('err'); err.textContent = ''; btn.disabled = true; btn.textContent = 'Signing in…';
+  sessionStorage.setItem('ht', JSON.stringify({ id, code }));
+  try {
+    const d = await api('teacher_login');
+    if (d.ok) { D = d; showApp(); }
+    else { sessionStorage.removeItem('ht'); if (!silent) err.textContent = d.error || 'Could not sign in.'; }
+  } catch (e) { sessionStorage.removeItem('ht'); if (!silent) err.textContent = 'Could not reach the school server. Please try again.'; }
+  btn.disabled = false; btn.textContent = 'Sign in';
+}
+$('demoNote').hidden = !!API_URL;
+$('lf').addEventListener('submit', (e) => { e.preventDefault(); const id = $('tid').value.trim(), code = $('tcode').value.trim(); if (!id || !code) { $('err').textContent = 'Enter your Teacher ID and access code.'; return; } signIn(id, code); });
+$('out').addEventListener('click', () => { sessionStorage.removeItem('ht'); D = null; S.tab = 'today'; S.marks = {}; S.sel = {}; app.hidden = true; app.innerHTML = ''; $('out').hidden = true; $('login').hidden = false; $('tcode').value = ''; });
+{ const c = creds(); if (c.id && c.code) signIn(c.id, c.code, true); }
+
+/* ---------- demo mode (only used while API_URL is empty) ---------- */
+let DEMO = null;
+const isoD = (d) => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+const plus = (n) => { const d = new Date(); d.setDate(d.getDate() + n); return d; };
+function demoBase() {
+  const st = (id, name, level, p, t, juz, surah, ayah) => ({ StudentID: id, Name: name, Level: level, Plan: 'Full Madrasah (Group)', Teacher: 'Ustadh Demo', PaymentStatus: 'Paid', NextDue: '', AttendancePresent: p, AttendanceTotal: t, NextClass: '', ClassLink: '', Juz: juz, CurrentSurah: surah, CurrentAyah: ayah, Wa: id === 'HM-0001' ? '2348012345678' : '' });
+  const s1 = st('HM-0001', 'Amina Yusuf', 'Thālithah Ibtidā’iyyah', 14, 16, 2, 'Al-Baqarah', 142), s2 = st('HM-0002', 'Bilal Adeyemi', 'Awwal Ibtidā’iyyah', 9, 12, 1, 'Al-Fātiḥah', ''), s3 = st('HM-0003', 'Khadijah Musa', 'Thālithah Ibtidā’iyyah', 15, 16, 5, 'Āl ʿImrān', 20);
+  s2.PaymentStatus = 'Overdue';
+  return { ok: true, today: isoD(new Date()), teacher: { TeacherID: 'DEMO', Name: 'Ustadh Demo', Role: 'Teacher' }, students: [s1, s2, s3],
+    hifdh: [{ StudentID: 'HM-0001', Surah: 'An-Nās', Status: 'Memorised' }, { StudentID: 'HM-0001', Surah: 'Al-Falaq', Status: 'Revising' }, { StudentID: 'HM-0003', Surah: 'An-Nās', Status: 'Memorised' }],
+    murajaah: [{ StudentID: 'HM-0001', Day: 'Monday', Portion: 'An-Nās to Al-Masad' }],
+    results: [{ StudentID: 'HM-0001', Date: isoD(plus(-5)), Type: 'Hifdh test', Subject: 'Al-Baqarah 1 to 141', Score: 18, OutOf: 20 }],
+    attendance: [{ StudentID: 'HM-0001', Date: isoD(plus(-1)), Status: 'Present' }],
+    assignments: [{ AssignmentID: 'A-DEMO1', Title: 'Noon sakinah practice', Subject: 'Tajweed', Instructions: 'Recite Al-Baqarah 1 to 5 and write the rules you applied.', Level: 'All', Audience: 'All', Assigned: isoD(plus(-3)), Due: isoD(plus(2)), Link: '', MaxScore: 20, Active: true, CreatedBy: 'DEMO', Counts: { assigned: 3, submitted: 1, marked: 0 },
+      Rows: [{ StudentID: 'HM-0001', Name: 'Amina Yusuf', Status: 'Submitted', Submission: { Submitted: new Date().toISOString(), Note: 'Done. I found three rules.', Link: 'https://example.com/work', Score: '', Feedback: '', Late: false } }, { StudentID: 'HM-0002', Name: 'Bilal Adeyemi', Status: 'To do', Submission: null }, { StudentID: 'HM-0003', Name: 'Khadijah Musa', Status: 'To do', Submission: null }] }],
+    levels: ['Awwal Ibtidā’iyyah', 'Thālithah Ibtidā’iyyah'] };
+}
+async function demoApi(c, action, p) {
+  await new Promise((r) => setTimeout(r, 120));
+  if (String(c.id || '').toUpperCase() !== 'DEMO' || c.code !== 'demo') return { ok: false, error: 'Wrong ID or access code.' };
+  if (!DEMO) DEMO = demoBase();
+  const bad = (m) => ({ ok: false, error: m }), stu = (id) => DEMO.students.find((s) => s.StudentID === id);
+  const own = (ids) => (ids || []).every((i) => stu(i));
+  const part = (s) => (s === 'Present' || s === 'Late') ? [1, 1] : s === 'Absent' ? [0, 1] : [0, 0];
+  if (action === 'teacher_attendance') {
+    if (!p.date || p.date > DEMO.today) return bad('Choose a date within the last 60 days.');
+    p.marks.forEach((m) => { const s = stu(m.studentId), ex = DEMO.attendance.find((a) => a.StudentID === m.studentId && a.Date === p.date), a = ex ? part(ex.Status) : [0, 0], b = part(m.status);
+      if (ex) ex.Status = m.status; else DEMO.attendance.unshift({ StudentID: m.studentId, Date: p.date, Status: m.status });
+      s.AttendancePresent = Math.max(0, s.AttendancePresent + b[0] - a[0]); s.AttendanceTotal = Math.max(0, s.AttendanceTotal + b[1] - a[1]); });
+  } else if (action === 'teacher_student') {
+    const j = Number(p.juz); if (!(j >= 0 && j <= 30 && Math.floor(j) === j)) return bad('Juz must be a whole number from 0 to 30.');
+    Object.assign(stu(p.studentId), { Juz: j, CurrentSurah: p.currentSurah, CurrentAyah: p.currentAyah });
+  } else if (action === 'teacher_hifdh') {
+    const i = DEMO.hifdh.findIndex((h) => h.StudentID === p.studentId && h.Surah.toLowerCase() === String(p.surah).toLowerCase());
+    if (p.remove) { if (i >= 0) DEMO.hifdh.splice(i, 1); } else if (i >= 0) DEMO.hifdh[i].Status = p.status; else DEMO.hifdh.push({ StudentID: p.studentId, Surah: p.surah, Status: p.status });
+  } else if (action === 'teacher_murajaah') {
+    DEMO.murajaah = DEMO.murajaah.filter((m) => p.studentIds.indexOf(m.StudentID) < 0);
+    p.studentIds.forEach((id) => p.plan.forEach((l) => DEMO.murajaah.push({ StudentID: id, Day: l.day, Portion: l.portion })));
+  } else if (action === 'teacher_results') {
+    const n = p.scores.map((x) => Number(x.score)); if (n.some((x) => !(x >= 0 && x <= Number(p.outOf)))) return bad('Each score must be between 0 and ' + p.outOf + '.');
+    p.scores.forEach((x) => DEMO.results.unshift({ StudentID: x.studentId, Date: p.date, Type: p.type, Subject: p.subject, Score: Number(x.score), OutOf: Number(p.outOf) }));
+  } else if (action === 'teacher_class') {
+    if (p.link && !/^https?:\/\//i.test(p.link)) return bad('The class link must start with http:// or https://');
+    p.studentIds.forEach((id) => Object.assign(stu(id), { NextClass: p.nextClass, ClassLink: p.link }));
+  } else if (action === 'teacher_assignment') {
+    if (!p.title) return bad('Enter a title.');
+    const ids = p.scope === 'students' ? p.studentIds : DEMO.students.map((s) => s.StudentID);
+    DEMO.assignments.unshift({ AssignmentID: 'A-' + Math.random().toString(36).slice(2, 8).toUpperCase(), Title: p.title, Subject: p.subject, Instructions: p.instructions, Level: 'All', Audience: ids.join(', '), Assigned: DEMO.today, Due: p.due, Link: p.link, MaxScore: p.maxScore, Active: true, CreatedBy: 'DEMO', Counts: { assigned: ids.length, submitted: 0, marked: 0 }, Rows: ids.map((id) => ({ StudentID: id, Name: stu(id).Name, Status: 'To do', Submission: null })) });
+  } else if (action === 'teacher_assignment_active') {
+    DEMO.assignments.find((a) => a.AssignmentID === p.assignmentId).Active = !!p.active;
+  } else if (action === 'teacher_mark') {
+    const a = DEMO.assignments.find((x) => x.AssignmentID === p.assignmentId), r = a.Rows.find((x) => x.StudentID === p.studentId);
+    if (String(p.score) === '') { r.Status = 'Submitted'; r.Submission.Score = ''; r.Submission.Feedback = p.feedback; }
+    else { const n = Number(p.score); if (!(n >= 0) || (a.MaxScore && n > Number(a.MaxScore))) return bad('The score must be between 0 and ' + a.MaxScore + '.'); r.Status = 'Marked'; r.Submission.Score = n; r.Submission.Feedback = p.feedback; }
+    a.Counts.marked = a.Rows.filter((x) => x.Status === 'Marked').length;
+  } else if (action === 'teacher_password') {
+    if (String(p.newCode).length < 8) return bad('Your new code must be 8 to 40 characters.');
+  } else if (action !== 'teacher_login') return bad('Unknown action.');
+  return JSON.parse(JSON.stringify(DEMO));
+}
+</script>
+</body>
+</html>

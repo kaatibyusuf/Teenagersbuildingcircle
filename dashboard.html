@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Dashboard | Himaayah Schools</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#094570">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--deep:#062F4D;--ink:#094570;--sky:#85CCFF;--sky-d:#3E97D9;--wash:#F1F7FC;--text:#0E2A3D;--muted:#55697B;--line:rgba(9,69,112,.12);--d:'Bricolage Grotesque','Inter',sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{font-family:'Inter',sans-serif;color:var(--text);background:var(--wash);line-height:1.55;-webkit-font-smoothing:antialiased;min-height:100vh}
+a{color:inherit;text-decoration:none}button,input,textarea{font:inherit}button{cursor:pointer;border:0;background:none}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,summary:focus-visible{outline:2px solid var(--sky-d);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 24px;font-size:14.5px;font-weight:600;border-radius:999px;transition:background .2s,color .2s}
+.btn:disabled{opacity:.6;cursor:default}
+.btn-ink{background:var(--ink);color:#fff}.btn-ink:hover{background:var(--deep)}
+.btn-sky{background:var(--sky);color:var(--deep)}.btn-sky:hover{background:#fff}
+.btn-line{border:1px solid var(--ink);color:var(--ink)}.btn-line:hover{background:var(--ink);color:#fff}
+.top{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.top div{max-width:1200px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--d);font-weight:700;font-size:18px;color:var(--ink)}
+.top nav{display:flex;gap:10px;align-items:center}.top .btn{padding:10px 18px;font-size:13.5px}
+.wrap{max-width:1200px;margin:0 auto;padding:24px}
+/* login */
+.login{min-height:calc(100vh - 62px);display:grid;place-items:center;padding:24px}
+.lbox{width:100%;max-width:440px;background:#fff;border-radius:32px;padding:40px;box-shadow:0 30px 60px -40px rgba(6,47,77,.5)}
+.lbox h1{font-family:var(--d);font-size:34px;line-height:1.08;letter-spacing:-.02em;color:var(--deep);margin-bottom:8px}.lbox p{color:var(--muted);margin-bottom:24px;font-size:15px}
+.f{margin-bottom:14px}.f label{display:block;font-size:13.5px;font-weight:600;color:var(--deep);margin-bottom:6px}
+.f input{width:100%;padding:14px 16px;border-radius:14px;border:1.5px solid transparent;background:var(--wash);font-size:15px}.f input:focus{outline:none;border-color:var(--ink);background:#fff}
+.err{color:#B42318;font-size:13.5px;min-height:20px;margin:4px 0 10px}.lbox .btn{width:100%}.hint{margin-top:16px;font-size:13px;color:var(--muted)}.hint a{color:var(--ink);font-weight:600}
+.demo{background:var(--wash);border-radius:14px;padding:10px 14px;font-size:13px;color:var(--deep);margin-bottom:16px}
+/* dashboard */
+.greet{background:var(--ink);color:#fff;border-radius:32px;padding:36px 40px;display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap}
+.greet small{color:var(--sky);font-weight:600;font-size:14px}.greet h1{font-family:var(--d);font-size:clamp(28px,4vw,44px);line-height:1.08;letter-spacing:-.02em;margin:4px 0 12px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}.chips span{font-size:13px;font-weight:600;padding:7px 14px;border-radius:999px;background:rgba(255,255,255,.14)}
+.remind{display:grid;gap:8px;margin-top:16px}
+.remind a{display:flex;justify-content:space-between;align-items:center;gap:14px;background:#fff;border-radius:20px;padding:14px 20px;font-size:14.5px;font-weight:600;color:var(--deep);transition:box-shadow .2s}
+.remind a:hover{box-shadow:0 0 0 1.5px var(--ink)}
+.remind a span{flex-shrink:0;font-size:12.5px;font-weight:700;padding:5px 12px;border-radius:999px;background:var(--sky);color:var(--deep)}
+.remind a.urgent span{background:#FEE4E2;color:#B42318}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px;margin-top:16px}
+.c{background:#fff;border-radius:28px;padding:28px;grid-column:span 4;animation:up .5s cubic-bezier(.2,.7,.2,1) backwards;animation-delay:calc(var(--i,0)*60ms)}
+.c.w6{grid-column:span 6}.c.w8{grid-column:span 8}.c.w12{grid-column:span 12}
+@media(max-width:1000px){.c,.c.w6,.c.w8{grid-column:span 6}}@media(max-width:700px){.c,.c.w6,.c.w8,.c.w12{grid-column:span 12}.greet{padding:28px 24px}}
+@keyframes up{from{opacity:0;transform:translateY(18px)}}
+.c h2{font-family:var(--d);font-size:20px;color:var(--deep);margin-bottom:14px}.k{font-size:12.5px;font-weight:700;color:var(--sky-d);margin-bottom:6px}
+.big{font-family:var(--d);font-size:30px;line-height:1.1;color:var(--ink);letter-spacing:-.01em}.sub{color:var(--muted);font-size:14px;margin-top:4px}
+.pill{display:inline-block;font-size:12.5px;font-weight:700;padding:6px 14px;border-radius:999px}
+.p-paid{background:var(--ink);color:#fff}.p-due{background:var(--sky);color:var(--deep)}.p-over{background:#FEE4E2;color:#B42318}
+.bar{height:12px;background:var(--wash);border-radius:99px;overflow:hidden;margin:10px 0 6px}.bar i{display:block;height:100%;background:var(--ink);border-radius:99px;width:0;transition:width 1.1s cubic-bezier(.2,.7,.2,1)}
+.row{display:flex;justify-content:space-between;gap:10px;font-size:13.5px;color:var(--muted)}
+.sur{display:flex;flex-wrap:wrap;gap:8px}.sur span{font-size:13px;font-weight:600;padding:8px 14px;border-radius:999px}
+.s-Memorised{background:var(--ink);color:#fff}.s-Revising{background:var(--sky);color:var(--deep)}.s-In-progress{background:#fff;color:var(--ink);border:1.5px dashed var(--ink)}.s-Not-started{background:var(--wash);color:var(--muted)}
+.leg{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);margin:14px 0 8px}
+.list{list-style:none;display:grid;gap:10px}.list li{display:flex;justify-content:space-between;gap:12px;padding:12px 16px;background:var(--wash);border-radius:16px;font-size:14.5px}.list li b{color:var(--deep)}.list li span{color:var(--muted);text-align:right}
+.list a{color:var(--ink);font-weight:600;border-bottom:1px solid var(--sky-d)}
+table{width:100%;border-collapse:collapse;font-size:14px}th{text-align:left;color:var(--muted);font-size:12.5px;padding:8px 6px}td{padding:11px 6px;border-top:1px solid var(--line)}td:last-child,th:last-child{text-align:right}
+.chart{display:flex;align-items:flex-end;gap:8px;height:90px;margin:6px 0 14px}.chart div{flex:1;background:var(--sky);border-radius:8px 8px 0 0;position:relative;min-height:6px;transition:height .9s}.chart div:last-child{background:var(--ink)}
+.chart div em{position:absolute;top:-18px;left:0;right:0;text-align:center;font-style:normal;font-size:11px;color:var(--muted);font-weight:600}
+.path{display:flex;flex-wrap:wrap;gap:8px}.path span{font-size:13px;font-weight:600;padding:8px 14px;border-radius:999px;background:var(--wash);color:var(--muted)}.path span.done{background:var(--sky);color:var(--deep)}.path span.now{background:var(--ink);color:#fff}
+.empty{color:var(--muted);font-size:14px}.foot{text-align:center;color:var(--muted);font-size:12.5px;padding:28px 0 40px}
+.lnk{color:var(--ink);font-weight:600;border-bottom:1px solid var(--sky-d)}
+/* assignments */
+.asgs{display:grid;gap:10px}
+.asg{background:var(--wash);border-radius:20px}
+.asg[open]{box-shadow:0 0 0 1.5px var(--ink);background:#fff}
+.asg summary{list-style:none;display:flex;justify-content:space-between;align-items:center;gap:14px;padding:16px 20px;cursor:pointer}
+.asg summary::-webkit-details-marker{display:none}
+.asg summary b{display:block;color:var(--deep);font-size:15.5px}
+.asg summary small{color:var(--muted);font-size:13px}
+.st-todo{background:var(--sky);color:var(--deep)}.st-over{background:#FEE4E2;color:#B42318}.st-sub{background:#fff;color:var(--ink);border:1.5px dashed var(--ink)}.st-mark{background:var(--ink);color:#fff}
+.abody{padding:0 20px 20px;display:grid;gap:12px}
+.abody p{font-size:14.5px;color:var(--text)}
+.mark{background:var(--wash);border-radius:16px;padding:14px 16px}.mark b{font-family:var(--d);font-size:24px;color:var(--ink)}
+.mine{background:var(--wash);border-radius:16px;padding:14px 16px}
+.subm{display:grid;gap:8px}
+.subm label{font-size:13px;font-weight:600;color:var(--deep)}
+.subm textarea,.subm input{width:100%;padding:12px 14px;border-radius:14px;border:1.5px solid transparent;background:var(--wash);font-size:14.5px;resize:vertical}
+.subm textarea:focus,.subm input:focus{outline:none;border-color:var(--ink);background:#fff}
+.msg{font-size:13.5px;min-height:18px}.msg.bad{color:#B42318}.msg.good{color:var(--ink);font-weight:600}
+.subm .btn{justify-self:start}
+</style>
+</head>
+<body>
+<header class="top"><div>
+<a class="brand" href="index.html"><svg width="22" height="27" viewBox="0 0 377.21 459.6" fill="#094570" aria-hidden="true"><path d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>Himaayah Schools</a>
+<nav><a class="btn btn-line" href="index.html">Home</a><button class="btn btn-ink" id="out" hidden>Log out</button></nav>
+</div></header>
+
+<main id="login" class="login"><form class="lbox" id="lf" novalidate>
+<h1>Student login</h1><p>Sign in with the Student ID and access code the school gave you.</p>
+<div class="demo" id="demoNote" hidden><b>Demo mode.</b> Use ID <b>DEMO</b> and code <b>demo</b> to see sample data.</div>
+<div class="f"><label for="sid">Student ID</label><input id="sid" autocomplete="username" autocapitalize="characters" placeholder="e.g. HM-0001" required></div>
+<div class="f"><label for="scode">Access code</label><input id="scode" type="password" autocomplete="current-password" required></div>
+<div class="err" id="err" role="alert"></div>
+<button class="btn btn-ink" id="go" type="submit">Sign in</button>
+<p class="hint">Lost your code? <a href="https://wa.me/2347025842849?text=Assalaamu%20alaykum.%20I%20need%20help%20with%20my%20student%20dashboard%20login." target="_blank" rel="noopener">Message the Madrasah line</a>.</p>
+</form></main>
+
+<main id="app" class="wrap" hidden></main>
+
+<script>
+/* ===== SETTINGS =====
+   Paste your Google Apps Script web-app URL here (see SETUP.md).
+   While it is empty the page runs in DEMO mode with sample data. */
+const API_URL = 'https://script.google.com/macros/s/AKfycbzC4W9ovvvyKoJGFXCL8E7g0sfyAXWxuaHvcO2yqiw7xPpYaDpC-_p4lj6q9BMEjka9/exec';
+const MADRASAH_WA = '2347025842849';
+const PAYMENT_WA = '2347220156478';   /* WhatsApp number students send payment receipts to. Confirm this is the right one. */
+const LEVELS = ['Rawdah','Tamheedi','Awwal Ibtidā’iyyah','Thāniyah Ibtidā’iyyah','Thālithah Ibtidā’iyyah','Rābiʿah Ibtidā’iyyah','Awwal Iʿdādiyyah'];
+
+const $ = (id) => document.getElementById(id);
+const esc = (t) => String(t ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fdate = (iso, t) => { const d = new Date(iso); return isNaN(d) ? esc(iso) : d.toLocaleDateString('en-GB', {weekday:'short', day:'numeric', month:'short', year:'numeric'}) + (t ? ', ' + d.toLocaleTimeString('en-GB', {hour:'2-digit', minute:'2-digit'}) : ''); };
+const naira = (n) => '\u20A6' + Number(n || 0).toLocaleString('en-NG');
+/* Whole days from today to a date (negative = in the past). */
+const dd = (iso) => Math.round((new Date(String(iso).slice(0, 10) + 'T00:00:00') - new Date(new Date().toDateString())) / 864e5);
+const inDays = (n) => n === 0 ? 'today' : n === 1 ? 'tomorrow' : 'in ' + n + ' days';
+/* Only http(s) links are clickable; anything else (e.g. javascript:) shows as plain text. */
+const safeUrl = (u) => /^https?:\/\//i.test(String(u ?? '').trim());
+
+/* ---- demo data (shown only when API_URL is empty) ---- */
+let demoData = null;
+function demo() {
+  if (demoData) return JSON.parse(JSON.stringify(demoData));
+  const day = (n, h = 0) => { const d = new Date(); d.setDate(d.getDate() + n); d.setHours(h, 0, 0, 0); return d.toISOString().slice(0, 16); };
+  const ymd = (n) => day(n).slice(0, 10);
+  demoData = { ok: true, student: { StudentID: 'DEMO', Name: 'Sample Student', Level: 'Thālithah Ibtidā’iyyah', Plan: 'Full Madrasah (Personal)', Teacher: 'Your teacher', PaymentStatus: 'Due', NextDue: ymd(4), MonthlyFee: 35000, AttendancePresent: 14, AttendanceTotal: 16, NextClass: day(1, 17), ClassLink: '#', Juz: 2, CurrentSurah: 'Al-Baqarah', CurrentAyah: 142 },
+    hifdh: [['An-Nās','Memorised'],['Al-Falaq','Memorised'],['Al-Ikhlāṣ','Memorised'],['Al-Masad','Memorised'],['An-Naṣr','Revising'],['Al-Kāfirūn','Revising'],['Al-Baqarah','In progress'],['Āl ʿImrān','Not started']].map(([Surah, Status]) => ({ Surah, Status })),
+    murajaah: [{Day:'Monday',Portion:'An-Nās to Al-Masad'},{Day:'Wednesday',Portion:'An-Naṣr and Al-Kāfirūn'},{Day:'Friday',Portion:'Al-Baqarah 1 to 141'}],
+    results: [{Date:ymd(-42),Type:'Test',Subject:'Tajweed',Score:14,OutOf:20},{Date:ymd(-28),Type:'Hifdh test',Subject:'Juz ʿAmma',Score:17,OutOf:20},{Date:ymd(-14),Type:'Exam',Subject:'Aqeedah',Score:38,OutOf:50},{Date:ymd(-5),Type:'Hifdh test',Subject:'Al-Baqarah 1 to 141',Score:18,OutOf:20}],
+    announcements: [{Date:ymd(-1),Title:'Sample announcement',Body:'Your teacher\u2019s notices appear here, such as class changes and exam dates.'}],
+    materials: [{Title:'Sample revision notes (PDF)',URL:'#'},{Title:'Tajweed rules summary',URL:'#'}],
+    assignments: [
+      { AssignmentID: 'A1', Title: 'Noon sakinah practice', Subject: 'Tajweed', Instructions: 'Recite Al-Baqarah 1 to 5 and write down each rule you applied.', Assigned: ymd(-3), Due: ymd(2), Link: '#', MaxScore: 20, Status: 'To do', Submission: null },
+      { AssignmentID: 'A2', Title: 'Seerah questions', Subject: 'Seerah', Instructions: 'Answer questions 1 to 5 from the handout.', Assigned: ymd(-7), Due: ymd(-1), Link: '', MaxScore: 10, Status: 'Overdue', Submission: null },
+      { AssignmentID: 'A3', Title: 'Aqeedah worksheet', Subject: 'Tawheed', Instructions: 'Complete the worksheet and submit a photo link.', Assigned: ymd(-6), Due: ymd(3), Link: '', MaxScore: 20, Status: 'Submitted', Submission: { Submitted: day(-1, 20), Note: 'Done, Alhamdulillah.', Link: '', Score: '', Feedback: '', Late: false } },
+      { AssignmentID: 'A4', Title: 'Fiqh of wudu', Subject: 'Fiqh', Instructions: 'Write the obligatory acts of wudu.', Assigned: ymd(-14), Due: ymd(-9), Link: '', MaxScore: 20, Status: 'Marked', Submission: { Submitted: day(-10, 18), Note: 'My answers are attached.', Link: '', Score: 17, Feedback: 'Good work. Revise the order of the acts.', Late: false } }],
+    payments: [{Date:ymd(-26),Amount:35000,Months:1,Reference:'TRF-10421'},{Date:ymd(-56),Amount:35000,Months:1,Reference:'TRF-09877'}] };
+  return JSON.parse(JSON.stringify(demoData));
+}
+function demoSubmit(p) {
+  const d = demo(), a = d.assignments.find((x) => x.AssignmentID === p.assignmentId);
+  if (!a) return { ok: false, error: 'Assignment not found.' };
+  if (a.Status === 'Marked') return { ok: false, error: 'This assignment has already been marked.' };
+  a.Status = 'Submitted'; a.Submission = { Submitted: new Date().toISOString(), Note: p.note || '', Link: p.link || '', Score: '', Feedback: '', Late: a.Due < new Date().toISOString().slice(0, 10) };
+  demoData = d; return demo();
+}
+
+async function api(id, code, action, extra) {
+  if (!API_URL) {
+    await new Promise((r) => setTimeout(r, 400));
+    if (id.toUpperCase() !== 'DEMO' || code !== 'demo') return { ok: false, error: 'Wrong ID or access code.' };
+    return action === 'submit' ? demoSubmit(extra) : demo();
+  }
+  const r = await fetch(API_URL, { method: 'POST', body: JSON.stringify(Object.assign({ action: action || 'login', id, code }, extra || {})) });
+  return r.json();
+}
+
+function reminders(s, d, status, due) {
+  const out = [];
+  if (status !== 'exempt' && !isNaN(due)) {
+    const n = dd(s.NextDue);
+    if (n < 0) out.push({ t: 'Your payment is ' + (-n) + ' day' + (n === -1 ? '' : 's') + ' overdue.', a: '#pay', u: 1, tag: 'Pay now' });
+    else if (n <= 7) out.push({ t: 'Your payment is due ' + inDays(n) + '.', a: '#pay', tag: 'Payment' });
+  }
+  (d.assignments || []).filter((a) => (a.Status === 'To do' || a.Status === 'Overdue') && a.Due).forEach((a) => {
+    const n = dd(a.Due);
+    if (n < 0) out.push({ t: '\u201C' + esc(a.Title) + '\u201D is overdue.', a: '#assign', u: 1, tag: 'Submit' });
+    else if (n <= 2) out.push({ t: '\u201C' + esc(a.Title) + '\u201D is due ' + inDays(n) + '.', a: '#assign', tag: 'Assignment' });
+  });
+  if (s.NextClass) { const n = dd(s.NextClass); if (n === 0 || n === 1) out.push({ t: 'Your next class is ' + inDays(n) + ' at ' + new Date(s.NextClass).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }) + '.', a: '#next', tag: 'Class' }); }
+  return out;
+}
+
+function assignmentHtml(a) {
+  const sb = a.Submission, st = a.Status;
+  const cls = { 'To do': 'st-todo', 'Overdue': 'st-over', 'Submitted': 'st-sub', 'Marked': 'st-mark' }[st] || 'st-todo';
+  const marked = st === 'Marked' && sb;
+  return `<details class="asg" data-id="${esc(a.AssignmentID)}"><summary>
+    <div><b>${esc(a.Title)}</b><small>${esc(a.Subject || 'Assignment')}${a.Due ? ' \u00B7 Due ' + fdate(a.Due) : ''}</small></div>
+    <span class="pill ${cls}">${marked ? esc(sb.Score) + (a.MaxScore ? '/' + esc(a.MaxScore) : '') : esc(st)}</span></summary>
+    <div class="abody">
+      ${a.Instructions ? `<p>${esc(a.Instructions)}</p>` : ''}
+      ${safeUrl(a.Link) ? `<p><a class="lnk" href="${esc(a.Link)}" target="_blank" rel="noopener">Open the resource</a></p>` : ''}
+      ${marked ? `<div class="mark"><div class="k">Marked by your teacher</div><b>${esc(sb.Score)}${a.MaxScore ? '/' + esc(a.MaxScore) : ''}</b>${sb.Feedback ? `<p>${esc(sb.Feedback)}</p>` : ''}</div>` : ''}
+      ${sb ? `<div class="mine"><div class="k">Your submission${sb.Late ? ' (late)' : ''}, ${fdate(sb.Submitted, true)}</div>${sb.Note ? `<p>${esc(sb.Note)}</p>` : ''}${safeUrl(sb.Link) ? `<p><a class="lnk" href="${esc(sb.Link)}" target="_blank" rel="noopener">Your link</a></p>` : ''}</div>` : ''}
+      ${marked ? '' : `<form class="subm" data-id="${esc(a.AssignmentID)}" novalidate>
+        <label for="n-${esc(a.AssignmentID)}">${sb ? 'Change your note' : 'Note to your teacher'}</label>
+        <textarea id="n-${esc(a.AssignmentID)}" name="note" rows="3" maxlength="2000" placeholder="Write your answer or a short note">${esc(sb ? sb.Note : '')}</textarea>
+        <label for="l-${esc(a.AssignmentID)}">Link to your work (optional)</label>
+        <input id="l-${esc(a.AssignmentID)}" name="link" type="url" placeholder="https://..." value="${esc(sb ? sb.Link : '')}">
+        <div class="msg" role="status"></div>
+        <button class="btn btn-ink" type="submit">${sb ? 'Update submission' : 'Submit'}</button></form>`}
+    </div></details>`;
+}
+
+function render(d) {
+  const openIds = [...document.querySelectorAll('.asg[open]')].map((x) => x.dataset.id);
+  const s = d.student, first = String(s.Name).split(' ')[0];
+  const att = s.AttendanceTotal ? Math.round(100 * s.AttendancePresent / s.AttendanceTotal) : null;
+  const juz = Math.min(30, Number(s.Juz) || 0);
+  const due = new Date(s.NextDue), status = String(s.PaymentStatus || '').toLowerCase();
+  const pcls = status === 'paid' || status === 'exempt' ? 'p-paid' : status === 'overdue' ? 'p-over' : 'p-due';
+  const lvlIdx = LEVELS.findIndex((l) => l === s.Level);
+  const res = d.results || [], pct = (r) => Math.round(100 * r.Score / r.OutOf);
+  const last = res.slice(-6);
+  const asg = d.assignments || [], todo = asg.filter((a) => a.Status === 'To do' || a.Status === 'Overdue').length;
+  const pays = d.payments || [];
+  const remind = reminders(s, d, status, due);
+  const waHelp = 'https://wa.me/' + MADRASAH_WA + '?text=' + encodeURIComponent('Assalaamu alaykum. This is ' + s.Name + ' (' + s.StudentID + ') from the Madrasah.');
+  const groups = ['Memorised','Revising','In progress','Not started'];
+  $('app').innerHTML = `
+  <section class="greet"><div><small>Assalaamu alaykum</small><h1>${esc(first)}, here is your progress.</h1>
+    <div class="chips"><span>${esc(s.Level)}</span><span>${esc(s.Plan)}</span>${s.Teacher ? `<span>Teacher: ${esc(s.Teacher)}</span>` : ''}</div></div>
+    <a class="btn btn-sky" href="${waHelp}" target="_blank" rel="noopener">Message the Madrasah line</a></section>
+  ${remind.length ? `<section class="remind" aria-label="Reminders">${remind.map((r) => `<a href="${r.a}" class="${r.u ? 'urgent' : ''}">${r.t}<span>${r.tag}</span></a>`).join('')}</section>` : ''}
+  <div class="grid">
+    <article class="c" id="next" style="--i:0"><div class="k">Next class</div>${s.NextClass ? `<div class="big">${fdate(s.NextClass, true)}</div>${safeUrl(s.ClassLink) ? `<p class="sub"><a class="btn btn-ink" style="margin-top:12px" href="${esc(s.ClassLink)}" target="_blank" rel="noopener">Join class</a></p>` : '<p class="sub">Your teacher will share the join link.</p>'}` : '<p class="empty">No class scheduled yet.</p>'}</article>
+    <article class="c" id="pay" style="--i:1"><div class="k">Payment</div><span class="pill ${pcls}">${esc(s.PaymentStatus || 'Due')}</span>
+      ${status === 'exempt' ? '<div class="big" style="margin-top:12px">Nothing to pay</div>' : `<div class="big" style="margin-top:12px">${isNaN(due) ? 'No date set' : fdate(s.NextDue)}</div><p class="sub">Next payment due${s.MonthlyFee ? ': ' + naira(s.MonthlyFee) : ''}. After paying, send your receipt on <a href="https://wa.me/${PAYMENT_WA}" target="_blank" rel="noopener" class="lnk">WhatsApp</a>. This page updates once the school confirms it.</p>`}</article>
+    <article class="c" style="--i:2"><div class="k">Attendance</div><div class="big">${att === null ? 'No data yet' : att + '%'}</div>
+      ${att === null ? '' : `<div class="bar"><i data-w="${att}"></i></div><div class="row"><span>${s.AttendancePresent} present</span><span>${s.AttendanceTotal} classes</span></div>`}</article>
+
+    <article class="c w12" id="assign" style="--i:3"><h2>Assignments${todo ? ` <span class="pill st-todo" style="font-size:12px;vertical-align:middle">${todo} to do</span>` : ''}</h2>
+      <div class="asgs">${asg.map(assignmentHtml).join('') || '<p class="empty">No assignments yet. Your teacher will post them here.</p>'}</div></article>
+
+    <article class="c w8" style="--i:4"><h2>Hifdh tracker</h2>
+      <div class="row"><b style="color:var(--deep)">${juz} of 30 juz memorised</b><span>${Math.round(juz / 30 * 100)}%</span></div><div class="bar"><i data-w="${juz / 30 * 100}"></i></div>
+      ${s.CurrentSurah ? `<p class="sub">Currently on <b>${esc(s.CurrentSurah)}</b>${s.CurrentAyah ? `, ayah ${esc(s.CurrentAyah)}` : ''}.</p>` : ''}
+      <div class="leg">${groups.map((g) => `<span class="pill s-${g.replace(/ /g, '-')}" style="padding:4px 12px">${g}</span>`).join('')}</div>
+      <div class="sur">${(d.hifdh || []).map((h) => `<span class="s-${esc(String(h.Status).replace(/ /g, '-'))}">${esc(h.Surah)}</span>`).join('') || '<span class="empty">Your teacher will add your surahs here.</span>'}</div></article>
+    <article class="c" style="--i:5"><h2>This week\u2019s murajaah</h2><ul class="list">${(d.murajaah || []).map((m) => `<li><b>${esc(m.Day)}</b><span>${esc(m.Portion)}</span></li>`).join('') || '<li class="empty">No revision plan yet.</li>'}</ul></article>
+
+    <article class="c w8" style="--i:6"><h2>Tests and exams</h2>${last.length ? `<div class="chart">${last.map((r) => `<div data-h="${pct(r)}"><em>${pct(r)}%</em></div>`).join('')}</div>
+      <table><thead><tr><th>Date</th><th>Subject</th><th>Type</th><th>Score</th></tr></thead><tbody>${res.slice().reverse().map((r) => `<tr><td>${fdate(r.Date)}</td><td>${esc(r.Subject)}</td><td>${esc(r.Type)}</td><td><b>${esc(r.Score)}/${esc(r.OutOf)}</b></td></tr>`).join('')}</tbody></table>` : '<p class="empty">No results yet.</p>'}</article>
+    <article class="c" style="--i:7"><h2>Your level</h2><div class="path">${LEVELS.map((l, i) => `<span class="${i < lvlIdx ? 'done' : i === lvlIdx ? 'now' : ''}">${esc(l)}</span>`).join('')}</div>
+      <p class="sub" style="margin-top:14px"><a href="admissions.html#madrasah-levels" class="lnk">See what the next level requires</a></p></article>
+
+    <article class="c w6" style="--i:8"><h2>Announcements</h2><ul class="list">${(d.announcements || []).map((a) => `<li style="display:block"><b>${esc(a.Title)}</b> <span style="float:right">${fdate(a.Date)}</span><div class="sub">${esc(a.Body)}</div></li>`).join('') || '<li class="empty">Nothing new.</li>'}</ul></article>
+    <article class="c w6" style="--i:9"><h2>Materials</h2><ul class="list">${(d.materials || []).map((m) => `<li>${safeUrl(m.URL) ? `<a href="${esc(m.URL)}" target="_blank" rel="noopener">${esc(m.Title)}</a>` : esc(m.Title)}</li>`).join('') || '<li class="empty">No materials yet.</li>'}</ul></article>
+
+    <article class="c w12" style="--i:10"><h2>Payment history</h2>${pays.length ? `<table><thead><tr><th>Date</th><th>Reference</th><th>Covers</th><th>Amount</th></tr></thead><tbody>${pays.map((p) => `<tr><td>${fdate(p.Date)}</td><td>${esc(p.Reference || '')}</td><td>${esc(p.Months)} month${Number(p.Months) === 1 ? '' : 's'}</td><td><b>${naira(p.Amount)}</b></td></tr>`).join('')}</tbody></table>` : '<p class="empty">Confirmed payments will appear here.</p>'}</article>
+  </div>
+  <p class="foot">${API_URL ? '' : 'Demo mode: this is sample data. '}Your records are updated by your teachers. Questions? Message the Madrasah line.</p>`;
+  openIds.forEach((id) => { const el = [...document.querySelectorAll('.asg')].find((x) => x.dataset.id === id); if (el) el.open = true; });
+  requestAnimationFrame(() => setTimeout(() => {
+    document.querySelectorAll('.bar i').forEach((b) => { b.style.width = b.dataset.w + '%'; });
+    document.querySelectorAll('.chart div').forEach((b) => { b.style.height = b.dataset.h + '%'; });
+  }, 80));
+}
+
+function show(data, id, code) {
+  sessionStorage.setItem('hs', JSON.stringify({ id, code }));
+  $('login').hidden = true; $('app').hidden = false; $('out').hidden = false; render(data); window.scrollTo(0, 0);
+}
+async function signIn(id, code, silent) {
+  const btn = $('go'), err = $('err'); err.textContent = ''; btn.disabled = true; btn.textContent = 'Signing in…';
+  try {
+    const d = await api(id, code);
+    if (d.ok) show(d, id, code); else if (!silent) err.textContent = d.error || 'Could not sign in.'; else sessionStorage.removeItem('hs');
+  } catch (e) { if (!silent) err.textContent = 'Could not reach the school server. Please try again.'; }
+  btn.disabled = false; btn.textContent = 'Sign in';
+}
+$('demoNote').hidden = !!API_URL;
+$('lf').addEventListener('submit', (e) => { e.preventDefault(); const id = $('sid').value.trim(), code = $('scode').value.trim(); if (!id || !code) { $('err').textContent = 'Enter your Student ID and access code.'; return; } signIn(id, code); });
+$('out').addEventListener('click', () => { sessionStorage.removeItem('hs'); $('app').hidden = true; $('app').innerHTML = ''; $('out').hidden = true; $('login').hidden = false; $('scode').value = ''; });
+
+/* Assignment submissions */
+$('app').addEventListener('submit', async (e) => {
+  const f = e.target.closest('form.subm'); if (!f) return;
+  e.preventDefault();
+  const msg = f.querySelector('.msg'), btn = f.querySelector('button'), id = f.dataset.id;
+  let saved = null; try { saved = JSON.parse(sessionStorage.getItem('hs') || 'null'); } catch (x) {}
+  const bad = (t) => { msg.textContent = t; msg.className = 'msg bad'; };
+  if (!saved) return bad('Please log in again.');
+  const note = f.elements.note.value.trim(), link = f.elements.link.value.trim();
+  if (!note && !link) return bad('Add a note or a link to your work.');
+  if (link && !safeUrl(link)) return bad('The link must start with http:// or https://');
+  const label = btn.textContent; btn.disabled = true; btn.textContent = 'Sending…'; msg.textContent = ''; msg.className = 'msg';
+  try {
+    const d = await api(saved.id, saved.code, 'submit', { assignmentId: id, note, link });
+    if (d.ok) {
+      render(d);
+      const nf = [...document.querySelectorAll('form.subm')].find((x) => x.dataset.id === id);
+      if (nf) { const m = nf.querySelector('.msg'); m.textContent = 'Saved. Your teacher can see it now.'; m.className = 'msg good'; }
+      return;
+    }
+    bad(d.error || 'Could not submit. Please try again.');
+  } catch (err) { bad('Could not reach the school server. Please try again.'); }
+  btn.disabled = false; btn.textContent = label;
+});
+
+try { const saved = JSON.parse(sessionStorage.getItem('hs') || 'null'); if (saved) signIn(saved.id, saved.code, true); } catch (e) {}
+</script>
+</body>
+</html>

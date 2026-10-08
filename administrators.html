@@ -102,18 +102,27 @@
   /* Administrators */
   .team { padding: 130px 0 0; }
   .team[hidden] { display: none; }
-  .cards { display: flex; flex-wrap: wrap; justify-content: center; gap: 24px; }
-  .card { flex: 1 1 320px; max-width: 380px; background: #fff; border: 1px solid var(--line); border-radius: 22px; box-shadow: var(--shadow); padding: 30px; display: flex; flex-direction: column; transition: border-color .25s, transform .35s var(--ease), box-shadow .3s; }
-  .card:hover { border-color: var(--ink); transform: translateY(-6px); box-shadow: 0 1px 2px rgba(6,47,77,.06), 0 28px 44px -22px rgba(6,47,77,.35); }
-  .c-role { align-self: flex-start; padding: 5px 13px; border-radius: 999px; background: var(--wash); border: 1px solid var(--line); color: var(--ink); font-size: 12.5px; font-weight: 700; margin-bottom: 22px; }
-  .c-name { font-family: var(--display); font-weight: 700; font-size: 28px; line-height: 1.1; letter-spacing: -.02em; color: var(--deep); margin-bottom: 10px; }
-  .c-bio { flex: 1; }
-  .c-bio p { color: var(--muted); font-size: 15.5px; }
-  .c-bio p + p { margin-top: 8px; }
-  .c-foot { margin-top: 24px; padding-top: 18px; border-top: 1px solid var(--line); }
-  .c-foot a { display: inline-flex; align-items: center; gap: 8px; font-size: 14.5px; font-weight: 600; color: var(--ink); }
-  .c-foot a span { display: inline-block; transition: transform .25s var(--ease); }
-  .c-foot a:hover span { transform: translateX(5px); }
+  .jump { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: -20px auto 56px; }
+  .jump a { padding: 9px 18px; border-radius: 999px; border: 1px solid var(--line); background: #fff; font-size: 14px; font-weight: 600; color: var(--deep); transition: background .2s, border-color .2s; }
+  .jump a:hover { background: var(--wash); border-color: var(--ink); }
+  .roster { border-top: 1px solid var(--line); }
+  .person { display: grid; grid-template-columns: minmax(240px, 340px) 1fr; gap: 64px; padding: 60px 0; border-bottom: 1px solid var(--line); }
+  .p-side { position: sticky; top: 110px; align-self: start; }
+  .p-mono, .p-photo { width: 92px; height: 92px; border-radius: 28px; margin-bottom: 24px; }
+  .p-mono { background: var(--deep); color: var(--sky); display: grid; place-items: center; font-family: var(--display); font-weight: 700; font-size: 34px; letter-spacing: -.02em; }
+  .p-photo { object-fit: cover; }
+  .p-role { display: inline-block; padding: 5px 13px; border-radius: 999px; background: var(--wash); border: 1px solid var(--line); color: var(--ink); font-size: 12.5px; font-weight: 700; margin-bottom: 14px; }
+  .p-name { font-family: var(--display); font-weight: 700; font-size: clamp(30px, 3.4vw, 42px); line-height: 1.04; letter-spacing: -.03em; color: var(--deep); }
+  .p-bio p { color: var(--muted); font-size: 17px; max-width: 64ch; margin-bottom: 16px; }
+  .p-bio > p:first-child { font-size: 21px; line-height: 1.55; color: var(--deep); font-weight: 500; letter-spacing: -.01em; }
+  .p-more[hidden] { display: none; }
+  .p-toggle { margin-top: 6px; padding: 11px 22px; border-radius: 999px; border: 1px solid var(--line); background: #fff; font-size: 14.5px; font-weight: 600; color: var(--ink); transition: border-color .2s, background .2s; }
+  .p-toggle:hover { border-color: var(--ink); background: var(--wash); }
+  @media (max-width: 800px) {
+    .person { grid-template-columns: 1fr; gap: 22px; padding: 44px 0; }
+    .p-side { position: static; }
+    .p-bio > p:first-child { font-size: 19px; }
+  }
 
   /* Contact */
   .cta { padding: 130px 16px 24px; }
@@ -254,7 +263,8 @@
       <h2>The team that runs the school</h2>
       <p>The administrators who look after the school day to day.</p>
     </div>
-    <div class="cards" id="cards"></div>
+    <nav class="jump reveal" id="jump" aria-label="Administrators"></nav>
+    <div class="roster" id="cards"></div>
   </div>
 </section>
 
@@ -318,19 +328,50 @@
      bio  : one or two sentences (separate paragraphs with \n\n)
    Example:
      { name: 'Name Here', role: 'Head of Madrasah', bio: 'Short bio.' },
+   Optional: photo: 'images/name.jpg' replaces the initials tile.
    The founder is shown separately above, so add only the other administrators here. */
   const ADMINS = [
     { name: 'Abdullah Adedokun', role: 'Director of Student Affairs', bio: 'Abdullah leads student affairs at Himaayah Schools. He is also a software engineering enthusiast.' },
-    { name: 'Dauda Mubarak', role: 'Director of the Academy', bio: 'Dauda Mubarak is the Director of the Academy. A seasoned tutor with a wealth of teaching experience, he was the pioneer head of the Academy and has tutored a wide range of students.' },
+    { name: 'Dauda Mubarak', role: 'Director of the Academy', bio: `Mubarak is committed to making affordable, quality education accessible to the Ummah.
+
+He has also helped others reach the same heights. In the last two years, the students he has taught and mentored include more than 50 who scored 300 and above in UTME, one who scored above 360 in two consecutive years, two who earned 16 points in JUPEB, and one who finished 100 Level with a perfect CGPA.
+
+He is now deepening his knowledge of cognitive science and data science and applying it to help the Academy’s students succeed.` },
+    { name: 'Mujaheed M. Sirajudeen', role: 'Director of the Hifdh Programme', bio: `Mujaheed M. Sirajudeen is a Nigerian educator, Arabic educator, Qur’anic teacher, mentor, researcher and educational-technology builder working at the intersection of traditional Islamic scholarship, modern pedagogy, and digital technology. His life mission centres on expanding access to structured Qur’anic education, fostering youth development, and building sustainable educational platforms and institutions.
+
+Over the years, his engagement with the Qur’an has expanded beyond memorisation into tajwīd, Qur’anic sciences including tafsir, teaching, and helping students build a deep, lifelong relationship with the Qur’an.
+
+He began teaching at a very young age and has since gained extensive experience across traditional schools, madāris, foundations, and online platforms in Nigeria and internationally. He has served as Head Teacher at Khoirōt Foundation and has held teaching roles at Manahilul Furqōn International School for Qur’an Memorization and Islamic Studies (since 2022), Imam Bukhari College, Daarul-Arqam, Makkah Integrated School, Mahdud Diny Wa Arobiyy, and Hanān School of Qur’an and Islamic Sciences, among others. He also co-initiated Mahdu Tanzil, a free Qur’an learning circle.
+
+He holds a B.A. Ed. in Arabic from Bayero University Kano and a Diploma in the Teaching of Arabic and Islamic Studies from Emmanuel Alayande University of Education. He also earned a Diploma in Hisbah from An-Naseeha International Institute. He continues his studies in Qur’anic sciences with Takrar, a Saudi Arabia-based Qur’anic institute, and learns under scholars in Nigeria and abroad.
+
+Beyond the classroom, he is an active community leader and contributor to international Qur’anic media. He has served as an Imam in professional and voluntary roles across various institutions and has worked with reciters and scholars from countries including Morocco and Pakistan to produce recorded Qur’anic video content.
+
+Driven by the conviction that true education must lead to personal transformation, he sees Qur’anic study not as rote memorisation alone, but as a way to build character, discipline, and intellectual growth. His long-term goal is to build enduring global learning platforms and institutions that enable students worldwide to engage with the Qur’an with consistency, depth, and academic rigour.` },
+    { name: 'Abdulsomad Olaide Amobi', role: 'Director of the Teenagers Building Circle', bio: `A graduate of Chemical Engineering from the University of Ilorin, Abdulsomad is passionate about research, technology, mentoring, and community service, and is looking to pursue postgraduate studies with research interests in carbon capture, green emissions, nanotechnology, and process engineering.
+
+As a student, he mentored, tutored, and guided colleagues and younger students in both their academic and spiritual lives. Students he has tutored are now doing well across institutions in Nigeria, including the University of Ilorin, University of Ibadan, ABU, LAUTECH, and others.
+
+He currently tutors across several institutes, including the Naasir Institute, a UK-based institute, where he prepares students for major exams such as GCSE. He has been part of Himaayah Institute since 2024, where he tutored UTME students. He now serves the Himaayah Institute of Arabic and Islamic Studies and the Himaayah Teenage Circle, training the younger generation to grow into responsible adults in society.` },
   ];
 
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const initials = (n) => { const w = String(n).replace(/\b[A-Z]\.\s?/g, '').trim().split(/\s+/); return ((w[0] || '')[0] + (w.length > 1 ? w[w.length - 1][0] : '')).toUpperCase(); };
   if (ADMINS.length) {
     document.getElementById('team').hidden = false;
-    document.getElementById('cards').innerHTML = ADMINS.map((a, i) => `<article class="card reveal" style="--i:${i}">
-      <span class="c-role">${esc(a.role)}</span><h3 class="c-name">${esc(a.name)}</h3>
-      <div class="c-bio">${String(a.bio || '').split(/\n\n+/).map((p) => `<p>${esc(p)}</p>`).join('')}</div>
-      <div class="c-foot"><a href="contact.html">Contact the team <span aria-hidden="true">&rarr;</span></a></div></article>`).join('');
+    document.getElementById('jump').innerHTML = ADMINS.map((a, i) => `<a href="#admin-${i}">${esc(a.name)}</a>`).join('');
+    document.getElementById('cards').innerHTML = ADMINS.map((a, i) => {
+      const ps = String(a.bio || '').split(/\n\n+/).map((p) => `<p>${esc(p)}</p>`), cut = ps.length > 3 ? 2 : ps.length;
+      const pic = a.photo ? `<img class="p-photo" src="${esc(a.photo)}" alt="${esc(a.name)}">` : `<div class="p-mono" aria-hidden="true">${esc(initials(a.name))}</div>`;
+      return `<article class="person reveal" id="admin-${i}">
+      <div class="p-side">${pic}<span class="p-role">${esc(a.role)}</span><h3 class="p-name">${esc(a.name)}</h3></div>
+      <div class="p-bio">${ps.slice(0, cut).join('')}${ps.length > cut ? `<div class="p-more" hidden>${ps.slice(cut).join('')}</div><button type="button" class="p-toggle" aria-expanded="false">Read full profile</button>` : ''}</div></article>`;
+    }).join('');
+    document.getElementById('cards').addEventListener('click', (e) => {
+      const b = e.target.closest('.p-toggle'); if (!b) return;
+      const m = b.previousElementSibling, open = m.hidden;
+      m.hidden = !open; b.textContent = open ? 'Show less' : 'Read full profile'; b.setAttribute('aria-expanded', open);
+    });
   }
 
   const countUp = (el) => {

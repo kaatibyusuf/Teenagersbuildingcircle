@@ -24,6 +24,7 @@
     --display: 'Bricolage Grotesque', 'Inter', sans-serif;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  [hidden] { display: none !important; }
   body { font-family: 'Inter', -apple-system, sans-serif; color: var(--text); background: #fff; -webkit-font-smoothing: antialiased; line-height: 1.55; }
   a { color: inherit; text-decoration: none; }
   button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
@@ -78,6 +79,7 @@
   .field { margin-bottom: 18px; }
   .field label { display: block; font-size: 13.5px; font-weight: 600; color: var(--deep); margin-bottom: 7px; }
   .field .req { color: var(--sky-d); }
+  .field .opt { font-weight: 400; color: var(--muted); }
   .field input, .field select { width: 100%; padding: 15px 18px; font-size: 15px; color: var(--text); background: var(--wash); border: 1.5px solid transparent; border-radius: 16px; transition: border-color .2s, background .2s, box-shadow .2s; }
   .field input::placeholder { color: #8DA0B0; }
   .field input:focus, .field select:focus { background: #fff; border-color: var(--ink); box-shadow: 0 0 0 4px rgba(133,204,255,.35); outline: none; }
@@ -86,6 +88,7 @@
   .field.error .err-msg { display: block; }
   .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
   @media (max-width: 520px) { .field-row { grid-template-columns: 1fr; } }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; overflow: hidden; }
 
   /* Step 2 */
   .prog-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 22px; }
@@ -134,6 +137,7 @@
   .form-status { font-size: 13.5px; margin-top: 12px; display: none; }
   .form-status.error { color: var(--error); }
   .form-note { font-size: 13px; color: var(--muted); margin-top: 14px; line-height: 1.6; }
+  .form-note a { text-decoration: underline; }
 
   .confirm-icon { width: 64px; height: 64px; border-radius: 50%; background: var(--sky); color: var(--deep); display: grid; place-items: center; margin-bottom: 22px; animation: pop .6s cubic-bezier(.2,.7,.2,1) both; }
   @keyframes pop { from { transform: scale(0); } }
@@ -208,7 +212,7 @@
         <div class="field-row">
           <div class="field" data-field="dob">
             <label>Date of birth <span class="req">*</span></label>
-            <input type="date" name="dob">
+            <input type="date" name="dob" id="dobInput">
             <p class="err-msg">Enter a date of birth.</p>
           </div>
           <div class="field" data-field="gradeLevel">
@@ -225,6 +229,13 @@
             <p class="err-msg">Select a grade level.</p>
           </div>
         </div>
+
+        <div class="field" data-field="studentEmail" data-optional id="studentEmailField" hidden>
+          <label>Student's own email <span class="opt">(optional, for students aged 18+)</span></label>
+          <input type="email" name="studentEmail" placeholder="Where the student's login details should be sent" autocomplete="email">
+          <p class="err-msg">Enter a valid email address, or leave this blank.</p>
+        </div>
+
         <div class="field" data-field="kinName">
           <label>Next of kin — full name <span class="req">*</span></label>
           <input type="text" name="kinName" placeholder="Parent or guardian's full name" autocomplete="name">
@@ -253,9 +264,15 @@
           <input type="email" name="kinEmail" placeholder="For enrollment updates and payment receipts" autocomplete="email">
           <p class="err-msg">Enter a valid email address.</p>
         </div>
+
+        <div class="hp" aria-hidden="true">
+          <label>Leave this empty <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+        </div>
+
         <div class="step-actions">
           <button type="button" class="btn btn-primary" data-next>Save & Continue</button>
         </div>
+        <p class="form-note">We use these details to set up the student's account and send login details by email. See our <a href="policies.html" target="_blank" rel="noopener">privacy policy</a>.</p>
       </form>
 
       <form class="step" id="step2" data-step="2" novalidate>
@@ -294,6 +311,7 @@
           <a class="btn btn-wa" id="waLink2" target="_blank" rel="noopener">Send on WhatsApp <small>· +234 702 584 2849</small></a>
         </div>
         <button type="button" class="btn btn-secondary" id="copyMsgBtn">Copy the message instead</button>
+        <p class="form-status error" id="enrolStatus"></p>
 
         <p class="msg-title">Your message</p>
         <div class="msg-preview" id="msgPreview"></div>
@@ -325,6 +343,10 @@
 </div>
 
 <script>
+  // Paste the SAME Apps Script web app URL that dashboard.html uses.
+  // While this is empty the form still works (WhatsApp only) but nothing is saved to the sheet.
+  const API_URL = 'https://script.google.com/macros/s/AKfycbzC4W9ovvvyKoJGFXCL8E7g0sfyAXWxuaHvcO2yqiw7xPpYaDpC-_p4lj6q9BMEjka9/exec';
+
   const PROGRAMMES = [
     {
       id: 'circle', name: 'Teenagers Building Circle',
@@ -408,7 +430,7 @@
   const initialProgrammeId = planProgramme
     ? planProgramme.id
     : (PROGRAMMES.some((p) => p.id === requestedProgramme) ? requestedProgramme : PROGRAMMES[0].id);
-  const state = { step: 1, student: {}, programmeId: initialProgrammeId, plan: initialPlan };
+  const state = { step: 1, student: {}, programmeId: initialProgrammeId, plan: initialPlan, ref: null, sent: false };
 
   const steps = document.querySelectorAll('.step');
   const stepper = document.getElementById('stepper');
@@ -442,12 +464,36 @@
     stepEl.querySelectorAll('[data-field]').forEach((field) => {
       const input = field.querySelector('input, select');
       if (!input) return;
-      const valid = input.type === 'email' ? /^\S+@\S+\.\S+$/.test(input.value.trim()) : input.value.trim().length > 0;
+      if (field.hidden) { field.classList.remove('error'); return; }
+      const val = input.value.trim();
+      let valid = input.type === 'email' ? /^\S+@\S+\.\S+$/.test(val) : val.length > 0;
+      if (field.hasAttribute('data-optional') && val === '') valid = true;
       field.classList.toggle('error', !valid);
       if (!valid) ok = false;
     });
     return ok;
   }
+
+  // Students aged 18+ can give their own email for their login details
+  function ageFrom(dob) {
+    const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(dob || '');
+    if (!m) return null;
+    const b = new Date(+m[1], +m[2] - 1, +m[3]), t = new Date();
+    let a = t.getFullYear() - b.getFullYear();
+    if (t.getMonth() < b.getMonth() || (t.getMonth() === b.getMonth() && t.getDate() < b.getDate())) a--;
+    return a >= 0 && a < 120 ? a : null;
+  }
+  const dobInput = document.getElementById('dobInput');
+  const studentEmailField = document.getElementById('studentEmailField');
+  dobInput.max = new Date().toISOString().slice(0, 10);
+  function syncStudentEmail() {
+    const age = ageFrom(dobInput.value);
+    const adult = age !== null && age >= 18;
+    studentEmailField.hidden = !adult;
+    if (!adult) { studentEmailField.querySelector('input').value = ''; studentEmailField.classList.remove('error'); }
+  }
+  dobInput.addEventListener('input', syncStudentEmail);
+  dobInput.addEventListener('change', syncStudentEmail);
 
   document.getElementById('step1').querySelector('[data-next]').addEventListener('click', () => {
     const stepEl = document.getElementById('step1');
@@ -525,14 +571,29 @@
   renderProgPills();
   renderPlanOptions();
 
+  // Short reference that ties the WhatsApp receipt to the row in the sheet
+  function newRef() {
+    const A = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
+    const b = new Uint8Array(6);
+    (window.crypto || window.msCrypto).getRandomValues(b);
+    return 'ENR-' + Array.from(b, (x) => A[x % A.length]).join('');
+  }
+
   function renderPaySummary() {
     const s = state.student;
+    if (!state.sent || !state.ref) { state.ref = newRef(); state.sent = false; }
+    document.getElementById('enrolStatus').style.display = 'none';
     document.getElementById('paySummary').innerHTML = `
-      <div class="row"><span>Student</span><b>${s.studentName || ''}</b></div>
+      <div class="row"><span>Student</span><b>${escapeHtml(s.studentName || '')}</b></div>
       <div class="row"><span>Plan</span><b>${state.plan.name}</b></div>
       <div class="row"><span>Amount to pay</span><b>${amountText(state.plan)}</b></div>
+      <div class="row"><span>Your reference</span><b>${state.ref}</b></div>
     `;
     preparePayment();
+  }
+
+  function escapeHtml(t) {
+    return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
 
   document.querySelectorAll('.pay-tab').forEach((tab) => {
@@ -559,11 +620,12 @@
   });
 
   // =================================================================
-  // Payment: no payment API yet. The student pays by bank transfer,
-  // then sends a pre-written WhatsApp message (with their details and
-  // plan) to either school line. To bring back card payment and saved
-  // registrations later, restore /api/submit-registration and
-  // /api/create-checkout calls here.
+  // Payment: the student pays by bank transfer, then sends a pre-written
+  // WhatsApp message (with their details, plan and reference) to either
+  // school line. When they tap WhatsApp or copy the message, the details
+  // are also saved to the "Enrolments" tab of the Google Sheet
+  // (see submitEnrolment). Staff then check the receipt and set the row
+  // to Confirmed, which creates the student's account automatically.
   // =================================================================
   const WA_NUMBERS = ['2348066043320', '2347025842849'];
 
@@ -575,10 +637,11 @@
   function buildMessage() {
     const s = state.student;
     const programme = PROGRAMMES.find((p) => p.id === state.programmeId).name;
-    return [
+    const lines = [
       "Assalaamu alaykum warahmatullah. I have just paid for enrollment at Himaayah Schools.",
       '',
       'PAYMENT',
+      'Reference: ' + state.ref,
       'Programme: ' + programme,
       'Plan: ' + state.plan.name,
       'Amount paid: ' + amountText(state.plan),
@@ -588,18 +651,48 @@
       'Name: ' + s.studentName,
       'Date of birth: ' + s.dob,
       'Grade level: ' + s.gradeLevel,
+    ];
+    if (s.studentEmail) lines.push('Student email: ' + s.studentEmail);
+    lines.push(
       '',
       'NEXT OF KIN',
       'Name: ' + s.kinName + ' (' + s.kinRelationship + ')',
       'Phone: ' + s.kinPhone,
       'Email: ' + s.kinEmail,
       '',
-      'My payment receipt is attached. Please confirm my enrollment. Jazakumullahu khayran.',
-    ].join('\n');
+      'My payment receipt is attached. Please confirm my enrollment. Jazakumullahu khayran.'
+    );
+    return lines.join('\n');
   }
 
   function waLink(number) {
     return 'https://wa.me/' + number + '?text=' + encodeURIComponent(buildMessage());
+  }
+
+  // Save the enrolment to the sheet. Never blocks WhatsApp: if it fails, the
+  // WhatsApp message still has every detail, and staff can add the row by hand.
+  function submitEnrolment() {
+    if (!API_URL || state.sent || !state.ref || !state.plan) return;
+    state.sent = true;
+    const s = state.student;
+    const body = {
+      action: 'enrol', ref: state.ref, studentName: s.studentName, dob: s.dob, gradeLevel: s.gradeLevel,
+      programme: PROGRAMMES.find((p) => p.id === state.programmeId).name, plan: state.plan.name,
+      kinName: s.kinName, kinRelationship: s.kinRelationship, kinPhone: s.kinPhone, kinEmail: s.kinEmail,
+      studentEmail: s.studentEmail || '', website: s.website || '',
+    };
+    const status = document.getElementById('enrolStatus');
+    fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },   // plain text avoids a browser preflight that Apps Script cannot answer
+      body: JSON.stringify(body),
+    }).then((r) => r.json()).then((j) => {
+      if (!j || !j.ok) {
+        state.sent = false;
+        status.textContent = (j && j.error ? j.error + ' ' : '') + 'We could not save your details automatically, but your WhatsApp message has everything we need.';
+        status.style.display = 'block';
+      }
+    }).catch(() => { state.sent = false; });
   }
 
   function preparePayment() {
@@ -610,9 +703,10 @@
     });
   }
 
-  // After the WhatsApp tab opens, move this page to a reminder screen
+  // After the WhatsApp tab opens, save the enrolment and move this page to a reminder screen
   [1, 2].forEach((i) => {
     document.getElementById('waLink' + i).addEventListener('click', () => {
+      submitEnrolment();
       setTimeout(showWhatsAppDone, 500);
     });
   });
@@ -621,7 +715,7 @@
     document.getElementById('doneTitle').textContent = 'One last step.';
     document.getElementById('doneSub').textContent =
       'WhatsApp should have opened with your message ready. Attach your payment receipt and press send, and we\u2019ll confirm ' +
-      (state.student.studentName ? state.student.studentName + '\u2019s' : 'your') + ' place, usually within a few hours.';
+      (state.student.studentName ? state.student.studentName + '\u2019s' : 'your') + ' place, usually within a few hours. Your reference is ' + state.ref + '.';
     document.getElementById('doneActions').innerHTML = WA_NUMBERS.map((num) =>
       `<a class="btn btn-wa" href="${waLink(num)}" target="_blank" rel="noopener">Open WhatsApp again <small>\u00b7 +${num.replace(/^234(\d{3})(\d{3})(\d{4})$/, '234 $1 $2 $3')}</small></a>`
     ).join('') + '<a class="btn btn-secondary" href="index.html">Back to Himaayah Schools</a>';
@@ -630,6 +724,7 @@
 
   document.getElementById('copyMsgBtn').addEventListener('click', (e) => {
     const btn = e.currentTarget, text = buildMessage();
+    submitEnrolment();
     const finish = () => { btn.textContent = 'Message copied'; setTimeout(() => { btn.textContent = 'Copy the message instead'; }, 1800); };
     if (navigator.clipboard?.writeText) navigator.clipboard.writeText(text).then(finish).catch(finish);
     else finish();
