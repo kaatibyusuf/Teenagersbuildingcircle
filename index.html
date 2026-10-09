@@ -16,217 +16,170 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<script>document.documentElement.classList.add('js');</script>
 <style>
+  /* ===== Himaayah design system (reuse :root + nav + footer on every page) ===== */
   :root {
     --deep: #062F4D; --ink: #094570; --sky: #85CCFF; --sky-d: #3E97D9;
     --wash: #F1F7FC; --white: #fff; --text: #0E2A3D; --muted: #55697B;
-    --line: rgba(9,69,112,.14); --r-lg: 32px;
+    --line: rgba(9,69,112,.12); --r-lg: 32px; --r-md: 20px;
     --display: 'Bricolage Grotesque', 'Inter', sans-serif;
-    --ease: cubic-bezier(.2,.7,.2,1);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; scroll-padding-top: 100px; }
-  body { font-family: 'Inter', -apple-system, sans-serif; color: var(--text); background: var(--white); -webkit-font-smoothing: antialiased; line-height: 1.65; overflow-x: hidden; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', -apple-system, sans-serif; color: var(--text); background: var(--white); -webkit-font-smoothing: antialiased; line-height: 1.6; }
   a { color: inherit; text-decoration: none; }
-  button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+  img { display: block; max-width: 100%; }
+  button { font-family: inherit; cursor: pointer; border: none; background: none; }
   .wrap { max-width: 1200px; margin: 0 auto; padding: 0 28px; }
   a:focus-visible, button:focus-visible { outline: 2px solid var(--sky-d); outline-offset: 3px; }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition-duration: .001ms !important; scroll-behavior: auto !important; } }
 
-  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 15px 28px; font-size: 15px; font-weight: 600; border-radius: 999px; transition: background .2s, color .2s, border-color .2s; }
+  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 15px 28px; font-size: 15px; font-weight: 600; border-radius: 999px; transition: background .2s, color .2s, border-color .2s; }
   .btn-sky { background: var(--sky); color: var(--deep); } .btn-sky:hover { background: #fff; }
   .btn-ink { background: var(--ink); color: #fff; } .btn-ink:hover { background: var(--deep); }
-  .btn-line { border: 1px solid var(--line); background: #fff; color: var(--deep); } .btn-line:hover { border-color: var(--ink); }
-  .btn-ghost { border: 1px solid rgba(255,255,255,.4); color: #fff; } .btn-ghost:hover { background: rgba(255,255,255,.12); }
+  .btn-ghost { border: 1px solid rgba(255,255,255,.5); color: #fff; } .btn-ghost:hover { background: rgba(255,255,255,.14); }
 
-  /* Nav */
+  /* ===== Nav: floating pill ===== */
   .nav { position: fixed; top: 16px; left: 0; right: 0; z-index: 100; padding: 0 20px; }
   .nav-pill { max-width: 1200px; margin: 0 auto; height: 64px; padding: 0 12px 0 22px; display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,.94); backdrop-filter: blur(14px); border-radius: 999px; box-shadow: 0 8px 30px -12px rgba(6,47,77,.35); }
   .brand { display: flex; align-items: center; gap: 10px; font-family: var(--display); font-weight: 700; font-size: 18px; color: var(--ink); }
-  .nav-links { display: flex; align-items: center; gap: 26px; }
+  .nav-links { display: flex; align-items: center; gap: 30px; }
   .nav-links a:not(.btn) { font-size: 14px; font-weight: 500; color: var(--muted); transition: color .2s; }
   .nav-links a:not(.btn):hover { color: var(--ink); }
   .nav-links .btn { padding: 11px 22px; font-size: 14px; }
   .nav-toggle { display: none; width: 44px; height: 44px; border-radius: 50%; position: relative; }
   .nav-toggle span { position: absolute; left: 13px; right: 13px; height: 2px; background: var(--ink); }
   .nav-toggle span:nth-child(1) { top: 16px; } .nav-toggle span:nth-child(2) { top: 21px; } .nav-toggle span:nth-child(3) { top: 26px; }
-  @media (max-width: 1060px) {
+  @media (max-width: 900px) {
     .nav-toggle { display: block; }
     .nav-links { position: absolute; top: 76px; left: 20px; right: 20px; flex-direction: column; align-items: stretch; gap: 0; background: #fff; border-radius: 24px; padding: 8px 20px 20px; box-shadow: 0 20px 40px -16px rgba(6,47,77,.4); display: none; }
     .nav-links.open { display: flex; }
     .nav-links a:not(.btn) { padding: 15px 0; border-bottom: 1px solid var(--line); }
-    .nav-links .btn { margin-top: 16px; }
+    .nav-links .btn { margin-top: 16px; justify-content: center; }
   }
+
+  /* ===== Hero ===== */
+  .hero { padding: 100px 16px 0; }
+  .hero-frame { position: relative; max-width: 1400px; margin: 0 auto; min-height: 640px; border-radius: 40px; overflow: hidden; display: flex; align-items: flex-end; padding: 64px;
+    background: url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=2000&q=80') center/cover; box-shadow: inset 0 0 0 2000px rgba(6,47,77,.66); color: #fff; }
+  .hero-copy { max-width: 760px; }
+  .hero h1 { font-family: var(--display); font-weight: 700; font-size: clamp(38px, 6vw, 72px); line-height: 1.04; letter-spacing: -.025em; margin-bottom: 22px; }
+  .hero p { font-size: 17px; color: rgba(255,255,255,.82); max-width: 52ch; margin-bottom: 34px; }
+  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+  .hero-stats { position: absolute; right: 48px; bottom: 64px; display: flex; flex-direction: column; gap: 12px; }
+  .chip { background: rgba(255,255,255,.12); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,.22); border-radius: 20px; padding: 14px 22px; min-width: 190px; }
+  .chip b { display: block; font-family: var(--display); font-size: 28px; line-height: 1.1; color: var(--sky); }
+  .chip span { font-size: 13px; color: rgba(255,255,255,.8); }
+  @media (max-width: 1000px) { .hero-stats { display: none; } }
+  @media (max-width: 600px) { .hero-frame { padding: 32px 24px; min-height: 560px; border-radius: 28px; } }
+
+  /* ===== Statement ===== */
+  .statement { padding: 110px 0 90px; }
+  .statement p { font-family: var(--display); font-weight: 500; font-size: clamp(24px, 3.4vw, 40px); line-height: 1.28; letter-spacing: -.015em; color: var(--ink); max-width: 28em; }
+  .statement p span { color: #8FA6B8; }
+
+  /* ===== Programmes ===== */
+  .section-head { display: flex; align-items: end; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-bottom: 40px; }
+  .section-head h2 { font-family: var(--display); font-weight: 700; font-size: clamp(30px, 4vw, 46px); line-height: 1.1; letter-spacing: -.02em; color: var(--deep); max-width: 14em; }
+  .section-head p { color: var(--muted); max-width: 40ch; font-size: 15px; }
+  .programmes { padding-bottom: 110px; }
+  .programmes { overflow-x: clip; }
+  .rail-nav { display: flex; gap: 10px; }
+  .rail-nav button { width: 52px; height: 52px; border-radius: 50%; border: 1.5px solid var(--ink); color: var(--ink); display: grid; place-items: center; transition: background .2s, color .2s, opacity .2s; }
+  .rail-nav button:hover:not(:disabled) { background: var(--ink); color: #fff; } .rail-nav button:disabled { opacity: .3; cursor: default; }
+  .rail { --pad: max(28px, calc((100vw - 1200px) / 2 + 28px)); display: flex; gap: 20px; width: 100vw; margin-left: calc(50% - 50vw); padding: 6px var(--pad) 18px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: var(--pad); scrollbar-width: none; cursor: grab; -webkit-overflow-scrolling: touch; }
+  .rail::-webkit-scrollbar { display: none; }
+  .rail.dragging { cursor: grabbing; scroll-snap-type: none; }
+  .rail:focus-visible { outline: 2px solid var(--sky-d); outline-offset: -2px; border-radius: 24px; }
+  .card { position: relative; flex: 0 0 clamp(270px, 28vw, 380px); height: 440px; scroll-snap-align: start; border-radius: var(--r-lg); overflow: hidden; display: flex; align-items: flex-end; color: #fff; isolation: isolate; user-select: none; -webkit-user-drag: none; }
+  .rail-bar { height: 4px; border-radius: 99px; background: var(--wash); margin-top: 14px; position: relative; overflow: hidden; }
+  .rail-bar i { position: absolute; top: 0; bottom: 0; left: 0; width: 30%; border-radius: 99px; background: var(--ink); transition: left .12s linear, width .2s; }
+  @media (max-width: 620px) { .card { height: 400px; flex-basis: 80vw; } .rail-nav button { width: 46px; height: 46px; } }
+  .card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; transition: transform .6s ease; }
+  .card::after { content: ''; position: absolute; inset: 0; z-index: -1; background: rgba(6,47,77,.58); }
+  .card:hover img { transform: scale(1.05); }
+  .card-body { padding: 28px; width: 100%; display: flex; align-items: end; justify-content: space-between; gap: 16px; }
+  .card h3 { font-family: var(--display); font-size: 24px; line-height: 1.15; letter-spacing: -.01em; margin-bottom: 6px; }
+  .card p { font-size: 13.5px; color: rgba(255,255,255,.8); }
+  .card .go { flex-shrink: 0; width: 46px; height: 46px; border-radius: 50%; background: var(--sky); color: var(--deep); display: grid; place-items: center; transition: transform .25s; }
+  .card:hover .go { transform: rotate(-45deg); }
+
+  /* ===== Results ===== */
+  .results { background: var(--ink); color: #fff; border-radius: 40px; margin: 0 16px; padding: 90px 0; }
+  .results .section-head h2 { color: #fff; } .results .section-head p { color: rgba(255,255,255,.7); }
+  .stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .stat { border-top: 1px solid rgba(255,255,255,.22); padding-top: 22px; }
+  .stat b { display: block; font-family: var(--display); font-size: clamp(44px, 6vw, 72px); line-height: 1; letter-spacing: -.03em; color: var(--sky); }
+  .stat span { display: block; margin-top: 10px; font-size: 14px; color: rgba(255,255,255,.75); max-width: 20ch; }
+  @media (max-width: 760px) { .stat-row { grid-template-columns: repeat(2, 1fr); gap: 36px 20px; } }
+
+  /* ===== Testimonials ===== */
+  .voices { padding: 110px 0; }
+  .voices { overflow-x: clip; }
+  .rail.dragging { user-select: none; }
+  .voice { flex: 0 0 clamp(290px, 31vw, 410px); scroll-snap-align: start; background: var(--wash); border-radius: var(--r-lg); padding: 34px; display: flex; flex-direction: column; justify-content: space-between; gap: 28px; }
+  .voice blockquote { font-size: 16px; line-height: 1.7; color: var(--text); }
+  .voice footer { display: flex; align-items: center; gap: 14px; }
+  .avatar { width: 46px; height: 46px; border-radius: 50%; background: var(--ink); color: var(--sky); font-family: var(--display); font-weight: 700; display: grid; place-items: center; font-size: 18px; }
+  .voice b { display: block; font-size: 15px; color: var(--deep); }
+  .voice small { font-size: 13px; color: var(--sky-d); font-weight: 600; }
+  @media (max-width: 620px) { .voice { flex-basis: 84vw; } }
+
+  /* ===== CTA ===== */
+  .cta { padding: 0 16px 24px; }
+  .cta-box { max-width: 1400px; margin: 0 auto; border-radius: 40px; padding: 90px 28px; text-align: center; background: var(--wash); }
+  .cta-box h2 { font-family: var(--display); font-weight: 700; font-size: clamp(30px, 4.4vw, 54px); line-height: 1.08; letter-spacing: -.02em; color: var(--deep); max-width: 15em; margin: 0 auto 16px; }
+  .cta-box p { color: var(--muted); max-width: 46ch; margin: 0 auto 30px; }
+
+  /* ===== Footer ===== */
+  footer.site { background: var(--deep); color: rgba(255,255,255,.65); border-radius: 40px 40px 0 0; margin: 40px 16px 0; padding: 70px 0 28px; font-size: 14px; }
+  .f-top { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 44px; margin-bottom: 48px; }
+  .f-brand { max-width: 320px; }
+  .f-brand .brand { color: #fff; margin-bottom: 14px; }
+  .f-brand p { margin-bottom: 20px; }
+  .social { display: flex; gap: 10px; }
+  .social a { width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,.2); display: grid; place-items: center; transition: background .2s, color .2s; }
+  .social a:hover { background: var(--sky); color: var(--deep); }
+  .f-cols { display: flex; gap: 60px; flex-wrap: wrap; }
+  .f-col h4 { font-family: var(--display); font-size: 16px; color: #fff; margin-bottom: 14px; }
+  .f-col a, .f-col span { display: block; margin-bottom: 9px; transition: color .2s; }
+  .f-col a:hover { color: var(--sky); }
+  .f-bottom { padding-top: 22px; border-top: 1px solid rgba(255,255,255,.12); }
+
+  /* single orchestrated reveal: hero only */
+  .hero-copy > * { animation: rise .8s cubic-bezier(.2,.7,.2,1) both; }
+  .hero-copy > *:nth-child(2) { animation-delay: .12s; } .hero-copy > *:nth-child(3) { animation-delay: .24s; }
+  @keyframes rise { from { opacity: 0; transform: translateY(22px); } }
+
+  /* Always-visible home button */
+  .home-fab { position: fixed; left: 20px; bottom: 20px; z-index: 90; display: inline-flex; align-items: center; gap: 8px; padding: 13px 20px 13px 16px; border-radius: 999px; background: #062F4D; color: #fff; font-size: 14px; font-weight: 600; box-shadow: 0 12px 30px -10px rgba(6,47,77,.6); transition: background .2s, transform .2s; }
+  .home-fab:hover { background: #094570; transform: translateY(-2px); }
+  .home-fab:focus-visible { outline: 2px solid #85CCFF; outline-offset: 3px; }
+
+  /* Programmes dropdown */
   .dd { position: relative; }
   .dd-btn { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 500; color: var(--muted); transition: color .2s; }
   .dd-btn svg { transition: transform .25s; }
   .dd:hover .dd-btn, .dd:focus-within .dd-btn { color: var(--ink); }
   .dd:hover .dd-btn svg, .dd.open .dd-btn svg { transform: rotate(180deg); }
   .dd-menu { position: absolute; top: 100%; left: -18px; min-width: 270px; padding: 24px 10px 10px; opacity: 0; visibility: hidden; transform: translateY(6px); transition: opacity .2s, transform .2s, visibility .2s; }
-  .dd-r .dd-menu { left: auto; right: -18px; min-width: 210px; }
   .dd-menu::before { content: ''; position: absolute; inset: 14px 0 0 0; background: #fff; border-radius: 22px; box-shadow: 0 24px 50px -20px rgba(6,47,77,.45); z-index: -1; }
   .dd:hover .dd-menu, .dd:focus-within .dd-menu, .dd.open .dd-menu { opacity: 1; visibility: visible; transform: none; }
   .dd-menu a { display: block; padding: 12px 16px; border-radius: 14px; font-size: 14.5px; font-weight: 500; color: var(--text); }
   .dd-menu a:hover { background: var(--wash); color: var(--ink); }
-  @media (max-width: 1060px) {
+  @media (max-width: 900px) {
     .dd-btn { padding: 15px 0; width: 100%; border-bottom: 1px solid var(--line); justify-content: space-between; }
-    .dd-menu, .dd-r .dd-menu { position: static; opacity: 1; visibility: visible; transform: none; padding: 0 0 0 14px; display: none; min-width: 0; }
+    .dd-menu { position: static; opacity: 1; visibility: visible; transform: none; padding: 0 0 0 14px; display: none; }
     .dd-menu::before { display: none; }
-    .dd.open .dd-menu { display: block; } .dd:hover .dd-menu { display: none; } .dd.open:hover .dd-menu { display: block; }
+    .dd.open .dd-menu { display: block; }
+    .dd:hover .dd-menu { display: none; } .dd.open:hover .dd-menu { display: block; }
   }
 
-  /* Hero */
-  .hero { position: relative; overflow: hidden; padding: 190px 0 70px; text-align: center; }
-  .hero .bgmark { width: 560px; height: 682px; right: -120px; top: 30px; color: var(--ink); opacity: .06; animation: floatmark 13s ease-in-out infinite alternate; -webkit-mask-image: linear-gradient(#000 45%, transparent 92%); mask-image: linear-gradient(#000 45%, transparent 92%); }
-  .hero .bgmark + .wrap, .hero .wrap { position: relative; z-index: 1; }
-  .hero h1 { font-family: var(--display); font-weight: 700; font-size: clamp(42px, 7vw, 92px); line-height: 1; letter-spacing: -.04em; color: var(--deep); max-width: 12em; margin: 0 auto 26px; }
-  .hero-copy > p { font-size: 19px; color: var(--muted); max-width: 46ch; margin: 0 auto 38px; }
-  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
-  .hero-copy > * { animation: rise .8s var(--ease) both; } .hero-copy > :nth-child(2) { animation-delay: .08s; } .hero-copy > :nth-child(3) { animation-delay: .16s; }
-  @keyframes rise { from { opacity: 0; transform: translateY(20px); } }
-  @media (max-width: 700px) { .hero { padding: 140px 0 48px; } .hero-copy > p { font-size: 17px; } }
-
-  /* Key facts */
-  .facts { padding: 20px 0 0; }
-  .fact-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-  .fact { background: var(--wash); border: 1px solid var(--line); border-radius: 24px; padding: 26px 24px; }
-  .fact .ico { display: grid; place-items: center; width: 50px; height: 50px; border-radius: 16px; background: #fff; color: var(--ink); margin-bottom: 18px; }
-  .fact b { display: block; font-family: var(--display); font-weight: 700; font-size: clamp(36px, 4.4vw, 54px); line-height: 1; letter-spacing: -.04em; color: var(--ink); }
-  .fact > span:last-child { display: block; margin-top: 8px; font-size: 14.5px; color: var(--muted); }
-  @media (max-width: 860px) { .fact-row { grid-template-columns: 1fr 1fr; } }
-
-  /* About */
-  .about { padding: 130px 0 0; }
-  .about-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 64px; align-items: end; }
-  .about h2, .sec-head h2 { font-family: var(--display); font-weight: 700; font-size: clamp(32px, 4.6vw, 54px); line-height: 1.04; letter-spacing: -.03em; color: var(--deep); }
-  .about p { font-size: 19px; color: var(--muted); margin-bottom: 18px; }
-  .more { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 15px; color: var(--ink); }
-  .more span { transition: transform .25s var(--ease); } a:hover .more span, a.more:hover span { transform: translateX(5px); }
-  @media (max-width: 800px) { .about-grid { grid-template-columns: 1fr; gap: 20px; } .about { padding-top: 90px; } }
-
-  /* Programmes */
-  .programmes, .path { padding: 130px 0 0; }
-  .sec-head { max-width: 720px; margin: 0 auto 52px; text-align: center; }
-  .sec-head h2 { margin-bottom: 14px; } .sec-head p { color: var(--muted); font-size: 18px; }
-  .pgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-  .pc { position: relative; overflow: hidden; isolation: isolate; display: flex; flex-direction: column; background: #fff; border: 1px solid var(--line); border-radius: 26px; padding: 30px; min-height: 250px; transition: border-color .25s, transform .35s var(--ease), box-shadow .3s; -webkit-tap-highlight-color: transparent; }
-  .pc::before { content: ''; position: absolute; inset: 0; z-index: -1; background: var(--ink); transform: translateY(101%); transition: transform .5s var(--ease); }
-  .pc > * { transition: color .3s, background .3s, border-color .3s; }
-  .pc .ripple { position: absolute; z-index: -1; width: 20px; height: 20px; margin: -10px 0 0 -10px; border-radius: 50%; background: var(--sky-d); transform: scale(0); animation: ripple .65s var(--ease) forwards; pointer-events: none; }
-  @keyframes ripple { to { transform: scale(60); } }
-  .pc.pressed { transform: scale(.97); border-color: var(--sky-d); }
-  .pc.pressed::before { transform: none; }
-  .pc.pressed > *, .pc:focus-visible > * { }
-  @media (hover: hover) { .pc:hover { border-color: var(--ink); transform: translateY(-6px); box-shadow: 0 28px 44px -22px rgba(9,69,112,.6); } .pc:hover::before { transform: none; } }
-  .pc:hover h3, .pc.pressed h3 { color: #fff; } .pc:hover p, .pc.pressed p { color: rgba(255,255,255,.82); }
-  .pc:hover .more { color: var(--sky); } .pc.pressed .more { color: #fff; }
-  .pc:hover small, .pc.pressed small { background: rgba(255,255,255,.14); border-color: rgba(255,255,255,.3); color: #fff; }
-  .pc.pressed .more span { transform: translateX(8px); }
-  .pc small { align-self: flex-start; padding: 5px 13px; border-radius: 999px; background: var(--wash); border: 1px solid var(--line); font-size: 12.5px; font-weight: 700; color: var(--ink); margin-bottom: 22px; }
-  .pc h3 { font-family: var(--display); font-weight: 700; font-size: 28px; line-height: 1.08; letter-spacing: -.02em; color: var(--deep); margin-bottom: 10px; }
-  .pc p { color: var(--muted); font-size: 15.5px; flex: 1; }
-  .pc .more { margin-top: 22px; }
-  @media (max-width: 960px) { .pgrid { grid-template-columns: 1fr 1fr; } } @media (max-width: 620px) { .pgrid { grid-template-columns: 1fr; } .pc { min-height: 0; } }
-
-  /* Pull quote */
-  .pull { position: relative; overflow: hidden; margin: 130px 16px 0; background: var(--deep); color: #fff; border-radius: 36px; padding: 110px 0; text-align: center; }
-  .pull::before, .pull::after { content: ''; position: absolute; width: 640px; height: 640px; border-radius: 50%; pointer-events: none; filter: blur(70px); opacity: .5; }
-  .pull::before { left: -160px; top: -240px; background: radial-gradient(circle, rgba(133,204,255,.55), transparent 65%); animation: drift1 14s ease-in-out infinite alternate; }
-  .pull::after { right: -180px; bottom: -280px; background: radial-gradient(circle, rgba(62,151,217,.6), transparent 65%); animation: drift2 17s ease-in-out infinite alternate; }
-  @keyframes drift1 { to { transform: translate(420px, 180px) scale(1.2); } } @keyframes drift2 { to { transform: translate(-420px, -140px) scale(1.15); } }
-  .pull .wrap { position: relative; z-index: 1; }
-  .pull .qmark { display: block; margin: 0 auto 18px; width: 54px; height: 54px; color: var(--sky); opacity: 0; transform: scale(.6) rotate(-12deg); transition: opacity .8s var(--ease), transform .9s var(--ease); }
-  .pull .wrap.in .qmark { opacity: 1; transform: none; }
-  .js .pull .w { display: inline-block; opacity: .14; transform: translateY(.35em); filter: blur(5px); transition: opacity .7s var(--ease), transform .7s var(--ease), filter .7s var(--ease); transition-delay: calc(var(--d) * 55ms + 250ms); }
-  .js .pull .wrap.in .w { opacity: 1; transform: none; filter: none; }
-  .js .pull cite { display: block; opacity: 0; transition: opacity .9s var(--ease) var(--cd, 2.6s); }
-  .js .pull .wrap.in cite { opacity: 1; }
-  .pull cite::before { content: ''; display: block; height: 2px; width: 0; margin: 0 auto 16px; background: var(--sky); transition: width 1s var(--ease) var(--cd, 2.6s); }
-  .pull .wrap.in cite::before { width: 64px; }
-  .pull p { font-family: var(--display); font-weight: 600; font-size: clamp(24px, 3.6vw, 44px); line-height: 1.16; letter-spacing: -.025em; max-width: 24em; margin: 0 auto 20px; }
-  .pull cite { font-style: normal; font-size: 15px; font-weight: 600; color: var(--sky); }
-
-  /* Learning path */
-  .steps-wrap { position: relative; }
-  .track { position: absolute; top: 31px; left: 10%; width: 80%; height: 4px; border-radius: 4px; background: var(--line); overflow: hidden; }
-  .track i { display: block; height: 100%; width: 0; background: var(--sky-d); border-radius: 4px; transition: width .9s var(--ease); }
-  .steps { list-style: none; position: relative; display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; text-align: center; }
-  .steps li { padding: 0 8px 26px; border-radius: 24px; cursor: pointer; transition: background .4s, transform .5s var(--ease); outline-offset: 4px; }
-  .steps .num { display: grid; place-items: center; width: 66px; height: 66px; margin: 0 auto 20px; border-radius: 50%; background: #fff; border: 2px solid var(--line); font-family: var(--display); font-weight: 700; font-size: 22px; letter-spacing: -.02em; color: var(--muted); transition: background .4s, color .4s, border-color .4s, transform .5s var(--ease), box-shadow .5s; }
-  .steps h3 { font-family: var(--display); font-weight: 700; font-size: 21px; letter-spacing: -.01em; color: var(--muted); margin-bottom: 8px; transition: color .4s; }
-  .steps p { color: var(--muted); font-size: 15px; max-width: 24ch; margin: 0 auto; transition: color .4s; }
-  .steps li.done .num { background: var(--sky); border-color: var(--sky); color: var(--deep); }
-  .steps li.active { background: var(--wash); transform: translateY(-6px); }
-  .steps li.active .num { background: var(--ink); border-color: var(--ink); color: #fff; transform: scale(1.14); box-shadow: 0 0 0 8px rgba(9,69,112,.12); animation: pulse 1.8s ease-out infinite; }
-  .steps li.active h3 { color: var(--deep); } .steps li.active p { color: var(--text); }
-  @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(9,69,112,.35); } 100% { box-shadow: 0 0 0 18px rgba(9,69,112,0); } }
-  @media (max-width: 960px) { .track { display: none; } .steps { grid-template-columns: 1fr 1fr; gap: 20px; } .steps li { padding-top: 22px; } }
-  @media (max-width: 560px) { .steps { grid-template-columns: 1fr; } }
-  .cta-box .acts { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
-
-  /* Voices */
-  .bgmark { position: absolute; pointer-events: none; z-index: 0; fill: currentColor; }
-  .pull .bgmark { width: 520px; height: 633px; right: -110px; top: -90px; color: #fff; opacity: .07; animation: floatmark 12s ease-in-out infinite alternate; }
-  .voice-stage .bgmark { width: 420px; height: 511px; right: -90px; bottom: -150px; color: var(--ink); opacity: .06; animation: floatmark 14s ease-in-out infinite alternate; }
-  @keyframes floatmark { from { transform: translateY(0) rotate(-4deg); } to { transform: translateY(-26px) rotate(4deg); } }
-  .voice-row, .v-ctrl { position: relative; z-index: 1; }
-  .voice-stage { position: relative; background: var(--wash); border: 1px solid var(--line); border-radius: 36px; padding: 64px 56px 40px; overflow: hidden; }
-  .voice-row { display: grid; gap: 20px; }
-  .voice { display: grid; grid-template-columns: .55fr 1.45fr; column-gap: 56px; row-gap: 0; align-items: center; }
-  .voice .score { grid-column: 1; grid-row: 1 / span 2; } .voice blockquote { grid-column: 2; grid-row: 1; align-self: end; } .voice figcaption { grid-column: 2; grid-row: 2; align-self: start; }
-  .voice .score { font-family: var(--display); font-weight: 700; font-size: clamp(88px, 12vw, 170px); line-height: .85; letter-spacing: -.06em; color: var(--ink); }
-  .voice .score small { display: block; margin-top: 14px; font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 600; letter-spacing: 0; color: var(--sky-d); }
-  .voice blockquote { font-family: var(--display); font-weight: 500; font-size: clamp(20px, 2.4vw, 29px); line-height: 1.38; letter-spacing: -.015em; color: var(--deep); margin-bottom: 26px; }
-  .voice figcaption { display: flex; align-items: center; gap: 12px; font-weight: 600; color: var(--deep); font-size: 16px; }
-  .avatar { width: 44px; height: 44px; border-radius: 50%; background: var(--ink); color: var(--sky); font-family: var(--display); font-weight: 700; display: grid; place-items: center; font-size: 17px; }
-  .js .voice-row { grid-template-columns: 1fr; gap: 0; }
-  .js .voice { grid-area: 1 / 1; opacity: 0; visibility: hidden; transform: translateX(36px); transition: opacity .6s var(--ease), transform .8s var(--ease), visibility .6s; }
-  .js .voice.active { opacity: 1; visibility: visible; transform: none; }
-  .js .voice.leaving { transform: translateX(-36px); }
-  .js .voice.active blockquote, .js .voice.active figcaption { animation: vin .8s var(--ease) both; } .js .voice.active figcaption { animation-delay: .15s; }
-  @keyframes vin { from { opacity: 0; transform: translateY(14px); } }
-  .v-ctrl { display: flex; align-items: center; justify-content: center; gap: 18px; margin-top: 44px; }
-  .v-ctrl[hidden] { display: none; }
-  .v-btn { width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--line); background: #fff; color: var(--ink); display: grid; place-items: center; transition: background .2s, color .2s, border-color .2s; }
-  .v-btn:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
-  .v-dots { display: flex; gap: 10px; }
-  .v-dot { position: relative; width: 12px; height: 12px; border-radius: 999px; background: rgba(9,69,112,.18); overflow: hidden; transition: width .4s var(--ease); }
-  .v-dot.on { width: 56px; }
-  .v-dot i { position: absolute; inset: 0; background: var(--ink); transform: scaleX(0); transform-origin: left; }
-  .v-dot.on i { animation: vfill var(--dur, 7000ms) linear forwards; }
-  .v-paused .v-dot.on i { animation-play-state: paused; }
-  .v-static .v-dot.on i { animation: none; transform: scaleX(1); }
-  @keyframes vfill { to { transform: scaleX(1); } }
-  @media (max-width: 800px) { .voice-stage { padding: 40px 24px 28px; border-radius: 28px; } .voice { grid-template-columns: 1fr; row-gap: 22px; } .voice .score, .voice blockquote, .voice figcaption { grid-column: 1; grid-row: auto; align-self: auto; } .voice .score { font-size: 96px; } }
-  @media (prefers-reduced-motion: reduce) { .js .voice.active blockquote, .js .voice.active figcaption { animation: none; } }
-
-  /* CTA */
-  .cta { padding: 120px 16px 24px; }
-  .cta-box { max-width: 1100px; margin: 0 auto; border: 1px solid var(--line); border-radius: 36px; background: var(--wash); padding: 84px 28px; text-align: center; }
-  .cta-box h2 { font-family: var(--display); font-weight: 700; font-size: clamp(32px, 4.6vw, 56px); line-height: 1.04; letter-spacing: -.035em; color: var(--deep); max-width: 13em; margin: 0 auto 16px; }
-  .cta-box p { color: var(--muted); font-size: 17px; max-width: 46ch; margin: 0 auto 30px; }
-
-  /* Footer */
-  footer.site { background: var(--deep); color: rgba(255,255,255,.65); border-radius: 40px 40px 0 0; margin: 40px 16px 0; padding: 70px 0 28px; font-size: 14px; }
-  .f-top { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 44px; margin-bottom: 48px; }
-  .f-brand { max-width: 320px; } .f-brand .brand { color: #fff; margin-bottom: 14px; } .f-brand p { margin-bottom: 20px; }
-  .social { display: flex; gap: 10px; }
-  .social a { width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,.2); display: grid; place-items: center; transition: background .2s, color .2s; }
-  .social a:hover { background: var(--sky); color: var(--deep); }
-  .f-cols { display: flex; gap: 60px; flex-wrap: wrap; }
-  .f-col h4 { font-family: var(--display); font-size: 16px; color: #fff; margin-bottom: 14px; }
-  .f-col a, .f-col span { display: block; margin-bottom: 9px; transition: color .2s; } .f-col a:hover { color: var(--sky); }
-  .f-bottom { padding-top: 22px; border-top: 1px solid rgba(255,255,255,.12); }
-
-  /* Reveal */
-  .js .reveal { opacity: 0; transform: translateY(26px); transition: opacity .8s var(--ease), transform .8s var(--ease); transition-delay: calc(var(--i, 0) * 100ms); }
-  .js .reveal.in { opacity: 1; transform: none; }
-  @media (prefers-reduced-motion: reduce) { .js .pull .w, .js .pull cite, .pull .qmark { opacity: 1 !important; transform: none !important; filter: none !important; } *, *::before, *::after { animation: none !important; transition-duration: .001ms !important; scroll-behavior: auto !important; } .js .reveal { opacity: 1; transform: none; } }
-
-  /* WhatsApp widget */
+  /* WhatsApp chat widget */
   .wa-widget { position: fixed; right: 20px; bottom: 20px; z-index: 90; display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
   .wa-fab { display: inline-flex; align-items: center; gap: 10px; padding: 14px 20px 14px 16px; border-radius: 999px; background: #128C4B; color: #fff; font-size: 14px; font-weight: 600; box-shadow: 0 12px 30px -10px rgba(18,140,75,.7); transition: background .2s, transform .2s; }
   .wa-fab:hover { background: #0E6F3B; transform: translateY(-2px); }
+  .wa-fab:focus-visible, .wa-menu a:focus-visible { outline: 2px solid #85CCFF; outline-offset: 3px; }
   .wa-menu { display: none; flex-direction: column; gap: 6px; background: #fff; border-radius: 22px; padding: 10px; box-shadow: 0 24px 50px -16px rgba(6,47,77,.5); min-width: 250px; animation: waIn .25s ease both; }
   .wa-widget.open .wa-menu { display: flex; }
   .wa-menu a { display: flex; flex-direction: column; padding: 12px 16px; border-radius: 14px; font-size: 14px; font-weight: 600; color: #062F4D; }
@@ -237,17 +190,25 @@
 </style>
 </head>
 <body>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="lg" viewBox="0 0 377.21 459.6"><path d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></symbol>
-<symbol id="ar" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol></svg>
+
+<a class="home-fab" href="index.html" aria-label="Back to home">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+  Home
+</a>
+
 
 <nav class="nav">
   <div class="nav-pill">
-    <a class="brand" href="index.html"><svg width="24" height="30" fill="#094570" aria-hidden="true"><use href="#lg"/></svg>Himaayah Schools</a>
+    <a class="brand" href="index.html">
+      <svg width="24" height="30" viewBox="0 0 377.21 459.6" aria-hidden="true"><path fill="#094570" d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>
+      Himaayah Schools
+    </a>
     <div class="nav-links" id="navLinks">
       <div class="dd">
         <button type="button" class="dd-btn" aria-haspopup="true" aria-expanded="false">Programmes
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
         <div class="dd-menu">
+          <a href="programmes.html">All programmes</a>
           <a href="teenagers-building-circle.html">Teenagers Building Circle</a>
           <a href="madrasah.html">Madrasah</a>
           <a href="academy.html">Academy</a>
@@ -256,15 +217,9 @@
       </div>
       <a href="admissions.html">Admissions</a>
       <a href="about.html">About</a>
-      <a href="mission.html">Mission</a>
       <a href="success-stories.html">Success Stories</a>
       <a href="faq.html">FAQ</a>
       <a href="contact.html">Contact</a>
-      <div class="dd dd-r">
-        <button type="button" class="dd-btn" aria-haspopup="true" aria-expanded="false">Login
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
-        <div class="dd-menu"><a href="dashboard.html">Student login</a><a href="teacher.html">Teacher login</a></div>
-      </div>
       <a href="enroll.html" class="btn btn-ink">Enroll Now</a>
     </div>
     <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -272,116 +227,111 @@
 </nav>
 
 <header class="hero">
-  <svg class="bgmark" viewBox="0 0 377.21 459.6" aria-hidden="true"><use href="#lg"/></svg>
-  <div class="wrap hero-copy">
-    <h1>Raising scholars who lead with deen and discipline.</h1>
-    <p>One academy, four programmes. From Qur'an memorisation to top UTME scores, with structured teaching, close mentorship, and a standard you can see in the results.</p>
-    <div class="hero-actions">
-      <a href="admissions.html" class="btn btn-ink">Start admissions</a>
-      <a href="#tracks" class="btn btn-line">View the programmes</a>
+  <div class="hero-frame">
+    <div class="hero-copy">
+      <h1>Raising scholars who lead with deen and discipline.</h1>
+      <p>One academy, four programmes. From Qur'an memorisation to top UTME scores, with structured teaching, close mentorship, and a standard students can see in their results.</p>
+      <div class="hero-actions">
+        <a href="programmes.html" class="btn btn-sky">View the programmes</a>
+        <a href="admissions.html" class="btn btn-ghost">Start admissions</a>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="chip"><b>90%</b><span>UTME success rate</span></div>
+      <div class="chip"><b>4</b><span>programmes, one standard</span></div>
+      <div class="chip"><b>2 years</b><span>of teaching, deepened yearly</span></div>
     </div>
   </div>
 </header>
 
-<section class="facts">
+<section class="statement">
   <div class="wrap">
-    <div class="fact-row">
-      <div class="fact reveal"><span class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/></svg></span><b data-count="90" data-suffix="%">90%</b><span>UTME success rate</span></div>
-      <div class="fact reveal" style="--i:1"><span class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2"/></svg></span><b data-count="98" data-suffix="%">98%</b><span>scored 200+ in UTME</span></div>
-      <div class="fact reveal" style="--i:2"><span class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="9" r="6"/><path d="M8.5 14L7 22l5-3 5 3-1.5-8"/></svg></span><b data-count="50" data-suffix="+">100+</b><span>students taught+ in two years</span></div>
-      <div class="fact reveal" style="--i:3"><span class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 9l10-5 10 5-10 5L2 9z"/><path d="M6 11.5V16c3 2.5 9 2.5 12 0v-4.5"/></svg></span><b data-count="90" data-suffix="%">80%</b><span>admitted into their desired course</span></div>
-    </div>
-  </div>
-</section>
-
-<section class="about" id="about">
-  <div class="wrap about-grid">
-    <div class="reveal">
-      <h2>We teach for the exam hall and for life.</h2>
-    </div>
-    <div class="reveal" style="--i:1">
-      <p>Faith, knowledge, and practical skill, taught in one place by teachers who stay with every student through the failures and the wins.</p>
-      <a class="more" href="about.html">Find out more <span aria-hidden="true">&rarr;</span></a>
-    </div>
+    <p>We teach for the exam hall and for life. <span>Faith, knowledge, and practical skill, taught in one place by teachers who stay with every student through the failures and the wins.</span></p>
   </div>
 </section>
 
 <section class="programmes" id="tracks">
   <div class="wrap">
-    <div class="sec-head reveal">
+    <div class="section-head">
       <h2>Four programmes, six paths. Start where you are.</h2>
       <p>Exam prep, advanced levels, practical skills, teenage development, and Islamic studies, each with its own instructors and outcomes.</p>
+      <div class="rail-nav"><button type="button" id="railPrev" aria-label="Previous programmes"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button><button type="button" id="railNext" aria-label="Next programmes"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></div>
     </div>
-    <div class="pgrid">
-      <a class="pc reveal" href="academy.html"><small>Academy</small><h3>UTME / Post-UTME</h3><p>CBT simulator and live classes.</p><span class="more">Explore <span aria-hidden="true">&rarr;</span></span></a>
-      <a class="pc reveal" style="--i:1" href="academy.html"><small>Academy</small><h3>O-Levels</h3><p>WAEC and NECO live classes.</p><span class="more">Explore <span aria-hidden="true">&rarr;</span></span></a>
-      <a class="pc reveal" style="--i:2" href="academy.html"><small>Academy</small><h3>A-Levels</h3><p>IJMB and JUPEB live classes.</p><span class="more">Explore <span aria-hidden="true">&rarr;</span></span></a>
-      <a class="pc reveal" href="madrasah.html"><small>Madrasah</small><h3>Qur'an and Islamic studies</h3><p>Group or personal, four classes a week.</p><span class="more">Explore <span aria-hidden="true">&rarr;</span></span></a>
-      <a class="pc reveal" style="--i:1" href="skills-school.html"><small>Skills School</small><h3>Practical skills</h3><p>Project-based, with a certificate.</p><span class="more">Explore <span aria-hidden="true">&rarr;</span></span></a>
-      <a class="pc reveal" style="--i:2" href="teenagers-building-circle.html"><small>Teenagers Building Circle</small><h3>Ages 13 to 19</h3><p>A weekly cohort that builds character and direction.</p><span class="more">Explore <span aria-hidden="true">&rarr;</span></span></a>
+    <div class="rail" id="rail" tabindex="0" role="region" aria-label="Programmes. Scroll sideways to see more.">
+      <a class="card" href="academy.html" aria-label="UTME and Post-UTME">
+        <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=1000&q=80" alt="A stack of admission and application documents on a desk.">
+        <div class="card-body"><div><h3>UTME / Post-UTME</h3><p>CBT simulator and live classes</p></div><span class="go"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+      </a>
+      <a class="card" href="madrasah.html" aria-label="Madrasah">
+        <img src="https://images.unsplash.com/photo-1616422840391-fa670d4b2ae7?auto=format&fit=crop&w=1000&q=80" alt="An open Qur'an resting on a wooden stand.">
+        <div class="card-body"><div><h3>Madrasah</h3><p>Group or personal, four classes a week</p></div><span class="go"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+      </a>
+      <a class="card" href="academy.html" aria-label="O-Levels">
+        <img src="https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=700&q=80" alt="Notebooks and a calculator arranged on a study table.">
+        <div class="card-body"><div><h3>O-Levels</h3><p>WAEC and NECO live classes</p></div><span class="go"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+      </a>
+      <a class="card" href="academy.html" aria-label="A-Levels">
+        <img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=700&q=80" alt="A pair of glasses resting on an open textbook.">
+        <div class="card-body"><div><h3>A-Levels</h3><p>IJMB and JUPEB live classes</p></div><span class="go"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+      </a>
+      <a class="card" href="skills-school.html" aria-label="Skills School">
+        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=700&q=80" alt="Charts and performance graphs displayed across a laptop screen.">
+        <div class="card-body"><div><h3>Skills School</h3><p>Project-based, with certificate</p></div><span class="go"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+      </a>
+      <a class="card" href="teenagers-building-circle.html" aria-label="Teenagers Building Circle">
+        <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1400&q=80" alt="An open notebook, pen, and a warm desk lamp on a wooden study table.">
+        <div class="card-body"><div><h3>Teenagers Building Circle</h3><p>Ages 13 to 19, weekly cohort</p></div><span class="go"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+      </a>
     </div>
+    <div class="rail-bar" aria-hidden="true"><i id="railThumb"></i></div>
   </div>
 </section>
 
-<section class="pull">
-  <svg class="bgmark" viewBox="0 0 377.21 459.6" aria-hidden="true"><use href="#lg"/></svg>
-  <div class="wrap" id="pullWrap">
-    <svg class="qmark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.5 17.5c-1-1.3-1.5-2.9-1.5-4.8C3 8.7 5.2 5.9 9 5l.7 1.6C7.8 7.3 7 8.6 6.9 10.2c.3-.1.6-.2 1-.2 1.7 0 3 1.300 3 3.100 0 1.900-1.400 3.300-3.300 3.300-1.200 0-2.200-.4-3.100-.9zm10 0c-1-1.300-1.500-2.900-1.500-4.800 0-4 2.200-6.800 6-7.700l.7 1.600c-1.900.7-2.700 2-2.800 3.600.3-.1.6-.2 1-.2 1.700 0 3 1.300 3 3.100 0 1.900-1.400 3.300-3.300 3.300-1.200 0-2.200-.4-3.100-.9z"/></svg>
-    <p id="pullText">How do we become people capable of carrying the weight of the knowledge, opportunities, relationships, and responsibilities Allah places in our hands?</p>
-    <cite>The question behind Kaatib Yusuf's work, founder of Himaayah Schools</cite>
-  </div>
-</section>
-
-<section class="path">
+<section class="results">
   <div class="wrap">
-    <div class="sec-head reveal">
-      <h2>Your learning path</h2>
-      <p>From the day you enrol to the day you get your result.</p>
+    <div class="section-head">
+      <h2>Results, on the record.</h2>
+      <p>What our UTME students have achieved so far.</p>
     </div>
-    <div class="steps-wrap"><div class="track" aria-hidden="true"><i id="trackFill"></i></div>
-    <ol class="steps" id="steps">
-      <li class="reveal"><span class="num">01</span><h3>Enrol</h3><p>Fill the short enrolment form for your programme.</p></li>
-      <li class="reveal" style="--i:1"><span class="num">02</span><h3>Get your login</h3><p>Receive your Student ID and access code for the dashboard.</p></li>
-      <li class="reveal" style="--i:2"><span class="num">03</span><h3>Attend and practise</h3><p>Join live classes, finish assignments and take the quizzes.</p></li>
-      <li class="reveal" style="--i:3"><span class="num">04</span><h3>Track your progress</h3><p>See attendance, payments, Hifdh progress and results in one place.</p></li>
-      <li class="reveal" style="--i:4"><span class="num">05</span><h3>Sit the exam</h3><p>Go into the exam hall prepared, with your teachers behind you.</p></li>
-    </ol></div>
+    <div class="stat-row">
+      <div class="stat"><b data-count="90" data-suffix="%">90%</b><span>UTME success rate</span></div>
+      <div class="stat"><b data-count="98" data-suffix="%">98%</b><span>scored 200+ in UTME</span></div>
+      <div class="stat"><b data-count="90" data-suffix="%">90%</b><span>2026 cohort success rate</span></div>
+      <div class="stat"><b data-count="90" data-suffix="%">90%</b><span>now admitted into their desired course</span></div>
+    </div>
   </div>
 </section>
 
 <section class="voices" id="voices">
   <div class="wrap">
-    <div class="sec-head reveal">
+    <div class="section-head">
       <h2>Testimonials, not promises.</h2>
       <p>Direct from students who sat their exams through the Academy.</p>
+      <div class="rail-nav"><button type="button" id="vPrev" aria-label="Previous testimonials"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button><button type="button" id="vNext" aria-label="Next testimonials"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></div>
     </div>
-    <div class="voice-stage" id="voiceStage"><svg class="bgmark" viewBox="0 0 377.21 459.6" aria-hidden="true"><use href="#lg"/></svg><div class="voice-row" id="voiceRow">
-      <figure class="voice reveal" style="--i:0">
-        <div class="score"><span class="sn" data-n="294">294</span><small>in UTME</small></div>
+    <div class="rail" id="vRail" tabindex="0" role="region" aria-label="Testimonials. Scroll sideways to read more.">
+      <figure class="voice">
         <blockquote>Alhamdulillah, Himaayah Academy is the best place I will recommend for anyone preparing for the next UTME. I had no prior knowledge of my department subjects, but with the help of Allah and my dedicated teachers, I was able to have my score.</blockquote>
-        <figcaption><span class="avatar">A</span>Ameenah</figcaption>
+        <footer><span class="avatar">A</span><div><b>Ameenah</b><small>294 in UTME</small></div></footer>
       </figure>
-      <figure class="voice reveal" style="--i:1">
-        <div class="score"><span class="sn" data-n="299">299</span><small>in UTME</small></div>
+      <figure class="voice">
         <blockquote>At Himaayah Academy, I didn't just learn about academics — I learnt resilience, discipline, and how to manage my fears. It gave me teachers that stood by me despite my failures, and friends who are now dear to my heart.</blockquote>
-        <figcaption><span class="avatar">H</span>Hafsah</figcaption>
+        <footer><span class="avatar">H</span><div><b>Hafsah</b><small>299 in UTME</small></div></footer>
       </figure>
-      <figure class="voice reveal" style="--i:2">
-        <div class="score"><span class="sn" data-n="319">319</span><small>in UTME, 2026</small></div>
+      <figure class="voice">
         <blockquote>The academy was very helpful and strategic. Everything was structured to make sure everyone puts in their all — from daily tasks to the reading club, to brainstorming sessions, to daily CBT quizzes. It sets the path.</blockquote>
-        <figcaption><span class="avatar">H</span>Hussainah</figcaption>
+        <footer><span class="avatar">H</span><div><b>Hussainah</b><small>319 in UTME, 2026</small></div></footer>
       </figure>
     </div>
-    <div class="v-ctrl" id="vCtrl" hidden><button type="button" class="v-btn" id="vPrev" aria-label="Previous testimonial"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button><div class="v-dots" id="vDots"></div><button type="button" class="v-btn" id="vNext" aria-label="Next testimonial"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
-    </div>
+    <div class="rail-bar" aria-hidden="true"><i id="vThumb"></i></div>
   </div>
 </section>
 
 <section class="cta">
-  <div class="cta-box reveal">
+  <div class="cta-box">
     <h2>Your seat in the next cohort is open.</h2>
     <p>Same structure, same teachers, same standard, for whichever exam or skill is ahead of you.</p>
-    <div class="acts"><a href="enroll.html" class="btn btn-ink">Enroll now</a><a href="faq.html" class="btn btn-line">Read the FAQ</a></div>
+    <a href="enroll.html" class="btn btn-ink">Enroll now</a>
   </div>
 </section>
 
@@ -389,7 +339,10 @@
   <div class="wrap">
     <div class="f-top">
       <div class="f-brand">
-        <a class="brand" href="index.html"><svg width="24" height="30" fill="#85CCFF" aria-hidden="true"><use href="#lg"/></svg>Himaayah Schools</a>
+        <a class="brand" href="index.html">
+          <svg width="24" height="30" viewBox="0 0 377.21 459.6" aria-hidden="true"><path fill="#85CCFF" d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>
+          Himaayah Schools
+        </a>
         <p>Raising the next generation with deen, knowledge, and purpose.</p>
         <div class="social">
           <a href="https://instagram.com/himaayahschools" target="_blank" rel="noopener" aria-label="Himaayah Schools on Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg></a>
@@ -398,6 +351,7 @@
       </div>
       <div class="f-cols">
         <div class="f-col"><h4>Programmes</h4>
+          <a href="programmes.html">All programmes</a>
           <a href="teenagers-building-circle.html">Teenagers Building Circle</a>
           <a href="madrasah.html">Madrasah</a>
           <a href="academy.html">Academy</a>
@@ -407,21 +361,16 @@
           <a href="index.html">Home</a>
           <a href="admissions.html">Admissions</a>
           <a href="about.html">About</a>
-          <a href="administrators.html">Our Team</a>
           <a href="faq.html">FAQ</a>
           <a href="contact.html">Contact</a>
           <a href="policies.html">Policies</a>
-          <a href="mission.html">Mission and Vision</a>
           <a href="enroll.html">Enroll</a>
-        </div>
-        <div class="f-col"><h4>Portal</h4>
-          <a href="dashboard.html">Student Login</a>
-          <a href="teacher.html">Teacher Login</a>
         </div>
         <div class="f-col"><h4>Contact</h4>
           <a href="mailto:himaayahschools@gmail.com">himaayahschools@gmail.com</a>
           <a href="tel:+2348066043320">+234 806 604 3320</a>
           <a href="tel:+2347025842849">+234 702 584 2849</a>
+          <a href="tel:+2347220156478">+234 722 015 6478</a>
           <span>Ilorin, Nigeria</span>
         </div>
       </div>
@@ -433,104 +382,52 @@
 <script>
   const t = document.getElementById('navToggle'), l = document.getElementById('navLinks');
   t.addEventListener('click', () => { const o = l.classList.toggle('open'); t.setAttribute('aria-expanded', o); });
-  const dds = document.querySelectorAll('.dd');
-  dds.forEach((dd) => { const b = dd.querySelector('.dd-btn'); b.addEventListener('click', () => {
-    dds.forEach((o) => { if (o !== dd) { o.classList.remove('open'); o.querySelector('.dd-btn').setAttribute('aria-expanded', 'false'); } });
-    const open = dd.classList.toggle('open'); b.setAttribute('aria-expanded', open); }); });
+  const dd = document.querySelector('.dd'), ddb = dd.querySelector('.dd-btn');
+  ddb.addEventListener('click', () => { const o = dd.classList.toggle('open'); ddb.setAttribute('aria-expanded', o); });
 
 
-  // Quote band: split into words so they light up one after another
-  (function () {
-    const p = document.getElementById('pullText'), wrap = document.getElementById('pullWrap'); if (!p) return;
-    const words = p.textContent.trim().split(/\s+/);
-    p.setAttribute('aria-label', words.join(' '));
-    p.textContent = '';
-    words.forEach((w, i) => { const sp = document.createElement('span'); sp.className = 'w'; sp.setAttribute('aria-hidden', 'true'); sp.style.setProperty('--d', i); sp.textContent = w; p.appendChild(sp); if (i < words.length - 1) p.appendChild(document.createTextNode(' ')); });
-    const cite = wrap.querySelector('cite'); if (cite) cite.style.setProperty('--cd', (words.length * 0.055 + 0.6).toFixed(2) + 's');
-    if ('IntersectionObserver' in window) {
-      const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { wrap.classList.add('in'); io.disconnect(); } }), { threshold: .35 });
-      io.observe(wrap);
-    } else { wrap.classList.add('in'); }
-  })();
+  // Sideways rails (programmes and testimonials): arrows, progress bar, mouse drag. Touch uses native swipe.
+  function makeRail(railId, prevId, nextId, thumbId) {
+    const rail = document.getElementById(railId), prev = document.getElementById(prevId), next = document.getElementById(nextId), thumb = document.getElementById(thumbId);
+    if (!rail) return;
+    const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const step = () => { const c = rail.firstElementChild; return (c ? c.offsetWidth : 300) + 20; };
+    const update = () => {
+      const max = rail.scrollWidth - rail.clientWidth, x = rail.scrollLeft, w = Math.max(14, Math.min(100, 100 * rail.clientWidth / rail.scrollWidth));
+      thumb.style.width = w + '%'; thumb.style.left = (max > 0 ? (100 - w) * x / max : 0) + '%';
+      prev.disabled = x <= 2; next.disabled = x >= max - 2;
+    };
+    prev.addEventListener('click', () => rail.scrollBy({ left: -step(), behavior: calm ? 'auto' : 'smooth' }));
+    next.addEventListener('click', () => rail.scrollBy({ left: step(), behavior: calm ? 'auto' : 'smooth' }));
+    rail.addEventListener('scroll', update, { passive: true }); window.addEventListener('resize', update); update();
+    let down = false, moved = false, sx = 0, sl = 0;
+    rail.addEventListener('pointerdown', (e) => { if (e.pointerType !== 'mouse' || e.button !== 0) return; down = true; moved = false; sx = e.clientX; sl = rail.scrollLeft; });
+    window.addEventListener('pointermove', (e) => { if (!down) return; const dx = e.clientX - sx; if (Math.abs(dx) > 6) { moved = true; rail.classList.add('dragging'); } if (moved) rail.scrollLeft = sl - dx; });
+    window.addEventListener('pointerup', () => { if (!down) return; down = false; rail.classList.remove('dragging'); });
+    rail.addEventListener('click', (e) => { if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; } }, true);
+    rail.addEventListener('dragstart', (e) => e.preventDefault());
+  }
+  makeRail('rail', 'railPrev', 'railNext', 'railThumb');
+  makeRail('vRail', 'vPrev', 'vNext', 'vThumb');
 
-  // Programme cards: fill with blue from the click point, then go to the page
-  document.querySelectorAll('.pc').forEach((card) => card.addEventListener('click', (e) => {
-    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-    if (matchMedia('(prefers-reduced-motion: reduce)').matches || card.classList.contains('pressed')) return;
-    e.preventDefault();
-    const r = card.getBoundingClientRect(), rp = document.createElement('span'); rp.className = 'ripple';
-    rp.style.left = (e.detail === 0 ? r.width / 2 : e.clientX - r.left) + 'px'; rp.style.top = (e.detail === 0 ? r.height / 2 : e.clientY - r.top) + 'px';
-    card.appendChild(rp); card.classList.add('pressed');
-    const go = card.href; setTimeout(() => { location.href = go; }, 520);
-  }));
-  window.addEventListener('pageshow', () => document.querySelectorAll('.pc.pressed').forEach((c) => { c.classList.remove('pressed'); const r = c.querySelector('.ripple'); if (r) r.remove(); }));
-
-  // Learning path: steps light up one after another by themselves
-  (function () {
-    const ol = document.getElementById('steps'); if (!ol) return;
-    const lis = [...ol.children], fill = document.getElementById('trackFill');
-    let i = -1, timer = null, paused = false, seen = false;
-    const set = (n) => { i = n; lis.forEach((li, k) => { li.classList.toggle('active', k === n); li.classList.toggle('done', k < n); });
-      fill.style.width = (n / (lis.length - 1) * 100) + '%'; };
-    const next = () => { if (!paused) set((i + 1) % lis.length); };
-    const start = () => { if (timer || matchMedia('(prefers-reduced-motion: reduce)').matches) return; timer = setInterval(next, 3000); };
-    const stop = () => { clearInterval(timer); timer = null; };
-    lis.forEach((li, k) => { li.tabIndex = 0;
-      li.addEventListener('click', () => { set(k); });
-      li.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); set(k); } });
-    });
-    ol.addEventListener('mouseenter', () => { paused = true; }); ol.addEventListener('mouseleave', () => { paused = false; });
-    ol.addEventListener('focusin', () => { paused = true; }); ol.addEventListener('focusout', () => { paused = false; });
-    if ('IntersectionObserver' in window) {
-      new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { if (!seen) { seen = true; set(0); } start(); } else stop(); }), { threshold: .4 }).observe(ol);
-    } else { set(0); }
-  })();
-
-  // Testimonials: one at a time, advancing on its own
-  (function () {
-    const row = document.getElementById('voiceRow'), stage = document.getElementById('voiceStage'); if (!row) return;
-    const slides = [...row.children], ctrl = document.getElementById('vCtrl'), dots = document.getElementById('vDots');
-    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches, DUR = 7000;
-    ctrl.hidden = false; stage.style.setProperty('--dur', DUR + 'ms'); if (reduce) stage.classList.add('v-static');
-    const dEls = slides.map((sl, k) => { const d = document.createElement('button'); d.type = 'button'; d.className = 'v-dot'; d.setAttribute('aria-label', 'Testimonial ' + (k + 1)); d.innerHTML = '<i></i>'; d.onclick = () => { go(k); restart(); }; dots.appendChild(d); return d; });
-    let cur = -1, timer = null, paused = false, visible = false;
-    const count = (el) => { const end = +el.dataset.n; if (reduce) { el.textContent = end; return; } const t0 = performance.now(); const tick = (n) => { const p = Math.min((n - t0) / 1100, 1); el.textContent = Math.round((1 - Math.pow(1 - p, 3)) * end); if (p < 1) requestAnimationFrame(tick); }; requestAnimationFrame(tick); };
-    const go = (n) => { n = (n + slides.length) % slides.length; if (n === cur) return;
-      slides.forEach((sl, k) => { sl.classList.toggle('active', k === n); sl.classList.toggle('leaving', k === cur && k !== n); sl.setAttribute('aria-hidden', k === n ? 'false' : 'true'); if (k !== cur && k !== n) sl.classList.remove('leaving'); });
-      dEls.forEach((d, k) => { d.classList.remove('on'); void d.offsetWidth; d.classList.toggle('on', k === n); d.setAttribute('aria-current', k === n ? 'true' : 'false'); });
-      cur = n; const sn = slides[n].querySelector('.sn'); if (sn) count(sn); };
-    const restart = () => { clearInterval(timer); timer = null; if (!reduce && visible) timer = setInterval(() => { if (!paused) go(cur + 1); }, DUR); };
-    document.getElementById('vPrev').onclick = () => { go(cur - 1); restart(); };
-    document.getElementById('vNext').onclick = () => { go(cur + 1); restart(); };
-    const pause = (v) => { paused = v; stage.classList.toggle('v-paused', v); };
-    stage.addEventListener('mouseenter', () => pause(true)); stage.addEventListener('mouseleave', () => pause(false));
-    stage.addEventListener('focusin', () => pause(true)); stage.addEventListener('focusout', () => pause(false));
-    let x0 = null; stage.addEventListener('pointerdown', (e) => { x0 = e.clientX; });
-    stage.addEventListener('pointerup', (e) => { if (x0 === null) return; const dx = e.clientX - x0; x0 = null; if (Math.abs(dx) > 50) { go(cur + (dx < 0 ? 1 : -1)); restart(); } });
-    go(0);
-    if ('IntersectionObserver' in window) new IntersectionObserver((es) => es.forEach((e) => { visible = e.isIntersecting; if (visible) { const sn = slides[cur].querySelector('.sn'); if (sn) count(sn); } restart(); }), { threshold: .4 }).observe(stage);
-    else { visible = true; restart(); }
-  })();
-
+  // Count-up on the results band (the one scroll-triggered moment)
+  const nums = document.querySelectorAll('[data-count]');
   const run = (el) => {
     const end = +el.dataset.count, s = el.dataset.suffix || '', t0 = performance.now();
-    const tick = (n) => { const p = Math.min((n - t0) / 1400, 1); el.textContent = Math.round((1 - Math.pow(1 - p, 3)) * end) + s; if (p < 1) requestAnimationFrame(tick); };
+    const tick = (n) => { const p = Math.min((n - t0) / 1300, 1); el.textContent = Math.round((1 - Math.pow(1 - p, 3)) * end) + s; if (p < 1) requestAnimationFrame(tick); };
     requestAnimationFrame(tick);
   };
-  const items = document.querySelectorAll('.reveal');
   if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    const io = new IntersectionObserver((es) => es.forEach((e) => {
-      if (!e.isIntersecting) return;
-      e.target.classList.add('in'); e.target.querySelectorAll('[data-count]').forEach(run); io.unobserve(e.target);
-    }), { threshold: .15, rootMargin: '0px 0px -40px 0px' });
-    items.forEach((el) => io.observe(el));
-  } else { items.forEach((el) => el.classList.add('in')); }
+    const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { run(e.target); io.unobserve(e.target); } }), { threshold: .5 });
+    nums.forEach((n) => io.observe(n));
+  }
 </script>
 
 <div class="wa-widget" id="waWidget">
   <div class="wa-menu" id="waMenu">
-    <a href="https://wa.me/2348066043320?text=Assalaamu%20alaykum.%20I%27d%20like%20to%20ask%20about%20Himaayah%20Schools." target="_blank" rel="noopener">Chat on WhatsApp <small>+234 806 604 3320</small></a>
-    <a href="https://wa.me/2347025842849?text=Assalaamu%20alaykum.%20I%27d%20like%20to%20ask%20about%20Himaayah%20Schools." target="_blank" rel="noopener">Chat on WhatsApp <small>+234 702 584 2849</small></a>
+    <a href="https://wa.me/2348066043320?text=Assalaamu%20alaykum.%20I%27d%20like%20to%20ask%20about%20Himaayah%20Schools." target="_blank" rel="noopener">Academy <small>+234 806 604 3320</small></a>
+    <a href="https://wa.me/2347025842849?text=Assalaamu%20alaykum.%20I%27d%20like%20to%20ask%20about%20Himaayah%20Schools." target="_blank" rel="noopener">Madrasah <small>+234 702 584 2849</small></a>
+    <a href="https://wa.me/2347220156478?text=Assalaamu%20alaykum.%20I%27d%20like%20to%20ask%20about%20Himaayah%20Schools." target="_blank" rel="noopener">General <small>+234 722 015 6478</small></a>
   </div>
   <button type="button" class="wa-fab" id="waBtn" aria-expanded="false" aria-controls="waMenu" aria-label="Chat with us on WhatsApp">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.7-5.2A8.5 8.5 0 1 1 21 11.5z"/></svg>
