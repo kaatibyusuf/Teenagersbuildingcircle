@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Madrasah Library | Himaayah Schools</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#094570">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--deep:#062F4D;--ink:#094570;--sky:#85CCFF;--sky-d:#3E97D9;--wash:#F1F7FC;--text:#0E2A3D;--muted:#55697B;--line:rgba(9,69,112,.12);--d:'Bricolage Grotesque','Inter',sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;color:var(--text);background:var(--wash);line-height:1.55;-webkit-font-smoothing:antialiased;min-height:100vh}
+a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer;border:0;background:none}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--sky-d);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.001ms!important}}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 22px;font-size:14.5px;font-weight:600;border-radius:999px;transition:background .2s,color .2s}
+.btn-ink{background:var(--ink);color:#fff}.btn-ink:hover{background:var(--deep)}.btn-sky{background:var(--sky);color:var(--deep)}.btn-sky:hover{background:#fff}
+.btn-line{border:1px solid var(--ink);color:var(--ink)}.btn-line:hover{background:var(--ink);color:#fff}.btn-sm{padding:9px 16px;font-size:13.5px}
+.top{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.top>div{max-width:1200px;margin:0 auto;padding:11px 24px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--d);font-weight:700;font-size:18px;color:var(--ink)}.top nav{display:flex;gap:8px}
+.wrap{max-width:1200px;margin:0 auto;padding:24px}
+.login{min-height:calc(100vh - 62px);display:grid;place-items:center;padding:24px}.lbox{width:100%;max-width:440px;background:#fff;border-radius:32px;padding:40px;box-shadow:0 30px 60px -40px rgba(6,47,77,.5)}
+.lbox h1{font-family:var(--d);font-size:32px;line-height:1.08;color:var(--deep);margin-bottom:8px}.lbox p{color:var(--muted);margin-bottom:22px;font-size:15px}.lbox .btn{width:100%;padding:14px}
+.f{margin-bottom:14px}.f label{display:block;font-size:13.5px;font-weight:600;color:var(--deep);margin-bottom:6px}
+input{width:100%;padding:14px 16px;border-radius:14px;border:1.5px solid transparent;background:var(--wash);font-size:15px;color:var(--text)}input:focus{outline:none;border-color:var(--ink);background:#fff}
+.err{color:#B42318;font-size:13.5px;min-height:20px;margin:4px 0 10px}.demo{background:var(--wash);border-radius:14px;padding:10px 14px;font-size:13px;margin-bottom:16px}
+.hero{background:var(--ink);color:#fff;border-radius:32px;padding:38px 40px}.hero small{color:var(--sky);font-weight:600;font-size:14px}.hero h1{font-family:var(--d);font-size:clamp(28px,4vw,44px);line-height:1.08;letter-spacing:-.02em;margin:4px 0 8px}.hero p{color:rgba(255,255,255,.8);max-width:58ch;font-size:15px}
+.hero .search{margin-top:20px;max-width:560px}.hero input{background:#fff;padding:15px 20px;border-radius:999px}
+@media(max-width:700px){.hero{padding:28px 24px}}
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:18px 0 6px}
+.bar button{font-size:13px;font-weight:600;padding:8px 15px;border-radius:99px;background:#fff;color:var(--muted);border:1px solid var(--line);transition:background .2s,color .2s}.bar button:hover{color:var(--ink)}.bar button[aria-pressed=true]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.bar .sp{flex:1}.meta{font-size:13.5px;color:var(--muted);margin:4px 0 14px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}@media(max-width:1000px){.grid{grid-template-columns:1fr 1fr}}@media(max-width:640px){.grid{grid-template-columns:1fr}}
+.item{background:#fff;border-radius:24px;padding:22px;display:flex;flex-direction:column;gap:8px;animation:up .45s cubic-bezier(.2,.7,.2,1) backwards;animation-delay:calc(var(--i,0)*35ms);transition:box-shadow .25s,transform .25s}
+.item:hover{box-shadow:0 0 0 1.5px var(--ink),0 24px 40px -30px rgba(6,47,77,.5);transform:translateY(-3px)}.item.other{opacity:.78}
+@keyframes up{from{opacity:0;transform:translateY(14px)}}
+.row{display:flex;gap:6px;flex-wrap:wrap;align-items:center}.pill{font-size:11.5px;font-weight:700;padding:4px 11px;border-radius:99px;background:var(--wash);color:var(--ink)}
+.pill.t{background:var(--ink);color:#fff}.pill.new{background:var(--sky);color:var(--deep)}.pill.lv{background:#fff;border:1px solid var(--line);color:var(--muted)}
+.item h3{font-family:var(--d);font-size:19px;line-height:1.2;color:var(--deep)}.item .by{font-size:13.5px;color:var(--muted)}.item p{font-size:14px;color:var(--muted);flex:1}
+.item .foot{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:6px;padding-top:12px;border-top:1px solid var(--line)}
+.empty{background:#fff;border-radius:24px;padding:40px;text-align:center;color:var(--muted)}.foot2{text-align:center;color:var(--muted);font-size:12.5px;padding:26px 0 40px}
+</style>
+</head>
+<body>
+<header class="top"><div>
+<a class="brand" href="index.html"><svg width="22" height="27" viewBox="0 0 377.21 459.6" fill="#094570" aria-hidden="true"><path d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>Himaayah Schools</a>
+<nav><a class="btn btn-line btn-sm" href="dashboard.html">My dashboard</a><button class="btn btn-ink btn-sm" id="out" hidden>Log out</button></nav>
+</div></header>
+
+<main id="login" class="login"><form class="lbox" id="lf" novalidate>
+<h1>Madrasah library</h1><p>Books, notes and links for Himaayah students. Sign in with your Student ID and access code.</p>
+<div class="demo" id="demoNote" hidden><b>Demo mode.</b> Use ID <b>DEMO</b> and code <b>demo</b> to see sample items.</div>
+<div class="f"><label for="sid">Student ID</label><input id="sid" autocomplete="username" autocapitalize="characters" required></div>
+<div class="f"><label for="scode">Access code</label><input id="scode" type="password" autocomplete="current-password" required></div>
+<div class="err" id="err" role="alert"></div><button class="btn btn-ink" id="go" type="submit">Sign in</button>
+</form></main>
+
+<main id="app" class="wrap" hidden></main>
+
+<script>
+/* Paste your Apps Script web-app URL (the same one as dashboard.html). While empty, the page runs in DEMO mode. */
+const API_URL = 'https://script.google.com/macros/s/AKfycbzC4W9ovvvyKoJGFXCL8E7g0sfyAXWxuaHvcO2yqiw7xPpYaDpC-_p4lj6q9BMEjka9/exec';
+
+const $ = (id) => document.getElementById(id);
+const esc = (t) => String(t ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const ST = { student: null, items: [], q: '', subject: 'All', type: 'All', all: false, sort: 'new' };
+const safeUrl = (u) => /^https:\/\/[^\s]+$/i.test(String(u || '')) ? u : '#';
+
+/* ---- demo data (only while API_URL is empty) ---- */
+function demo() {
+  const d = (n) => { const x = new Date(); x.setDate(x.getDate() - n); return x.toISOString().slice(0, 10); };
+  const it = (Title, Author, Type, Subject, Level, Description, ago, forMe) => ({ Title, Author, Type, Subject, Level, Url: 'https://example.com/sample', Description, Added: d(ago), forMe });
+  return { ok: true, student: { name: 'Sample Student', level: 'Thālithah Ibtidā’iyyah' }, items: [
+    it('Sample: Forty Hadith revision notes', 'Himaayah teachers', 'PDF', 'Hadith', 'All', 'Your teachers\u2019 own notes. Items like this appear when staff add them to the sheet.', 3, true),
+    it('Sample: Tajweed rules at a glance', 'Himaayah teachers', 'PDF', 'Tajweed', 'All', 'A one-page summary to keep beside you when you recite.', 12, true),
+    it('Sample: Arabic reading practice', 'Himaayah teachers', 'PDF', 'Arabic', 'Thālithah Ibtidā’iyyah', 'Practice sheets for your level.', 40, true),
+    it('Sample: Link to a trusted tafsir website', '', 'Link', 'Fiqh', 'All', 'Links to other websites open in a new tab.', 80, true),
+    it('Sample: Beginner Arabic letters workbook', 'Himaayah teachers', 'PDF', 'Arabic', 'Rawdah', 'For students in a lower level. Hidden unless you choose "All levels".', 90, false),
+    it('Sample: Iʿdādiyyah reading list', 'Himaayah teachers', 'Book', 'Aqeedah', 'Awwal Iʿdādiyyah', 'For students in a higher level.', 120, false) ] };
+}
+async function api(id, code) {
+  if (!API_URL) { await new Promise((r) => setTimeout(r, 350)); return id.toUpperCase() === 'DEMO' && code === 'demo' ? demo() : { ok: false, error: 'Wrong ID or access code.' }; }
+  const r = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'library', id, code }) });
+  return r.json();
+}
+
+/* ---- view ---- */
+const isNew = (a) => { const t = Date.parse(a); return !isNaN(t) && (Date.now() - t) / 864e5 <= 30; };
+function visible() {
+  const q = ST.q.trim().toLowerCase();
+  let l = ST.items.filter((x) => (ST.all || x.forMe) && (ST.subject === 'All' || x.Subject === ST.subject) && (ST.type === 'All' || (ST.type === 'Books' ? x.Type !== 'Link' : x.Type === 'Link'))
+    && (!q || (x.Title + ' ' + x.Author + ' ' + x.Description + ' ' + x.Subject).toLowerCase().includes(q)));
+  l = l.slice().sort((a, b) => ST.sort === 'az' ? a.Title.localeCompare(b.Title) : String(b.Added).localeCompare(String(a.Added)));
+  return l;
+}
+function cards() {
+  const l = visible();
+  return l.length ? `<div class="grid">${l.map((x, i) => `<article class="item ${x.forMe ? '' : 'other'}" style="--i:${Math.min(i, 12)}">
+    <div class="row"><span class="pill t">${esc(x.Type === 'Link' ? 'Website' : x.Type)}</span>${isNew(x.Added) ? '<span class="pill new">New</span>' : ''}<span class="pill lv">${esc(x.Level === 'All' ? 'All levels' : x.Level)}</span></div>
+    <h3>${esc(x.Title)}</h3>${x.Author ? `<div class="by">${esc(x.Author)}</div>` : ''}<p>${esc(x.Description)}</p>
+    <div class="foot"><span class="pill">${esc(x.Subject)}</span><a class="btn btn-ink btn-sm" href="${esc(safeUrl(x.Url))}" target="_blank" rel="noopener noreferrer">${x.Type === 'Link' ? 'Visit site' : x.Type === 'Book' ? 'Read' : 'Open PDF'}</a></div></article>`).join('')}</div>`
+    : '<div class="empty">Nothing matches. Try another subject, or choose "All levels" to see the whole library.</div>';
+}
+function render() {
+  const subs = ['All'].concat([...new Set(ST.items.map((x) => x.Subject))].sort());
+  const n = visible().length;
+  $('app').innerHTML = `<section class="hero"><small>Assalaamu alaykum</small><h1>${esc(String(ST.student.name).split(' ')[0])}, your Madrasah library.</h1>
+    <p>Books, notes and links chosen by your teachers. You are on <b>${esc(ST.student.level || 'your level')}</b>, so that is what you see first.</p>
+    <div class="search"><input id="q" type="search" placeholder="Search by title, author or subject" value="${esc(ST.q)}" aria-label="Search the library"></div></section>
+  <div class="bar" role="group" aria-label="Subject">${subs.map((s) => `<button data-sub="${esc(s)}" aria-pressed="${ST.subject === s}">${esc(s)}</button>`).join('')}</div>
+  <div class="bar" role="group" aria-label="Type and level">${[['All','Everything'],['Books','PDFs and books'],['Links','Websites']].map(([k, l]) => `<button data-type="${k}" aria-pressed="${ST.type === k}">${l}</button>`).join('')}
+    <span class="sp"></span><button data-all aria-pressed="${ST.all}">${ST.all ? 'Showing all levels' : 'Show all levels'}</button><button data-sort="${ST.sort === 'new' ? 'az' : 'new'}" aria-pressed="false">Sort: ${ST.sort === 'new' ? 'newest first' : 'A to Z'}</button></div>
+  <div class="meta" aria-live="polite" id="meta">${n} item${n === 1 ? '' : 's'}</div><div id="cards">${cards()}</div>
+  <p class="foot2">For Himaayah students only. Please do not share these materials. Some links lead to other websites.</p>`;
+}
+document.addEventListener('click', (e) => {
+  const t = e.target.closest('[data-sub],[data-type],[data-all],[data-sort]'); if (!t || !ST.student) return;
+  if (t.dataset.sub !== undefined) ST.subject = t.dataset.sub; else if (t.dataset.type) ST.type = t.dataset.type; else if (t.dataset.sort) ST.sort = t.dataset.sort; else ST.all = !ST.all;
+  render();
+});
+document.addEventListener('input', (e) => { if (e.target.id === 'q') { ST.q = e.target.value; $('cards').innerHTML = cards(); const n = visible().length; $('meta').textContent = n + ' item' + (n === 1 ? '' : 's'); } });
+
+/* ---- sign in (shares the dashboard's session, so a student who just signed in there is already in) ---- */
+function enter(d, id, code) { sessionStorage.setItem('hs', JSON.stringify({ id, code })); Object.assign(ST, { student: d.student, items: d.items }); $('login').hidden = true; $('app').hidden = false; $('out').hidden = false; render(); window.scrollTo(0, 0); }
+async function signIn(id, code, silent) {
+  const b = $('go'); $('err').textContent = ''; b.disabled = true; b.textContent = 'Signing in…';
+  try { const d = await api(id, code); if (d.ok) enter(d, id, code); else if (!silent) $('err').textContent = d.error || 'Could not sign in.'; else sessionStorage.removeItem('hs'); }
+  catch (x) { if (!silent) $('err').textContent = 'Could not reach the school server. Please try again.'; }
+  b.disabled = false; b.textContent = 'Sign in';
+}
+$('demoNote').hidden = !!API_URL;
+$('lf').addEventListener('submit', (e) => { e.preventDefault(); const i = $('sid').value.trim(), c = $('scode').value.trim(); if (!i || !c) { $('err').textContent = 'Enter your Student ID and access code.'; return; } signIn(i, c); });
+$('out').addEventListener('click', () => { sessionStorage.removeItem('hs'); location.reload(); });
+try { const s = JSON.parse(sessionStorage.getItem('hs') || 'null'); if (s && s.id && s.code) signIn(s.id, s.code, true); } catch (x) {}
+</script>
+</body>
+</html>
