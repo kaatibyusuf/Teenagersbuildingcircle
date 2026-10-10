@@ -10,46 +10,87 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--deep:#062F4D;--ink:#094570;--sky:#85CCFF;--sky-d:#3E97D9;--wash:#F1F7FC;--text:#0E2A3D;--muted:#55697B;--line:rgba(9,69,112,.12);--d:'Bricolage Grotesque','Inter',sans-serif}
+:root{--deep:#062F4D;--ink:#094570;--sky:#85CCFF;--sky-d:#3E97D9;--wash:#F1F7FC;--text:#0E2A3D;--muted:#55697B;--line:rgba(9,69,112,.14);--d:'Bricolage Grotesque','Inter',sans-serif}
 *{box-sizing:border-box;margin:0;padding:0}
 [hidden]{display:none!important}
 body{font-family:'Inter',sans-serif;color:var(--text);background:var(--wash);line-height:1.55;-webkit-font-smoothing:antialiased;min-height:100vh}
 a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer;border:0;background:none}
 a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--sky-d);outline-offset:3px}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.001ms!important}}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 22px;font-size:14.5px;font-weight:600;border-radius:999px;transition:background .2s,color .2s}
-.btn-ink{background:var(--ink);color:#fff}.btn-ink:hover{background:var(--deep)}.btn-sky{background:var(--sky);color:var(--deep)}.btn-sky:hover{background:#fff}
-.btn-line{border:1px solid var(--ink);color:var(--ink)}.btn-line:hover{background:var(--ink);color:#fff}.btn-sm{padding:9px 16px;font-size:13.5px}
-.top{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-.top>div{max-width:1200px;margin:0 auto;padding:11px 24px;display:flex;align-items:center;justify-content:space-between;gap:10px}
-.brand{display:flex;align-items:center;gap:10px;font-family:var(--d);font-weight:700;font-size:18px;color:var(--ink)}.top nav{display:flex;gap:8px}
-.wrap{max-width:1200px;margin:0 auto;padding:24px}
-.login{min-height:calc(100vh - 62px);display:grid;place-items:center;padding:24px}.lbox{width:100%;max-width:440px;background:#fff;border-radius:32px;padding:40px;box-shadow:0 30px 60px -40px rgba(6,47,77,.5)}
-.lbox h1{font-family:var(--d);font-size:32px;line-height:1.08;color:var(--deep);margin-bottom:8px}.lbox p{color:var(--muted);margin-bottom:22px;font-size:15px}.lbox .btn{width:100%;padding:14px}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 22px;font-size:14.5px;font-weight:600;border-radius:999px;transition:background .2s,color .2s}
+.btn-ink{background:var(--ink);color:#fff}.btn-ink:hover{background:var(--deep)}
+.btn-sky{background:var(--sky);color:var(--deep)}.btn-sky:hover{background:#fff}
+.btn-line{border:1px solid var(--ink);color:var(--ink)}.btn-line:hover{background:var(--ink);color:#fff}
+
+/* top bar */
+.top{background:#fff;border-bottom:1px solid var(--line)}
+.top>div{max-width:1200px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--d);font-weight:700;font-size:18px;color:var(--ink)}
+.top nav{display:flex;gap:8px}
+
+/* login */
+.login{min-height:calc(100vh - 70px);display:grid;place-items:center;padding:24px}
+.lbox{width:100%;max-width:440px;background:#fff;border-radius:32px;padding:40px;box-shadow:0 30px 60px -40px rgba(6,47,77,.5)}
+.lbox h1{font-family:var(--d);font-size:32px;line-height:1.08;color:var(--deep);margin-bottom:8px}.lbox p{color:var(--muted);margin-bottom:22px;font-size:15px}.lbox .btn{width:100%}
 .f{margin-bottom:14px}.f label{display:block;font-size:13.5px;font-weight:600;color:var(--deep);margin-bottom:6px}
-input{width:100%;padding:14px 16px;border-radius:14px;border:1.5px solid transparent;background:var(--wash);font-size:15px;color:var(--text)}input:focus{outline:none;border-color:var(--ink);background:#fff}
+input{width:100%;min-height:48px;padding:0 16px;border-radius:14px;border:1.5px solid transparent;background:var(--wash);font-size:15px;color:var(--text)}input:focus{outline:none;border-color:var(--ink);background:#fff}
 .err{color:#B42318;font-size:13.5px;min-height:20px;margin:4px 0 10px}.demo{background:var(--wash);border-radius:14px;padding:10px 14px;font-size:13px;margin-bottom:16px}
-.hero{background:var(--ink);color:#fff;border-radius:32px;padding:38px 40px}.hero small{color:var(--sky);font-weight:600;font-size:14px}.hero h1{font-family:var(--d);font-size:clamp(28px,4vw,44px);line-height:1.08;letter-spacing:-.02em;margin:4px 0 8px}.hero p{color:rgba(255,255,255,.8);max-width:58ch;font-size:15px}
-.hero .search{margin-top:20px;max-width:560px}.hero input{background:#fff;padding:15px 20px;border-radius:999px}
-@media(max-width:700px){.hero{padding:28px 24px}}
-.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:18px 0 6px}
-.bar button{font-size:13px;font-weight:600;padding:8px 15px;border-radius:99px;background:#fff;color:var(--muted);border:1px solid var(--line);transition:background .2s,color .2s}.bar button:hover{color:var(--ink)}.bar button[aria-pressed=true]{background:var(--ink);color:#fff;border-color:var(--ink)}
-.bar .sp{flex:1}.meta{font-size:13.5px;color:var(--muted);margin:4px 0 14px}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}@media(max-width:1000px){.grid{grid-template-columns:1fr 1fr}}@media(max-width:640px){.grid{grid-template-columns:1fr}}
-.item{background:#fff;border-radius:24px;padding:22px;display:flex;flex-direction:column;gap:8px;animation:up .45s cubic-bezier(.2,.7,.2,1) backwards;animation-delay:calc(var(--i,0)*35ms);transition:box-shadow .25s,transform .25s}
-.item:hover{box-shadow:0 0 0 1.5px var(--ink),0 24px 40px -30px rgba(6,47,77,.5);transform:translateY(-3px)}.item.other{opacity:.78}
+
+/* library */
+.wrap{max-width:1200px;margin:0 auto;padding:48px 24px 40px}
+.greet{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:8px}
+.wrap h1{font-family:var(--d);font-weight:700;font-size:clamp(38px,6vw,64px);line-height:1;letter-spacing:-.035em;color:var(--deep);margin-bottom:16px}
+.intro{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.intro p{font-size:17px;color:var(--muted);max-width:52ch}
+.chip{display:inline-block;padding:7px 16px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:13.5px;font-weight:600;color:var(--ink)}
+.layout{display:flex;flex-wrap:wrap;gap:24px;margin-top:40px;align-items:flex-start}
+.rail{flex:1 1 260px;max-width:320px;background:#fff;border-radius:24px;padding:24px;display:flex;flex-direction:column;gap:24px}
+.main{flex:3 1 560px;min-width:0;display:flex;flex-direction:column;gap:40px}
+@media(max-width:760px){.rail{max-width:none;flex-basis:100%}}
+.rail label,.rail .lbl{display:block;font-size:13.5px;font-weight:700;color:var(--deep);margin-bottom:8px}
+.subjects{display:flex;flex-direction:column;gap:4px}
+.subjects button{display:flex;justify-content:space-between;align-items:center;min-height:44px;padding:0 14px;border-radius:12px;color:var(--text);font-size:14.5px;font-weight:500;text-align:left;transition:background .2s}
+.subjects button:hover{background:var(--wash)}.subjects button span+span{color:var(--muted)}
+.subjects button[aria-pressed=true]{background:var(--ink);color:#fff;font-weight:600}.subjects button[aria-pressed=true] span+span{color:#fff}
+.formats{display:flex;flex-wrap:wrap;gap:8px}
+.formats button,.sortbtn{min-height:44px;padding:0 16px;border-radius:999px;border:1px solid rgba(9,69,112,.25);background:#fff;color:var(--text);font-size:13.5px;font-weight:600;transition:background .2s,color .2s}
+.formats button:hover,.sortbtn:hover{border-color:var(--ink)}
+.formats button[aria-pressed=true]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.levels{border-top:1px solid var(--line);padding-top:20px}
+.levels button{width:100%;min-height:44px;border-radius:999px;border:1.5px dashed var(--ink);background:#fff;color:var(--ink);font-size:14px;font-weight:600}
+.levels button[aria-pressed=true]{background:var(--ink);color:#fff;border-style:solid}
+
+.main h2{font-family:var(--d);font-size:28px;letter-spacing:-.02em;color:var(--deep);line-height:1.2}
+.main h2 small{font-family:'Inter',sans-serif;font-size:15px;font-weight:500;color:var(--muted)}
+.fgrid{display:flex;flex-wrap:wrap;gap:16px;margin-top:16px}
+.feat{flex:1 1 300px;background:var(--ink);color:#fff;border-radius:28px;padding:28px;display:flex;flex-direction:column;gap:12px;animation:up .5s cubic-bezier(.2,.7,.2,1) backwards}
+.feat .top2{display:flex;align-items:center;justify-content:space-between}
+.tile{flex:none;width:48px;height:48px;border-radius:14px;background:var(--sky);color:var(--deep);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px}
+.tile svg{width:24px;height:24px}
+.newp{padding:5px 12px;border-radius:999px;background:var(--sky);color:var(--deep);font-size:12px;font-weight:700}
+.feat h3{margin-top:8px;font-family:var(--d);font-size:24px;line-height:1.15}
+.feat .by{font-size:14px;color:var(--sky);font-weight:600}.feat p.d{font-size:14.5px;color:rgba(255,255,255,.82)}.feat .btn{align-self:flex-start;margin-top:8px}
+.head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.list{display:flex;flex-direction:column;gap:12px}
+.item{background:#fff;border-radius:24px;padding:22px 24px;display:flex;gap:20px;align-items:center;flex-wrap:wrap;animation:up .45s cubic-bezier(.2,.7,.2,1) backwards;animation-delay:calc(var(--i,0)*35ms);transition:box-shadow .25s,transform .25s}
+.item:hover{box-shadow:0 0 0 1.5px var(--ink),0 24px 40px -30px rgba(6,47,77,.5);transform:translateY(-2px)}
+.item.other{opacity:.8}
+.item .tile{width:56px;height:56px;border-radius:16px;background:var(--wash);color:var(--ink)}
+.item .txt{flex:1 1 260px;min-width:0}
+.item h3{font-family:var(--d);font-size:20px;line-height:1.2;color:var(--deep)}
+.item .by{font-size:13.5px;color:var(--muted);margin:2px 0 6px}.item .d{font-size:14.5px;color:var(--muted)}
+.item .act{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.lv{padding:5px 12px;border-radius:999px;background:var(--wash);color:var(--ink);font-size:12px;font-weight:700}.lv.mine{background:var(--ink);color:#fff}
+.nm{padding:5px 12px;border-radius:999px;background:var(--sky);color:var(--deep);font-size:12px;font-weight:700}
+.empty{background:#fff;border-radius:24px;padding:40px;text-align:center;color:var(--muted)}
 @keyframes up{from{opacity:0;transform:translateY(14px)}}
-.row{display:flex;gap:6px;flex-wrap:wrap;align-items:center}.pill{font-size:11.5px;font-weight:700;padding:4px 11px;border-radius:99px;background:var(--wash);color:var(--ink)}
-.pill.t{background:var(--ink);color:#fff}.pill.new{background:var(--sky);color:var(--deep)}.pill.lv{background:#fff;border:1px solid var(--line);color:var(--muted)}
-.item h3{font-family:var(--d);font-size:19px;line-height:1.2;color:var(--deep)}.item .by{font-size:13.5px;color:var(--muted)}.item p{font-size:14px;color:var(--muted);flex:1}
-.item .foot{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:6px;padding-top:12px;border-top:1px solid var(--line)}
-.empty{background:#fff;border-radius:24px;padding:40px;text-align:center;color:var(--muted)}.foot2{text-align:center;color:var(--muted);font-size:12.5px;padding:26px 0 40px}
+.foot2{text-align:center;color:var(--muted);font-size:12.5px;padding:48px 0 0}
 </style>
 </head>
 <body>
 <header class="top"><div>
 <a class="brand" href="index.html"><svg width="22" height="27" viewBox="0 0 377.21 459.6" fill="#094570" aria-hidden="true"><path d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>Himaayah Schools</a>
-<nav><a class="btn btn-line btn-sm" href="dashboard.html">My dashboard</a><button class="btn btn-ink btn-sm" id="out" hidden>Log out</button></nav>
+<nav><a class="btn btn-line" href="dashboard.html">My dashboard</a><button class="btn btn-ink" id="out" hidden>Log out</button></nav>
 </div></header>
 
 <main id="login" class="login"><form class="lbox" id="lf" novalidate>
@@ -60,7 +101,7 @@ input{width:100%;padding:14px 16px;border-radius:14px;border:1.5px solid transpa
 <div class="err" id="err" role="alert"></div><button class="btn btn-ink" id="go" type="submit">Sign in</button>
 </form></main>
 
-<main id="app" class="wrap" hidden></main>
+<main id="app" hidden></main>
 
 <script>
 /* Paste your Apps Script web-app URL (the same one as dashboard.html). While empty, the page runs in DEMO mode. */
@@ -80,7 +121,7 @@ function demo() {
     it('Sample: Tajweed rules at a glance', 'Himaayah teachers', 'PDF', 'Tajweed', 'All', 'A one-page summary to keep beside you when you recite.', 12, true),
     it('Sample: Arabic reading practice', 'Himaayah teachers', 'PDF', 'Arabic', 'Thālithah Ibtidā’iyyah', 'Practice sheets for your level.', 40, true),
     it('Sample: Link to a trusted tafsir website', '', 'Link', 'Fiqh', 'All', 'Links to other websites open in a new tab.', 80, true),
-    it('Sample: Beginner Arabic letters workbook', 'Himaayah teachers', 'PDF', 'Arabic', 'Rawdah', 'For students in a lower level. Hidden unless you choose "All levels".', 90, false),
+    it('Sample: Beginner Arabic letters workbook', 'Himaayah teachers', 'PDF', 'Arabic', 'Rawdah', 'For students in a lower level. Hidden unless you choose "Show other levels too".', 90, false),
     it('Sample: Iʿdādiyyah reading list', 'Himaayah teachers', 'Book', 'Aqeedah', 'Awwal Iʿdādiyyah', 'For students in a higher level.', 120, false) ] };
 }
 async function api(id, code) {
@@ -91,42 +132,61 @@ async function api(id, code) {
 
 /* ---- view ---- */
 const isNew = (a) => { const t = Date.parse(a); return !isNaN(t) && (Date.now() - t) / 864e5 <= 30; };
+const byNewest = (a, b) => String(b.Added).localeCompare(String(a.Added));
+const typeOk = (x) => ST.type === 'All' || (ST.type === 'Books' ? x.Type !== 'Link' : x.Type === 'Link');
+const scopeOk = (x) => ST.all || x.forMe;
 function visible() {
   const q = ST.q.trim().toLowerCase();
-  let l = ST.items.filter((x) => (ST.all || x.forMe) && (ST.subject === 'All' || x.Subject === ST.subject) && (ST.type === 'All' || (ST.type === 'Books' ? x.Type !== 'Link' : x.Type === 'Link'))
-    && (!q || (x.Title + ' ' + x.Author + ' ' + x.Description + ' ' + x.Subject).toLowerCase().includes(q)));
-  l = l.slice().sort((a, b) => ST.sort === 'az' ? a.Title.localeCompare(b.Title) : String(b.Added).localeCompare(String(a.Added)));
-  return l;
+  return ST.items.filter((x) => scopeOk(x) && typeOk(x) && (ST.subject === 'All' || x.Subject === ST.subject)
+    && (!q || (x.Title + ' ' + x.Author + ' ' + x.Description + ' ' + x.Subject).toLowerCase().includes(q)))
+    .sort((a, b) => ST.sort === 'az' ? String(a.Title).localeCompare(String(b.Title)) : byNewest(a, b));
 }
-function cards() {
+const GLOBE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Website"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/></svg>';
+const tile = (x) => x.Type === 'Link' ? `<div class="tile">${GLOBE}</div>` : `<div class="tile">${x.Type === 'Book' ? 'BOOK' : 'PDF'}</div>`;
+const label = (x) => x.Type === 'Link' ? 'Visit site' : x.Type === 'Book' ? 'Read' : 'Open PDF';
+const link = (x, cls) => `<a class="btn ${cls}" href="${esc(safeUrl(x.Url))}" target="_blank" rel="noopener noreferrer">${label(x)}</a>`;
+const lvl = (x) => x.Level === 'All' || !x.Level ? '<span class="lv">All levels</span>' : `<span class="lv mine">${esc(x.Level)}</span>`;
+
+function main() {
   const l = visible();
-  return l.length ? `<div class="grid">${l.map((x, i) => `<article class="item ${x.forMe ? '' : 'other'}" style="--i:${Math.min(i, 12)}">
-    <div class="row"><span class="pill t">${esc(x.Type === 'Link' ? 'Website' : x.Type)}</span>${isNew(x.Added) ? '<span class="pill new">New</span>' : ''}<span class="pill lv">${esc(x.Level === 'All' ? 'All levels' : x.Level)}</span></div>
-    <h3>${esc(x.Title)}</h3>${x.Author ? `<div class="by">${esc(x.Author)}</div>` : ''}<p>${esc(x.Description)}</p>
-    <div class="foot"><span class="pill">${esc(x.Subject)}</span><a class="btn btn-ink btn-sm" href="${esc(safeUrl(x.Url))}" target="_blank" rel="noopener noreferrer">${x.Type === 'Link' ? 'Visit site' : x.Type === 'Book' ? 'Read' : 'Open PDF'}</a></div></article>`).join('')}</div>`
-    : '<div class="empty">Nothing matches. Try another subject, or choose "All levels" to see the whole library.</div>';
+  const feat = (!ST.q.trim() && ST.subject === 'All' && ST.type === 'All') ? l.filter((x) => isNew(x.Added)).sort(byNewest).slice(0, 2) : [];
+  const fHtml = feat.length ? `<section><h2>New this month</h2><div class="fgrid">${feat.map((x) => `<article class="feat"><div class="top2">${tile(x)}<span class="newp">New</span></div>
+      <h3>${esc(x.Title)}</h3><div class="by">${esc([x.Author, x.Subject].filter(Boolean).join(' \u00B7 '))}</div><p class="d">${esc(x.Description)}</p>${link(x, 'btn-sky')}</article>`).join('')}</div></section>` : '';
+  const rows = l.length ? `<div class="list">${l.map((x, i) => `<article class="item ${x.forMe ? '' : 'other'}" style="--i:${Math.min(i, 12)}">${tile(x)}
+      <div class="txt"><h3>${esc(x.Title)}</h3><div class="by">${esc([x.Author, x.Subject].filter(Boolean).join(' \u00B7 '))}</div><p class="d">${esc(x.Description)}</p></div>
+      <div class="act">${isNew(x.Added) ? '<span class="nm">New</span>' : ''}${lvl(x)}${link(x, 'btn-ink')}</div></article>`).join('')}</div>`
+    : '<div class="empty">Nothing matches. Try another subject or format, or choose "Show other levels too" to see the whole library.</div>';
+  $('main').innerHTML = `${fHtml}<section><div class="head"><h2>All materials <small>${l.length} item${l.length === 1 ? '' : 's'}</small></h2>
+    <button class="sortbtn" data-sort="${ST.sort === 'new' ? 'az' : 'new'}">Sort: ${ST.sort === 'new' ? 'newest first' : 'A to Z'}</button></div><div aria-live="polite">${rows}</div></section>`;
 }
-function render() {
-  const subs = ['All'].concat([...new Set(ST.items.map((x) => x.Subject))].sort());
-  const n = visible().length;
-  $('app').innerHTML = `<section class="hero"><small>Assalaamu alaykum</small><h1>${esc(String(ST.student.name).split(' ')[0])}, your Madrasah library.</h1>
-    <p>Books, notes and links chosen by your teachers. You are on <b>${esc(ST.student.level || 'your level')}</b>, so that is what you see first.</p>
-    <div class="search"><input id="q" type="search" placeholder="Search by title, author or subject" value="${esc(ST.q)}" aria-label="Search the library"></div></section>
-  <div class="bar" role="group" aria-label="Subject">${subs.map((s) => `<button data-sub="${esc(s)}" aria-pressed="${ST.subject === s}">${esc(s)}</button>`).join('')}</div>
-  <div class="bar" role="group" aria-label="Type and level">${[['All','Everything'],['Books','PDFs and books'],['Links','Websites']].map(([k, l]) => `<button data-type="${k}" aria-pressed="${ST.type === k}">${l}</button>`).join('')}
-    <span class="sp"></span><button data-all aria-pressed="${ST.all}">${ST.all ? 'Showing all levels' : 'Show all levels'}</button><button data-sort="${ST.sort === 'new' ? 'az' : 'new'}" aria-pressed="false">Sort: ${ST.sort === 'new' ? 'newest first' : 'A to Z'}</button></div>
-  <div class="meta" aria-live="polite" id="meta">${n} item${n === 1 ? '' : 's'}</div><div id="cards">${cards()}</div>
-  <p class="foot2">For Himaayah students only. Please do not share these materials. Some links lead to other websites.</p>`;
+function page() {
+  const pool = ST.items.filter((x) => scopeOk(x) && typeOk(x));
+  const counts = {}; pool.forEach((x) => { counts[x.Subject] = (counts[x.Subject] || 0) + 1; });
+  const subs = Object.keys(counts).sort();
+  const subBtn = (k, name, n) => `<button data-sub="${esc(k)}" aria-pressed="${ST.subject === k}"><span>${esc(name)}</span><span>${n}</span></button>`;
+  $('app').innerHTML = `<div class="wrap">
+    <p class="greet">Assalaamu alaykum, ${esc(String(ST.student.name).split(' ')[0])}</p><h1>Your Madrasah library</h1>
+    <div class="intro"><p>Books, notes and links chosen by your teachers.</p><span class="chip">Showing: ${ST.all ? 'all levels' : esc(ST.student.level || 'your level') + ' and all levels'}</span></div>
+    <div class="layout"><aside class="rail" aria-label="Filters">
+      <div><label for="q">Search</label><input id="q" type="search" placeholder="Title, author or subject" value="${esc(ST.q)}"></div>
+      <div><span class="lbl">Subject</span><div class="subjects">${subBtn('All', 'All subjects', pool.length)}${subs.map((s) => subBtn(s, s, counts[s])).join('')}</div></div>
+      <div><span class="lbl">Format</span><div class="formats">${[['All', 'Everything'], ['Books', 'PDFs and books'], ['Links', 'Websites']].map(([k, t]) => `<button data-type="${k}" aria-pressed="${ST.type === k}">${t}</button>`).join('')}</div></div>
+      <div class="levels"><button data-all aria-pressed="${ST.all}">${ST.all ? 'Showing all levels' : 'Show other levels too'}</button></div>
+    </aside><div class="main" id="main"></div></div>
+    <p class="foot2">For Himaayah students only. Please do not share these materials. Some links lead to other websites.</p></div>`;
+  main();
 }
 document.addEventListener('click', (e) => {
   const t = e.target.closest('[data-sub],[data-type],[data-all],[data-sort]'); if (!t || !ST.student) return;
-  if (t.dataset.sub !== undefined) ST.subject = t.dataset.sub; else if (t.dataset.type) ST.type = t.dataset.type; else if (t.dataset.sort) ST.sort = t.dataset.sort; else ST.all = !ST.all;
-  render();
+  if (t.dataset.sort) { ST.sort = t.dataset.sort; main(); return; }
+  if (t.dataset.sub !== undefined) ST.subject = t.dataset.sub; else if (t.dataset.type) ST.type = t.dataset.type; else ST.all = !ST.all;
+  if (ST.subject !== 'All' && !ST.items.some((x) => x.Subject === ST.subject && scopeOk(x) && typeOk(x))) ST.subject = 'All';
+  page();
 });
-document.addEventListener('input', (e) => { if (e.target.id === 'q') { ST.q = e.target.value; $('cards').innerHTML = cards(); const n = visible().length; $('meta').textContent = n + ' item' + (n === 1 ? '' : 's'); } });
+document.addEventListener('input', (e) => { if (e.target.id === 'q') { ST.q = e.target.value; main(); } });
 
 /* ---- sign in (shares the dashboard's session, so a student who just signed in there is already in) ---- */
-function enter(d, id, code) { sessionStorage.setItem('hs', JSON.stringify({ id, code })); Object.assign(ST, { student: d.student, items: d.items }); $('login').hidden = true; $('app').hidden = false; $('out').hidden = false; render(); window.scrollTo(0, 0); }
+function enter(d, id, code) { sessionStorage.setItem('hs', JSON.stringify({ id, code })); Object.assign(ST, { student: d.student, items: d.items || [] }); $('login').hidden = true; $('app').hidden = false; $('out').hidden = false; page(); window.scrollTo(0, 0); }
 async function signIn(id, code, silent) {
   const b = $('go'); $('err').textContent = ''; b.disabled = true; b.textContent = 'Signing in…';
   try { const d = await api(id, code); if (d.ok) enter(d, id, code); else if (!silent) $('err').textContent = d.error || 'Could not sign in.'; else sessionStorage.removeItem('hs'); }
