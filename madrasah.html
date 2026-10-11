@@ -254,7 +254,7 @@ const L=[
 function show(i){const v=L[i];$$('.tab').forEach((b,j)=>b.setAttribute('aria-selected',j===i));
 $('#panel').innerHTML=`<div class="lvl"><div class="sc">${v.s?`<b>${v.s}%</b><span>Minimum admission score</span>`:`<b style="font-size:38px">${v.tag}</b><span>${v.note}</span>`}<div class="goal">${v.goal}</div></div><div><h3>${v.n}</h3><p class="in">A student must meet all of the following:</p><ul>${v.r.map(x=>`<li>${x}</li>`).join('')}</ul>${v.strict?`<div class="strict">${v.strict}</div>`:''}</div></div>`}
 L.forEach((v,i)=>{const b=document.createElement('button');b.type='button';b.className='tab';b.setAttribute('role','tab');b.textContent=v.n;b.onclick=()=>show(i);$('#tabs').appendChild(b)});show(2);
-const A={'Ṣarf':'الصرف','Seerah':'السيرة','Naḥw':'النحو','Hadeeth':'الحديث','Tawheed':'التوحيد','Fiqh':'الفقه','Matn':'المتن','Arabiyyah':'اللغة العربية','Tajweed':'التجويد','Maḥfūẓah':'المحفوظة','Tārīkh':'التاريخ','Muṣṭalaḥ al-Ḥadīth':'مصطلح الحديث','Balāghah':'البلاغة','Qirāʾah':'القراءة','Tafseer':'التفسير','Qawāʿid al-Imlāʾ':'قواعد الإملاء'};
+const A={'Ṣarf':'الصرف','Seerah':'السيرة','Naḥw':'النحو','Hadeeth':'الحديث','Tawheed':'التوحيد','Fiqh':'الفقه','Matn':'المتن','Arabiyyah':'اللغة العربية','Tajweed':'التجويد','Maḥfūẓah':'المحفوظة','Tārīkh':'التاريخ','Muṣṭalaḥul-Ḥadīth':'مصطلح الحديث','Balāghah':'البلاغة','Qirāʾah':'القراءة','Tafseer':'التفسير','Qawāʿidul-Imlāʾ':'قواعد الإملاء'};
 const SJ=[['Rawdah',['Arabiyyah','Qirāʾah','Hadeeth','Fiqh']],
 ['Tamheedi',['Arabiyyah','Qirāʾah','Hadeeth','Fiqh']],
 ['Awwal Ibtidāʾiyyah',['Ṣarf','Seerah','Naḥw','Hadeeth','Tawheed','Fiqh','Matn','Arabiyyah','Tajweed']],
@@ -264,7 +264,7 @@ const SJ=[['Rawdah',['Arabiyyah','Qirāʾah','Hadeeth','Fiqh']],
 ['Awwal Iʿdādiyyah',['Tārīkh','Naḥw','Hadeeth','Muṣṭalaḥul-Ḥadīth','Tawheed','Fiqh','Balāghah','Tafseer','Tajweed']],
 ['Thāniy Iʿdādiyyah',['Tārīkh','Naḥw','Hadeeth','Muṣṭalaḥul-Ḥadīth','Tawheed','Fiqh','Balāghah','Tajweed','Tafseer']]];
 function showSubj(i){$$('#stabs .tab').forEach((b,j)=>b.setAttribute('aria-selected',j===i));
-$('#sgrid').innerHTML=SJ[i][1].map(x=>`<div class="card"><i lang="ar">${A[x]}</i><b>${x}</b></div>`).join('')+'<div class="card go"><b>Ready to begin?</b><a class="btn btn-sky" href="enroll.html?programme=madrasah">Enroll now</a></div>'}
+$('#sgrid').innerHTML=SJ[i][1].map(x=>`<div class="card"><i lang="ar">${A[x]||''}</i><b>${x}</b></div>`).join('')+'<div class="card go"><b>Ready to begin?</b><a class="btn btn-sky" href="enroll.html?programme=madrasah">Enroll now</a></div>'}
 SJ.forEach((v,i)=>{const b=document.createElement('button');b.type='button';b.className='tab';b.setAttribute('role','tab');b.textContent=v[0];b.onclick=()=>showSubj(i);$('#stabs').appendChild(b)});showSubj(0);
 const w=$('#wa'),wb=$('#wab');wb.onclick=()=>{wb.setAttribute('aria-expanded',w.classList.toggle('open'))};
 document.addEventListener('click',e=>{if(!w.contains(e.target)){w.classList.remove('open');wb.setAttribute('aria-expanded',false)}});

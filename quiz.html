@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quizzes | Himaayah Schools</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#094570">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--deep:#062F4D;--ink:#094570;--sky:#85CCFF;--sky-d:#3E97D9;--wash:#F1F7FC;--text:#0E2A3D;--muted:#55697B;--line:rgba(9,69,112,.12);--ok:#1B7F4B;--bad:#B42318;--d:'Bricolage Grotesque','Inter',sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+[hidden]{display:none!important}
+body{font-family:'Inter',sans-serif;color:var(--text);background:var(--wash);line-height:1.55;-webkit-font-smoothing:antialiased;min-height:100vh}
+a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer;border:0;background:none}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--sky-d);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.001ms!important}}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 22px;font-size:14.5px;font-weight:600;border-radius:999px;transition:background .2s,color .2s}
+.btn-ink{background:var(--ink);color:#fff}.btn-ink:hover{background:var(--deep)}.btn-line{border:1px solid var(--ink);color:var(--ink)}.btn-line:hover{background:var(--ink);color:#fff}.btn-sm{padding:9px 16px;font-size:13.5px}.btn:disabled{opacity:.5;cursor:not-allowed}
+.top{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.top>div{max-width:1000px;margin:0 auto;padding:11px 24px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--d);font-weight:700;font-size:18px;color:var(--ink)}.top nav{display:flex;gap:8px}
+.wrap{max-width:1000px;margin:0 auto;padding:24px}
+.login{min-height:calc(100vh - 62px);display:grid;place-items:center;padding:24px}.lbox{width:100%;max-width:440px;background:#fff;border-radius:32px;padding:40px;box-shadow:0 30px 60px -40px rgba(6,47,77,.5)}
+.lbox h1{font-family:var(--d);font-size:32px;line-height:1.08;color:var(--deep);margin-bottom:8px}.lbox p{color:var(--muted);margin-bottom:22px;font-size:15px}.lbox .btn{width:100%;padding:14px}
+.f{margin-bottom:14px}.f label{display:block;font-size:13.5px;font-weight:600;color:var(--deep);margin-bottom:6px}
+input{width:100%;padding:14px 16px;border-radius:14px;border:1.5px solid transparent;background:var(--wash);font-size:15px;color:var(--text)}input:focus{outline:none;border-color:var(--ink);background:#fff}
+.err{color:var(--bad);font-size:13.5px;min-height:20px;margin:4px 0 10px}.demo{background:var(--wash);border-radius:14px;padding:10px 14px;font-size:13px;margin-bottom:16px}
+
+.hero{background:var(--ink);color:#fff;border-radius:32px;padding:34px 40px}.hero small{color:var(--sky);font-weight:600;font-size:14px}
+.hero h1{font-family:var(--d);font-size:clamp(26px,4vw,40px);line-height:1.1;letter-spacing:-.02em;margin:4px 0 8px}.hero p{color:rgba(255,255,255,.8);max-width:58ch;font-size:15px}
+@media(max-width:640px){.hero{padding:28px 24px}}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:18px}@media(max-width:700px){.grid{grid-template-columns:1fr}}
+.item{background:#fff;border-radius:24px;padding:24px;display:flex;flex-direction:column;gap:8px;animation:up .45s cubic-bezier(.2,.7,.2,1) backwards;animation-delay:calc(var(--i,0)*45ms);transition:box-shadow .25s,transform .25s}
+.item:hover{box-shadow:0 0 0 1.5px var(--ink),0 24px 40px -30px rgba(6,47,77,.5);transform:translateY(-3px)}
+@keyframes up{from{opacity:0;transform:translateY(14px)}}
+.pill{font-size:11.5px;font-weight:700;padding:4px 11px;border-radius:99px;background:var(--wash);color:var(--ink);display:inline-block}.pill.t{background:var(--ink);color:#fff}.pill.ok{background:#EAF6EF;color:var(--ok)}
+.item h3{font-family:var(--d);font-size:20px;line-height:1.2;color:var(--deep)}.item p{font-size:14px;color:var(--muted);flex:1}
+.item .foot{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:6px;padding-top:12px;border-top:1px solid var(--line);font-size:13.5px;color:var(--muted)}
+.empty{background:#fff;border-radius:24px;padding:40px;text-align:center;color:var(--muted);margin-top:18px}
+
+.q{background:#fff;border-radius:28px;padding:30px;margin-top:18px}
+.prog{height:8px;border-radius:99px;background:var(--wash);overflow:hidden;margin:6px 0 4px}.prog i{display:block;height:100%;background:var(--sky-d);border-radius:99px;transition:width .3s}
+.pmeta{font-size:13px;color:var(--muted);display:flex;justify-content:space-between}
+.q h2{font-family:var(--d);font-size:clamp(21px,3vw,27px);line-height:1.25;color:var(--deep);margin:20px 0 18px}
+.opt{display:flex;align-items:center;gap:14px;width:100%;text-align:left;padding:15px 16px;border-radius:18px;background:var(--wash);margin-bottom:10px;border:1.5px solid transparent;transition:background .2s,border-color .2s}
+.opt:hover{border-color:var(--sky-d)}.opt .k{flex:none;width:30px;height:30px;border-radius:50%;background:#fff;border:1.5px solid var(--line);display:grid;place-items:center;font-weight:700;font-size:13px;color:var(--ink)}
+.opt .tx{font-weight:500;font-size:16px}.opt .tx.ar{font-size:30px;line-height:1.2;font-weight:600}.opt[aria-checked=true]{background:#E4F1FD;border-color:var(--ink)}.opt[aria-checked=true] .k{background:var(--ink);color:#fff;border-color:var(--ink)}
+.opt.good{background:#EAF6EF;border-color:var(--ok)}.opt.good .k{background:var(--ok);color:#fff;border-color:var(--ok)}.opt.wrong{background:#FDECEA;border-color:var(--bad)}.opt.wrong .k{background:var(--bad);color:#fff;border-color:var(--bad)}.opt.static{cursor:default}
+.nav{display:flex;justify-content:space-between;gap:10px;margin-top:18px;flex-wrap:wrap}
+.score{display:grid;grid-template-columns:auto 1fr;gap:26px;align-items:center;background:#fff;border-radius:28px;padding:30px;margin-top:18px}
+.ring{width:130px;height:130px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--c,var(--ink)) calc(var(--p)*1%),var(--wash) 0)}
+.ring div{width:100px;height:100px;border-radius:50%;background:#fff;display:grid;place-items:center;font-family:var(--d);font-size:30px;font-weight:700;color:var(--deep)}
+.score h2{font-family:var(--d);font-size:26px;color:var(--deep);line-height:1.15;margin-bottom:6px}.score p{color:var(--muted);font-size:15px;margin-bottom:14px}
+@media(max-width:560px){.score{grid-template-columns:1fr;text-align:center}.ring{margin:0 auto}}
+.rev{background:#fff;border-radius:24px;padding:22px 24px;margin-top:12px}.rev h3{font-size:16px;color:var(--deep);margin-bottom:12px;font-weight:600}
+.ex{font-size:14px;color:var(--muted);margin-top:6px;background:var(--wash);border-radius:14px;padding:10px 14px}
+.msg{color:var(--bad);font-size:13.5px;min-height:20px;margin-top:10px}.foot2{text-align:center;color:var(--muted);font-size:12.5px;padding:26px 0 40px}
+.msg:empty{display:none}
+@media(max-width:480px){.top>div{padding:10px 16px}.brand{font-size:15px;white-space:nowrap;gap:8px}.brand svg{width:18px;height:22px}.btn-sm{padding:8px 12px;font-size:12.5px;white-space:nowrap}.top nav{gap:6px}.wrap{padding:16px}}
+</style>
+</head>
+<body>
+<header class="top"><div>
+<a class="brand" href="index.html"><svg width="22" height="27" viewBox="0 0 377.21 459.6" fill="#094570" aria-hidden="true"><path d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>Himaayah Schools</a>
+<nav><a class="btn btn-line btn-sm" href="dashboard.html">My dashboard</a><button class="btn btn-ink btn-sm" id="out" hidden>Log out</button></nav>
+</div></header>
+
+<main id="login" class="login"><form class="lbox" id="lf" novalidate>
+<h1>Practice quizzes</h1><p>Short quizzes marked for you straight away. Sign in with your Student ID and access code.</p>
+<div class="demo" id="demoNote" hidden><b>Demo mode.</b> Use ID <b>DEMO</b> and code <b>demo</b> to try it.</div>
+<div class="f"><label for="sid">Student ID</label><input id="sid" autocomplete="username" autocapitalize="characters" required></div>
+<div class="f"><label for="scode">Access code</label><input id="scode" type="password" autocomplete="current-password" required></div>
+<div class="err" id="err" role="alert"></div><button class="btn btn-ink" id="go" type="submit">Sign in</button>
+</form></main>
+
+<main id="app" class="wrap" hidden></main>
+
+<script>
+/* The Apps Script web-app URL. It must be the SAME address your dashboard.html uses. While empty, the page runs in DEMO mode. */
+const API_URL = 'https://script.google.com/macros/s/AKfycby0AsifBuB_Ad7g1SjDXCipaDU27-BrzYWf67muw5jeY_C0_0uz8AhQYYXdiNRQhvqX/exec';
+
+const $ = (id) => document.getElementById(id);
+const esc = (t) => String(t ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const arCls = (t) => (/^[\u0600-\u06FF\s]{1,6}$/.test(String(t)) ? ' ar' : '');
+const ST = { id: '', code: '', student: null, quizzes: [], quiz: null, qs: [], i: 0, ans: {}, result: null, busy: false };
+
+/* ---- demo (only while API_URL is empty) ---- */
+const DQ = [{ id: '1', question: 'How many letters are in the Arabic alphabet?', options: [{k:'A',t:'26'},{k:'B',t:'28'},{k:'C',t:'30'},{k:'D',t:'32'}], correct: 'B', explanation: 'The standard alphabet has 28 letters.' },
+  { id: '2', question: 'Which letter has two dots above it?', options: [{k:'A',t:'ب'},{k:'B',t:'ت'},{k:'C',t:'ث'},{k:'D',t:'ن'}], correct: 'B', explanation: 'ت (taa) has two dots above.' }];
+async function api(body) {
+  if (!API_URL) {
+    await new Promise((r) => setTimeout(r, 250));
+    if (body.id.toUpperCase() !== 'DEMO' || body.code !== 'demo') return { ok: false, error: 'Wrong ID or access code.' };
+    const stu = { name: 'Sample Student', level: 'Rawdah' };
+    if (body.op === 'start') return { ok: true, quiz: { QuizID: 'DEMO', Title: 'Arabic letters (demo)', PassMark: 70 }, questions: DQ.map(({ id, question, options }) => ({ id, question, options })) };
+    if (body.op === 'submit') { const review = DQ.map((q) => ({ id: q.id, question: q.question, options: q.options, yours: (body.answers[q.id] || ''), correct: q.correct, ok: body.answers[q.id] === q.correct, explanation: q.explanation })); const score = review.filter((x) => x.ok).length; return { ok: true, score, outOf: DQ.length, percent: Math.round(score / DQ.length * 100), passed: score / DQ.length >= .7, passMark: 70, saved: true, review }; }
+    return { ok: true, student: stu, quizzes: [{ QuizID: 'DEMO', Title: 'Arabic letters (demo)', Subject: 'Arabic', Description: 'Two sample questions so you can see how it works.', Questions: 2, PassMark: 70, Attempts: 0, Best: null }] };
+  }
+  const r = await fetch(API_URL, { method: 'POST', body: JSON.stringify(Object.assign({ action: 'quiz', id: ST.id, code: ST.code }, body)) });
+  return r.json();
+}
+const call = (body) => api(Object.assign({ id: ST.id, code: ST.code }, body));
+
+/* ---- views ---- */
+function listView() {
+  const q = ST.quizzes;
+  $('app').innerHTML = `<section class="hero"><small>Assalaamu alaykum</small><h1>${esc(String(ST.student.name).split(' ')[0])}, test what you know.</h1>
+    <p>Pick a quiz for <b>${esc(ST.student.level || 'your level')}</b>. You see your score at once, and your best score is saved for your teachers.</p></section>
+    ${q.length ? `<div class="grid">${q.map((x, i) => `<article class="item" style="--i:${Math.min(i, 10)}"><div><span class="pill t">${esc(x.Subject)}</span> ${x.Best && x.Best.percent >= x.PassMark ? '<span class="pill ok">Passed</span>' : ''}</div>
+      <h3>${esc(x.Title)}</h3><p>${esc(x.Description)}</p>
+      <div class="foot"><span>${x.Questions} question${x.Questions === 1 ? '' : 's'}${x.Best ? ` &middot; best ${x.Best.score}/${x.Best.outOf}` : ''}</span><button class="btn btn-ink btn-sm" data-start="${esc(x.QuizID)}">${x.Attempts ? 'Try again' : 'Start'}</button></div></article>`).join('')}</div>`
+      : '<div class="empty">No quizzes for your level yet. Please check again soon.</div>'}
+    <div class="msg" id="msg" role="alert"></div>`;
+}
+function qView() {
+  const q = ST.qs[ST.i], n = ST.qs.length, last = ST.i === n - 1, answered = Object.keys(ST.ans).length;
+  $('app').innerHTML = `<section class="q"><div class="pmeta"><b>${esc(ST.quiz.Title)}</b><span>Question ${ST.i + 1} of ${n}</span></div>
+    <div class="prog" role="progressbar" aria-valuemin="0" aria-valuemax="${n}" aria-valuenow="${ST.i + 1}"><i style="width:${(ST.i + 1) / n * 100}%"></i></div>
+    <h2 id="qt">${esc(q.question)}</h2>
+    <div role="radiogroup" aria-labelledby="qt">${q.options.map((o) => `<button class="opt" role="radio" aria-checked="${ST.ans[q.id] === o.k}" data-k="${esc(o.k)}"><span class="k">${esc(o.k)}</span><span class="tx${arCls(o.t)}">${esc(o.t)}</span></button>`).join('')}</div>
+    <div class="nav"><button class="btn btn-line" data-back ${ST.i === 0 ? 'disabled' : ''}>Back</button>
+      ${last ? `<button class="btn btn-ink" data-submit ${ST.busy ? 'disabled' : ''}>${ST.busy ? 'Marking…' : 'Submit (' + answered + ' of ' + n + ' answered)'}</button>` : `<button class="btn btn-ink" data-next ${ST.ans[q.id] ? '' : 'disabled'}>Next</button>`}</div>
+    <div class="msg" id="msg" role="alert"></div></section>`;
+}
+function resultView() {
+  const r = ST.result, c = r.passed ? 'var(--ok)' : 'var(--sky-d)';
+  $('app').innerHTML = `<section class="score"><div class="ring" style="--p:${r.percent};--c:${c}"><div>${r.score}/${r.outOf}</div></div><div>
+    <h2>${r.passed ? 'Mashaa Allah, well done!' : 'Good effort. Keep practising.'}</h2>
+    <p>You scored ${r.percent}%. The pass mark is ${r.passMark}%.${r.saved ? ' Your best score is saved.' : ' You have used today&rsquo;s saved attempts for this quiz, so this one was not recorded.'}</p>
+    <button class="btn btn-ink" data-start="${esc(ST.quiz.QuizID)}">Try again</button> <button class="btn btn-line" data-list>All quizzes</button></div></section>
+    ${r.review.map((x, i) => `<section class="rev"><h3>${i + 1}. ${esc(x.question)}</h3>${x.options.map((o) => `<div class="opt static ${o.k === x.correct ? 'good' : o.k === x.yours ? 'wrong' : ''}"><span class="k">${esc(o.k)}</span><span class="tx${arCls(o.t)}">${esc(o.t)}</span></div>`).join('')}
+      ${x.yours ? '' : '<div class="ex">You did not answer this one.</div>'}${x.explanation ? `<div class="ex">${esc(x.explanation)}</div>` : ''}</section>`).join('')}
+    <p class="foot2">Answers are shown after you submit.</p>`;
+  window.scrollTo(0, 0);
+}
+
+async function loadList() {
+  const d = await call({ op: 'list' });
+  if (!d.ok) { return fail(d.error); }
+  ST.student = d.student; ST.quizzes = d.quizzes; ST.quiz = null; ST.result = null; listView();
+}
+function fail(m) { const el = $('msg'); if (el) el.textContent = m || 'Something went wrong. Please try again.'; }
+document.addEventListener('click', async (e) => {
+  if (!ST.student) return;
+  const s = e.target.closest('[data-start]'), k = e.target.closest('[data-k]');
+  if (s) {
+    s.disabled = true;
+    try { const d = await call({ op: 'start', quizId: s.dataset.start }); if (!d.ok) { s.disabled = false; return fail(d.error); } Object.assign(ST, { quiz: d.quiz, qs: d.questions, i: 0, ans: {}, result: null }); qView(); window.scrollTo(0, 0); }
+    catch (x) { s.disabled = false; fail('Could not reach the school server. Please try again.'); }
+  } else if (k && ST.qs.length) { ST.ans[ST.qs[ST.i].id] = k.dataset.k; qView(); }
+  else if (e.target.closest('[data-next]')) { ST.i++; qView(); }
+  else if (e.target.closest('[data-back]')) { ST.i--; qView(); }
+  else if (e.target.closest('[data-list]')) { loadList(); }
+  else if (e.target.closest('[data-submit]') && !ST.busy) {
+    ST.busy = true; qView();
+    try { const d = await call({ op: 'submit', quizId: ST.quiz.QuizID, answers: ST.ans }); ST.busy = false; if (!d.ok) { qView(); return fail(d.error); } ST.result = d; resultView(); }
+    catch (x) { ST.busy = false; qView(); fail('Could not reach the school server. Please try again.'); }
+  }
+});
+
+/* ---- sign in (shares the dashboard's session) ---- */
+async function signIn(id, code, silent) {
+  const b = $('go'); $('err').textContent = ''; b.disabled = true; b.textContent = 'Signing in…'; ST.id = id; ST.code = code;
+  try {
+    const d = await call({ op: 'list' });
+    if (d.ok) { sessionStorage.setItem('hs', JSON.stringify({ id, code })); $('login').hidden = true; $('app').hidden = false; $('out').hidden = false; ST.student = d.student; ST.quizzes = d.quizzes; listView(); window.scrollTo(0, 0); }
+    else if (!silent) $('err').textContent = d.error || 'Could not sign in.'; else sessionStorage.removeItem('hs');
+  } catch (x) { if (!silent) $('err').textContent = 'Could not reach the school server. Please try again.'; }
+  b.disabled = false; b.textContent = 'Sign in';
+}
+$('demoNote').hidden = !!API_URL;
+$('lf').addEventListener('submit', (e) => { e.preventDefault(); const i = $('sid').value.trim(), c = $('scode').value.trim(); if (!i || !c) { $('err').textContent = 'Enter your Student ID and access code.'; return; } signIn(i, c); });
+$('out').addEventListener('click', () => { sessionStorage.removeItem('hs'); location.reload(); });
+try { const s = JSON.parse(sessionStorage.getItem('hs') || 'null'); if (s && s.id && s.code) signIn(s.id, s.code, true); } catch (x) {}
+</script>
+</body>
+</html>

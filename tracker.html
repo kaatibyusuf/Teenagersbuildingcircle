@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Revision | Himaayah Schools</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#094570">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--deep:#062F4D;--ink:#094570;--sky:#85CCFF;--sky-d:#3E97D9;--wash:#F1F7FC;--text:#0E2A3D;--muted:#55697B;--line:rgba(9,69,112,.12);--ok:#1B7F4B;--d:'Bricolage Grotesque','Inter',sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+[hidden]{display:none!important}
+body{font-family:'Inter',sans-serif;color:var(--text);background:var(--wash);line-height:1.55;-webkit-font-smoothing:antialiased;min-height:100vh}
+a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer;border:0;background:none}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--sky-d);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.001ms!important}}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 22px;font-size:14.5px;font-weight:600;border-radius:999px;transition:background .2s,color .2s}
+.btn-ink{background:var(--ink);color:#fff}.btn-ink:hover{background:var(--deep)}.btn-line{border:1px solid var(--ink);color:var(--ink)}.btn-line:hover{background:var(--ink);color:#fff}.btn-sm{padding:9px 16px;font-size:13.5px}
+.top{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.top>div{max-width:900px;margin:0 auto;padding:11px 24px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--d);font-weight:700;font-size:18px;color:var(--ink)}.top nav{display:flex;gap:8px}
+.wrap{max-width:900px;margin:0 auto;padding:24px}
+.login{min-height:calc(100vh - 62px);display:grid;place-items:center;padding:24px}.lbox{width:100%;max-width:440px;background:#fff;border-radius:32px;padding:40px;box-shadow:0 30px 60px -40px rgba(6,47,77,.5)}
+.lbox h1{font-family:var(--d);font-size:32px;line-height:1.08;color:var(--deep);margin-bottom:8px}.lbox p{color:var(--muted);margin-bottom:22px;font-size:15px}.lbox .btn{width:100%;padding:14px}
+.f{margin-bottom:14px}.f label{display:block;font-size:13.5px;font-weight:600;color:var(--deep);margin-bottom:6px}
+input{width:100%;padding:14px 16px;border-radius:14px;border:1.5px solid transparent;background:var(--wash);font-size:15px;color:var(--text)}input:focus{outline:none;border-color:var(--ink);background:#fff}
+.err{color:#B42318;font-size:13.5px;min-height:20px;margin:4px 0 10px}.demo{background:var(--wash);border-radius:14px;padding:10px 14px;font-size:13px;margin-bottom:16px}
+
+.hero{background:var(--ink);color:#fff;border-radius:32px;padding:34px 40px;display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center}
+.hero small{color:var(--sky);font-weight:600;font-size:14px}.hero h1{font-family:var(--d);font-size:clamp(26px,4vw,38px);line-height:1.1;letter-spacing:-.02em;margin:4px 0 8px}.hero p{color:rgba(255,255,255,.8);font-size:15px}
+.streak{text-align:center;min-width:120px}.streak svg{display:block;margin:0 auto 2px;transform-origin:50% 90%}.streak.on svg{animation:flick 2.4s ease-in-out infinite}
+@keyframes flick{0%,100%{transform:scale(1) rotate(-2deg)}50%{transform:scale(1.08) rotate(2deg)}}
+.streak b{display:block;font-family:var(--d);font-size:54px;line-height:1}.streak span{font-size:13px;color:var(--sky);font-weight:600}
+@media(max-width:640px){.hero{grid-template-columns:1fr;padding:28px 24px}.streak{text-align:left;display:flex;align-items:center;gap:14px}.streak svg{margin:0}.streak b{font-size:40px}}
+
+.card{background:#fff;border-radius:28px;padding:26px 28px;margin-top:16px}
+.card h2{font-family:var(--d);font-size:21px;color:var(--deep);margin-bottom:4px}.card .sub{font-size:14px;color:var(--muted);margin-bottom:16px}
+.task{display:flex;align-items:center;gap:14px;width:100%;text-align:left;padding:15px 16px;border-radius:18px;background:var(--wash);margin-bottom:10px;border:1.5px solid transparent;transition:background .2s,border-color .2s}
+.task:hover{border-color:var(--sky-d)}.task .box{flex:none;width:28px;height:28px;border-radius:9px;border:2px solid var(--ink);display:grid;place-items:center;background:#fff;transition:background .2s,border-color .2s}
+.task .box svg{opacity:0;transform:scale(.4);transition:opacity .2s,transform .25s}.task .t{font-weight:600;color:var(--deep)}
+.task[aria-checked=true]{background:#EAF6EF}.task[aria-checked=true] .box{background:var(--ok);border-color:var(--ok)}.task[aria-checked=true] .box svg{opacity:1;transform:scale(1)}.task[aria-checked=true] .t{color:var(--ok)}
+.task:disabled{opacity:.6;cursor:wait}
+.done{background:#EAF6EF;color:var(--ok);border-radius:16px;padding:12px 16px;font-weight:600;font-size:14.5px;margin-top:4px}
+.msg{color:#B42318;font-size:13.5px;min-height:20px;margin-top:8px}
+.strip{display:grid;grid-template-columns:repeat(14,1fr);gap:6px}
+.strip div{text-align:center;font-size:11px;color:var(--muted)}.strip i{display:grid;place-items:center;margin:0 auto 5px;width:100%;max-width:34px;aspect-ratio:1;border-radius:50%;background:var(--wash);border:1.5px solid var(--line)}
+.strip .y i{background:var(--ink);border-color:var(--ink)}.strip .t{color:var(--deep);font-weight:700}.strip .t i{border-color:var(--sky-d)}
+@media(max-width:560px){.strip{grid-template-columns:repeat(7,1fr);row-gap:12px}}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}.stats div{background:var(--wash);border-radius:18px;padding:14px;text-align:center}.stats b{display:block;font-family:var(--d);font-size:28px;color:var(--ink);line-height:1.1}.stats span{font-size:12.5px;color:var(--muted)}
+.foot2{text-align:center;color:var(--muted);font-size:12.5px;padding:26px 0 40px}
+.msg:empty{display:none}
+@media(max-width:480px){.top>div{padding:10px 16px}.brand{font-size:15px;white-space:nowrap;gap:8px}.brand svg{width:18px;height:22px}.btn-sm{padding:8px 12px;font-size:12.5px;white-space:nowrap}.top nav{gap:6px}.wrap{padding:16px}}
+</style>
+</head>
+<body>
+<header class="top"><div>
+<a class="brand" href="index.html"><svg width="22" height="27" viewBox="0 0 377.21 459.6" fill="#094570" aria-hidden="true"><path d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>Himaayah Schools</a>
+<nav><a class="btn btn-line btn-sm" href="dashboard.html">My dashboard</a><button class="btn btn-ink btn-sm" id="out" hidden>Log out</button></nav>
+</div></header>
+
+<main id="login" class="login"><form class="lbox" id="lf" novalidate>
+<h1>Daily revision</h1><p>Tick off today&rsquo;s revision and build your streak. Sign in with your Student ID and access code.</p>
+<div class="demo" id="demoNote" hidden><b>Demo mode.</b> Use ID <b>DEMO</b> and code <b>demo</b> to try it.</div>
+<div class="f"><label for="sid">Student ID</label><input id="sid" autocomplete="username" autocapitalize="characters" required></div>
+<div class="f"><label for="scode">Access code</label><input id="scode" type="password" autocomplete="current-password" required></div>
+<div class="err" id="err" role="alert"></div><button class="btn btn-ink" id="go" type="submit">Sign in</button>
+</form></main>
+
+<main id="app" class="wrap" hidden></main>
+
+<script>
+/* The Apps Script web-app URL. It must be the SAME address your dashboard.html uses. While empty, the page runs in DEMO mode. */
+const API_URL = 'https://script.google.com/macros/s/AKfycby0AsifBuB_Ad7g1SjDXCipaDU27-BrzYWf67muw5jeY_C0_0uz8AhQYYXdiNRQhvqX/exec';
+
+const $ = (id) => document.getElementById(id);
+const esc = (t) => String(t ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const ST = { id: '', code: '', d: null, busy: false };
+const CHECK = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8.5l3.2 3.2L13 4.8"/></svg>';
+const FLAME = (c) => `<svg width="64" height="76" viewBox="0 0 64 76" aria-hidden="true"><path d="M32 3c3 14 20 21 20 41a20 20 0 0 1-40 0c0-9 4-14 8-19 1 6 3 9 6 10-1-14 2-24 6-32z" fill="${c}"/><path d="M32 40c2 7 10 10 10 19a10 10 0 0 1-20 0c0-5 3-8 5-11 1 3 2 4 4 4-1-5 0-8 1-12z" fill="#fff" opacity=".85"/></svg>`;
+
+/* ---- demo (only while API_URL is empty) ---- */
+const DEMO = { tasks: [{ portion: 'Surah Al-Mulk, verses 1 to 15', done: false }, { portion: 'Surah An-Naba, last page', done: false }], streak: 3, longest: 6, totalDays: 18, strip: [] };
+function demoData() {
+  const names = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'], pattern = [0,1,1,0,1,1,1,1,0,1,1,1,1,0]; const out = []; const now = new Date();
+  for (let i = 13; i >= 0; i--) { const d = new Date(now); d.setDate(d.getDate() - i); out.push({ date: d.toISOString().slice(0, 10), day: names[d.getDay()], done: !!pattern[13 - i] && i > 0 }); }
+  const t = new Date(); return Object.assign({ ok: true, student: { name: 'Sample Student', level: 'Rawdah' }, today: t.toISOString().slice(0, 10), weekday: ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][t.getDay()], planned: true, week: 0 }, JSON.parse(JSON.stringify(DEMO)), { strip: out });
+}
+let demoState = null;
+async function api(body) {
+  if (!API_URL) {
+    await new Promise((r) => setTimeout(r, 250));
+    if (body.id.toUpperCase() !== 'DEMO' || body.code !== 'demo') return { ok: false, error: 'Wrong ID or access code.' };
+    demoState = demoState || demoData();
+    if (body.op === 'tick') { const t = demoState.tasks.find((x) => x.portion === body.portion); if (t) t.done = body.done; const any = demoState.tasks.some((x) => x.done); const last = demoState.strip[demoState.strip.length - 1]; last.done = any; demoState.streak = (any ? 4 : 3); demoState.week = demoState.strip.slice(7).filter((x) => x.done).length; }
+    return JSON.parse(JSON.stringify(demoState));
+  }
+  const r = await fetch(API_URL, { method: 'POST', body: JSON.stringify(Object.assign({ action: 'tracker' }, body)) });
+  return r.json();
+}
+
+/* ---- view ---- */
+function render() {
+  const d = ST.d, first = String(d.student.name || '').split(' ')[0];
+  const left = d.tasks.filter((t) => !t.done).length, all = d.tasks.length;
+  const head = d.streak > 0 ? `You are on a ${d.streak}-day streak. Keep it going.` : 'Revise today to start a new streak.';
+  $('app').innerHTML = `<section class="hero"><div><small>Assalaamu alaykum</small><h1>${esc(first)}, ${left === 0 ? 'today&rsquo;s revision is done.' : 'keep your streak going.'}</h1><p>${esc(head)}</p></div>
+    <div class="streak ${d.streak > 0 ? 'on' : ''}" aria-label="Current streak ${d.streak} days">${FLAME(d.streak > 0 ? '#FFB547' : '#6F8CA3')}<div><b>${d.streak}</b><span>day${d.streak === 1 ? '' : 's'} in a row</span></div></div></section>
+  <section class="card"><h2>Today&rsquo;s revision</h2><div class="sub">${esc(d.weekday)} &middot; ${d.planned ? 'set by your teacher' : 'your teacher has not set a plan for today, so tick this when you have revised'}</div>
+    <div role="group" aria-label="Today's revision">${d.tasks.map((t, i) => `<button class="task" role="checkbox" aria-checked="${t.done}" data-i="${i}" ${ST.busy ? 'disabled' : ''}><span class="box">${CHECK}</span><span class="t">${esc(t.portion)}</span></button>`).join('')}</div>
+    ${left === 0 ? '<div class="done" role="status">Mashaa Allah! You have finished today&rsquo;s revision.</div>' : `<div class="sub" style="margin:4px 0 0">${all - left} of ${all} done</div>`}
+    <div class="msg" id="msg" role="alert"></div></section>
+  <section class="card"><h2>Last 14 days</h2><div class="sub">A filled circle means you revised that day.</div>
+    <div class="strip">${d.strip.map((x, i) => `<div class="${x.done ? 'y' : ''} ${i === d.strip.length - 1 ? 't' : ''}"><i>${x.done ? CHECK : ''}</i>${esc(x.day)}</div>`).join('')}</div>
+    <div class="stats"><div><b>${d.week}</b><span>days this week</span></div><div><b>${d.longest}</b><span>longest streak</span></div><div><b>${d.totalDays}</b><span>days in total</span></div></div></section>
+  <p class="foot2">Your parent receives a short summary every Sunday evening.</p>`;
+}
+document.addEventListener('click', async (e) => {
+  const b = e.target.closest('.task'); if (!b || ST.busy || !ST.d) return;
+  const t = ST.d.tasks[Number(b.dataset.i)]; if (!t) return;
+  const want = !t.done, was = t.done; t.done = want; ST.busy = true; render();
+  try {
+    const d = await api({ op: 'tick', id: ST.id, code: ST.code, portion: t.portion, done: want });
+    if (d.ok) ST.d = d; else { t.done = was; ST.busy = false; render(); $('msg').textContent = d.error || 'Could not save. Please try again.'; return; }
+  } catch (x) { t.done = was; ST.busy = false; render(); $('msg').textContent = 'Could not reach the school server. Please try again.'; return; }
+  ST.busy = false; render();
+});
+
+/* ---- sign in (shares the dashboard's session) ---- */
+function enter(d, id, code) { sessionStorage.setItem('hs', JSON.stringify({ id, code })); Object.assign(ST, { id, code, d }); $('login').hidden = true; $('app').hidden = false; $('out').hidden = false; render(); window.scrollTo(0, 0); }
+async function signIn(id, code, silent) {
+  const b = $('go'); $('err').textContent = ''; b.disabled = true; b.textContent = 'Signing in…';
+  try { const d = await api({ op: 'get', id, code }); if (d.ok) enter(d, id, code); else if (!silent) $('err').textContent = d.error || 'Could not sign in.'; else sessionStorage.removeItem('hs'); }
+  catch (x) { if (!silent) $('err').textContent = 'Could not reach the school server. Please try again.'; }
+  b.disabled = false; b.textContent = 'Sign in';
+}
+$('demoNote').hidden = !!API_URL;
+$('lf').addEventListener('submit', (e) => { e.preventDefault(); const i = $('sid').value.trim(), c = $('scode').value.trim(); if (!i || !c) { $('err').textContent = 'Enter your Student ID and access code.'; return; } signIn(i, c); });
+$('out').addEventListener('click', () => { sessionStorage.removeItem('hs'); location.reload(); });
+try { const s = JSON.parse(sessionStorage.getItem('hs') || 'null'); if (s && s.id && s.code) signIn(s.id, s.code, true); } catch (x) {}
+</script>
+</body>
+</html>
