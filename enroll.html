@@ -160,6 +160,27 @@
   .msg-preview { margin-top: 18px; background: var(--wash); border-radius: 18px; padding: 16px 18px; font-size: 13px; line-height: 1.6; color: var(--muted); white-space: pre-wrap; max-height: 190px; overflow: auto; }
   .msg-title { font-size: 12.5px; font-weight: 700; color: var(--ink); margin-top: 20px; }
   .done-actions { display: grid; gap: 10px; margin-top: 8px; }
+/* phone: smaller type, tighter spacing */
+@media(max-width:600px){
+.split{padding:8px;gap:8px;min-height:0}
+.hero{min-height:0;padding:22px 20px 24px;border-radius:24px;gap:22px}
+.hero-top a{font-size:16.5px}.hero-top .crest{width:20px;height:25px}
+.hero-mid h1{font-size:30px;margin-bottom:10px}.hero-mid p{font-size:14.5px}
+.form-panel{min-height:0}.form-panel-inner{padding:22px 8px 16px}
+.wizard-footer{padding:14px 8px 70px}
+.stepper{margin-bottom:22px}
+.step h2{font-size:26px}.step>p.step-sub{font-size:14.5px;margin-bottom:20px}
+.field{margin-bottom:14px}.field label{font-size:13px;margin-bottom:5px}.field input,.field select{padding:13px 15px;font-size:15px;border-radius:14px}
+.field-row{gap:0}
+.prog-pills{gap:6px;margin-bottom:16px}.prog-pill{padding:9px 14px;font-size:13.5px}
+.plan-options{gap:10px}.plan-opt{border-radius:18px}.plan-opt-head{padding:14px 16px;gap:12px}.plan-opt-name{font-size:15px}.plan-opt-price{font-size:16px}.plan-opt-toggle{padding:0 16px 12px 50px}
+.pay-summary{padding:14px 16px;margin-bottom:18px;border-radius:18px;font-size:14px}.pay-summary .row{padding:4px 0}
+.pay-steps{gap:8px}.account-row{padding:12px 16px;font-size:14px}
+.btn{padding:14px 20px;font-size:15px}
+.msg-preview{max-height:150px;padding:14px 16px}
+.confirm-icon{width:52px;height:52px;margin-bottom:16px}
+.home-fab{right:12px;bottom:12px;padding:10px 15px 10px 12px;font-size:13px}
+}
 </style>
 </head>
 <body>

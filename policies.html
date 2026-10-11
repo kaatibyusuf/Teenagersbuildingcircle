@@ -141,6 +141,27 @@
   .wa-menu a:hover { background: #F1F7FC; }
   @keyframes waIn { from { opacity: 0; transform: translateY(8px); } }
   @media (max-width: 600px) { .wa-fab span { display: none; } .wa-fab { padding: 15px; } }
+/* phone: smaller type, tighter spacing, shorter blocks */
+@media(max-width:600px){
+body{font-size:15px;line-height:1.55}
+.wrap{padding:0 18px}
+.btn{padding:12px 20px;font-size:14.5px}
+.nav{top:10px;padding:0 12px}.nav-pill{height:56px;padding:0 8px 0 18px}.brand{font-size:16.5px}.brand svg{width:20px;height:25px}
+.nav-links{top:66px;left:12px;right:12px}
+.hero{padding:76px 10px 0}
+.hero-frame{border-radius:24px;padding:30px 20px 26px;min-height:0}
+.hero h1{font-size:33px;margin-bottom:14px}.hero p{font-size:15.5px;margin-bottom:22px}
+.cta{padding-left:10px;padding-right:10px}
+.cta-box{border-radius:24px;padding:46px 20px}.cta-box h2{font-size:26px}.cta-box p{font-size:15px;margin-bottom:22px}
+footer.site{margin-left:10px;margin-right:10px;border-radius:24px 24px 0 0;padding:40px 0 22px}
+.f-top{gap:26px;margin-bottom:28px}.f-cols{display:grid;grid-template-columns:1fr 1fr;gap:26px 20px}.f-col:last-child{grid-column:1/-1}.f-col h4{margin-bottom:8px}.f-col a,.f-col span{margin-bottom:6px}
+.home-fab{left:12px;bottom:12px;padding:10px 15px 10px 12px;font-size:13px}.wa-widget{right:12px;bottom:12px}.wa-fab{padding:12px}
+.hero-frame{padding:30px 20px 26px}.hero small{margin-top:14px;font-size:13px}
+.highlights{padding:34px 0 8px}.hl-grid{gap:10px}.hl{padding:18px 20px;border-radius:20px}.hl b{font-size:18px}.hl span{font-size:14px}
+.doc{padding:26px 0 56px}.doc-grid{gap:18px}.toc a{padding:8px 14px;font-size:13px}
+.doc section{padding-bottom:28px;margin-bottom:28px}.doc h2{font-size:25px;margin-bottom:12px}.doc h3{font-size:16px;margin:16px 0 4px}.doc p,.doc li{font-size:15px}.doc p+p{margin-top:10px}.doc ul{margin-left:18px}
+.callout{padding:16px 18px;border-radius:0 16px 16px 0}
+}
 </style>
 </head>
 <body>
@@ -353,7 +374,7 @@
   t.addEventListener('click', () => { const o = l.classList.toggle('open'); t.setAttribute('aria-expanded', o); });
 
   // Highlight the section being read in the contents list
-  const links = [...document.querySelectorAll('#toc a')];
+  const links = [...document.querySelectorAll('#toc a[href^="#"]')];
   const secs = links.map((a) => document.querySelector(a.getAttribute('href')));
   if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver((es) => es.forEach((e) => {
