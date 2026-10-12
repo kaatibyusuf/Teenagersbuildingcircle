@@ -101,6 +101,25 @@ table{width:100%;border-collapse:collapse;font-size:14px}th{text-align:left;colo
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--deep);color:#fff;padding:12px 22px;border-radius:999px;font-size:14px;font-weight:600;z-index:100;box-shadow:0 14px 30px -10px rgba(6,47,77,.6);max-width:90vw;text-align:center}
 .toast.bad{background:#B42318}
 .foot{text-align:center;color:var(--muted);font-size:12.5px;padding:28px 0 40px}
+/* phone: smaller type, tighter spacing */
+@media(max-width:600px){
+body{line-height:1.5}
+.btn{padding:11px 20px;font-size:14px}
+.top div{padding:9px 14px}.brand{font-size:16px}.brand svg{width:19px;height:23px}.top .btn{padding:8px 14px;font-size:13px}
+.wrap{padding:14px}
+.login{padding:16px;min-height:calc(100vh - 54px)}.lbox{padding:26px 20px;border-radius:24px}.lbox h1{font-size:27px}.lbox>p{margin-bottom:18px;font-size:14.5px}
+.greet{padding:20px;border-radius:24px;gap:12px}.greet h1{font-size:25px;margin:2px 0 10px}.chips span{font-size:12px;padding:6px 12px}
+.tabs{flex-wrap:nowrap;overflow-x:auto;margin:12px -14px;padding:0 14px 4px;gap:6px;scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}.tabs button{padding:9px 16px;font-size:13.5px;white-space:nowrap;flex:none}
+.grid{gap:12px}.c{padding:18px 16px;border-radius:22px}.c h2{font-size:18px}
+.alist{max-height:none;gap:6px}.arow{padding:10px 12px;border-radius:14px}.segb button{padding:6px 10px;font-size:12px}
+.bar2>div{min-width:0;flex:1 1 140px}
+details.box>summary{padding:12px 14px}.body{padding:2px 14px 14px;gap:14px}
+.mj{grid-template-columns:1fr}
+.list li{padding:10px 12px}.mrow{padding:10px 12px}
+.scores div{padding:6px 6px 6px 12px}.scores input{width:84px}
+.toast{bottom:14px;padding:10px 18px;font-size:13.5px}
+.foot{padding:20px 0 28px}
+}
 </style>
 </head>
 <body>
