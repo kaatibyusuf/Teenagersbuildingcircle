@@ -13,211 +13,232 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="About Us — Himaayah Schools">
 <meta property="og:description" content="Himaayah Schools in Ilorin: Qur'an, strong academics and practical skills in one place, taught by teachers who stay with every student.">
+<script>document.documentElement.classList.add('js');</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<script>document.documentElement.classList.add('js');</script>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+  /* ===== Himaayah design system (matches homepage) ===== */
   :root {
-    --deep: #062F4D; --ink: #094570; --sky: #85CCFF; --sky-d: #3E97D9;
-    --wash: #F1F7FC; --white: #fff; --text: #0E2A3D; --muted: #55697B;
-    --line: rgba(9,69,112,.12); --r-lg: 32px;
+    --deep: #062F4D; --ink: #094570; --sky: #85CCFF; --sky-d: #3E97D9; --sky-l: #E3F2FD;
+    --wash: #F4F8FB; --text: #0E2A3D; --muted: #5B6E7F;
+    --line: #E3EAF0; --r: 20px; --ease: cubic-bezier(.2,.7,.2,1);
     --display: 'Bricolage Grotesque', 'Inter', sans-serif;
+    --shadow: 0 1px 2px rgba(6,47,77,.04), 0 12px 32px -18px rgba(6,47,77,.18);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; scroll-padding-top: 110px; }
-  body { font-family: 'Inter', -apple-system, sans-serif; color: var(--text); background: var(--white); -webkit-font-smoothing: antialiased; line-height: 1.7; }
+  html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+  body { font-family: 'Inter', -apple-system, sans-serif; color: var(--text); background: #fff; -webkit-font-smoothing: antialiased; line-height: 1.65; }
   a { color: inherit; text-decoration: none; }
   button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
-  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 28px; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
   a:focus-visible, button:focus-visible { outline: 2px solid var(--sky-d); outline-offset: 3px; }
-  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition-duration: .001ms !important; scroll-behavior: auto !important; } }
 
-  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 15px 28px; font-size: 15px; font-weight: 600; border-radius: 999px; transition: background .2s, color .2s; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 9px; padding: 14px 26px; font-size: 15px; font-weight: 600; border-radius: 12px; transition: background .2s, color .2s, border-color .2s, transform .2s; }
   .btn-ink { background: var(--ink); color: #fff; } .btn-ink:hover { background: var(--deep); }
+  .btn-line { border: 1.5px solid var(--line); color: var(--ink); background: #fff; } .btn-line:hover { border-color: var(--ink); }
+  .lift:hover { transform: translateY(-2px); }
 
-  /* Nav */
-  .nav { position: fixed; top: 16px; left: 0; right: 0; z-index: 100; padding: 0 20px; }
-  .nav-pill { max-width: 1200px; margin: 0 auto; height: 64px; padding: 0 12px 0 22px; display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,.94); backdrop-filter: blur(14px); border-radius: 999px; box-shadow: 0 8px 30px -12px rgba(6,47,77,.35); }
-  .brand { display: flex; align-items: center; gap: 10px; font-family: var(--display); font-weight: 700; font-size: 18px; color: var(--ink); }
-  .nav-links { display: flex; align-items: center; gap: 30px; }
-  .nav-links a:not(.btn) { font-size: 14px; font-weight: 500; color: var(--muted); transition: color .2s; }
-  .nav-links a:not(.btn):hover { color: var(--ink); }
-  .nav-links .btn { padding: 11px 22px; font-size: 14px; }
-  .nav-toggle { display: none; width: 44px; height: 44px; border-radius: 50%; position: relative; }
-  .nav-toggle span { position: absolute; left: 13px; right: 13px; height: 2px; background: var(--ink); }
-  .nav-toggle span:nth-child(1) { top: 16px; } .nav-toggle span:nth-child(2) { top: 21px; } .nav-toggle span:nth-child(3) { top: 26px; }
-  @media (max-width: 900px) {
-    .nav-toggle { display: block; }
-    .nav-links { position: absolute; top: 76px; left: 20px; right: 20px; flex-direction: column; align-items: stretch; gap: 0; background: #fff; border-radius: 24px; padding: 8px 20px 20px; box-shadow: 0 20px 40px -16px rgba(6,47,77,.4); display: none; }
-    .nav-links.open { display: flex; }
-    .nav-links a:not(.btn) { padding: 15px 0; border-bottom: 1px solid var(--line); }
-    .nav-links .btn { margin-top: 16px; }
-  }
+  .sec { padding: clamp(80px, 10vw, 128px) 0 0; }
+  .head { text-align: center; max-width: 640px; margin: 0 auto clamp(40px, 5vw, 56px); }
+  .kicker { display: inline-block; font-size: 13px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--sky-d); margin-bottom: 12px; }
+  .head h2, .h2 { font-family: var(--display); font-weight: 700; font-size: clamp(30px, 3.8vw, 46px); line-height: 1.12; letter-spacing: -.02em; color: var(--deep); }
+  .head p { margin-top: 14px; font-size: 17px; color: var(--muted); }
 
-  .home-fab { position: fixed; left: 20px; bottom: 20px; z-index: 90; display: inline-flex; align-items: center; gap: 8px; padding: 13px 20px 13px 16px; border-radius: 999px; background: #062F4D; color: #fff; font-size: 14px; font-weight: 600; box-shadow: 0 12px 30px -10px rgba(6,47,77,.6); transition: background .2s, transform .2s; }
-  .home-fab:hover { background: #094570; transform: translateY(-2px); }
-
-  /* Hero */
-  .hero { padding: 100px 16px 0; }
-  .hero-frame { position: relative; max-width: 1400px; margin: 0 auto; border-radius: 40px; overflow: hidden; background: var(--ink); color: #fff; padding: 80px 64px 64px; }
-  .hero-copy { position: relative; max-width: 760px; animation: rise .8s cubic-bezier(.2,.7,.2,1) both; }
-  .hero h1 { font-family: var(--display); font-weight: 700; font-size: clamp(38px, 5.6vw, 64px); line-height: 1.05; letter-spacing: -.025em; margin-bottom: 18px; }
-  .hero p { font-size: 17px; color: rgba(255,255,255,.82); max-width: 56ch; }
-  .hero small { display: block; margin-top: 22px; font-size: 13.5px; color: rgba(255,255,255,.65); }
-  @keyframes rise { from { opacity: 0; transform: translateY(22px); } }
-  @media (max-width: 700px) { .hero-frame { padding: 52px 24px 44px; border-radius: 28px; } }
-
-  /* Hero extras */
-  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 30px; }
-  .btn-sky { background: var(--sky); color: var(--deep); } .btn-sky:hover { background: #fff; }
-  .btn-ghost { border: 1px solid rgba(255,255,255,.5); color: #fff; } .btn-ghost:hover { background: rgba(255,255,255,.14); }
-  .hero-frame { padding: 100px 64px 84px; }
-  @media (max-width: 700px) { .hero-frame { padding: 60px 24px 48px; } }
-
-  /* Statement */
-  .statement { padding: 110px 0 90px; }
-  .statement p { font-family: var(--display); font-weight: 500; font-size: clamp(26px, 3.8vw, 46px); line-height: 1.22; letter-spacing: -.02em; color: var(--ink); max-width: 24em; }
-  .statement p span { color: #8FA6B8; }
-
-  /* Story */
-  .story { padding: 0 0 110px; }
-  .story-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 64px; align-items: start; }
-  @media (max-width: 900px) { .story-grid { grid-template-columns: 1fr; gap: 28px; } }
-  .story h2, .sec-title { font-family: var(--display); font-weight: 700; font-size: clamp(30px, 4vw, 46px); line-height: 1.1; letter-spacing: -.02em; color: var(--deep); }
-  .story p { color: var(--muted); font-size: 17px; max-width: 56ch; }
-  .story p + p { margin-top: 16px; }
-  .story p b { color: var(--deep); }
-  .chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
-  .chips a { padding: 11px 20px; border-radius: 999px; background: var(--wash); color: var(--ink); font-size: 14.5px; font-weight: 600; transition: background .2s, color .2s; }
-  .chips a:hover { background: var(--ink); color: #fff; }
-
-  /* Beliefs */
-  .beliefs { padding: 0 0 110px; }
-  .beliefs .sec-title { margin-bottom: 40px; max-width: 14em; }
-  .belief-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-  @media (max-width: 800px) { .belief-grid { grid-template-columns: 1fr; } }
-  .belief { background: var(--wash); border-radius: var(--r-lg); padding: 40px; transition: transform .35s cubic-bezier(.2,.7,.2,1), background .3s, box-shadow .35s; }
-  .belief:hover { transform: translateY(-6px); background: #fff; box-shadow: 0 0 0 1.5px var(--ink), 0 30px 50px -34px rgba(6,47,77,.5); }
-  .belief h3 { font-family: var(--display); font-size: 26px; line-height: 1.15; letter-spacing: -.01em; color: var(--deep); margin-bottom: 12px; }
-  .belief p { color: var(--muted); font-size: 16px; }
-
-  /* Voice + numbers */
-  .band { background: var(--ink); color: #fff; border-radius: 40px; margin: 0 16px 110px; padding: 90px 0; }
-  .quote { font-family: var(--display); font-weight: 500; font-size: clamp(26px, 3.6vw, 44px); line-height: 1.2; letter-spacing: -.02em; max-width: 22em; margin-bottom: 14px; }
-  .quote-by { color: var(--sky); font-weight: 600; font-size: 15px; margin-bottom: 64px; }
-  .nums { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-  @media (max-width: 760px) { .nums { grid-template-columns: repeat(2, 1fr); gap: 36px 20px; } }
-  .num { border-top: 1px solid rgba(255,255,255,.22); padding-top: 20px; }
-  .num b { display: block; font-family: var(--display); font-size: clamp(44px, 6vw, 70px); line-height: 1; letter-spacing: -.03em; color: var(--sky); }
-  .num span { display: block; margin-top: 10px; font-size: 14px; color: rgba(255,255,255,.75); max-width: 20ch; }
-  .note { margin-top: 28px; font-size: 13px; color: rgba(255,255,255,.6); }
-
-  /* Journey */
-  .journey { padding: 0 0 110px; }
-  .journey .head { max-width: 40em; margin-bottom: 48px; }
-  .journey .head p { color: var(--muted); font-size: 17px; margin-top: 14px; max-width: 52ch; }
-  .steps { position: relative; display: grid; gap: 14px; counter-reset: s; }
-  .steps::before { content: ''; position: absolute; left: 27px; top: 20px; bottom: 20px; width: 2px; background: var(--line); }
-  .step-i { position: relative; display: grid; grid-template-columns: 56px 1fr; gap: 24px; align-items: start; }
-  .step-i::before { counter-increment: s; content: counter(s); width: 56px; height: 56px; border-radius: 50%; background: var(--ink); color: var(--sky); font-family: var(--display); font-weight: 700; font-size: 20px; display: grid; place-items: center; box-shadow: 0 0 0 8px #fff; position: relative; z-index: 1; }
-  .step-i div { background: var(--wash); border-radius: 24px; padding: 24px 28px; }
-  .step-i h3 { font-family: var(--display); font-size: 21px; color: var(--deep); margin-bottom: 4px; }
-  .step-i p { color: var(--muted); font-size: 15.5px; }
-  @media (max-width: 600px) { .step-i { grid-template-columns: 44px 1fr; gap: 14px; } .step-i::before { width: 44px; height: 44px; font-size: 17px; } .steps::before { left: 21px; } .step-i div { padding: 20px; } }
-
-  /* Name */
-  .name { padding: 0 0 110px; }
-  .name-box { display: grid; grid-template-columns: auto 1fr; gap: 48px; align-items: center; background: var(--wash); border-radius: 40px; padding: 56px 64px; }
-  .name-box .crest { width: 120px; height: auto; }
-  .name-box h2 { font-family: var(--display); font-weight: 700; font-size: clamp(26px, 3.4vw, 40px); line-height: 1.12; letter-spacing: -.02em; color: var(--deep); margin-bottom: 12px; }
-  .name-box p { color: var(--muted); font-size: 17px; max-width: 58ch; }
-  .name-box em { font-style: normal; color: var(--ink); font-weight: 600; }
-  @media (max-width: 760px) { .name-box { grid-template-columns: 1fr; padding: 36px 28px; border-radius: 28px; gap: 24px; } .name-box .crest { width: 72px; } }
-
-  /* CTA */
-  .cta { padding: 0 16px 24px; }
-  .cta-box { max-width: 1400px; margin: 0 auto; border-radius: 40px; padding: 90px 28px; text-align: center; background: var(--deep); color: #fff; }
-  .cta-box h2 { font-family: var(--display); font-weight: 700; font-size: clamp(30px, 4.4vw, 54px); line-height: 1.08; letter-spacing: -.02em; max-width: 14em; margin: 0 auto 16px; }
-  .cta-box p { color: rgba(255,255,255,.75); max-width: 48ch; margin: 0 auto 30px; }
-  .cta-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-
-  /* Reveal */
-  .js .reveal { opacity: 0; transform: translateY(30px); transition: opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1); transition-delay: calc(var(--i, 0) * 110ms); }
-  .js .reveal.in { opacity: 1; transform: none; }
-  @media (prefers-reduced-motion: reduce) { .js .reveal { opacity: 1; transform: none; } }
-
-  /* Footer */
-  footer.site { background: var(--deep); color: rgba(255,255,255,.65); border-radius: 40px 40px 0 0; margin: 0 16px; padding: 70px 0 28px; font-size: 14px; }
-  .f-top { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 44px; margin-bottom: 48px; }
-  .f-brand { max-width: 320px; } .f-brand .brand { color: #fff; margin-bottom: 14px; } .f-brand p { margin-bottom: 20px; }
-  .social { display: flex; gap: 10px; }
-  .social a { width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,.2); display: grid; place-items: center; transition: background .2s, color .2s; }
-  .social a:hover { background: var(--sky); color: var(--deep); }
-  .f-cols { display: flex; gap: 60px; flex-wrap: wrap; }
-  .f-col h4 { font-family: var(--display); font-size: 16px; color: #fff; margin-bottom: 14px; }
-  .f-col a, .f-col span { display: block; margin-bottom: 9px; transition: color .2s; } .f-col a:hover { color: var(--sky); }
-  .f-bottom { padding-top: 22px; border-top: 1px solid rgba(255,255,255,.12); }
-
-  /* Programmes dropdown */
+  /* ===== Nav ===== */
+  .nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,.92); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
+  .nav-pill { max-width: 1180px; margin: 0 auto; height: 76px; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; position: relative; }
+  .brand { display: flex; align-items: center; gap: 11px; font-family: var(--display); font-weight: 700; font-size: 19px; color: var(--deep); }
+  .nav-links { display: flex; align-items: center; gap: 28px; }
+  .nav-links a:not(.btn) { font-size: 14.5px; font-weight: 500; color: var(--muted); transition: color .2s; }
+  .nav-links a:not(.btn):hover, .nav-links > a[aria-current="page"] { color: var(--ink); }
+  .nav-links > a[aria-current="page"] { font-weight: 600; }
+  .nav-links .btn { padding: 11px 20px; font-size: 14px; }
+  .nav-toggle { display: none; width: 44px; height: 44px; border-radius: 10px; position: relative; border: 1px solid var(--line); }
+  .nav-toggle span { position: absolute; left: 12px; right: 12px; height: 2px; border-radius: 2px; background: var(--ink); transition: transform .25s, opacity .2s; }
+  .nav-toggle span:nth-child(1) { top: 15px; } .nav-toggle span:nth-child(2) { top: 20px; } .nav-toggle span:nth-child(3) { top: 25px; }
+  .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(5px) rotate(45deg); }
+  .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+  .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-5px) rotate(-45deg); }
   .dd { position: relative; }
-  .dd-btn { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 500; color: var(--muted); transition: color .2s; }
+  .dd-btn { display: inline-flex; align-items: center; gap: 6px; font-size: 14.5px; font-weight: 500; color: var(--muted); transition: color .2s; }
   .dd-btn svg { transition: transform .25s; }
-  .dd:hover .dd-btn, .dd:focus-within .dd-btn, .dd.cur .dd-btn { color: var(--ink); }
-  .dd.cur .dd-btn, .nav-links a[aria-current="page"] { font-weight: 600; }
+  .dd:hover .dd-btn, .dd:focus-within .dd-btn { color: var(--ink); }
   .dd:hover .dd-btn svg, .dd.open .dd-btn svg { transform: rotate(180deg); }
-  .dd-menu { position: absolute; top: 100%; left: -18px; min-width: 270px; padding: 24px 10px 10px; opacity: 0; visibility: hidden; transform: translateY(6px); transition: opacity .2s, transform .2s, visibility .2s; }
-  .dd-menu::before { content: ''; position: absolute; inset: 14px 0 0 0; background: #fff; border-radius: 22px; box-shadow: 0 24px 50px -20px rgba(6,47,77,.45); z-index: -1; }
+  .dd-menu { position: absolute; top: 100%; left: -16px; min-width: 260px; padding: 20px 8px 8px; opacity: 0; visibility: hidden; transform: translateY(6px); transition: opacity .2s, transform .2s, visibility .2s; }
+  .dd-menu::before { content: ''; position: absolute; inset: 12px 0 0 0; background: #fff; border: 1px solid var(--line); border-radius: 16px; box-shadow: var(--shadow); z-index: -1; }
   .dd:hover .dd-menu, .dd:focus-within .dd-menu, .dd.open .dd-menu { opacity: 1; visibility: visible; transform: none; }
-  .dd-menu a { display: block; padding: 12px 16px; border-radius: 14px; font-size: 14.5px; font-weight: 500; color: var(--text); }
-  .dd-menu a:hover, .dd-menu a[aria-current="page"] { background: var(--wash); color: var(--ink); }
-  @media (max-width: 900px) {
-    .dd-btn { padding: 15px 0; width: 100%; border-bottom: 1px solid var(--line); justify-content: space-between; }
-    .dd-menu { position: static; opacity: 1; visibility: visible; transform: none; padding: 0 0 0 14px; display: none; }
+  .dd-menu a { display: block; padding: 10px 14px; border-radius: 10px; font-size: 14.5px !important; color: var(--text) !important; }
+  .dd-menu a:hover { background: var(--wash); color: var(--ink) !important; }
+  @media (max-width: 960px) {
+    .nav-toggle { display: block; }
+    .nav-links { position: absolute; top: 76px; left: 0; right: 0; flex-direction: column; align-items: stretch; gap: 0; background: #fff; border-bottom: 1px solid var(--line); padding: 6px 24px 22px; box-shadow: 0 20px 30px -24px rgba(6,47,77,.35); display: none; max-height: calc(100vh - 76px); overflow-y: auto; }
+    .nav-links.open { display: flex; }
+    .nav-links a:not(.btn) { padding: 14px 0; border-bottom: 1px solid var(--line); }
+    .nav-links .btn { margin-top: 16px; }
+    .dd-btn { padding: 14px 0; width: 100%; border-bottom: 1px solid var(--line); justify-content: space-between; }
+    .dd-menu { position: static; opacity: 1; visibility: visible; transform: none; padding: 4px 0 4px 12px; display: none; min-width: 0; }
     .dd-menu::before { display: none; }
     .dd.open .dd-menu { display: block; }
     .dd:hover .dd-menu { display: none; } .dd.open:hover .dd-menu { display: block; }
   }
 
-  /* WhatsApp chat widget */
-  .wa-widget { position: fixed; right: 20px; bottom: 20px; z-index: 90; display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
-  .wa-fab { display: inline-flex; align-items: center; gap: 10px; padding: 14px 20px 14px 16px; border-radius: 999px; background: #128C4B; color: #fff; font-size: 14px; font-weight: 600; box-shadow: 0 12px 30px -10px rgba(18,140,75,.7); transition: background .2s, transform .2s; }
-  .wa-fab:hover { background: #0E6F3B; transform: translateY(-2px); }
-  .wa-fab:focus-visible, .wa-menu a:focus-visible { outline: 2px solid #85CCFF; outline-offset: 3px; }
-  .wa-menu { display: none; flex-direction: column; gap: 6px; background: #fff; border-radius: 22px; padding: 10px; box-shadow: 0 24px 50px -16px rgba(6,47,77,.5); min-width: 250px; animation: waIn .25s ease both; }
-  .wa-widget.open .wa-menu { display: flex; }
-  .wa-menu a { display: flex; flex-direction: column; padding: 12px 16px; border-radius: 14px; font-size: 14px; font-weight: 600; color: #062F4D; }
-  .wa-menu a small { font-weight: 500; color: #55697B; font-size: 13px; }
-  .wa-menu a:hover { background: #F1F7FC; }
-  @keyframes waIn { from { opacity: 0; transform: translateY(8px); } }
-  @media (max-width: 600px) { .wa-fab span { display: none; } .wa-fab { padding: 15px; } }
+  /* ===== Hero ===== */
+  .hero { position: relative; overflow: hidden; padding: clamp(64px, 9vw, 112px) 0 clamp(56px, 7vw, 88px); background: linear-gradient(180deg, var(--wash) 0%, #fff 100%); text-align: center; }
+  .hero::before, .hero::after { content: ''; position: absolute; border-radius: 50%; border: 1.5px dashed rgba(9,69,112,.12); pointer-events: none; }
+  .hero::before { width: 520px; height: 520px; left: -220px; top: -200px; }
+  .hero::after { width: 360px; height: 360px; right: -130px; bottom: -150px; }
+  .hero-copy { position: relative; max-width: 760px; margin: 0 auto; }
+  .hero-copy > * { animation: rise .8s var(--ease) both; } .hero-copy > *:nth-child(2) { animation-delay: .08s; } .hero-copy > *:nth-child(3) { animation-delay: .16s; } .hero-copy > *:nth-child(4) { animation-delay: .24s; }
+  @keyframes rise { from { opacity: 0; transform: translateY(20px); } }
+  .hero h1 { font-family: var(--display); font-weight: 700; font-size: clamp(38px, 5.4vw, 64px); line-height: 1.06; letter-spacing: -.03em; color: var(--deep); margin-bottom: 18px; }
+  .hero p { font-size: 18px; color: var(--muted); max-width: 54ch; margin: 0 auto; }
+  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 32px; }
 
-/* phone: smaller type, tighter spacing, shorter blocks */
-@media(max-width:600px){
-body{font-size:15px;line-height:1.55}
-.wrap{padding:0 18px}
-.btn{padding:12px 20px;font-size:14.5px}
-.nav{top:10px;padding:0 12px}.nav-pill{height:56px;padding:0 8px 0 18px}.brand{font-size:16.5px}.brand svg{width:20px;height:25px}
-.nav-links{top:66px;left:12px;right:12px}
-.hero{padding:76px 10px 0}
-.hero-frame{border-radius:24px;padding:30px 20px 26px;min-height:0}
-.hero h1{font-size:33px;margin-bottom:14px}.hero p{font-size:15.5px;margin-bottom:22px}
-.cta{padding-left:10px;padding-right:10px}
-.cta-box{border-radius:24px;padding:46px 20px}.cta-box h2{font-size:26px}.cta-box p{font-size:15px;margin-bottom:22px}
-footer.site{margin-left:10px;margin-right:10px;border-radius:24px 24px 0 0;padding:40px 0 22px}
-.f-top{gap:26px;margin-bottom:28px}.f-cols{display:grid;grid-template-columns:1fr 1fr;gap:26px 20px}.f-col:last-child{grid-column:1/-1}.f-col h4{margin-bottom:8px}.f-col a,.f-col span{margin-bottom:6px}
-.home-fab{left:12px;bottom:12px;padding:10px 15px 10px 12px;font-size:13px}.wa-widget{right:12px;bottom:12px}.wa-fab{padding:12px}
-.hero-actions{margin-top:22px;gap:10px}
-.statement{padding:52px 0 40px}.statement p{font-size:22px}
-.story{padding-bottom:56px}.story h2,.sec-title{font-size:27px}.story p{font-size:15.5px}.chips{margin-top:20px}.chips a{padding:9px 16px;font-size:14px}
-.beliefs{padding-bottom:56px}.beliefs .sec-title{margin-bottom:24px}.belief-grid{gap:12px}
-.belief{padding:22px 20px;border-radius:24px}.belief h3{font-size:21px;margin-bottom:8px}.belief p{font-size:14.5px}
-.band{margin:0 10px 56px;border-radius:24px;padding:52px 0}.quote{font-size:22px}.quote-by{margin-bottom:36px}
-.nums{gap:28px 16px}.num b{font-size:38px}.num span{font-size:13px}
-.journey{padding-bottom:56px}.journey .head{margin-bottom:26px}.journey .head p{font-size:15.5px}
-.step-i div{padding:16px 18px;border-radius:18px}.step-i h3{font-size:18px}.step-i p{font-size:14.5px}
-.name{padding-bottom:56px}.name-box{padding:26px 20px;gap:16px;border-radius:24px}.name-box h2{font-size:24px}.name-box p{font-size:15.5px}
-}
+  /* ===== Statement ===== */
+  .statement p { font-family: var(--display); font-weight: 600; font-size: clamp(26px, 3.4vw, 42px); line-height: 1.25; letter-spacing: -.02em; color: var(--deep); max-width: 26em; margin: 0 auto; text-align: center; }
+  .statement p span { color: #8FA6B8; }
+
+  /* ===== Story ===== */
+  .story-grid { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: clamp(28px, 5vw, 64px); align-items: start; }
+  .story .kicker { margin-bottom: 10px; }
+  .story p { color: var(--muted); font-size: 17px; max-width: 56ch; }
+  .story p + p { margin-top: 16px; }
+  .story p b { color: var(--deep); font-weight: 600; }
+  .chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+  .chips a { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 12px; background: #fff; border: 1px solid var(--line); color: var(--ink); font-size: 14.5px; font-weight: 600; transition: border-color .2s, transform .2s var(--ease); }
+  .chips a::after { content: '→'; transition: transform .2s; }
+  .chips a:hover { border-color: var(--ink); transform: translateY(-2px); }
+  .chips a:hover::after { transform: translateX(3px); }
+
+  /* ===== Beliefs ===== */
+  .belief-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+  .belief { padding: 32px 30px; background: #fff; border: 1px solid var(--line); border-radius: var(--r); }
+  .belief .ic { width: 52px; height: 52px; border-radius: 14px; background: var(--sky-l); color: var(--ink); display: grid; place-items: center; margin-bottom: 22px; }
+  .belief .ic svg { width: 26px; height: 26px; }
+  .belief h3 { font-family: var(--display); font-weight: 700; font-size: 22px; line-height: 1.2; color: var(--deep); margin-bottom: 10px; }
+  .belief p { color: var(--muted); font-size: 15.5px; }
+
+  /* ===== Quote + numbers ===== */
+  .band { margin-top: clamp(80px, 10vw, 128px); background: var(--wash); padding: clamp(64px, 8vw, 104px) 0; text-align: center; }
+  .band .qm { width: 40px; height: 40px; color: var(--sky-d); margin: 0 auto 18px; display: block; }
+  .quote { font-family: var(--display); font-weight: 600; font-size: clamp(22px, 2.8vw, 32px); line-height: 1.3; letter-spacing: -.01em; color: var(--deep); max-width: 26em; margin: 0 auto 14px; }
+  .quote-by { color: var(--muted); font-size: 14px; }
+  .nums { margin-top: clamp(40px, 5vw, 56px); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); background: #fff; border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--shadow); text-align: left; }
+  .num { display: flex; align-items: center; gap: 14px; padding: 24px 22px; }
+  .num + .num { border-left: 1px solid var(--line); }
+  .num .ic { width: 44px; height: 44px; border-radius: 12px; background: var(--sky-l); color: var(--ink); display: grid; place-items: center; flex: none; }
+  .num b { display: block; font-family: var(--display); font-weight: 700; font-size: 26px; line-height: 1.1; color: var(--deep); }
+  .num span { display: block; font-size: 13px; color: var(--muted); line-height: 1.35; }
+  .note { margin-top: 16px; font-size: 13px; color: var(--muted); }
+  .band + .sec { padding-top: clamp(80px, 10vw, 128px); }
+
+  /* ===== Journey ===== */
+  .steps { position: relative; display: grid; gap: 14px; max-width: 820px; margin: 0 auto; counter-reset: s; }
+  .steps::before { content: ''; position: absolute; left: 25px; top: 26px; bottom: 26px; width: 2px; background: repeating-linear-gradient(to bottom, #C9D8E4 0 6px, transparent 6px 12px); }
+  .step-i { position: relative; display: grid; grid-template-columns: 52px 1fr; gap: 20px; align-items: start; }
+  .step-i::before { counter-increment: s; content: counter(s); width: 52px; height: 52px; border-radius: 50%; background: #fff; border: 1.5px solid var(--line); color: var(--ink); font-family: var(--display); font-weight: 700; font-size: 19px; display: grid; place-items: center; position: relative; z-index: 1; transition: background .3s, color .3s, border-color .3s; }
+  .step-i.in::before { background: var(--ink); color: #fff; border-color: var(--ink); transition-delay: .3s; }
+  .step-i div { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 22px 24px; }
+  .step-i h3 { font-family: var(--display); font-weight: 700; font-size: 19px; color: var(--deep); margin-bottom: 4px; }
+  .step-i p { color: var(--muted); font-size: 15.5px; }
+
+  /* ===== Name ===== */
+  .name-box { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: clamp(28px, 5vw, 56px); align-items: center; padding: clamp(28px, 4.5vw, 52px); border: 1px solid var(--line); border-radius: var(--r); background: #fff; }
+  .seal { position: relative; width: 180px; height: 180px; border-radius: 50%; display: grid; place-items: center; background: radial-gradient(circle at 35% 30%, #fff 0%, var(--sky-l) 60%, #CFE8FA 100%); }
+  .seal::after { content: ''; position: absolute; inset: -12px; border-radius: 50%; border: 1.5px dashed rgba(9,69,112,.18); }
+  .seal .crest { width: 64px; height: auto; }
+  .seal b { position: absolute; bottom: 22px; font-family: 'Amiri', serif; font-size: 22px; color: var(--ink); direction: rtl; }
+  .name-box h2 { font-family: var(--display); font-weight: 700; font-size: clamp(26px, 3.2vw, 38px); line-height: 1.15; letter-spacing: -.02em; color: var(--deep); margin: 4px 0 12px; }
+  .name-box p { color: var(--muted); font-size: 17px; max-width: 58ch; }
+  .name-box em { font-style: normal; color: var(--ink); font-weight: 600; }
+
+  /* ===== CTA ===== */
+  .cta-box { text-align: center; padding: clamp(48px, 7vw, 88px) 24px; border-radius: var(--r); background: linear-gradient(180deg, var(--sky-l), #fff); border: 1px solid var(--line); }
+  .cta-box h2 { font-family: var(--display); font-weight: 700; font-size: clamp(30px, 4vw, 46px); line-height: 1.1; letter-spacing: -.02em; color: var(--deep); max-width: 14em; margin: 0 auto 14px; }
+  .cta-box p { font-size: 17px; color: var(--muted); max-width: 48ch; margin: 0 auto 30px; }
+  .cta-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+  /* ===== Footer ===== */
+  footer.site { background: var(--deep); color: rgba(255,255,255,.62); margin-top: clamp(80px, 10vw, 128px); padding: 72px 0 28px; font-size: 14px; }
+  .f-top { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 44px; margin-bottom: 48px; }
+  .f-brand { max-width: 320px; } .f-brand .brand { color: #fff; margin-bottom: 14px; } .f-brand p { margin-bottom: 20px; }
+  .social { display: flex; gap: 10px; }
+  .social a { width: 40px; height: 40px; border-radius: 10px; border: 1px solid rgba(255,255,255,.18); display: grid; place-items: center; transition: background .2s, color .2s; }
+  .social a:hover { background: var(--sky); color: var(--deep); }
+  .f-cols { display: flex; gap: 64px; flex-wrap: wrap; }
+  .f-col h4 { font-family: var(--display); font-size: 16px; color: #fff; margin-bottom: 14px; }
+  .f-col a, .f-col span { display: block; margin-bottom: 9px; transition: color .2s; } .f-col a:hover { color: var(--sky); }
+  .f-bottom { padding-top: 22px; border-top: 1px solid rgba(255,255,255,.1); }
+
+  /* Home button + WhatsApp */
+  .home-fab { position: fixed; left: 20px; bottom: 20px; z-index: 90; display: inline-flex; align-items: center; gap: 8px; padding: 12px 18px 12px 14px; border-radius: 12px; background: #062F4D; color: #fff; font-size: 14px; font-weight: 600; box-shadow: 0 12px 30px -10px rgba(6,47,77,.6); transition: background .2s, transform .2s; }
+  .home-fab:hover { background: #094570; transform: translateY(-2px); }
+  .wa-widget { position: fixed; right: 20px; bottom: 20px; z-index: 90; display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
+  .wa-fab { display: inline-flex; align-items: center; gap: 10px; padding: 13px 18px 13px 14px; border-radius: 12px; background: #128C4B; color: #fff; font-size: 14px; font-weight: 600; box-shadow: 0 12px 30px -10px rgba(18,140,75,.7); transition: background .2s, transform .2s; }
+  .wa-fab:hover { background: #0E6F3B; transform: translateY(-2px); }
+  .wa-menu { display: none; flex-direction: column; gap: 4px; background: #fff; border-radius: 16px; padding: 8px; box-shadow: 0 24px 50px -16px rgba(6,47,77,.5); min-width: 240px; animation: waIn .25s ease both; }
+  .wa-widget.open .wa-menu { display: flex; }
+  .wa-menu a { display: flex; flex-direction: column; padding: 11px 14px; border-radius: 10px; font-size: 14px; font-weight: 600; color: #062F4D; }
+  .wa-menu a small { font-weight: 500; color: #5B6E7F; font-size: 13px; }
+  .wa-menu a:hover { background: #F4F8FB; }
+  @keyframes waIn { from { opacity: 0; transform: translateY(8px); } }
+
+  /* ===== Motion ===== */
+  .js .reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s var(--ease), transform .8s var(--ease); transition-delay: calc(var(--i, 0) * 100ms); }
+  .js .reveal.in { opacity: 1; transform: none; }
+
+  /* ===== Card touch/hover fill (navy ripple from touch point) ===== */
+  .fx { position: relative; overflow: hidden; isolation: isolate; -webkit-tap-highlight-color: transparent; transition: color .35s, border-color .35s, box-shadow .35s, opacity .8s var(--ease), transform .8s var(--ease); }
+  .fx::after { content: ''; position: absolute; left: var(--x, 50%); top: var(--y, 50%); width: 24px; height: 24px; border-radius: 50%; z-index: -1; pointer-events: none;
+    background: radial-gradient(circle, #0B5A8F 0%, #062F4D 70%); transform: translate(-50%, -50%) scale(0); transition: transform .6s var(--ease); }
+  .fx.fx-on { border-color: transparent; box-shadow: 0 24px 48px -24px rgba(6,47,77,.55); }
+  .fx.fx-on::after { transform: translate(-50%, -50%) scale(90); }
+  .fx.fx-on h3 { color: #fff; } .fx.fx-on p { color: rgba(255,255,255,.8); }
+  .fx.fx-on .ic { background: rgba(133,204,255,.16); color: var(--sky); }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
+    .js .reveal { opacity: 1; transform: none; }
+  }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 1000px) {
+    .nums { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .num:nth-child(3) { border-left: 0; }
+    .num:nth-child(n+3) { border-top: 1px solid var(--line); }
+  }
+  @media (max-width: 860px) {
+    .story-grid { grid-template-columns: 1fr; }
+    .belief-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 760px) {
+    .name-box { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+    .name-box p { margin: 0 auto; }
+  }
+  @media (max-width: 600px) {
+    body { font-size: 15px; }
+    .wrap { padding: 0 18px; }
+    .btn { padding: 13px 20px; font-size: 14.5px; }
+    .nav-pill { height: 66px; padding: 0 18px; } .brand { font-size: 17px; } .brand svg { width: 21px; height: 26px; }
+    .nav-links { top: 66px; padding: 6px 18px 20px; }
+    .hero { padding: 48px 0 40px; } .hero h1 { font-size: 34px; } .hero p { font-size: 16px; }
+    .hero-actions { margin-top: 24px; gap: 10px; } .hero-actions .btn { flex: 1 1 100%; }
+    .sec { padding-top: 64px; } .head { margin-bottom: 28px; } .head h2, .h2 { font-size: 28px; } .head p { font-size: 15.5px; }
+    .statement p { font-size: 23px; }
+    .story p { font-size: 15.5px; } .chips a { padding: 9px 14px; font-size: 14px; }
+    .belief-grid { gap: 14px; } .belief { padding: 22px 20px; display: grid; grid-template-columns: auto 1fr; gap: 0 16px; } .belief .ic { grid-row: span 2; margin: 0; width: 44px; height: 44px; } .belief h3 { font-size: 18px; margin-bottom: 6px; } .belief p { font-size: 14.5px; }
+    .band { margin-top: 64px; padding: 56px 0; } .quote { font-size: 20px; }
+    .nums { grid-template-columns: 1fr; } .num { padding: 16px 18px; } .num + .num { border-left: 0; border-top: 1px solid var(--line); } .num b { font-size: 22px; }
+    .steps::before { left: 21px; } .step-i { grid-template-columns: 44px 1fr; gap: 14px; } .step-i::before { width: 44px; height: 44px; font-size: 16px; }
+    .step-i div { padding: 16px 18px; } .step-i h3 { font-size: 17px; } .step-i p { font-size: 14.5px; }
+    .name-box { padding: 28px 20px; gap: 24px; } .seal { width: 140px; height: 140px; } .seal .crest { width: 50px; } .seal b { font-size: 18px; bottom: 16px; } .name-box h2 { font-size: 24px; } .name-box p { font-size: 15.5px; }
+    .cta-box { padding: 44px 20px; } .cta-box h2 { font-size: 27px; } .cta-box p { font-size: 15px; }
+    footer.site { margin-top: 72px; padding: 48px 0 90px; }
+    .f-top { gap: 28px; margin-bottom: 28px; } .f-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 26px 20px; } .f-col:last-child { grid-column: 1 / -1; }
+    .home-fab { left: 12px; bottom: 12px; padding: 10px 14px 10px 12px; font-size: 13px; }
+    .wa-widget { right: 12px; bottom: 12px; } .wa-fab span { display: none; } .wa-fab { padding: 12px; }
+  }
 </style>
 </head>
 <body>
@@ -238,14 +259,15 @@ footer.site{margin-left:10px;margin-right:10px;border-radius:24px 24px 0 0;paddi
         <button type="button" class="dd-btn" aria-haspopup="true" aria-expanded="false">Programmes
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
         <div class="dd-menu">
+          <a href="programmes.html">All programmes</a>
           <a href="teenagers-building-circle.html">Teenagers Building Circle</a>
-          <a href="programmes.html">Programmes</a>
           <a href="madrasah.html">Madrasah</a>
           <a href="academy.html">Academy</a>
           <a href="skills-school.html">Skills School</a>
         </div>
       </div>
-      <a href="programmes.html" aria-current="page">Programmes</a>
+      <a href="admissions.html">Admissions</a>
+      <a href="about.html" aria-current="page">About</a>
       <a href="success-stories.html">Success Stories</a>
       <a href="faq.html">FAQ</a>
       <a href="contact.html">Contact</a>
@@ -256,15 +278,13 @@ footer.site{margin-left:10px;margin-right:10px;border-radius:24px 24px 0 0;paddi
 </nav>
 
 <header class="hero">
-  <div class="hero-frame">
-    <div class="hero-copy">
-      <h1>We teach so that learning lasts.</h1>
-      <p>Himaayah Schools is a school for students who want a real relationship with the Qur'an, strong academics, and the discipline to carry both through life.</p>
-      <div class="hero-actions">
-        <a href="success-stories.html" class="btn btn-sky">See our results</a>
-        <a href="administrators.html" class="btn btn-ghost">Meet our administrators</a>
-        <a href="contact.html" class="btn btn-ghost">Talk to us</a>
-      </div>
+  <div class="wrap hero-copy">
+    <h1>We teach so that learning lasts.</h1>
+    <p>Himaayah Schools is a school for students who want a real relationship with the Qur'an, strong academics, and the discipline to carry both through life.</p>
+    <div class="hero-actions">
+      <a href="success-stories.html" class="btn btn-ink lift">See our results</a>
+      <a href="administrators.html" class="btn btn-line lift">Meet our administrators</a>
+      <a href="contact.html" class="btn btn-line lift">Talk to us</a>
     </div>
   </div>
 </header>
@@ -275,9 +295,12 @@ footer.site{margin-left:10px;margin-right:10px;border-radius:24px 24px 0 0;paddi
   </div>
 </section>
 
-<section class="story">
+<section class="sec story">
   <div class="wrap story-grid">
-    <h2 class="reveal">One academy. Four programmes. One standard.</h2>
+    <div class="reveal">
+      <span class="kicker">Our story</span>
+      <h2 class="h2">One academy. Four programmes. One standard.</h2>
+    </div>
     <div class="reveal" style="--i:1">
       <!-- ADD HERE (optional): the founder's name and photo, and the personal reason the school was started. -->
       <p>Himaayah is two years old, and every year we have deepened what we teach. Today we run four programmes under one roof, for students who want the <b>Qur'an and Islamic knowledge</b>, <b>top exam results</b>, <b>practical skills</b>, or all three.</p>
@@ -289,36 +312,41 @@ footer.site{margin-left:10px;margin-right:10px;border-radius:24px 24px 0 0;paddi
   </div>
 </section>
 
-<section class="beliefs">
+<section class="sec">
   <div class="wrap">
-    <h2 class="sec-title reveal">What we believe about teaching.</h2>
+    <div class="head reveal">
+      <span class="kicker">Our approach</span>
+      <h2>What we believe about teaching.</h2>
+    </div>
     <div class="belief-grid">
-      <div class="belief reveal" style="--i:0"><h3>Taught properly, paced to the student</h3><p>Groups move at a shared pace and one-on-one classes move at the student's. Either way, nobody is rushed past what they have not yet learned.</p></div>
-      <div class="belief reveal" style="--i:1"><h3>Structure beats good intentions</h3><p>Daily tasks, a reading club, brainstorming sessions, daily CBT quizzes. Our students don't hope to be ready. The week is built to make them ready.</p></div>
-      <div class="belief reveal" style="--i:2"><h3>Faith and academics belong together</h3><p>In the Teenagers Building Circle, deen, educational development, skills and personal development are all touched every week, not one this term and one the next.</p></div>
-      <div class="belief reveal" style="--i:3"><h3>Teachers who stay</h3><p>Every class has a dedicated teacher, and progress is tracked class by class, surah by surah, with tests and exams, so a student always knows where they stand.</p></div>
+      <div class="belief reveal" style="--i:0"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><h3>Taught properly, paced to the student</h3><p>Groups move at a shared pace and one-on-one classes move at the student's. Either way, nobody is rushed past what they have not yet learned.</p></div>
+      <div class="belief reveal" style="--i:1"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></div><h3>Structure beats good intentions</h3><p>Daily tasks, a reading club, brainstorming sessions, daily CBT quizzes. Our students don't hope to be ready. The week is built to make them ready.</p></div>
+      <div class="belief reveal" style="--i:0"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 4h6a4 4 0 0 1 4 4v12a3 3 0 0 0-3-3H2z"/><path d="M22 4h-6a4 4 0 0 0-4 4v12a3 3 0 0 1 3-3h7z"/></svg></div><h3>Faith and academics belong together</h3><p>In the Teenagers Building Circle, deen, educational development, skills and personal development are all touched every week, not one this term and one the next.</p></div>
+      <div class="belief reveal" style="--i:1"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><path d="M17 5.5a3.2 3.2 0 0 1 0 6"/><path d="M21.5 20c0-2.6-1.6-4.5-3.8-5.3"/></svg></div><h3>Teachers who stay</h3><p>Every class has a dedicated teacher, and progress is tracked class by class, surah by surah, with tests and exams, so a student always knows where they stand.</p></div>
     </div>
   </div>
 </section>
 
 <section class="band">
   <div class="wrap">
+    <svg class="qm reveal" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M10 7H6a3 3 0 0 0-3 3v4h4v4l3-4V7zm11 0h-4a3 3 0 0 0-3 3v4h4v4l3-4V7z"/></svg>
     <p class="quote reveal">"It gave me teachers that stood by me despite my failures, and friends who are now dear to my heart."</p>
     <p class="quote-by reveal" style="--i:1">Hafsah, scored 299 in UTME</p>
-    <div class="nums">
-      <div class="num reveal" style="--i:0"><b>90%</b><span>UTME success rate</span></div>
-      <div class="num reveal" style="--i:1"><b>98%</b><span>scored 200+ in UTME</span></div>
-      <div class="num reveal" style="--i:2"><b>4</b><span>classes a week in the Madrasah</span></div>
-      <div class="num reveal" style="--i:3"><b>4</b><span>programmes, one standard</span></div>
+    <div class="nums reveal" style="--i:2">
+      <div class="num"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg></span><div><b>90%</b><span>UTME success rate</span></div></div>
+      <div class="num"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="6"/><path d="M8.5 13.5L7 22l5-3 5 3-1.5-8.5"/></svg></span><div><b>98%</b><span>scored 200+ in UTME</span></div></div>
+      <div class="num"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span><div><b>4</b><span>classes a week in the Madrasah</span></div></div>
+      <div class="num"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span><div><b>4</b><span>programmes, one standard</span></div></div>
     </div>
     <p class="note">UTME figures are from our Academy programme.</p>
   </div>
 </section>
 
-<section class="journey">
+<section class="sec">
   <div class="wrap">
     <div class="head reveal">
-      <h2 class="sec-title">How a student's journey works.</h2>
+      <span class="kicker">The journey</span>
+      <h2>How a student's journey works.</h2>
       <p>The details differ by programme, but the shape is the same.</p>
     </div>
     <div class="steps">
@@ -331,12 +359,16 @@ footer.site{margin-left:10px;margin-right:10px;border-radius:24px 24px 0 0;paddi
   </div>
 </section>
 
-<section class="name">
+<section class="sec">
   <div class="wrap">
     <!-- CONFIRM: the meaning and story of the name are written from the Arabic word and the shield-shaped crest. Replace with the founders' own account if different. -->
     <div class="name-box reveal">
-      <svg class="crest" viewBox="0 0 377.21 459.6" aria-hidden="true"><path fill="#094570" d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>
+      <div class="seal" aria-hidden="true">
+        <svg class="crest" viewBox="0 0 377.21 459.6"><path fill="#094570" d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>
+        <b lang="ar">حماية</b>
+      </div>
       <div>
+        <span class="kicker">Our name</span>
         <h2>Why "Himaayah"?</h2>
         <p><em>Himāyah</em> (حماية) is the Arabic word for protection, and our crest is a shield. It is the standard we hold ourselves to: protecting a student's faith, their focus, and their future, while we help them grow into someone who can lead.</p>
       </div>
@@ -344,13 +376,15 @@ footer.site{margin-left:10px;margin-right:10px;border-radius:24px 24px 0 0;paddi
   </div>
 </section>
 
-<section class="cta">
-  <div class="cta-box reveal">
-    <h2>Come and see the standard for yourself.</h2>
-    <p>Sit a free CBT mock test, ask us anything on WhatsApp, or go straight to enrollment.</p>
-    <div class="cta-actions">
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLScfToSyajwBUybYdXDSXtFT3vF9bWzG7ICw0DL7hXPBR7_UsA/viewform?usp=header" target="_blank" rel="noopener" class="btn btn-sky">Book a free mock test</a>
-      <a href="enroll.html" class="btn btn-ghost">Enroll now</a>
+<section class="sec">
+  <div class="wrap">
+    <div class="cta-box reveal">
+      <h2>Come and see the standard for yourself.</h2>
+      <p>Sit a free CBT mock test, ask us anything on WhatsApp, or go straight to enrollment.</p>
+      <div class="cta-actions">
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLScfToSyajwBUybYdXDSXtFT3vF9bWzG7ICw0DL7hXPBR7_UsA/viewform?usp=header" target="_blank" rel="noopener" class="btn btn-ink lift">Book a free mock test</a>
+        <a href="enroll.html" class="btn btn-line lift">Enroll now</a>
+      </div>
     </div>
   </div>
 </section>
@@ -367,11 +401,12 @@ footer.site{margin-left:10px;margin-right:10px;border-radius:24px 24px 0 0;paddi
         <div class="social">
           <a href="https://instagram.com/himaayahschools" target="_blank" rel="noopener" aria-label="Himaayah Schools on Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg></a>
           <a href="https://x.com/himaayahschools" target="_blank" rel="noopener" aria-label="Himaayah Schools on X"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.24 2H21.5l-7.3 8.34L22.8 22h-6.73l-5.27-6.9L4.7 22H1.4l7.8-8.92L1 2h6.9l4.76 6.3L18.24 2zm-1.18 18h1.86L7.03 3.9H5.03L17.06 20z"/></svg></a>
-        <a href="https://ng.linkedin.com/company/himaaayah" target="_blank" rel="noopener" aria-label="Himaayah Schools on LinkedIn"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg></a>
+          <a href="https://ng.linkedin.com/company/himaaayah" target="_blank" rel="noopener" aria-label="Himaayah Schools on LinkedIn"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg></a>
         </div>
       </div>
       <div class="f-cols">
         <div class="f-col"><h4>Programmes</h4>
+          <a href="programmes.html">All programmes</a>
           <a href="teenagers-building-circle.html">Teenagers Building Circle</a>
           <a href="madrasah.html">Madrasah</a>
           <a href="academy.html">Academy</a>
@@ -379,7 +414,9 @@ footer.site{margin-left:10px;margin-right:10px;border-radius:24px 24px 0 0;paddi
         </div>
         <div class="f-col"><h4>Site</h4>
           <a href="index.html">Home</a>
+          <a href="admissions.html">Admissions</a>
           <a href="about.html">About</a>
+          <a href="administrators.html">Administrators</a>
           <a href="exam-calendars.html">Exam Calendars</a>
           <a href="faq.html">FAQ</a>
           <a href="contact.html">Contact</a>
@@ -390,6 +427,7 @@ footer.site{margin-left:10px;margin-right:10px;border-radius:24px 24px 0 0;paddi
           <a href="mailto:himaayahschools@gmail.com">himaayahschools@gmail.com</a>
           <a href="tel:+2348066043320">+234 806 604 3320</a>
           <a href="tel:+2347025842849">+234 702 584 2849</a>
+          <a href="tel:+2347220156487">+234 722 015 6487</a>
           <span>Ilorin, Nigeria</span>
         </div>
       </div>
@@ -401,18 +439,41 @@ footer.site{margin-left:10px;margin-right:10px;border-radius:24px 24px 0 0;paddi
 <script>
   const t = document.getElementById('navToggle'), l = document.getElementById('navLinks');
   t.addEventListener('click', () => { const o = l.classList.toggle('open'); t.setAttribute('aria-expanded', o); });
+  (function () {
+    const dd = document.querySelector('.dd'); if (!dd) return;
+    const b = dd.querySelector('.dd-btn');
+    b.addEventListener('click', () => { const o = dd.classList.toggle('open'); b.setAttribute('aria-expanded', o); });
+  })();
 
   const items = document.querySelectorAll('.reveal');
   if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
     const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .15, rootMargin: '0px 0px -40px 0px' });
     items.forEach((el) => io.observe(el));
   } else { items.forEach((el) => el.classList.add('in')); }
+
+  // Card fill: navy ripple grows from the touch/pointer point
+  (function () {
+    const cards = document.querySelectorAll('.belief');
+    const at = (c, e) => { const r = c.getBoundingClientRect(); c.style.setProperty('--x', (e.clientX - r.left) + 'px'); c.style.setProperty('--y', (e.clientY - r.top) + 'px'); };
+    cards.forEach((c) => {
+      c.classList.add('fx');
+      let tm;
+      const on = (e) => { clearTimeout(tm); if (e && 'clientX' in e) at(c, e); c.classList.add('fx-on'); };
+      const off = (delay) => { clearTimeout(tm); tm = setTimeout(() => c.classList.remove('fx-on'), delay); };
+      c.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') on(e); });
+      c.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse') off(0); });
+      c.addEventListener('pointerdown', (e) => { if (e.pointerType !== 'mouse') { cards.forEach((x) => x !== c && x.classList.remove('fx-on')); on(e); } });
+      c.addEventListener('pointerup', (e) => { if (e.pointerType !== 'mouse') off(900); });
+      c.addEventListener('pointercancel', () => off(0));
+    });
+  })();
 </script>
 
 <div class="wa-widget" id="waWidget">
   <div class="wa-menu" id="waMenu">
-    <a href="https://wa.me/2348066043320?text=Assalaamu%20alaykum.%20I%27d%20like%20to%20ask%20about%20Himaayah%20Schools." target="_blank" rel="noopener">Chat on WhatsApp <small>+234 806 604 3320</small></a>
-    <a href="https://wa.me/2347025842849?text=Assalaamu%20alaykum.%20I%27d%20like%20to%20ask%20about%20Himaayah%20Schools." target="_blank" rel="noopener">Chat on WhatsApp <small>+234 702 584 2849</small></a>
+    <a href="https://wa.me/2348066043320?text=Assalaamu%20alaykum.%20I%27d%20like%20to%20ask%20about%20Himaayah%20Schools." target="_blank" rel="noopener">Academy <small>+234 806 604 3320</small></a>
+    <a href="https://wa.me/2347025842849?text=Assalaamu%20alaykum.%20I%27d%20like%20to%20ask%20about%20Himaayah%20Schools." target="_blank" rel="noopener">Madrasah <small>+234 702 584 2849</small></a>
+    <a href="https://wa.me/2347220156487?text=Assalaamu%20alaykum.%20I%27d%20like%20to%20ask%20about%20Himaayah%20Schools." target="_blank" rel="noopener">General <small>+234 722 015 6487</small></a>
   </div>
   <button type="button" class="wa-fab" id="waBtn" aria-expanded="false" aria-controls="waMenu" aria-label="Chat with us on WhatsApp">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.7-5.2A8.5 8.5 0 1 1 21 11.5z"/></svg>

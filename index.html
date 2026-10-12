@@ -289,6 +289,31 @@
     .home-fab { left: 12px; bottom: 12px; padding: 10px 14px 10px 12px; font-size: 13px; }
     .wa-widget { right: 12px; bottom: 12px; } .wa-fab span { display: none; } .wa-fab { padding: 12px; }
   }
+
+  /* ===== Card touch/hover fill (navy ripple from touch point) ===== */
+  .fx { position: relative; overflow: hidden; isolation: isolate; -webkit-tap-highlight-color: transparent; transition: color .35s, border-color .35s, box-shadow .35s, transform .35s var(--ease, ease); }
+  .fx::after { content: ''; position: absolute; left: var(--x, 50%); top: var(--y, 50%); width: 24px; height: 24px; border-radius: 50%; z-index: -1; pointer-events: none;
+    background: radial-gradient(circle, #0B5A8F 0%, #062F4D 70%); transform: translate(-50%, -50%) scale(0); transition: transform .6s cubic-bezier(.2,.7,.2,1); }
+  .fx.fx-on { border-color: transparent !important; box-shadow: 0 24px 48px -24px rgba(6,47,77,.55); }
+  .fx.fx-on::after { transform: translate(-50%, -50%) scale(90); }
+  .fx.fx-on :is(h3, h4, b, strong, blockquote, .p-name) { color: #fff; }
+  .fx.fx-on :is(p, span, li, .goal) { color: rgba(255,255,255,.8); }
+  .fx.fx-on :is(small, .k, .p-role, em) { color: var(--sky, #85CCFF); }
+  .fx.fx-on .ic { background: rgba(133,204,255,.16); color: var(--sky, #85CCFF); }
+  .fx.fx-on .tag { background: rgba(255,255,255,.12); color: #fff; }
+  .fx.fx-on .tag.on { background: var(--sky, #85CCFF); color: var(--deep, #062F4D); }
+  .fx.fx-on :is(.tag span, .p-toggle span, .btn span) { color: inherit; }
+  .fx.fx-on .price b { color: var(--sky, #85CCFF); }
+  .fx.fx-on :is(.more, .p-toggle) { color: var(--sky, #85CCFF); }
+  .fx.fx-on > svg, .fx.fx-on .qm { color: var(--sky, #85CCFF); }
+  .fx.fx-on :is(.avatar, .p-mono) { background: var(--sky, #85CCFF); color: var(--deep, #062F4D); }
+  .fx.fx-on .btn-ink { background: var(--sky, #85CCFF); color: var(--deep, #062F4D); }
+  .fx.fx-on .btn-line { background: transparent; border-color: rgba(255,255,255,.4); color: #fff; }
+  .fx.fx-on :is(li, .foot, figcaption) { border-color: rgba(255,255,255,.15); }
+  .fx.fx-on .note { background: rgba(133,204,255,.14); color: #fff; }
+  .fx.fx-on .yr i { background: rgba(255,255,255,.12); color: #fff; } .fx.fx-on .yr i + i { background: var(--sky, #85CCFF); color: var(--deep, #062F4D); }
+  .plan.f.fx::before { top: 16px; left: auto; right: 18px; z-index: 1; }
+  @media (prefers-reduced-motion: reduce) { .fx::after { transition: none; } }
 </style>
 </head>
 <body>
@@ -331,7 +356,6 @@
   <div class="wrap">
     <div class="hero-grid">
       <div class="hero-copy">
-        <span class="loc"><i aria-hidden="true"></i>Ilorin, Nigeria &middot; Live classes</span>
         <h1>Faith, knowledge and skill, taught in <em>one place.</em></h1>
         <p class="lead">Qur'an and Islamic studies, exam preparation, practical skills and a development circle for teenagers. Structured teaching, close mentorship, and results our students can point to.</p>
         <div class="hero-actions">
@@ -619,6 +643,27 @@
     b.addEventListener('click', () => { const o = w.classList.toggle('open'); b.setAttribute('aria-expanded', o); });
     document.addEventListener('click', (e) => { if (!w.contains(e.target)) { w.classList.remove('open'); b.setAttribute('aria-expanded', 'false'); } });
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { w.classList.remove('open'); b.setAttribute('aria-expanded', 'false'); b.focus(); } });
+  })();
+</script>
+
+<script>
+  // Card fill: navy ripple grows from the touch/pointer point
+  (function () {
+    const cards = document.querySelectorAll('.prog, .quote, .track, .perk, .pillar, .person, .hw, .sc2, .pg .plan');
+    const at = (c, e) => { const r = c.getBoundingClientRect(); c.style.setProperty('--x', (e.clientX - r.left) + 'px'); c.style.setProperty('--y', (e.clientY - r.top) + 'px'); };
+    cards.forEach((c) => {
+      c.classList.add('fx');
+      let tm;
+      const on = (e) => { clearTimeout(tm); if (e && 'clientX' in e) at(c, e); c.classList.add('fx-on'); };
+      const off = (delay) => { clearTimeout(tm); tm = setTimeout(() => c.classList.remove('fx-on'), delay); };
+      c.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') on(e); });
+      c.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse') off(0); });
+      c.addEventListener('pointerdown', (e) => { if (e.pointerType !== 'mouse') { cards.forEach((x) => x !== c && x.classList.remove('fx-on')); on(e); } });
+      c.addEventListener('pointerup', (e) => { if (e.pointerType !== 'mouse') off(900); });
+      c.addEventListener('pointercancel', () => off(0));
+      c.addEventListener('focusin', () => { c.style.setProperty('--x', '50%'); c.style.setProperty('--y', '50%'); on(); });
+      c.addEventListener('focusout', (e) => { if (!c.contains(e.relatedTarget)) off(0); });
+    });
   })();
 </script>
 </body>

@@ -17,140 +17,181 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+  /* ===== Himaayah design system (matches homepage) ===== */
   :root {
-    --deep: #062F4D; --ink: #094570; --sky: #85CCFF; --sky-d: #3E97D9;
-    --wash: #F1F7FC; --white: #fff; --text: #0E2A3D; --muted: #55697B;
-    --line: rgba(9,69,112,.12); --r-lg: 32px;
+    --deep: #062F4D; --ink: #094570; --sky: #85CCFF; --sky-d: #3E97D9; --sky-l: #E3F2FD;
+    --wash: #F4F8FB; --text: #0E2A3D; --muted: #5B6E7F;
+    --line: #E3EAF0; --r: 20px; --ease: cubic-bezier(.2,.7,.2,1);
     --display: 'Bricolage Grotesque', 'Inter', sans-serif;
+    --shadow: 0 1px 2px rgba(6,47,77,.04), 0 12px 32px -18px rgba(6,47,77,.18);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  [hidden] { display: none !important; }
   html { scroll-behavior: smooth; }
-  body { font-family: 'Inter', -apple-system, sans-serif; color: var(--text); background: var(--white); -webkit-font-smoothing: antialiased; line-height: 1.6; }
+  body { font-family: 'Inter', -apple-system, sans-serif; color: var(--text); background: #fff; -webkit-font-smoothing: antialiased; line-height: 1.65; }
   a { color: inherit; text-decoration: none; }
-  button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
-  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 28px; }
-  a:focus-visible, button:focus-visible { outline: 2px solid var(--sky-d); outline-offset: 3px; }
-  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition-duration: .001ms !important; scroll-behavior: auto !important; } }
+  button, input { font: inherit; color: inherit; }
+  button { cursor: pointer; border: none; background: none; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+  a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid var(--sky-d); outline-offset: 3px; }
 
-  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 15px 28px; font-size: 15px; font-weight: 600; border-radius: 999px; transition: background .2s, color .2s; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 9px; padding: 14px 26px; font-size: 15px; font-weight: 600; border-radius: 12px; transition: background .2s, color .2s, border-color .2s, transform .2s; }
   .btn-ink { background: var(--ink); color: #fff; } .btn-ink:hover { background: var(--deep); }
-  .btn-sky { background: var(--sky); color: var(--deep); } .btn-sky:hover { background: #fff; }
+  .btn-line { border: 1.5px solid var(--line); color: var(--ink); background: #fff; } .btn-line:hover { border-color: var(--ink); }
+  .lift:hover { transform: translateY(-2px); }
+  .kicker { display: inline-block; font-size: 13px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--sky-d); margin-bottom: 12px; }
 
-  /* Nav */
-  .nav { position: fixed; top: 16px; left: 0; right: 0; z-index: 100; padding: 0 20px; }
-  .nav-pill { max-width: 1200px; margin: 0 auto; height: 64px; padding: 0 12px 0 22px; display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,.94); backdrop-filter: blur(14px); border-radius: 999px; box-shadow: 0 8px 30px -12px rgba(6,47,77,.35); }
-  .brand { display: flex; align-items: center; gap: 10px; font-family: var(--display); font-weight: 700; font-size: 18px; color: var(--ink); }
-  .nav-links { display: flex; align-items: center; gap: 30px; }
-  .nav-links a:not(.btn) { font-size: 14px; font-weight: 500; color: var(--muted); transition: color .2s; }
-  .nav-links a:not(.btn):hover { color: var(--ink); }
-  .nav-links .btn { padding: 11px 22px; font-size: 14px; }
-  .nav-toggle { display: none; width: 44px; height: 44px; border-radius: 50%; position: relative; }
-  .nav-toggle span { position: absolute; left: 13px; right: 13px; height: 2px; background: var(--ink); }
-  .nav-toggle span:nth-child(1) { top: 16px; } .nav-toggle span:nth-child(2) { top: 21px; } .nav-toggle span:nth-child(3) { top: 26px; }
-  @media (max-width: 900px) {
-    .nav-toggle { display: block; }
-    .nav-links { position: absolute; top: 76px; left: 20px; right: 20px; flex-direction: column; align-items: stretch; gap: 0; background: #fff; border-radius: 24px; padding: 8px 20px 20px; box-shadow: 0 20px 40px -16px rgba(6,47,77,.4); display: none; }
-    .nav-links.open { display: flex; }
-    .nav-links a:not(.btn) { padding: 15px 0; border-bottom: 1px solid var(--line); }
-    .nav-links .btn { margin-top: 16px; }
-  }
-
-  /* FAQ layout */
-  .faq { padding: 150px 0 110px; }
-  .faq-grid { display: grid; grid-template-columns: .85fr 1.15fr; gap: 64px; align-items: start; }
-  @media (max-width: 900px) { .faq-grid { grid-template-columns: 1fr; gap: 44px; } .faq { padding-top: 130px; } }
-  .side { position: sticky; top: 110px; }
-  @media (max-width: 900px) { .side { position: static; } }
-  .side h1 { font-family: var(--display); font-weight: 700; font-size: clamp(38px, 5.4vw, 64px); line-height: 1.04; letter-spacing: -.025em; color: var(--deep); margin-bottom: 18px; animation: rise .8s cubic-bezier(.2,.7,.2,1) both; }
-  .side > p { color: var(--muted); font-size: 17px; max-width: 38ch; margin-bottom: 32px; animation: rise .8s .12s cubic-bezier(.2,.7,.2,1) both; }
-  @keyframes rise { from { opacity: 0; transform: translateY(22px); } }
-  .ask { background: var(--ink); color: #fff; border-radius: var(--r-lg); padding: 32px; }
-  .ask h2 { font-family: var(--display); font-size: 24px; line-height: 1.15; margin-bottom: 8px; }
-  .ask p { color: rgba(255,255,255,.75); font-size: 15px; margin-bottom: 22px; }
-
-  /* Accordion */
-  .acc { display: grid; gap: 12px; }
-  .item { background: var(--wash); border-radius: 24px; transition: background .25s; }
-  .item.open { background: #fff; box-shadow: inset 0 0 0 1.5px var(--ink); }
-  .q { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 24px 28px; text-align: left; font-family: var(--display); font-size: 19px; font-weight: 600; line-height: 1.3; color: var(--deep); }
-  .icon { flex-shrink: 0; width: 38px; height: 38px; border-radius: 50%; background: #fff; color: var(--ink); display: grid; place-items: center; transition: transform .3s, background .25s, color .25s; }
-  .item.open .icon { transform: rotate(45deg); background: var(--ink); color: #fff; }
-  .a { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .35s cubic-bezier(.2,.7,.2,1); }
-  .item.open .a { grid-template-rows: 1fr; }
-  .a > div { overflow: hidden; }
-  .a p { padding: 0 28px 26px; color: var(--muted); font-size: 15.5px; max-width: 58ch; }
-  .a a { color: var(--ink); font-weight: 600; border-bottom: 1px solid var(--sky-d); }
-  .a a:hover { color: var(--sky-d); }
-
-  /* Footer */
-  footer.site { background: var(--deep); color: rgba(255,255,255,.65); border-radius: 40px 40px 0 0; margin: 0 16px; padding: 70px 0 28px; font-size: 14px; }
-  .f-top { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 44px; margin-bottom: 48px; }
-  .f-brand { max-width: 320px; } .f-brand .brand { color: #fff; margin-bottom: 14px; } .f-brand p { margin-bottom: 20px; }
-  .social { display: flex; gap: 10px; }
-  .social a { width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,.2); display: grid; place-items: center; transition: background .2s, color .2s; }
-  .social a:hover { background: var(--sky); color: var(--deep); }
-  .f-cols { display: flex; gap: 60px; flex-wrap: wrap; }
-  .f-col h4 { font-family: var(--display); font-size: 16px; color: #fff; margin-bottom: 14px; }
-  .f-col a, .f-col span { display: block; margin-bottom: 9px; transition: color .2s; } .f-col a:hover { color: var(--sky); }
-  .f-bottom { padding-top: 22px; border-top: 1px solid rgba(255,255,255,.12); }
-
-  /* Always-visible home button */
-  .home-fab { position: fixed; left: 20px; bottom: 20px; z-index: 90; display: inline-flex; align-items: center; gap: 8px; padding: 13px 20px 13px 16px; border-radius: 999px; background: #062F4D; color: #fff; font-size: 14px; font-weight: 600; box-shadow: 0 12px 30px -10px rgba(6,47,77,.6); transition: background .2s, transform .2s; }
-  .home-fab:hover { background: #094570; transform: translateY(-2px); }
-  .home-fab:focus-visible { outline: 2px solid #85CCFF; outline-offset: 3px; }
-
-  /* Programmes dropdown */
+  /* ===== Nav ===== */
+  .nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,.92); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
+  .nav-pill { max-width: 1180px; margin: 0 auto; height: 76px; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; position: relative; }
+  .brand { display: flex; align-items: center; gap: 11px; font-family: var(--display); font-weight: 700; font-size: 19px; color: var(--deep); }
+  .nav-links { display: flex; align-items: center; gap: 28px; }
+  .nav-links a:not(.btn) { font-size: 14.5px; font-weight: 500; color: var(--muted); transition: color .2s; }
+  .nav-links a:not(.btn):hover, .nav-links > a[aria-current="page"] { color: var(--ink); }
+  .nav-links > a[aria-current="page"] { font-weight: 600; }
+  .nav-links .btn { padding: 11px 20px; font-size: 14px; }
+  .nav-toggle { display: none; width: 44px; height: 44px; border-radius: 10px; position: relative; border: 1px solid var(--line); }
+  .nav-toggle span { position: absolute; left: 12px; right: 12px; height: 2px; border-radius: 2px; background: var(--ink); transition: transform .25s, opacity .2s; }
+  .nav-toggle span:nth-child(1) { top: 15px; } .nav-toggle span:nth-child(2) { top: 20px; } .nav-toggle span:nth-child(3) { top: 25px; }
+  .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(5px) rotate(45deg); }
+  .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+  .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-5px) rotate(-45deg); }
   .dd { position: relative; }
-  .dd-btn { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 500; color: var(--muted); transition: color .2s; }
+  .dd-btn { display: inline-flex; align-items: center; gap: 6px; font-size: 14.5px; font-weight: 500; color: var(--muted); transition: color .2s; }
   .dd-btn svg { transition: transform .25s; }
-  .dd:hover .dd-btn, .dd:focus-within .dd-btn, .dd.cur .dd-btn { color: var(--ink); }
-  .dd.cur .dd-btn, .nav-links a[aria-current="page"] { font-weight: 600; }
+  .dd:hover .dd-btn, .dd:focus-within .dd-btn { color: var(--ink); }
   .dd:hover .dd-btn svg, .dd.open .dd-btn svg { transform: rotate(180deg); }
-  .dd-menu { position: absolute; top: 100%; left: -18px; min-width: 270px; padding: 24px 10px 10px; opacity: 0; visibility: hidden; transform: translateY(6px); transition: opacity .2s, transform .2s, visibility .2s; }
-  .dd-menu::before { content: ''; position: absolute; inset: 14px 0 0 0; background: #fff; border-radius: 22px; box-shadow: 0 24px 50px -20px rgba(6,47,77,.45); z-index: -1; }
+  .dd-menu { position: absolute; top: 100%; left: -16px; min-width: 260px; padding: 20px 8px 8px; opacity: 0; visibility: hidden; transform: translateY(6px); transition: opacity .2s, transform .2s, visibility .2s; }
+  .dd-menu::before { content: ''; position: absolute; inset: 12px 0 0 0; background: #fff; border: 1px solid var(--line); border-radius: 16px; box-shadow: var(--shadow); z-index: -1; }
   .dd:hover .dd-menu, .dd:focus-within .dd-menu, .dd.open .dd-menu { opacity: 1; visibility: visible; transform: none; }
-  .dd-menu a { display: block; padding: 12px 16px; border-radius: 14px; font-size: 14.5px; font-weight: 500; color: var(--text); }
-  .dd-menu a:hover, .dd-menu a[aria-current="page"] { background: var(--wash); color: var(--ink); }
-  @media (max-width: 900px) {
-    .dd-btn { padding: 15px 0; width: 100%; border-bottom: 1px solid var(--line); justify-content: space-between; }
-    .dd-menu { position: static; opacity: 1; visibility: visible; transform: none; padding: 0 0 0 14px; display: none; }
+  .dd-menu a { display: block; padding: 10px 14px; border-radius: 10px; font-size: 14.5px !important; color: var(--text) !important; }
+  .dd-menu a:hover { background: var(--wash); color: var(--ink) !important; }
+  @media (max-width: 960px) {
+    .nav-toggle { display: block; }
+    .nav-links { position: absolute; top: 76px; left: 0; right: 0; flex-direction: column; align-items: stretch; gap: 0; background: #fff; border-bottom: 1px solid var(--line); padding: 6px 24px 22px; box-shadow: 0 20px 30px -24px rgba(6,47,77,.35); display: none; max-height: calc(100vh - 76px); overflow-y: auto; }
+    .nav-links.open { display: flex; }
+    .nav-links a:not(.btn) { padding: 14px 0; border-bottom: 1px solid var(--line); }
+    .nav-links .btn { margin-top: 16px; }
+    .dd-btn { padding: 14px 0; width: 100%; border-bottom: 1px solid var(--line); justify-content: space-between; }
+    .dd-menu { position: static; opacity: 1; visibility: visible; transform: none; padding: 4px 0 4px 12px; display: none; min-width: 0; }
     .dd-menu::before { display: none; }
     .dd.open .dd-menu { display: block; }
     .dd:hover .dd-menu { display: none; } .dd.open:hover .dd-menu { display: block; }
   }
 
-  /* WhatsApp chat widget */
+  /* ===== Hero ===== */
+  .hero { position: relative; overflow: hidden; padding: clamp(64px, 9vw, 104px) 0 clamp(48px, 6vw, 72px); background: linear-gradient(180deg, var(--wash) 0%, #fff 100%); text-align: center; }
+  .hero::before { content: ''; position: absolute; width: 480px; height: 480px; left: -200px; top: -180px; border-radius: 50%; border: 1.5px dashed rgba(9,69,112,.12); pointer-events: none; }
+  .hero-copy { position: relative; max-width: 680px; margin: 0 auto; }
+  .hero-copy > * { animation: rise .8s var(--ease) both; } .hero-copy > *:nth-child(2) { animation-delay: .08s; } .hero-copy > *:nth-child(3) { animation-delay: .16s; } .hero-copy > *:nth-child(4) { animation-delay: .24s; }
+  @keyframes rise { from { opacity: 0; transform: translateY(20px); } }
+  .hero h1 { font-family: var(--display); font-weight: 700; font-size: clamp(38px, 5.2vw, 62px); line-height: 1.06; letter-spacing: -.03em; color: var(--deep); margin-bottom: 16px; }
+  .hero p { font-size: 18px; color: var(--muted); max-width: 52ch; margin: 0 auto; }
+  .search { position: relative; max-width: 520px; margin: 30px auto 0; }
+  .search svg { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
+  .search input { width: 100%; padding: 16px 18px 16px 50px; border-radius: 14px; border: 1.5px solid var(--line); background: #fff; font-size: 15.5px; box-shadow: var(--shadow); transition: border-color .2s, box-shadow .2s; }
+  .search input:focus { outline: none; border-color: var(--ink); box-shadow: 0 0 0 4px rgba(62,151,217,.15); }
+
+
+  /* ===== Heading: letter reveal + hopping dot ===== */
+  .hero-copy > h1 { animation: none; position: relative; }
+  .hero h1 .w { display: inline-block; white-space: nowrap; }
+  .hero h1 .ch { display: inline-block; opacity: 0; transform: translateY(.5em) rotate(8deg); filter: blur(8px); animation: chIn .7s var(--ease) var(--d, 0ms) forwards; }
+  @keyframes chIn { to { opacity: 1; transform: none; filter: blur(0); } }
+  .hero h1 .ball { position: absolute; left: 0; top: 0; width: 10px; height: 10px; border-radius: 50%; background: var(--sky-d); opacity: 0; pointer-events: none; will-change: transform; box-shadow: 0 0 0 0 rgba(62,151,217,.45); }
+  .hero h1 .ball.landed { animation: ping 1.4s ease-out .1s 2; }
+  @keyframes ping { to { box-shadow: 0 0 0 14px rgba(62,151,217,0); } }
+  @media (prefers-reduced-motion: reduce) { .hero h1 .ch { opacity: 1; transform: none; filter: none; } }
+
+  /* ===== FAQ layout ===== */
+  .faq { padding: clamp(32px, 4vw, 48px) 0 0; }
+  .faq-grid { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, .6fr); gap: clamp(28px, 4vw, 48px); align-items: start; }
+  .side { position: sticky; top: 100px; display: grid; gap: 16px; }
+  .ask { background: var(--deep); color: #fff; border-radius: var(--r); padding: 28px; position: relative; overflow: hidden; }
+  .ask::after { content: ''; position: absolute; right: -60px; top: -60px; width: 180px; height: 180px; border-radius: 50%; border: 1.5px dashed rgba(133,204,255,.25); }
+  .ask .ic { width: 48px; height: 48px; border-radius: 14px; background: rgba(133,204,255,.16); color: var(--sky); display: grid; place-items: center; margin-bottom: 18px; }
+  .ask h2 { font-family: var(--display); font-weight: 700; font-size: 22px; line-height: 1.2; margin-bottom: 8px; }
+  .ask p { color: rgba(255,255,255,.75); font-size: 15px; margin-bottom: 20px; }
+  .ask .btn { width: 100%; background: var(--sky); color: var(--deep); } .ask .btn:hover { background: #fff; }
+  .ask .alt { display: block; text-align: center; margin-top: 12px; font-size: 14px; font-weight: 600; color: var(--sky); }
+  .ask .alt:hover { color: #fff; }
+  .links { background: #fff; border: 1px solid var(--line); border-radius: var(--r); padding: 22px; }
+  .links h3 { font-size: 13px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+  .links a { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-top: 1px solid var(--line); font-size: 14.5px; font-weight: 600; color: var(--deep); transition: color .2s; }
+  .links a:first-of-type { border-top: 0; }
+  .links a::after { content: '→'; color: var(--sky-d); transition: transform .2s; }
+  .links a:hover { color: var(--ink); } .links a:hover::after { transform: translateX(3px); }
+
+  /* ===== Accordion ===== */
+  .acc { display: grid; gap: 12px; }
+  .item { background: #fff; border: 1px solid var(--line); border-radius: 16px; transition: box-shadow .25s, border-color .25s; }
+  .item:hover { border-color: #C9D8E4; }
+  .item.open { border-color: transparent; box-shadow: 0 0 0 1.5px var(--ink), var(--shadow); }
+  .q { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 20px 24px; text-align: left; font-weight: 600; font-size: 16.5px; line-height: 1.35; color: var(--deep); }
+  .q:focus-visible { outline-offset: -2px; border-radius: 16px; }
+  .icon { flex-shrink: 0; width: 34px; height: 34px; border-radius: 50%; background: var(--wash); color: var(--ink); display: grid; place-items: center; transition: transform .3s var(--ease), background .25s, color .25s; }
+  .item.open .icon { transform: rotate(45deg); background: var(--ink); color: #fff; }
+  .a { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .35s var(--ease); }
+  .item.open .a { grid-template-rows: 1fr; }
+  .a > div { overflow: hidden; }
+  .a p { padding: 0 24px 22px; color: var(--muted); font-size: 15.5px; max-width: 62ch; }
+  .a a { color: var(--ink); font-weight: 600; border-bottom: 1px solid var(--sky-d); }
+  .a a:hover { color: var(--sky-d); }
+  mark { background: #FFF1C2; color: inherit; border-radius: 3px; padding: 0 2px; }
+  .none { text-align: center; padding: 36px 20px; border: 1.5px dashed var(--line); border-radius: 16px; color: var(--muted); }
+  .none b { display: block; color: var(--deep); font-size: 16px; margin-bottom: 4px; }
+
+  /* ===== Footer ===== */
+  footer.site { background: var(--deep); color: rgba(255,255,255,.62); margin-top: clamp(80px, 10vw, 128px); padding: 72px 0 28px; font-size: 14px; }
+  .f-top { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 44px; margin-bottom: 48px; }
+  .f-brand { max-width: 320px; } .f-brand .brand { color: #fff; margin-bottom: 14px; } .f-brand p { margin-bottom: 20px; }
+  .social { display: flex; gap: 10px; }
+  .social a { width: 40px; height: 40px; border-radius: 10px; border: 1px solid rgba(255,255,255,.18); display: grid; place-items: center; transition: background .2s, color .2s; }
+  .social a:hover { background: var(--sky); color: var(--deep); }
+  .f-cols { display: flex; gap: 64px; flex-wrap: wrap; }
+  .f-col h4 { font-family: var(--display); font-size: 16px; color: #fff; margin-bottom: 14px; }
+  .f-col a, .f-col span { display: block; margin-bottom: 9px; transition: color .2s; } .f-col a:hover { color: var(--sky); }
+  .f-bottom { padding-top: 22px; border-top: 1px solid rgba(255,255,255,.1); }
+
+  /* Home button + WhatsApp */
+  .home-fab { position: fixed; left: 20px; bottom: 20px; z-index: 90; display: inline-flex; align-items: center; gap: 8px; padding: 12px 18px 12px 14px; border-radius: 12px; background: #062F4D; color: #fff; font-size: 14px; font-weight: 600; box-shadow: 0 12px 30px -10px rgba(6,47,77,.6); transition: background .2s, transform .2s; }
+  .home-fab:hover { background: #094570; transform: translateY(-2px); }
   .wa-widget { position: fixed; right: 20px; bottom: 20px; z-index: 90; display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
-  .wa-fab { display: inline-flex; align-items: center; gap: 10px; padding: 14px 20px 14px 16px; border-radius: 999px; background: #128C4B; color: #fff; font-size: 14px; font-weight: 600; box-shadow: 0 12px 30px -10px rgba(18,140,75,.7); transition: background .2s, transform .2s; }
+  .wa-fab { display: inline-flex; align-items: center; gap: 10px; padding: 13px 18px 13px 14px; border-radius: 12px; background: #128C4B; color: #fff; font-size: 14px; font-weight: 600; box-shadow: 0 12px 30px -10px rgba(18,140,75,.7); transition: background .2s, transform .2s; }
   .wa-fab:hover { background: #0E6F3B; transform: translateY(-2px); }
-  .wa-fab:focus-visible, .wa-menu a:focus-visible { outline: 2px solid #85CCFF; outline-offset: 3px; }
-  .wa-menu { display: none; flex-direction: column; gap: 6px; background: #fff; border-radius: 22px; padding: 10px; box-shadow: 0 24px 50px -16px rgba(6,47,77,.5); min-width: 250px; animation: waIn .25s ease both; }
+  .wa-menu { display: none; flex-direction: column; gap: 4px; background: #fff; border-radius: 16px; padding: 8px; box-shadow: 0 24px 50px -16px rgba(6,47,77,.5); min-width: 240px; animation: waIn .25s ease both; }
   .wa-widget.open .wa-menu { display: flex; }
-  .wa-menu a { display: flex; flex-direction: column; padding: 12px 16px; border-radius: 14px; font-size: 14px; font-weight: 600; color: #062F4D; }
-  .wa-menu a small { font-weight: 500; color: #55697B; font-size: 13px; }
-  .wa-menu a:hover { background: #F1F7FC; }
+  .wa-menu a { display: flex; flex-direction: column; padding: 11px 14px; border-radius: 10px; font-size: 14px; font-weight: 600; color: #062F4D; }
+  .wa-menu a small { font-weight: 500; color: #5B6E7F; font-size: 13px; }
+  .wa-menu a:hover { background: #F4F8FB; }
   @keyframes waIn { from { opacity: 0; transform: translateY(8px); } }
-  @media (max-width: 600px) { .wa-fab span { display: none; } .wa-fab { padding: 15px; } }
-/* phone: smaller type, tighter spacing, shorter blocks */
-@media(max-width:600px){
-body{font-size:15px;line-height:1.55}
-.wrap{padding:0 18px}
-.btn{padding:12px 20px;font-size:14.5px}
-.nav{top:10px;padding:0 12px}.nav-pill{height:56px;padding:0 8px 0 18px}.brand{font-size:16.5px}.brand svg{width:20px;height:25px}
-.nav-links{top:66px;left:12px;right:12px}
-.hero{padding:76px 10px 0}
-.hero-frame{border-radius:24px;padding:30px 20px 26px;min-height:0}
-.hero h1{font-size:33px;margin-bottom:14px}.hero p{font-size:15.5px;margin-bottom:22px}
-.cta{padding-left:10px;padding-right:10px}
-.cta-box{border-radius:24px;padding:46px 20px}.cta-box h2{font-size:26px}.cta-box p{font-size:15px;margin-bottom:22px}
-footer.site{margin-left:10px;margin-right:10px;border-radius:24px 24px 0 0;padding:40px 0 22px}
-.f-top{gap:26px;margin-bottom:28px}.f-cols{display:grid;grid-template-columns:1fr 1fr;gap:26px 20px}.f-col:last-child{grid-column:1/-1}.f-col h4{margin-bottom:8px}.f-col a,.f-col span{margin-bottom:6px}
-.home-fab{left:12px;bottom:12px;padding:10px 15px 10px 12px;font-size:13px}.wa-widget{right:12px;bottom:12px}.wa-fab{padding:12px}
-.faq{padding:100px 0 56px}.faq-grid{gap:28px}
-.side h1{font-size:34px;margin-bottom:12px}.side>p{font-size:15.5px;margin-bottom:22px}
-.ask{border-radius:24px;padding:24px 20px}.ask h2{font-size:22px}.ask p{font-size:14.5px;margin-bottom:18px}
-.acc{gap:10px}.item{border-radius:20px}.q{padding:17px 18px;font-size:16.5px;gap:14px}.icon{width:32px;height:32px}.a p{padding:0 18px 20px;font-size:14.5px}
-}
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
+  }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 900px) {
+    .faq-grid { grid-template-columns: 1fr; }
+    .side { position: static; grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 600px) {
+    body { font-size: 15px; }
+    .wrap { padding: 0 18px; }
+    .btn { padding: 13px 20px; font-size: 14.5px; }
+    .nav-pill { height: 66px; padding: 0 18px; } .brand { font-size: 17px; } .brand svg { width: 21px; height: 26px; }
+    .nav-links { top: 66px; padding: 6px 18px 20px; }
+    .hero { padding: 48px 0 32px; } .hero h1 { font-size: 34px; } .hero p { font-size: 16px; }
+    .search { margin-top: 22px; } .search input { padding: 14px 16px 14px 46px; font-size: 15px; }
+    .faq { padding-top: 20px; }
+    .side { grid-template-columns: 1fr; }
+    .acc { gap: 10px; } .q { padding: 16px 18px; font-size: 15.5px; gap: 14px; } .icon { width: 30px; height: 30px; } .a p { padding: 0 18px 18px; font-size: 14.5px; }
+    .ask { padding: 22px 20px; } .ask h2 { font-size: 20px; } .ask p { font-size: 14.5px; }
+    footer.site { margin-top: 72px; padding: 48px 0 90px; }
+    .f-top { gap: 28px; margin-bottom: 28px; } .f-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 26px 20px; } .f-col:last-child { grid-column: 1 / -1; }
+    .home-fab { left: 12px; bottom: 12px; padding: 10px 14px 10px 12px; font-size: 13px; }
+    .wa-widget { right: 12px; bottom: 12px; } .wa-fab span { display: none; } .wa-fab { padding: 12px; }
+  }
 </style>
 </head>
 <body>
@@ -189,58 +230,79 @@ footer.site{margin-left:10px;margin-right:10px;border-radius:24px 24px 0 0;paddi
   Home
 </a>
 
+<header class="hero">
+  <div class="wrap hero-copy">
+    <h1>Frequently asked questions.</h1>
+    <p>Everything about enrolling, paying, and studying at Himaayah Schools. Can't find your answer? Reach out directly.</p>
+    <label class="search">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <input type="search" id="faqSearch" placeholder="Search questions, e.g. payment" aria-label="Search the FAQ" autocomplete="off">
+    </label>
+  </div>
+</header>
 
 <main class="faq">
   <div class="wrap faq-grid">
 
-    <div class="side">
-      <h1>Frequently asked questions.</h1>
-      <p>Everything about enrolling, paying, and studying at Himaayah Schools. Can't find your answer? Reach out directly.</p>
+    <div>
+      <div class="acc" id="faqList">
+
+        <div class="item open">
+          <button class="q" type="button" aria-expanded="true">How do I enroll?<span class="icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></button>
+          <div class="a"><div><p>Head to <a href="enroll.html">Enroll</a> and work through three short steps: student information, then your programme and plan, then payment. It takes about two minutes. At the end, you pay by bank transfer and send your receipt to us on WhatsApp using a message that is already written for you.</p></div></div>
+        </div>
+
+        <div class="item">
+          <button class="q" type="button" aria-expanded="false">What payment methods do you accept?<span class="icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></button>
+          <div class="a"><div><p>Bank transfer. After you pay, the enrollment page opens WhatsApp with your details and plan already filled in. Attach your receipt and send it, and we confirm your place, usually within a few hours. Card payment is coming soon.</p></div></div>
+        </div>
+
+        <div class="item">
+          <button class="q" type="button" aria-expanded="false">Which programmes do you offer?<span class="icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></button>
+          <div class="a"><div><p>Four: <a href="teenagers-building-circle.html">Teenagers Building Circle</a> (ages 13–19), <a href="madrasah.html">Madrasah</a> (Qur'an and Islamic studies), <a href="academy.html">Academy</a> (UTME, WAEC/NECO, A-Levels), and <a href="skills-school.html">Skills School</a> (Public Speaking, Graphic Design, Data Analysis).</p></div></div>
+        </div>
+
+        <div class="item">
+          <button class="q" type="button" aria-expanded="false">Are plans billed monthly, or one-time?<span class="icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></button>
+          <div class="a"><div><p>Most Madrasah and Academy plans bill monthly. Skills School's Public Speaking and Graphic Design courses are one-time payments; Data Analysis bills every two months. Each plan's page shows its exact billing before you pay.</p></div></div>
+        </div>
+
+        <div class="item">
+          <button class="q" type="button" aria-expanded="false">What ages do you accept?<span class="icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></button>
+          <div class="a"><div><p>Teenagers Building Circle is specifically for ages 13–19. Madrasah, Academy, and Skills School are open more broadly — from school-age students to adult learners, depending on the plan.</p></div></div>
+        </div>
+
+        <div class="item">
+          <button class="q" type="button" aria-expanded="false">Can I change my plan after enrolling?<span class="icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></button>
+          <div class="a"><div><p>Yes — email us at <a href="mailto:himaayahschools@gmail.com">himaayahschools@gmail.com</a> with your name and current plan, and we'll help you switch.</p></div></div>
+        </div>
+
+        <div class="item">
+          <button class="q" type="button" aria-expanded="false">How do I contact Himaayah Schools?<span class="icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></button>
+          <div class="a"><div><p>Email <a href="mailto:himaayahschools@gmail.com">himaayahschools@gmail.com</a>, or find us on Instagram and X at <a href="https://instagram.com/himaayahschools" target="_blank" rel="noopener">@himaayahschools</a>.</p></div></div>
+        </div>
+
+      </div>
+      <div class="none" id="noResults" hidden><b>No matching questions</b>Try another word, or ask us directly and we'll answer.</div>
+    </div>
+
+    <aside class="side">
       <div class="ask">
+        <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.7-5.2A8.5 8.5 0 1 1 21 11.5z"/></svg></span>
         <h2>Still have a question?</h2>
         <p>We're happy to help. Reach out directly and we'll get back to you.</p>
-        <a href="mailto:himaayahschools@gmail.com" class="btn btn-sky">Email us</a>
+        <a href="mailto:himaayahschools@gmail.com" class="btn lift">Email us</a>
+        <a href="https://wa.me/2347220156487?text=Assalaamu%20alaykum.%20I%20have%20a%20question%20about%20Himaayah%20Schools." target="_blank" rel="noopener" class="alt">or message us on WhatsApp</a>
       </div>
-    </div>
+      <nav class="links" aria-label="Helpful pages">
+        <h3>Helpful pages</h3>
+        <a href="enroll.html">Enroll</a>
+        <a href="programmes.html">All programmes</a>
+        <a href="admissions.html">Admissions</a>
+        <a href="policies.html">Policies</a>
+      </nav>
+    </aside>
 
-    <div class="acc" id="faqList">
-
-      <div class="item open">
-        <button class="q" type="button" aria-expanded="true">How do I enroll?<span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></button>
-        <div class="a"><div><p>Head to <a href="enroll.html">Enroll</a> and work through three short steps: student information, then your programme and plan, then payment. It takes about two minutes. At the end, you pay by bank transfer and send your receipt to us on WhatsApp using a message that is already written for you.</p></div></div>
-      </div>
-
-      <div class="item">
-        <button class="q" type="button" aria-expanded="false">What payment methods do you accept?<span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></button>
-        <div class="a"><div><p>Bank transfer. After you pay, the enrollment page opens WhatsApp with your details and plan already filled in. Attach your receipt and send it, and we confirm your place, usually within a few hours. Card payment is coming soon.</p></div></div>
-      </div>
-
-      <div class="item">
-        <button class="q" type="button" aria-expanded="false">Which programmes do you offer?<span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></button>
-        <div class="a"><div><p>Four: <a href="teenagers-building-circle.html">Teenagers Building Circle</a> (ages 13–19), <a href="madrasah.html">Madrasah</a> (Qur'an and Islamic studies), <a href="academy.html">Academy</a> (UTME, WAEC/NECO, A-Levels), and <a href="skills-school.html">Skills School</a> (Public Speaking, Graphic Design, Data Analysis).</p></div></div>
-      </div>
-
-      <div class="item">
-        <button class="q" type="button" aria-expanded="false">Are plans billed monthly, or one-time?<span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></button>
-        <div class="a"><div><p>Most Madrasah and Academy plans bill monthly. Skills School's Public Speaking and Graphic Design courses are one-time payments; Data Analysis bills every two months. Each plan's page shows its exact billing before you pay.</p></div></div>
-      </div>
-
-      <div class="item">
-        <button class="q" type="button" aria-expanded="false">What ages do you accept?<span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></button>
-        <div class="a"><div><p>Teenagers Building Circle is specifically for ages 13–19. Madrasah, Academy, and Skills School are open more broadly — from school-age students to adult learners, depending on the plan.</p></div></div>
-      </div>
-
-      <div class="item">
-        <button class="q" type="button" aria-expanded="false">Can I change my plan after enrolling?<span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></button>
-        <div class="a"><div><p>Yes — email us at <a href="mailto:himaayahschools@gmail.com">himaayahschools@gmail.com</a> with your name and current plan, and we'll help you switch.</p></div></div>
-      </div>
-
-      <div class="item">
-        <button class="q" type="button" aria-expanded="false">How do I contact Himaayah Schools?<span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></button>
-        <div class="a"><div><p>Email <a href="mailto:himaayahschools@gmail.com">himaayahschools@gmail.com</a>, or find us on Instagram and X at <a href="https://instagram.com/himaayahschools" target="_blank" rel="noopener">@himaayahschools</a>.</p></div></div>
-      </div>
-
-    </div>
   </div>
 </main>
 
@@ -256,7 +318,7 @@ footer.site{margin-left:10px;margin-right:10px;border-radius:24px 24px 0 0;paddi
         <div class="social">
           <a href="https://instagram.com/himaayahschools" target="_blank" rel="noopener" aria-label="Himaayah Schools on Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg></a>
           <a href="https://x.com/himaayahschools" target="_blank" rel="noopener" aria-label="Himaayah Schools on X"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.24 2H21.5l-7.3 8.34L22.8 22h-6.73l-5.27-6.9L4.7 22H1.4l7.8-8.92L1 2h6.9l4.76 6.3L18.24 2zm-1.18 18h1.86L7.03 3.9H5.03L17.06 20z"/></svg></a>
-        <a href="https://ng.linkedin.com/company/himaaayah" target="_blank" rel="noopener" aria-label="Himaayah Schools on LinkedIn"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg></a>
+          <a href="https://ng.linkedin.com/company/himaaayah" target="_blank" rel="noopener" aria-label="Himaayah Schools on LinkedIn"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg></a>
         </div>
       </div>
       <div class="f-cols">
@@ -281,6 +343,7 @@ footer.site{margin-left:10px;margin-right:10px;border-radius:24px 24px 0 0;paddi
           <a href="mailto:himaayahschools@gmail.com">himaayahschools@gmail.com</a>
           <a href="tel:+2348066043320">+234 806 604 3320</a>
           <a href="tel:+2347025842849">+234 702 584 2849</a>
+          <a href="tel:+2347220156487">+234 722 015 6487</a>
           <span>Ilorin, Nigeria</span>
         </div>
       </div>
@@ -303,12 +366,123 @@ footer.site{margin-left:10px;margin-right:10px;border-radius:24px 24px 0 0;paddi
     const b = dd.querySelector('.dd-btn');
     b.addEventListener('click', () => { const o = dd.classList.toggle('open'); b.setAttribute('aria-expanded', o); });
   })();
+
+  // Search: filters questions by question and answer text, highlights matches in the question
+  (function () {
+    const input = document.getElementById('faqSearch'), none = document.getElementById('noResults');
+    const items = [...document.querySelectorAll('#faqList .item')].map((el) => {
+      const q = el.querySelector('.q'), label = q.firstChild;
+      return { el, q, label, orig: label.textContent, text: el.textContent.toLowerCase() };
+    });
+    const escRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    input.addEventListener('input', () => {
+      const v = input.value.trim().toLowerCase(); let shown = 0;
+      items.forEach((it) => {
+        const hit = !v || it.text.includes(v);
+        it.el.hidden = !hit; if (hit) shown++;
+        const span = document.createElement('span');
+        if (v && it.orig.toLowerCase().includes(v)) {
+          span.innerHTML = it.orig.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])).replace(new RegExp('(' + escRe(v) + ')', 'ig'), '<mark>$1</mark>');
+        } else { span.textContent = it.orig; }
+        it.q.replaceChild(span, it.label); it.label = span;
+      });
+      none.hidden = shown > 0;
+    });
+  })();
 </script>
 
+
+<script>
+  // Heading: letters reveal one by one, then a ball hops along the tops of the
+  // letters and lands as the dot on the "i" in "questions" (shown as a dotless ı).
+  (function () {
+    const h = document.querySelector('.hero h1'); if (!h) return;
+    const text = h.textContent.trim();
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    h.setAttribute('aria-label', text);
+    h.textContent = '';
+    const hop = []; let target = null, n = 0;
+    text.split(' ').forEach((word, wi, arr) => {
+      const w = document.createElement('span'); w.className = 'w'; w.setAttribute('aria-hidden', 'true');
+      [...word].forEach((c) => {
+        const sp = document.createElement('span'); sp.className = 'ch';
+        let ch = c;
+        if (!target && /^questions/i.test(word) && c === 'i') { ch = 'ı'; target = sp; }
+        sp.textContent = ch; sp.style.setProperty('--d', (n++ * 38) + 'ms');
+        w.appendChild(sp);
+        if (/[A-Za-zı]/.test(ch) && !target) hop.push(sp);
+      });
+      h.appendChild(w);
+      if (wi < arr.length - 1) h.appendChild(document.createTextNode(' '));
+    });
+    if (!target) return;
+    const ball = document.createElement('span'); ball.className = 'ball'; ball.setAttribute('aria-hidden', 'true');
+    h.appendChild(ball);
+
+    const ctx = document.createElement('canvas').getContext('2d');
+    function geo() {
+      const cs = getComputedStyle(h), f = parseFloat(cs.fontSize);
+      ctx.font = cs.fontWeight + ' ' + cs.fontSize + ' ' + cs.fontFamily;
+      const m = ctx.measureText('Hg'), fa = m.fontBoundingBoxAscent, fd = m.fontBoundingBoxDescent;
+      const hr = h.getBoundingClientRect(), dm = ctx.measureText('\u0131'), stem = (dm.actualBoundingBoxRight || 0) + (dm.actualBoundingBoxLeft || 0), size = Math.max(6, stem > 2 && stem < f * 0.3 ? stem * 1.05 : f * 0.15);
+      const base = (r) => (fa ? r.top + (r.height - (fa + fd)) / 2 + fa : r.top + r.height * 0.8);
+      const at = (sp) => {           // ball resting on top of a letter
+        const r = sp.getBoundingClientRect(), asc = ctx.measureText(sp.textContent).actualBoundingBoxAscent || f * 0.7;
+        return { x: r.left + r.width / 2 - hr.left, y: base(r) - asc - size / 2 - 1 - hr.top };
+      };
+      const dot = () => {            // where the i's dot sits
+        const r = target.getBoundingClientRect(), ai = ctx.measureText('i').actualBoundingBoxAscent || f * 0.75;
+        return { x: r.left + r.width / 2 - hr.left, y: base(r) - ai + size / 2 - hr.top };
+      };
+      return { f, size, at, dot };
+    }
+    const tf = (p, extra) => 'translate(' + p.x + 'px,' + p.y + 'px) translate(-50%,-50%)' + (extra || '');
+    let final = null;
+    function place() { const g = geo(); ball.style.width = ball.style.height = g.size + 'px'; final = g.dot(); ball.style.transform = tf(final); ball.style.opacity = 1; }
+
+    function run() {
+      const g = geo(); ball.style.width = ball.style.height = g.size + 'px';
+      const pts = hop.map(g.at); final = g.dot(); pts.push(final);
+      const start = { x: pts[0].x, y: pts[0].y - g.f * 1.3 };
+      const frames = [], add = (p, t) => frames.push({ p, t });
+      let t = 0; add(start, 0);
+      t += 340; add(pts[0], t);                                   // drop onto the first letter
+      for (let i = 1; i < pts.length; i++) {
+        const a = pts[i - 1], b = pts[i], last = i === pts.length - 1;
+        const dist = Math.hypot(b.x - a.x, b.y - a.y);
+        const H = g.f * (last ? 0.55 : 0.2) + dist * 0.12, d = last ? 520 : Math.min(320, 120 + dist * 0.25);
+        [0.2, 0.4, 0.6, 0.8, 1].forEach((k) => {
+          const x = a.x + (b.x - a.x) * k, y = a.y + (b.y - a.y) * k - 4 * H * k * (1 - k);
+          add({ x, y }, t + d * k);
+        });
+        t += d;
+      }
+      ball.style.opacity = 1;
+      const anim = ball.animate(frames.map((fr) => ({ transform: tf(fr.p), offset: fr.t / t })), { duration: t, easing: 'linear', fill: 'forwards' });
+      anim.onfinish = () => {
+        ball.style.transform = tf(final); anim.cancel();
+        const sq = ball.animate([
+          { transform: tf(final, ' scale(1.5,.55)') },
+          { transform: tf(final, ' scale(.85,1.15)') },
+          { transform: tf(final, ' scale(1)') }
+        ], { duration: 380, easing: 'cubic-bezier(.2,.7,.2,1)' });
+        sq.onfinish = () => ball.classList.add('landed');
+      };
+    }
+
+    const revealMs = n * 38 + 700;
+    (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(() => {
+      if (reduce || !ball.animate) { place(); return; }
+      setTimeout(run, revealMs);
+    });
+    let rz; addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { if (final) place(); }, 120); });
+  })();
+</script>
 <div class="wa-widget" id="waWidget">
   <div class="wa-menu" id="waMenu">
-    <a href="https://wa.me/2348066043320?text=Assalaamu%20alaykum.%20I%27d%20like%20to%20ask%20about%20Himaayah%20Schools." target="_blank" rel="noopener">Chat on WhatsApp <small>+234 806 604 3320</small></a>
-    <a href="https://wa.me/2347025842849?text=Assalaamu%20alaykum.%20I%27d%20like%20to%20ask%20about%20Himaayah%20Schools." target="_blank" rel="noopener">Chat on WhatsApp <small>+234 702 584 2849</small></a>
+    <a href="https://wa.me/2348066043320?text=Assalaamu%20alaykum.%20I%27d%20like%20to%20ask%20about%20Himaayah%20Schools." target="_blank" rel="noopener">Academy <small>+234 806 604 3320</small></a>
+    <a href="https://wa.me/2347025842849?text=Assalaamu%20alaykum.%20I%27d%20like%20to%20ask%20about%20Himaayah%20Schools." target="_blank" rel="noopener">Madrasah <small>+234 702 584 2849</small></a>
+    <a href="https://wa.me/2347220156487?text=Assalaamu%20alaykum.%20I%27d%20like%20to%20ask%20about%20Himaayah%20Schools." target="_blank" rel="noopener">General <small>+234 722 015 6487</small></a>
   </div>
   <button type="button" class="wa-fab" id="waBtn" aria-expanded="false" aria-controls="waMenu" aria-label="Chat with us on WhatsApp">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.7-5.2A8.5 8.5 0 1 1 21 11.5z"/></svg>
