@@ -70,6 +70,7 @@
   .dd-menu { position: absolute; top: 100%; left: -16px; min-width: 260px; padding: 20px 8px 8px; opacity: 0; visibility: hidden; transform: translateY(6px); transition: opacity .2s, transform .2s, visibility .2s; }
   .dd-menu::before { content: ''; position: absolute; inset: 12px 0 0 0; background: #fff; border: 1px solid var(--line); border-radius: 16px; box-shadow: var(--shadow); z-index: -1; }
   .dd:hover .dd-menu, .dd:focus-within .dd-menu, .dd.open .dd-menu { opacity: 1; visibility: visible; transform: none; }
+  .dd-r .dd-menu { left: auto; right: -16px; min-width: 200px; }
   .dd-menu a { display: block; padding: 10px 14px; border-radius: 10px; font-size: 14.5px !important; color: var(--text) !important; }
   .dd-menu a:hover { background: var(--wash); color: var(--ink) !important; }
   @media (max-width: 960px) {
@@ -346,6 +347,11 @@
       <a href="success-stories.html">Success Stories</a>
       <a href="faq.html">FAQ</a>
       <a href="contact.html">Contact</a>
+      <div class="dd dd-r">
+        <button type="button" class="dd-btn" aria-haspopup="true" aria-expanded="false">Login
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="dd-menu"><a href="dashboard.html">Student login</a><a href="teacher.html">Teacher login</a></div>
+      </div>
       <a href="enroll.html" class="btn btn-ink">Enroll Now</a>
     </div>
     <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -578,8 +584,10 @@
 <script>
   const t = document.getElementById('navToggle'), l = document.getElementById('navLinks');
   t.addEventListener('click', () => { const o = l.classList.toggle('open'); t.setAttribute('aria-expanded', o); });
-  const dd = document.querySelector('.dd'), ddb = dd.querySelector('.dd-btn');
-  ddb.addEventListener('click', () => { const o = dd.classList.toggle('open'); ddb.setAttribute('aria-expanded', o); });
+  document.querySelectorAll('.dd').forEach((dd) => {
+    const ddb = dd.querySelector('.dd-btn');
+    ddb.addEventListener('click', () => { const o = dd.classList.toggle('open'); ddb.setAttribute('aria-expanded', o); });
+  });
 
   // Scroll reveal + count-up on stats
   const run = (el) => {
