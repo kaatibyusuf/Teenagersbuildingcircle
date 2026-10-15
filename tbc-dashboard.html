@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teenagers Building Circle | Himaayah Schools</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#094570">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--deep:#062F4D;--ink:#094570;--sky:#85CCFF;--sky-d:#3E97D9;--wash:#F1F7FC;--text:#0E2A3D;--muted:#55697B;--line:rgba(9,69,112,.12);--d:'Bricolage Grotesque','Inter',sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{font-family:'Inter',sans-serif;color:var(--text);background:var(--wash);line-height:1.55;-webkit-font-smoothing:antialiased;min-height:100vh}
+a{color:inherit;text-decoration:none}button,input,textarea{font:inherit}button{cursor:pointer;border:0;background:none}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,summary:focus-visible{outline:2px solid var(--sky-d);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 24px;font-size:14.5px;font-weight:600;border-radius:999px;transition:background .2s,color .2s}
+.btn:disabled{opacity:.6;cursor:default}
+.btn-ink{background:var(--ink);color:#fff}.btn-ink:hover{background:var(--deep)}
+.btn-sky{background:var(--sky);color:var(--deep)}.btn-sky:hover{background:#fff}
+.btn-line{border:1px solid var(--ink);color:var(--ink)}.btn-line:hover{background:var(--ink);color:#fff}
+.top{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.top div{max-width:1200px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--d);font-weight:700;font-size:18px;color:var(--ink)}
+.top nav{display:flex;gap:10px;align-items:center}.top .btn{padding:10px 18px;font-size:13.5px}
+.wrap{max-width:1200px;margin:0 auto;padding:24px}
+/* login */
+.login{min-height:calc(100vh - 62px);display:grid;place-items:center;padding:24px}
+.lbox{width:100%;max-width:440px;background:#fff;border-radius:32px;padding:40px;box-shadow:0 30px 60px -40px rgba(6,47,77,.5)}
+.lbox h1{font-family:var(--d);font-size:34px;line-height:1.08;letter-spacing:-.02em;color:var(--deep);margin-bottom:8px}.lbox p{color:var(--muted);margin-bottom:24px;font-size:15px}
+.f{margin-bottom:14px}.f label{display:block;font-size:13.5px;font-weight:600;color:var(--deep);margin-bottom:6px}
+.f input{width:100%;padding:14px 16px;border-radius:14px;border:1.5px solid transparent;background:var(--wash);font-size:15px}.f input:focus{outline:none;border-color:var(--ink);background:#fff}
+.err{color:#B42318;font-size:13.5px;min-height:20px;margin:4px 0 10px}.lbox .btn{width:100%}.hint{margin-top:16px;font-size:13px;color:var(--muted)}.hint a{color:var(--ink);font-weight:600}
+.demo{background:var(--wash);border-radius:14px;padding:10px 14px;font-size:13px;color:var(--deep);margin-bottom:16px}
+/* dashboard */
+.greet{background:var(--ink);color:#fff;border-radius:32px;padding:36px 40px;display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap}
+.greet small{color:var(--sky);font-weight:600;font-size:14px}.greet h1{font-family:var(--d);font-size:clamp(28px,4vw,44px);line-height:1.08;letter-spacing:-.02em;margin:4px 0 12px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}.chips span{font-size:13px;font-weight:600;padding:7px 14px;border-radius:999px;background:rgba(255,255,255,.14)}
+.remind{display:grid;gap:8px;margin-top:16px}
+.remind a{display:flex;justify-content:space-between;align-items:center;gap:14px;background:#fff;border-radius:20px;padding:14px 20px;font-size:14.5px;font-weight:600;color:var(--deep);transition:box-shadow .2s}
+.remind a:hover{box-shadow:0 0 0 1.5px var(--ink)}
+.remind a span{flex-shrink:0;font-size:12.5px;font-weight:700;padding:5px 12px;border-radius:999px;background:var(--sky);color:var(--deep)}
+.remind a.urgent span{background:#FEE4E2;color:#B42318}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px;margin-top:16px}
+.c{background:#fff;border-radius:28px;padding:28px;grid-column:span 4;animation:up .5s cubic-bezier(.2,.7,.2,1) backwards;animation-delay:calc(var(--i,0)*60ms)}
+.c.w6{grid-column:span 6}.c.w8{grid-column:span 8}.c.w12{grid-column:span 12}
+@media(max-width:1000px){.c,.c.w6,.c.w8{grid-column:span 6}}@media(max-width:700px){.c,.c.w6,.c.w8,.c.w12{grid-column:span 12}.greet{padding:28px 24px}}
+@keyframes up{from{opacity:0;transform:translateY(18px)}}
+.c h2{font-family:var(--d);font-size:20px;color:var(--deep);margin-bottom:14px}.k{font-size:12.5px;font-weight:700;color:var(--sky-d);margin-bottom:6px}
+.big{font-family:var(--d);font-size:30px;line-height:1.1;color:var(--ink);letter-spacing:-.01em}.sub{color:var(--muted);font-size:14px;margin-top:4px}
+.pill{display:inline-block;font-size:12.5px;font-weight:700;padding:6px 14px;border-radius:999px}
+.p-paid{background:var(--ink);color:#fff}.p-due{background:var(--sky);color:var(--deep)}.p-over{background:#FEE4E2;color:#B42318}
+.bar{height:12px;background:var(--wash);border-radius:99px;overflow:hidden;margin:10px 0 6px}.bar i{display:block;height:100%;background:var(--ink);border-radius:99px;width:0;transition:width 1.1s cubic-bezier(.2,.7,.2,1)}
+.row{display:flex;justify-content:space-between;gap:10px;font-size:13.5px;color:var(--muted)}
+.sur{display:flex;flex-wrap:wrap;gap:8px}.sur span{font-size:13px;font-weight:600;padding:8px 14px;border-radius:999px}
+.s-Memorised{background:var(--ink);color:#fff}.s-Revising{background:var(--sky);color:var(--deep)}.s-In-progress{background:#fff;color:var(--ink);border:1.5px dashed var(--ink)}.s-Not-started{background:var(--wash);color:var(--muted)}
+.leg{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);margin:14px 0 8px}
+.list{list-style:none;display:grid;gap:10px}.list li{display:flex;justify-content:space-between;gap:12px;padding:12px 16px;background:var(--wash);border-radius:16px;font-size:14.5px}.list li b{color:var(--deep)}.list li span{color:var(--muted);text-align:right}
+.list a{color:var(--ink);font-weight:600;border-bottom:1px solid var(--sky-d)}
+table{width:100%;border-collapse:collapse;font-size:14px}th{text-align:left;color:var(--muted);font-size:12.5px;padding:8px 6px}td{padding:11px 6px;border-top:1px solid var(--line)}td:last-child,th:last-child{text-align:right}
+.chart{display:flex;align-items:flex-end;gap:8px;height:90px;margin:6px 0 14px}.chart div{flex:1;background:var(--sky);border-radius:8px 8px 0 0;position:relative;min-height:6px;transition:height .9s}.chart div:last-child{background:var(--ink)}
+.chart div em{position:absolute;top:-18px;left:0;right:0;text-align:center;font-style:normal;font-size:11px;color:var(--muted);font-weight:600}
+.path{display:flex;flex-wrap:wrap;gap:8px}.path span{font-size:13px;font-weight:600;padding:8px 14px;border-radius:999px;background:var(--wash);color:var(--muted)}.path span.done{background:var(--sky);color:var(--deep)}.path span.now{background:var(--ink);color:#fff}
+.empty{color:var(--muted);font-size:14px}.foot{text-align:center;color:var(--muted);font-size:12.5px;padding:28px 0 40px}
+.lnk{color:var(--ink);font-weight:600;border-bottom:1px solid var(--sky-d)}
+/* assignments */
+.asgs{display:grid;gap:10px}
+.asg{background:var(--wash);border-radius:20px}
+.asg[open]{box-shadow:0 0 0 1.5px var(--ink);background:#fff}
+.asg summary{list-style:none;display:flex;justify-content:space-between;align-items:center;gap:14px;padding:16px 20px;cursor:pointer}
+.asg summary::-webkit-details-marker{display:none}
+.asg summary b{display:block;color:var(--deep);font-size:15.5px}
+.asg summary small{color:var(--muted);font-size:13px}
+.st-todo{background:var(--sky);color:var(--deep)}.st-over{background:#FEE4E2;color:#B42318}.st-sub{background:#fff;color:var(--ink);border:1.5px dashed var(--ink)}.st-mark{background:var(--ink);color:#fff}
+.abody{padding:0 20px 20px;display:grid;gap:12px}
+.abody p{font-size:14.5px;color:var(--text)}
+.mark{background:var(--wash);border-radius:16px;padding:14px 16px}.mark b{font-family:var(--d);font-size:24px;color:var(--ink)}
+.mine{background:var(--wash);border-radius:16px;padding:14px 16px}
+.subm{display:grid;gap:8px}
+.subm label{font-size:13px;font-weight:600;color:var(--deep)}
+.subm textarea,.subm input{width:100%;padding:12px 14px;border-radius:14px;border:1.5px solid transparent;background:var(--wash);font-size:14.5px;resize:vertical}
+.subm textarea:focus,.subm input:focus{outline:none;border-color:var(--ink);background:#fff}
+.msg{font-size:13.5px;min-height:18px}.msg.bad{color:#B42318}.msg.good{color:var(--ink);font-weight:600}
+.subm .btn{justify-self:start}
+/* study tools */
+.tools{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.tool{display:block;background:var(--wash);border-radius:20px;padding:18px 20px;border:1.5px solid transparent;transition:border-color .2s,background .2s,transform .2s}
+.tool:hover{border-color:var(--ink);background:#fff;transform:translateY(-2px)}
+.tool b{display:block;font-family:var(--d);font-size:17px;color:var(--deep);margin-bottom:2px}
+.tool span{display:block;font-size:13.5px;color:var(--muted)}
+@media(max-width:700px){.tools{grid-template-columns:1fr}}
+/* phone: smaller type, tighter spacing */
+@media(max-width:600px){
+body{line-height:1.5}
+.top div{padding:9px 14px}.brand{font-size:16px}.brand svg{width:19px;height:23px}.top .btn{padding:8px 14px;font-size:13px}
+.wrap{padding:14px}
+.login{padding:16px;min-height:calc(100vh - 54px)}.lbox{padding:26px 20px;border-radius:24px}.lbox h1{font-size:27px}.lbox p{margin-bottom:18px;font-size:14.5px}
+.btn{padding:11px 20px;font-size:14px}
+.greet{padding:22px 20px;border-radius:24px;gap:14px}.greet h1{font-size:25px;margin:2px 0 10px}.chips span{font-size:12px;padding:6px 12px}
+.remind{gap:6px;margin-top:12px}.remind a{padding:11px 16px;font-size:14px;border-radius:16px}
+.grid{gap:12px;margin-top:12px}
+.c{padding:20px 18px;border-radius:22px}.c h2{font-size:18px;margin-bottom:10px}.big{font-size:23px}.sub{font-size:13.5px}
+.sur span{font-size:12.5px;padding:7px 12px}.list li{padding:10px 14px;font-size:14px}
+table{font-size:13px}td{padding:9px 4px}
+.chart{height:76px}
+.path span{font-size:12.5px;padding:7px 12px}
+.asg summary{padding:13px 16px}.asg summary b{font-size:15px}.abody{padding:0 16px 16px}
+.tool{padding:14px 16px}.tool b{font-size:16px}.tool span{font-size:13px}
+.foot{padding:20px 0 28px}
+}
+
+.btn-ghost{background:rgba(255,255,255,.14);color:#fff}.btn-ghost:hover{background:rgba(255,255,255,.26)}
+.gbtn{display:flex;gap:10px;flex-wrap:wrap}
+/* pillars */
+.pils{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.pil{background:var(--wash);border-radius:22px;padding:20px;display:flex;flex-direction:column;gap:2px}
+.ph{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:10px}.ph b{font-family:var(--d);font-size:17px;line-height:1.2;color:var(--deep)}
+.rt{flex:none;font-size:11.5px;font-weight:700;padding:4px 10px;border-radius:999px;background:#fff;color:var(--muted)}
+.rt.r3,.rt.r4,.rt.r5{background:var(--ink);color:#fff}.rt.r1,.rt.r2{background:var(--sky);color:var(--deep)}
+.meter{display:flex;gap:5px;margin-bottom:8px}.meter i{flex:1;height:9px;border-radius:99px;background:#fff}.meter i.on{background:var(--ink)}
+.pil .sub{margin-top:2px}
+blockquote{margin-top:12px;background:#fff;border-radius:14px;padding:12px 14px;font-size:14px;color:var(--text)}blockquote cite{display:block;font-style:normal;font-size:12px;color:var(--muted);margin-top:6px}
+.trend{display:flex;align-items:flex-end;gap:4px;height:30px;margin-top:12px}.trend span{flex:1;background:var(--sky);border-radius:4px 4px 0 0;min-height:4px}.trend span:last-child{background:var(--ink)}
+.att{display:flex;flex-wrap:wrap;gap:8px}.att span{display:block;font-size:12.5px;color:var(--muted);padding:9px 14px;border-radius:16px;background:var(--wash)}.att b{display:block;font-size:13.5px;color:var(--deep)}
+.att .a-Absent{background:#FEE4E2}.att .a-Absent b{color:#B42318}.att .a-Present{background:var(--sky)}.att .a-Present b{color:var(--deep)}
+@media(max-width:1000px){.pils{grid-template-columns:repeat(2,1fr)}}@media(max-width:600px){.pils{grid-template-columns:1fr}.pil{padding:16px}.gbtn .btn{padding:10px 16px}}
+</style>
+</head>
+<body>
+<header class="top"><div>
+<a class="brand" href="index.html"><svg width="22" height="27" viewBox="0 0 377.21 459.6" fill="#094570" aria-hidden="true"><path d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>Himaayah Schools</a>
+<nav><a class="btn btn-line" href="index.html">Home</a><button class="btn btn-ink" id="out" hidden>Log out</button></nav>
+</div></header>
+
+<main id="login" class="login"><form class="lbox" id="lf" novalidate>
+<h1>Teenagers Building Circle</h1><p>Sign in with the Student ID and access code the school gave you.</p>
+<div class="demo" id="demoNote" hidden><b>Demo mode.</b> Use ID <b>DEMO</b> and code <b>demo</b> to see sample data.</div>
+<div class="f"><label for="sid">Student ID</label><input id="sid" autocomplete="username" autocapitalize="characters" placeholder="e.g. HM-0001" required></div>
+<div class="f"><label for="scode">Access code</label><input id="scode" type="password" autocomplete="current-password" required></div>
+<div class="err" id="err" role="alert"></div>
+<button class="btn btn-ink" id="go" type="submit">Sign in</button>
+<p class="hint">Lost your code? <a href="https://wa.me/2348066043320?text=Assalaamu%20alaykum.%20I%20need%20help%20with%20my%20Teenagers%20Building%20Circle%20login." target="_blank" rel="noopener">Message the school</a>. Madrasah students sign in on the <a href="dashboard.html">student dashboard</a>.</p>
+</form></main>
+
+<main id="app" class="wrap" hidden></main>
+
+<script>
+/* ===== SETTINGS =====
+   Same Apps Script web app as the other portals. While it is empty the page runs in DEMO mode with sample data. */
+const API_URL = 'https://script.google.com/macros/s/AKfycby0AsifBuB_Ad7g1SjDXCipaDU27-BrzYWf67muw5jeY_C0_0uz8AhQYYXdiNRQhvqX/exec';
+const HELP_WA = '2348066043320';
+const PAYMENT_WA = '2347220156487';   /* WhatsApp number students send payment receipts to. Confirm this is the right one. */
+const KEY = 'hb';
+const PILLAR_TEXT = {
+  'Deen': 'Faith and practice that hold up outside the classroom.',
+  'Educational Development': 'Study habits and academic footing for every subject.',
+  'Skills': 'Practical ability you can actually use.',
+  'Personal Development': 'Character and self-management.'
+};
+const RATING = ['Not rated yet', 'Needs support', 'Developing', 'On track', 'Strong', 'Excelling'];
+
+const $ = (id) => document.getElementById(id);
+const esc = (t) => String(t ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fdate = (iso, t) => { const d = new Date(iso); return isNaN(d) ? esc(iso) : d.toLocaleDateString('en-GB', {weekday:'short', day:'numeric', month:'short', year:'numeric'}) + (t ? ', ' + d.toLocaleTimeString('en-GB', {hour:'2-digit', minute:'2-digit'}) : ''); };
+const naira = (n) => '₦' + Number(n || 0).toLocaleString('en-NG');
+const dd = (iso) => Math.round((new Date(String(iso).slice(0, 10) + 'T00:00:00') - new Date(new Date().toDateString())) / 864e5);
+const inDays = (n) => n === 0 ? 'today' : n === 1 ? 'tomorrow' : 'in ' + n + ' days';
+const safeUrl = (u) => /^https?:\/\//i.test(String(u ?? '').trim());
+
+/* ---- demo data (shown only when API_URL is empty) ---- */
+let demoData = null;
+function demo() {
+  if (demoData) return JSON.parse(JSON.stringify(demoData));
+  const day = (n, h) => { const d = new Date(); d.setDate(d.getDate() + n); d.setHours(h || 0, 0, 0, 0); const p = (x) => String(x).padStart(2, '0'); return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()) + 'T' + p(d.getHours()) + ':00'; };
+  const ymd = (n) => day(n).slice(0, 10);
+  const pil = (name, r, note, hist) => ({ Pillar: name, Rating: r, Note: note, Date: r ? ymd(-3) : '', History: hist.map((x, i) => ({ Date: ymd(-7 * (hist.length - i)), Rating: x })) });
+  demoData = { ok: true, student: { StudentID: 'DEMO', Name: 'Sample Student', Cohort: 'Cohort 1', Plan: 'Full Programme', Facilitator: 'Ustadh Demo', PaymentStatus: 'Due', NextDue: ymd(4), MonthlyFee: 40000, AttendancePresent: 7, AttendanceTotal: 8 },
+    slack: 'https://slack.com',
+    pillars: [pil('Deen', 4, 'Consistent with the daily adhkar. Next, lead a short reminder in the circle.', [2, 3, 3, 4]), pil('Educational Development', 3, 'Planning homework better. Keep the weekly study timetable going.', [2, 2, 3]), pil('Skills', 2, 'Started the public speaking track. Practise the 2 minute talk twice this week.', [1, 2]), pil('Personal Development', 0, '', [])],
+    sessions: [{ SessionID: 'S1', Start: day(1, 17), Title: 'Week 5: Time and attention', Pillar: 'Personal Development', Link: 'https://meet.google.com/', Notes: 'Bring your weekly plan.', Audience: '' }, { SessionID: 'S2', Start: day(8, 17), Title: 'Week 6: Public speaking', Pillar: 'Skills', Link: '', Notes: '', Audience: '' }, { SessionID: 'S0', Start: day(-6, 17), Title: 'Week 4: Study habits', Pillar: 'Educational Development', Link: '', Notes: '', Audience: '' }],
+    attendance: [{ Date: ymd(-6), Status: 'Present' }, { Date: ymd(-13), Status: 'Present' }, { Date: ymd(-20), Status: 'Late' }, { Date: ymd(-27), Status: 'Absent' }, { Date: ymd(-34), Status: 'Present' }],
+    assignments: [
+      { AssignmentID: 'A1', Title: 'Weekly reflection', Subject: 'Personal Development', Instructions: 'Write five lines on one habit you want to change this month, and why.', Assigned: ymd(-2), Due: ymd(2), Link: '', MaxScore: 10, Status: 'To do', Submission: null },
+      { AssignmentID: 'A2', Title: 'Study timetable', Subject: 'Educational Development', Instructions: 'Share a photo link of your weekly study timetable.', Assigned: ymd(-9), Due: ymd(-4), Link: '', MaxScore: 10, Status: 'Marked', Submission: { Submitted: day(-5, 10), Note: 'Done.', Link: '', Score: 8, Feedback: 'Clear and realistic. Add one rest block.', Late: false } }],
+    announcements: [{ Date: ymd(-1), Title: 'Sample announcement', Body: 'Notices from your facilitators appear here, such as a changed session time.' }],
+    payments: [{ Date: ymd(-26), Amount: 40000, Months: 1, Reference: 'TRF-10421' }] };
+  return JSON.parse(JSON.stringify(demoData));
+}
+function demoSubmit(p) {
+  const d = demo(), a = d.assignments.find((x) => x.AssignmentID === p.assignmentId);
+  if (!a) return { ok: false, error: 'Assignment not found.' };
+  if (a.Status === 'Marked') return { ok: false, error: 'This assignment has already been marked.' };
+  a.Status = 'Submitted'; a.Submission = { Submitted: new Date().toISOString(), Note: p.note || '', Link: p.link || '', Score: '', Feedback: '', Late: false };
+  demoData = d; return demo();
+}
+async function api(id, code, action, extra) {
+  if (!API_URL) {
+    await new Promise((r) => setTimeout(r, 300));
+    if (id.toUpperCase() !== 'DEMO' || code !== 'demo') return { ok: false, error: 'Wrong ID or access code.' };
+    return action === 'tbc_submit' ? demoSubmit(extra) : demo();
+  }
+  const r = await fetch(API_URL, { method: 'POST', body: JSON.stringify(Object.assign({ action: action || 'tbc_login', id, code }, extra || {})) });
+  return r.json();
+}
+
+function reminders(s, d, status, due) {
+  const out = [];
+  if (status !== 'exempt' && !isNaN(due)) {
+    const n = dd(s.NextDue);
+    if (n < 0) out.push({ t: 'Your payment is ' + (-n) + ' day' + (n === -1 ? '' : 's') + ' overdue.', a: '#pay', u: 1, tag: 'Pay now' });
+    else if (n <= 7) out.push({ t: 'Your payment is due ' + inDays(n) + '.', a: '#pay', tag: 'Payment' });
+  }
+  (d.assignments || []).filter((a) => (a.Status === 'To do' || a.Status === 'Overdue') && a.Due).forEach((a) => {
+    const n = dd(a.Due);
+    if (n < 0) out.push({ t: '“' + esc(a.Title) + '” is overdue.', a: '#assign', u: 1, tag: 'Submit' });
+    else if (n <= 2) out.push({ t: '“' + esc(a.Title) + '” is due ' + inDays(n) + '.', a: '#assign', tag: 'Assignment' });
+  });
+  const ns = nextSession(d);
+  if (ns) { const n = dd(ns.Start); if (n === 0 || n === 1) out.push({ t: 'Your next session is ' + inDays(n) + ' at ' + new Date(ns.Start).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }) + '.', a: '#next', tag: 'Session' }); }
+  return out;
+}
+function nextSession(d) {
+  const now = new Date();
+  return (d.sessions || []).filter((x) => new Date(x.Start) >= new Date(now.getTime() - 90 * 60000)).sort((a, b) => a.Start < b.Start ? -1 : 1)[0] || null;
+}
+
+function assignmentHtml(a) {
+  const sb = a.Submission, st = a.Status;
+  const cls = { 'To do': 'st-todo', 'Overdue': 'st-over', 'Submitted': 'st-sub', 'Marked': 'st-mark' }[st] || 'st-todo';
+  const marked = st === 'Marked' && sb;
+  return `<details class="asg" data-id="${esc(a.AssignmentID)}"><summary>
+    <div><b>${esc(a.Title)}</b><small>${esc(a.Subject || 'Assignment')}${a.Due ? ' · Due ' + fdate(a.Due) : ''}</small></div>
+    <span class="pill ${cls}">${marked ? esc(sb.Score) + (a.MaxScore ? '/' + esc(a.MaxScore) : '') : esc(st)}</span></summary>
+    <div class="abody">
+      ${a.Instructions ? `<p>${esc(a.Instructions)}</p>` : ''}
+      ${safeUrl(a.Link) ? `<p><a class="lnk" href="${esc(a.Link)}" target="_blank" rel="noopener">Open the resource</a></p>` : ''}
+      ${marked ? `<div class="mark"><div class="k">Marked by your facilitator</div><b>${esc(sb.Score)}${a.MaxScore ? '/' + esc(a.MaxScore) : ''}</b>${sb.Feedback ? `<p>${esc(sb.Feedback)}</p>` : ''}</div>` : ''}
+      ${sb ? `<div class="mine"><div class="k">Your submission${sb.Late ? ' (late)' : ''}, ${fdate(sb.Submitted, true)}</div>${sb.Note ? `<p>${esc(sb.Note)}</p>` : ''}${safeUrl(sb.Link) ? `<p><a class="lnk" href="${esc(sb.Link)}" target="_blank" rel="noopener">Your link</a></p>` : ''}</div>` : ''}
+      ${marked ? '' : `<form class="subm" data-id="${esc(a.AssignmentID)}" novalidate>
+        <label for="n-${esc(a.AssignmentID)}">${sb ? 'Change your note' : 'Your answer or a short note'}</label>
+        <textarea id="n-${esc(a.AssignmentID)}" name="note" rows="3" maxlength="2000" placeholder="Write your answer or a short note">${esc(sb ? sb.Note : '')}</textarea>
+        <label for="l-${esc(a.AssignmentID)}">Link to your work (optional)</label>
+        <input id="l-${esc(a.AssignmentID)}" name="link" type="url" placeholder="https://..." value="${esc(sb ? sb.Link : '')}">
+        <div class="msg" role="status"></div>
+        <button class="btn btn-ink" type="submit">${sb ? 'Update submission' : 'Submit'}</button></form>`}
+    </div></details>`;
+}
+
+function pillarHtml(p) {
+  const r = Number(p.Rating) || 0;
+  const meter = [1, 2, 3, 4, 5].map((i) => `<i class="${i <= r ? 'on' : ''}"></i>`).join('');
+  const hist = (p.History || []).length > 1 ? `<div class="trend" aria-hidden="true">${p.History.map((h) => `<span style="height:${h.Rating * 20}%"></span>`).join('')}</div>` : '';
+  return `<div class="pil"><div class="ph"><b>${esc(p.Pillar)}</b><span class="rt r${r}">${esc(RATING[r])}</span></div>
+    <div class="meter" role="img" aria-label="${esc(p.Pillar)}: ${esc(RATING[r])}${r ? ', ' + r + ' of 5' : ''}">${meter}</div>
+    <p class="sub">${esc(PILLAR_TEXT[p.Pillar] || '')}</p>
+    ${p.Note ? `<blockquote>${esc(p.Note)}<cite>${fdate(p.Date)}</cite></blockquote>` : `<p class="empty" style="margin-top:8px">Your facilitator will add feedback here.</p>`}${hist}</div>`;
+}
+
+function render(d) {
+  const openIds = [...document.querySelectorAll('.asg[open]')].map((x) => x.dataset.id);
+  const s = d.student, first = String(s.Name).split(' ')[0];
+  const att = s.AttendanceTotal ? Math.round(100 * s.AttendancePresent / s.AttendanceTotal) : null;
+  const due = new Date(s.NextDue), status = String(s.PaymentStatus || '').toLowerCase();
+  const pcls = status === 'paid' || status === 'exempt' ? 'p-paid' : status === 'overdue' ? 'p-over' : 'p-due';
+  const asg = d.assignments || [], todo = asg.filter((a) => a.Status === 'To do' || a.Status === 'Overdue').length;
+  const pays = d.payments || [], remind = reminders(s, d, status, due), ns = nextSession(d);
+  const sessions = (d.sessions || []).slice().sort((a, b) => a.Start < b.Start ? -1 : 1);
+  const up = sessions.filter((x) => x !== ns && new Date(x.Start) >= new Date()), past = sessions.filter((x) => new Date(x.Start) < new Date() && x !== ns).reverse();
+  const waHelp = 'https://wa.me/' + HELP_WA + '?text=' + encodeURIComponent('Assalaamu alaykum. This is ' + s.Name + ' (' + s.StudentID + ') from the Teenagers Building Circle.');
+  const waPay = 'https://wa.me/' + PAYMENT_WA + '?text=' + encodeURIComponent('Assalaamu alaykum. This is my payment receipt. Name: ' + s.Name + ', ID: ' + s.StudentID + '.');
+  const rated = (d.pillars || []).filter((p) => p.Rating);
+  $('app').innerHTML = `
+  <section class="greet"><div><small>Assalaamu alaykum</small><h1>${esc(first)}, here is your week.</h1>
+    <div class="chips"><span>${esc(s.Cohort || 'Teenagers Building Circle')}</span><span>${esc(s.Plan)}</span>${s.Facilitator ? `<span>Facilitator: ${esc(s.Facilitator)}</span>` : ''}</div></div>
+    <div class="gbtn">${safeUrl(d.slack) ? `<a class="btn btn-sky" href="${esc(d.slack)}" target="_blank" rel="noopener">Open the cohort Slack</a>` : ''}<a class="btn btn-ghost" href="${waHelp}" target="_blank" rel="noopener">Need help?</a></div></section>
+  ${remind.length ? `<section class="remind" aria-label="Reminders">${remind.map((r) => `<a href="${r.a}" class="${r.u ? 'urgent' : ''}">${r.t}<span>${r.tag}</span></a>`).join('')}</section>` : ''}
+  <div class="grid">
+    <article class="c" id="next" style="--i:0"><div class="k">Next live session</div>${ns ? `<div class="big">${fdate(ns.Start, true)}</div><p class="sub"><b>${esc(ns.Title)}</b>${ns.Pillar ? ' · ' + esc(ns.Pillar) : ''}</p>${ns.Notes ? `<p class="sub">${esc(ns.Notes)}</p>` : ''}${safeUrl(ns.Link) ? `<p><a class="btn btn-ink" style="margin-top:12px" href="${esc(ns.Link)}" target="_blank" rel="noopener">Join the session</a></p>` : '<p class="sub">The join link will appear here.</p>'}` : '<div class="big">Not scheduled</div><p class="sub">Your facilitator will post the next session here.</p>'}</article>
+    <article class="c" id="pay" style="--i:1"><div class="k">Payment</div><span class="pill ${pcls}">${esc(s.PaymentStatus || 'Due')}</span>
+      ${status === 'exempt' ? '<div class="big" style="margin-top:12px">Nothing to pay</div>' : `<div class="big" style="margin-top:12px">${isNaN(due) ? 'No date set' : fdate(s.NextDue)}</div><p class="sub">Next payment due${s.MonthlyFee ? ' · ' + naira(s.MonthlyFee) + ' a month' : ''}.</p>${status === 'paid' ? '' : `<p><a class="btn btn-ink" style="margin-top:12px" href="${waPay}" target="_blank" rel="noopener">Send your receipt</a></p>`}`}</article>
+    <article class="c" style="--i:2"><div class="k">Attendance</div><div class="big">${att === null ? 'No data yet' : att + '%'}</div>
+      ${att === null ? '' : `<div class="bar"><i data-w="${att}"></i></div><div class="row"><span>${s.AttendancePresent} present</span><span>${s.AttendanceTotal} sessions</span></div>`}</article>
+
+    <article class="c w12" id="pillars" style="--i:3"><h2>Your four pillars</h2><p class="sub" style="margin:-8px 0 16px">${rated.length ? 'Your facilitator rates each pillar from 1 to 5 after check-ins. The bars show where you are now.' : 'Your first check-in will appear here.'}</p>
+      <div class="pils">${(d.pillars || []).map(pillarHtml).join('')}</div></article>
+
+    <article class="c w12" id="assign" style="--i:4"><h2>Assignments${todo ? ` <span class="pill st-todo" style="font-size:12px;vertical-align:middle">${todo} to do</span>` : ''}</h2>
+      <div class="asgs">${asg.map(assignmentHtml).join('') || '<p class="empty">No assignments yet. Your facilitator will post them here.</p>'}</div></article>
+
+    <article class="c w6" style="--i:5"><h2>Upcoming sessions</h2><ul class="list">${up.map((x) => `<li style="display:block"><b>${esc(x.Title)}</b> <span style="float:right">${fdate(x.Start, true)}</span>${x.Pillar ? `<div class="sub">${esc(x.Pillar)}</div>` : ''}${safeUrl(x.Link) ? `<div class="sub"><a class="lnk" href="${esc(x.Link)}" target="_blank" rel="noopener">Join link</a></div>` : ''}</li>`).join('') || '<li class="empty">No more sessions scheduled yet.</li>'}</ul>
+      ${past.length ? `<p class="k" style="margin-top:18px">Recent sessions</p><ul class="list">${past.slice(0, 3).map((x) => `<li><b>${esc(x.Title)}</b><span>${fdate(x.Start)}</span></li>`).join('')}</ul>` : ''}</article>
+    <article class="c w6" style="--i:6"><h2>Your attendance</h2><div class="att">${(d.attendance || []).map((a) => `<span class="a-${esc(a.Status)}" title="${esc(a.Status)}"><b>${esc(a.Status)}</b>${fdate(a.Date)}</span>`).join('') || '<p class="empty">No sessions recorded yet.</p>'}</div></article>
+
+    <article class="c w6" style="--i:7"><h2>Announcements</h2><ul class="list">${(d.announcements || []).map((a) => `<li style="display:block"><b>${esc(a.Title)}</b> <span style="float:right">${fdate(a.Date)}</span><div class="sub">${esc(a.Body)}</div></li>`).join('') || '<li class="empty">No announcements.</li>'}</ul></article>
+    <article class="c w6" style="--i:8"><h2>Payment history</h2>${pays.length ? `<table><thead><tr><th>Date</th><th>Reference</th><th>Covers</th><th>Amount</th></tr></thead><tbody>${pays.map((p) => `<tr><td>${fdate(p.Date)}</td><td>${esc(p.Reference || '')}</td><td>${esc(p.Months)} mo</td><td><b>${naira(p.Amount)}</b></td></tr>`).join('')}</tbody></table>` : '<p class="empty">No payments recorded yet.</p>'}</article>
+  </div>
+  <p class="foot">${API_URL ? '' : 'Demo mode: this is sample data. '}Your records are updated by your facilitators. Questions? Use the Need help? button.</p>`;
+  openIds.forEach((id) => { const el = [...document.querySelectorAll('.asg')].find((x) => x.dataset.id === id); if (el) el.open = true; });
+  requestAnimationFrame(() => setTimeout(() => { document.querySelectorAll('.bar i').forEach((b) => { b.style.width = b.dataset.w + '%'; }); }, 80));
+}
+
+function show(data, id, code) {
+  sessionStorage.setItem(KEY, JSON.stringify({ id, code }));
+  $('login').hidden = true; $('app').hidden = false; $('out').hidden = false; render(data); window.scrollTo(0, 0);
+}
+async function signIn(id, code, silent) {
+  const btn = $('go'), err = $('err'); err.textContent = ''; btn.disabled = true; btn.textContent = 'Signing in…';
+  try {
+    const d = await api(id, code);
+    if (d.ok) show(d, id, code); else if (!silent) err.textContent = d.error || 'Could not sign in.'; else sessionStorage.removeItem(KEY);
+  } catch (e) { if (!silent) err.textContent = 'Could not reach the school server. Please try again.'; }
+  btn.disabled = false; btn.textContent = 'Sign in';
+}
+$('demoNote').hidden = !!API_URL;
+$('lf').addEventListener('submit', (e) => { e.preventDefault(); const id = $('sid').value.trim(), code = $('scode').value.trim(); if (!id || !code) { $('err').textContent = 'Enter your Student ID and access code.'; return; } signIn(id, code); });
+$('out').addEventListener('click', () => { sessionStorage.removeItem(KEY); $('app').hidden = true; $('app').innerHTML = ''; $('out').hidden = true; $('login').hidden = false; $('scode').value = ''; });
+
+$('app').addEventListener('submit', async (e) => {
+  const f = e.target.closest('form.subm'); if (!f) return;
+  e.preventDefault();
+  const msg = f.querySelector('.msg'), btn = f.querySelector('button'), id = f.dataset.id;
+  let saved = null; try { saved = JSON.parse(sessionStorage.getItem(KEY) || 'null'); } catch (x) {}
+  const bad = (t) => { msg.textContent = t; msg.className = 'msg bad'; };
+  if (!saved) return bad('Please log in again.');
+  const note = f.elements.note.value.trim(), link = f.elements.link.value.trim();
+  if (!note && !link) return bad('Add a note or a link to your work.');
+  if (link && !safeUrl(link)) return bad('The link must start with http:// or https://');
+  const label = btn.textContent; btn.disabled = true; btn.textContent = 'Sending…'; msg.textContent = ''; msg.className = 'msg';
+  try {
+    const d = await api(saved.id, saved.code, 'tbc_submit', { assignmentId: id, note, link });
+    if (d.ok) {
+      render(d);
+      const nf = [...document.querySelectorAll('form.subm')].find((x) => x.dataset.id === id);
+      if (nf) { const m = nf.querySelector('.msg'); m.textContent = 'Saved. Your facilitator can see it now.'; m.className = 'msg good'; }
+      return;
+    }
+    bad(d.error || 'Could not submit. Please try again.');
+  } catch (err) { bad('Could not reach the school server. Please try again.'); }
+  btn.disabled = false; btn.textContent = label;
+});
+try { const saved = JSON.parse(sessionStorage.getItem(KEY) || 'null'); if (saved) signIn(saved.id, saved.code, true); } catch (e) {}
+</script>
+</body>
+</html>

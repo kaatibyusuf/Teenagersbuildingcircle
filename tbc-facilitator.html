@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Facilitator | Teenagers Building Circle</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#094570">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ===== Himaayah design system (matches the public site) ===== */
+:root{--deep:#062F4D;--ink:#094570;--sky:#85CCFF;--sky-d:#3E97D9;--sky-l:#E3F2FD;--wash:#F4F8FB;--text:#0E2A3D;--muted:#5B6E7F;--line:#E3EAF0;--d:'Bricolage Grotesque','Inter',sans-serif;--ease:cubic-bezier(.2,.7,.2,1);--ring:0 0 0 1px var(--line);--shadow:0 0 0 1px var(--line),0 12px 32px -22px rgba(6,47,77,.25)}
+*{box-sizing:border-box;margin:0;padding:0}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{font-family:'Inter',sans-serif;color:var(--text);background:var(--wash);line-height:1.55;-webkit-font-smoothing:antialiased;min-height:100vh}
+a{color:inherit;text-decoration:none}button,input,textarea,select{font:inherit;color:inherit}button{cursor:pointer;border:0;background:none}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,summary:focus-visible{outline:2px solid var(--sky-d);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 22px;font-size:14.5px;font-weight:600;border-radius:12px;transition:background .2s,color .2s,border-color .2s,transform .2s}
+.btn:disabled{opacity:.6;cursor:default}
+.btn-ink{background:var(--ink);color:#fff}.btn-ink:hover:not(:disabled){background:var(--deep)}
+.btn-sky{background:var(--sky);color:var(--deep)}.btn-sky:hover{background:#fff}
+.btn-line{border:1.5px solid var(--line);background:#fff;color:var(--ink)}.btn-line:hover{border-color:var(--ink)}
+.btn-sm{padding:8px 14px;font-size:13px;border-radius:10px}
+
+/* top bar */
+.top{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.top>div{max-width:1200px;margin:0 auto;padding:0 24px;height:68px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--d);font-weight:700;font-size:18px;color:var(--deep)}
+.brand em{font-style:normal;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;padding:3px 9px;border-radius:999px;background:var(--sky-l);color:var(--ink)}
+.top nav{display:flex;gap:8px;align-items:center}.top .btn{padding:9px 16px;font-size:13.5px}
+.wrap{max-width:1200px;margin:0 auto;padding:28px 24px}
+
+/* login */
+.login{min-height:calc(100vh - 69px);display:grid;place-items:center;padding:32px 24px;background:linear-gradient(180deg,#fff 0%,var(--wash) 60%)}
+.lbox{width:100%;max-width:440px;background:#fff;border-radius:20px;padding:40px;box-shadow:var(--shadow);animation:up .5s var(--ease) both}
+.lbox .crest{width:56px;height:56px;border-radius:16px;background:var(--sky-l);display:grid;place-items:center;margin-bottom:20px}
+.lbox .kick{display:block;font-size:12.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--sky-d);margin-bottom:6px}
+.lbox h1{font-family:var(--d);font-size:32px;line-height:1.1;letter-spacing:-.02em;color:var(--deep);margin-bottom:8px}.lbox>p{color:var(--muted);margin-bottom:26px;font-size:15px}
+.f{margin-bottom:16px}.f label,.fl{display:block;font-size:13px;font-weight:600;color:var(--deep);margin-bottom:6px}
+.in,.f input{width:100%;padding:11px 13px;border-radius:10px;border:1.5px solid var(--line);background:#fff;font-size:14.5px;transition:border-color .2s,box-shadow .2s}
+.f input{padding:13px 15px;font-size:15px}
+.in:focus,.f input:focus{outline:none;border-color:var(--ink);box-shadow:0 0 0 4px rgba(62,151,217,.15)}
+textarea.in{resize:vertical}
+select.in{appearance:none;-webkit-appearance:none;padding-right:34px;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23094570' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") right 11px center/14px no-repeat}
+.err{color:#B42318;font-size:13.5px;min-height:20px;margin:4px 0 10px}.lbox .btn{width:100%;padding:14px}
+.demo{background:var(--sky-l);border-radius:12px;padding:11px 14px;font-size:13px;color:var(--ink);margin-bottom:18px}
+
+/* greeting */
+.greet{position:relative;overflow:hidden;background:linear-gradient(120deg,var(--sky-l) 0%,#fff 70%);border-radius:20px;padding:30px 34px;box-shadow:var(--shadow);display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap}
+.greet::after{content:'';position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;border:1.5px dashed rgba(9,69,112,.14);pointer-events:none}
+.greet small{display:block;color:var(--sky-d);font-weight:700;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase}
+.greet h1{font-family:var(--d);font-size:clamp(26px,3.4vw,38px);line-height:1.1;letter-spacing:-.02em;color:var(--deep);margin:6px 0 14px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}.chips span{font-size:13px;font-weight:600;padding:6px 13px;border-radius:999px;background:#fff;color:var(--ink);box-shadow:var(--ring)}
+.chips span:last-child{background:var(--ink);color:#fff;box-shadow:none}
+
+/* tabs */
+.tabs{display:flex;gap:4px;flex-wrap:wrap;margin:18px 0;padding:5px;background:#fff;border-radius:14px;box-shadow:var(--ring);width:fit-content;max-width:100%}
+.tabs button{padding:10px 18px;border-radius:10px;color:var(--muted);font-weight:600;font-size:14px;transition:background .2s,color .2s}
+.tabs button:hover{color:var(--ink);background:var(--wash)}.tabs button[aria-selected=true]{background:var(--ink);color:#fff}
+
+/* cards */
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:18px}
+.c{background:#fff;border-radius:20px;padding:28px;grid-column:span 6;box-shadow:var(--shadow);animation:up .4s var(--ease) backwards}
+.c.w12{grid-column:span 12}.c.w8{grid-column:span 8}.c.w4{grid-column:span 4}
+@media(max-width:1000px){.c,.c.w8,.c.w4{grid-column:span 12}}@media(max-width:700px){.greet{padding:24px 22px}.c{padding:22px}}
+@keyframes up{from{opacity:0;transform:translateY(14px)}}
+.c h2{font-family:var(--d);font-size:20px;color:var(--deep);margin-bottom:6px}.c>.sub{margin-bottom:16px}
+.sub{color:var(--muted);font-size:14px}.k{font-size:12.5px;font-weight:700;color:var(--sky-d);margin-bottom:4px}
+.pill{display:inline-block;font-size:12px;font-weight:700;padding:4px 11px;border-radius:999px;white-space:nowrap}
+.p-ink{background:var(--ink);color:#fff}.p-sky{background:var(--sky-l);color:var(--ink)}.p-red{background:#FEE4E2;color:#B42318}.p-wash{background:var(--wash);color:var(--muted)}.p-dash{background:#fff;color:var(--ink);border:1.5px dashed var(--ink)}
+.lnk{color:var(--ink);font-weight:600;border-bottom:1px solid var(--sky-d)}
+.empty{color:var(--muted);font-size:14px;padding:14px 16px;background:var(--wash);border-radius:12px}
+
+/* forms */
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.row3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:640px){.row2,.row3{grid-template-columns:1fr}}
+.frm{display:grid;gap:14px;margin-top:6px}
+.frm .btn{justify-self:start}
+.inline{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.inline .in{flex:1;min-width:120px}
+
+/* attendance */
+.alist{display:grid;gap:8px;margin:14px 0 18px;max-height:520px;overflow:auto}
+.arow{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 12px 10px 16px;background:var(--wash);border-radius:12px;flex-wrap:wrap}
+.arow b{display:block;color:var(--deep);font-size:14.5px}.arow small{color:var(--muted);font-size:12.5px}
+.segb{display:flex;gap:2px;flex-wrap:wrap;background:#fff;padding:3px;border-radius:10px;box-shadow:var(--ring)}
+.segb button{padding:6px 12px;border-radius:8px;font-size:12.5px;font-weight:600;color:var(--muted);transition:background .15s,color .15s}
+.segb button:hover{color:var(--ink)}
+.segb button.on{background:var(--ink);color:#fff}
+.segb button.on[data-v=Absent]{background:#B42318}.segb button.on[data-v=Late]{background:#B7791F}.segb button.on[data-v=Excused]{background:var(--sky-d)}
+.bar2{display:flex;gap:10px;align-items:end;flex-wrap:wrap;margin-top:12px}.bar2>div{min-width:170px}
+.pick{display:grid;gap:6px;margin:10px 0 14px;max-height:240px;overflow:auto}
+.pick label{display:flex;gap:10px;align-items:center;font-size:14px;padding:9px 12px;background:var(--wash);border-radius:10px;cursor:pointer;transition:background .15s}
+.pick label:hover{background:var(--sky-l)}
+.pick input{width:17px;height:17px;accent-color:var(--ink)}
+
+/* lists */
+.list{list-style:none;display:grid;gap:8px}
+.list li{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:11px 14px;background:var(--wash);border-radius:12px;font-size:14px}
+.list li button{color:var(--ink);font-weight:600;font-size:13px;padding:6px 12px;border-radius:8px;background:#fff;box-shadow:var(--ring)}
+.list li button:hover{box-shadow:0 0 0 1.5px var(--ink)}
+details.box{background:#fff;border-radius:14px;margin-top:10px;box-shadow:var(--ring);transition:box-shadow .2s}
+details.box:hover{box-shadow:0 0 0 1px #C9D8E4}
+details.box[open]{box-shadow:0 0 0 1.5px var(--ink),0 16px 36px -24px rgba(6,47,77,.35)}
+details.box>summary{list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:15px 18px;cursor:pointer}
+details.box>summary::-webkit-details-marker{display:none}
+details.box>summary::after{content:'';flex:none;width:9px;height:9px;border-right:2.2px solid var(--ink);border-bottom:2.2px solid var(--ink);transform:rotate(45deg) translateY(-3px);transition:transform .25s;margin-left:4px}
+details.box[open]>summary::after{transform:rotate(225deg) translateY(-3px)}
+details.box>summary b{display:block;color:var(--deep);font-size:15px}details.box>summary small{color:var(--muted);font-size:12.5px}
+.sum-r{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;margin-left:auto}
+.body{padding:4px 18px 20px;display:grid;gap:20px;border-top:1px solid var(--line);padding-top:18px}
+.sec h3{font-family:var(--d);font-size:16px;color:var(--deep);margin-bottom:10px}
+.surs{display:grid;gap:6px;margin-bottom:10px}
+.sr{display:flex;gap:8px;align-items:center;padding:6px 6px 6px 14px;background:var(--wash);border-radius:10px;font-size:14px}
+.sr span{flex:1;font-weight:600;color:var(--deep)}.sr select{width:auto;padding:7px 32px 7px 10px}
+.x{width:30px;height:30px;border-radius:8px;background:#fff;color:#B42318;font-weight:700;box-shadow:var(--ring)}.x:hover{background:#FEE4E2}
+.mj{display:grid;grid-template-columns:140px 1fr;gap:8px;margin-bottom:6px}
+.chipl{display:flex;gap:6px;flex-wrap:wrap}.chipl span{font-size:12.5px;font-weight:600;padding:5px 11px;border-radius:999px;background:var(--wash);color:var(--muted)}
+.mrow{padding:14px 16px;background:var(--wash);border-radius:12px;display:grid;gap:10px}
+.mh{display:flex;justify-content:space-between;align-items:center;gap:10px}.mh b{color:var(--deep);font-size:14.5px}
+.mine{background:#fff;border-radius:10px;padding:11px 13px;font-size:14px;box-shadow:var(--ring)}.mine p{margin-top:4px}
+table{width:100%;border-collapse:collapse;font-size:14px}th{text-align:left;color:var(--muted);font-size:12.5px;padding:8px 6px}td{padding:11px 6px;border-top:1px solid var(--line)}
+tr:first-child td{border-top:0}
+.scores{display:grid;gap:8px;margin:8px 0}.scores div{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:7px 7px 7px 14px;background:var(--wash);border-radius:12px;font-size:14px}.scores input{width:100px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--deep);color:#fff;padding:12px 20px;border-radius:12px;font-size:14px;font-weight:600;z-index:100;box-shadow:0 14px 30px -10px rgba(6,47,77,.6);max-width:90vw;text-align:center;animation:up .3s var(--ease) both}
+.toast.bad{background:#B42318}
+.foot{text-align:center;color:var(--muted);font-size:12.5px;padding:32px 0 44px}
+
+/* phone */
+@media(max-width:600px){
+body{line-height:1.5}
+.btn{padding:11px 18px;font-size:14px}
+.top>div{padding:0 14px;height:60px}.brand{font-size:15px;white-space:nowrap;min-width:0}.brand em{display:none}.brand svg{width:19px;height:23px;flex:none}.top .btn{padding:7px 12px;font-size:12.5px;border-radius:10px;white-space:nowrap}.top nav{gap:6px;flex:none}
+.wrap{padding:16px 14px}
+.login{padding:20px 14px;min-height:calc(100vh - 61px)}.lbox{padding:28px 20px}.lbox h1{font-size:27px}.lbox>p{margin-bottom:20px;font-size:14.5px}
+.greet{padding:22px 20px;gap:12px}.greet h1{font-size:25px;margin:4px 0 12px}.chips span{font-size:12px;padding:5px 11px}
+.tabs{flex-wrap:nowrap;overflow-x:auto;width:auto;margin:14px 0;scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}.tabs button{padding:9px 14px;font-size:13.5px;white-space:nowrap;flex:none}
+.grid{gap:12px}.c{padding:20px 16px}.c h2{font-size:18px}
+.alist{max-height:none;gap:6px}.arow{padding:10px 10px 10px 12px}.segb{width:100%}.segb button{flex:1;padding:7px 4px;font-size:12px}
+.bar2>div{min-width:0;flex:1 1 140px}
+details.box>summary{padding:13px 14px}.body{padding:14px 14px 16px;gap:16px}
+.mj{grid-template-columns:1fr}
+.list li{padding:10px 12px}.mrow{padding:12px}
+.scores div{padding:6px 6px 6px 12px}.scores input{width:84px}
+.toast{bottom:14px;padding:10px 16px;font-size:13.5px}
+.foot{padding:22px 0 30px}
+}
+
+/* admin */
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 16px}
+.tile{background:var(--wash);border-radius:14px;padding:12px 14px}.tile b{display:block;font-family:var(--d);font-size:24px;line-height:1.1;color:var(--ink)}.tile span{font-size:12.5px;color:var(--muted)}
+.tile.warn b{color:#B42318}
+.tool{display:flex;gap:10px;align-items:end;flex-wrap:wrap;margin:6px 0 12px}.tool>div{min-width:150px;flex:1 1 150px}
+.pick label small{margin-left:auto;color:var(--muted);font-size:12.5px;text-align:right}
+.pick{max-height:420px}
+@media(max-width:600px){.tiles{gap:8px}.tile{padding:10px 12px}.tile b{font-size:21px}.pick{max-height:320px}.pick label small{display:none}}
+.pcheck{background:var(--wash);border-radius:14px;padding:12px 14px;display:grid;gap:8px}.ptop{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:baseline}.ptop b{color:var(--deep);font-size:14.5px}.ptop small{color:var(--muted);font-size:12.5px}
+</style>
+</head>
+<body>
+<header class="top"><div>
+<a class="brand" href="index.html"><svg width="22" height="27" viewBox="0 0 377.21 459.6" fill="#094570" aria-hidden="true"><path d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>Himaayah Schools <em>Facilitator</em></a>
+<nav><a class="btn btn-line" href="index.html">Home</a><button class="btn btn-ink" id="out" hidden>Log out</button></nav>
+</div></header>
+
+<main id="login" class="login"><form class="lbox" id="lf" novalidate>
+<div class="crest" aria-hidden="true"><svg width="26" height="32" viewBox="0 0 377.21 459.6" fill="#094570"><path d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg></div>
+<span class="kick">Teenagers Building Circle</span><h1>Facilitator login</h1><p>Sign in with the Teacher ID and access code the school gave you.</p>
+<div class="demo" id="demoNote" hidden><b>Demo mode.</b> Use ID <b>DEMO</b> and code <b>demo</b> to try it with sample data.</div>
+<div class="f"><label for="tid">Teacher ID</label><input id="tid" autocomplete="username" autocapitalize="characters" placeholder="e.g. T-001" required></div>
+<div class="f"><label for="tcode">Access code</label><input id="tcode" type="password" autocomplete="current-password" required></div>
+<div class="err" id="err" role="alert"></div>
+<button class="btn btn-ink" id="go" type="submit">Sign in</button>
+</form></main>
+
+<main id="app" class="wrap" hidden></main>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script>
+/* ===== SETTINGS =====
+   Same Apps Script web app as the other portals. While it is empty the page runs in DEMO mode. */
+const API_URL = 'https://script.google.com/macros/s/AKfycby0AsifBuB_Ad7g1SjDXCipaDU27-BrzYWf67muw5jeY_C0_0uz8AhQYYXdiNRQhvqX/exec';
+const KEY = 'hf';
+const ATT = ['Present', 'Late', 'Absent', 'Excused'];
+
+const $ = (id) => document.getElementById(id);
+const esc = (t) => String(t ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fdate = (iso, t) => { const d = new Date(iso); return isNaN(d) ? esc(iso || 'Not set') : d.toLocaleDateString('en-GB', {day:'numeric', month:'short', year:'numeric'}) + (t ? ', ' + d.toLocaleTimeString('en-GB', {hour:'2-digit', minute:'2-digit'}) : ''); };
+const TABS = [['checkins', 'Check-ins'], ['attendance', 'Attendance'], ['sessions', 'Sessions'], ['account', 'Account']];
+let D = null;
+const S = { tab: 'checkins', q: '', open: '', date: '', marks: {} };
+
+const creds = () => { try { return JSON.parse(sessionStorage.getItem(KEY) || 'null') || {}; } catch (e) { return {}; } };
+async function api(action, extra) {
+  const c = creds();
+  if (!API_URL) return demoApi(c, action, extra || {});
+  const r = await fetch(API_URL, { method: 'POST', body: JSON.stringify(Object.assign({ action, id: c.id, code: c.code }, extra || {})) });
+  return r.json();
+}
+let toastT;
+function toast(msg, bad) { const t = $('toast'); t.textContent = msg; t.className = 'toast' + (bad ? ' bad' : ''); t.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => { t.hidden = true; }, bad ? 5000 : 3000); }
+let busy = false;
+async function act(action, extra, okMsg, btn) {
+  if (busy) return false;
+  busy = true; const old = btn && btn.textContent; if (btn) { btn.disabled = true; btn.textContent = 'Saving…'; }
+  try {
+    const d = await api(action, extra);
+    if (d.ok) { D = d; if (okMsg) toast(okMsg); render(); return true; }
+    toast(d.error || 'Could not save. Please try again.', true);
+  } catch (e) { toast('Could not reach the school server. Please try again.', true); }
+  finally { busy = false; if (btn && document.contains(btn)) { btn.disabled = false; btn.textContent = old; } }
+  return false;
+}
+
+/* ---------- helpers ---------- */
+const today = () => D.today;
+const addDays = (iso, n) => { const d = new Date(iso + 'T00:00:00'); d.setDate(d.getDate() + n); const p = (x) => String(x).padStart(2, '0'); return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()); };
+const attPct = (s) => s.AttendanceTotal ? Math.round(100 * s.AttendancePresent / s.AttendanceTotal) + '% attendance' : 'No attendance yet';
+const shortP = { 'Deen': 'D', 'Educational Development': 'E', 'Skills': 'S', 'Personal Development': 'P' };
+const ratePills = (s) => s.Pillars.map((p) => `<span class="pill ${p.Rating >= 3 ? 'p-ink' : p.Rating ? 'p-sky' : 'p-wash'}" title="${esc(p.Pillar)}">${esc(shortP[p.Pillar] || p.Pillar[0])} ${p.Rating || '–'}</span>`).join('');
+
+/* ---------- views ---------- */
+function vCheckins() {
+  const row = (s) => `<details class="box stu" data-name="${esc((s.Name + ' ' + s.StudentID).toLowerCase())}" data-id="${esc(s.StudentID)}"${s.StudentID === S.open ? ' open' : ''}>
+    <summary><div><b>${esc(s.Name)}</b><small>${esc(s.Cohort || 'No cohort yet')} · ${attPct(s)}</small></div><div class="sum-r">${ratePills(s)}</div></summary>
+    <div class="body"><form class="frm" data-form="checkin" data-id="${esc(s.StudentID)}">
+      <div><label class="fl">Check-in date</label><input class="in" name="date" type="date" value="${esc(today())}" max="${esc(today())}" required style="max-width:220px"></div>
+      ${s.Pillars.map((p, i) => `<div class="pcheck"><div class="ptop"><b>${esc(p.Pillar)}</b><small>${p.Rating ? 'Last: ' + esc(D.ratings[p.Rating - 1]) + ' (' + p.Rating + '), ' + fdate(p.Date) : 'Not rated yet'}</small></div>
+        <div class="row2"><div><label class="fl" for="r-${esc(s.StudentID)}-${i}">Rating</label><select class="in" id="r-${esc(s.StudentID)}-${i}" name="r${i}"><option value="">No change</option>${D.ratings.map((l, k) => `<option value="${k + 1}">${k + 1} · ${esc(l)}</option>`).join('')}</select></div>
+        <div><label class="fl" for="n-${esc(s.StudentID)}-${i}">Note for the student</label><input class="in" id="n-${esc(s.StudentID)}-${i}" name="n${i}" maxlength="500" placeholder="${p.Note ? 'Last note: ' + esc(p.Note.slice(0, 40)) + '…' : 'One clear next step'}"></div></div></div>`).join('')}
+      <button class="btn btn-ink" type="submit">Save check-in</button></form>
+      ${s.Wa ? `<p class="sub" style="margin-top:10px"><a class="lnk" href="https://wa.me/${esc(s.Wa)}" target="_blank" rel="noopener">Message on WhatsApp</a></p>` : ''}</div></details>`;
+  const rated = D.students.filter((s) => s.Pillars.some((p) => p.Rating)).length;
+  return `<article class="c w12"><h2>Pillar check-ins</h2><p class="sub">Open a student, rate any pillar you reviewed this week (1 to 5) and leave one clear next step. Pillars you leave on “No change” stay as they are.</p>
+    <div class="tiles"><div class="tile"><b>${D.students.length}</b><span>students</span></div><div class="tile"><b>${rated}</b><span>have a rating</span></div><div class="tile ${D.students.length - rated ? 'warn' : ''}"><b>${D.students.length - rated}</b><span>not rated yet</span></div></div>
+    <input class="in" id="q" type="search" placeholder="Search by name or ID" value="${esc(S.q)}" style="max-width:340px">
+    <div id="stulist">${D.students.map(row).join('') || '<p class="empty" style="margin-top:12px">No Teenagers Building Circle students are assigned to you yet.</p>'}</div></article>`;
+}
+
+function vAttendance() {
+  const date = S.date || today();
+  const prior = {}; D.attendance.filter((a) => a.Date === date).forEach((a) => { prior[a.StudentID] = a.Status; });
+  const cur = (id) => S.marks[id] || prior[id] || '';
+  return `<article class="c w12"><h2>Session attendance</h2><p class="sub">Pick the session date, mark each student, then save. You can correct a date up to 60 days back.</p>
+    <div class="bar2"><div><label class="fl" for="adate">Date</label><input class="in" id="adate" type="date" value="${esc(date)}" max="${esc(today())}" min="${esc(addDays(today(), -60))}"></div>
+      <button class="btn btn-line btn-sm" type="button" data-act="allPresent">Mark everyone present</button></div>
+    ${D.students.length ? `<div class="alist">${D.students.map((s) => `<div class="arow"><div><b>${esc(s.Name)}</b><small>${esc(s.Cohort || 'No cohort yet')} · ${attPct(s)}</small></div><div class="segb" data-id="${esc(s.StudentID)}">${ATT.map((x) => `<button type="button" data-act="att" data-v="${x}" class="${cur(s.StudentID) === x ? 'on' : ''}">${x}</button>`).join('')}</div></div>`).join('')}</div>
+      <button class="btn btn-ink" type="button" data-act="saveAtt">Save attendance</button>` : '<p class="empty" style="margin-top:12px">No students assigned to you yet.</p>'}</article>`;
+}
+
+function vSessions() {
+  const now = new Date(), list = D.sessions.slice().sort((a, b) => a.Start < b.Start ? -1 : 1);
+  const mineOrAdmin = (x) => D.teacher.Role === 'Admin' || String(x.CreatedBy).toUpperCase() === String(D.teacher.TeacherID).toUpperCase();
+  const li = (x) => `<li style="display:block"><div style="display:flex;justify-content:space-between;gap:10px"><span style="text-align:left"><b>${esc(x.Title)}</b><br><span class="sub">${fdate(x.Start, true)}${x.Pillar ? ' · ' + esc(x.Pillar) : ''}${x.Audience ? ' · ' + esc(x.Audience) : ' · All cohorts'}</span></span>${mineOrAdmin(x) ? `<button class="btn btn-line btn-sm" type="button" data-act="delSession" data-id="${esc(x.SessionID)}" style="align-self:flex-start">Remove</button>` : ''}</div></li>`;
+  const up = list.filter((x) => new Date(x.Start) >= new Date(now.getTime() - 90 * 60000)), past = list.filter((x) => !up.includes(x)).reverse();
+  return `<div class="grid"><article class="c w6"><h2>Post a session</h2><p class="sub">Students see it on their dashboard with the join link.</p>
+    <form class="frm" data-form="session">
+      <div><label class="fl" for="st">Title</label><input class="in" id="st" name="title" maxlength="100" placeholder="e.g. Week 6: Public speaking" required></div>
+      <div class="row2"><div><label class="fl" for="ss">Starts</label><input class="in" id="ss" name="start" type="datetime-local" required></div>
+      <div><label class="fl" for="sp">Pillar (optional)</label><select class="in" id="sp" name="pillar"><option value="">Not specific</option>${D.pillars.map((p) => `<option>${esc(p)}</option>`).join('')}</select></div></div>
+      <div class="row2"><div><label class="fl" for="sa">For</label><select class="in" id="sa" name="audience"><option value="">All cohorts</option>${D.cohorts.map((c) => `<option>${esc(c)}</option>`).join('')}</select></div>
+      <div><label class="fl" for="sl">Join link (optional)</label><input class="in" id="sl" name="link" type="url" placeholder="https://meet.google.com/..."></div></div>
+      <div><label class="fl" for="sn">Note for students (optional)</label><input class="in" id="sn" name="notes" maxlength="500" placeholder="e.g. Bring your weekly plan"></div>
+      <button class="btn btn-ink" type="submit">Post session</button></form></article>
+    <article class="c w6"><h2>Upcoming</h2><ul class="list">${up.map(li).join('') || '<li class="empty">Nothing scheduled.</li>'}</ul>
+      ${past.length ? `<p class="k" style="margin-top:18px;font-size:12.5px;font-weight:700;color:var(--sky-d)">Recent</p><ul class="list">${past.slice(0, 4).map(li).join('')}</ul>` : ''}</article></div>`;
+}
+
+function vAccount() {
+  return `<article class="c w12" style="max-width:560px"><h2>Your account</h2><p class="sub">${esc(D.teacher.Name)} · ${esc(D.teacher.TeacherID)} · ${esc(D.teacher.Role)}</p>
+  <form class="frm" data-form="password"><div><label class="fl" for="np">New access code (8 characters or more)</label><input class="in" id="np" name="newCode" type="password" autocomplete="new-password" minlength="8" maxlength="40"></div>
+  <div><label class="fl" for="np2">Type it again</label><input class="in" id="np2" name="again" type="password" autocomplete="new-password"></div>
+  <button class="btn btn-ink" type="submit">Change my code</button></form></article>`;
+}
+
+const VIEWS = { checkins: vCheckins, attendance: vAttendance, sessions: vSessions, account: vAccount };
+function render() {
+  const next = D.sessions.filter((x) => new Date(x.Start) >= new Date()).sort((a, b) => a.Start < b.Start ? -1 : 1)[0];
+  $('app').innerHTML = `<section class="greet"><div><small>Assalaamu alaykum</small><h1>${esc(D.teacher.Name)}</h1>
+    <div class="chips"><span>${esc(D.teacher.Role)}</span><span>${D.students.length} student${D.students.length === 1 ? '' : 's'}</span><span>${next ? 'Next: ' + esc(next.Title) + ', ' + fdate(next.Start, true) : 'No session scheduled'}</span></div></div></section>
+  <nav class="tabs" role="tablist" aria-label="Sections">${TABS.map(([k, l]) => `<button role="tab" type="button" data-act="tab" data-t="${k}" aria-selected="${S.tab === k}">${l}</button>`).join('')}</nav>
+  <div id="view">${VIEWS[S.tab]()}</div>
+  <p class="foot">${API_URL ? '' : 'Demo mode: sample data, nothing is saved. '}Students see check-ins and sessions on their own dashboard.</p>`;
+  applyFilter();
+}
+function applyFilter() { const q = S.q.trim().toLowerCase(); document.querySelectorAll('#stulist [data-name]').forEach((el) => { el.hidden = !!q && el.dataset.name.indexOf(q) < 0; }); }
+
+/* ---------- events ---------- */
+const app = $('app');
+app.addEventListener('click', async (e) => {
+  const b = e.target.closest('[data-act]'); if (!b) return;
+  const a = b.dataset.act;
+  if (a === 'tab') { S.tab = b.dataset.t; render(); window.scrollTo(0, 0); }
+  else if (a === 'att') { const id = b.parentElement.dataset.id; S.marks[id] = b.dataset.v; b.parentElement.querySelectorAll('button').forEach((x) => x.classList.toggle('on', x === b)); }
+  else if (a === 'allPresent') { D.students.forEach((s) => { S.marks[s.StudentID] = 'Present'; }); document.querySelectorAll('.segb').forEach((g) => g.querySelectorAll('button').forEach((x) => x.classList.toggle('on', x.dataset.v === 'Present'))); }
+  else if (a === 'saveAtt') {
+    const date = S.date || today(), marks = Object.keys(S.marks).map((id) => ({ studentId: id, status: S.marks[id] }));
+    if (!marks.length) return toast('Mark at least one student.', true);
+    const ok = await act('tbcf_attendance', { date, marks }, 'Attendance saved for ' + fdate(date) + '.', b); if (ok) S.marks = {}; render();
+  }
+  else if (a === 'delSession') { if (confirm('Remove this session? Students will no longer see it.')) act('tbcf_session_delete', { sessionId: b.dataset.id }, 'Session removed.', b); }
+});
+app.addEventListener('input', (e) => { if (e.target.id === 'q') { S.q = e.target.value; applyFilter(); } });
+app.addEventListener('change', (e) => { if (e.target.id === 'adate') { S.date = e.target.value; S.marks = {}; render(); } });
+app.addEventListener('toggle', (e) => { const d = e.target; if (d.classList && d.classList.contains('stu')) S.open = d.open ? d.dataset.id : (S.open === d.dataset.id ? '' : S.open); }, true);
+app.addEventListener('submit', (e) => {
+  const f = e.target.closest('form[data-form]'); if (!f) return;
+  e.preventDefault();
+  const k = f.dataset.form, v = (n) => f.elements[n] ? f.elements[n].value : '', btn = f.querySelector('button[type=submit]');
+  if (k === 'checkin') {
+    const entries = D.pillars.map((p, i) => ({ pillar: p, rating: v('r' + i), note: v('n' + i).trim() })).filter((x) => x.rating !== '');
+    if (!entries.length) return toast('Give at least one pillar a rating.', true);
+    const sid = f.dataset.id, nm = (D.students.find((s) => s.StudentID === sid) || {}).Name;
+    act('tbcf_checkin', { studentId: sid, date: v('date'), entries }, 'Check-in saved for ' + nm + '.', btn);
+  } else if (k === 'session') {
+    if (!v('title').trim() || !v('start')) return toast('Enter a title and the start time.', true);
+    act('tbcf_session', { title: v('title').trim(), start: v('start'), pillar: v('pillar'), audience: v('audience'), link: v('link').trim(), notes: v('notes').trim() }, 'Session posted.', btn);
+  } else if (k === 'password') {
+    if (v('newCode').length < 8) return toast('Your new code must be at least 8 characters.', true);
+    if (v('newCode') !== v('again')) return toast('The two codes do not match.', true);
+    const code = v('newCode');
+    act('tbcf_password', { newCode: code }, 'Code changed.', btn).then((ok) => { if (ok) sessionStorage.setItem(KEY, JSON.stringify({ id: creds().id, code })); });
+  }
+});
+
+/* ---------- login ---------- */
+function showApp() { $('login').hidden = true; app.hidden = false; $('out').hidden = false; render(); window.scrollTo(0, 0); }
+async function signIn(id, code, silent) {
+  const btn = $('go'), err = $('err'); err.textContent = ''; btn.disabled = true; btn.textContent = 'Signing in…';
+  sessionStorage.setItem(KEY, JSON.stringify({ id, code }));
+  try {
+    const d = await api('tbcf_login');
+    if (d.ok) { D = d; showApp(); } else { sessionStorage.removeItem(KEY); if (!silent) err.textContent = d.error || 'Could not sign in.'; }
+  } catch (e) { sessionStorage.removeItem(KEY); if (!silent) err.textContent = 'Could not reach the school server. Please try again.'; }
+  btn.disabled = false; btn.textContent = 'Sign in';
+}
+$('demoNote').hidden = !!API_URL;
+$('lf').addEventListener('submit', (e) => { e.preventDefault(); const id = $('tid').value.trim(), code = $('tcode').value.trim(); if (!id || !code) { $('err').textContent = 'Enter your ID and access code.'; return; } signIn(id, code); });
+$('out').addEventListener('click', () => { sessionStorage.removeItem(KEY); D = null; S.tab = 'checkins'; S.marks = {}; S.open = ''; app.hidden = true; app.innerHTML = ''; $('out').hidden = true; $('login').hidden = false; $('tcode').value = ''; });
+{ const c = creds(); if (c.id && c.code) signIn(c.id, c.code, true); }
+
+/* ---------- demo mode (only used while API_URL is empty) ---------- */
+let DEMO = null;
+const isoD = (d) => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+const plus = (n) => { const d = new Date(); d.setDate(d.getDate() + n); return d; };
+const emptyP = () => ['Deen', 'Educational Development', 'Skills', 'Personal Development'].map((p) => ({ Pillar: p, Rating: 0, Note: '', Date: '', History: [] }));
+function demoBase() {
+  const st = (id, name, cohort, p, t) => ({ StudentID: id, Name: name, Cohort: cohort, AttendancePresent: p, AttendanceTotal: t, PaymentStatus: '', Wa: '', Pillars: emptyP() });
+  const a = st('HM-0101', 'Aisha Bello', 'Cohort 1', 7, 8), b = st('HM-0102', 'Yusuf Adeyemi', 'Cohort 1', 5, 8), c = st('HM-0103', 'Maryam Lawal', '', 0, 0);
+  a.Pillars[0] = { Pillar: 'Deen', Rating: 4, Note: 'Consistent with adhkar.', Date: isoD(plus(-3)), History: [{ Date: isoD(plus(-10)), Rating: 3 }, { Date: isoD(plus(-3)), Rating: 4 }] };
+  return { ok: true, today: isoD(new Date()), teacher: { TeacherID: 'DEMO', Name: 'Ustadh Demo', Role: 'Facilitator' }, students: [a, b, c],
+    pillars: ['Deen', 'Educational Development', 'Skills', 'Personal Development'], ratings: ['Needs support', 'Developing', 'On track', 'Strong', 'Excelling'], cohorts: ['Cohort 1'], slack: '',
+    attendance: [], sessions: [{ SessionID: 'S1', Start: isoD(plus(2)) + 'T17:00', Title: 'Week 5: Time and attention', Pillar: 'Personal Development', Link: '', Notes: '', Audience: '', CreatedBy: 'DEMO' }] };
+}
+async function demoApi(c, action, p) {
+  await new Promise((r) => setTimeout(r, 120));
+  if (String(c.id || '').toUpperCase() !== 'DEMO' || c.code !== 'demo') return { ok: false, error: 'Wrong ID or access code.' };
+  if (!DEMO) DEMO = demoBase();
+  const bad = (m) => ({ ok: false, error: m }), stu = (id) => DEMO.students.find((s) => s.StudentID === id);
+  if (action === 'tbcf_checkin') {
+    const s = stu(p.studentId); if (!s) return bad('One of those students is not assigned to you.');
+    if (!p.entries.length) return bad('Give at least one pillar a rating.');
+    p.entries.forEach((x) => { const pl = s.Pillars.find((q) => q.Pillar === x.pillar); pl.Rating = Number(x.rating); pl.Note = x.note || pl.Note; pl.Date = p.date; pl.History.push({ Date: p.date, Rating: Number(x.rating) }); });
+  } else if (action === 'tbcf_attendance') {
+    if (p.date > DEMO.today) return bad('Choose a date within the last 60 days.');
+    p.marks.forEach((m) => { const s = stu(m.studentId); if (!s) return; DEMO.attendance = DEMO.attendance.filter((a) => !(a.StudentID === s.StudentID && a.Date === p.date)); DEMO.attendance.push({ StudentID: s.StudentID, Date: p.date, Status: m.status }); s.AttendanceTotal += m.status === 'Excused' ? 0 : 1; if (m.status === 'Present' || m.status === 'Late') s.AttendancePresent += 1; });
+  } else if (action === 'tbcf_session') {
+    if (p.link && !/^https?:\/\//i.test(p.link)) return bad('The link must start with http:// or https://');
+    DEMO.sessions.push({ SessionID: 'S' + (DEMO.sessions.length + 1), Start: p.start, Title: p.title, Pillar: p.pillar, Link: p.link, Notes: p.notes, Audience: p.audience, CreatedBy: 'DEMO' });
+  } else if (action === 'tbcf_session_delete') { DEMO.sessions = DEMO.sessions.filter((x) => x.SessionID !== p.sessionId);
+  } else if (action === 'tbcf_password') { if (String(p.newCode).length < 8) return bad('Your new code must be 8 to 40 characters.');
+  } else if (action !== 'tbcf_login') return bad('Unknown action.');
+  return JSON.parse(JSON.stringify(DEMO));
+}
+</script>
+</body>
+</html>

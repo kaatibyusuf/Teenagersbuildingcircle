@@ -71,6 +71,7 @@
   .dd:hover .dd-menu, .dd:focus-within .dd-menu, .dd.open .dd-menu { opacity: 1; visibility: visible; transform: none; }
   .dd-menu a { display: block; padding: 10px 14px; border-radius: 10px; font-size: 14.5px !important; color: var(--text) !important; }
   .dd-menu a:hover, .dd-menu a[aria-current="page"] { background: var(--wash); color: var(--ink) !important; }
+  .dd-r .dd-menu { left: auto; right: -16px; min-width: 200px; }
   .dd-menu a[aria-current="page"] { font-weight: 600; }
   @media (max-width: 960px) {
     .nav-toggle { display: block; }
@@ -79,7 +80,7 @@
     .nav-links a:not(.btn) { padding: 14px 0; border-bottom: 1px solid var(--line); }
     .nav-links .btn { margin-top: 16px; }
     .dd-btn { padding: 14px 0; width: 100%; border-bottom: 1px solid var(--line); justify-content: space-between; }
-    .dd-menu { position: static; opacity: 1; visibility: visible; transform: none; padding: 4px 0 4px 12px; display: none; min-width: 0; }
+    .dd-menu, .dd-r .dd-menu { position: static; opacity: 1; visibility: visible; transform: none; padding: 4px 0 4px 12px; display: none; min-width: 0; }
     .dd-menu::before { display: none; }
     .dd.open .dd-menu { display: block; }
     .dd:hover .dd-menu { display: none; } .dd.open:hover .dd-menu { display: block; }
@@ -265,6 +266,14 @@
       <a href="success-stories.html">Success Stories</a>
       <a href="faq.html">FAQ</a>
       <a href="contact.html">Contact</a>
+      <div class="dd dd-r">
+        <button type="button" class="dd-btn" aria-haspopup="true" aria-expanded="false">Login
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="dd-menu">
+          <a href="tbc-dashboard.html">Student login</a>
+          <a href="tbc-facilitator.html">Facilitator login</a>
+        </div>
+      </div>
       <a href="enroll.html?programme=circle" class="btn btn-ink">Enroll Now</a>
     </div>
     <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -392,6 +401,8 @@
           <a href="contact.html">Contact</a>
           <a href="policies.html">Policies</a>
           <a href="enroll.html">Enroll</a>
+          <a href="tbc-dashboard.html">Student Login</a>
+          <a href="tbc-facilitator.html">Facilitator Login</a>
         </div>
         <div class="f-col"><h4>Contact</h4>
           <a href="mailto:himaayahschools@gmail.com">himaayahschools@gmail.com</a>
@@ -408,11 +419,10 @@
 <script>
   const t = document.getElementById('navToggle'), l = document.getElementById('navLinks');
   t.addEventListener('click', () => { const o = l.classList.toggle('open'); t.setAttribute('aria-expanded', o); });
-  (function () {
-    const dd = document.querySelector('.dd'); if (!dd) return;
+  document.querySelectorAll('.dd').forEach((dd) => {
     const b = dd.querySelector('.dd-btn');
     b.addEventListener('click', () => { const o = dd.classList.toggle('open'); b.setAttribute('aria-expanded', o); });
-  })();
+  });
   // Scroll reveal
   (function () {
     const items = document.querySelectorAll('.reveal');
