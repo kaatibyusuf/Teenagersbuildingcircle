@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Our Administrators — Himaayah Schools</title>
-<meta name="description" content="Meet the founder and the administrators who lead and run Himaayah Schools in Ilorin.">
+<meta name="description" content="Meet the founder and the administrators who lead and run Himaayah Schools in Ado-Ekiti, Nigeria.">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20377.21%20459.6%22%3E%3Cpath%20fill=%22%23094570%22%20d=%22M0.14%20280.14c4.28%2C65.12%2098.42%2C133.97%20163.39%2C172.42%2015.86%2C9.39%2034.24%2C9.39%2050.11%2C-0.01%2052.97%2C-31.37%20159.02%2C-102.63%20163.43%2C-172.41l-376.92%200zm302.67%20-162.41l74.4%20105.8%200%20-126.48c0%2C-20.52%20-11.85%2C-38.03%20-30.9%2C-45.66l-125.46%20-50.22%2081.96%20116.56zm-228.42%200l82.79%20-117.73%20-126.49%2051.28c-18.95%2C7.68%20-30.7%2C25.13%20-30.7%2C45.57l0%20126.67%2074.4%20-105.8zm114.21%20-8.75c35.22%2C0%2063.77%2C28.55%2063.77%2C63.77%200%2C35.22%20-28.55%2C63.77%20-63.77%2C63.77%20-35.22%2C0%20-63.77%2C-28.55%20-63.77%2C-63.77%200%2C-35.22%2028.55%2C-63.77%2063.77%2C-63.77z%22/%3E%3C/svg%3E">
 <link rel="canonical" href="https://www.himaayahschools.com/administrators.html">
 <meta name="robots" content="noindex"><!-- Concept preview. Remove this line and rename the file to administrators.html if you choose this design -->
@@ -50,7 +50,8 @@
   .brand { display: flex; align-items: center; gap: 11px; font-family: var(--display); font-weight: 700; font-size: 19px; color: var(--deep); }
   .nav-links { display: flex; align-items: center; gap: 28px; }
   .nav-links a:not(.btn) { font-size: 14.5px; font-weight: 500; color: var(--muted); transition: color .2s; }
-  .nav-links a:not(.btn):hover { color: var(--ink); }
+  .nav-links a:not(.btn):hover, .nav-links > a[aria-current="page"] { color: var(--ink); }
+  .nav-links > a[aria-current="page"] { font-weight: 600; }
   .nav-links .btn { padding: 11px 20px; font-size: 14px; }
   .nav-toggle { display: none; width: 44px; height: 44px; border-radius: 10px; position: relative; border: 1px solid var(--line); }
   .nav-toggle span { position: absolute; left: 12px; right: 12px; height: 2px; border-radius: 2px; background: var(--ink); transition: transform .25s, opacity .2s; }
@@ -87,53 +88,67 @@
   .hero p { font-size: 18px; color: var(--muted); max-width: 52ch; margin: 0 auto; }
   .hero-copy > * { animation: rise .8s var(--ease) both; } .hero-copy > :nth-child(2) { animation-delay: .08s; } .hero-copy > :nth-child(3) { animation-delay: .16s; }
   @keyframes rise { from { opacity: 0; transform: translateY(20px); } }
+  /* heading: letter reveal + hopping dot */
+  .hero-copy > h1 { animation: none; position: relative; }
+  .hero h1 .w { display: inline-block; white-space: nowrap; }
+  .hero h1 .ch { display: inline-block; opacity: 0; transform: translateY(.5em) rotate(8deg); filter: blur(8px); animation: chIn .7s var(--ease) var(--d, 0ms) forwards; }
+  @keyframes chIn { to { opacity: 1; transform: none; filter: blur(0); } }
+  .hero h1 .ball { position: absolute; left: 0; top: 0; width: 10px; height: 10px; border-radius: 50%; background: var(--sky-d); opacity: 0; pointer-events: none; will-change: transform; box-shadow: 0 0 0 0 rgba(62,151,217,.45); }
+  .hero h1 .ball.landed { animation: ping 1.4s ease-out .1s 2; }
+  @keyframes ping { to { box-shadow: 0 0 0 14px rgba(62,151,217,0); } }
+  @media (prefers-reduced-motion: reduce) { .hero h1 .ch { opacity: 1; transform: none; filter: none; } }
 
-  /* ===== Founder ===== */
-  .fc { background: #fff; border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--shadow); overflow: hidden; }
-  .fc-top { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: clamp(28px, 5vw, 64px); padding: clamp(28px, 4.5vw, 52px); }
-  .fc-id { display: flex; flex-direction: column; align-items: flex-start; }
-  .avatar-lg { width: 96px; height: 96px; border-radius: 50%; background: var(--sky-l); color: var(--ink); display: grid; place-items: center; font-family: var(--display); font-weight: 700; font-size: 34px; margin-bottom: 22px; }
-  .tag { display: inline-flex; padding: 5px 12px; border-radius: 999px; background: var(--sky-l); font-size: 12.5px; font-weight: 600; color: var(--ink); margin-bottom: 12px; }
-  .fc h2 { font-family: var(--display); font-weight: 700; font-size: clamp(32px, 4vw, 46px); line-height: 1.08; letter-spacing: -.02em; color: var(--deep); }
-  .fc .role { font-size: 16px; color: var(--muted); margin: 8px 0 26px; }
-  .facts { list-style: none; width: 100%; }
-  .facts li { display: flex; justify-content: space-between; gap: 16px; padding: 13px 0; border-top: 1px dashed var(--line); font-size: 15px; }
-  .facts li:last-child { border-bottom: 1px dashed var(--line); }
-  .facts small { font-size: 14px; color: var(--muted); white-space: nowrap; }
-  .facts span { font-weight: 600; color: var(--deep); text-align: right; }
-  .fc-bio p { color: var(--muted); font-size: 16.5px; margin-bottom: 16px; }
-  .fc-bio p:first-child { font-size: 19px; line-height: 1.55; color: var(--deep); }
-  .stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--line); background: var(--wash); }
-  .stat { display: flex; align-items: center; gap: 14px; padding: 24px clamp(20px, 3vw, 36px); }
-  .stat + .stat { border-left: 1px solid var(--line); }
-  .stat .ic { width: 44px; height: 44px; border-radius: 12px; background: #fff; color: var(--ink); display: grid; place-items: center; flex: none; }
-  .stat b { display: block; font-family: var(--display); font-size: 26px; font-weight: 700; line-height: 1.1; color: var(--deep); }
-  .stat span { display: block; font-size: 13.5px; color: var(--muted); line-height: 1.35; }
+  /* ===== Founder (calm) ===== */
+  .founder { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: clamp(24px, 4vw, 48px); align-items: start; max-width: 920px; margin: 0 auto; }
+  .avatar-lg { width: 112px; height: 112px; border-radius: 50%; background: var(--sky-l); color: var(--ink); display: grid; place-items: center; font-family: var(--display); font-weight: 700; font-size: 38px; box-shadow: 0 0 0 8px #fff, 0 0 0 9px var(--line); }
+  .tag { display: inline-flex; padding: 4px 11px; border-radius: 999px; background: var(--sky-l); font-size: 12.5px; font-weight: 600; color: var(--ink); }
+  .f-name { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin: 10px 0 4px; }
+  .f-name h2 { font-family: var(--display); font-weight: 700; font-size: clamp(30px, 3.6vw, 42px); line-height: 1.08; letter-spacing: -.02em; color: var(--deep); }
+  .f-role { font-size: 15.5px; color: var(--muted); margin-bottom: 18px; }
+  .f-lead { font-size: 18px; line-height: 1.6; color: var(--deep); max-width: 60ch; }
+  .f-stats { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+  .f-stats span { display: inline-flex; align-items: baseline; gap: 6px; padding: 7px 13px; border-radius: 999px; background: var(--wash); border: 1px solid var(--line); font-size: 13.5px; color: var(--muted); }
+  .f-stats b { font-family: var(--display); font-size: 15px; color: var(--ink); }
+  .open-btn { display: inline-flex; align-items: center; gap: 7px; margin-top: 18px; font-size: 14.5px; font-weight: 600; color: var(--ink); border-bottom: 1.5px solid var(--sky); padding-bottom: 1px; transition: border-color .2s; }
+  .open-btn:hover { border-color: var(--ink); }
+  .open-btn::after { content: '\2192'; transition: transform .2s; } .open-btn:hover::after { transform: translateX(3px); }
+  .quote { max-width: 760px; margin: clamp(48px, 6vw, 72px) auto 0; padding-top: clamp(32px, 4vw, 44px); border-top: 1px solid var(--line); text-align: center; }
+  .quote blockquote { font-family: var(--display); font-weight: 600; font-size: clamp(20px, 2.4vw, 26px); line-height: 1.35; letter-spacing: -.01em; color: var(--deep); }
+  .quote blockquote::before { content: '\201C'; display: block; font-size: 56px; line-height: .6; color: var(--sky-d); margin-bottom: 14px; }
+  .quote cite { display: block; margin-top: 12px; font-style: normal; font-size: 14px; color: var(--muted); }
 
-  /* ===== Quote band ===== */
-  .band { margin-top: clamp(80px, 10vw, 128px); background: var(--wash); padding: clamp(64px, 8vw, 104px) 0; text-align: center; }
-  .band .qm { width: 40px; height: 40px; color: var(--sky-d); margin: 0 auto 18px; display: block; }
-  .band blockquote { font-family: var(--display); font-weight: 600; font-size: clamp(22px, 2.8vw, 32px); line-height: 1.3; letter-spacing: -.01em; color: var(--deep); max-width: 26em; margin: 0 auto 16px; }
-  .band cite { font-style: normal; font-size: 14px; color: var(--muted); }
-
-  /* ===== Administrators ===== */
+  /* ===== Team grid ===== */
   .team[hidden] { display: none; }
-  .roster { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; align-items: start; }
-  .person { display: flex; flex-direction: column; padding: 32px; background: #fff; border: 1px solid var(--line); border-radius: var(--r); transition: box-shadow .3s, border-color .3s; }
-  .person:hover { box-shadow: var(--shadow); border-color: transparent; }
-  .p-head { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
-  .p-mono, .p-photo { width: 64px; height: 64px; border-radius: 50%; flex: none; }
-  .p-mono { background: var(--sky-l); color: var(--ink); display: grid; place-items: center; font-family: var(--display); font-weight: 700; font-size: 22px; }
+  .team { background: var(--wash); margin-top: clamp(80px, 10vw, 120px); padding: clamp(72px, 9vw, 112px) 0; }
+  .roster { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+  .person { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; padding: 26px 24px 22px; background: #fff; border: 1px solid var(--line); border-radius: var(--r); text-align: left; width: 100%; transition: box-shadow .3s, border-color .3s, transform .3s var(--ease); }
+  .person:hover { box-shadow: var(--shadow); border-color: transparent; transform: translateY(-4px); }
+  .p-mono, .p-photo { width: 56px; height: 56px; border-radius: 50%; flex: none; margin-bottom: 6px; }
+  .p-mono { background: var(--sky-l); color: var(--ink); display: grid; place-items: center; font-family: var(--display); font-weight: 700; font-size: 19px; }
   .p-photo { object-fit: cover; }
-  .p-role { display: block; font-size: 12.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--sky-d); margin-bottom: 4px; }
-  .p-name { font-family: var(--display); font-weight: 700; font-size: 22px; line-height: 1.2; color: var(--deep); }
-  .p-bio p { color: var(--muted); font-size: 15.5px; margin-bottom: 14px; }
-  .p-bio > p:first-child { color: var(--text); }
-  .p-more[hidden] { display: none; }
-  .p-toggle { display: inline-flex; align-items: center; gap: 7px; margin-top: 4px; font-size: 14.5px; font-weight: 600; color: var(--ink); }
-  .p-toggle svg { transition: transform .25s var(--ease); }
-  .p-toggle[aria-expanded="true"] svg { transform: rotate(180deg); }
-  .p-toggle:hover { color: var(--deep); }
+  .p-role { font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--sky-d); }
+  .p-name { font-family: var(--display); font-weight: 700; font-size: 20px; line-height: 1.2; color: var(--deep); }
+  .p-sum { font-size: 14.5px; color: var(--muted); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .p-open { margin-top: auto; padding-top: 8px; font-size: 14px; font-weight: 600; color: var(--ink); display: inline-flex; gap: 6px; }
+  .p-open::after { content: '\2192'; transition: transform .2s; } .person:hover .p-open::after { transform: translateX(3px); }
+
+  /* ===== Profile dialog ===== */
+  dialog.pd { border: 0; padding: 0; border-radius: 20px; width: min(640px, calc(100vw - 32px)); max-height: calc(100vh - 48px); margin: auto; box-shadow: 0 40px 80px -30px rgba(6,47,77,.55); color: var(--text); }
+  dialog.pd::backdrop { background: rgba(6,47,77,.45); backdrop-filter: blur(3px); }
+  dialog.pd[open] { animation: pdIn .3s var(--ease) both; }
+  @keyframes pdIn { from { opacity: 0; transform: translateY(16px) scale(.98); } }
+  .pd-head { position: sticky; top: 0; display: flex; align-items: center; gap: 14px; padding: 20px 22px; background: #fff; border-bottom: 1px solid var(--line); }
+  .pd-head .p-mono, .pd-head .p-photo { margin: 0; width: 52px; height: 52px; }
+  .pd-head div { flex: 1; min-width: 0; }
+  .pd-x { width: 38px; height: 38px; border-radius: 10px; border: 1px solid var(--line); display: grid; place-items: center; color: var(--ink); flex: none; }
+  .pd-x:hover { border-color: var(--ink); }
+  .pd-body { padding: 22px 24px 28px; }
+  .pd-body p { color: var(--muted); font-size: 15.5px; margin-bottom: 14px; }
+  .pd-body p:first-child { color: var(--deep); font-size: 16.5px; }
+  .pd-facts { list-style: none; margin: 4px 0 18px; }
+  .pd-facts li { display: flex; justify-content: space-between; gap: 16px; padding: 10px 0; border-top: 1px dashed var(--line); font-size: 14.5px; }
+  .pd-facts li:last-child { border-bottom: 1px dashed var(--line); }
+  .pd-facts small { color: var(--muted); font-size: 14px; } .pd-facts span { font-weight: 600; color: var(--deep); text-align: right; }
 
   /* ===== CTA ===== */
   .cta-box { text-align: center; padding: clamp(48px, 7vw, 88px) 24px; border-radius: var(--r); background: linear-gradient(180deg, var(--sky-l), #fff); border: 1px solid var(--line); }
@@ -175,14 +190,7 @@
   }
 
   /* ===== Responsive ===== */
-  @media (max-width: 900px) {
-    .fc-top { grid-template-columns: 1fr; }
-    .roster { grid-template-columns: 1fr; }
-  }
-  @media (max-width: 700px) {
-    .stats { grid-template-columns: 1fr; }
-    .stat + .stat { border-left: 0; border-top: 1px solid var(--line); }
-  }
+  @media (max-width: 700px) { .founder { grid-template-columns: 1fr; justify-items: start; } }
   @media (max-width: 600px) {
     body { font-size: 15px; }
     .wrap { padding: 0 18px; }
@@ -190,13 +198,10 @@
     .nav-pill { height: 66px; padding: 0 18px; } .brand { font-size: 17px; } .brand svg { width: 21px; height: 26px; }
     .nav-links { top: 66px; padding: 6px 18px 20px; }
     .hero { padding: 48px 0 44px; } .hero h1 { font-size: 32px; } .hero p { font-size: 16px; }
-    .fc-top { padding: 24px 20px; gap: 22px; } .avatar-lg { width: 72px; height: 72px; font-size: 26px; margin-bottom: 16px; }
-    .fc h2 { font-size: 30px; } .fc .role { font-size: 15px; margin-bottom: 18px; }
-    .facts li { font-size: 14.5px; padding: 11px 0; } .fc-bio p { font-size: 15px; } .fc-bio p:first-child { font-size: 17px; }
-    .stat { padding: 18px 20px; } .stat b { font-size: 22px; }
-    .band { margin-top: 72px; padding: 56px 0; } .band blockquote { font-size: 21px; }
+    .avatar-lg { width: 84px; height: 84px; font-size: 28px; } .f-name h2 { font-size: 28px; } .f-lead { font-size: 16px; } .f-stats span { font-size: 12.5px; }
+    .team { margin-top: 72px; padding: 56px 0; } .roster { gap: 12px; } .person { padding: 20px 18px; }
+    .pd-body { padding: 18px 18px 22px; } .pd-body p { font-size: 15px; }
     .sec { padding-top: 72px; } .head { margin-bottom: 32px; } .head h2 { font-size: 28px; } .head p { font-size: 15.5px; }
-    .roster { gap: 14px; } .person { padding: 24px 20px; } .p-mono, .p-photo { width: 54px; height: 54px; } .p-mono { font-size: 19px; } .p-name { font-size: 20px; } .p-bio p { font-size: 15px; }
     .cta-box { padding: 44px 20px; } .cta-box h2 { font-size: 26px; } .cta-box p { font-size: 15px; }
     footer.site { margin-top: 72px; padding: 48px 0 90px; }
     .f-top { gap: 28px; margin-bottom: 28px; } .f-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 26px 20px; } .f-col:last-child { grid-column: 1 / -1; }
@@ -221,13 +226,15 @@
         <button type="button" class="dd-btn" aria-haspopup="true" aria-expanded="false">Programmes
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
         <div class="dd-menu">
+          <a href="programmes.html">All programmes</a>
           <a href="teenagers-building-circle.html">Teenagers Building Circle</a>
           <a href="madrasah.html">Madrasah</a>
           <a href="academy.html">Academy</a>
           <a href="skills-school.html">Skills School</a>
         </div>
       </div>
-      <a href="about.html">About</a>
+      <a href="admissions.html">Admissions</a>
+      <a href="about.html" aria-current="page">About</a>
       <a href="success-stories.html">Success Stories</a>
       <a href="faq.html">FAQ</a>
       <a href="contact.html">Contact</a>
@@ -239,57 +246,57 @@
 
 <header class="hero">
   <div class="wrap hero-copy">
-    <span class="kicker">Our people</span>
-    <h1>Meet the people behind Himaayah Schools</h1>
+    <h1 data-dot-word="behind">Meet the people behind Himaayah Schools</h1>
     <p>The founder and the administrators who plan every class, look after every student, and answer for the standard.</p>
   </div>
 </header>
 
 <section class="wrap" id="founder">
-  <div class="fc reveal">
-    <div class="fc-top">
-      <div class="fc-id">
-        <div class="avatar-lg" aria-hidden="true">KY</div>
-        <span class="tag">Founder</span>
-        <h2>Kaatib Yusuf</h2>
-        <p class="role">Writer, educator, entrepreneur, and systems builder</p>
-        <ul class="facts">
-          <li><small>Founder</small><span>One Growth</span></li>
-          <li><small>Author</small><span>Facing The Dreams You Let Die</span></li>
-        </ul>
+  <div class="founder reveal">
+    <div class="avatar-lg" aria-hidden="true">KY</div>
+    <div>
+      <span class="tag">Founder</span>
+      <div class="f-name"><h2>Kaatib Yusuf</h2></div>
+      <p class="f-role">Writer, educator, entrepreneur, and systems builder</p>
+      <p class="f-lead">Kaatib Yusuf is a Nigerian writer, educator, entrepreneur, and systems builder whose work sits at the intersection of writing, education, personal development, faith, and human formation.</p>
+      <div class="f-stats">
+        <span><b data-count="16000" data-suffix="+">16,000+</b> readers of his book</span>
+        <span><b data-count="4">4</b> continents reached</span>
+        <span><b data-count="2">2</b> institutions founded</span>
       </div>
-      <div class="fc-bio">
-        <p>Kaatib Yusuf is a Nigerian writer, educator, entrepreneur, and systems builder whose work sits at the intersection of writing, education, personal development, faith, and human formation.</p>
-        <p>He is the founder of One Growth, a personal development organisation that has reached thousands of young people through mentorship, writing, and academic initiatives.</p>
-        <p>His book Facing The Dreams You Let Die has reached more than 16,000 readers across four continents. Much of his work asks how knowledge can be matched with the discipline, courage, and moral framework needed to use it well, and he is committed to building institutions that outlive their founders.</p>
-      </div>
-    </div>
-    <div class="stats">
-      <div class="stat"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 4h6a4 4 0 0 1 4 4v12a3 3 0 0 0-3-3H2z"/><path d="M22 4h-6a4 4 0 0 0-4 4v12a3 3 0 0 1 3-3h7z"/></svg></span><div><b data-count="16000" data-suffix="+">16,000+</b><span>readers of his book</span></div></div>
-      <div class="stat"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></span><div><b data-count="4">4</b><span>continents reached</span></div></div>
-      <div class="stat"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18M5 21V10l7-5 7 5v11"/><path d="M9 21v-6h6v6"/></svg></span><div><b data-count="2">2</b><span>institutions founded</span></div></div>
+      <button type="button" class="open-btn" id="founderOpen">Read full profile</button>
     </div>
   </div>
-</section>
-
-<section class="band" aria-label="Quote">
-  <div class="wrap reveal">
-    <svg class="qm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M10 7H6a3 3 0 0 0-3 3v4h4v4l3-4V7zm11 0h-4a3 3 0 0 0-3 3v4h4v4l3-4V7z"/></svg>
+  <template id="founderBio">
+    <ul class="pd-facts">
+      <li><small>Founder</small><span>One Growth</span></li>
+      <li><small>Author</small><span>Facing The Dreams You Let Die</span></li>
+    </ul>
+    <p>Kaatib Yusuf is a Nigerian writer, educator, entrepreneur, and systems builder whose work sits at the intersection of writing, education, personal development, faith, and human formation.</p>
+    <p>He is the founder of One Growth, a personal development organisation that has reached thousands of young people through mentorship, writing, and academic initiatives.</p>
+    <p>His book Facing The Dreams You Let Die has reached more than 16,000 readers across four continents. Much of his work asks how knowledge can be matched with the discipline, courage, and moral framework needed to use it well, and he is committed to building institutions that outlive their founders.</p>
+  </template>
+  <div class="quote reveal">
     <blockquote>How do we become people capable of carrying the weight of the knowledge, opportunities, relationships, and responsibilities Allah places in our hands?</blockquote>
     <cite>The question behind Kaatib Yusuf's work</cite>
   </div>
 </section>
 
-<section class="sec team" id="team" hidden>
+<section class="team" id="team" hidden>
   <div class="wrap">
     <div class="head reveal">
-      <span class="kicker">Administrators</span>
       <h2>The team that runs the school</h2>
-      <p>The administrators who look after the school day to day.</p>
+      <p>The administrators who look after the school day to day. Tap a name to read their profile.</p>
     </div>
     <div class="roster" id="cards"></div>
   </div>
 </section>
+
+<dialog class="pd" id="pd" aria-labelledby="pdName">
+  <div class="pd-head"><span id="pdPic"></span><div><span class="p-role" id="pdRole"></span><h3 class="p-name" id="pdName"></h3></div>
+    <button type="button" class="pd-x" id="pdX" aria-label="Close profile"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+  <div class="pd-body" id="pdBody"></div>
+</dialog>
 
 <section class="sec cta">
   <div class="wrap">
@@ -318,6 +325,7 @@
       </div>
       <div class="f-cols">
         <div class="f-col"><h4>Programmes</h4>
+          <a href="programmes.html">All programmes</a>
           <a href="teenagers-building-circle.html">Teenagers Building Circle</a>
           <a href="madrasah.html">Madrasah</a>
           <a href="academy.html">Academy</a>
@@ -325,7 +333,10 @@
         </div>
         <div class="f-col"><h4>Site</h4>
           <a href="index.html">Home</a>
+          <a href="admissions.html">Admissions</a>
           <a href="about.html">About</a>
+          <a href="mission.html">Mission &amp; Vision</a>
+          <a href="administrators.html">Administrators</a>
           <a href="exam-calendars.html">Exam Calendars</a>
           <a href="faq.html">FAQ</a>
           <a href="contact.html">Contact</a>
@@ -336,7 +347,8 @@
           <a href="mailto:himaayahschools@gmail.com">himaayahschools@gmail.com</a>
           <a href="tel:+2348066043320">+234 806 604 3320</a>
           <a href="tel:+2347025842849">+234 702 584 2849</a>
-          <span>Ilorin, Nigeria</span>
+          <a href="tel:+2347047226487">+234 704 722 6487</a>
+          <span>Ado-Ekiti, Nigeria</span>
         </div>
       </div>
     </div>
@@ -385,19 +397,28 @@ He currently tutors across several institutes, including the Naasir Institute, a
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const initials = (n) => { const w = String(n).replace(/\b[A-Z]\.\s?/g, '').trim().split(/\s+/); return ((w[0] || '')[0] + (w.length > 1 ? w[w.length - 1][0] : '')).toUpperCase(); };
   const chev = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
+  const pic = (a, cls) => a.photo ? `<img class="p-photo" src="${esc(a.photo)}" alt="${esc(a.name)}">` : `<div class="p-mono" aria-hidden="true">${esc(initials(a.name))}</div>`;
+  const pd = document.getElementById('pd');
+  const openProfile = (name, role, picHtml, bodyHtml) => {
+    document.getElementById('pdName').textContent = name; document.getElementById('pdRole').textContent = role;
+    document.getElementById('pdPic').innerHTML = picHtml; document.getElementById('pdBody').innerHTML = bodyHtml;
+    if (pd.showModal) pd.showModal(); else pd.setAttribute('open', '');
+    document.getElementById('pdBody').scrollTop = 0;
+  };
+  document.getElementById('pdX').addEventListener('click', () => pd.close());
+  pd.addEventListener('click', (e) => { if (e.target === pd) pd.close(); });
+  document.getElementById('founderOpen').addEventListener('click', () =>
+    openProfile('Kaatib Yusuf', 'Founder', '<div class="p-mono" aria-hidden="true">KY</div>', document.getElementById('founderBio').innerHTML));
   if (ADMINS.length) {
     document.getElementById('team').hidden = false;
     document.getElementById('cards').innerHTML = ADMINS.map((a, i) => {
-      const ps = String(a.bio || '').split(/\n\n+/).map((p) => `<p>${esc(p)}</p>`), cut = 1;
-      const pic = a.photo ? `<img class="p-photo" src="${esc(a.photo)}" alt="${esc(a.name)}">` : `<div class="p-mono" aria-hidden="true">${esc(initials(a.name))}</div>`;
-      return `<article class="person reveal" id="admin-${i}" style="--i:${i % 2}">
-      <div class="p-head">${pic}<div><span class="p-role">${esc(a.role)}</span><h3 class="p-name">${esc(a.name)}</h3></div></div>
-      <div class="p-bio">${ps.slice(0, cut).join('')}${ps.length > cut ? `<div class="p-more" hidden>${ps.slice(cut).join('')}</div><button type="button" class="p-toggle" aria-expanded="false"><span>Read full profile</span>${chev}</button>` : ''}</div></article>`;
+      const first = String(a.bio || '').split(/\n\n+/)[0];
+      return `<button type="button" class="person reveal" data-i="${i}" style="--i:${i % 4}">${pic(a)}<span class="p-role">${esc(a.role)}</span><span class="p-name">${esc(a.name)}</span><span class="p-sum">${esc(first)}</span><span class="p-open">Read profile</span></button>`;
     }).join('');
     document.getElementById('cards').addEventListener('click', (e) => {
-      const b = e.target.closest('.p-toggle'); if (!b) return;
-      const m = b.previousElementSibling, open = m.hidden;
-      m.hidden = !open; b.querySelector('span').textContent = open ? 'Show less' : 'Read full profile'; b.setAttribute('aria-expanded', open);
+      const c = e.target.closest('.person'); if (!c) return;
+      const a = ADMINS[+c.dataset.i];
+      openProfile(a.name, a.role, pic(a), String(a.bio || '').split(/\n\n+/).map((p) => `<p>${esc(p)}</p>`).join(''));
     });
   }
 
@@ -421,8 +442,9 @@ He currently tutors across several institutes, including the Naasir Institute, a
 
 <div class="wa-widget" id="waWidget">
   <div class="wa-menu" id="waMenu">
-    <a href="https://wa.me/2348066043320?text=Assalaamu%20alaykum.%20I%27d%20like%20to%20ask%20about%20Himaayah%20Schools." target="_blank" rel="noopener">Chat on WhatsApp <small>+234 806 604 3320</small></a>
-    <a href="https://wa.me/2347025842849?text=Assalaamu%20alaykum.%20I%27d%20like%20to%20ask%20about%20Himaayah%20Schools." target="_blank" rel="noopener">Chat on WhatsApp <small>+234 702 584 2849</small></a>
+    <a href="https://wa.me/2348066043320?text=Assalaamu%20alaykum.%20I%27d%20like%20to%20ask%20about%20Himaayah%20Schools." target="_blank" rel="noopener">Academy <small>+234 806 604 3320</small></a>
+    <a href="https://wa.me/2347025842849?text=Assalaamu%20alaykum.%20I%27d%20like%20to%20ask%20about%20Himaayah%20Schools." target="_blank" rel="noopener">Madrasah <small>+234 702 584 2849</small></a>
+    <a href="https://wa.me/2347047226487?text=Assalaamu%20alaykum.%20I%27d%20like%20to%20ask%20about%20Himaayah%20Schools." target="_blank" rel="noopener">General <small>+234 704 722 6487</small></a>
   </div>
   <button type="button" class="wa-fab" id="waBtn" aria-expanded="false" aria-controls="waMenu" aria-label="Chat with us on WhatsApp">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.7-5.2A8.5 8.5 0 1 1 21 11.5z"/></svg>
@@ -440,6 +462,94 @@ He currently tutors across several institutes, including the Naasir Institute, a
     const dd = document.querySelector('.dd'); if (!dd) return;
     const b = dd.querySelector('.dd-btn');
     b.addEventListener('click', () => { const o = dd.classList.toggle('open'); b.setAttribute('aria-expanded', o); });
+  })();
+</script>
+<script>
+  // Heading: letters reveal one by one, then a ball hops along the tops of the
+  // letters and lands as the dot on the first "i" of the word in data-dot-word.
+  (function () {
+    const h = document.querySelector('.hero h1'); if (!h) return;
+    const text = h.textContent.trim(), word0 = (h.dataset.dotWord || '').toLowerCase();
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    h.setAttribute('aria-label', text);
+    h.textContent = '';
+    const hop = []; let target = null, n = 0;
+    text.split(' ').forEach((word, wi, arr) => {
+      const w = document.createElement('span'); w.className = 'w'; w.setAttribute('aria-hidden', 'true');
+      [...word].forEach((c) => {
+        const sp = document.createElement('span'); sp.className = 'ch';
+        let ch = c;
+        if (!target && word0 && word.toLowerCase().startsWith(word0) && c === 'i') { ch = 'ı'; target = sp; }
+        sp.textContent = ch; sp.style.setProperty('--d', (n++ * 38) + 'ms');
+        w.appendChild(sp);
+        if (/[A-Za-z]/.test(ch) && !target) hop.push(sp);
+      });
+      h.appendChild(w);
+      if (wi < arr.length - 1) h.appendChild(document.createTextNode(' '));
+    });
+    if (!target) return;
+    hop.splice(0, Math.max(0, hop.length - 7)); // hop over the last few letters only
+    const ball = document.createElement('span'); ball.className = 'ball'; ball.setAttribute('aria-hidden', 'true');
+    h.appendChild(ball);
+
+    const ctx = document.createElement('canvas').getContext('2d');
+    function geo() {
+      const cs = getComputedStyle(h), f = parseFloat(cs.fontSize);
+      ctx.font = cs.fontWeight + ' ' + cs.fontSize + ' ' + cs.fontFamily;
+      const m = ctx.measureText('Hg'), fa = m.fontBoundingBoxAscent, fd = m.fontBoundingBoxDescent;
+      const hr = h.getBoundingClientRect(), dm = ctx.measureText('ı'), stem = (dm.actualBoundingBoxRight || 0) + (dm.actualBoundingBoxLeft || 0);
+      const size = Math.max(6, stem > 2 && stem < f * 0.3 ? stem * 1.05 : f * 0.15);
+      const base = (r) => (fa ? r.top + (r.height - (fa + fd)) / 2 + fa : r.top + r.height * 0.8);
+      const at = (sp) => {
+        const r = sp.getBoundingClientRect(), asc = ctx.measureText(sp.textContent).actualBoundingBoxAscent || f * 0.7;
+        return { x: r.left + r.width / 2 - hr.left, y: base(r) - asc - size / 2 - 1 - hr.top };
+      };
+      const dot = () => {
+        const r = target.getBoundingClientRect(), ai = ctx.measureText('i').actualBoundingBoxAscent || f * 0.75;
+        return { x: r.left + r.width / 2 - hr.left, y: base(r) - ai + size / 2 - hr.top };
+      };
+      return { f, size, at, dot };
+    }
+    const tf = (p, extra) => 'translate(' + p.x + 'px,' + p.y + 'px) translate(-50%,-50%)' + (extra || '');
+    let final = null;
+    function place() { const g = geo(); ball.style.width = ball.style.height = g.size + 'px'; final = g.dot(); ball.style.transform = tf(final); ball.style.opacity = 1; }
+
+    function run() {
+      const g = geo(); ball.style.width = ball.style.height = g.size + 'px';
+      const pts = hop.map(g.at); final = g.dot(); pts.push(final);
+      const start = { x: pts[0].x - g.f * 0.9, y: pts[0].y - g.f * 1.3 };
+      const frames = [], add = (p, t) => frames.push({ p, t });
+      let t = 0; add(start, 0);
+      t += 380; add(pts[0], t);
+      for (let i = 1; i < pts.length; i++) {
+        const a = pts[i - 1], b = pts[i], last = i === pts.length - 1;
+        const dist = Math.hypot(b.x - a.x, b.y - a.y);
+        const H = g.f * (last ? 0.55 : 0.22) + dist * 0.12, d = last ? 540 : Math.min(320, 150 + dist * 0.25);
+        [0.2, 0.4, 0.6, 0.8, 1].forEach((k) => {
+          const x = a.x + (b.x - a.x) * k, y = a.y + (b.y - a.y) * k - 4 * H * k * (1 - k);
+          add({ x, y }, t + d * k);
+        });
+        t += d;
+      }
+      ball.style.opacity = 1;
+      const anim = ball.animate(frames.map((fr) => ({ transform: tf(fr.p), offset: fr.t / t })), { duration: t, easing: 'linear', fill: 'forwards' });
+      anim.onfinish = () => {
+        ball.style.transform = tf(final); anim.cancel();
+        const sq = ball.animate([
+          { transform: tf(final, ' scale(1.5,.55)') },
+          { transform: tf(final, ' scale(.85,1.15)') },
+          { transform: tf(final, ' scale(1)') }
+        ], { duration: 380, easing: 'cubic-bezier(.2,.7,.2,1)' });
+        sq.onfinish = () => ball.classList.add('landed');
+      };
+    }
+
+    const revealMs = n * 38 + 700;
+    (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(() => {
+      if (reduce || !ball.animate) { place(); return; }
+      setTimeout(run, revealMs);
+    });
+    let rz; addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { if (final) place(); }, 120); });
   })();
 </script>
 </body>
