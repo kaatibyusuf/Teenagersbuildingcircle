@@ -160,6 +160,9 @@ details.box>summary{padding:13px 14px}.body{padding:14px 14px 16px;gap:16px}
 .pick{max-height:420px}
 @media(max-width:600px){.tiles{gap:8px}.tile{padding:10px 12px}.tile b{font-size:21px}.pick{max-height:320px}.pick label small{display:none}}
 .pcheck{background:var(--wash);border-radius:14px;padding:12px 14px;display:grid;gap:8px}.ptop{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:baseline}.ptop b{color:var(--deep);font-size:14.5px}.ptop small{color:var(--muted);font-size:12.5px}
+.pw{position:relative;display:block}.pw>input{padding-right:70px!important}
+.pw>button{position:absolute;right:6px;top:50%;transform:translateY(-50%);border:0;background:transparent;color:#094570;font:600 13px/1 Inter,system-ui,sans-serif;padding:8px 10px;border-radius:8px;cursor:pointer}
+.pw>button:hover{background:#F1F7FC}.pw>button:focus-visible{outline:2px solid #3E97D9}
 </style>
 </head>
 <body>
@@ -173,7 +176,7 @@ details.box>summary{padding:13px 14px}.body{padding:14px 14px 16px;gap:16px}
 <span class="kick">Teenagers Building Circle</span><h1>Facilitator login</h1><p>Sign in with the Teacher ID and access code the school gave you.</p>
 <div class="demo" id="demoNote" hidden><b>Demo mode.</b> Use ID <b>DEMO</b> and code <b>demo</b> to try it with sample data.</div>
 <div class="f"><label for="tid">Teacher ID</label><input id="tid" autocomplete="username" autocapitalize="characters" placeholder="e.g. T-001" required></div>
-<div class="f"><label for="tcode">Access code</label><input id="tcode" type="password" autocomplete="current-password" required></div>
+<div class="f"><label for="tcode">Access code</label><input id="tcode" type="password" autocomplete="new-password" data-lpignore="true" required></div>
 <div class="err" id="err" role="alert"></div>
 <button class="btn btn-ink" id="go" type="submit">Sign in</button>
 </form></main>
@@ -342,7 +345,6 @@ async function signIn(id, code, silent) {
 $('demoNote').hidden = !!API_URL;
 $('lf').addEventListener('submit', (e) => { e.preventDefault(); const id = $('tid').value.trim(), code = $('tcode').value.trim(); if (!id || !code) { $('err').textContent = 'Enter your ID and access code.'; return; } signIn(id, code); });
 $('out').addEventListener('click', () => { sessionStorage.removeItem(KEY); D = null; S.tab = 'checkins'; S.marks = {}; S.open = ''; app.hidden = true; app.innerHTML = ''; $('out').hidden = true; $('login').hidden = false; $('tcode').value = ''; });
-{ const c = creds(); if (c.id && c.code) signIn(c.id, c.code, true); }
 
 /* ---------- demo mode (only used while API_URL is empty) ---------- */
 let DEMO = null;
@@ -377,6 +379,21 @@ async function demoApi(c, action, p) {
   } else if (action !== 'tbcf_login') return bad('Unknown action.');
   return JSON.parse(JSON.stringify(DEMO));
 }
+</script>
+<script>
+/* Show/hide toggle on every access-code box */
+(function(){
+  function deco(){
+    document.querySelectorAll('input[type=password]:not([data-eye])').forEach(function(i){
+      i.setAttribute('data-eye','1');
+      var w=document.createElement('span');w.className='pw';i.parentNode.insertBefore(w,i);w.appendChild(i);
+      var b=document.createElement('button');b.type='button';b.textContent='Show';b.setAttribute('aria-label','Show access code');
+      b.addEventListener('click',function(){var s=i.type==='password';i.type=s?'text':'password';b.textContent=s?'Hide':'Show';b.setAttribute('aria-label',s?'Hide access code':'Show access code');});
+      w.appendChild(b);
+    });
+  }
+  deco();new MutationObserver(deco).observe(document.body,{childList:true,subtree:true});
+})();
 </script>
 </body>
 </html>

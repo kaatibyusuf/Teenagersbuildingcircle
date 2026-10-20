@@ -128,6 +128,9 @@ blockquote{margin-top:12px;background:#fff;border-radius:14px;padding:12px 14px;
 .att{display:flex;flex-wrap:wrap;gap:8px}.att span{display:block;font-size:12.5px;color:var(--muted);padding:9px 14px;border-radius:16px;background:var(--wash)}.att b{display:block;font-size:13.5px;color:var(--deep)}
 .att .a-Absent{background:#FEE4E2}.att .a-Absent b{color:#B42318}.att .a-Present{background:var(--sky)}.att .a-Present b{color:var(--deep)}
 @media(max-width:1000px){.pils{grid-template-columns:repeat(2,1fr)}}@media(max-width:600px){.pils{grid-template-columns:1fr}.pil{padding:16px}.gbtn .btn{padding:10px 16px}}
+.pw{position:relative;display:block}.pw>input{padding-right:70px!important}
+.pw>button{position:absolute;right:6px;top:50%;transform:translateY(-50%);border:0;background:transparent;color:#094570;font:600 13px/1 Inter,system-ui,sans-serif;padding:8px 10px;border-radius:8px;cursor:pointer}
+.pw>button:hover{background:#F1F7FC}.pw>button:focus-visible{outline:2px solid #3E97D9}
 </style>
 </head>
 <body>
@@ -140,7 +143,7 @@ blockquote{margin-top:12px;background:#fff;border-radius:14px;padding:12px 14px;
 <h1>Teenagers Building Circle</h1><p>Sign in with the Student ID and access code the school gave you.</p>
 <div class="demo" id="demoNote" hidden><b>Demo mode.</b> Use ID <b>DEMO</b> and code <b>demo</b> to see sample data.</div>
 <div class="f"><label for="sid">Student ID</label><input id="sid" autocomplete="username" autocapitalize="characters" placeholder="e.g. HM-0001" required></div>
-<div class="f"><label for="scode">Access code</label><input id="scode" type="password" autocomplete="current-password" required></div>
+<div class="f"><label for="scode">Access code</label><input id="scode" type="password" autocomplete="new-password" data-lpignore="true" required></div>
 <div class="err" id="err" role="alert"></div>
 <button class="btn btn-ink" id="go" type="submit">Sign in</button>
 <p class="hint">Lost your code? <a href="https://wa.me/2348066043320?text=Assalaamu%20alaykum.%20I%20need%20help%20with%20my%20Teenagers%20Building%20Circle%20login." target="_blank" rel="noopener">Message the school</a>. Madrasah students sign in on the <a href="dashboard.html">student dashboard</a>.</p>
@@ -342,7 +345,21 @@ $('app').addEventListener('submit', async (e) => {
   } catch (err) { bad('Could not reach the school server. Please try again.'); }
   btn.disabled = false; btn.textContent = label;
 });
-try { const saved = JSON.parse(sessionStorage.getItem(KEY) || 'null'); if (saved) signIn(saved.id, saved.code, true); } catch (e) {}
+</script>
+<script>
+/* Show/hide toggle on every access-code box */
+(function(){
+  function deco(){
+    document.querySelectorAll('input[type=password]:not([data-eye])').forEach(function(i){
+      i.setAttribute('data-eye','1');
+      var w=document.createElement('span');w.className='pw';i.parentNode.insertBefore(w,i);w.appendChild(i);
+      var b=document.createElement('button');b.type='button';b.textContent='Show';b.setAttribute('aria-label','Show access code');
+      b.addEventListener('click',function(){var s=i.type==='password';i.type=s?'text':'password';b.textContent=s?'Hide':'Show';b.setAttribute('aria-label',s?'Hide access code':'Show access code');});
+      w.appendChild(b);
+    });
+  }
+  deco();new MutationObserver(deco).observe(document.body,{childList:true,subtree:true});
+})();
 </script>
 </body>
 </html>

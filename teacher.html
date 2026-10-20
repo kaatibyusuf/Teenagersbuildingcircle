@@ -132,11 +132,10 @@ tr:first-child td{border-top:0}
 .foot{text-align:center;color:var(--muted);font-size:12.5px;padding:32px 0 44px}
 
 /* phone */
-@media(max-width:360px){.brand{font-size:14px}.top .btn{padding:7px 10px;font-size:12px}}
 @media(max-width:600px){
 body{line-height:1.5}
 .btn{padding:11px 18px;font-size:14px}
-.top>div{padding:0 12px;height:60px;gap:8px}.top nav{gap:6px;flex:none}.brand{font-size:15.5px;gap:8px;white-space:nowrap;min-width:0}.brand em{display:none}.brand svg{width:19px;height:23px;flex:none}.top .btn{padding:8px 12px;font-size:12.5px;border-radius:10px;white-space:nowrap;line-height:1.2}
+.top>div{padding:0 14px;height:60px}.brand{font-size:16px}.brand em{display:none}.brand svg{width:19px;height:23px}.top .btn{padding:8px 13px;font-size:13px}
 .wrap{padding:16px 14px}
 .login{padding:20px 14px;min-height:calc(100vh - 61px)}.lbox{padding:28px 20px}.lbox h1{font-size:27px}.lbox>p{margin-bottom:20px;font-size:14.5px}
 .greet{padding:22px 20px;gap:12px}.greet h1{font-size:25px;margin:4px 0 12px}.chips span{font-size:12px;padding:5px 11px}
@@ -151,6 +150,9 @@ details.box>summary{padding:13px 14px}.body{padding:14px 14px 16px;gap:16px}
 .toast{bottom:14px;padding:10px 16px;font-size:13.5px}
 .foot{padding:22px 0 30px}
 }
+.pw{position:relative;display:block}.pw>input{padding-right:70px!important}
+.pw>button{position:absolute;right:6px;top:50%;transform:translateY(-50%);border:0;background:transparent;color:#094570;font:600 13px/1 Inter,system-ui,sans-serif;padding:8px 10px;border-radius:8px;cursor:pointer}
+.pw>button:hover{background:#F1F7FC}.pw>button:focus-visible{outline:2px solid #3E97D9}
 </style>
 </head>
 <body>
@@ -161,10 +163,10 @@ details.box>summary{padding:13px 14px}.body{padding:14px 14px 16px;gap:16px}
 
 <main id="login" class="login"><form class="lbox" id="lf" novalidate>
 <div class="crest" aria-hidden="true"><svg width="26" height="32" viewBox="0 0 377.21 459.6" fill="#094570"><path d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg></div>
-<h1>Teacher login</h1><p>Sign in with the Teacher ID and access code the school gave you.</p>
+<span class="kick">Teacher portal</span><h1>Teacher login</h1><p>Sign in with the Teacher ID and access code the school gave you.</p>
 <div class="demo" id="demoNote" hidden><b>Demo mode.</b> Use ID <b>DEMO</b> and code <b>demo</b> to try it with sample data.</div>
 <div class="f"><label for="tid">Teacher ID</label><input id="tid" autocomplete="username" autocapitalize="characters" placeholder="e.g. T-001" required></div>
-<div class="f"><label for="tcode">Access code</label><input id="tcode" type="password" autocomplete="current-password" required></div>
+<div class="f"><label for="tcode">Access code</label><input id="tcode" type="password" autocomplete="new-password" data-lpignore="true" required></div>
 <div class="err" id="err" role="alert"></div>
 <button class="btn btn-ink" id="go" type="submit">Sign in</button>
 </form></main>
@@ -412,7 +414,6 @@ async function signIn(id, code, silent) {
 $('demoNote').hidden = !!API_URL;
 $('lf').addEventListener('submit', (e) => { e.preventDefault(); const id = $('tid').value.trim(), code = $('tcode').value.trim(); if (!id || !code) { $('err').textContent = 'Enter your Teacher ID and access code.'; return; } signIn(id, code); });
 $('out').addEventListener('click', () => { sessionStorage.removeItem('ht'); D = null; S.tab = 'today'; S.marks = {}; S.sel = {}; app.hidden = true; app.innerHTML = ''; $('out').hidden = true; $('login').hidden = false; $('tcode').value = ''; });
-{ const c = creds(); if (c.id && c.code) signIn(c.id, c.code, true); }
 
 /* ---------- demo mode (only used while API_URL is empty) ---------- */
 let DEMO = null;
@@ -474,6 +475,21 @@ async function demoApi(c, action, p) {
   } else if (action !== 'teacher_login') return bad('Unknown action.');
   return JSON.parse(JSON.stringify(DEMO));
 }
+</script>
+<script>
+/* Show/hide toggle on every access-code box */
+(function(){
+  function deco(){
+    document.querySelectorAll('input[type=password]:not([data-eye])').forEach(function(i){
+      i.setAttribute('data-eye','1');
+      var w=document.createElement('span');w.className='pw';i.parentNode.insertBefore(w,i);w.appendChild(i);
+      var b=document.createElement('button');b.type='button';b.textContent='Show';b.setAttribute('aria-label','Show access code');
+      b.addEventListener('click',function(){var s=i.type==='password';i.type=s?'text':'password';b.textContent=s?'Hide':'Show';b.setAttribute('aria-label',s?'Hide access code':'Show access code');});
+      w.appendChild(b);
+    });
+  }
+  deco();new MutationObserver(deco).observe(document.body,{childList:true,subtree:true});
+})();
 </script>
 </body>
 </html>
