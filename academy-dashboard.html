@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en" class="app student page-academy-dashboard">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Academy | Himaayah Schools</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#094570">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<header class="top"><div>
+<a class="brand" href="index.html"><svg width="22" height="27" viewBox="0 0 377.21 459.6" fill="#094570" aria-hidden="true"><path d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>Himaayah Schools</a>
+<nav><a class="btn btn-line" href="index.html">Home</a><button class="btn btn-ink" id="out" hidden>Log out</button></nav>
+</div></header>
+
+<main id="login" class="login"><form class="lbox" id="lf" novalidate>
+<h1>Academy login</h1><p>Sign in with the Student ID and access code the school gave you.</p>
+<div class="demo" id="demoNote" hidden><b>Demo mode.</b> Use ID <b>DEMO</b> and code <b>demo</b> to see sample data.</div>
+<div class="f"><label for="sid">Student ID</label><input id="sid" autocomplete="username" autocapitalize="characters" placeholder="e.g. HM-0001" required></div>
+<div class="f"><label for="scode">Access code</label><input id="scode" type="password" autocomplete="new-password" data-lpignore="true" required></div>
+<div class="err" id="err" role="alert"></div>
+<button class="btn btn-ink" id="go" type="submit">Sign in</button>
+<p class="hint">Lost your code? <a href="https://wa.me/2348066043320?text=Assalaamu%20alaykum.%20I%20need%20help%20with%20my%20Academy%20login." target="_blank" rel="noopener">Message the school</a>. Madrasah students sign in on the <a href="dashboard.html">student dashboard</a>.</p>
+</form></main>
+
+<main id="app" class="wrap" hidden></main>
+
+<script>
+/* ===== SETTINGS =====
+   Same Apps Script web app as the other portals. While it is empty the page runs in DEMO mode with sample data. */
+const API_URL = 'https://script.google.com/macros/s/AKfycby0AsifBuB_Ad7g1SjDXCipaDU27-BrzYWf67muw5jeY_C0_0uz8AhQYYXdiNRQhvqX/exec';
+const HELP_WA = '2348066043320';
+const PAYMENT_WA = '2347220156487';   /* WhatsApp number students send payment receipts to. Confirm this is the right one. */
+const KEY = 'hc';
+
+const $ = (id) => document.getElementById(id);
+const esc = (t) => String(t ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fdate = (iso, t) => { const d = new Date(iso); return isNaN(d) ? esc(iso) : d.toLocaleDateString('en-GB', {weekday:'short', day:'numeric', month:'short', year:'numeric'}) + (t ? ', ' + d.toLocaleTimeString('en-GB', {hour:'2-digit', minute:'2-digit'}) : ''); };
+const sdate = (iso) => { const d = new Date(iso); return isNaN(d) ? esc(iso) : d.toLocaleDateString('en-GB', {day:'numeric', month:'short'}); };
+const naira = (n) => '₦' + Number(n || 0).toLocaleString('en-NG');
+const dd = (iso) => Math.round((new Date(String(iso).slice(0, 10) + 'T00:00:00') - new Date(new Date().toDateString())) / 864e5);
+const inDays = (n) => n === 0 ? 'today' : n === 1 ? 'tomorrow' : 'in ' + n + ' days';
+const safeUrl = (u) => /^https?:\/\//i.test(String(u ?? '').trim());
+
+/* ---- demo data (shown only when API_URL is empty) ---- */
+let demoData = null;
+function demo() {
+  if (demoData) return JSON.parse(JSON.stringify(demoData));
+  const p = (x) => String(x).padStart(2, '0');
+  const ymd = (n) => { const d = new Date(); d.setDate(d.getDate() + n); return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()); };
+  const mon = (n) => { const d = new Date(); d.setDate(d.getDate() - ((d.getDay() + 6) % 7) + 7 * n); return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()); };
+  const sit = (n, type, pct) => ({ Date: ymd(n), Type: type, Percent: pct, Subjects: [{ Subject: 'English', Score: Math.round(pct) + 4, OutOf: 100 }, { Subject: 'Mathematics', Score: Math.round(pct) - 6, OutOf: 100 }, { Subject: 'Physics', Score: Math.round(pct) + 2, OutOf: 100 }, { Subject: 'Chemistry', Score: Math.round(pct) - 2, OutOf: 100 }] });
+  demoData = { ok: true, today: ymd(0),
+    student: { StudentID: 'DEMO', Name: 'Sample Student', Track: 'UTME', Group: 'Batch 1', Tutor: 'Ustadh Demo', IsUtme: true, PaymentStatus: 'Due', NextDue: ymd(3), MonthlyFee: 10000, ExamDate: ymd(96), TargetPercent: 75, NextClass: ymd(1) + 'T16:00', ClassLink: 'https://meet.google.com/' },
+    cbt: 'https://example.com/cbt', readingUnit: 'pages',
+    mocks: [sit(-1, 'Daily mock', 66), sit(-3, 'Weekly mock', 63), sit(-8, 'Daily mock', 59), sit(-10, 'Weekly mock', 57), sit(-15, 'Daily mock', 52), sit(-17, 'Weekly mock', 55), sit(-24, 'Weekly mock', 48)],
+    reading: { Week: mon(0), Target: 60, Done: 25, History: [{ Week: mon(-5), Target: 40, Done: 28 }, { Week: mon(-4), Target: 40, Done: 40 }, { Week: mon(-3), Target: 50, Done: 52 }, { Week: mon(-2), Target: 50, Done: 36 }, { Week: mon(-1), Target: 60, Done: 61 }, { Week: mon(0), Target: 60, Done: 25 }] },
+    announcements: [{ Date: ymd(-1), Title: 'Sample announcement', Body: 'Notices from your tutors appear here, such as a mock timetable change.' }],
+    payments: [{ Date: ymd(-27), Amount: 10000, Months: 1, Reference: 'TRF-20931' }] };
+  return JSON.parse(JSON.stringify(demoData));
+}
+function demoReading(p) {
+  const d = demo(); const t = Number(p.target), n = Number(p.done);
+  if (!(t >= 1)) return { ok: false, error: 'Enter a whole-number reading target for this week.' };
+  if (!(n >= 0)) return { ok: false, error: 'Enter how much you have read so far (0 or more).' };
+  d.reading.Target = t; d.reading.Done = n; const h = d.reading.History; h[h.length - 1] = { Week: d.reading.Week, Target: t, Done: n };
+  demoData = d; return demo();
+}
+async function api(id, code, action, extra) {
+  if (!API_URL) {
+    await new Promise((r) => setTimeout(r, 300));
+    if (id.toUpperCase() !== 'DEMO' || code !== 'demo') return { ok: false, error: 'Wrong ID or access code.' };
+    return action === 'acd_reading' ? demoReading(extra) : demo();
+  }
+  const r = await fetch(API_URL, { method: 'POST', body: JSON.stringify(Object.assign({ action: action || 'acd_login', id, code }, extra || {})) });
+  return r.json();
+}
+
+function reminders(d, status, due) {
+  const s = d.student, out = [];
+  if (status !== 'exempt' && !isNaN(due)) {
+    const n = dd(s.NextDue);
+    if (n < 0) out.push({ t: 'Your payment is ' + (-n) + ' day' + (n === -1 ? '' : 's') + ' overdue.', a: '#pay', u: 1, tag: 'Pay now' });
+    else if (n <= 7) out.push({ t: 'Your payment is due ' + inDays(n) + '.', a: '#pay', tag: 'Payment' });
+  }
+  if (s.IsUtme && !d.reading.Target) out.push({ t: 'Set your reading target for this week. The reading club is compulsory for UTME.', a: '#reading', u: 1, tag: 'Reading club' });
+  if (s.ExamDate) { const n = dd(s.ExamDate); if (n >= 0 && n <= 30) out.push({ t: 'Your exam is ' + inDays(n) + '.', a: '#exam', tag: 'Exam' }); }
+  if (s.NextClass) { const n = dd(s.NextClass); if (n === 0 || n === 1) out.push({ t: 'Your next class is ' + inDays(n) + ' at ' + new Date(s.NextClass).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }) + '.', a: '#classes', tag: 'Class' }); }
+  return out;
+}
+
+function mockHtml(d) {
+  const s = d.student, ms = d.mocks || [];
+  if (!ms.length) return '<p class="empty">Your first mock result will appear here. Daily and weekly mocks are marked by your tutor.</p>';
+  const recent = ms.slice(0, 10).reverse();
+  const best = Math.max(...ms.map((m) => m.Percent)), last5 = ms.slice(0, 5), avg = Math.round(10 * last5.reduce((a, m) => a + m.Percent, 0) / last5.length) / 10;
+  const tgt = s.TargetPercent || 0, weekly = ms.filter((m) => m.Type === 'Weekly mock').length;
+  const proj = (x) => s.IsUtme ? `<span class="sub"> ≈ ${Math.round(x * 4)}/400</span>` : '';
+  return `<div class="stats"><div><div class="k">Latest</div><div class="big">${ms[0].Percent}%</div>${proj(ms[0].Percent)}</div><div><div class="k">Average (last ${last5.length})</div><div class="big">${avg}%</div>${proj(avg)}</div><div><div class="k">Best</div><div class="big">${best}%</div>${proj(best)}</div><div><div class="k">${tgt ? 'Target' : 'Weekly mocks'}</div><div class="big">${tgt ? tgt + '%' : weekly}</div>${tgt ? `<span class="sub">${avg >= tgt ? 'You are on target' : (Math.round(10 * (tgt - avg)) / 10) + ' points to go'}</span>${proj(tgt)}` : ''}</div></div>
+    <div class="mchart" role="img" aria-label="Your last ${recent.length} mock scores">${tgt ? `<i class="tline" style="bottom:${tgt}%"><em>Target ${tgt}%</em></i>` : ''}${recent.map((m) => `<div class="${m.Type === 'Weekly mock' ? 'wk' : ''}" data-h="${m.Percent}"><em>${Math.round(m.Percent)}</em><span>${sdate(m.Date)}</span></div>`).join('')}</div>
+    <div class="legend"><span><i class="wk"></i>Weekly mock</span><span><i></i>Daily mock</span></div>
+    <div class="sits">${ms.slice(0, 12).map((m) => `<details class="sit"><summary><div><b>${esc(m.Type)}</b><small>${fdate(m.Date)}</small></div><span class="pill ${tgt && m.Percent >= tgt ? 'p-paid' : 'p-due'}">${m.Percent}%</span></summary><div class="subj">${m.Subjects.map((x) => `<span>${esc(x.Subject)} <b>${x.Score}/${x.OutOf}</b></span>`).join('')}</div></details>`).join('')}</div>`;
+}
+
+function readingHtml(d) {
+  const r = d.reading, u = esc(d.readingUnit || 'pages'), pct = r.Target ? Math.min(100, Math.round(100 * r.Done / r.Target)) : 0;
+  const hist = r.History.slice(-8);
+  const met = hist.filter((h) => h.Target && h.Done >= h.Target).length;
+  return `<p class="sub" style="margin:-8px 0 14px">Set a target for the week, then update it as you read.${d.student.IsUtme ? ' The reading club is compulsory for UTME students.' : ''}</p>
+    ${r.Target ? `<div class="row"><b style="color:var(--deep)">${r.Done} of ${r.Target} ${u} this week</b><span>${pct}%</span></div><div class="bar"><i data-w="${pct}"></i></div>${r.Done >= r.Target ? '<p class="sub"><b>Target met.</b> Keep the habit going.</p>' : ''}` : '<p class="empty" style="margin-bottom:8px">No target set for this week yet.</p>'}
+    <form class="rform" novalidate><div class="r2"><div><label for="rt">Target (${u})</label><input id="rt" name="target" type="number" min="1" max="100000" step="1" inputmode="numeric" value="${r.Target || ''}"></div><div><label for="rd">Read so far</label><input id="rd" name="done" type="number" min="0" max="1000000" step="1" inputmode="numeric" value="${r.Done || 0}"></div></div>
+    <div class="msg" role="status"></div><button class="btn btn-ink" type="submit">Save</button></form>
+    ${hist.length > 1 ? `<p class="k" style="margin-top:20px">Last ${hist.length} weeks${met ? ' · target met ' + met + ' time' + (met === 1 ? '' : 's') : ''}</p><div class="rchart">${hist.map((h) => `<div class="${h.Target && h.Done >= h.Target ? 'hit' : ''}" data-h="${h.Target ? Math.min(100, Math.round(100 * h.Done / h.Target)) : 0}" title="${h.Done}/${h.Target}"><span>${sdate(h.Week)}</span></div>`).join('')}</div>` : ''}`;
+}
+
+function render(d) {
+  const s = d.student, first = String(s.Name).split(' ')[0];
+  const due = new Date(s.NextDue), status = String(s.PaymentStatus || '').toLowerCase();
+  const pcls = status === 'paid' || status === 'exempt' ? 'p-paid' : status === 'overdue' ? 'p-over' : 'p-due';
+  const pays = d.payments || [], remind = reminders(d, status, due), ms = d.mocks || [];
+  const examDays = s.ExamDate ? dd(s.ExamDate) : null;
+  const waHelp = 'https://wa.me/' + HELP_WA + '?text=' + encodeURIComponent('Assalaamu alaykum. This is ' + s.Name + ' (' + s.StudentID + ') from the Academy.');
+  const waPay = 'https://wa.me/' + PAYMENT_WA + '?text=' + encodeURIComponent('Assalaamu alaykum. This is my payment receipt. Name: ' + s.Name + ', ID: ' + s.StudentID + '.');
+  const openSit = [...document.querySelectorAll('.sit[open]')].map((x) => x.querySelector('small').textContent + x.querySelector('b').textContent);
+  $('app').innerHTML = `
+  <section class="greet"><div><small>Assalaamu alaykum</small><h1>${esc(first)}, let’s get you exam-ready.</h1>
+    <div class="chips"><span>${esc(s.Track || 'Academy')}</span>${s.Group ? `<span>${esc(s.Group)}</span>` : ''}${s.Tutor ? `<span>Tutor: ${esc(s.Tutor)}</span>` : ''}</div></div>
+    <div class="gbtn">${safeUrl(d.cbt) ? `<a class="btn btn-sky" href="${esc(d.cbt)}" target="_blank" rel="noopener">Open CBT practice</a>` : ''}<a class="btn btn-ghost" href="${waHelp}" target="_blank" rel="noopener">Need help?</a></div></section>
+  ${remind.length ? `<section class="remind" aria-label="Reminders">${remind.map((r) => `<a href="${r.a}" class="${r.u ? 'urgent' : ''}">${r.t}<span>${r.tag}</span></a>`).join('')}</section>` : ''}
+  <div class="grid">
+    <article class="c" id="exam" style="--i:0"><div class="k">Exam countdown</div>${examDays === null ? '<div class="big">Date not set</div><p class="sub">Your tutor will add your exam date.</p>' : examDays < 0 ? `<div class="big">Exam done</div><p class="sub">${fdate(s.ExamDate)}</p>` : `<div class="big">${examDays === 0 ? 'Today' : examDays + ' day' + (examDays === 1 ? '' : 's')}</div><p class="sub">${esc(s.Track || 'Your exam')} · ${fdate(s.ExamDate)}</p>${examDays > 0 ? `<p class="sub">About ${Math.ceil(examDays / 7)} week${Math.ceil(examDays / 7) === 1 ? '' : 's'} of prep left.</p>` : ''}`}</article>
+    <article class="c" id="classes" style="--i:1"><div class="k">Next live class</div>${s.NextClass ? `<div class="big">${fdate(s.NextClass, true)}</div>${safeUrl(s.ClassLink) ? `<p><a class="btn btn-ink" style="margin-top:12px" href="${esc(s.ClassLink)}" target="_blank" rel="noopener">Join the class</a></p>` : '<p class="sub">The join link will appear here.</p>'}` : '<div class="big">Not scheduled</div><p class="sub">Your tutor will post the next class here.</p>'}</article>
+    <article class="c" id="pay" style="--i:2"><div class="k">Payment</div><span class="pill ${pcls}">${esc(s.PaymentStatus || 'Due')}</span>
+      ${status === 'exempt' ? '<div class="big" style="margin-top:12px">Nothing to pay</div>' : `<div class="big" style="margin-top:12px">${isNaN(due) ? 'No date set' : fdate(s.NextDue)}</div><p class="sub">Next payment due${s.MonthlyFee ? ' · ' + naira(s.MonthlyFee) + ' a month' : ''}.</p>${status === 'paid' ? '' : `<p><a class="btn btn-ink" style="margin-top:12px" href="${waPay}" target="_blank" rel="noopener">Send your receipt</a></p>`}`}</article>
+
+    <article class="c w12" id="mocks" style="--i:3"><h2>Mock exams${ms.length ? ` <span class="pill p-due" style="font-size:12px;vertical-align:middle">${ms.length} sitting${ms.length === 1 ? '' : 's'}</span>` : ''}</h2>${mockHtml(d)}</article>
+
+    <article class="c w6" id="reading" style="--i:4"><h2>Reading club</h2>${readingHtml(d)}</article>
+    <article class="c w6" style="--i:5"><h2>Announcements</h2><ul class="list">${(d.announcements || []).map((a) => `<li style="display:block"><b>${esc(a.Title)}</b> <span style="float:right">${fdate(a.Date)}</span><div class="sub">${esc(a.Body)}</div></li>`).join('') || '<li class="empty">No announcements.</li>'}</ul>
+      <h2 style="margin-top:24px">Payment history</h2>${pays.length ? `<table><thead><tr><th>Date</th><th>Covers</th><th>Amount</th></tr></thead><tbody>${pays.map((p) => `<tr><td>${fdate(p.Date)}</td><td>${esc(p.Months)} mo</td><td><b>${naira(p.Amount)}</b></td></tr>`).join('')}</tbody></table>` : '<p class="empty">No payments recorded yet.</p>'}</article>
+  </div>
+  <p class="foot">${API_URL ? '' : 'Demo mode: this is sample data. '}Your records are updated by your tutors. Questions? Use the Need help? button.</p>`;
+  document.querySelectorAll('.sit').forEach((x) => { if (openSit.indexOf(x.querySelector('small').textContent + x.querySelector('b').textContent) >= 0) x.open = true; });
+  requestAnimationFrame(() => setTimeout(() => {
+    document.querySelectorAll('.bar i').forEach((b) => { b.style.width = b.dataset.w + '%'; });
+    document.querySelectorAll('.mchart div, .rchart div').forEach((b) => { b.style.height = Math.max(4, b.dataset.h) + '%'; });
+  }, 80));
+}
+
+function show(data, id, code) {
+  sessionStorage.setItem(KEY, JSON.stringify({ id, code }));
+  $('login').hidden = true; $('app').hidden = false; $('out').hidden = false; render(data); window.scrollTo(0, 0);
+}
+async function signIn(id, code, silent) {
+  const btn = $('go'), err = $('err'); err.textContent = ''; btn.disabled = true; btn.textContent = 'Signing in…';
+  try {
+    const d = await api(id, code);
+    if (d.ok) show(d, id, code); else if (!silent) err.textContent = d.error || 'Could not sign in.'; else sessionStorage.removeItem(KEY);
+  } catch (e) { if (!silent) err.textContent = 'Could not reach the school server. Please try again.'; }
+  btn.disabled = false; btn.textContent = 'Sign in';
+}
+$('demoNote').hidden = !!API_URL;
+$('lf').addEventListener('submit', (e) => { e.preventDefault(); const id = $('sid').value.trim(), code = $('scode').value.trim(); if (!id || !code) { $('err').textContent = 'Enter your Student ID and access code.'; return; } signIn(id, code); });
+$('out').addEventListener('click', () => { sessionStorage.removeItem(KEY); $('app').hidden = true; $('app').innerHTML = ''; $('out').hidden = true; $('login').hidden = false; $('scode').value = ''; });
+
+$('app').addEventListener('submit', async (e) => {
+  const f = e.target.closest('form.rform'); if (!f) return;
+  e.preventDefault();
+  const msg = f.querySelector('.msg'), btn = f.querySelector('button');
+  let saved = null; try { saved = JSON.parse(sessionStorage.getItem(KEY) || 'null'); } catch (x) {}
+  const bad = (t) => { msg.textContent = t; msg.className = 'msg bad'; };
+  if (!saved) return bad('Please log in again.');
+  const target = f.elements.target.value.trim(), done = f.elements.done.value.trim() || '0';
+  if (!/^\d+$/.test(target) || Number(target) < 1) return bad('Enter a whole-number target, 1 or more.');
+  if (!/^\d+$/.test(done)) return bad('Enter how much you have read as a whole number.');
+  const label = btn.textContent; btn.disabled = true; btn.textContent = 'Saving…'; msg.textContent = ''; msg.className = 'msg';
+  try {
+    const d = await api(saved.id, saved.code, 'acd_reading', { target: Number(target), done: Number(done) });
+    if (d.ok) { render(d); const m = document.querySelector('.rform .msg'); if (m) { m.textContent = 'Saved.'; m.className = 'msg good'; } return; }
+    bad(d.error || 'Could not save. Please try again.');
+  } catch (err) { bad('Could not reach the school server. Please try again.'); }
+  btn.disabled = false; btn.textContent = label;
+});
+</script>
+<script>
+/* Show/hide toggle on every access-code box */
+(function(){
+  function deco(){
+    document.querySelectorAll('input[type=password]:not([data-eye])').forEach(function(i){
+      i.setAttribute('data-eye','1');
+      var w=document.createElement('span');w.className='pw';i.parentNode.insertBefore(w,i);w.appendChild(i);
+      var b=document.createElement('button');b.type='button';b.textContent='Show';b.setAttribute('aria-label','Show access code');
+      b.addEventListener('click',function(){var s=i.type==='password';i.type=s?'text':'password';b.textContent=s?'Hide':'Show';b.setAttribute('aria-label',s?'Hide access code':'Show access code');});
+      w.appendChild(b);
+    });
+  }
+  deco();new MutationObserver(deco).observe(document.body,{childList:true,subtree:true});
+})();
+</script>
+</body>
+</html>
