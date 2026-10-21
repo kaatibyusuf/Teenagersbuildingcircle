@@ -1903,6 +1903,19 @@ a.txt-link { color: var(--ink); font-weight: 600; border-bottom: 1px solid var(-
 :where(.page-payment-success) a.btn:hover { background: #fff; }
 :where(.page-payment-success) a.btn:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
 
+/* ------------------------------------------------------------------
+   Closed Madrasah classes (madrasah, admissions, enroll)
+   ------------------------------------------------------------------ */
+.btn.btn-locked, .btn.btn-locked:hover { background: var(--wash); color: var(--muted); border: 1.5px dashed #C9D8E4; cursor: not-allowed; transform: none; box-shadow: none; }
+.btn.btn-locked svg { color: #B7791F; }
+.plans-note { display: inline-block; margin-top: 14px !important; padding: 8px 14px; border-radius: 999px; background: #FFF8EB; color: #6B4A12 !important; font-size: 14px !important; font-weight: 600; }
+.plan-closed-note { margin: 0 0 4px; padding: 10px 14px; border-left: 3px solid #E0A23B; border-radius: 0 12px 12px 0; background: #FFF8EB; color: #6B4A12; font-size: 13.5px; }
+.plan-opt.closed { background: var(--wash); border-style: dashed; opacity: .7; }
+.plan-opt.closed:hover { border-color: var(--line); box-shadow: none; }
+.plan-opt.closed .plan-opt-head { cursor: not-allowed; }
+.plan-opt.closed .plan-opt-radio { border-color: #C9D8E4; background: #fff; }
+.plan-opt-shut { font-family: 'Inter', sans-serif; font-size: 12.5px; font-weight: 700; padding: 4px 11px; border-radius: 999px; border: 1.5px dashed #C9D8E4; color: var(--muted); }
+
 /* =====================================================================
    Screens 1120px wide and narrower
    ===================================================================== */

@@ -225,10 +225,10 @@
     {
       id: 'madrasah', name: 'Madrasah',
       plans: [
-        { name: 'Madrasah — Hifdh Only (Group)', tag: 'Group', amount: 12000, period: '/mo',
+        { name: 'Madrasah — Hifdh Only (Group)', closed: true, tag: 'Group', amount: 12000, period: '/mo',
           bullets: ['Qur\u2019an memorisation and tajweed', 'Small group setting, four classes weekly'],
           productIdLive: 'prod_1518dd1ab1ba4cfea0e8', productIdSandbox: 'prod_f6d40928f10a42c8a5fe' },
-        { name: 'Madrasah — Full Madrasah (Group)', tag: 'Group', amount: 20000, period: '/mo',
+        { name: 'Madrasah — Full Madrasah (Group)', closed: true, tag: 'Group', amount: 20000, period: '/mo',
           bullets: ['Hifdh and tajweed plus aqeedah, fiqh, seerah', 'Four classes weekly, group setting'],
           productIdLive: 'prod_88d2bf8aefd145569c32', productIdSandbox: 'prod_2adf6149f52b4e85a427' },
         { name: 'Madrasah — Hifdh Only (Personal)', tag: 'Personal', amount: 20000, period: '/mo',
@@ -237,7 +237,7 @@
         { name: 'Madrasah — Full Madrasah (Personal)', tag: 'Personal', amount: 35000, period: '/mo',
           bullets: ['Hifdh and Islamic studies combined', 'Taught entirely one-on-one'],
           productIdLive: 'prod_fe2428f2c1f647118abc', productIdSandbox: 'prod_84b3e07142ee45b1801d' },
-        { name: 'Madrasah — One-Year Hifdh', tag: '12 months', amount: 19000, period: '/mo',
+        { name: 'Madrasah — One-Year Hifdh', closed: true, tag: '12 months', amount: 19000, period: '/mo',
           bullets: ['Focused 12-month Qur\u2019an memorisation track', 'Structured monthly milestones and revision'],
           productIdLive: 'prod_330d0eede3bf4a4bb39a', productIdSandbox: 'prod_f9d8a4e440074dca896b' },
       ],
@@ -292,7 +292,9 @@
   };
   const requestedPlanName = PLAN_SLUGS[urlParams.get('plan')];
   const planProgramme = requestedPlanName ? PROGRAMMES.find((p) => p.plans.some((pl) => pl.name === requestedPlanName)) : null;
-  const initialPlan = planProgramme ? planProgramme.plans.find((pl) => pl.name === requestedPlanName) : null;
+  const linkedPlan = planProgramme ? planProgramme.plans.find((pl) => pl.name === requestedPlanName) : null;
+  // A link to a closed plan opens the programme with nothing selected
+  const initialPlan = linkedPlan && !linkedPlan.closed ? linkedPlan : null;
   const initialProgrammeId = planProgramme
     ? planProgramme.id
     : (PROGRAMMES.some((p) => p.id === requestedProgramme) ? requestedProgramme : PROGRAMMES[0].id);
@@ -405,14 +407,21 @@
   function renderPlanOptions() {
     const programme = PROGRAMMES.find((p) => p.id === state.programmeId);
     planOptions.innerHTML = '';
+    if (programme.plans.some((pl) => pl.closed)) {
+      const note = document.createElement('p');
+      note.className = 'plan-closed-note';
+      note.textContent = 'Group and one-year Madrasah classes are closed for now. Private (one-on-one) classes are open.';
+      planOptions.appendChild(note);
+    }
     programme.plans.forEach((plan) => {
       const wrap = document.createElement('div');
-      wrap.className = 'plan-opt' + (state.plan && state.plan.name === plan.name ? ' selected' : '');
+      wrap.className = 'plan-opt' + (plan.closed ? ' closed' : '') + (state.plan && state.plan.name === plan.name ? ' selected' : '');
+      if (plan.closed) wrap.setAttribute('aria-disabled', 'true');
       wrap.innerHTML = `
         <div class="plan-opt-head">
           <div class="plan-opt-radio"></div>
           <div class="plan-opt-name">${plan.name.split('—').pop().trim()}<small>${plan.tag}</small></div>
-          <div class="plan-opt-price">\u20a6${plan.amount.toLocaleString()}${plan.period}</div>
+          <div class="plan-opt-price">${plan.closed ? '<span class="plan-opt-shut">Closed</span>' : '\u20a6' + plan.amount.toLocaleString() + plan.period}</div>
         </div>
         <span class="plan-opt-toggle" data-toggle>Show details</span>
         <div class="plan-opt-details" data-details>
@@ -420,6 +429,7 @@
         </div>
       `;
       wrap.querySelector('.plan-opt-head').addEventListener('click', () => {
+        if (plan.closed) return;
         state.plan = plan;
         planOptions.querySelectorAll('.plan-opt').forEach((el) => el.classList.remove('selected'));
         wrap.classList.add('selected');
