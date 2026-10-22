@@ -311,7 +311,7 @@
     var pill = document.querySelector('.nav-pill, .h-pill');
     var mpill = document.querySelector('nav.nav > .pill');
     var topNav = document.querySelector('header.top nav');
-    if (pill) { pill.classList.add('has-lang'); pill.insertBefore(wrap, document.getElementById('navToggle')); }
+    if (pill) { pill.classList.add('has-lang'); pill.insertBefore(wrap, pill.querySelector('.h-tog, #navToggle')); }
     else if (mpill) { mpill.classList.add('has-lang'); mpill.insertBefore(wrap, document.getElementById('tog')); }
     else if (topNav) topNav.insertBefore(wrap, topNav.firstChild);
     else { wrap.classList.add('lang-float'); document.body.appendChild(wrap); }

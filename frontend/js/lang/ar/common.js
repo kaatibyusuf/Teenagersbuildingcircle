@@ -443,5 +443,7 @@ HS_I18N.add({
 "re:(\\d{1,2} \\w+ \\d{4}) · (.+)": "$1 · $2",
 "Time and attention": "الوقت والانتباه",
 "Study habits": "عادات الدراسة",
-"Public speaking": "الخطابة"
+"Public speaking": "الخطابة",
+"Himaayah": "حماية",
+"Main": "القائمة الرئيسية"
 });

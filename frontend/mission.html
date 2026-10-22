@@ -16,36 +16,36 @@
 <script>document.documentElement.classList.add('js');</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Inter:wght@400;500;600;700&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
 <script src="js/i18n.js"></script>
 </head>
 <body>
 <svg width="0" height="0" aria-hidden="true" class="sprite"><symbol id="lg" viewBox="0 0 377.21 459.6"><path d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></symbol></svg>
 
-<nav class="nav">
-  <div class="nav-pill">
-    <a class="brand" href="index.html"><svg width="24" height="30" fill="#094570" aria-hidden="true"><use href="#lg"/></svg>Himaayah Schools</a>
-    <div class="nav-links" id="navLinks">
-      <div class="dd">
-        <button type="button" class="dd-btn" aria-haspopup="true" aria-expanded="false">Programmes
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
-        <div class="dd-menu">
-          <a href="programmes.html">All programmes</a>
-          <a href="teenagers-building-circle.html">Teenagers Building Circle</a>
-          <a href="madrasah.html">Madrasah</a>
-          <a href="academy.html">Academy</a>
-          <a href="skills-school.html">Skills School</a>
-        </div>
-      </div>
-      <a href="admissions.html">Admissions</a>
-      <a href="about.html" aria-current="page">About</a>
-      <a href="success-stories.html">Success Stories</a>
-      <a href="faq.html">FAQ</a>
-      <a href="contact.html">Contact</a>
-      <a href="enroll.html" class="btn btn-ink">Enroll Now</a>
-    </div>
-    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
+<nav class="h-nav" aria-label="Main">
+  <div class="h-pill">
+    <a class="h-brand" href="index.html"><svg width="20" height="25" viewBox="0 0 377.21 459.6" aria-hidden="true"><path fill="currentColor" d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>Himaayah Schools</a>
+    <div class="h-links" id="navLinks">
+<div class="dd">
+<button aria-expanded="false" aria-haspopup="true" class="dd-btn" type="button">Programmes
+          <svg aria-hidden="true" fill="none" height="12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.8" viewbox="0 0 24 24" width="12"><path d="M6 9l6 6 6-6"></path></svg></button>
+<div class="dd-menu">
+<a href="programmes.html">All programmes</a>
+<a href="teenagers-building-circle.html">Teenagers Building Circle</a>
+<a href="madrasah.html">Madrasah</a>
+<a href="academy.html">Academy</a>
+<a href="skills-school.html">Skills School</a>
+</div>
+</div>
+<a href="admissions.html">Admissions</a>
+<a aria-current="page" href="about.html">About</a>
+<a href="success-stories.html">Success Stories</a>
+<a href="faq.html">FAQ</a>
+<a href="contact.html">Contact</a>
+<a class="h-btn h-btn-light h-nav-cta" href="enroll.html">Enroll Now</a>
+</div>
+    <button class="h-tog" id="navToggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span></button>
   </div>
 </nav>
 
@@ -122,27 +122,23 @@
   </div>
 </section>
 
-<footer class="site">
-  <div class="wrap">
-    <div class="f-top">
-      <div class="f-brand">
-        <a class="brand" href="index.html"><svg width="24" height="30" fill="#85CCFF" aria-hidden="true"><use href="#lg"/></svg>Himaayah Schools</a>
+<footer class="h-foot">
+  <div class="h-wrap">
+    <div class="h-foot-top">
+      <div class="h-foot-brand">
+        <a class="h-brand" href="index.html"><svg width="20" height="25" viewBox="0 0 377.21 459.6" aria-hidden="true"><path fill="currentColor" d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>Himaayah Schools</a>
         <p>Raising the next generation with deen, knowledge, and purpose.</p>
-        <div class="social">
-          <a href="https://instagram.com/himaayahschools" target="_blank" rel="noopener" aria-label="Himaayah Schools on Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg></a>
-          <a href="https://x.com/himaayahschools" target="_blank" rel="noopener" aria-label="Himaayah Schools on X"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.24 2H21.5l-7.3 8.34L22.8 22h-6.73l-5.27-6.9L4.7 22H1.4l7.8-8.92L1 2h6.9l4.76 6.3L18.24 2zm-1.18 18h1.86L7.03 3.9H5.03L17.06 20z"/></svg></a>
-          <a href="https://ng.linkedin.com/company/himaaayah" target="_blank" rel="noopener" aria-label="Himaayah Schools on LinkedIn"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg></a>
-        </div>
+        <a href="enroll.html" class="h-btn h-btn-light">Enroll now<span class="h-go"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
       </div>
-      <div class="f-cols">
-        <div class="f-col"><h4>Programmes</h4>
+      <div class="h-foot-cols">
+        <div><h4>Programmes</h4>
           <a href="programmes.html">All programmes</a>
           <a href="teenagers-building-circle.html">Teenagers Building Circle</a>
           <a href="madrasah.html">Madrasah</a>
           <a href="academy.html">Academy</a>
           <a href="skills-school.html">Skills School</a>
         </div>
-        <div class="f-col"><h4>Site</h4>
+        <div><h4>Site</h4>
           <a href="index.html">Home</a>
           <a href="admissions.html">Admissions</a>
           <a href="about.html">About</a>
@@ -153,7 +149,7 @@
           <a href="policies.html">Policies</a>
           <a href="enroll.html">Enroll</a>
         </div>
-        <div class="f-col"><h4>Contact</h4>
+        <div><h4>Contact</h4>
           <a href="mailto:himaayahschools@gmail.com">himaayahschools@gmail.com</a>
           <a href="tel:+2348066043320">+234 806 604 3320</a>
           <a href="tel:+2347025842849">+234 702 584 2849</a>
@@ -162,7 +158,12 @@
         </div>
       </div>
     </div>
-    <div class="f-bottom">© 2026 Himaayah Schools.</div>
+    <div class="h-mark" aria-hidden="true"><span>Himaayah</span></div>
+    <div class="h-foot-bar">
+      <span>© 2026 Himaayah Schools.</span>
+      <div class="h-social"><a href="https://instagram.com/himaayahschools" target="_blank" rel="noopener" aria-label="Himaayah Schools on Instagram"><svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/></svg></a><a href="https://x.com/himaayahschools" target="_blank" rel="noopener" aria-label="Himaayah Schools on X"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M18.24 2H21.5l-7.3 8.34L22.8 22h-6.73l-5.27-6.9L4.7 22H1.4l7.8-8.92L1 2h6.9l4.76 6.3L18.24 2zm-1.18 18h1.86L7.03 3.9H5.03L17.06 20z"/></svg></a><a href="https://ng.linkedin.com/company/himaaayah" target="_blank" rel="noopener" aria-label="Himaayah Schools on LinkedIn"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg></a></div>
+      <span>Ado-Ekiti, Nigeria</span>
+    </div>
   </div>
 </footer>
 
@@ -228,6 +229,17 @@
     b.addEventListener('click', () => { const o = w.classList.toggle('open'); b.setAttribute('aria-expanded', o); });
     document.addEventListener('click', (e) => { if (!w.contains(e.target)) { w.classList.remove('open'); b.setAttribute('aria-expanded', 'false'); } });
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { w.classList.remove('open'); b.setAttribute('aria-expanded', 'false'); b.focus(); } });
+  })();
+</script>
+<script>
+  // Glass nav turns solid after scrolling; the footer wordmark follows the pointer
+  (function () {
+    const nav = document.querySelector('.h-nav'), mark = document.querySelector('.h-mark');
+    if (nav) { const s = () => nav.classList.toggle('h-solid', scrollY > 40); s(); addEventListener('scroll', s, { passive: true }); }
+    if (mark) {
+      mark.addEventListener('pointermove', (e) => { const r = mark.getBoundingClientRect(); mark.style.setProperty('--sx', ((e.clientX - r.left) / r.width * 100) + '%'); });
+      mark.addEventListener('pointerleave', () => mark.style.removeProperty('--sx'));
+    }
   })();
 </script>
 </body>
