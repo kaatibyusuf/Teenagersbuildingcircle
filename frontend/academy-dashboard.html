@@ -10,6 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
+<script src="js/i18n.js"></script>
 </head>
 <body>
 <header class="top"><div>
@@ -103,7 +104,7 @@ function mockHtml(d) {
   return `<div class="stats"><div><div class="k">Latest</div><div class="big">${ms[0].Percent}%</div>${proj(ms[0].Percent)}</div><div><div class="k">Average (last ${last5.length})</div><div class="big">${avg}%</div>${proj(avg)}</div><div><div class="k">Best</div><div class="big">${best}%</div>${proj(best)}</div><div><div class="k">${tgt ? 'Target' : 'Weekly mocks'}</div><div class="big">${tgt ? tgt + '%' : weekly}</div>${tgt ? `<span class="sub">${avg >= tgt ? 'You are on target' : (Math.round(10 * (tgt - avg)) / 10) + ' points to go'}</span>${proj(tgt)}` : ''}</div></div>
     <div class="mchart" role="img" aria-label="Your last ${recent.length} mock scores">${tgt ? `<i class="tline" style="bottom:${tgt}%"><em>Target ${tgt}%</em></i>` : ''}${recent.map((m) => `<div class="${m.Type === 'Weekly mock' ? 'wk' : ''}" data-h="${m.Percent}"><em>${Math.round(m.Percent)}</em><span>${sdate(m.Date)}</span></div>`).join('')}</div>
     <div class="legend"><span><i class="wk"></i>Weekly mock</span><span><i></i>Daily mock</span></div>
-    <div class="sits">${ms.slice(0, 12).map((m) => `<details class="sit"><summary><div><b>${esc(m.Type)}</b><small>${fdate(m.Date)}</small></div><span class="pill ${tgt && m.Percent >= tgt ? 'p-paid' : 'p-due'}">${m.Percent}%</span></summary><div class="subj">${m.Subjects.map((x) => `<span>${esc(x.Subject)} <b>${x.Score}/${x.OutOf}</b></span>`).join('')}</div></details>`).join('')}</div>`;
+    <div class="sits">${ms.slice(0, 12).map((m) => `<details class="sit" data-k="${esc(m.Type)}|${esc(m.Date)}"><summary><div><b>${esc(m.Type)}</b><small>${fdate(m.Date)}</small></div><span class="pill ${tgt && m.Percent >= tgt ? 'p-paid' : 'p-due'}">${m.Percent}%</span></summary><div class="subj">${m.Subjects.map((x) => `<span>${esc(x.Subject)} <b>${x.Score}/${x.OutOf}</b></span>`).join('')}</div></details>`).join('')}</div>`;
 }
 
 function readingHtml(d) {
@@ -125,7 +126,7 @@ function render(d) {
   const examDays = s.ExamDate ? dd(s.ExamDate) : null;
   const waHelp = 'https://wa.me/' + HELP_WA + '?text=' + encodeURIComponent('Assalaamu alaykum. This is ' + s.Name + ' (' + s.StudentID + ') from the Academy.');
   const waPay = 'https://wa.me/' + PAYMENT_WA + '?text=' + encodeURIComponent('Assalaamu alaykum. This is my payment receipt. Name: ' + s.Name + ', ID: ' + s.StudentID + '.');
-  const openSit = [...document.querySelectorAll('.sit[open]')].map((x) => x.querySelector('small').textContent + x.querySelector('b').textContent);
+  const openSit = [...document.querySelectorAll('.sit[open]')].map((x) => x.dataset.k);
   $('app').innerHTML = `
   <section class="greet"><div><small>Assalaamu alaykum</small><h1>${esc(first)}, let’s get you exam-ready.</h1>
     <div class="chips"><span>${esc(s.Track || 'Academy')}</span>${s.Group ? `<span>${esc(s.Group)}</span>` : ''}${s.Tutor ? `<span>Tutor: ${esc(s.Tutor)}</span>` : ''}</div></div>
@@ -140,11 +141,11 @@ function render(d) {
     <article class="c w12" id="mocks" style="--i:3"><h2>Mock exams${ms.length ? ` <span class="pill p-due" style="font-size:12px;vertical-align:middle">${ms.length} sitting${ms.length === 1 ? '' : 's'}</span>` : ''}</h2>${mockHtml(d)}</article>
 
     <article class="c w6" id="reading" style="--i:4"><h2>Reading club</h2>${readingHtml(d)}</article>
-    <article class="c w6" style="--i:5"><h2>Announcements</h2><ul class="list">${(d.announcements || []).map((a) => `<li style="display:block"><b>${esc(a.Title)}</b> <span style="float:right">${fdate(a.Date)}</span><div class="sub">${esc(a.Body)}</div></li>`).join('') || '<li class="empty">No announcements.</li>'}</ul>
+    <article class="c w6" style="--i:5"><h2>Announcements</h2><ul class="list">${(d.announcements || []).map((a) => `<li style="display:block"><b>${esc(a.Title)}</b> <span style="float:inline-end">${fdate(a.Date)}</span><div class="sub">${esc(a.Body)}</div></li>`).join('') || '<li class="empty">No announcements.</li>'}</ul>
       <h2 style="margin-top:24px">Payment history</h2>${pays.length ? `<table><thead><tr><th>Date</th><th>Covers</th><th>Amount</th></tr></thead><tbody>${pays.map((p) => `<tr><td>${fdate(p.Date)}</td><td>${esc(p.Months)} mo</td><td><b>${naira(p.Amount)}</b></td></tr>`).join('')}</tbody></table>` : '<p class="empty">No payments recorded yet.</p>'}</article>
   </div>
   <p class="foot">${API_URL ? '' : 'Demo mode: this is sample data. '}Your records are updated by your tutors. Questions? Use the Need help? button.</p>`;
-  document.querySelectorAll('.sit').forEach((x) => { if (openSit.indexOf(x.querySelector('small').textContent + x.querySelector('b').textContent) >= 0) x.open = true; });
+  document.querySelectorAll('.sit').forEach((x) => { if (openSit.indexOf(x.dataset.k) >= 0) x.open = true; });
   requestAnimationFrame(() => setTimeout(() => {
     document.querySelectorAll('.bar i').forEach((b) => { b.style.width = b.dataset.w + '%'; });
     document.querySelectorAll('.mchart div, .rchart div').forEach((b) => { b.style.height = Math.max(4, b.dataset.h) + '%'; });

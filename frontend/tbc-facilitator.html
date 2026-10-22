@@ -10,6 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
+<script src="js/i18n.js"></script>
 </head>
 <body>
 <header class="top"><div>
@@ -105,7 +106,7 @@ function vAttendance() {
 function vSessions() {
   const now = new Date(), list = D.sessions.slice().sort((a, b) => a.Start < b.Start ? -1 : 1);
   const mineOrAdmin = (x) => D.teacher.Role === 'Admin' || String(x.CreatedBy).toUpperCase() === String(D.teacher.TeacherID).toUpperCase();
-  const li = (x) => `<li style="display:block"><div style="display:flex;justify-content:space-between;gap:10px"><span style="text-align:left"><b>${esc(x.Title)}</b><br><span class="sub">${fdate(x.Start, true)}${x.Pillar ? ' · ' + esc(x.Pillar) : ''}${x.Audience ? ' · ' + esc(x.Audience) : ' · All cohorts'}</span></span>${mineOrAdmin(x) ? `<button class="btn btn-line btn-sm" type="button" data-act="delSession" data-id="${esc(x.SessionID)}" style="align-self:flex-start">Remove</button>` : ''}</div></li>`;
+  const li = (x) => `<li style="display:block"><div style="display:flex;justify-content:space-between;gap:10px"><span style="text-align:start"><b>${esc(x.Title)}</b><br><span class="sub">${fdate(x.Start, true)}${x.Pillar ? ' · ' + esc(x.Pillar) : ''}${x.Audience ? ' · ' + esc(x.Audience) : ' · All cohorts'}</span></span>${mineOrAdmin(x) ? `<button class="btn btn-line btn-sm" type="button" data-act="delSession" data-id="${esc(x.SessionID)}" style="align-self:flex-start">Remove</button>` : ''}</div></li>`;
   const up = list.filter((x) => new Date(x.Start) >= new Date(now.getTime() - 90 * 60000)), past = list.filter((x) => !up.includes(x)).reverse();
   return `<div class="grid"><article class="c w6"><h2>Post a session</h2><p class="sub">Students see it on their dashboard with the join link.</p>
     <form class="frm" data-form="session">

@@ -10,6 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
+<script src="js/i18n.js"></script>
 </head>
 <body>
 <header class="top"><div>
@@ -163,7 +164,7 @@ function vResults() {
     <div class="row2"><div><label class="fl">Date</label><input class="in" type="date" name="date" value="${esc(D.today)}" max="${esc(D.today)}"></div><div><label class="fl">Out of</label><input class="in" type="number" name="outOf" min="1" max="1000" value="20"></div></div>
     <div class="scores">${D.students.map((s) => `<div><span>${esc(s.Name)}</span><input class="in score" type="number" step="any" min="0" data-id="${esc(s.StudentID)}" aria-label="Score for ${esc(s.Name)}"></div>`).join('') || '<p class="empty">No students yet.</p>'}</div>
     <button class="btn btn-ink" type="submit">Save results</button></form></article>
-  <article class="c w4"><h2>Recent</h2>${rows.length ? `<table><tbody>${rows.map((r) => `<tr><td>${esc(stuName(r.StudentID))}<br><span class="sub">${esc(r.Subject)} · ${fdate(r.Date)}</span></td><td style="text-align:right"><b>${esc(r.Score)}/${esc(r.OutOf)}</b></td></tr>`).join('')}</tbody></table>` : '<p class="empty">No results yet.</p>'}</article></div>`;
+  <article class="c w4"><h2>Recent</h2>${rows.length ? `<table><tbody>${rows.map((r) => `<tr><td>${esc(stuName(r.StudentID))}<br><span class="sub">${esc(r.Subject)} · ${fdate(r.Date)}</span></td><td style="text-align:end"><b>${esc(r.Score)}/${esc(r.OutOf)}</b></td></tr>`).join('')}</tbody></table>` : '<p class="empty">No results yet.</p>'}</article></div>`;
 }
 
 function vAccount() {

@@ -1,0 +1,31 @@
+/* Arabic for the teenagers-building-circle page. English on the left, Arabic on the right: edit the Arabic to change what visitors see.
+   Keys starting with re: are patterns for text with numbers or names in it ($1, $2 are the parts kept). */
+HS_I18N.add({
+"Building who they'll become.": "نبني من سيصبحون.",
+"A weekly circle for ages 13–19, built on four pillars: deen, educational development, skills, and personal development, with live sessions.": "حلقة أسبوعية للأعمار 13–19، قائمة على أربع ركائز: الدين، والتطوير التعليمي، والمهارات، والتطوير الشخصي، بجلسات مباشرة.",
+"See the pillars": "شاهد الركائز",
+"Education": "التعليم",
+"Personal growth": "النمو الشخصي",
+"in a weekly cohort": "في دفعة أسبوعية",
+"Live sessions": "جلسات مباشرة",
+"every week, all four pillars": "كل أسبوع، والركائز الأربع كلها",
+"Slack workspace": "مساحة عمل على Slack",
+"for the cohort, all week": "للدفعة، طوال الأسبوع",
+"The four pillars": "الركائز الأربع",
+"One programme, built on four sides.": "برنامج واحد، مبني من أربعة جوانب.",
+"Every week touches all four, not a semester of one and a semester of another.": "كل أسبوع يتناول الأربع كلها، لا فصلًا لواحدة وفصلًا لأخرى.",
+"Grounding in faith and practice that holds up outside the classroom, not just inside it.": "رسوخ في الإيمان والعمل يصمد خارج الفصل، لا داخله فقط.",
+"Study habits and academic footing that carry into every other subject a student takes.": "عادات دراسية وأساس علمي ينتقلان إلى كل مادة أخرى يدرسها الطالب.",
+"Practical ability, the kind you can actually use, not just describe on a form.": "قدرة عملية من النوع الذي تستعمله فعلًا، لا الذي تصفه في استمارة فقط.",
+"Character and self-management, the part no syllabus tests but every adult needs.": "الأخلاق وإدارة الذات، الجزء الذي لا يختبره أي منهج لكن يحتاجه كل بالغ.",
+"A typical week": "أسبوع نموذجي",
+"What a week actually looks like.": "كيف يبدو الأسبوع فعلًا.",
+"Every student starts with a diagnostic assessment, so the cohort isn't a guess. It's built around where each student actually is. From there, it's live weekly sessions with real facilitators, backed by a dedicated Slack workspace that keeps the conversation going the rest of the week.": "يبدأ كل طالب بتقييم تشخيصي، فلا تُبنى الدفعة على التخمين، بل على المستوى الحقيقي لكل طالب. ومن هناك تأتي جلسات أسبوعية مباشرة مع ميسّرين حقيقيين، تدعمها مساحة عمل خاصة على Slack تُبقي الحوار مستمرًا بقية الأسبوع.",
+"Live weekly sessions across all four pillars": "جلسات أسبوعية مباشرة في الركائز الأربع كلها",
+"A dedicated Slack workspace for the cohort": "مساحة عمل خاصة على Slack للدفعة",
+"Full programme": "البرنامج الكامل",
+"Weekly cohort": "دفعة أسبوعية",
+"Questions first? Ask on WhatsApp": "لديك أسئلة أولًا؟ اسأل على واتساب",
+"Facilitator Login": "دخول الميسّرين",
+"Teenagers Building Circle — Himaayah Schools": "حلقة بناء الناشئة — مدارس حماية"
+});

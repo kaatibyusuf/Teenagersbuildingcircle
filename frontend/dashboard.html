@@ -10,6 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
+<script src="js/i18n.js"></script>
 </head>
 <body>
 <header class="top"><div>
@@ -173,7 +174,7 @@ function render(d) {
     <article class="c" style="--i:7"><h2>Your level</h2><div class="path">${LEVELS.map((l, i) => `<span class="${i < lvlIdx ? 'done' : i === lvlIdx ? 'now' : ''}">${esc(l)}</span>`).join('')}</div>
       <p class="sub" style="margin-top:14px"><a href="admissions.html#madrasah-levels" class="lnk">See what the next level requires</a></p></article>
 
-    <article class="c w6" style="--i:8"><h2>Announcements</h2><ul class="list">${(d.announcements || []).map((a) => `<li style="display:block"><b>${esc(a.Title)}</b> <span style="float:right">${fdate(a.Date)}</span><div class="sub">${esc(a.Body)}</div></li>`).join('') || '<li class="empty">Nothing new.</li>'}</ul></article>
+    <article class="c w6" style="--i:8"><h2>Announcements</h2><ul class="list">${(d.announcements || []).map((a) => `<li style="display:block"><b>${esc(a.Title)}</b> <span style="float:inline-end">${fdate(a.Date)}</span><div class="sub">${esc(a.Body)}</div></li>`).join('') || '<li class="empty">Nothing new.</li>'}</ul></article>
     <article class="c w6" style="--i:9"><h2>Materials</h2><ul class="list">${(d.materials || []).map((m) => `<li>${safeUrl(m.URL) ? `<a href="${esc(m.URL)}" target="_blank" rel="noopener">${esc(m.Title)}</a>` : esc(m.Title)}</li>`).join('') || '<li class="empty">No materials yet.</li>'}</ul></article>
 
     <article class="c w12" style="--i:10"><h2>Payment history</h2>${pays.length ? `<table><thead><tr><th>Date</th><th>Reference</th><th>Covers</th><th>Amount</th></tr></thead><tbody>${pays.map((p) => `<tr><td>${fdate(p.Date)}</td><td>${esc(p.Reference || '')}</td><td>${esc(p.Months)} month${Number(p.Months) === 1 ? '' : 's'}</td><td><b>${naira(p.Amount)}</b></td></tr>`).join('')}</tbody></table>` : '<p class="empty">Confirmed payments will appear here.</p>'}</article>

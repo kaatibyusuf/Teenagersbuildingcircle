@@ -1,0 +1,31 @@
+/* Arabic for the success-stories page. English on the left, Arabic on the right: edit the Arabic to change what visitors see.
+   Keys starting with re: are patterns for text with numbers or names in it ($1, $2 are the parts kept). */
+HS_I18N.add({
+"Real results, real students.": "نتائج حقيقية، وطلاب حقيقيون.",
+"Numbers only mean something when they come from real cohorts. Here's what Himaayah Academy students have actually done.": "الأرقام لا تعني شيئًا إلا إذا جاءت من دفعات حقيقية. وهذا ما حقّقه طلاب أكاديمية حماية فعلًا.",
+"Success rate": "نسبة النجاح",
+"In our indigenous UTME programme": "في برنامجنا المحلي لـ UTME",
+"Scored 200+": "حصلوا على أكثر من 200",
+"Of students in the programme": "من طلاب البرنامج",
+"2026 success rate": "نسبة النجاح لعام 2026",
+"This year's cohort": "دفعة هذا العام",
+"Now admitted": "قُبلوا الآن",
+"Of 2025 UTME writers, into their desired course": "من ممتحني UTME لعام 2025، في التخصص الذي أرادوه",
+"UTME score": "درجة UTME",
+"From Sciences to Arts. First attempt, 294.": "من العلوم إلى الآداب. المحاولة الأولى، 294.",
+"One of our students switched from a science combination to Arts and still scored 294 in her first attempt at UTME, with no repeat sitting and no prior background in the new subjects. She is now a Law student at EKSU.": "انتقلت إحدى طالباتنا من تخصص علمي إلى الآداب، ومع ذلك حصلت على 294 في أول محاولة لها في UTME، دون إعادة الامتحان ودون أي خلفية سابقة في المواد الجديدة. وهي الآن طالبة قانون في جامعة EKSU.",
+"It's the kind of result that isn't about talent alone. It's what happens when the structure around a student adapts to where they're starting from, not where a syllabus assumes they are.": "إنها نتيجة لا تقوم على الموهبة وحدها، بل هي ما يحدث حين يتكيّف النظام المحيط بالطالب مع نقطة انطلاقه، لا مع ما يفترضه المنهج.",
+"Testimonials": "شهادات",
+"In their own words.": "بكلماتهم.",
+"Direct from students who sat UTME through the Academy.": "مباشرة من طلاب أدّوا امتحان UTME عبر الأكاديمية.",
+"\"Alhamdulillah, Himaayah Academy is the best place I will recommend for anyone preparing for the next UTME. I had no prior knowledge of my department subjects, but with the help of Allah and my dedicated teachers, I was able to have my score.\"": "«الحمد لله، أكاديمية حماية هي أفضل مكان أنصح به كل من يستعد لامتحان UTME القادم. لم تكن لديّ معرفة سابقة بمواد تخصصي، لكن بعون الله ثم بمعلّميّ المخلصين حصلت على درجتي.»",
+"294 in UTME": "294 في UTME",
+"\"At Himaayah Academy, I didn't just learn about academics — I learnt resilience, discipline, and how to manage my fears. It gave me teachers that stood by me despite my failures, and friends who are now dear to my heart.\"": "«في أكاديمية حماية لم أتعلّم الدروس فحسب، بل تعلّمت الصمود والانضباط وكيف أتعامل مع مخاوفي. ومنحتني معلّمين وقفوا إلى جانبي رغم إخفاقاتي، وأصدقاء صاروا أعزّاء على قلبي.»",
+"299 in UTME": "299 في UTME",
+"\"The academy was very helpful and strategic. Everything was structured to make sure everyone puts in their all — from daily tasks to the reading club, to brainstorming sessions, to daily CBT quizzes. It sets the path.\"": "«كانت الأكاديمية مفيدة جدًا ومدروسة. كان كل شيء منظَّمًا ليبذل الجميع أقصى ما عندهم، من المهام اليومية إلى نادي القراءة، إلى جلسات العصف الذهني، إلى اختبارات CBT اليومية. إنها ترسم الطريق.»",
+"Your result starts with a first step.": "نتيجتك تبدأ بخطوة أولى.",
+"Same structure, same teachers, same standard, for whichever exam is ahead of you.": "البنية نفسها، والمعلّمون أنفسهم، والمعيار نفسه، أيًّا كان الامتحان الذي أمامك.",
+"See the Academy": "شاهد الأكاديمية",
+"5 out of 5 stars": "5 من 5 نجوم",
+"Success Stories — Himaayah Schools": "قصص النجاح — مدارس حماية"
+});

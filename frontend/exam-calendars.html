@@ -17,6 +17,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
+<script src="js/i18n.js"></script>
 </head>
 <body>
 
@@ -290,7 +291,7 @@
 <script>
   // Heading: letters reveal one by one
   (function () {
-    const h = document.querySelector('.hero h1'); if (!h) return;
+    const h = document.querySelector('.hero h1'); if (!h || document.documentElement.lang === 'ar') return;  // Arabic keeps the heading whole
     const text = h.textContent.trim(); let n = 0;
     h.setAttribute('aria-label', text); h.textContent = '';
     text.split(' ').forEach((word, wi, arr) => {

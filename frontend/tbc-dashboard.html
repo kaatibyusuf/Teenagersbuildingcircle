@@ -10,6 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
+<script src="js/i18n.js"></script>
 </head>
 <body>
 <header class="top"><div>
@@ -172,11 +173,11 @@ function render(d) {
     <article class="c w12" id="assign" style="--i:4"><h2>Assignments${todo ? ` <span class="pill st-todo" style="font-size:12px;vertical-align:middle">${todo} to do</span>` : ''}</h2>
       <div class="asgs">${asg.map(assignmentHtml).join('') || '<p class="empty">No assignments yet. Your facilitator will post them here.</p>'}</div></article>
 
-    <article class="c w6" style="--i:5"><h2>Upcoming sessions</h2><ul class="list">${up.map((x) => `<li style="display:block"><b>${esc(x.Title)}</b> <span style="float:right">${fdate(x.Start, true)}</span>${x.Pillar ? `<div class="sub">${esc(x.Pillar)}</div>` : ''}${safeUrl(x.Link) ? `<div class="sub"><a class="lnk" href="${esc(x.Link)}" target="_blank" rel="noopener">Join link</a></div>` : ''}</li>`).join('') || '<li class="empty">No more sessions scheduled yet.</li>'}</ul>
+    <article class="c w6" style="--i:5"><h2>Upcoming sessions</h2><ul class="list">${up.map((x) => `<li style="display:block"><b>${esc(x.Title)}</b> <span style="float:inline-end">${fdate(x.Start, true)}</span>${x.Pillar ? `<div class="sub">${esc(x.Pillar)}</div>` : ''}${safeUrl(x.Link) ? `<div class="sub"><a class="lnk" href="${esc(x.Link)}" target="_blank" rel="noopener">Join link</a></div>` : ''}</li>`).join('') || '<li class="empty">No more sessions scheduled yet.</li>'}</ul>
       ${past.length ? `<p class="k" style="margin-top:18px">Recent sessions</p><ul class="list">${past.slice(0, 3).map((x) => `<li><b>${esc(x.Title)}</b><span>${fdate(x.Start)}</span></li>`).join('')}</ul>` : ''}</article>
     <article class="c w6" style="--i:6"><h2>Your attendance</h2><div class="att">${(d.attendance || []).map((a) => `<span class="a-${esc(a.Status)}" title="${esc(a.Status)}"><b>${esc(a.Status)}</b>${fdate(a.Date)}</span>`).join('') || '<p class="empty">No sessions recorded yet.</p>'}</div></article>
 
-    <article class="c w6" style="--i:7"><h2>Announcements</h2><ul class="list">${(d.announcements || []).map((a) => `<li style="display:block"><b>${esc(a.Title)}</b> <span style="float:right">${fdate(a.Date)}</span><div class="sub">${esc(a.Body)}</div></li>`).join('') || '<li class="empty">No announcements.</li>'}</ul></article>
+    <article class="c w6" style="--i:7"><h2>Announcements</h2><ul class="list">${(d.announcements || []).map((a) => `<li style="display:block"><b>${esc(a.Title)}</b> <span style="float:inline-end">${fdate(a.Date)}</span><div class="sub">${esc(a.Body)}</div></li>`).join('') || '<li class="empty">No announcements.</li>'}</ul></article>
     <article class="c w6" style="--i:8"><h2>Payment history</h2>${pays.length ? `<table><thead><tr><th>Date</th><th>Reference</th><th>Covers</th><th>Amount</th></tr></thead><tbody>${pays.map((p) => `<tr><td>${fdate(p.Date)}</td><td>${esc(p.Reference || '')}</td><td>${esc(p.Months)} mo</td><td><b>${naira(p.Amount)}</b></td></tr>`).join('')}</tbody></table>` : '<p class="empty">No payments recorded yet.</p>'}</article>
   </div>
   <p class="foot">${API_URL ? '' : 'Demo mode: this is sample data. '}Your records are updated by your facilitators. Questions? Use the Need help? button.</p>`;

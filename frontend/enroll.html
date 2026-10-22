@@ -17,6 +17,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
+<script src="js/i18n.js"></script>
 </head>
 <body>
 
@@ -179,7 +180,7 @@
         <p class="form-status error" id="enrolStatus"></p>
 
         <p class="msg-title">Your message</p>
-        <div class="msg-preview" id="msgPreview"></div>
+        <div class="msg-preview" id="msgPreview" translate="no" dir="ltr" lang="en"></div>
         <p class="form-note note-box"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg><span>Pay first, then send. Please attach your receipt before you press send. Payments are usually confirmed within a few hours.</span></p>
 
         <div class="step-actions">
@@ -611,7 +612,7 @@
   // Heading: letters reveal one by one, then a ball hops along the tops of the
   // letters and lands as the dot on the first "i" of the word in data-dot-word.
   (function () {
-    const h = document.querySelector('.hero h1'); if (!h) return;
+    const h = document.querySelector('.hero h1'); if (!h || document.documentElement.lang === 'ar') return;  // Arabic keeps the heading whole
     const acc = (h.dataset.accentWord || '').toLowerCase();
     const text = h.textContent.trim(), word0 = (h.dataset.dotWord || '').toLowerCase();
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;

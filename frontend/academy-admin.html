@@ -10,6 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
+<script src="js/i18n.js"></script>
 </head>
 <body>
 <header class="top"><div>
@@ -96,7 +97,7 @@ function vPayments() {
     <div class="tiles"><div class="tile warn"><b>${count((s) => s.PaymentStatus === 'Overdue')}</b><span>overdue</span></div><div class="tile"><b>${count((s) => s.PaymentStatus === 'Due')}</b><span>due soon</span></div><div class="tile"><b>${count((s) => s.PaymentStatus === 'Paid')}</b><span>paid up</span></div></div>
     <input class="in" id="q" type="search" placeholder="Search by name or ID" value="${esc(S.q)}" style="max-width:340px">
     <div id="stulist">${list.map(row).join('') || '<p class="empty" style="margin-top:12px">No students yet.</p>'}</div></article>
-  <article class="c w4"><h2>Recently confirmed</h2>${recent.length ? `<table><tbody>${recent.map((p) => `<tr><td>${esc(p.Name || stuName(p.StudentID))}<br><span class="sub">${fdate(p.Date)}${p.Reference ? ' · ' + esc(p.Reference) : ''}</span></td><td style="text-align:right"><b>${naira(p.Amount)}</b><br><span class="sub">${esc(p.Months)} mo</span></td></tr>`).join('')}</tbody></table>` : '<p class="empty">Nothing confirmed yet.</p>'}</article></div>`;
+  <article class="c w4"><h2>Recently confirmed</h2>${recent.length ? `<table><tbody>${recent.map((p) => `<tr><td>${esc(p.Name || stuName(p.StudentID))}<br><span class="sub">${fdate(p.Date)}${p.Reference ? ' · ' + esc(p.Reference) : ''}</span></td><td style="text-align:end"><b>${naira(p.Amount)}</b><br><span class="sub">${esc(p.Months)} mo</span></td></tr>`).join('')}</tbody></table>` : '<p class="empty">Nothing confirmed yet.</p>'}</article></div>`;
 }
 
 function vAssign() {
