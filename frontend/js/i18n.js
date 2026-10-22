@@ -308,7 +308,7 @@
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMenu(); });
 
     // where it goes: public nav, the Madrasah page's nav, portal top bar, or a small floating pill
-    var pill = document.querySelector('.nav-pill');
+    var pill = document.querySelector('.nav-pill, .h-pill');
     var mpill = document.querySelector('nav.nav > .pill');
     var topNav = document.querySelector('header.top nav');
     if (pill) { pill.classList.add('has-lang'); pill.insertBefore(wrap, document.getElementById('navToggle')); }
