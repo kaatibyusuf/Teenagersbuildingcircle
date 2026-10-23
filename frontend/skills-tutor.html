@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en" class="app staff page-skills-tutor page-academy-tutor">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tutor | Himaayah Skills School</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#094570">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600;700&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<script src="js/i18n.js"></script>
+<!-- Vercel Analytics: counts visits once enabled in the Vercel dashboard -->
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+<header class="top"><div>
+<a class="brand" href="index.html"><svg width="22" height="27" viewBox="0 0 377.21 459.6" fill="#094570" aria-hidden="true"><path d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>Himaayah Schools <em>Skills tutor</em></a>
+<nav><a class="btn btn-line" href="index.html">Home</a><button class="btn btn-ink" id="out" hidden>Log out</button></nav>
+</div></header>
+
+<main id="login" class="login"><form class="lbox" id="lf" novalidate>
+<div class="crest" aria-hidden="true"><svg width="26" height="32" viewBox="0 0 377.21 459.6" fill="#094570"><path d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg></div>
+<span class="kick">Skills School</span><h1>Tutor login</h1><p>Sign in with the Tutor ID and access code the school gave you.</p>
+<div class="demo" id="demoNote" hidden><b>Demo mode.</b> Use ID <b>DEMO</b> and code <b>demo</b> to try it with sample data.</div>
+<div class="f"><label for="tid">Tutor ID</label><input id="tid" autocomplete="username" autocapitalize="characters" placeholder="e.g. ST-001" required></div>
+<div class="f"><label for="tcode">Access code</label><input id="tcode" type="password" autocomplete="new-password" data-lpignore="true" required></div>
+<div class="err" id="err" role="alert"></div>
+<button class="btn btn-ink" id="go" type="submit">Sign in</button>
+</form></main>
+
+<main id="app" class="wrap" hidden></main>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script>
+/* ===== SETTINGS =====
+   Same Apps Script web app as the other portals. While it is empty the page runs in DEMO mode. */
+const API_URL = 'https://script.google.com/macros/s/AKfycby0AsifBuB_Ad7g1SjDXCipaDU27-BrzYWf67muw5jeY_C0_0uz8AhQYYXdiNRQhvqX/exec';
+const KEY = 'hskt';
+
+const $ = (id) => document.getElementById(id);
+const esc = (t) => String(t ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fdate = (iso, t) => { const d = new Date(iso); return isNaN(d) ? esc(iso || 'Not set') : d.toLocaleDateString('en-GB', {day:'numeric', month:'short', year:'numeric'}) + (t ? ', ' + d.toLocaleTimeString('en-GB', {hour:'2-digit', minute:'2-digit'}) : ''); };
+const safeUrl = (u) => /^https?:\/\//i.test(String(u ?? '').trim());
+const TABS = [['students', 'Students'], ['projects', 'Projects'], ['attendance', 'Attendance'], ['class', 'Class and completion'], ['account', 'Account']];
+let D = null;
+const S = { tab: 'students', q: '', course: '', attDate: '' };
+
+const creds = () => { try { return JSON.parse(sessionStorage.getItem(KEY) || 'null') || {}; } catch (e) { return {}; } };
+async function api(action, extra) {
+  const c = creds();
+  if (!API_URL) return demoApi(c, action, extra || {});
+  const r = await fetch(API_URL, { method: 'POST', body: JSON.stringify(Object.assign({ action, id: c.id, code: c.code }, extra || {})) });
+  return r.json();
+}
+let toastT;
+function toast(msg, bad) { const t = $('toast'); t.textContent = msg; t.className = 'toast' + (bad ? ' bad' : ''); t.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => { t.hidden = true; }, bad ? 5000 : 3000); }
+let busy = false;
+async function act(action, extra, okMsg, btn) {
+  if (busy) return false;
+  busy = true; const old = btn && btn.textContent; if (btn) { btn.disabled = true; btn.textContent = 'Saving…'; }
+  try {
+    const d = await api(action, extra);
+    if (d.ok) { D = d; if (okMsg) toast(okMsg); render(); return true; }
+    toast(d.error || 'Could not save. Please try again.', true);
+  } catch (e) { toast('Could not reach the school server. Please try again.', true); }
+  finally { busy = false; if (btn && document.contains(btn)) { btn.disabled = false; btn.textContent = old; } }
+  return false;
+}
+
+/* ---------- helpers ---------- */
+const shown = () => D.students.filter((s) => !S.course || s.Course === S.course);
+const courseFilter = (id) => D.courses.length > 1 ? `<div><label class="fl" for="${id}">Course</label><select class="in cf" id="${id}"><option value="">All courses</option>${D.courses.map((c) => `<option${c === S.course ? ' selected' : ''}>${esc(c)}</option>`).join('')}</select></div>` : '';
+const pending = () => D.projects.reduce((a, p) => a + p.Pending, 0);
+const pick = (n) => `<div class="pick" id="${n}">${shown().map((s) => `<label><input type="checkbox" value="${esc(s.StudentID)}"> <span>${esc(s.Name)}</span><small>${esc(s.Course)}${s.Cohort ? ' · ' + esc(s.Cohort) : ''}</small></label>`).join('') || '<p class="empty">No students yet.</p>'}</div>
+  <div class="tool"><button class="btn btn-line btn-sm" type="button" data-act="all" data-t="${n}">Select all</button><button class="btn btn-line btn-sm" type="button" data-act="none" data-t="${n}">Clear</button></div>`;
+
+/* ---------- views ---------- */
+function vStudents() {
+  const row = (s) => `<details class="box stu" data-name="${esc((s.Name + ' ' + s.StudentID).toLowerCase())}">
+    <summary><div><b>${esc(s.Name)}</b><small>${esc(s.Course)}${s.Cohort ? ' · ' + esc(s.Cohort) : ''} · ${s.Status === 'Completed' ? 'Completed' : s.Week ? 'Week ' + s.Week + (s.Weeks ? ' of ' + s.Weeks : '') : 'Not started'}</small></div><div class="sum-r"><span class="pill ${s.Outstanding ? 'p-sky' : 'p-ink'}">${s.Outstanding} to do</span><span class="pill p-wash">${s.Total ? s.Present + '/' + s.Total + ' present' : 'No register yet'}</span></div></summary>
+    <div class="body"><div class="tiles" style="grid-template-columns:repeat(3,1fr)"><div class="tile"><b>${s.Submitted}</b><span>waiting to be marked</span></div><div class="tile"><b>${s.Marked}</b><span>marked</span></div><div class="tile"><b>${s.Total ? Math.round(100 * s.Present / s.Total) + '%' : '–'}</b><span>attendance</span></div></div>
+      <p class="sub">${s.StartDate ? 'Started ' + fdate(s.StartDate) + '.' : 'No start date yet.'}${s.NextClass ? ' Next class: ' + fdate(s.NextClass, true) + '.' : ''}${D.teacher.Role === 'Admin' && s.PaymentStatus ? ' Payment: ' + esc(s.PaymentStatus) + '.' : ''}${safeUrl(s.Certificate) ? ' <a class="lnk" href="' + esc(s.Certificate) + '" target="_blank" rel="noopener">Certificate</a>' : ''}</p>
+      ${s.Wa ? `<p class="sub"><a class="lnk" href="https://wa.me/${esc(s.Wa)}" target="_blank" rel="noopener">Message on WhatsApp</a></p>` : ''}</div></details>`;
+  const list = shown();
+  return `<article class="c w12"><h2>Your students</h2>
+    <div class="tiles"><div class="tile"><b>${list.length}</b><span>students</span></div><div class="tile ${pending() ? 'warn' : ''}"><b>${pending()}</b><span>submissions to mark</span></div><div class="tile"><b>${list.filter((s) => s.Status === 'Completed').length}</b><span>completed</span></div></div>
+    <div class="tool">${courseFilter('cf1')}<div><label class="fl" for="q">Search</label><input class="in" id="q" type="search" placeholder="Name or ID" value="${esc(S.q)}"></div></div>
+    <div id="stulist">${list.map(row).join('') || '<p class="empty" style="margin-top:12px">No Skills School students are assigned to you yet.</p>'}</div></article>`;
+}
+
+function vProjects() {
+  const subRow = (p, x) => `<div class="subm"><div><b>${esc(x.Name)}</b><small>${fdate(x.Submitted, true)}${x.Late ? ' · late' : ''}</small>${safeUrl(x.Link) ? `<a class="lnk" href="${esc(x.Link)}" target="_blank" rel="noopener">Open their work</a>` : ''}${x.Note ? `<p class="sub">${esc(x.Note)}</p>` : ''}</div>
+    <form class="frm mark" data-form="mark" data-id="${esc(x.SubmissionID)}"><div class="row2"><div><label class="fl">Score${p.MaxScore ? ' (out of ' + esc(p.MaxScore) + ')' : ''}</label><input class="in" name="score" type="number" min="0" step="any" value="${esc(x.Score === 'Reviewed' ? '' : x.Score)}"></div><div><label class="fl">Feedback</label><input class="in" name="feedback" maxlength="3000" value="${esc(x.Feedback)}"></div></div><button class="btn btn-ink btn-sm" type="submit">${x.Score !== '' ? 'Update' : 'Save mark'}</button></form></div>`;
+  const list = D.projects.filter((p) => !S.course || p.Course === S.course);
+  return `<div class="grid"><article class="c w4"><h2>Set a project</h2><p class="sub">Students on the course (and cohort, if you choose one) see it on their dashboard and can send a link to their work.</p>
+    <form class="frm" data-form="project">
+      <div class="row2"><div><label class="fl" for="pc">Course</label><select class="in" id="pc" name="course">${D.courses.map((c) => `<option${c === S.course ? ' selected' : ''}>${esc(c)}</option>`).join('')}</select></div>
+      <div><label class="fl" for="ph">Cohort</label><select class="in" id="ph" name="cohort"><option value="">All cohorts</option>${D.cohorts.map((c) => `<option>${esc(c)}</option>`).join('')}</select></div></div>
+      <div><label class="fl" for="pt">Title</label><input class="in" id="pt" name="title" maxlength="120" placeholder="e.g. Week 3: A two-minute speech" required></div>
+      <div><label class="fl" for="pb">Brief</label><textarea class="in" id="pb" name="brief" rows="4" maxlength="3000" placeholder="What to make and how it will be marked"></textarea></div>
+      <div class="row3"><div><label class="fl" for="pw">Week</label><input class="in" id="pw" name="week" type="number" min="1" max="52"></div><div><label class="fl" for="pd">Due date</label><input class="in" id="pd" name="due" type="date"></div><div><label class="fl" for="pm">Out of</label><input class="in" id="pm" name="maxScore" type="number" min="1" max="1000" placeholder="20"></div></div>
+      <div><label class="fl" for="pl">Link to a brief or file (optional)</label><input class="in" id="pl" name="link" type="url" placeholder="https://..."></div>
+      <button class="btn btn-ink" type="submit">Set project</button></form></article>
+  <article class="c w8"><h2>Submissions</h2><div class="tool">${courseFilter('cf2')}</div>${list.map((p) => `<details class="box"${p.Pending ? ' open' : ''}><summary><div><b>${esc(p.Title)}</b><small>${esc(p.Course)}${p.Cohort ? ' · ' + esc(p.Cohort) : ''}${p.Due ? ' · due ' + fdate(p.Due) : ''}</small></div><div class="sum-r"><span class="pill ${p.Pending ? 'p-sky' : 'p-wash'}">${p.Pending} to mark</span><span class="pill p-wash">${p.Submissions.length} sent</span></div></summary>
+    <div class="body">${p.Submissions.map((x) => subRow(p, x)).join('') || '<p class="empty">No submissions yet.</p>'}</div></details>`).join('') || '<p class="empty">No projects yet. Set one on the left.</p>'}</article></div>`;
+}
+
+function vAttendance() {
+  const date = S.attDate || D.today, list = shown();
+  return `<article class="c w12" style="max-width:760px"><h2>Take the register</h2><p class="sub">Untick anyone who missed the class, then save. Saving the same date again corrects it.</p>
+  <form class="frm" data-form="attendance"><div class="row2"><div><label class="fl" for="ad">Class date</label><input class="in" id="ad" name="date" type="date" value="${esc(date)}" max="${esc(D.today)}" required></div>${courseFilter('cf3')}</div>
+    <div class="pick" id="att">${list.map((s) => `<label><input type="checkbox" value="${esc(s.StudentID)}" checked> <span>${esc(s.Name)}</span><small>${esc(s.Course)}${s.Cohort ? ' · ' + esc(s.Cohort) : ''}</small></label>`).join('') || '<p class="empty">No students yet.</p>'}</div>
+    ${list.length ? '<button class="btn btn-ink" type="submit">Save register</button>' : ''}</form></article>`;
+}
+
+function vClass() {
+  return `<div class="grid"><article class="c w6"><h2>Next live class</h2><p class="sub">Shown on each ticked student’s dashboard with a join button.</p>
+    <form class="frm" data-form="class"><div class="tool">${courseFilter('cf4')}</div><div><label class="fl" for="cn">Date and time</label><input class="in" id="cn" name="nextClass" type="datetime-local"></div><div><label class="fl" for="cl">Join link</label><input class="in" id="cl" name="link" type="url" placeholder="https://meet.google.com/..."></div>
+    <label class="fl">Students</label>${pick('cp')}<button class="btn btn-ink" type="submit">Save class</button></form></article>
+  <article class="c w6"><h2>Mark course complete</h2><p class="sub">For students who have finished. They get an email, and the certificate link (if you add one) appears on their dashboard.</p>
+    <form class="frm" data-form="complete"><div><label class="fl" for="cc">Certificate link (optional)</label><input class="in" id="cc" name="certificate" type="url" placeholder="https://drive.google.com/..."></div>
+    <label class="fl">Students</label>${pick('dp')}<button class="btn btn-ink" type="submit">Mark complete</button></form></article></div>`;
+}
+
+function vAccount() {
+  return `<article class="c w12" style="max-width:560px"><h2>Your account</h2><p class="sub">${esc(D.teacher.Name)} · ${esc(D.teacher.TeacherID)} · ${esc(D.teacher.Role)}</p>
+  <form class="frm" data-form="password"><div><label class="fl" for="np">New access code (8 characters or more)</label><input class="in" id="np" name="newCode" type="password" autocomplete="new-password" minlength="8" maxlength="40"></div>
+  <div><label class="fl" for="np2">Type it again</label><input class="in" id="np2" name="again" type="password" autocomplete="new-password"></div>
+  <button class="btn btn-ink" type="submit">Change my code</button></form></article>`;
+}
+
+const VIEWS = { students: vStudents, projects: vProjects, attendance: vAttendance, class: vClass, account: vAccount };
+function render() {
+  const pn = pending();
+  $('app').innerHTML = `<section class="greet"><div><small>Assalaamu alaykum</small><h1>${esc(D.teacher.Name)}</h1>
+    <div class="chips"><span>${esc(D.teacher.Role)}</span><span>${D.students.length} student${D.students.length === 1 ? '' : 's'}</span>${pn ? `<span>${pn} to mark</span>` : ''}</div></div></section>
+  <nav class="tabs" role="tablist" aria-label="Sections">${TABS.map(([k, l]) => `<button role="tab" type="button" data-act="tab" data-t="${k}" aria-selected="${S.tab === k}">${l}</button>`).join('')}</nav>
+  <div id="view">${VIEWS[S.tab]()}</div>
+  <p class="foot">${API_URL ? '' : 'Demo mode: sample data, nothing is saved. '}Students see their projects, attendance and class details on their own dashboard.</p>`;
+  applyFilter();
+}
+function applyFilter() { const q = S.q.trim().toLowerCase(); document.querySelectorAll('#stulist [data-name]').forEach((el) => { el.hidden = !!q && el.dataset.name.indexOf(q) < 0; }); }
+
+/* ---------- events ---------- */
+const app = $('app');
+const ticked = (id) => [...document.querySelectorAll('#' + id + ' input:checked')].map((x) => x.value);
+app.addEventListener('click', (e) => {
+  const b = e.target.closest('[data-act]'); if (!b) return;
+  const a = b.dataset.act;
+  if (a === 'tab') {
+    S.tab = b.dataset.t; render(); window.scrollTo(0, 0);
+    if (!busy) api('skt_login').then((d) => { if (d && d.ok && !busy) { D = d; render(); } }).catch(() => {});   // pick up new submissions quietly
+  }
+  else if (a === 'all' || a === 'none') document.querySelectorAll('#' + b.dataset.t + ' input').forEach((x) => { x.checked = a === 'all'; });
+});
+app.addEventListener('change', (e) => { if (e.target.classList.contains('cf')) { S.course = e.target.value; render(); } else if (e.target.id === 'ad') S.attDate = e.target.value; });
+app.addEventListener('input', (e) => { if (e.target.id === 'q') { S.q = e.target.value; applyFilter(); } });
+app.addEventListener('submit', async (e) => {
+  const f = e.target.closest('form[data-form]'); if (!f) return;
+  e.preventDefault();
+  const k = f.dataset.form, v = (n) => f.elements[n] ? f.elements[n].value : '', btn = f.querySelector('button[type=submit]');
+  if (k === 'project') {
+    if (!v('title').trim()) return toast('Give the project a title.', true);
+    if (v('link').trim() && !safeUrl(v('link'))) return toast('The link must start with http:// or https://', true);
+    act('skt_project', { course: v('course'), cohort: v('cohort'), title: v('title').trim(), brief: v('brief').trim(), week: v('week'), due: v('due'), maxScore: v('maxScore'), link: v('link').trim() }, 'Project set.', btn);
+  } else if (k === 'mark') {
+    if (v('score') === '' && !v('feedback').trim()) return toast('Enter a score or some feedback.', true);
+    act('skt_mark', { submissionId: f.dataset.id, score: v('score'), feedback: v('feedback').trim() }, 'Marked.', btn);
+  } else if (k === 'attendance') {
+    const all = [...f.querySelectorAll('#att input')].map((x) => x.value); if (!all.length) return;
+    const present = ticked('att');
+    act('skt_attendance', { date: v('date'), studentIds: all, present }, 'Register saved: ' + present.length + ' of ' + all.length + ' present.', btn);
+  } else if (k === 'class') {
+    const ids = ticked('cp'); if (!ids.length) return toast('Tick at least one student.', true);
+    if (!v('nextClass') && !v('link').trim()) return toast('Enter a date and time, or a link.', true);
+    act('skt_class', { studentIds: ids, nextClass: v('nextClass'), link: v('link').trim() }, 'Class saved.', btn);
+  } else if (k === 'complete') {
+    const ids = ticked('dp'); if (!ids.length) return toast('Tick at least one student.', true);
+    if (v('certificate').trim() && !safeUrl(v('certificate'))) return toast('The certificate link must start with http:// or https://', true);
+    act('skt_complete', { studentIds: ids, certificate: v('certificate').trim() }, 'Marked complete for ' + ids.length + ' student' + (ids.length === 1 ? '' : 's') + '.', btn);
+  } else if (k === 'password') {
+    if (v('newCode').length < 8) return toast('Your new code must be at least 8 characters.', true);
+    if (v('newCode') !== v('again')) return toast('The two codes do not match.', true);
+    const code = v('newCode');
+    act('skt_password', { newCode: code }, 'Code changed.', btn).then((ok) => { if (ok) sessionStorage.setItem(KEY, JSON.stringify({ id: creds().id, code })); });
+  }
+});
+
+/* ---------- login ---------- */
+function showApp() { $('login').hidden = true; app.hidden = false; $('out').hidden = false; render(); window.scrollTo(0, 0); }
+async function signIn(id, code, silent) {
+  const btn = $('go'), err = $('err'); err.textContent = ''; btn.disabled = true; btn.textContent = 'Signing in…';
+  sessionStorage.setItem(KEY, JSON.stringify({ id, code }));
+  try {
+    const d = await api('skt_login');
+    if (d.ok) { D = d; showApp(); } else { sessionStorage.removeItem(KEY); if (!silent) err.textContent = d.error || 'Could not sign in.'; }
+  } catch (e) { sessionStorage.removeItem(KEY); if (!silent) err.textContent = 'Could not reach the school server. Please try again.'; }
+  btn.disabled = false; btn.textContent = 'Sign in';
+}
+$('demoNote').hidden = !!API_URL;
+$('lf').addEventListener('submit', (e) => { e.preventDefault(); const id = $('tid').value.trim(), code = $('tcode').value.trim(); if (!id || !code) { $('err').textContent = 'Enter your ID and access code.'; return; } signIn(id, code); });
+$('out').addEventListener('click', () => { sessionStorage.removeItem(KEY); D = null; S.tab = 'students'; app.hidden = true; app.innerHTML = ''; $('out').hidden = true; $('login').hidden = false; $('tcode').value = ''; });
+
+/* ---------- demo mode (only used while API_URL is empty) ---------- */
+let DEMO = null;
+const isoD = (d) => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+const plus = (n) => { const d = new Date(); d.setDate(d.getDate() + n); return d; };
+function demoBase() {
+  const st = (id, name, course, week, weeks, present, total, sub, marked, out) => ({ StudentID: id, Name: name, Course: course, Cohort: 'Cohort 1', StartDate: isoD(plus(-7 * (week - 1) - 2)), Week: week, Weeks: weeks, Status: 'In progress', NextClass: '', ClassLink: '', Certificate: '', Wa: '', PaymentStatus: '', Present: present, Total: total, Submitted: sub, Marked: marked, Outstanding: out });
+  return { ok: true, today: isoD(new Date()), teacher: { TeacherID: 'DEMO', Name: 'Ustadhah Demo', Role: 'Tutor' },
+    students: [st('SK-0001', 'Aisha Bello', 'Graphic Design', 3, 6, 5, 6, 1, 1, 0), st('SK-0002', 'Yusuf Adeyemi', 'Graphic Design', 3, 6, 6, 6, 0, 1, 1), st('SK-0003', 'Maryam Lawal', 'Public Speaking', 2, 4, 3, 4, 0, 0, 1)],
+    projects: [{ ProjectID: 'P1', Course: 'Graphic Design', Cohort: '', Week: 3, Title: 'Week 3: A poster for a school event', Brief: '', Due: isoD(plus(2)), Link: '', MaxScore: 20, Pending: 1,
+      Submissions: [{ SubmissionID: 'S1', StudentID: 'SK-0001', Name: 'Aisha Bello', Submitted: isoD(plus(-1)) + 'T19:20', Link: 'https://example.com/poster', Note: 'Two versions inside.', Score: '', Feedback: '', Late: false }] }],
+    courses: ['Graphic Design', 'Public Speaking'], cohorts: ['Cohort 1', 'Cohort 2'] };
+}
+async function demoApi(c, action, p) {
+  await new Promise((r) => setTimeout(r, 120));
+  if (String(c.id || '').toUpperCase() !== 'DEMO' || c.code !== 'demo') return { ok: false, error: 'Wrong ID or access code.' };
+  if (!DEMO) DEMO = demoBase();
+  const bad = (m) => ({ ok: false, error: m }), stu = (id) => DEMO.students.find((s) => s.StudentID === id);
+  if (action === 'skt_project') { if (!p.title) return bad('Give the project a title.'); DEMO.projects.unshift({ ProjectID: 'P' + Date.now(), Course: p.course, Cohort: p.cohort, Week: p.week, Title: p.title, Brief: p.brief, Due: p.due, Link: p.link, MaxScore: p.maxScore, Pending: 0, Submissions: [] }); }
+  else if (action === 'skt_mark') { DEMO.projects.forEach((x) => x.Submissions.forEach((s) => { if (s.SubmissionID === p.submissionId) { s.Score = p.score === '' ? 'Reviewed' : Number(p.score); s.Feedback = p.feedback; } })); DEMO.projects.forEach((x) => { x.Pending = x.Submissions.filter((s) => s.Score === '').length; }); }
+  else if (action === 'skt_attendance') { p.studentIds.forEach((id) => { const s = stu(id); s.Total += 1; if (p.present.indexOf(id) >= 0) s.Present += 1; }); }
+  else if (action === 'skt_class') { if (p.link && !/^https?:\/\//i.test(p.link)) return bad('The class link must start with http:// or https://'); p.studentIds.forEach((id) => { const s = stu(id); if (p.nextClass) s.NextClass = p.nextClass; if (p.link) s.ClassLink = p.link; }); }
+  else if (action === 'skt_complete') { p.studentIds.forEach((id) => { const s = stu(id); s.Status = 'Completed'; if (p.certificate) s.Certificate = p.certificate; }); }
+  else if (action === 'skt_password') { if (String(p.newCode).length < 8) return bad('Your new code must be 8 to 40 characters.'); }
+  else if (action !== 'skt_login') return bad('Unknown action.');
+  return JSON.parse(JSON.stringify(DEMO));
+}
+</script>
+<script>
+/* Show/hide toggle on every access-code box */
+(function(){
+  function deco(){
+    document.querySelectorAll('input[type=password]:not([data-eye])').forEach(function(i){
+      i.setAttribute('data-eye','1');
+      var w=document.createElement('span');w.className='pw';i.parentNode.insertBefore(w,i);w.appendChild(i);
+      var b=document.createElement('button');b.type='button';b.textContent='Show';b.setAttribute('aria-label','Show access code');
+      b.addEventListener('click',function(){var s=i.type==='password';i.type=s?'text':'password';b.textContent=s?'Hide':'Show';b.setAttribute('aria-label',s?'Hide access code':'Show access code');});
+      w.appendChild(b);
+    });
+  }
+  deco();new MutationObserver(deco).observe(document.body,{childList:true,subtree:true});
+})();
+</script>
+</body>
+</html>

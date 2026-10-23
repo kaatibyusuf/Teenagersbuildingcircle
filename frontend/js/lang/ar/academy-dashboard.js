@@ -54,5 +54,7 @@ HS_I18N.add({
 "re:Last (\\d+) weeks": "آخر $1 أسابيع",
 "re:Average \\(last (\\d+)\\)": "المتوسط (آخر $1)",
 "re:Target \\((.+)\\)": "الهدف ($1)",
-"re:Mock exams (.+)": "الاختبارات التجريبية $1"
+"re:Mock exams (.+)": "الاختبارات التجريبية $1",
+", and Skills School students on the": "، وطلاب مدرسة المهارات على",
+"Skills dashboard": "لوحة المهارات"
 });

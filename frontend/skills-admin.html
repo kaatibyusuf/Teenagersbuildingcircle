@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en" class="app staff page-skills-admin page-academy-admin">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin | Himaayah Skills School</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#094570">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600;700&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<script src="js/i18n.js"></script>
+<!-- Vercel Analytics: counts visits once enabled in the Vercel dashboard -->
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+<header class="top"><div>
+<a class="brand" href="index.html"><svg width="22" height="27" viewBox="0 0 377.21 459.6" fill="#094570" aria-hidden="true"><path d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>Himaayah Schools <em>Skills admin</em></a>
+<nav><a class="btn btn-line" href="index.html">Home</a><button class="btn btn-ink" id="out" hidden>Log out</button></nav>
+</div></header>
+
+<main id="login" class="login"><form class="lbox" id="lf" novalidate>
+<div class="crest" aria-hidden="true"><svg width="26" height="32" viewBox="0 0 377.21 459.6" fill="#094570"><path d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg></div>
+<span class="kick">Skills School</span><h1>Admin login</h1><p>Sign in with your Admin ID and access code.</p>
+<div class="demo" id="demoNote" hidden><b>Demo mode.</b> Use ID <b>DEMO</b> and code <b>demo</b> to try it with sample data.</div>
+<div class="f"><label for="tid">Admin ID</label><input id="tid" autocomplete="username" autocapitalize="characters" placeholder="e.g. SA-001" required></div>
+<div class="f"><label for="tcode">Access code</label><input id="tcode" type="password" autocomplete="new-password" data-lpignore="true" required></div>
+<div class="err" id="err" role="alert"></div>
+<button class="btn btn-ink" id="go" type="submit">Sign in</button>
+</form></main>
+
+<main id="app" class="wrap" hidden></main>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script>
+/* ===== SETTINGS =====
+   Same Apps Script web app as the other portals. While it is empty the page runs in DEMO mode. */
+const API_URL = 'https://script.google.com/macros/s/AKfycby0AsifBuB_Ad7g1SjDXCipaDU27-BrzYWf67muw5jeY_C0_0uz8AhQYYXdiNRQhvqX/exec';
+
+const $ = (id) => document.getElementById(id);
+const esc = (t) => String(t ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const naira = (n) => '₦' + Number(n || 0).toLocaleString('en-NG');
+const fdate = (iso, t) => { const d = new Date(iso); return isNaN(d) ? esc(iso || 'Not set') : d.toLocaleDateString('en-GB', {day:'numeric', month:'short', year:'numeric'}) + (t ? ', ' + d.toLocaleTimeString('en-GB', {hour:'2-digit', minute:'2-digit'}) : ''); };
+const TABS = [['payments', 'Payments'], ['assign', 'Assign'], ['account', 'Account']];
+let D = null;
+const S = { tab: 'payments', q: '', filter: 'all', sel: {} };
+
+/* ---------- talking to the school server ---------- */
+const creds = () => { try { return JSON.parse(sessionStorage.getItem('hcsa') || 'null') || {}; } catch (e) { return {}; } };
+async function api(action, extra) {
+  const c = creds();
+  if (!API_URL) return demoApi(c, action, extra || {});
+  const r = await fetch(API_URL, { method: 'POST', body: JSON.stringify(Object.assign({ action, id: c.id, code: c.code }, extra || {})) });
+  return r.json();
+}
+let toastT;
+function toast(msg, bad) {
+  const t = $('toast'); t.textContent = msg; t.className = 'toast' + (bad ? ' bad' : ''); t.hidden = false;
+  clearTimeout(toastT); toastT = setTimeout(() => { t.hidden = true; }, bad ? 5000 : 3000);
+}
+let busy = false;
+async function act(action, extra, okMsg, btn) {
+  if (busy) return false;
+  busy = true; const old = btn && btn.textContent; if (btn) { btn.disabled = true; btn.textContent = 'Saving…'; }
+  try {
+    const d = await api(action, extra);
+    if (d.ok) { D = d; if (okMsg) toast(okMsg); render(); return true; }
+    toast(d.error || 'Could not save. Please try again.', true);
+  } catch (e) { toast('Could not reach the school server. Please try again.', true); }
+  finally { busy = false; if (btn && document.contains(btn)) { btn.disabled = false; btn.textContent = old; } }
+  return false;
+}
+
+/* ---------- helpers ---------- */
+const PCLS = { Paid: 'p-ink', Exempt: 'p-wash', Overdue: 'p-red', Due: 'p-sky' };
+const payPill = (s) => `<span class="pill ${PCLS[s.PaymentStatus] || 'p-sky'}">${esc(s.PaymentStatus || 'Due')}</span>`;
+const stuName = (id) => (D.students.find((s) => s.StudentID === id) || {}).Name || id;
+const opts = (list, first) => `<option value="">${esc(first)}</option>` + list.map((x) => `<option value="${esc(x.v)}">${esc(x.t)}</option>`).join('');
+const count = (fn) => D.students.filter(fn).length;
+
+/* ---------- views ---------- */
+function vPayments() {
+  const rank = { Overdue: 0, Due: 1 };
+  const list = D.students.slice().sort((a, b) => (rank[a.PaymentStatus] ?? 2) - (rank[b.PaymentStatus] ?? 2) || String(a.NextDue).localeCompare(String(b.NextDue)));
+  const row = (s) => {
+    const exempt = String(s.PaymentStatus).toLowerCase() === 'exempt';
+    return `<details class="box stu" data-name="${esc((s.Name + ' ' + s.StudentID).toLowerCase())}"${s.StudentID === S.open ? ' open' : ''} data-id="${esc(s.StudentID)}">
+    <summary><div><b>${esc(s.Name)}</b><small>${esc(s.StudentID)} · ${esc(s.Plan)}${s.Level ? ' · ' + esc(s.Level) : ''} · ${exempt ? 'Exempt' : s.NextDue ? 'Next due ' + fdate(s.NextDue) : esc(s.Period || 'One-time')}</small></div><div class="sum-r">${payPill(s)}</div></summary>
+    <div class="body">${exempt ? '<p class="empty">This student is exempt from payment.</p>' : `<form class="frm" data-form="pay" data-id="${esc(s.StudentID)}">
+      <div class="row3"><div><label class="fl">Amount received (₦)</label><input class="in" name="amount" type="number" min="1" step="any" value="${esc(s.Fee || '')}" required></div>
+      <div><label class="fl">Covers</label><select class="in" name="months">${s.NextDue ? [2, 1, 3, 4, 6].map((m) => `<option value="${m}">${m} month${m === 1 ? '' : 's'}</option>`).join('') : '<option value="0">The whole course</option>'}</select></div>
+      <div><label class="fl">Date received</label><input class="in" name="date" type="date" value="${esc(D.today)}" max="${esc(D.today)}" required></div></div>
+      <div><label class="fl">Transfer reference (optional)</label><input class="in" name="reference" maxlength="60" placeholder="From the receipt"></div>
+      <button class="btn btn-ink" type="submit">Confirm payment</button></form>`}</div></details>`;
+  };
+  const recent = (D.payments || []).slice(0, 8);
+  return `<div class="grid"><article class="c w8"><h2>Payments</h2><p class="sub">Open a student, check the receipt they sent, and confirm. Overdue students are at the top.</p>
+    <div class="tiles"><div class="tile warn"><b>${count((s) => s.PaymentStatus === 'Overdue')}</b><span>overdue</span></div><div class="tile"><b>${count((s) => s.PaymentStatus === 'Due')}</b><span>due soon</span></div><div class="tile"><b>${count((s) => s.PaymentStatus === 'Paid')}</b><span>paid up</span></div></div>
+    <input class="in" id="q" type="search" placeholder="Search by name or ID" value="${esc(S.q)}" style="max-width:340px">
+    <div id="stulist">${list.map(row).join('') || '<p class="empty" style="margin-top:12px">No students yet.</p>'}</div></article>
+  <article class="c w4"><h2>Recently confirmed</h2>${recent.length ? `<table><tbody>${recent.map((p) => `<tr><td>${esc(p.Name || stuName(p.StudentID))}<br><span class="sub">${fdate(p.Date)}${p.Reference ? ' · ' + esc(p.Reference) : ''}</span></td><td style="text-align:end"><b>${naira(p.Amount)}</b><br><span class="sub">${p.Months ? esc(p.Months) + ' mo' : 'course'}</span></td></tr>`).join('')}</tbody></table>` : '<p class="empty">Nothing confirmed yet.</p>'}</article></div>`;
+}
+
+function vAssign() {
+  const f = S.filter;
+  const shown = D.students.filter((s) => f === 'all' || (f === 'noFac' && !s.TeacherID) || (f === 'noGroup' && !s.Level) || (f === 'noStart' && !s.StartDate));
+  const load = D.teachers.map((t) => ({ t, n: count((s) => s.TeacherID === t.TeacherID) }));
+  return `<div class="grid"><article class="c w8"><h2>Students</h2><p class="sub">Tick the students, then choose a tutor, cohort or start date on the right. Anything left on “No change” is untouched.</p>
+    <div class="tiles"><div class="tile"><b>${D.students.length}</b><span>students</span></div><div class="tile ${count((s) => !s.TeacherID) ? 'warn' : ''}"><b>${count((s) => !s.TeacherID)}</b><span>no tutor yet</span></div><div class="tile ${count((s) => !s.Level) ? 'warn' : ''}"><b>${count((s) => !s.Level)}</b><span>no cohort yet</span></div></div>
+    <div class="tool"><div><label class="fl" for="q">Search</label><input class="in" id="q" type="search" placeholder="Name or ID" value="${esc(S.q)}"></div>
+      <div><label class="fl" for="flt">Show</label><select class="in" id="flt"><option value="all"${f === 'all' ? ' selected' : ''}>All students</option><option value="noFac"${f === 'noFac' ? ' selected' : ''}>No tutor yet</option><option value="noGroup"${f === 'noGroup' ? ' selected' : ''}>No cohort yet</option><option value="noStart"${f === 'noStart' ? ' selected' : ''}>No start date yet</option></select></div>
+      <button class="btn btn-line btn-sm" type="button" data-act="selAll">Select all shown</button></div>
+    <div class="pick" id="stulist">${shown.map((s) => `<label data-name="${esc((s.Name + ' ' + s.StudentID).toLowerCase())}"><input type="checkbox" class="asg" value="${esc(s.StudentID)}"${S.sel[s.StudentID] ? ' checked' : ''}> <span><b>${esc(s.Name)}</b> <span class="sub">${esc(s.Plan)} · ${esc(s.Level || 'No cohort')}${s.StartDate ? ' · starts ' + fdate(s.StartDate) : ''}</span></span><small>${esc(s.Teacher || 'No tutor')}</small></label>`).join('') || '<p class="empty">No students match.</p>'}</div></article>
+  <div class="c w4" style="display:grid;gap:16px;align-content:start;padding:0;background:none;box-shadow:none">
+    <article class="c" style="grid-column:auto"><h2>Assign selected</h2><p class="sub" id="selCount">${Object.keys(S.sel).filter((k) => S.sel[k]).length} selected</p>
+      <form class="frm" data-form="assign">
+        <div><label class="fl" for="at">Tutor</label><select class="in" id="at" name="teacherId">${opts(D.teachers.map((t) => ({ v: t.TeacherID, t: t.Name })), 'No change')}</select></div>
+        <div><label class="fl" for="al">Cohort</label><select class="in" id="al" name="level">${opts(D.levels.map((l) => ({ v: l, t: l })), 'No change')}</select></div>
+        <div><label class="fl" for="as">Start date</label><input class="in" id="as" name="startDate" type="date"></div>
+        <button class="btn btn-ink" type="submit">Apply to selected</button></form></article>
+    <article class="c" style="grid-column:auto"><h2>Tutor load</h2><ul class="list">${load.map((x) => `<li><span><b>${esc(x.t.Name)}</b></span><span>${x.n} student${x.n === 1 ? '' : 's'}</span></li>`).join('') || '<li>No tutors yet.</li>'}</ul></article>
+  </div></div>`;
+}
+
+function vAccount() {
+  return `<article class="c w12" style="max-width:560px"><h2>Your account</h2><p class="sub">${esc(D.admin.Name)} · ${esc(D.admin.AdminID)}</p>
+  <form class="frm" data-form="password"><div><label class="fl" for="np">New access code (8 characters or more)</label><input class="in" id="np" name="newCode" type="password" autocomplete="new-password" minlength="8" maxlength="40"></div>
+  <div><label class="fl" for="np2">Type it again</label><input class="in" id="np2" name="again" type="password" autocomplete="new-password"></div>
+  <button class="btn btn-ink" type="submit">Change my code</button></form></article>`;
+}
+
+const VIEWS = { payments: vPayments, assign: vAssign, account: vAccount };
+function render() {
+  const a = D.admin, od = count((s) => s.PaymentStatus === 'Overdue'), nt = count((s) => !s.TeacherID);
+  $('app').innerHTML = `<section class="greet"><div><small>Assalaamu alaykum</small><h1>${esc(a.Name)}</h1>
+    <div class="chips"><span>Skills School admin</span><span>${od} overdue</span><span>${nt} without a tutor</span></div></div></section>
+  <nav class="tabs" role="tablist" aria-label="Sections">${TABS.map(([k, l]) => `<button role="tab" type="button" data-act="tab" data-t="${k}" aria-selected="${S.tab === k}">${l}</button>`).join('')}</nav>
+  <div id="view">${VIEWS[S.tab]()}</div>
+  <p class="foot">${API_URL ? '' : 'Demo mode: sample data, nothing is saved. '}Only confirm a payment after you have seen the receipt. Class times, projects and registers are handled by tutors.</p>`;
+  applyFilter();
+}
+function applyFilter() {
+  const q = S.q.trim().toLowerCase();
+  document.querySelectorAll('#stulist [data-name]').forEach((el) => { el.hidden = !!q && el.dataset.name.indexOf(q) < 0; });
+}
+
+/* ---------- events ---------- */
+const app = $('app');
+app.addEventListener('click', (e) => {
+  const b = e.target.closest('[data-act]'); if (!b) return;
+  if (b.dataset.act === 'tab') { S.tab = b.dataset.t; render(); window.scrollTo(0, 0); }
+  else if (b.dataset.act === 'selAll') {
+    const boxes = [...document.querySelectorAll('.asg')].filter((x) => !x.closest('label').hidden), all = boxes.every((x) => x.checked);
+    boxes.forEach((x) => { x.checked = !all; S.sel[x.value] = !all; }); updCount();
+  }
+});
+const updCount = () => { const el = $('selCount'); if (el) el.textContent = Object.keys(S.sel).filter((k) => S.sel[k]).length + ' selected'; };
+app.addEventListener('change', (e) => {
+  const t = e.target;
+  if (t.id === 'flt') { S.filter = t.value; render(); }
+  else if (t.classList.contains('asg')) { S.sel[t.value] = t.checked; updCount(); }
+});
+app.addEventListener('input', (e) => { if (e.target.id === 'q') { S.q = e.target.value; applyFilter(); } });
+app.addEventListener('toggle', (e) => { const d = e.target; if (d.classList && d.classList.contains('stu')) S.open = d.open ? d.dataset.id : (S.open === d.dataset.id ? '' : S.open); }, true);
+app.addEventListener('submit', (e) => {
+  const f = e.target.closest('form[data-form]'); if (!f) return;
+  e.preventDefault();
+  const k = f.dataset.form, v = (n) => f.elements[n] ? f.elements[n].value : '', btn = f.querySelector('button[type=submit]');
+  if (k === 'pay') {
+    const amount = Number(v('amount')); if (!(amount > 0)) return toast('Enter the amount received.', true);
+    act('ska_payment', { studentId: f.dataset.id, amount, months: Number(v('months')), date: v('date'), reference: v('reference') }, 'Payment confirmed for ' + stuName(f.dataset.id) + '.', btn);
+  } else if (k === 'assign') {
+    const ids = Object.keys(S.sel).filter((x) => S.sel[x]);
+    if (!ids.length) return toast('Tick at least one student.', true);
+    if (!v('teacherId') && !v('level') && !v('startDate')) return toast('Choose a tutor, a cohort or a start date to apply.', true);
+    act('ska_assign', { studentIds: ids, teacherId: v('teacherId'), level: v('level'), startDate: v('startDate') }, 'Saved for ' + ids.length + ' student' + (ids.length === 1 ? '' : 's') + '.', btn).then((ok) => { if (ok) S.sel = {}; render(); });
+  } else if (k === 'password') {
+    if (v('newCode').length < 8) return toast('Your new code must be at least 8 characters.', true);
+    if (v('newCode') !== v('again')) return toast('The two codes do not match.', true);
+    const code = v('newCode');
+    act('ska_password', { newCode: code }, 'Code changed.', btn).then((ok) => { if (ok) sessionStorage.setItem('hcsa', JSON.stringify({ id: creds().id, code })); });
+  }
+});
+
+/* ---------- login ---------- */
+function showApp() { $('login').hidden = true; app.hidden = false; $('out').hidden = false; render(); window.scrollTo(0, 0); }
+async function signIn(id, code, silent) {
+  const btn = $('go'), err = $('err'); err.textContent = ''; btn.disabled = true; btn.textContent = 'Signing in…';
+  sessionStorage.setItem('hcsa', JSON.stringify({ id, code }));
+  try {
+    const d = await api('ska_login');
+    if (d.ok) { D = d; showApp(); }
+    else { sessionStorage.removeItem('hcsa'); if (!silent) err.textContent = d.error || 'Could not sign in.'; }
+  } catch (e) { sessionStorage.removeItem('hcsa'); if (!silent) err.textContent = 'Could not reach the school server. Please try again.'; }
+  btn.disabled = false; btn.textContent = 'Sign in';
+}
+$('demoNote').hidden = !!API_URL;
+$('lf').addEventListener('submit', (e) => { e.preventDefault(); const id = $('tid').value.trim(), code = $('tcode').value.trim(); if (!id || !code) { $('err').textContent = 'Enter your Admin ID and access code.'; return; } signIn(id, code); });
+$('out').addEventListener('click', () => { sessionStorage.removeItem('hcsa'); D = null; S.tab = 'payments'; S.sel = {}; app.hidden = true; app.innerHTML = ''; $('out').hidden = true; $('login').hidden = false; $('tcode').value = ''; });
+
+/* ---------- demo mode (only used while API_URL is empty) ---------- */
+let DEMO = null;
+const isoD = (d) => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+const plus = (n) => { const d = new Date(); d.setDate(d.getDate() + n); return d; };
+function demoBase() {
+  const T = { 'ST-001': 'Ustadhah Maryam', 'ST-002': 'Brother Kunle' };
+  const st = (id, name, course, cohort, fee, status, due, period, tid, start) => ({ StudentID: id, Name: name, Plan: course, Level: cohort, Fee: fee, MonthlyFee: fee, PaymentStatus: status, NextDue: due, Period: period, TeacherID: tid || '', Teacher: tid ? T[tid] : '', StartDate: start || '' });
+  return { ok: true, today: isoD(new Date()), admin: { AdminID: 'DEMO', Name: 'Admin Demo' },
+    students: [st('SK-0001', 'Aisha Bello', 'Graphic Design', 'Cohort 1', 35000, 'Paid', '', 'One-time', 'ST-001', isoD(plus(-15))), st('SK-0002', 'Yusuf Adeyemi', 'Data Analysis', 'Cohort 1', 80000, 'Due', isoD(plus(4)), 'Every 2 months', 'ST-002', isoD(plus(-50))), st('SK-0003', 'Maryam Lawal', 'Public Speaking', '', 25000, 'Paid', '', 'One-time', '', ''), st('SK-0004', 'Ibrahim Sani', 'Data Analysis', '', 80000, 'Overdue', isoD(plus(-2)), 'Every 2 months', '', '')],
+    teachers: [{ TeacherID: 'ST-001', Name: 'Ustadhah Maryam' }, { TeacherID: 'ST-002', Name: 'Brother Kunle' }],
+    levels: ['Cohort 1', 'Cohort 2'],
+    payments: [{ Date: isoD(plus(-9)), StudentID: 'SK-0001', Name: 'Aisha Bello', Amount: 35000, Months: 0, Reference: 'ENR-SAMPLE' }] };
+}
+async function demoApi(c, action, p) {
+  await new Promise((r) => setTimeout(r, 120));
+  if (String(c.id || '').toUpperCase() !== 'DEMO' || c.code !== 'demo') return { ok: false, error: 'Wrong ID or access code.' };
+  if (!DEMO) DEMO = demoBase();
+  const bad = (m) => ({ ok: false, error: m }), stu = (id) => DEMO.students.find((s) => s.StudentID === id);
+  if (action === 'ska_payment') {
+    const s = stu(p.studentId); if (!s) return bad('Student not found.');
+    if (!(Number(p.amount) > 0)) return bad('Enter the amount received.');
+    if (!(p.months >= 0 && p.months <= 24)) return bad('Months must be between 0 and 24.');
+    if (!p.date || p.date > DEMO.today) return bad('The date cannot be in the future.');
+    if (Number(p.months) > 0) { const base = s.NextDue && s.NextDue > DEMO.today ? new Date(s.NextDue + 'T00:00:00') : new Date(DEMO.today + 'T00:00:00'); base.setMonth(base.getMonth() + Number(p.months)); s.NextDue = isoD(base); } s.PaymentStatus = 'Paid';
+    DEMO.payments.unshift({ Date: p.date, StudentID: s.StudentID, Name: s.Name, Amount: Number(p.amount), Months: Number(p.months), Reference: p.reference || '' });
+  } else if (action === 'ska_assign') {
+    if (p.link && !/^https?:\/\//i.test(p.link)) return bad('The class link must start with http:// or https://');
+    const t = DEMO.teachers.find((x) => x.TeacherID === p.teacherId);
+    if (p.teacherId && !t) return bad('Teacher not found.');
+    p.studentIds.forEach((id) => { const s = stu(id); if (!s) return; if (t) { s.TeacherID = t.TeacherID; s.Teacher = t.Name; } if (p.level) s.Level = p.level; if (p.startDate) s.StartDate = p.startDate; if (p.nextClass) s.NextClass = p.nextClass; if (p.link) s.ClassLink = p.link; });
+  } else if (action === 'ska_password') {
+    if (String(p.newCode).length < 8) return bad('Your new code must be 8 to 40 characters.');
+  } else if (action !== 'ska_login') return bad('Unknown action.');
+  return JSON.parse(JSON.stringify(DEMO));
+}
+</script>
+<script>
+/* Show/hide toggle on every access-code box */
+(function(){
+  function deco(){
+    document.querySelectorAll('input[type=password]:not([data-eye])').forEach(function(i){
+      i.setAttribute('data-eye','1');
+      var w=document.createElement('span');w.className='pw';i.parentNode.insertBefore(w,i);w.appendChild(i);
+      var b=document.createElement('button');b.type='button';b.textContent='Show';b.setAttribute('aria-label','Show access code');
+      b.addEventListener('click',function(){var s=i.type==='password';i.type=s?'text':'password';b.textContent=s?'Hide':'Show';b.setAttribute('aria-label',s?'Hide access code':'Show access code');});
+      w.appendChild(b);
+    });
+  }
+  deco();new MutationObserver(deco).observe(document.body,{childList:true,subtree:true});
+})();
+</script>
+</body>
+</html>

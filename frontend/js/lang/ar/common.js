@@ -454,5 +454,8 @@ HS_I18N.add({
 "Times set with your tutor": "المواعيد تُحدَّد مع مدرّسك",
 "After you enroll, your teacher contacts you and you agree the days and hour together, around school and family.": "بعد التسجيل يتواصل معك معلّمك، وتتفقان معًا على الأيام والساعة بما يناسب المدرسة والأسرة.",
 "After you enroll, your tutor contacts you and you agree the days and hour together, around school and family.": "بعد التسجيل يتواصل معك مدرّسك، وتتفقان معًا على الأيام والساعة بما يناسب المدرسة والأسرة.",
-"Our anthem": "نشيدنا"
+"Our anthem": "نشيدنا",
+"re:e\\.g\\. ([A-Z]{1,3}-\\d+)": "مثال: $1",
+"Tutor login": "دخول المدرّس",
+"Tutor Login": "دخول المدرّس"
 });

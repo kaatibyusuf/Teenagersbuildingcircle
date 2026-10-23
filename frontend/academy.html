@@ -54,6 +54,15 @@
 <a href="success-stories.html">Success Stories</a>
 <a href="faq.html">FAQ</a>
 <a href="contact.html">Contact</a>
+<div class="dd dd-r">
+<button aria-expanded="false" aria-haspopup="true" class="dd-btn" type="button">Login
+          <svg aria-hidden="true" fill="none" height="12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.8" viewbox="0 0 24 24" width="12"><path d="M6 9l6 6 6-6"></path></svg></button>
+<div class="dd-menu">
+<a href="academy-dashboard.html">Student login</a>
+<a href="academy-tutor.html">Tutor login</a>
+<a href="academy-admin.html">Admin login</a>
+</div>
+</div>
 <a class="h-btn h-btn-light h-nav-cta" href="enroll.html?programme=academy">Enroll Now</a>
 </div>
     <button class="h-tog" id="navToggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span></button>
@@ -263,6 +272,8 @@
           <a href="contact.html">Contact</a>
           <a href="policies.html">Policies</a>
           <a href="enroll.html">Enroll</a>
+          <a href="academy-dashboard.html">Student Login</a>
+          <a href="academy-tutor.html">Tutor Login</a>
         </div>
         <div><h4>Contact</h4>
           <a href="mailto:himaayahschools@gmail.com">himaayahschools@gmail.com</a>
@@ -284,11 +295,10 @@
 <script>
   const t = document.getElementById('navToggle'), l = document.getElementById('navLinks');
   t.addEventListener('click', () => { const o = l.classList.toggle('open'); t.setAttribute('aria-expanded', o); });
-  (function () {
-    const dd = document.querySelector('.dd'); if (!dd) return;
+  document.querySelectorAll('.dd').forEach((dd) => {
     const b = dd.querySelector('.dd-btn');
     b.addEventListener('click', () => { const o = dd.classList.toggle('open'); b.setAttribute('aria-expanded', o); });
-  })();
+  });
   // Scroll reveal
   (function () {
     const items = document.querySelectorAll('.reveal');

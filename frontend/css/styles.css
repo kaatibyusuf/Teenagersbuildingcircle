@@ -3689,3 +3689,25 @@ html[lang="ar"] .site .anthem-mean, html[lang="ar"].site .anthem-mean, html[lang
 .page-enroll .card-cancelled { margin: 0 0 18px; }
 .page-payment-success .ref { margin-top: -4px; font-size: 14.5px; }
 .page-payment-success .ref[hidden] { display: none; }
+
+/* ---------- Skills School portals (share the Academy portal styles) ---------- */
+.page-skills-dashboard .pbody { padding: 0 18px 16px; display: grid; gap: 10px; }
+.page-skills-dashboard .pbody .sub { margin: 0; }
+.page-skills-dashboard .fb { padding: 12px 14px; border-radius: 14px; background: #EEF4F7; }
+.page-skills-dashboard .fb b { display: block; font-size: 13px; color: var(--deep); margin-bottom: 4px; }
+.page-skills-dashboard .fb p { margin: 0; font-size: 14.5px; color: var(--text); }
+.page-skills-dashboard .pform { display: grid; gap: 10px; }
+.page-skills-dashboard .pform label { display: block; font-size: 13px; font-weight: 500; color: var(--muted); margin-bottom: 4px; }
+.page-skills-dashboard .pform input { width: 100%; padding: 11px 13px; border-radius: 12px; border: 1px solid var(--line); background: #fff; font: inherit; }
+.page-skills-dashboard .pform .btn { justify-self: start; }
+.page-skills-dashboard .lnk, .page-skills-tutor .lnk { color: var(--sky-d); font-weight: 500; }
+.page-skills-tutor .subm { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 14px; padding: 14px 0; border-top: 1px solid var(--line); }
+.page-skills-tutor .subm:first-child { border-top: 0; padding-top: 0; }
+.page-skills-tutor .subm b { display: block; color: var(--deep); }
+.page-skills-tutor .subm small { display: block; color: var(--muted); font-size: 12.5px; margin-bottom: 4px; }
+.page-skills-tutor .subm .frm { margin: 0; gap: 8px; }
+.page-skills-tutor textarea.in { resize: vertical; min-height: 96px; }
+@media (max-width: 720px) {
+  .page-skills-tutor .subm { grid-template-columns: 1fr; }
+  .page-skills-dashboard .pbody { padding: 0 14px 14px; }
+}
