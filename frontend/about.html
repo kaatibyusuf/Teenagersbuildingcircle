@@ -25,7 +25,7 @@
 <script>document.documentElement.classList.add('js');</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Inter:wght@400;500;600;700&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Inter:wght@400;500;600;700&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
 <script src="js/i18n.js"></script>
 <!-- Vercel Analytics: counts visits once enabled in the Vercel dashboard -->
@@ -187,6 +187,23 @@
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg>
         </a>
       </div>
+      <div class="anthem-words">
+        <div class="anthem-words-head">
+          <h3>The words</h3>
+          <button class="anthem-mean" type="button" aria-pressed="false" aria-controls="anthemLyrics">Show English meaning</button>
+        </div>
+        <ol class="anthem-lyrics" id="anthemLyrics">
+          <li><p class="lyr-ar notranslate" lang="ar" dir="rtl" translate="no"><span>أَيَا طَالِبَ العِلْمِ يَا ذَا المَعَالِي</span><span>أَيَا طَالِبَ الحَقِّ طُولَ اللَّيَالِي</span></p><p class="lyr-en">O seeker of knowledge, you of high aims; O seeker of truth through the long nights,</p></li>
+          <li><p class="lyr-ar notranslate" lang="ar" dir="rtl" translate="no"><span>وَيَا رَاغِبًا فِي صَفَاءِ الجِنَانِ</span><span>وَفِي شَرْعِ ذِي الكَوْنِ رَبِّ الكَمَالِ</span></p><p class="lyr-en">you who long for the purity of Paradise, and for the law of the Lord of all creation, the Lord of perfection:</p></li>
+          <li><p class="lyr-ar notranslate" lang="ar" dir="rtl" translate="no"><span>أَتَانَا بِعَوْنِ الإِلَٰهِ الكَرِيمِ</span><span>سَفِينُ السَّعَادَةِ كَنْزُ اللَّآلِي</span></p><p class="lyr-en">by the help of God, the Most Generous, a ship of happiness has come to us, a treasure of pearls,</p></li>
+          <li><p class="lyr-ar notranslate" lang="ar" dir="rtl" translate="no"><span>لِحِفْظِ الشَّرِيعَةِ وَالدِّينِ وَالْـ</span><span>ـعُلُومِ الإِلَٰهِي عَنْ كُلِّ غَالِ</span></p><p class="lyr-en">to guard the Sharīʿah, the religion and the sacred sciences from every extremist.</p></li>
+          <li><p class="lyr-ar notranslate" lang="ar" dir="rtl" translate="no"><span>وَذَلِكَ مَعْهَدُنَا ذُو الجَمَالِ</span><span>لِتَدْرِيسِ حَقٍّ وَدَفْعِ الضَّلَالِ</span></p><p class="lyr-en">That is our school, full of beauty, teaching the truth and pushing back misguidance.</p></li>
+          <li><p class="lyr-ar notranslate" lang="ar" dir="rtl" translate="no"><span>بِنَهْجِ الكِتَابِ وَقَوْلِ الرَّسُولِ</span><span>وَخَيْرِ القُرُونِ اغْتَنِمْنَا المَعَالِي</span></p><p class="lyr-en">On the way of the Book, the words of the Messenger and the best generations, we have taken hold of the heights.</p></li>
+          <li><p class="lyr-ar notranslate" lang="ar" dir="rtl" translate="no"><span>فَيَا رَبَّنَا كُنْ لَنَا سَرْمَدًا</span><span>مُعِينًا نَصِيرًا بِحَقِّ الجَلَالِ</span></p><p class="lyr-en">So, our Lord, be for us always a helper and a supporter, by Your majesty.</p></li>
+          <li><p class="lyr-ar notranslate" lang="ar" dir="rtl" translate="no"><span>وَبَارِكْ لَنَا دَائِمًا فِي العُلُومِ</span><span>وَأَحْسِنْ بِنَا اللَّهُ فِي كُلِّ حَالِ</span></p><p class="lyr-en">Bless us always in our learning, and be good to us, O Allah, in every state.</p></li>
+          <li><p class="lyr-ar notranslate" lang="ar" dir="rtl" translate="no"><span>وَصَلِّ عَلَى أَحْمَدَ المُصْطَفَى</span><span>مَدَى يَكْمُلُ البَدْرُ بَعْدَ الهِلَالِ</span></p><p class="lyr-en">And send blessings upon Ahmad, the Chosen One, for as long as the full moon follows the crescent.</p></li>
+        </ol>
+      </div>
     </div>
   </div>
 </section>
@@ -329,6 +346,13 @@
       a.addEventListener('ended', () => { a.currentTime = 0; paint(); });
       btn.addEventListener('click', () => { a.paused ? a.play() : a.pause(); });
       seek.addEventListener('input', () => { a.currentTime = +seek.value; paint(); });
+    });
+    // English meaning of the anthem: hidden until asked for
+    const mean = document.querySelector('.anthem-mean'), lyr = document.getElementById('anthemLyrics');
+    if (mean && lyr) mean.addEventListener('click', () => {
+      const on = mean.getAttribute('aria-pressed') !== 'true';
+      mean.setAttribute('aria-pressed', on); lyr.classList.toggle('show-en', on);
+      mean.textContent = on ? 'Hide English meaning' : 'Show English meaning';
     });
   })();
 </script>

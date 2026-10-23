@@ -56,5 +56,8 @@ HS_I18N.add({
 "Play the anthem": "تشغيل النشيد",
 "Pause the anthem": "إيقاف النشيد مؤقتًا",
 "Seek through the anthem": "التنقل داخل النشيد",
-"Download the anthem": "تنزيل النشيد"
+"Download the anthem": "تنزيل النشيد",
+"The words": "كلمات النشيد",
+"Show English meaning": "إظهار المعنى بالإنجليزية",
+"Hide English meaning": "إخفاء المعنى بالإنجليزية"
 });
