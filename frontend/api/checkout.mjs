@@ -10,7 +10,6 @@
 // Plan name (exactly as on the enrolment page) → price in naira and Bachs product IDs.
 // Monthly and two-monthly plans are charged as a one-time payment of one period's fee
 // (Bachs NGN subscriptions are not enabled, and the school's own reminders handle renewals).
-// One-time courses use their Bachs product, so the product name shows on the payment page.
 // Keep the amounts in step with enroll.html and Enrol.gs.
 const PLANS = {
   'Teenagers Building Circle — Full Programme': { amount: 40000, recurring: true, live: 'prod_cbd46cdefa0e4d75a31c', sandbox: 'prod_4be17e80bcc74b9f8e3a' },
@@ -66,9 +65,9 @@ export async function POST(request) {
   if (ph) customer.phone_number = ph;
 
   const session = {
-    ...(plan.recurring
-      ? { pricing: { currency: 'NGN', amount: plan.amount.toFixed(2) } }
-      : { product_cart: [{ product_id: live ? plan.live : plan.sandbox, quantity: 1 }] }),
+    // Every plan is charged as a plain naira amount set here, so it works the same in
+    // sandbox and live without matching product IDs (the IDs below are kept for reference).
+    pricing: { currency: 'NGN', amount: plan.amount.toFixed(2) },
     customer,
     success_url: site + '/payment-success.html?ref=' + ref,
     cancel_url: site + '/enroll.html?card=cancelled',
