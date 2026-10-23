@@ -164,6 +164,33 @@
   </div>
 </section>
 
+<section class="sec anthem-sec" id="anthem">
+  <div class="wrap">
+    <div class="anthem reveal">
+      <div class="anthem-copy">
+        <span class="kicker">Our anthem</span>
+        <h2>The Himaayah anthem.</h2>
+        <p>Two minutes of what we stand for. Press play and listen.</p>
+      </div>
+      <div class="anthem-player" data-anthem>
+        <audio preload="metadata" src="media/himaayah-anthem.mp3"></audio>
+        <button class="anthem-play" type="button" aria-label="Play the anthem">
+          <svg class="i-play" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M8 5.5v13a1 1 0 0 0 1.52.85l10.4-6.5a1 1 0 0 0 0-1.7L9.52 4.65A1 1 0 0 0 8 5.5z"/></svg>
+          <svg class="i-pause" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="5" width="4.2" height="14" rx="1.2" fill="currentColor"/><rect x="13.8" y="5" width="4.2" height="14" rx="1.2" fill="currentColor"/></svg>
+        </button>
+        <div class="anthem-track">
+          <div class="anthem-wave" aria-hidden="true"><i style="--h:38%"></i><i style="--h:80%"></i><i style="--h:62%"></i><i style="--h:49%"></i><i style="--h:31%"></i><i style="--h:91%"></i><i style="--h:36%"></i><i style="--h:47%"></i><i style="--h:22%"></i><i style="--h:96%"></i><i style="--h:45%"></i><i style="--h:44%"></i><i style="--h:29%"></i><i style="--h:69%"></i><i style="--h:58%"></i><i style="--h:33%"></i><i style="--h:87%"></i><i style="--h:62%"></i><i style="--h:58%"></i><i style="--h:22%"></i><i style="--h:62%"></i><i style="--h:35%"></i><i style="--h:44%"></i><i style="--h:22%"></i><i style="--h:76%"></i><i style="--h:55%"></i><i style="--h:22%"></i><i style="--h:64%"></i><i style="--h:58%"></i><i style="--h:49%"></i><i style="--h:42%"></i><i style="--h:91%"></i><i style="--h:60%"></i><i style="--h:58%"></i><i style="--h:55%"></i><i style="--h:69%"></i><i style="--h:60%"></i><i style="--h:24%"></i><i style="--h:69%"></i><i style="--h:62%"></i><i style="--h:56%"></i><i style="--h:47%"></i><i style="--h:73%"></i><i style="--h:51%"></i><i style="--h:44%"></i><i style="--h:93%"></i><i style="--h:71%"></i><i style="--h:49%"></i><i style="--h:36%"></i><i style="--h:64%"></i><i style="--h:53%"></i><i style="--h:22%"></i><i style="--h:100%"></i><i style="--h:75%"></i><i style="--h:49%"></i><i style="--h:60%"></i><i style="--h:51%"></i><i style="--h:56%"></i><i style="--h:45%"></i><i style="--h:49%"></i><i style="--h:29%"></i><i style="--h:22%"></i><i style="--h:75%"></i><i style="--h:82%"></i><i style="--h:60%"></i><i style="--h:53%"></i><i style="--h:65%"></i><i style="--h:67%"></i><i style="--h:31%"></i><i style="--h:71%"></i><i style="--h:35%"></i><i style="--h:35%"></i></div>
+          <input class="anthem-seek" type="range" min="0" max="120" step="0.1" value="0" aria-label="Seek through the anthem">
+          <div class="anthem-meta"><span class="anthem-now">0:00</span><span class="anthem-dur">2:00</span></div>
+        </div>
+        <a class="anthem-dl" href="media/himaayah-anthem.mp3" download="Himaayah Schools Anthem.mp3" aria-label="Download the anthem">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="sec">
   <div class="wrap">
     <div class="cta-box reveal">
@@ -197,6 +224,7 @@
           <a href="index.html">Home</a>
           <a href="admissions.html">Admissions</a>
           <a href="about.html">About</a>
+          <a href="about.html#anthem">Our anthem</a>
           <a href="administrators.html">Administrators</a>
           <a href="exam-calendars.html">Exam Calendars</a>
           <a href="faq.html">FAQ</a>
@@ -283,6 +311,25 @@
       mark.addEventListener('pointermove', (e) => { const r = mark.getBoundingClientRect(); mark.style.setProperty('--sx', ((e.clientX - r.left) / r.width * 100) + '%'); });
       mark.addEventListener('pointerleave', () => mark.style.removeProperty('--sx'));
     }
+  })();
+</script>
+<script>
+  // Anthem player: plays only when pressed; the slider seeks and works with the keyboard
+  (function () {
+    document.querySelectorAll('[data-anthem]').forEach((box) => {
+      const a = box.querySelector('audio'), btn = box.querySelector('.anthem-play'), seek = box.querySelector('.anthem-seek'),
+        now = box.querySelector('.anthem-now'), dur = box.querySelector('.anthem-dur');
+      const t = (s) => { s = Math.max(0, Math.floor(s || 0)); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); };
+      const bars = box.querySelectorAll('.anthem-wave i');
+      const paint = () => { const d = a.duration || +seek.max, k = Math.round(a.currentTime / d * bars.length); bars.forEach((b, i) => b.classList.toggle('on', i < k)); seek.value = a.currentTime; now.textContent = t(a.currentTime); };
+      a.addEventListener('loadedmetadata', () => { seek.max = a.duration; dur.textContent = t(a.duration); });
+      a.addEventListener('timeupdate', paint);
+      a.addEventListener('play', () => { box.classList.add('is-playing'); btn.setAttribute('aria-label', 'Pause the anthem'); });
+      a.addEventListener('pause', () => { box.classList.remove('is-playing'); btn.setAttribute('aria-label', 'Play the anthem'); });
+      a.addEventListener('ended', () => { a.currentTime = 0; paint(); });
+      btn.addEventListener('click', () => { a.paused ? a.play() : a.pause(); });
+      seek.addEventListener('input', () => { a.currentTime = +seek.value; paint(); });
+    });
   })();
 </script>
 </body>
