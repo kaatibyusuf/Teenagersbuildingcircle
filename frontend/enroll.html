@@ -653,9 +653,10 @@
     const s = state.student;
     // save the enrolment first (wait up to 5 seconds; the payment is matched by reference either way)
     await Promise.race([submitEnrolment('card'), new Promise((r) => setTimeout(r, 5000))]);
+    const ctl = new AbortController(), timer = setTimeout(() => ctl.abort(), 25000);   // never leave the button spinning
     try {
       const r = await fetch('/api/checkout', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, signal: ctl.signal,
         body: JSON.stringify({ ref: state.ref, plan: state.plan.name, email: s.studentEmail || s.kinEmail, name: s.kinName, phone: s.kinPhone, studentName: s.studentName }),
       });
       const j = await r.json().catch(() => null);
@@ -663,8 +664,10 @@
       cardError((j && j.error) || 'Card payment isn\u2019t available right now.');
     } catch (e) {
       cardError('Card payment isn\u2019t available right now.');
-    }
+    } finally { clearTimeout(timer); }
   });
+  // Coming back from the payment page with the Back button: reset the card button
+  window.addEventListener('pageshow', (e) => { if (e.persisted) { cardBtn.disabled = false; cardLabel(); } });
   if (urlParams.get('card') === 'cancelled') {
     const note = document.createElement('p');
     note.className = 'form-status error card-cancelled';
