@@ -1037,7 +1037,7 @@ html:where(.page-faq) { scroll-behavior: smooth; }
 :where(.page-faq) .item { background: #fff; border: 1px solid var(--line); border-radius: 16px; transition: box-shadow .25s, border-color .25s; }
 :where(.page-faq) .item:hover { border-color: #C9D8E4; }
 :where(.page-faq) .q { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 20px 24px; text-align: start; font-weight: 600; font-size: 16.5px; line-height: 1.35; color: var(--deep); }
-:where(.page-faq) .search { position: relative; max-width: 520px; margin: 30px auto 0; }
+:where(.page-faq) .search { position: relative; display: block; max-width: 520px; margin: 30px auto 0; }
 :where(.page-faq) .search svg { position: absolute; inset-inline-start: 18px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
 :where(.page-faq) .search input { width: 100%; padding-block: 16px 16px; padding-inline: 50px 18px; border-radius: 14px; border: 1.5px solid var(--line); background: #fff; font-size: 15.5px; box-shadow: var(--shadow); transition: border-color .2s, box-shadow .2s; }
 :where(.page-faq) .search input:focus { outline: none; border-color: var(--ink); box-shadow: 0 0 0 4px rgba(62,151,217,.15); }
