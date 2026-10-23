@@ -7,21 +7,25 @@
 //   BACHS_SECRET_KEY   sk_sandbox_… while testing, sk_live_… when going live
 //   SITE_URL           optional, e.g. https://www.himaayahschools.com
 
-// Plan name (exactly as on the enrolment page) → Bachs product IDs
+// Plan name (exactly as on the enrolment page) → price in naira and Bachs product IDs.
+// Monthly and two-monthly plans are charged as a one-time payment of one period's fee
+// (Bachs NGN subscriptions are not enabled, and the school's own reminders handle renewals).
+// One-time courses use their Bachs product, so the product name shows on the payment page.
+// Keep the amounts in step with enroll.html and Enrol.gs.
 const PLANS = {
-  'Teenagers Building Circle — Full Programme': { live: 'prod_cbd46cdefa0e4d75a31c', sandbox: 'prod_4be17e80bcc74b9f8e3a' },
-  'Madrasah — Hifdh Only (Group)':              { live: 'prod_1518dd1ab1ba4cfea0e8', sandbox: 'prod_f6d40928f10a42c8a5fe', closed: true },
-  'Madrasah — Full Madrasah (Group)':           { live: 'prod_88d2bf8aefd145569c32', sandbox: 'prod_2adf6149f52b4e85a427', closed: true },
-  'Madrasah — Hifdh Only (Personal)':           { live: 'prod_1debd07326f34dd2bc53', sandbox: 'prod_d2a0efd2bed64f96aa61' },
-  'Madrasah — Full Madrasah (Personal)':        { live: 'prod_fe2428f2c1f647118abc', sandbox: 'prod_84b3e07142ee45b1801d' },
-  'Madrasah — One-Year Hifdh':                  { live: 'prod_330d0eede3bf4a4bb39a', sandbox: 'prod_f9d8a4e440074dca896b', closed: true },
-  'Academy — UTME':                             { live: 'prod_6de197ce78fe4f049970', sandbox: 'prod_9f7f11caa6ae4375a03f' },
-  'Academy — Post-UTME':                        { live: 'prod_5273f7bb1f1249f6b164', sandbox: 'prod_e2a70d3ed18d4b8ba203' },
-  'Academy — A-Levels':                         { live: 'prod_eea22ca104b6496aace8', sandbox: 'prod_b80ca29cd9a741038fbc' },
-  'Academy — O-Levels':                         { live: 'prod_16d184d1f3f64de98c98', sandbox: 'prod_4a954043f4f14a1abb87' },
-  'Skills School — Public Speaking':            { live: 'prod_f6fa17539a43498782c0', sandbox: 'prod_0db88a060ba7464cb18e' },
-  'Skills School — Graphic Design':             { live: 'prod_bad801192e5c47ffae03', sandbox: 'prod_0fcee9e3af2e4d5797f8' },
-  'Skills School — Data Analysis':              { live: 'prod_0a4ba5e2488546b4aa8c', sandbox: 'prod_0161d06903fb4680a671' },
+  'Teenagers Building Circle — Full Programme': { amount: 40000, recurring: true, live: 'prod_cbd46cdefa0e4d75a31c', sandbox: 'prod_4be17e80bcc74b9f8e3a' },
+  'Madrasah — Hifdh Only (Group)':              { amount: 12000, recurring: true, live: 'prod_1518dd1ab1ba4cfea0e8', sandbox: 'prod_f6d40928f10a42c8a5fe', closed: true },
+  'Madrasah — Full Madrasah (Group)':           { amount: 20000, recurring: true, live: 'prod_88d2bf8aefd145569c32', sandbox: 'prod_2adf6149f52b4e85a427', closed: true },
+  'Madrasah — Hifdh Only (Personal)':           { amount: 20000, recurring: true, live: 'prod_1debd07326f34dd2bc53', sandbox: 'prod_d2a0efd2bed64f96aa61' },
+  'Madrasah — Full Madrasah (Personal)':        { amount: 35000, recurring: true, live: 'prod_fe2428f2c1f647118abc', sandbox: 'prod_84b3e07142ee45b1801d' },
+  'Madrasah — One-Year Hifdh':                  { amount: 19000, recurring: true, live: 'prod_330d0eede3bf4a4bb39a', sandbox: 'prod_f9d8a4e440074dca896b', closed: true },
+  'Academy — UTME':                             { amount: 10000, recurring: true, live: 'prod_6de197ce78fe4f049970', sandbox: 'prod_9f7f11caa6ae4375a03f' },
+  'Academy — Post-UTME':                        { amount: 10000, recurring: true, live: 'prod_5273f7bb1f1249f6b164', sandbox: 'prod_e2a70d3ed18d4b8ba203' },
+  'Academy — A-Levels':                         { amount: 10000, recurring: true, live: 'prod_eea22ca104b6496aace8', sandbox: 'prod_b80ca29cd9a741038fbc' },
+  'Academy — O-Levels':                         { amount: 10000, recurring: true, live: 'prod_16d184d1f3f64de98c98', sandbox: 'prod_4a954043f4f14a1abb87' },
+  'Skills School — Public Speaking':            { amount: 25000, recurring: false, live: 'prod_f6fa17539a43498782c0', sandbox: 'prod_0db88a060ba7464cb18e' },
+  'Skills School — Graphic Design':             { amount: 35000, recurring: false, live: 'prod_bad801192e5c47ffae03', sandbox: 'prod_0fcee9e3af2e4d5797f8' },
+  'Skills School — Data Analysis':              { amount: 80000, recurring: true, live: 'prod_0a4ba5e2488546b4aa8c', sandbox: 'prod_0161d06903fb4680a671' },
 };
 
 const json = (body, status = 200) =>
@@ -62,7 +66,9 @@ export async function POST(request) {
   if (ph) customer.phone_number = ph;
 
   const session = {
-    product_cart: [{ product_id: live ? plan.live : plan.sandbox, quantity: 1 }],
+    ...(plan.recurring
+      ? { pricing: { currency: 'NGN', amount: plan.amount.toFixed(2) } }
+      : { product_cart: [{ product_id: live ? plan.live : plan.sandbox, quantity: 1 }] }),
     customer,
     success_url: site + '/payment-success.html?ref=' + ref,
     cancel_url: site + '/enroll.html?card=cancelled',
