@@ -445,5 +445,13 @@ HS_I18N.add({
 "Study habits": "عادات الدراسة",
 "Public speaking": "الخطابة",
 "Himaayah": "حماية",
-"Main": "القائمة الرئيسية"
+"Main": "القائمة الرئيسية",
+"Class times": "مواعيد الحصص",
+"When classes happen.": "متى تُعقد الحصص.",
+"There is no fixed timetable. Classes are set to suit the student.": "لا يوجد جدول ثابت. تُحدَّد الحصص بما يناسب الطالب.",
+"There is no fixed timetable. Each class is set to suit the student.": "لا يوجد جدول ثابت. تُحدَّد كل حصة بما يناسب الطالب.",
+"Times set with your teacher": "المواعيد تُحدَّد مع معلّمك",
+"Times set with your tutor": "المواعيد تُحدَّد مع مدرّسك",
+"After you enroll, your teacher contacts you and you agree the days and hour together, around school and family.": "بعد التسجيل يتواصل معك معلّمك، وتتفقان معًا على الأيام والساعة بما يناسب المدرسة والأسرة.",
+"After you enroll, your tutor contacts you and you agree the days and hour together, around school and family.": "بعد التسجيل يتواصل معك مدرّسك، وتتفقان معًا على الأيام والساعة بما يناسب المدرسة والأسرة."
 });

@@ -48,5 +48,9 @@ HS_I18N.add({
 "Read how Academy students scored in UTME, or start your prep today.": "اقرأ كيف حصل طلاب الأكاديمية على درجاتهم في UTME، أو ابدأ تحضيرك اليوم.",
 "Read success stories": "اقرأ قصص النجاح",
 "Illustration of a computer-based test screen showing a multiple-choice question and a countdown timer.": "رسم توضيحي لشاشة اختبار إلكتروني تعرض سؤال اختيار من متعدد وعدّادًا تنازليًا.",
-"Academy — Himaayah Schools": "الأكاديمية — مدارس حماية"
+"Academy — Himaayah Schools": "الأكاديمية — مدارس حماية",
+"Six classes a week": "ست حصص في الأسبوع",
+"Live lessons through the week, plus timed mocks and a personal review.": "دروس مباشرة طوال الأسبوع، مع اختبارات تجريبية موقوتة ومراجعة شخصية.",
+"Live, with recordings": "مباشرة، مع التسجيلات",
+"Miss a class and you can watch it back.": "إن فاتتك حصة يمكنك مشاهدتها لاحقًا."
 });

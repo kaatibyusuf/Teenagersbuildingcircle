@@ -151,5 +151,7 @@ HS_I18N.add({
 "The final level, continuing the Iʿdādiyyah studies.": "المستوى الأخير، استكمالًا للدراسة الإعدادية.",
 "Students normally arrive from Awwal Iʿdādiyyah.": "يأتي الطلاب عادةً من الأول الإعدادي.",
 "For anyone joining directly, message the Madrasah line and a teacher will advise.": "ومن أراد الالتحاق مباشرة، فليراسل خط المدرسة الشرعية وسيرشده أحد المعلّمين.",
-"% to join": "% للالتحاق"
+"% to join": "% للالتحاق",
+"Every plan meets four times a week, with revision, tests and exams built in.": "كل خطة تجتمع أربع مرات في الأسبوع، مع المراجعة والاختبارات والامتحانات.",
+"Join from home, wherever you are.": "انضم من بيتك، أينما كنت."
 });

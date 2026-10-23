@@ -2916,7 +2916,7 @@ a.txt-link { color: var(--ink); font-weight: 600; border-bottom: 1px solid var(-
    then calm paper sections, a dark results board, a tide-blue admission band,
    and a dark footer with a spotlit wordmark. Shared pieces use the h- prefix.
    ========================================================================== */
-:root:where(.site) {
+:root:where(.site, .app) {
   --h-ink: #061521; --h-deep: #0A2B40; --h-tide: #0F4460; --h-glow: #3B88A8;
   --h-sky: #85CCFF; --h-sand: #E4C4A2; --h-copper: #B97A4E;
   --h-paper: #EDEBE5; --h-paper-2: #E4E1D9; --h-text: #13212B; --h-muted: #5E6B73;
@@ -3366,6 +3366,7 @@ html[lang="ar"].site .h-mark span { line-height: 1.35; }
     linear-gradient(180deg, var(--h-tide) 0%, var(--h-deep) 55%, #0A2333 100%); }
 .site:not(.page-index, .page-enroll) header.hero::before, .site:not(.page-index, .page-enroll) header.hero::after { border-color: rgba(255,255,255,.08) !important; }
 .site:not(.page-index, .page-enroll) header.hero :is(h1, h2) { color: #fff; }
+.site:not(.page-index, .page-enroll) header.hero h1 { margin-bottom: clamp(24px, 2.6vw, 34px); }  /* breathing room above the intro text */
 .site:not(.page-index, .page-enroll) header.hero :is(h1 em, h1 .acc, h1 span:not(.w):not(.ch):not(.ball)) { color: rgba(255,255,255,.55); font-style: normal; }
 .site:not(.page-index, .page-enroll) header.hero h1 .acc .ch { color: inherit; }
 .site:not(.page-index, .page-enroll) header.hero h1 .ball { background: var(--h-sand) !important; box-shadow: none !important; }
@@ -3536,4 +3537,94 @@ iframe.goog-te-banner-frame, body > .skiptranslate > iframe, #goog-gt-tt, .goog-
 @media (max-width: 480px) {
   .top nav .lang-btn { height: 34px; padding: 0 10px; font-size: 12.5px; }
   .top nav .lang-btn svg { display: none; }
+}
+
+/* ---------- class times (programme pages) ---------- */
+:where(.site) .when-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+:where(.site) .when-card { display: flex; flex-direction: column; gap: 8px; padding: 26px 24px 24px; border-radius: 20px; background: #fff; box-shadow: inset 0 0 0 1px var(--line), var(--shadow); }
+:where(.site) .when-card b { font-family: var(--h-f); font-weight: 500; font-size: 19px; letter-spacing: -.02em; color: var(--text); }
+:where(.site) .when-card p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.55; }
+:where(.site) .when-i { display: grid; place-items: center; width: 40px; height: 40px; margin-bottom: 8px; border-radius: 12px; color: #fff; background: linear-gradient(180deg, var(--h-tide), var(--h-ink)); }
+:where(.site) .when-card:last-child { background: linear-gradient(180deg, #0C3048, var(--h-ink)); box-shadow: none; }
+:where(.site) .when-card:last-child b { color: #fff; }
+:where(.site) .when-card:last-child p { color: rgba(255,255,255,.7); }
+:where(.site) .when-card:last-child .when-i { background: rgba(255,255,255,.12); color: var(--h-sky); }
+@media (max-width: 820px) { :where(.site) .when-grid { grid-template-columns: 1fr; } }
+
+/* ==========================================================================
+   Glass design on the portals
+   Student, teacher and admin pages move onto the website's palette: a dark
+   glass top bar, a night-blue sign-in screen, pill buttons, Geist headings
+   and night-blue welcome panels. Layout and behaviour are unchanged.
+   ========================================================================== */
+:root.app {
+  --ink: #0F4460; --deep: #0A2B40; --sky-d: #2D7DA3; --sky-l: #DCEBF2; --wash: #F2F0EB;
+  --line: #E2DED5; --text: #13212B; --muted: #5E6B73;
+  --d: 'Geist', 'Inter', system-ui, sans-serif; --display: var(--d);
+  --ring: 0 0 0 1px #E2DED5;
+}
+.app body { background: var(--h-paper); }
+.app :is(h1, h2, h3, h4) { font-family: var(--d); font-weight: 500; letter-spacing: -.03em; }
+.app :is(h3, h4) { letter-spacing: -.02em; }
+.app .big, .app .tile b, .app .mark b { font-family: var(--d); font-weight: 500; letter-spacing: -.03em; }
+
+/* top bar: dark glass */
+.app header.top { background: rgba(6,21,33,.88); backdrop-filter: blur(16px) saturate(140%); -webkit-backdrop-filter: blur(16px) saturate(140%); border-bottom: 1px solid rgba(255,255,255,.08); color: #fff; }
+.app header.top .brand { color: #fff; font-family: var(--h-f); font-weight: 500; letter-spacing: -.02em; }
+.app header.top .brand svg { fill: #fff; }
+.app header.top .brand em { background: rgba(255,255,255,.12); color: rgba(255,255,255,.9); font-family: var(--h-f); font-weight: 500; }
+.app header.top .btn { border-radius: 999px; font-family: var(--h-f); font-weight: 500; }
+.app header.top .btn-line { background: rgba(255,255,255,.08); color: #fff; border-color: transparent; box-shadow: inset 0 0 0 1px rgba(255,255,255,.18); }
+.app header.top .btn-line:hover { background: rgba(255,255,255,.15); }
+.app header.top .btn-ink { background: #fff; color: var(--h-ink); border-color: #fff; }
+.app header.top .btn-ink:hover { background: #E9EEF1; }
+.app header.top .lang-btn { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.18); color: #fff; }
+.app header.top .lang-btn:hover, .app header.top .lang.open .lang-btn { background: rgba(255,255,255,.15); border-color: rgba(255,255,255,.28); }
+.app header.top .lang-btn svg { color: var(--h-sky); }
+
+/* sign-in screen: night blue behind a white card */
+.app main.login { background:
+    radial-gradient(50% 55% at 15% 5%, rgba(59,136,168,.5), transparent 70%),
+    radial-gradient(40% 45% at 92% 18%, rgba(59,136,168,.25), transparent 70%),
+    radial-gradient(60% 50% at 50% 112%, rgba(185,122,78,.35), transparent 72%),
+    linear-gradient(180deg, var(--h-tide) 0%, var(--h-deep) 55%, var(--h-ink) 100%); }
+.app .lbox { border-radius: 26px; box-shadow: 0 1px 0 rgba(255,255,255,.6) inset, 0 40px 80px -30px rgba(0,0,0,.7); }
+.app .lbox h1 { color: var(--text); font-weight: 500; letter-spacing: -.035em; }
+.app .lbox .crest { background: linear-gradient(180deg, var(--h-tide), var(--h-ink)); }
+.app .lbox .crest svg[fill]:not([fill="none"]) { fill: #fff; }
+.app .lbox .crest svg[stroke] { stroke: #fff; }
+.app .lbox .kick { letter-spacing: 0; text-transform: none; font-weight: 500; font-size: 13.5px; color: var(--muted); display: inline-flex; align-items: center; gap: 8px; }
+.app .lbox .kick::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--sky-d); }
+.app .lbox .demo { background: #EEF4F7; color: var(--text); border-radius: 14px; }
+.app .lbox :is(input, select) { border-radius: 12px; }
+
+/* buttons: pills in the website's ink */
+.app .btn { border-radius: 999px; font-family: var(--h-f); font-weight: 500; letter-spacing: -.01em; }
+.app .btn-ink { background: var(--h-ink); border-color: var(--h-ink); color: #fff; }
+.app .btn-ink:hover { background: var(--deep); }
+.app .tabs button { font-family: var(--h-f); font-weight: 500; }
+.app .tabs button[aria-selected="true"] { background: var(--h-ink); color: #fff; }
+
+/* welcome panels: night blue like the website hero */
+.app :is(section.greet, section.hero) { position: relative; isolation: isolate; overflow: hidden; color: #fff; border: 0; box-shadow: 0 30px 60px -40px rgba(6,21,33,.8);
+  background:
+    radial-gradient(45% 80% at 12% 0%, rgba(59,136,168,.55), transparent 70%),
+    radial-gradient(35% 70% at 88% 10%, rgba(110,180,205,.3), transparent 70%),
+    radial-gradient(50% 70% at 60% 130%, rgba(185,122,78,.35), transparent 72%),
+    linear-gradient(180deg, #0F3E58, var(--h-ink)); }
+.app :is(section.greet, section.hero)::before, .app :is(section.greet, section.hero)::after { opacity: .35; }
+.app :is(section.greet, section.hero) :is(h1, h2) { color: #fff; }
+.app :is(section.greet, section.hero) :is(small, p) { color: rgba(255,255,255,.7); }
+.app :is(section.greet, section.hero) small { letter-spacing: 0; text-transform: none; font-weight: 500; }
+.app :is(section.greet, section.hero) .chips span { background: rgba(255,255,255,.1); color: #fff; box-shadow: inset 0 0 0 1px rgba(255,255,255,.16); }
+.app :is(section.greet, section.hero) .chips span:last-child { background: #fff; color: var(--h-ink); box-shadow: none; }
+.app :is(section.greet, section.hero) .btn-ink { background: #fff; color: var(--h-ink); border-color: #fff; }
+@media (max-width: 480px) {
+  .app header.top > div { padding-inline: 14px; gap: 8px; }
+  .app header.top nav { gap: 6px; }
+  .app header.top nav .btn { min-height: 36px; padding: 8px 12px; font-size: 13px; }
+  .app header.top:has(#out:not([hidden])) .brand { font-size: 0; gap: 0; }
+  .app header.top .lang-btn { height: 36px; padding: 0 10px; }
+  .app header.top .brand { font-size: 15px; white-space: nowrap; }
+  .app header.top .brand em { display: none; }
 }

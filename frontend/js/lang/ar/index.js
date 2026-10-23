@@ -113,5 +113,12 @@ HS_I18N.add({
 "Main": "القائمة الرئيسية",
 "Testimonials": "شهادات",
 "Get started": "ابدأ",
-"re:Admission to the Madrasah is closed for now\\. Have a question before it reopens\\? Message the Madrasah line\\.": "القبول في المدرسة الشرعية مغلق حاليًا. لديك سؤال قبل إعادة فتحه؟ راسل خط المدرسة الشرعية."
+"re:Admission to the Madrasah is closed for now\\. Have a question before it reopens\\? Message the Madrasah line\\.": "القبول في المدرسة الشرعية مغلق حاليًا. لديك سؤال قبل إعادة فتحه؟ راسل خط المدرسة الشرعية.",
+"Private classes open": "الحصص الخاصة متاحة",
+"Private Madrasah classes are open now.": "الحصص الخاصة في المدرسة الشرعية متاحة الآن.",
+"Group classes reopen in": "تُستأنف الحصص الجماعية بعد",
+"One-on-one Hifdh and Full Madrasah take new students any time. Group and one-year classes reopen on": "حصص الحفظ الفردية والمدرسة الشرعية الكاملة تقبل طلابًا جددًا في أي وقت. وتُستأنف الحصص الجماعية وحصص السنة الواحدة يوم",
+"Enroll in a private class": "سجّل في حصة خاصة",
+"Group classes reopen": "تُستأنف الحصص الجماعية",
+"Time until group Madrasah classes reopen": "الوقت المتبقي حتى تُستأنف الحصص الجماعية في المدرسة الشرعية"
 });
