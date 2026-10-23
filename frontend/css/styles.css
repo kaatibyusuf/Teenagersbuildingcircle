@@ -3682,3 +3682,10 @@ html[lang="ar"] .site .anthem-mean, html[lang="ar"].site .anthem-mean, html[lang
   .site .lyr-ar span:first-child { text-align: right; }
   .site .lyr-ar span:last-child { text-align: left; }
 }
+
+/* card payment (enrol step 3) */
+.page-enroll .btn-card { width: 100%; margin: 4px 0 14px; }
+.page-enroll .btn-card:disabled { opacity: .7; cursor: progress; }
+.page-enroll .card-cancelled { margin: 0 0 18px; }
+.page-payment-success .ref { margin-top: -4px; font-size: 14.5px; }
+.page-payment-success .ref[hidden] { display: none; }

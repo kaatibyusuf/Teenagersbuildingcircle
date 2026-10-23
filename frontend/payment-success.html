@@ -27,8 +27,16 @@
       </div>
       <h1>Payment received.</h1>
       <p>Your enrollment is saved and your payment went through. We'll be in touch by email with what's next. No further steps are needed on your end right now.</p>
+      <p class="ref" id="payRef" hidden>Your reference: <b translate="no"></b></p>
       <a href="index.html" class="btn">Back to Himaayah Schools</a>
     </div>
   </div>
+<script>
+  // Show the enrolment reference when Bachs sends the parent back here
+  (function () {
+    const ref = new URLSearchParams(location.search).get('ref');
+    if (ref && /^ENR-[A-Z0-9]{6}$/.test(ref)) { const p = document.getElementById('payRef'); p.querySelector('b').textContent = ref; p.hidden = false; }
+  })();
+</script>
 </body>
 </html>

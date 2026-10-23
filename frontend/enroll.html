@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Enroll — Himaayah Schools</title>
-<meta name="description" content="Enroll in Himaayah Schools: tell us about the student, choose a programme, then pay by transfer or card.">
+<meta name="description" content="Enroll in Himaayah Schools: tell us about the student, choose a programme, then pay by card or bank transfer.">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20377.21%20459.6%22%3E%3Cpath%20fill=%22%23094570%22%20d=%22M0.14%20280.14c4.28%2C65.12%2098.42%2C133.97%20163.39%2C172.42%2015.86%2C9.39%2034.24%2C9.39%2050.11%2C-0.01%2052.97%2C-31.37%20159.02%2C-102.63%20163.43%2C-172.41l-376.92%200zm302.67%20-162.41l74.4%20105.8%200%20-126.48c0%2C-20.52%20-11.85%2C-38.03%20-30.9%2C-45.66l-125.46%20-50.22%2081.96%20116.56zm-228.42%200l82.79%20-117.73%20-126.49%2051.28c-18.95%2C7.68%20-30.7%2C25.13%20-30.7%2C45.57l0%20126.67%2074.4%20-105.8zm114.21%20-8.75c35.22%2C0%2063.77%2C28.55%2063.77%2C63.77%200%2C35.22%20-28.55%2C63.77%20-63.77%2C63.77%20-35.22%2C0%20-63.77%2C-28.55%20-63.77%2C-63.77%200%2C-35.22%2028.55%2C-63.77%2063.77%2C-63.77z%22/%3E%3C/svg%3E">
 <link rel="canonical" href="https://www.himaayahschools.com/enroll.html">
 <meta property="og:url" content="https://www.himaayahschools.com/enroll.html">
@@ -12,7 +12,7 @@
 <meta property="og:site_name" content="Himaayah Schools">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Enroll — Himaayah Schools">
-<meta property="og:description" content="Enroll in Himaayah Schools: tell us about the student, choose a programme, then pay by transfer or card.">
+<meta property="og:description" content="Enroll in Himaayah Schools: tell us about the student, choose a programme, then pay by card or bank transfer.">
 <meta property="og:locale" content="en_NG">
 <meta property="og:image" content="https://www.himaayahschools.com/og-image.jpg">
 <meta property="og:image:width" content="1200">
@@ -21,7 +21,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@himaayahschools">
 <meta name="twitter:title" content="Enroll — Himaayah Schools">
-<meta name="twitter:description" content="Enroll in Himaayah Schools: tell us about the student, choose a programme, then pay by transfer or card.">
+<meta name="twitter:description" content="Enroll in Himaayah Schools: tell us about the student, choose a programme, then pay by card or bank transfer.">
 <meta name="twitter:image" content="https://www.himaayahschools.com/og-image.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -58,7 +58,7 @@
       <div class="hero-roadmap" id="heroRoadmap">
         <div class="r-item active" data-for="1"><span class="r-num">1</span> Tell us about the student</div>
         <div class="r-item" data-for="2"><span class="r-num">2</span> Choose a programme</div>
-        <div class="r-item" data-for="3"><span class="r-num">3</span> Pay & confirm on WhatsApp</div>
+        <div class="r-item" data-for="3"><span class="r-num">3</span> Pay &amp; confirm</div>
       </div>
       <p class="hero-help">Need help choosing? <a href="programmes.html">Compare programmes</a> or <a href="faq.html">read the FAQ</a>.</p>
     </div>
@@ -167,34 +167,52 @@
 
       <div class="step" id="step3" data-step="3">
         <span class="kicker">Step 3 of 3</span>
-        <h2>Pay &amp; confirm on WhatsApp</h2>
-        <p class="step-sub">Pay by bank transfer, then send us your receipt on WhatsApp. That's how we confirm your place.</p>
+        <h2>Pay &amp; confirm</h2>
+        <p class="step-sub">Pay by card in a minute, or by bank transfer and send us your receipt on WhatsApp.</p>
 
         <div class="pay-summary" id="paySummary"></div>
 
-        <ol class="pay-steps">
-          <li><span><b>Transfer the amount</b> above to this account.</span></li>
-          <li><span><b>Tap WhatsApp</b> below. Your message is already written for this plan.</span></li>
-          <li><span><b>Attach your receipt</b> in the chat and send.</span></li>
-        </ol>
-
-        <div class="account-box">
-          <div class="account-row"><span>Account Name</span><b>Himaayah Ltd</b></div>
-          <div class="account-row"><span>Account Number</span><b>0127584920<button class="copy-btn" data-copy="0127584920" type="button">Copy</button></b></div>
-          <div class="account-row"><span>Bank</span><b>Wema Bank</b></div>
+        <div class="pay-tabs" role="tablist" aria-label="Payment method">
+          <button type="button" class="pay-tab" role="tab" data-pay-tab="card" aria-selected="true" aria-controls="payCard">Card</button>
+          <button type="button" class="pay-tab" role="tab" data-pay-tab="transfer" aria-selected="false" aria-controls="payTransfer">Bank transfer</button>
         </div>
 
-        <p class="wa-label">I've paid. Send my receipt on WhatsApp:</p>
-        <div class="wa-grid">
-          <a class="btn btn-wa" id="waLink1" target="_blank" rel="noopener">Send on WhatsApp <small>· +234 806 604 3320</small></a>
-          <a class="btn btn-wa" id="waLink2" target="_blank" rel="noopener">Send on WhatsApp <small>· +234 702 584 2849</small></a>
+        <div class="pay-view active" data-pay-view="card" id="payCard" role="tabpanel">
+          <ol class="pay-steps">
+            <li><span><b>Tap Pay by card.</b> A secure payment page opens.</span></li>
+            <li><span><b>Pay</b> with your card, or another option the page offers.</span></li>
+            <li><span><b>You come back here</b> and we confirm your place by email.</span></li>
+          </ol>
+          <button type="button" class="btn btn-primary btn-card" id="cardBtn">Pay by card</button>
+          <p class="form-status error" id="cardStatus"></p>
+          <p class="form-note note-box"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>Card payments are processed securely by Bachs. Your card details never reach our website.</span></p>
         </div>
-        <button type="button" class="btn btn-secondary" id="copyMsgBtn">Copy the message instead</button>
-        <p class="form-status error" id="enrolStatus"></p>
 
-        <p class="msg-title">Your message</p>
-        <div class="msg-preview" id="msgPreview" translate="no" dir="ltr" lang="en"></div>
-        <p class="form-note note-box"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg><span>Pay first, then send. Please attach your receipt before you press send. Payments are usually confirmed within a few hours.</span></p>
+        <div class="pay-view" data-pay-view="transfer" id="payTransfer" role="tabpanel">
+          <ol class="pay-steps">
+            <li><span><b>Transfer the amount</b> above to this account.</span></li>
+            <li><span><b>Tap WhatsApp</b> below. Your message is already written for this plan.</span></li>
+            <li><span><b>Attach your receipt</b> in the chat and send.</span></li>
+          </ol>
+
+          <div class="account-box">
+            <div class="account-row"><span>Account Name</span><b>Himaayah Ltd</b></div>
+            <div class="account-row"><span>Account Number</span><b>0127584920<button class="copy-btn" data-copy="0127584920" type="button">Copy</button></b></div>
+            <div class="account-row"><span>Bank</span><b>Wema Bank</b></div>
+          </div>
+
+          <p class="wa-label">I've paid. Send my receipt on WhatsApp:</p>
+          <div class="wa-grid">
+            <a class="btn btn-wa" id="waLink1" target="_blank" rel="noopener">Send on WhatsApp <small>· +234 806 604 3320</small></a>
+            <a class="btn btn-wa" id="waLink2" target="_blank" rel="noopener">Send on WhatsApp <small>· +234 702 584 2849</small></a>
+          </div>
+          <button type="button" class="btn btn-secondary" id="copyMsgBtn">Copy the message instead</button>
+          <p class="form-status error" id="enrolStatus"></p>
+
+          <p class="msg-title">Your message</p>
+          <div class="msg-preview" id="msgPreview" translate="no" dir="ltr" lang="en"></div>
+          <p class="form-note note-box"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg><span>Pay first, then send. Please attach your receipt before you press send. Payments are usually confirmed within a few hours.</span></p>
+        </div>
 
         <div class="step-actions">
           <button type="button" class="btn btn-secondary" data-back>Back</button>
@@ -480,6 +498,7 @@
       <div class="row"><span>Your reference</span><b>${state.ref}</b></div>
     `;
     preparePayment();
+    cardLabel();
   }
 
   function escapeHtml(t) {
@@ -561,8 +580,8 @@
 
   // Save the enrolment to the sheet. Never blocks WhatsApp: if it fails, the
   // WhatsApp message still has every detail, and staff can add the row by hand.
-  function submitEnrolment() {
-    if (!API_URL || state.sent || !state.ref || !state.plan) return;
+  function submitEnrolment(method) {
+    if (!API_URL || state.sent || !state.ref || !state.plan) return Promise.resolve();
     state.sent = true;
     const s = state.student;
     const body = {
@@ -570,9 +589,10 @@
       programme: PROGRAMMES.find((p) => p.id === state.programmeId).name, plan: state.plan.name,
       kinName: s.kinName, kinRelationship: s.kinRelationship, kinPhone: s.kinPhone, kinEmail: s.kinEmail,
       studentEmail: s.studentEmail || '', website: s.website || '',
+      payMethod: method === 'card' ? 'Card' : 'Bank transfer',
     };
     const status = document.getElementById('enrolStatus');
-    fetch(API_URL, {
+    return fetch(API_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },   // plain text avoids a browser preflight that Apps Script cannot answer
       body: JSON.stringify(body),
@@ -610,6 +630,49 @@
       `<a class="btn btn-wa" href="${waLink(num)}" target="_blank" rel="noopener">Open WhatsApp again <small>\u00b7 +${num.replace(/^234(\d{3})(\d{3})(\d{4})$/, '234 $1 $2 $3')}</small></a>`
     ).join('') + '<a class="btn btn-secondary" href="index.html">Back to Himaayah Schools</a>';
     showStep('Done');
+  }
+
+
+  // =================================================================
+  // Card payment (Bachs). The enrolment is saved to the sheet first, then
+  // /api/checkout opens the Bachs payment page. The payment is recorded in
+  // the sheet by /api/bachs-webhook once Bachs confirms it.
+  // =================================================================
+  const cardBtn = document.getElementById('cardBtn');
+  function cardLabel() { if (state.plan) cardBtn.textContent = 'Pay \u20a6' + state.plan.amount.toLocaleString() + ' by card'; }
+  function cardError(msg) {
+    const st = document.getElementById('cardStatus');
+    st.textContent = msg + ' You can pay by bank transfer instead.';
+    st.style.display = 'block';
+    cardLabel(); cardBtn.disabled = false;
+  }
+  cardBtn.addEventListener('click', async () => {
+    if (!state.plan || !state.ref) return;
+    document.getElementById('cardStatus').style.display = 'none';
+    cardBtn.disabled = true; cardBtn.textContent = 'Opening the secure payment page\u2026';
+    const s = state.student;
+    // save the enrolment first (wait up to 5 seconds; the payment is matched by reference either way)
+    await Promise.race([submitEnrolment('card'), new Promise((r) => setTimeout(r, 5000))]);
+    try {
+      const r = await fetch('/api/checkout', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ref: state.ref, plan: state.plan.name, email: s.studentEmail || s.kinEmail, name: s.kinName, phone: s.kinPhone, studentName: s.studentName }),
+      });
+      const j = await r.json().catch(() => null);
+      if (j && j.ok && j.url) { window.location.href = j.url; return; }
+      cardError((j && j.error) || 'Card payment isn\u2019t available right now.');
+    } catch (e) {
+      cardError('Card payment isn\u2019t available right now.');
+    }
+  });
+  if (urlParams.get('card') === 'cancelled') {
+    const note = document.createElement('p');
+    note.className = 'form-status error card-cancelled';
+    note.setAttribute('role', 'status');
+    note.textContent = 'Your card payment was cancelled, so nothing was charged. Fill in the form again to try once more, or pay by bank transfer.';
+    note.style.display = 'block';
+    const s1 = document.getElementById('step1');
+    s1.insertBefore(note, s1.querySelector('.step-sub').nextSibling);
   }
 
   document.getElementById('copyMsgBtn').addEventListener('click', (e) => {

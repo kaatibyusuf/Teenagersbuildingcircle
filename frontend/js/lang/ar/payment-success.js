@@ -3,5 +3,6 @@
 HS_I18N.add({
 "Payment received.": "تم استلام الدفع.",
 "Your enrollment is saved and your payment went through. We'll be in touch by email with what's next. No further steps are needed on your end right now.": "تم حفظ تسجيلك ونجح الدفع. سنتواصل معك عبر البريد الإلكتروني بالخطوات التالية. لا يلزمك فعل شيء آخر الآن.",
-"Payment Received — Himaayah Schools": "تم استلام الدفع — مدارس حماية"
+"Payment Received — Himaayah Schools": "تم استلام الدفع — مدارس حماية",
+"Your reference:": "رقمك المرجعي:"
 });

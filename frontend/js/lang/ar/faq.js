@@ -25,5 +25,6 @@ HS_I18N.add({
 "Helpful pages": "صفحات مفيدة",
 "Search questions, e.g. payment": "ابحث في الأسئلة، مثل: الدفع",
 "Search the FAQ": "ابحث في الأسئلة الشائعة",
-"FAQ — Himaayah Schools": "الأسئلة الشائعة — مدارس حماية"
+"FAQ — Himaayah Schools": "الأسئلة الشائعة — مدارس حماية",
+"Card or bank transfer. At the last step of enrollment, choose Card to pay on a secure Bachs payment page, or Bank transfer to pay into our account. After a transfer, the page opens WhatsApp with your details and plan already filled in. Attach your receipt and send it, and we confirm your place, usually within a few hours.": "بالبطاقة أو بالتحويل البنكي. في الخطوة الأخيرة من التسجيل اختر «البطاقة» لتدفع على صفحة دفع آمنة من Bachs، أو «التحويل البنكي» لتدفع إلى حسابنا. بعد التحويل تفتح الصفحة واتساب وبياناتك وخطتك معبّأة مسبقًا. أرفق إيصالك وأرسله، ونؤكّد مقعدك عادةً خلال ساعات قليلة."
 });

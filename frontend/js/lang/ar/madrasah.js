@@ -153,5 +153,6 @@ HS_I18N.add({
 "For anyone joining directly, message the Madrasah line and a teacher will advise.": "ومن أراد الالتحاق مباشرة، فليراسل خط المدرسة الشرعية وسيرشده أحد المعلّمين.",
 "% to join": "% للالتحاق",
 "Every plan meets four times a week, with revision, tests and exams built in.": "كل خطة تجتمع أربع مرات في الأسبوع، مع المراجعة والاختبارات والامتحانات.",
-"Join from home, wherever you are.": "انضم من بيتك، أينما كنت."
+"Join from home, wherever you are.": "انضم من بيتك، أينما كنت.",
+"Pay by card at the last step of enrollment, or by bank transfer and send the receipt on WhatsApp. Payment is made once a month, in a single payment.": "ادفع بالبطاقة في الخطوة الأخيرة من التسجيل، أو بالتحويل البنكي وأرسل الإيصال على واتساب. يكون الدفع مرة واحدة في الشهر، دفعة واحدة."
 });
