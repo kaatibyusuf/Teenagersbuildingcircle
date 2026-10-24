@@ -173,5 +173,9 @@ HS_I18N.add({
 "(optional, if someone invited you)": "(اختياري، إذا دعاك أحد)",
 "e.g. FATIMA1184": "مثال: FATIMA1184",
 "re:Referred by (.+)": "بإحالة من $1",
-"We could not find that referral code.": "لم نعثر على رمز الإحالة هذا."
+"We could not find that referral code.": "لم نعثر على رمز الإحالة هذا.",
+"Saving your details…": "جارٍ حفظ بياناتك…",
+"We could not save your details. Check your connection and try again. You can pay by bank transfer instead.": "تعذّر حفظ بياناتك. تحقّق من اتصالك وحاول مرة أخرى. يمكنك الدفع بالتحويل البنكي بدلًا من ذلك.",
+"Too many submissions from this email. Please wait an hour and try again. Nothing has been charged. You can pay by bank transfer instead.": "إرسالات كثيرة من هذا البريد. يُرجى الانتظار ساعة ثم المحاولة. لم يُخصم أي مبلغ. يمكنك الدفع بالتحويل البنكي بدلًا من ذلك.",
+"re:(.+) Nothing has been charged\\. You can pay by bank transfer instead\\.": "$1 لم يُخصم أي مبلغ. يمكنك الدفع بالتحويل البنكي بدلًا من ذلك."
 });

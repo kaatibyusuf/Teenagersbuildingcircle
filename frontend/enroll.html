@@ -647,13 +647,17 @@
       method: 'POST',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },   // plain text avoids a browser preflight that Apps Script cannot answer
       body: JSON.stringify(body),
+      keepalive: true,                                             // finishes even if the page moves on to the payment page
     }).then((r) => r.json()).then((j) => {
       if (!j || !j.ok) {
         state.sent = false;
-        status.textContent = (j && j.error ? j.error + ' ' : '') + 'We could not save your details automatically, but your WhatsApp message has everything we need.';
-        status.style.display = 'block';
+        if (method !== 'card') {
+          status.textContent = (j && j.error ? j.error + ' ' : '') + 'We could not save your details automatically, but your WhatsApp message has everything we need.';
+          status.style.display = 'block';
+        }
       }
-    }).catch(() => { state.sent = false; });
+      return j || { ok: false };
+    }).catch(() => { state.sent = false; return { ok: false, offline: true }; });
   }
 
   function preparePayment() {
@@ -700,10 +704,17 @@
   cardBtn.addEventListener('click', async () => {
     if (!state.plan || !state.ref) return;
     document.getElementById('cardStatus').style.display = 'none';
-    cardBtn.disabled = true; cardBtn.textContent = 'Opening the secure payment page\u2026';
+    cardBtn.disabled = true; cardBtn.textContent = 'Saving your details\u2026';
     const s = state.student;
-    // save the enrolment first (wait up to 5 seconds; the payment is matched by reference either way)
-    await Promise.race([submitEnrolment('card'), new Promise((r) => setTimeout(r, 5000))]);
+    // Save the enrolment before going to the payment page, so the payment has a row to match.
+    // A refused save (for example too many tries) stops here; a slow server gets 30 seconds.
+    const saved = await Promise.race([submitEnrolment('card'), new Promise((r) => setTimeout(() => r({ slow: true }), 30000))]);
+    if (saved && saved.ok === false) {
+      cardError(saved.offline ? 'We could not save your details. Check your connection and try again.'
+        : (saved.error || 'We could not save your details.') + ' Nothing has been charged.');
+      return;
+    }
+    cardBtn.textContent = 'Opening the secure payment page\u2026';
     const ctl = new AbortController(), timer = setTimeout(() => ctl.abort(), 25000);   // never leave the button spinning
     try {
       const r = await fetch('/api/checkout', {
