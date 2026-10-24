@@ -469,5 +469,6 @@ HS_I18N.add({
 "Join waitlist": "انضم لقائمة الانتظار",
 "Closed · Join waitlist": "مغلق · انضم لقائمة الانتظار",
 "for a group place.": "للحصول على مقعد في فصل جماعي.",
-"Admission is closed for now. Join the waitlist.": "القبول مغلق حاليًا. انضم إلى قائمة الانتظار."
+"Admission is closed for now. Join the waitlist.": "القبول مغلق حاليًا. انضم إلى قائمة الانتظار.",
+"Newsletter": "النشرة البريدية"
 });

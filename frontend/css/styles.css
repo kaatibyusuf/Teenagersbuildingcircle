@@ -3904,3 +3904,50 @@ html[dir="rtl"] .site.page-articles .art-go, html[dir="rtl"].site.page-articles 
 a.wl-shut { cursor: pointer; text-decoration: none; }
 a.wl-shut:hover { color: var(--ink); border-color: var(--ink); background: #fff; }
 .plan-opt.closed .plan-opt-shut.wl-shut { cursor: pointer; }
+
+/* ==========================================================================
+   Newsletter signup box (articles pages, newsletter.html)
+   ========================================================================== */
+.site .nl-wrap { max-width: 920px; margin: 0 auto; }
+.site.page-articles .nl-wrap { padding-top: clamp(32px, 4vw, 48px); padding-bottom: 8px; }
+.site.page-articles #artGrid + .nl-box { margin-top: clamp(36px, 4vw, 56px); }
+.site.page-articles .art-index-cta { margin-top: 20px; }
+.site .nl-box { background: var(--h-ink); color: #fff; border-radius: 28px; padding: clamp(24px, 3.4vw, 40px); position: relative; overflow: hidden; isolation: isolate; }
+.site .nl-box::before { content: ''; position: absolute; inset: auto -20% -60% auto; width: 70%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(closest-side, rgba(59,136,168,.45), transparent); z-index: -1; pointer-events: none; }
+.site .nl-intro { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 22px; }
+.site .nl-ic { flex: none; width: 46px; height: 46px; border-radius: 14px; background: rgba(255,255,255,.08); box-shadow: inset 0 0 0 1px rgba(255,255,255,.14); display: grid; place-items: center; color: var(--h-sky); }
+.site .nl-box h2 { font-size: clamp(22px, 2.4vw, 28px); line-height: 1.2; margin: 0 0 6px; color: #fff; }
+.site .nl-box p { margin: 0; color: rgba(255,255,255,.7); font-size: 15px; line-height: 1.6; }
+.site .nl-row { display: flex; gap: 10px; }
+.site .nl-row input { flex: 1 1 0; min-width: 0; font: inherit; font-size: 16px; color: #fff; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.18); border-radius: 999px; padding: 13px 18px; }
+.site .nl-row input::placeholder { color: rgba(255,255,255,.5); }
+.site .nl-row input:focus { outline: none; border-color: var(--h-sky); box-shadow: 0 0 0 3px rgba(133,204,255,.25); }
+.site .nl-row input[name=email] { flex-grow: 1.6; }
+.site .nl-box .btn-ink { flex: none; background: #fff; color: var(--h-ink); border-color: #fff; }
+.site .nl-box .btn-ink:hover { background: var(--h-paper); }
+.site .nl-box .btn-ink:disabled { opacity: .65; cursor: progress; }
+.site .nl-ints { border: 0; margin: 16px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.site .nl-ints legend { float: left; margin-inline-end: 6px; font-size: 13.5px; color: rgba(255,255,255,.65); }
+.site .nl-ints legend small { color: rgba(255,255,255,.45); }
+.site .nl-chip { position: relative; cursor: pointer; }
+.site .nl-chip input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+.site .nl-chip span { display: inline-block; font-size: 13.5px; padding: 6px 12px; border-radius: 999px; color: rgba(255,255,255,.8); box-shadow: inset 0 0 0 1px rgba(255,255,255,.2); transition: background .2s, color .2s; }
+.site .nl-chip input:checked + span { background: var(--h-sky); color: var(--h-ink); box-shadow: none; }
+.site .nl-chip input:focus-visible + span { outline: 2px solid var(--h-sky); outline-offset: 2px; }
+.site .nl-hp, .site .nl-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.site .nl-msg { margin-top: 14px !important; font-size: 14.5px !important; }
+.site .nl-msg:empty { display: none; }
+.site .nl-msg.ok { color: #9BE3B8 !important; }
+.site .nl-msg.bad { color: #FFB4A8 !important; }
+.site .nl-page { padding: clamp(40px, 6vw, 80px) 0 clamp(56px, 7vw, 96px); }
+.site .nl-unsub { background: #FFF4E0; color: #7A4A00; border-radius: 16px; padding: 14px 18px; margin-bottom: 20px; font-size: 15px; }
+.site .nl-unsub.ok { background: #EAF6EF; color: #14532D; }
+.site .nl-unsub p { margin: 0; }
+.site .nl-more { text-align: center; margin-top: 18px; }
+.site .nl-more a { color: var(--ink); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+.site.page-newsletter header.hero { padding-bottom: clamp(56px, 7vw, 96px); }
+@media (max-width: 640px) {
+  .site .nl-row { flex-direction: column; }
+  .site .nl-row .btn { width: 100%; justify-content: center; }
+  .site .nl-intro { flex-direction: column; gap: 12px; }
+}

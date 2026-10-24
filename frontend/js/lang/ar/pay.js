@@ -45,7 +45,7 @@ HS_I18N.add({
 "Madrasah": "المدرسة الشرعية",
 "Academy": "الأكاديمية",
 "Skills School": "مدرسة المهارات",
-"Teenagers Building Circle": "حلقة بناء المراهقين",
+"Teenagers Building Circle": "حلقة بناء الناشئة",
 "Full course fee": "رسوم الدورة كاملة",
 "1 month": "شهر واحد",
 "Opening the payment page…": "جارٍ فتح صفحة الدفع…",
