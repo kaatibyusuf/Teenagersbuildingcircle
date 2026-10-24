@@ -3711,3 +3711,68 @@ html[lang="ar"] .site .anthem-mean, html[lang="ar"].site .anthem-mean, html[lang
   .page-skills-tutor .subm { grid-template-columns: 1fr; }
   .page-skills-dashboard .pbody { padding: 0 14px 14px; }
 }
+
+/* live chat entry in the green "Chat with us" menu (js/chat.js) */
+.wa-menu .wa-live { display: flex; flex-direction: column; align-items: flex-start; padding: 11px 14px; border: 0; border-radius: 10px; background: #EEF6F1; color: #0B5A31; font: 600 14px/1.3 inherit; font-family: inherit; text-align: start; cursor: pointer; }
+.wa-menu .wa-live span { display: inline-flex; align-items: center; gap: 8px; }
+.wa-menu .wa-live span::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: #22A35A; box-shadow: 0 0 0 3px rgba(34,163,90,.18); }
+.wa-menu .wa-live small { font-weight: 500; color: #3E6B52; font-size: 13px; }
+.wa-menu .wa-live:hover { background: #E1F0E7; }
+.wa-menu .wa-live:focus-visible { outline: 2px solid #85CCFF; outline-offset: 3px; }
+
+/* Madrasah: Muraajah banner (light, so it reads as open next to the closed one-year track) */
+.site.page-madrasah .year.mur { margin-top: 16px; background: #fff; color: var(--text); box-shadow: inset 0 0 0 1px var(--line), var(--shadow); }
+.site.page-madrasah .year.mur h3 { color: var(--text); }
+.site.page-madrasah .year.mur p { color: var(--muted); }
+.site.page-madrasah .year.mur .price, .site.page-madrasah .year.mur .price b { color: var(--text); }
+.site.page-madrasah .mur-k { display: inline-flex; align-items: center; gap: 6px; margin-bottom: 10px; padding: 4px 11px; border-radius: 999px; font-size: 12.5px; font-weight: 500; color: #fff; background: linear-gradient(180deg, var(--h-tide), var(--h-ink)); }
+
+/* ==========================================================================
+   Articles (index and article pages)
+   ========================================================================== */
+.site.page-articles .art-hero .hero-copy { max-width: 860px; }
+.site.page-articles .art-back { display: inline-flex; align-items: center; gap: 6px; margin-bottom: 18px; font-size: 14px; color: rgba(255,255,255,.75) !important; }
+.site.page-articles .art-back::before { content: ''; width: 8px; height: 8px; border-left: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg); }
+html[dir="rtl"] .site.page-articles .art-back::before, html[dir="rtl"].site.page-articles .art-back::before { transform: rotate(-135deg); }
+.site.page-articles .art-back:hover { color: #fff !important; }
+.site.page-articles .art-sub { font-size: clamp(17px, 1.6vw, 20px); max-width: 60ch; }
+.site.page-articles .art-byline { margin-top: 18px; font-size: 14px; color: rgba(255,255,255,.6) !important; }
+
+.site.page-articles .art-body { max-width: 720px; margin: 0 auto; padding: clamp(48px, 6vw, 80px) 20px 8px; color: var(--text); }
+.site.page-articles .art-body p, .site.page-articles .art-body li { font-size: 18px; line-height: 1.75; color: #24323B; }
+.site.page-articles .art-body p { margin: 0 0 20px; }
+.site.page-articles .art-body h2 { margin: 44px 0 14px; font-size: clamp(24px, 2.6vw, 30px); line-height: 1.2; color: var(--text); }
+.site.page-articles .art-body ul { margin: 0 0 24px; padding: 0; list-style: none; display: grid; gap: 12px; }
+.site.page-articles .art-body li { position: relative; padding-inline-start: 26px; }
+.site.page-articles .art-body li::before { content: ''; position: absolute; inset-inline-start: 4px; top: .7em; width: 8px; height: 8px; border-radius: 50%; background: var(--sky-d); }
+.site.page-articles .art-q { margin: 32px 0 36px; padding: clamp(24px, 3vw, 34px); border-radius: 22px; color: #fff;
+  background: radial-gradient(60% 90% at 10% 0%, rgba(59,136,168,.55), transparent 70%), linear-gradient(180deg, #0F3E58, var(--h-ink)); }
+.site.page-articles .art-q blockquote { margin: 0; }
+.site.page-articles .art-q .art-q-ar { margin: 0 0 14px; font-family: 'Amiri', 'IBM Plex Sans Arabic', serif; font-size: clamp(22px, 2.4vw, 28px); line-height: 1.9; color: #fff; text-align: right; }
+.site.page-articles .art-q .art-q-en { margin: 0; font-size: 17px; line-height: 1.65; color: rgba(255,255,255,.8); }
+.site.page-articles .art-q figcaption { margin-top: 14px; font-size: 13.5px; color: var(--h-sand); }
+html[lang="ar"] .site.page-articles .art-q .art-q-en, html[lang="ar"].site.page-articles .art-q .art-q-en { display: none; }
+
+.site.page-articles .art-filter { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 26px; }
+.site.page-articles .art-filter button { padding: 9px 16px; border: 0; border-radius: 999px; background: #fff; color: var(--text); box-shadow: inset 0 0 0 1px var(--line); font: 500 14px/1 var(--h-f); cursor: pointer; }
+.site.page-articles .art-filter button[aria-pressed="true"] { background: var(--h-ink); color: #fff; box-shadow: none; }
+.site.page-articles .art-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.site.page-articles .art-card { display: flex; flex-direction: column; gap: 10px; padding: 26px 24px 22px; border-radius: 22px; background: #fff; color: var(--text); box-shadow: inset 0 0 0 1px var(--line), var(--shadow); transition: transform .25s var(--h-ease), box-shadow .25s; }
+.site.page-articles .art-card[hidden] { display: none; }
+.site.page-articles .art-card:hover { transform: translateY(-3px); box-shadow: inset 0 0 0 1px #CFCABF, 0 24px 48px -28px rgba(6,21,33,.45); }
+.site.page-articles .art-card h3 { margin: 0; font-size: 21px; line-height: 1.25; color: var(--text); }
+.site.page-articles .art-card p { margin: 0; color: var(--muted); font-size: 15.5px; line-height: 1.6; flex: 1; }
+.site.page-articles .art-cat { align-self: flex-start; padding: 4px 11px; border-radius: 999px; font-size: 12.5px; font-weight: 500; color: var(--h-tide); background: #E4EEF2; }
+.site.page-articles .art-meta { font-size: 13px; color: var(--muted); }
+.site.page-articles .art-more .art-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 900px) { .site.page-articles .art-grid, .site.page-articles .art-more .art-grid { grid-template-columns: 1fr; } }
+@media (max-width: 600px) { .site.page-articles .art-body p, .site.page-articles .art-body li { font-size: 17px; } }
+.site.page-articles header.hero { padding-bottom: clamp(56px, 7vw, 96px); }
+.site.page-articles .art-back { display: flex; width: max-content; }
+.site.page-articles .art-hero .kicker { display: flex; width: max-content; }
+.site.page-madrasah .mur-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.site.page-madrasah .mur-opt { display: grid; gap: 10px; align-content: start; padding: 18px; border-radius: 18px; background: var(--h-paper); }
+.site.page-madrasah .mur-opt .btn { justify-self: start; }
+.site.page-madrasah .mur-l { font-size: 13px; font-weight: 500; color: var(--muted); }
+@media (max-width: 520px) { .site.page-madrasah .mur-opts { grid-template-columns: 1fr; } }
+.site.page-madrasah .mur-opt .price b { font-size: 24px; } .site.page-madrasah .mur-opt .price { white-space: nowrap; font-size: 14px; }

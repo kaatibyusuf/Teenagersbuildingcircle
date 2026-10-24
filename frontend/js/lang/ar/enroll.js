@@ -157,5 +157,16 @@ HS_I18N.add({
 "Card payment isn’t available right now. You can pay by bank transfer instead.": "الدفع بالبطاقة غير متاح الآن. يمكنك الدفع بالتحويل البنكي بدلًا من ذلك.",
 "Card payments are not set up yet. You can pay by bank transfer instead.": "الدفع بالبطاقة لم يُفعَّل بعد. يمكنك الدفع بالتحويل البنكي بدلًا من ذلك.",
 "The card payment page could not be opened. You can pay by bank transfer instead.": "تعذّر فتح صفحة الدفع بالبطاقة. يمكنك الدفع بالتحويل البنكي بدلًا من ذلك.",
-"Your card payment was cancelled, so nothing was charged. Fill in the form again to try once more, or pay by bank transfer.": "أُلغي الدفع بالبطاقة، فلم يُخصم أي مبلغ. املأ النموذج مرة أخرى لتعيد المحاولة، أو ادفع بالتحويل البنكي."
+"Your card payment was cancelled, so nothing was charged. Fill in the form again to try once more, or pay by bank transfer.": "أُلغي الدفع بالبطاقة، فلم يُخصم أي مبلغ. املأ النموذج مرة أخرى لتعيد المحاولة، أو ادفع بالتحويل البنكي.",
+"Muraajah": "المراجعة",
+"Madrasah — Muraajah": "المدرسة الشرعية — المراجعة",
+"Completed the Qur’an": "أتمّ حفظ القرآن",
+"Structured revision for students who have completed the Qur’an": "مراجعة منظّمة للطلاب الذين أتمّوا حفظ القرآن",
+"Makes your hifdh firm and lasting, with a teacher checking every portion": "تثبّت حفظك وتديمه، مع معلّم يتابع كل مقطع",
+"Muraajah (Group)": "المراجعة (جماعي)",
+"Muraajah (Personal)": "المراجعة (فردي)",
+"Madrasah — Muraajah (Group)": "المدرسة الشرعية — المراجعة (جماعي)",
+"Madrasah — Muraajah (Personal)": "المدرسة الشرعية — المراجعة (فردي)",
+"Small group, four classes weekly": "مجموعة صغيرة، أربع حصص أسبوعيًا",
+"One-on-one, four classes weekly": "فردي، أربع حصص أسبوعيًا"
 });

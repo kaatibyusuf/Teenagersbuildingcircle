@@ -28,6 +28,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
 <script src="js/i18n.js"></script>
+<script src="js/chat.js" defer></script>
 <!-- Vercel Analytics: counts visits once enabled in the Vercel dashboard -->
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
 <script defer src="/_vercel/insights/script.js"></script>
@@ -272,6 +273,12 @@
         { name: 'Madrasah — One-Year Hifdh', closed: true, tag: '12 months', amount: 19000, period: '/mo',
           bullets: ['Focused 12-month Qur\u2019an memorisation track', 'Structured monthly milestones and revision'],
           productIdLive: 'prod_330d0eede3bf4a4bb39a', productIdSandbox: 'prod_f9d8a4e440074dca896b' },
+        { name: 'Madrasah — Muraajah (Group)', tag: 'Group', amount: 14000, period: '/mo',
+          bullets: ['Structured revision for students who have completed the Qur\u2019an', 'Small group, four classes weekly'],
+          productIdLive: 'prod_1e019c42c4234c56a24e', productIdSandbox: '' },
+        { name: 'Madrasah — Muraajah (Personal)', tag: 'Personal', amount: 20000, period: '/mo',
+          bullets: ['Structured revision for students who have completed the Qur\u2019an', 'One-on-one, four classes weekly'],
+          productIdLive: 'prod_1209bb063bd94741b579', productIdSandbox: '' },
       ],
     },
     {
@@ -321,6 +328,9 @@
     'hifdh-personal': 'Madrasah \u2014 Hifdh Only (Personal)',
     'full-personal': 'Madrasah \u2014 Full Madrasah (Personal)',
     'one-year': 'Madrasah \u2014 One-Year Hifdh',
+    'muraajah': 'Madrasah \u2014 Muraajah (Group)',
+    'muraajah-group': 'Madrasah \u2014 Muraajah (Group)',
+    'muraajah-personal': 'Madrasah \u2014 Muraajah (Personal)',
   };
   const requestedPlanName = PLAN_SLUGS[urlParams.get('plan')];
   const planProgramme = requestedPlanName ? PROGRAMMES.find((p) => p.plans.some((pl) => pl.name === requestedPlanName)) : null;

@@ -154,5 +154,9 @@ HS_I18N.add({
 "% to join": "% للالتحاق",
 "Every plan meets four times a week, with revision, tests and exams built in.": "كل خطة تجتمع أربع مرات في الأسبوع، مع المراجعة والاختبارات والامتحانات.",
 "Join from home, wherever you are.": "انضم من بيتك، أينما كنت.",
-"Pay by card at the last step of enrollment, or by bank transfer and send the receipt on WhatsApp. Payment is made once a month, in a single payment.": "ادفع بالبطاقة في الخطوة الأخيرة من التسجيل، أو بالتحويل البنكي وأرسل الإيصال على واتساب. يكون الدفع مرة واحدة في الشهر، دفعة واحدة."
+"Pay by card at the last step of enrollment, or by bank transfer and send the receipt on WhatsApp. Payment is made once a month, in a single payment.": "ادفع بالبطاقة في الخطوة الأخيرة من التسجيل، أو بالتحويل البنكي وأرسل الإيصال على واتساب. يكون الدفع مرة واحدة في الشهر، دفعة واحدة.",
+"New": "جديد",
+"Completed the Qur'an? Make it firm with Muraajah.": "أتممت القرآن؟ ثبّت حفظك مع برنامج المراجعة.",
+"For students who have finished memorising and want to make their hifdh solid and lasting, through steady, structured revision with a teacher.": "للطلاب الذين أتمّوا الحفظ ويريدون تثبيته وإدامته، بمراجعة منتظمة منظّمة مع معلّم.",
+"For students who have finished memorising and want to make their hifdh solid and lasting, through steady, structured revision with a teacher. Four classes a week, in a small group or one-on-one.": "للطلاب الذين أتمّوا الحفظ ويريدون تثبيته وإدامته، بمراجعة منتظمة منظّمة مع معلّم. أربع حصص في الأسبوع، في مجموعة صغيرة أو فرديًا."
 });

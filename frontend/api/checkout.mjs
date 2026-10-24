@@ -18,6 +18,8 @@ const PLANS = {
   'Madrasah — Hifdh Only (Personal)':           { amount: 20000, recurring: true, live: 'prod_1debd07326f34dd2bc53', sandbox: 'prod_d2a0efd2bed64f96aa61' },
   'Madrasah — Full Madrasah (Personal)':        { amount: 35000, recurring: true, live: 'prod_fe2428f2c1f647118abc', sandbox: 'prod_84b3e07142ee45b1801d' },
   'Madrasah — One-Year Hifdh':                  { amount: 19000, recurring: true, live: 'prod_330d0eede3bf4a4bb39a', sandbox: 'prod_f9d8a4e440074dca896b', closed: true },
+  'Madrasah — Muraajah (Group)':                { amount: 14000, recurring: true, live: 'prod_1e019c42c4234c56a24e', sandbox: '' },
+  'Madrasah — Muraajah (Personal)':             { amount: 20000, recurring: true, live: 'prod_1209bb063bd94741b579', sandbox: '' },
   'Academy — UTME':                             { amount: 10000, recurring: true, live: 'prod_6de197ce78fe4f049970', sandbox: 'prod_9f7f11caa6ae4375a03f' },
   'Academy — Post-UTME':                        { amount: 10000, recurring: true, live: 'prod_5273f7bb1f1249f6b164', sandbox: 'prod_e2a70d3ed18d4b8ba203' },
   'Academy — A-Levels':                         { amount: 10000, recurring: true, live: 'prod_eea22ca104b6496aace8', sandbox: 'prod_b80ca29cd9a741038fbc' },

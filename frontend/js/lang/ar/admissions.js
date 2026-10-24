@@ -80,5 +80,11 @@ HS_I18N.add({
 "Enrollment takes about two minutes. We confirm your place as soon as we see your receipt.": "يستغرق التسجيل نحو دقيقتين. ونؤكّد مقعدك بمجرد أن نرى إيصالك.",
 "See exam dates": "شاهد مواعيد الامتحانات",
 "Admission, step by step.": "القبول، خطوة بخطوة.",
-"Admissions — Himaayah Schools": "القبول — مدارس حماية"
+"Admissions — Himaayah Schools": "القبول — مدارس حماية",
+"Muraajah": "المراجعة",
+"Revision for students who have completed the Qur'an": "مراجعة للطلاب الذين أتمّوا حفظ القرآن",
+"Muraajah (Group)": "المراجعة (جماعي)",
+"Muraajah (Personal)": "المراجعة (فردي)",
+"Revision after completing the Qur'an · four classes a week": "مراجعة بعد إتمام القرآن · أربع حصص أسبوعيًا",
+"Revision after completing the Qur'an · one-on-one": "مراجعة بعد إتمام القرآن · فردي"
 });

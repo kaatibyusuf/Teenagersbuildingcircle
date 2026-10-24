@@ -457,5 +457,8 @@ HS_I18N.add({
 "Our anthem": "نشيدنا",
 "re:e\\.g\\. ([A-Z]{1,3}-\\d+)": "مثال: $1",
 "Tutor login": "دخول المدرّس",
-"Tutor Login": "دخول المدرّس"
+"Tutor Login": "دخول المدرّس",
+"Live chat": "محادثة مباشرة",
+"Talk to us here, now": "تحدّث معنا هنا الآن",
+"Articles": "مقالات"
 });
