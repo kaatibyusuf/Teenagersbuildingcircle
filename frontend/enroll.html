@@ -452,7 +452,7 @@
     if (programme.plans.some((pl) => pl.closed)) {
       const note = document.createElement('p');
       note.className = 'plan-closed-note';
-      note.textContent = 'Group and one-year Madrasah classes are closed for now. Private (one-on-one) classes are open.';
+      note.innerHTML = 'Group and one-year Madrasah classes are closed for now. Private (one-on-one) classes are open. <a class="wl-inline" href="waitlist.html" target="_blank" rel="noopener">Join the waitlist</a> for a group place.';
       planOptions.appendChild(note);
     }
     programme.plans.forEach((plan) => {
@@ -463,7 +463,7 @@
         <div class="plan-opt-head">
           <div class="plan-opt-radio"></div>
           <div class="plan-opt-name">${plan.name.split('—').pop().trim()}<small>${plan.tag}</small></div>
-          <div class="plan-opt-price">${plan.closed ? '<span class="plan-opt-shut">Closed</span>' : '\u20a6' + plan.amount.toLocaleString() + plan.period}</div>
+          <div class="plan-opt-price">${plan.closed ? `<a class="plan-opt-shut wl-shut" href="waitlist.html?plan=${Object.keys(PLAN_SLUGS).find((k) => PLAN_SLUGS[k] === plan.name) || ''}" target="_blank" rel="noopener">Closed · Join waitlist</a>` : '\u20a6' + plan.amount.toLocaleString() + plan.period}</div>
         </div>
         <span class="plan-opt-toggle" data-toggle>Show details</span>
         <div class="plan-opt-details" data-details>

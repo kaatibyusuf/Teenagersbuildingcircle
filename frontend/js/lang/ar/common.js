@@ -464,5 +464,10 @@ HS_I18N.add({
 "Pay by card": "ادفع بالبطاقة",
 "Pay ahead by card": "ادفع مقدّمًا بالبطاقة",
 "Send a transfer receipt": "أرسل إيصال التحويل",
-"Pay fees": "دفع الرسوم"
+"Pay fees": "دفع الرسوم",
+"Join the waitlist": "انضم إلى قائمة الانتظار",
+"Join waitlist": "انضم لقائمة الانتظار",
+"Closed · Join waitlist": "مغلق · انضم لقائمة الانتظار",
+"for a group place.": "للحصول على مقعد في فصل جماعي.",
+"Admission is closed for now. Join the waitlist.": "القبول مغلق حاليًا. انضم إلى قائمة الانتظار."
 });
