@@ -473,5 +473,6 @@ HS_I18N.add({
 "Newsletter": "النشرة البريدية",
 "Mentor login": "دخول المرشد",
 "Mentor Login": "دخول المرشد",
-"Refer and earn": "ادعُ واربح"
+"Refer and earn": "ادعُ واربح",
+"Sponsor a student": "اكفل طالبًا"
 });

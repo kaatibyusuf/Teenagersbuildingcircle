@@ -59,6 +59,14 @@ export async function POST(request) {
     kind: meta.kind || '',            // 'fee' for the Pay fees page (api/fees-checkout)
     studentId: meta.studentId || '',
     periods: meta.periods || '',
+    type: meta.type || '',            // sponsorships (api/sponsor-checkout): 'fund' or 'student'
+    requestId: meta.requestId || '',
+    months: meta.months || '',
+    donorName: meta.donorName || '',
+    donorEmail: meta.donorEmail || '',
+    donorPhone: meta.donorPhone || '',
+    showName: meta.showName || '',
+    message: meta.message || '',
     status: d.status || '',
     amount: d.amount || '',
     currency: d.currency || '',

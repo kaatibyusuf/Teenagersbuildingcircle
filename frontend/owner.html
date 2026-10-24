@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en" class="app staff page-owner">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Owner dashboard | Himaayah Schools</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#094570">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600;700&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<script src="js/i18n.js"></script>
+<!-- Vercel Analytics: counts visits once enabled in the Vercel dashboard -->
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+<header class="top"><div>
+<a class="brand" href="index.html"><svg width="22" height="27" viewBox="0 0 377.21 459.6" fill="#094570" aria-hidden="true"><path d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>Himaayah Schools <em>Owner</em></a>
+<nav><a class="btn btn-line" href="index.html">Home</a><button class="btn btn-ink" id="out" hidden>Log out</button></nav>
+</div></header>
+
+<main id="login" class="login"><form class="lbox" id="lf" novalidate>
+<div class="crest" aria-hidden="true"><svg width="26" height="32" viewBox="0 0 377.21 459.6" fill="#094570"><path d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg></div>
+<span class="kick">Himaayah Schools</span><h1>Owner login</h1><p>Sign in with your Owner ID and access code.</p>
+<div class="f"><label for="tid">Owner ID</label><input id="tid" autocomplete="username" autocapitalize="characters" placeholder="e.g. OW-001" required></div>
+<div class="f"><label for="tcode">Access code</label><input id="tcode" type="password" autocomplete="new-password" data-lpignore="true" required></div>
+<div class="err" id="err" role="alert"></div>
+<button class="btn btn-ink" id="go" type="submit">Sign in</button>
+</form></main>
+
+<main id="app" class="wrap" hidden></main>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script>
+/* ===== SETTINGS ===== Same Apps Script web app as the other portals. */
+const API_URL = 'https://script.google.com/macros/s/AKfycby0AsifBuB_Ad7g1SjDXCipaDU27-BrzYWf67muw5jeY_C0_0uz8AhQYYXdiNRQhvqX/exec';
+const KEY = 'how';
+
+const $ = (id) => document.getElementById(id);
+const esc = (t) => String(t ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const naira = (n) => '₦' + Math.round(Number(n) || 0).toLocaleString('en-NG');
+const short = (n) => { n = Number(n) || 0; return n >= 1e6 ? '₦' + (Math.round(n / 1e5) / 10) + 'm' : n >= 1e3 ? '₦' + Math.round(n / 1e3) + 'k' : '₦' + n; };
+const fdate = (iso, t) => { if (!iso) return '–'; const d = new Date(iso); return isNaN(d) ? esc(iso) : d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) + (t && /T/.test(iso) ? ', ' + d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }) : ''); };
+const mname = (m) => new Date(m + '-01T00:00').toLocaleDateString('en-GB', { month: 'short' });
+const plural = (n, w) => n + ' ' + (n === 1 ? w : /[^aeiou]y$/.test(w) ? w.slice(0, -1) + 'ies' : /(s|sh|ch|x)$/.test(w) ? w + 'es' : w + 's');
+const change = (a, b) => b ? (a >= b ? '+' : '') + Math.round(100 * (a - b) / b) + '% on last month' : a ? 'none last month' : '';
+const TABS = [['overview', 'Overview'], ['fees', 'Fees'], ['referrals', 'Referrals'], ['sponsors', 'Sponsors'], ['growth', 'Growth'], ['account', 'Account']];
+let D = null;
+const S = { tab: 'overview', open: {} };
+
+/* ---------- talking to the school server ---------- */
+const creds = () => { try { return JSON.parse(sessionStorage.getItem(KEY) || 'null') || {}; } catch (e) { return {}; } };
+async function api(action, extra) {
+  const c = creds();
+  const r = await fetch(API_URL, { method: 'POST', body: JSON.stringify(Object.assign({ action, id: c.id, code: c.code }, extra || {})) });
+  return r.json();
+}
+let toastT;
+function toast(msg, bad) { const t = $('toast'); t.textContent = msg; t.className = 'toast' + (bad ? ' bad' : ''); t.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => { t.hidden = true; }, bad ? 6000 : 3500); }
+let busy = false;
+async function act(action, extra, btn) {
+  if (busy) return false;
+  busy = true; const old = btn && btn.textContent; if (btn) { btn.disabled = true; btn.textContent = 'Saving…'; }
+  try {
+    const d = await api(action, extra);
+    if (d.ok) { D = d; if (d.message) toast(d.message); render(); return true; }
+    toast(d.error || 'Could not save. Please try again.', true);
+  } catch (e) { toast('Could not reach the school server. Please try again.', true); }
+  finally { busy = false; if (btn && document.contains(btn)) { btn.disabled = false; btn.textContent = old; } }
+  return false;
+}
+
+/* ---------- small pieces ---------- */
+const tile = (b, s, warn, sub) => `<div class="tile${warn ? ' warn' : ''}"><b>${b}</b><span>${s}</span>${sub ? `<small class="ow-sub">${sub}</small>` : ''}</div>`;
+const empty = (t) => `<p class="empty">${t}</p>`;
+const wa = (href, label) => href ? `<a class="btn btn-line btn-sm" href="${esc(href)}" target="_blank" rel="noopener">${label || 'WhatsApp'}</a>` : '';
+function moneyBars() {
+  const max = Math.max(1, ...D.months.map((m) => m.Total));
+  return `<div class="acx-bars" role="img" aria-label="Fees collected by month">${D.months.map((m) => `<div><em>${m.Total ? short(m.Total) : ''}</em><i style="height:${m.Total ? Math.max(3, Math.round(100 * m.Total / max)) : 0}%"></i><span>${mname(m.Month)}</span></div>`).join('')}</div>`;
+}
+function hbars(obj, money) {
+  const keys = Object.keys(obj).sort((a, b) => obj[b] - obj[a]);
+  if (!keys.length) return empty('Nothing yet.');
+  const max = Math.max(1, ...keys.map((k) => obj[k]));
+  return `<ul class="ow-h">${keys.map((k) => `<li><span>${esc(k)}</span><i style="width:${Math.max(4, Math.round(100 * obj[k] / max))}%"></i><b>${money ? naira(obj[k]) : obj[k]}</b></li>`).join('')}</ul>`;
+}
+
+/* ---------- views ---------- */
+function vOverview() {
+  const k = D.kpi, sp = D.sponsors, thisM = D.months[D.months.length - 1];
+  const todo = [];
+  if (D.enrol.pending.length) todo.push([plural(D.enrol.pending.length, 'enrolment') + ' waiting to be confirmed', 'overview', '#pending']);
+  if (D.attention.length) todo.push([plural(D.attention.length, 'card payment') + ' to check by hand', 'overview', '#cards']);
+  if (D.referrals.due.length) todo.push([plural(D.referrals.due.length, 'referral payout') + ' to send (' + naira(D.referrals.dueTotal) + ')', 'referrals']);
+  if (sp && sp.requests.filter((r) => r.Status === 'New').length) todo.push([plural(sp.requests.filter((r) => r.Status === 'New').length, 'new sponsorship request'), 'sponsors']);
+  if (sp && sp.held) todo.push([naira(sp.held) + ' of sponsorships waiting for a Student ID', 'sponsors']);
+  if (k.overdue) todo.push([plural(k.overdue, 'student') + ' with overdue fees', 'fees']);
+  if (D.reports && D.reports.errors) todo.push([plural(D.reports.errors, 'progress report') + ' failed to send', 'growth']);
+  return `<div class="grid">
+    <article class="c w12"><h2>This month</h2>
+      <div class="tiles acx-tiles6">
+        ${tile(D.kpi.enrolMonth, 'new enrolments', false, change(k.enrolMonth, k.enrolLast))}
+        ${tile(naira(k.moneyMonth), 'fees collected', false, change(k.moneyMonth, k.moneyLast))}
+        ${tile(k.active, 'active students', false, k.paidUp + ' paid up')}
+        ${tile(k.overdue, 'fees overdue', k.overdue > 0, k.overdue ? naira(k.overdueAmount) + ' outstanding' : '')}
+        ${tile(naira(k.referralDue), 'referral payouts due', k.referralDue > 0)}
+        ${tile(sp ? naira(sp.balance) : '–', 'in the sponsorship fund')}
+      </div></article>
+    <article class="c w12 ow-todo"><h2>Needs your attention</h2>${todo.length ? `<ul class="ow-list">${todo.map((t) => `<li><span>${t[0]}</span><button class="btn btn-line btn-sm" type="button" data-act="${t[2] ? 'jump' : 'tab'}" data-t="${t[1]}" data-to="${t[2] || ''}">Open</button></li>`).join('')}</ul>` : empty('Nothing waiting. Alhamdulillah.')}</article>
+    <article class="c w7"><h2>Fees collected by month</h2><p class="sub">Card payments are ${k.cardShare}% of this month’s fees.</p>${moneyBars()}</article>
+    <article class="c w5"><h2>Active students</h2>${hbars(D.active)}</article>
+    <article class="c w6"><h2>Fees by programme this month</h2>${hbars(thisM.ByProg, true)}</article>
+    <article class="c w6"><h2>Enrolments this month</h2>${hbars(D.enrol.byProg)}</article>
+    <article class="c w12" id="pending"><h2>Enrolments waiting</h2><p class="sub">Bank transfers waiting for a receipt check, and card payments that need a person.</p>
+      ${D.enrol.pending.length ? `<div class="acx-scroll"><table><thead><tr><th>Student</th><th>Plan</th><th>Status</th><th>Sent</th><th></th></tr></thead><tbody>${D.enrol.pending.map((r) => `<tr><td><b>${esc(r.Name)}</b><br><span class="sub" translate="no">${esc(r.Ref)}</span></td><td>${esc(r.Plan.split(' — ').pop())}<br><span class="sub">${esc(r.Programme)} · ${naira(r.Amount)}</span></td><td><span class="pill p-sky">${esc(r.Status)}</span></td><td>${fdate(r.Submitted, 1)}</td><td>${wa(r.WhatsApp)}</td></tr>`).join('')}</tbody></table></div>` : empty('None.')}
+      <p class="sub">Confirm them in the Enrolments tab of the sheet (set Status to Confirmed).</p></article>
+    <article class="c w12" id="cards"><h2>Card payments to check</h2>
+      ${D.attention.length ? `<div class="acx-scroll"><table><thead><tr><th>Received</th><th>Reference</th><th>Student</th><th>Amount</th><th>What happened</th></tr></thead><tbody>${D.attention.map((c) => `<tr><td>${fdate(c.Received, 1)}</td><td translate="no">${esc(c.Reference)}</td><td>${esc(c.Student)}</td><td>${naira(c.Amount)}</td><td>${esc(c.Result)}</td></tr>`).join('')}</tbody></table></div><p class="sub">After you add or fix the Enrolments row, run Himaayah → Match card payments to enrolments.</p>` : empty('None in the last two months.')}</article>
+  </div>`;
+}
+function vFees() {
+  const k = D.kpi;
+  return `<div class="grid">
+    <article class="c w12"><div class="tiles acx-tiles6">${tile(k.paidUp, 'paid up')}${tile(k.dueSoon, 'due in the next week')}${tile(k.overdue, 'overdue', k.overdue > 0)}${tile(naira(k.overdueAmount), 'outstanding', k.overdue > 0)}${tile(naira(k.moneyMonth), 'collected this month')}${tile(naira(k.moneyLast), 'collected last month')}</div></article>
+    <article class="c w12"><h2>Overdue fees</h2><p class="sub">Longest overdue first. The WhatsApp button opens a polite reminder with the Pay fees link.</p>
+      ${D.overdue.length ? `<div class="acx-scroll"><table><thead><tr><th>Student</th><th>Programme</th><th>Was due</th><th>Days late</th><th>Fee</th><th></th></tr></thead><tbody>${D.overdue.map((o) => `<tr><td><b>${esc(o.Name)}</b><br><span class="sub" translate="no">${esc(o.StudentID)}</span></td><td>${esc(o.Programme)}</td><td>${fdate(o.NextDue)}</td><td>${o.Days}</td><td>${naira(o.Fee)}</td><td>${wa(o.WhatsApp, 'Remind')}</td></tr>`).join('')}</tbody></table></div>` : empty('Nobody is overdue. Alhamdulillah.')}</article>
+  </div>`;
+}
+function vReferrals() {
+  const R = D.referrals;
+  return `<div class="grid">
+    <article class="c w12"><div class="tiles">${tile(naira(R.dueTotal), 'to pay', R.dueTotal > 0)}${tile(naira(R.paidMonth), 'paid this month')}${tile(R.referrers, 'referrers signed up')}</div></article>
+    <article class="c w12"><h2>Payouts to send</h2><p class="sub">Send the transfer from the school account first, then enter its reference and mark it paid. The referrer is emailed straight away.</p>
+      ${R.due.length ? R.due.map((e) => `<div class="box ow-pay"><div class="ow-pay-l"><b>${naira(e.Amount)} to ${esc(e.Referrer)}</b><small>For ${esc(e.Student)} · ${esc(e.Plan.split(' — ').pop())} · since ${fdate(e.Created)}</small>
+          <div class="ow-bank"><span>${esc(e.Bank)}</span><code translate="no">${esc(e.AccountNumber)}</code><span translate="no">${esc(e.AccountName)}</span><button class="btn btn-line btn-sm" type="button" data-act="copy" data-v="${esc(e.AccountNumber)}">Copy number</button></div></div>
+        <form class="frm ow-pay-r" data-form="payout" data-id="${esc(e.EarningID)}"><div><label class="fl">Transfer reference</label><input class="in" name="reference" maxlength="80" placeholder="From your bank app"></div><button class="btn btn-ink" type="submit">Mark paid</button></form></div>`).join('') : empty('No payouts waiting.')}</article>
+  </div>`;
+}
+const ST = ['New', 'Listed', 'Funded', 'Closed', 'Declined'];
+function vSponsors() {
+  const sp = D.sponsors;
+  if (!sp) return `<article class="c w12">${empty('Sponsorships are not set up yet. Add Sponsors.gs and run Himaayah → Set up sponsorship tabs.')}</article>`;
+  const reqForm = (r) => `<details class="box" data-k="r-${esc(r.RequestID)}"${S.open['r-' + r.RequestID] ? ' open' : ''}><summary><div><b>${esc(r.StudentName)}</b><small>${esc(r.Programme)}${r.Plan ? ' · ' + esc(r.Plan) : ''} · ${fdate(r.Submitted)} · <span translate="no">${esc(r.RequestID)}</span></small></div><div class="sum-r"><span class="pill ${r.Status === 'New' ? 'p-red' : r.Status === 'Listed' ? 'p-sky' : 'p-wash'}">${esc(r.Status)}</span></div></summary>
+    <div class="body"><p class="ow-reason" dir="auto">${esc(r.Reason)}</p>
+      <p class="sub">Parent: ${esc(r.ParentName)} · <a href="mailto:${esc(r.Email)}">${esc(r.Email)}</a> · ${esc(r.WhatsApp)} · Agrees to share progress: <b>${esc(r.Consent || 'No')}</b>${r.MonthsNeeded ? ' · Sponsored ' + r.MonthsFunded + ' of ' + r.MonthsNeeded + ' months' : ''}</p>
+      <div class="acx-acts">${wa(r.WhatsApp ? 'https://wa.me/' + r.WhatsApp.replace(/\D/g, '').replace(/^0/, '234') + '?text=' + encodeURIComponent('Assalaamu alaykum. This is Himaayah Schools about your request for support (' + r.RequestID + ').') : '', 'WhatsApp the family')}</div>
+      <form class="frm" data-form="request" data-id="${esc(r.RequestID)}">
+        <div class="row3"><div><label class="fl">Status</label><select class="in" name="status">${ST.map((s) => `<option${s === r.Status ? ' selected' : ''}>${s}</option>`).join('')}</select></div>
+          <div><label class="fl">Public name (first name only)</label><input class="in" name="publicName" maxlength="40" value="${esc(r.PublicName)}" placeholder="e.g. Aisha, 9"></div>
+          <div><label class="fl">Student ID (once enrolled)</label><input class="in" name="studentId" maxlength="20" value="${esc(r.StudentID)}" placeholder="HM-0001"></div></div>
+        <div class="row3"><div><label class="fl">Monthly fee (₦)</label><input class="in" name="monthlyFee" type="number" min="0" value="${r.MonthlyFee || ''}"></div>
+          <div><label class="fl">Months needed</label><input class="in" name="monthsNeeded" type="number" min="0" max="36" value="${r.MonthsNeeded || ''}"></div>
+          <div><label class="fl">Private notes</label><input class="in" name="notes" maxlength="300" value="${esc(r.Notes)}"></div></div>
+        <div><label class="fl">What sponsors see (a sentence or two, no surname or address)</label><input class="in" name="blurb" maxlength="400" value="${esc(r.Blurb)}" placeholder="e.g. Memorising Juz Amma and loves Surah Al-Mulk."></div>
+        <button class="btn btn-ink" type="submit">Save</button></form></div></details>`;
+  return `<div class="grid">
+    <article class="c w12"><div class="tiles acx-tiles6">${tile(naira(sp.balance), 'in the fund')}${tile(naira(sp.month), 'given this month')}${tile(naira(sp.raised), 'given in total')}${tile(naira(sp.allocated), 'paid out from the fund')}${tile(naira(sp.held), 'waiting for a Student ID', sp.held > 0)}${tile(sp.requests.filter((r) => r.Status === 'New').length, 'new requests', sp.requests.some((r) => r.Status === 'New'))}</div></article>
+    <article class="c w12"><h2>Pay fees from the fund</h2><p class="sub">Pays a student’s fees for the months you choose and moves their next due date. The donors whose gifts are used get an email (without the student’s name).</p>
+      <form class="frm" data-form="allocate"><div class="row3"><div><label class="fl">Student ID</label><input class="in" name="studentId" maxlength="20" placeholder="HM-0001" required></div>
+        <div><label class="fl">Months</label><select class="in" name="months">${[1, 2, 3, 4, 5, 6, 12].map((m) => `<option>${m}</option>`).join('')}</select></div>
+        <div><label class="fl">Note (optional)</label><input class="in" name="note" maxlength="150" placeholder="Why this student"></div></div>
+        <button class="btn btn-ink" type="submit">Pay from the fund</button></form></article>
+    <article class="c w12"><h2>Requests for support</h2><p class="sub">Talk to the family first. To show a student on the Sponsor page, set Status to Listed and fill in the public name, monthly fee and months needed. Add the Student ID once they are enrolled, and any gifts waiting for them are applied.</p>
+      ${sp.requests.length ? sp.requests.map(reqForm).join('') : empty('No requests yet.')}</article>
+    <article class="c w12"><h2>Recent gifts</h2>${sp.recent.length ? `<div class="acx-scroll"><table><thead><tr><th>Date</th><th>Type</th><th>From</th><th>For</th><th>Amount</th><th>Status</th></tr></thead><tbody>${sp.recent.map((g) => `<tr><td>${fdate(g.Date, 1)}</td><td>${esc(g.Type)}</td><td>${esc(g.Donor || '–')}${g.Message ? `<br><span class="sub" dir="auto">“${esc(g.Message)}”</span>` : ''}</td><td translate="no">${esc(g.StudentID || g.RequestID || 'Fund')}</td><td>${naira(g.Amount)}${g.Type === 'Fund' && g.Remaining ? `<br><span class="sub">${naira(g.Remaining)} unused</span>` : ''}</td><td>${esc(g.Status)}</td></tr>`).join('')}</tbody></table></div>` : empty('No gifts yet.')}</article>
+  </div>`;
+}
+function vGrowth() {
+  const n = D.newsletter, w = D.waitlist, r = D.reports;
+  return `<div class="grid">
+    <article class="c w6"><h2>Newsletter</h2><div class="tiles">${tile(n.active, 'subscribers')}${tile(n.month, 'joined this month', false, change(n.month, n.last))}</div>
+      <p class="sub">${n.lastCampaign ? 'Last sent: ' + esc(n.lastCampaign.Subject) + ' (' + fdate(n.lastCampaign.Date) + ')' : 'No newsletter sent yet.'}</p></article>
+    <article class="c w6"><h2>Waitlist</h2><div class="tiles">${tile(w.total, 'families waiting')}</div>${hbars(w.byPlan)}</article>
+    <article class="c w12"><h2>Monthly progress reports</h2>${r && r.total ? `<p class="sub">Reports for ${esc(r.month)}</p><div class="tiles acx-tiles6">${tile(r.sent, 'sent')}${tile(r.queued, 'waiting for email quota')}${tile(r.noEmail, 'no email on file', r.noEmail > 0)}${tile(r.errors, 'failed', r.errors > 0)}</div>` : empty(r ? 'The reports for ' + esc(r.month) + ' go out on the 1st of the month.' : 'Progress reports are not set up yet (Reports.gs).')}
+      <p class="sub">Teachers can add a note for a student’s report in the “Report notes” tab before the 1st.</p></article>
+  </div>`;
+}
+function vAccount() {
+  return `<article class="c w12" style="max-width:560px"><h2>Your account</h2><p class="sub">${esc(D.me.Name)} · <span translate="no">${esc(D.me.OwnerID)}</span></p>
+  <form class="frm" data-form="password"><div><label class="fl" for="np">New access code (8 characters or more)</label><input class="in" id="np" name="newCode" type="password" autocomplete="new-password" minlength="8" maxlength="40"></div>
+  <div><label class="fl" for="np2">Type it again</label><input class="in" id="np2" name="again" type="password" autocomplete="new-password"></div>
+  <button class="btn btn-ink" type="submit">Change my code</button></form></article>`;
+}
+const VIEWS = { overview: vOverview, fees: vFees, referrals: vReferrals, sponsors: vSponsors, growth: vGrowth, account: vAccount };
+function render() {
+  document.querySelectorAll('details[data-k]').forEach((x) => { S.open[x.dataset.k] = x.open; });
+  const k = D.kpi;
+  $('app').innerHTML = `<section class="greet"><div><small>Assalaamu alaykum</small><h1>${esc(D.me.Name || 'Owner')}</h1>
+    <div class="chips"><span>${fdate(D.today)}</span><span>${plural(k.active, 'active student')}</span><span>${k.overdue} overdue</span><span>${plural(k.enrolMonth, 'enrolment')} this month</span></div></div>
+    <button class="btn btn-line btn-sm" type="button" data-act="refresh">Refresh</button></section>
+  <nav class="tabs" role="tablist" aria-label="Sections">${TABS.map(([t, l]) => `<button role="tab" type="button" data-act="tab" data-t="${t}" aria-selected="${S.tab === t}">${l}</button>`).join('')}</nav>
+  <div id="view">${VIEWS[S.tab]()}</div>
+  <p class="foot">Figures come straight from the school sheet. Fees collected counts confirmed payments in the Payments, AcademyPayments and SkillsPayments tabs.</p>`;
+}
+
+/* ---------- events ---------- */
+const app = $('app');
+app.addEventListener('click', async (e) => {
+  const b = e.target.closest('[data-act]'); if (!b) return;
+  const a = b.dataset.act;
+  if (a === 'tab') { S.tab = b.dataset.t; render(); window.scrollTo(0, 0); }
+  else if (a === 'jump') { S.tab = b.dataset.t; render(); const el = document.querySelector(b.dataset.to); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  else if (a === 'refresh') act('ow_login', {}, b);
+  else if (a === 'copy') { try { await navigator.clipboard.writeText(b.dataset.v); toast('Account number copied.'); } catch (x) { toast(b.dataset.v); } }
+});
+app.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const f = e.target, k = f.dataset.form, btn = f.querySelector('button[type=submit]'), v = (n) => (f.elements[n] ? f.elements[n].value : '');
+  if (k === 'payout') {
+    if (!confirm('Mark this payout as paid and email the referrer? Only do this after the transfer has gone through.')) return;
+    act('ow_payout', { earningId: f.dataset.id, reference: v('reference').trim() }, btn);
+  } else if (k === 'allocate') {
+    if (!v('studentId').trim()) return toast('Enter the Student ID.', true);
+    if (!confirm('Pay ' + v('months') + ' month(s) of fees for ' + v('studentId').trim().toUpperCase() + ' from the sponsorship fund?')) return;
+    act('ow_allocate', { studentId: v('studentId').trim(), months: Number(v('months')), note: v('note').trim() }, btn).then((ok) => { if (ok) f.reset(); });
+  } else if (k === 'request') {
+    act('ow_request', { requestId: f.dataset.id, status: v('status'), publicName: v('publicName').trim(), studentId: v('studentId').trim(), monthlyFee: Number(v('monthlyFee')) || 0,
+      monthsNeeded: Number(v('monthsNeeded')) || 0, notes: v('notes').trim(), blurb: v('blurb').trim() }, btn);
+  } else if (k === 'password') {
+    if (v('newCode').length < 8) return toast('Your new code must be at least 8 characters.', true);
+    if (v('newCode') !== v('again')) return toast('The two codes do not match.', true);
+    const code = v('newCode');
+    act('ow_password', { newCode: code }, btn).then((ok) => { if (ok) { sessionStorage.setItem(KEY, JSON.stringify({ id: creds().id, code })); toast('Code changed.'); } });
+  }
+});
+
+/* ---------- login ---------- */
+function showApp() { $('login').hidden = true; app.hidden = false; $('out').hidden = false; render(); window.scrollTo(0, 0); }
+async function signIn(id, code, silent) {
+  const btn = $('go'), err = $('err'); err.textContent = ''; btn.disabled = true; btn.textContent = 'Signing in…';
+  sessionStorage.setItem(KEY, JSON.stringify({ id, code }));
+  try {
+    const d = await api('ow_login');
+    if (d.ok) { D = d; showApp(); }
+    else { sessionStorage.removeItem(KEY); if (!silent) err.textContent = d.error || 'Could not sign in.'; }
+  } catch (e) { if (!silent) { sessionStorage.removeItem(KEY); err.textContent = 'Could not reach the school server. Please try again.'; } }
+  btn.disabled = false; btn.textContent = 'Sign in';
+}
+$('lf').addEventListener('submit', (e) => { e.preventDefault(); const id = $('tid').value.trim(), code = $('tcode').value.trim(); if (!id || !code) { $('err').textContent = 'Enter your Owner ID and access code.'; return; } signIn(id, code); });
+$('out').addEventListener('click', () => { sessionStorage.removeItem(KEY); D = null; S.tab = 'overview'; app.hidden = true; app.innerHTML = ''; $('out').hidden = true; $('login').hidden = false; $('tcode').value = ''; });
+{ const c = creds(); if (c.id && c.code) signIn(c.id, c.code, true); }
+</script>
+<script>
+/* Show/hide toggle on every access-code box */
+(function(){
+  function deco(){
+    document.querySelectorAll('input[type=password]:not([data-eye])').forEach(function(i){
+      i.setAttribute('data-eye','1');
+      var w=document.createElement('span');w.className='pw';i.parentNode.insertBefore(w,i);w.appendChild(i);
+      var b=document.createElement('button');b.type='button';b.textContent='Show';b.setAttribute('aria-label','Show access code');
+      b.addEventListener('click',function(){var s=i.type==='password';i.type=s?'text':'password';b.textContent=s?'Hide':'Show';b.setAttribute('aria-label',s?'Hide access code':'Show access code');});
+      w.appendChild(b);
+    });
+  }
+  deco();new MutationObserver(deco).observe(document.body,{childList:true,subtree:true});
+})();
+</script>
+</body>
+</html>
