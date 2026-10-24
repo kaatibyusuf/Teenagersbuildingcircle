@@ -143,6 +143,12 @@
           <p class="err-msg">Enter a valid email address.</p>
         </div>
 
+        <div class="field" data-field="referral" data-optional>
+          <label>Referral code <span class="opt">(optional, if someone invited you)</span></label>
+          <input type="text" name="referral" id="refInput" maxlength="20" autocapitalize="characters" autocomplete="off" dir="ltr" translate="no" placeholder="e.g. FATIMA1184">
+          <p class="ref-ok" id="refOk" aria-live="polite"></p>
+        </div>
+
         <div class="hp" aria-hidden="true">
           <label>Leave this empty <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
         </div>
@@ -340,6 +346,19 @@
   const initialProgrammeId = planProgramme
     ? planProgramme.id
     : (PROGRAMMES.some((p) => p.id === requestedProgramme) ? requestedProgramme : PROGRAMMES[0].id);
+  // Referral code from a refer.html link (?ref=CODE), remembered for 60 days
+  const REF_KEY = 'hs-ref';
+  (function () {
+    const fromLink = (urlParams.get('ref') || '').replace(/[^A-Za-z0-9]/g, '').toUpperCase().slice(0, 20);
+    try {
+      if (fromLink) localStorage.setItem(REF_KEY, JSON.stringify({ code: fromLink, at: Date.now() }));
+      const saved = JSON.parse(localStorage.getItem(REF_KEY) || 'null');
+      if (saved && Date.now() - saved.at > 60 * 864e5) localStorage.removeItem(REF_KEY);
+    } catch (e) {}
+  })();
+  function savedRef() {
+    try { const v = JSON.parse(localStorage.getItem(REF_KEY) || 'null'); return v && v.code ? v.code : ''; } catch (e) { return ''; }
+  }
   const state = { step: 1, student: {}, programmeId: initialProgrammeId, plan: initialPlan, ref: null, sent: false };
 
   const steps = document.querySelectorAll('.step');
@@ -368,6 +387,26 @@
     });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+
+  // Show who invited them; an unknown code is ignored, never blocks enrolment
+  const refInput = document.getElementById('refInput'), refOk = document.getElementById('refOk');
+  let refTimer = null, refAsked = '';
+  function checkRef() {
+    const code = refInput.value.replace(/[^A-Za-z0-9]/g, '').toUpperCase();
+    if (code !== refInput.value) refInput.value = code;
+    if (code === refAsked) return;
+    refAsked = code; refOk.textContent = ''; refOk.classList.remove('bad');
+    if (code.length < 4 || !API_URL) return;
+    fetch(API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'ref_check', code }) })
+      .then((r) => r.json()).then((j) => {
+        if (refInput.value !== code) return;
+        if (j && j.ok) { refOk.textContent = 'Referred by ' + j.name; }
+        else { refOk.textContent = 'We could not find that referral code.'; refOk.classList.add('bad'); }
+      }).catch(() => {});
+  }
+  refInput.value = savedRef();
+  refInput.addEventListener('input', () => { clearTimeout(refTimer); refTimer = setTimeout(checkRef, 500); });
+  if (refInput.value) checkRef();
 
   function validateStep(stepEl) {
     let ok = true;
@@ -572,6 +611,7 @@
       'Grade level: ' + s.gradeLevel,
     ];
     if (s.studentEmail) lines.push('Student email: ' + s.studentEmail);
+    if (s.referral) lines.push('Referral code: ' + s.referral);
     lines.push(
       '',
       'NEXT OF KIN',
@@ -599,6 +639,7 @@
       programme: PROGRAMMES.find((p) => p.id === state.programmeId).name, plan: state.plan.name,
       kinName: s.kinName, kinRelationship: s.kinRelationship, kinPhone: s.kinPhone, kinEmail: s.kinEmail,
       studentEmail: s.studentEmail || '', website: s.website || '',
+      referral: s.referral || '',
       payMethod: method === 'card' ? 'Card' : 'Bank transfer',
     };
     const status = document.getElementById('enrolStatus');

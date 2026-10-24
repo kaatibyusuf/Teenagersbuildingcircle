@@ -472,5 +472,6 @@ HS_I18N.add({
 "Admission is closed for now. Join the waitlist.": "القبول مغلق حاليًا. انضم إلى قائمة الانتظار.",
 "Newsletter": "النشرة البريدية",
 "Mentor login": "دخول المرشد",
-"Mentor Login": "دخول المرشد"
+"Mentor Login": "دخول المرشد",
+"Refer and earn": "ادعُ واربح"
 });

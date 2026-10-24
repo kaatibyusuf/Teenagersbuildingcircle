@@ -168,5 +168,10 @@ HS_I18N.add({
 "Madrasah — Muraajah (Group)": "المدرسة الشرعية — المراجعة (جماعي)",
 "Madrasah — Muraajah (Personal)": "المدرسة الشرعية — المراجعة (فردي)",
 "Small group, four classes weekly": "مجموعة صغيرة، أربع حصص أسبوعيًا",
-"One-on-one, four classes weekly": "فردي، أربع حصص أسبوعيًا"
+"One-on-one, four classes weekly": "فردي، أربع حصص أسبوعيًا",
+"Referral code": "رمز الإحالة",
+"(optional, if someone invited you)": "(اختياري، إذا دعاك أحد)",
+"e.g. FATIMA1184": "مثال: FATIMA1184",
+"re:Referred by (.+)": "بإحالة من $1",
+"We could not find that referral code.": "لم نعثر على رمز الإحالة هذا."
 });
