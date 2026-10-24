@@ -45,8 +45,8 @@ const naira = (n) => '₦' + Number(n || 0).toLocaleString('en-NG');
 const fdate = (iso, t) => { const d = new Date(iso); return isNaN(d) ? esc(iso || 'Not set') : d.toLocaleDateString('en-GB', {day:'numeric', month:'short', year:'numeric'}) + (t ? ', ' + d.toLocaleTimeString('en-GB', {hour:'2-digit', minute:'2-digit'}) : ''); };
 const pct = (x) => x == null ? '–' : x + '%';
 const num = (x) => x == null ? '–' : x;
-const plural = (n, w) => n + ' ' + w + (n === 1 ? '' : /(s|sh|ch|x)$/.test(w) ? 'es' : 's');
-const TABS = [['reports', 'Reports'], ['students', 'Students'], ['mentors', 'Mentors'], ['assign', 'Assign'], ['groups', 'Class groups'], ['payments', 'Payments'], ['account', 'Account']];
+const plural = (n, w) => n + ' ' + (n === 1 ? w : /[^aeiou]y$/.test(w) ? w.slice(0, -1) + 'ies' : /(s|sh|ch|x)$/.test(w) ? w + 'es' : w + 's');
+const TABS = [['reports', 'Reports'], ['students', 'Students'], ['mentors', 'Mentors'], ['families', 'Families'], ['assign', 'Assign'], ['groups', 'Class groups'], ['payments', 'Payments'], ['account', 'Account']];
 let D = null;
 const S = { tab: 'reports', q: '', filter: 'all', sel: {}, open: {}, created: null, addOpen: false };
 
@@ -166,19 +166,21 @@ function vMentors() {
 /* ---------- assign ---------- */
 function vAssign() {
   const f = S.filter;
-  const shown = D.students.filter((s) => f === 'all' || (f === 'noFac' && !s.TeacherID) || (f === 'noGroup' && !s.Level));
+  const shown = D.students.filter((s) => f === 'all' || (f === 'noFac' && !s.TeacherID) || (f === 'noGroup' && !s.Level) || (f === 'noFam' && !s.Family));
+  const famName = (id) => ((D.families || []).find((x) => x.FamilyID === id) || {}).Name || '';
   const load = D.teachers.map((t) => ({ t, n: count((s) => s.TeacherID === t.TeacherID) }));
-  return `<div class="grid"><article class="c w8"><h2>Assign mentees</h2><p class="sub">Tick the students, then choose a mentor or class group on the right. Anything left on “No change” is untouched.</p>
+  return `<div class="grid"><article class="c w8"><h2>Assign mentees</h2><p class="sub">Tick the students, then choose a mentor, class group or family on the right. Anything left on “No change” is untouched.</p>
     <div class="tiles"><div class="tile"><b>${D.students.length}</b><span>students</span></div><div class="tile ${count((s) => !s.TeacherID) ? 'warn' : ''}"><b>${count((s) => !s.TeacherID)}</b><span>no mentor yet</span></div><div class="tile ${count((s) => !s.Level) ? 'warn' : ''}"><b>${count((s) => !s.Level)}</b><span>no class group yet</span></div></div>
     <div class="tool"><div><label class="fl" for="q">Search</label><input class="in" id="q" type="search" placeholder="Name or ID" value="${esc(S.q)}"></div>
-      <div><label class="fl" for="flt">Show</label><select class="in" id="flt"><option value="all"${f === 'all' ? ' selected' : ''}>All students</option><option value="noFac"${f === 'noFac' ? ' selected' : ''}>No mentor yet</option><option value="noGroup"${f === 'noGroup' ? ' selected' : ''}>No class group yet</option></select></div>
+      <div><label class="fl" for="flt">Show</label><select class="in" id="flt"><option value="all"${f === 'all' ? ' selected' : ''}>All students</option><option value="noFac"${f === 'noFac' ? ' selected' : ''}>No mentor yet</option><option value="noGroup"${f === 'noGroup' ? ' selected' : ''}>No class group yet</option><option value="noFam"${f === 'noFam' ? ' selected' : ''}>Not in a family</option></select></div>
       <button class="btn btn-line btn-sm" type="button" data-act="selAll">Select all shown</button></div>
-    <div class="pick" id="stulist">${shown.map((s) => `<label data-name="${esc((s.Name + ' ' + s.StudentID).toLowerCase())}"><input type="checkbox" class="asg" value="${esc(s.StudentID)}"${S.sel[s.StudentID] ? ' checked' : ''}> <span><b>${esc(s.Name)}</b> <span class="sub">${esc(s.Level || 'No class group')}</span></span><small>${esc(s.Teacher || 'No mentor')}</small></label>`).join('') || '<p class="empty">No students match.</p>'}</div></article>
+    <div class="pick" id="stulist">${shown.map((s) => `<label data-name="${esc((s.Name + ' ' + s.StudentID).toLowerCase())}"><input type="checkbox" class="asg" value="${esc(s.StudentID)}"${S.sel[s.StudentID] ? ' checked' : ''}> <span><b>${esc(s.Name)}</b> <span class="sub">${esc(s.Level || 'No class group')}${s.Family ? ' · ' + esc(famName(s.Family)) : ''}</span></span><small>${esc(s.Teacher || 'No mentor')}</small></label>`).join('') || '<p class="empty">No students match.</p>'}</div></article>
   <div class="c w4" style="display:grid;gap:16px;align-content:start;padding:0;background:none;box-shadow:none">
     <article class="c" style="grid-column:auto"><h2>Assign selected</h2><p class="sub" id="selCount">${Object.keys(S.sel).filter((k) => S.sel[k]).length} selected</p>
       <form class="frm" data-form="assign">
         <div><label class="fl" for="at">Mentor</label><select class="in" id="at" name="teacherId">${opts(D.teachers.map((t) => ({ v: t.TeacherID, t: t.Name })), 'No change')}</select></div>
         <div><label class="fl" for="al">Class group</label><select class="in" id="al" name="level">${opts(D.levels.map((l) => ({ v: l, t: l })), 'No change')}</select></div>
+        <div><label class="fl" for="af">Mentorship family</label><select class="in" id="af" name="familyId">${opts((D.families || []).filter((x) => x.Active).map((x) => ({ v: x.FamilyID, t: x.Name })).concat([{ v: 'NONE', t: 'Remove from their family' }]), 'No change')}</select></div>
         <button class="btn btn-ink" type="submit">Apply to selected</button></form></article>
     <article class="c" style="grid-column:auto"><h2>Mentor load</h2><ul class="list">${load.map((x) => `<li><span><b>${esc(x.t.Name)}</b></span><span>${plural(x.n, 'mentee')}</span></li>`).join('') || '<li>No mentors yet.</li>'}</ul></article>
   </div></div>`;
@@ -196,6 +198,40 @@ function vGroups() {
       <div><label class="fl" for="gn">Group name</label><input class="in" id="gn" name="group" maxlength="40" required></div>
       <div class="row2"><div><label class="fl" for="gmn">Google Meet link</label><input class="in" id="gmn" name="meetLink" type="url" maxlength="500" placeholder="https://meet.google.com/..."></div><div><label class="fl" for="gtn">Telegram link</label><input class="in" id="gtn" name="telegramLink" type="url" maxlength="500" placeholder="https://t.me/+..."></div></div>
       <div><label class="fl" for="gsn">Timetable</label><input class="in" id="gsn" name="timetable" maxlength="500"></div><button class="btn btn-ink" type="submit">Add group</button></form></div></details></article></div>`;
+}
+
+
+/* ---------- mentorship families ---------- */
+const ROLE = { mentor: 'Mentor', admin: 'School' };
+function famPost(p, famId) {
+  const tag = (x) => ROLE[x.AuthorType] ? `<span class="acx-role">${ROLE[x.AuthorType]}</span>` : '';
+  const replies = (p.Replies || []).map((r) => `<div class="acx-reply${r.Hidden ? ' hid' : ''}"><div class="acx-post-h"><b translate="no" dir="auto">${esc(r.AuthorName)}</b>${tag(r)}<small>${fdate(r.Created, true)}</small>${r.Hidden ? '<span class="acx-pin">Hidden</span>' : ''}<button class="acx-lnk acx-del" type="button" data-act="${r.Hidden ? 'showPost' : 'hidePost'}" data-id="${esc(r.PostID)}">${r.Hidden ? 'Show' : 'Hide'}</button></div><p>${esc(r.Body)}</p></div>`).join('');
+  return `<div class="acx-post ${p.Kind === 'Announcement' ? 'ann' : p.Kind === 'Resource' ? 'res' : ''}${p.Hidden ? ' hid' : ''}"><div class="acx-post-h"><b translate="no" dir="auto">${esc(p.AuthorName)}</b>${tag(p)}<small>${fdate(p.Created, true)}</small>${p.Pinned ? '<span class="acx-pin">Pinned</span>' : ''}${p.Hidden ? '<span class="acx-pin">Hidden</span>' : ''}</div>
+    ${p.Kind === 'Resource' ? `<a class="acx-res" href="${esc(p.Link)}" target="_blank" rel="noopener"><b>${esc(p.Title)}</b><span>${esc(p.Link)}</span></a>` : ''}${p.Body ? `<p>${esc(p.Body)}</p>` : ''}
+    <div class="acx-post-f"><button class="acx-lnk" type="button" data-act="${p.Pinned ? 'unpin' : 'pin'}" data-id="${esc(p.PostID)}">${p.Pinned ? 'Unpin' : 'Pin'}</button><button class="acx-lnk acx-del" type="button" data-act="${p.Hidden ? 'showPost' : 'hidePost'}" data-id="${esc(p.PostID)}">${p.Hidden ? 'Show' : 'Hide'}</button></div>
+    ${replies ? `<div class="acx-replies">${replies}</div>` : ''}</div>`;
+}
+function famForm(f, id) {
+  f = f || {};
+  return `<form class="frm" data-form="family" data-id="${esc(f.FamilyID || '')}"><div class="row2"><div><label class="fl" for="${id}n">Family name</label><input class="in" id="${id}n" name="name" maxlength="60" value="${esc(f.Name)}" required placeholder="e.g. Al-Fajr"></div>
+    <div><label class="fl" for="${id}m">Mentor</label><select class="in" id="${id}m" name="mentorId">${opts(D.teachers.map((t) => ({ v: t.TeacherID, t: t.Name })), 'No mentor yet', f.MentorID)}</select></div></div>
+    <div><label class="fl" for="${id}t">Motto <small>(optional)</small></label><input class="in" id="${id}t" name="motto" maxlength="160" value="${esc(f.Motto)}" placeholder="A short line the family rallies around"></div>
+    <button class="btn btn-ink" type="submit">${f.FamilyID ? 'Save changes' : 'Create family'}</button></form>`;
+}
+function vFamilies() {
+  const fs = D.families || [], act_ = fs.filter((f) => f.Active), gone = fs.filter((f) => !f.Active);
+  const unfam = D.students.filter((s) => !s.Family).length;
+  return `<div class="grid"><article class="c w12"><h2>Mentorship families</h2><p class="sub">A family is a small group of students with one mentor and a private board in the portal. Add students to families in the Assign tab.</p>
+    <div class="tiles"><div class="tile"><b>${act_.length}</b><span>families</span></div><div class="tile"><b>${D.students.length - unfam}</b><span>students in a family</span></div><div class="tile ${unfam ? 'warn' : ''}"><b>${unfam}</b><span>not in a family</span></div></div>
+    <details class="box acx-add" data-k="addf"${S.open.addf ? ' open' : ''}><summary><div><b>Create a family</b><small>Give it a name and a mentor.</small></div></summary><div class="body">${famForm(null, 'nf')}</div></details>
+    ${act_.map((f) => `<details class="box stu" data-k="f-${esc(f.FamilyID)}"${S.open['f-' + f.FamilyID] ? ' open' : ''}><summary><div><b>${esc(f.Name)}</b><small>${esc(f.Mentor || 'No mentor')} · ${plural(f.Members.length, 'student')} · ${plural(f.Posts.length, 'post')}</small></div><div class="sum-r">${f.Rank ? `<span class="pill p-wash">Rank ${f.Rank}</span>` : ''}${f.Score != null ? `<span class="pill p-ink">${f.Score}</span>` : ''}</div></summary>
+      <div class="body"><div class="grid" style="margin-top:0"><div class="c w6" style="padding:0;box-shadow:none;background:none">${famForm(f, 'f' + f.FamilyID.replace(/\W/g, ''))}
+        <p class="k" style="margin-top:16px">Members</p><ul class="acx-members">${f.Members.map((m) => `<li><span>${esc(m.Name)}</span><button class="acx-lnk" type="button" data-act="view" data-id="${esc(m.StudentID)}">Open</button></li>`).join('') || '<li class="empty">No members yet.</li>'}</ul>
+        <div class="acx-acts"><button class="btn btn-line btn-sm acx-danger" type="button" data-act="famRemove" data-id="${esc(f.FamilyID)}">Remove family</button></div></div>
+        <div class="c w6" style="padding:0;box-shadow:none;background:none"><p class="k">Family board</p>
+          <form class="acx-form acx-compose" data-form="post" data-fam="${esc(f.FamilyID)}"><textarea name="body" rows="2" maxlength="2000" placeholder="Post an announcement to this family" aria-label="Announcement"></textarea><button class="btn btn-ink btn-sm" type="submit">Post announcement</button></form>
+          ${f.Posts.map((p) => famPost(p, f.FamilyID)).join('') || '<p class="empty">No posts yet.</p>'}</div></div></div></details>`).join('') || '<p class="empty" style="margin-top:12px">No families yet.</p>'}
+    ${gone.length ? `<p class="k" style="margin-top:24px">Removed families</p><ul class="list">${gone.map((f) => `<li><span><b>${esc(f.Name)}</b></span><button type="button" data-act="famRestore" data-id="${esc(f.FamilyID)}">Restore</button></li>`).join('')}</ul>` : ''}</article></div>`;
 }
 
 /* ---------- payments (as before) ---------- */
@@ -227,7 +263,7 @@ function vAccount() {
   <button class="btn btn-ink" type="submit">Change my code</button></form></article>`;
 }
 
-const VIEWS = { reports: vReports, students: vStudents, mentors: vMentors, assign: vAssign, groups: vGroups, payments: vPayments, account: vAccount };
+const VIEWS = { families: vFamilies, reports: vReports, students: vStudents, mentors: vMentors, assign: vAssign, groups: vGroups, payments: vPayments, account: vAccount };
 function render() {
   document.querySelectorAll('details[data-k]').forEach((x) => { S.open[x.dataset.k] = x.open; });
   S.addOpen = !!S.open.add;
@@ -272,6 +308,10 @@ app.addEventListener('click', async (e) => {
   else if (a === 'mcode') { if (window.confirm('Give this mentor a new access code? The old one stops working.')) act('acda_tutor_code', { tutorId: id, email: window.confirm('Email the new code to the mentor?') }, 'New access code created.', b); }
   else if (a === 'mremove') { if (window.confirm('Remove this mentor? They will not be able to sign in. Their mentees stay assigned until you move them.')) act('acda_tutor_remove', { tutorId: id }, 'Mentor removed.', b); }
   else if (a === 'mrestore') act('acda_tutor_restore', { tutorId: id }, 'Mentor restored.', b);
+  else if (a === 'famRemove') { if (window.confirm('Remove this family? Its board is kept and students stay where they are until you move them.')) act('acda_family_remove', { familyId: id }, 'Family removed.', b); }
+  else if (a === 'famRestore') act('acda_family_restore', { familyId: id }, 'Family restored.', b);
+  else if (a === 'pin' || a === 'unpin') act('acda_post_pin', { postId: id, unpin: a === 'unpin' }, a === 'pin' ? 'Pinned.' : 'Unpinned.', b);
+  else if (a === 'hidePost' || a === 'showPost') act('acda_post_hide', { postId: id, show: a === 'showPost' }, a === 'hidePost' ? 'Hidden from students.' : 'Shown again.', b);
 });
 app.addEventListener('change', (e) => {
   const t = e.target;
@@ -290,6 +330,12 @@ app.addEventListener('submit', (e) => {
   } else if (k === 'mentor') {
     if (!v('name').trim()) return toast('Enter the mentor’s name.', true);
     act('acda_tutor_save', { tutorId: f.dataset.id, name: v('name').trim(), role: v('role'), email: v('email').trim(), whatsapp: v('whatsapp').trim(), sendEmail: !!(f.elements.sendEmail && f.elements.sendEmail.checked) }, f.dataset.id ? 'Saved.' : 'Mentor added.', btn).then((ok) => { if (ok && !f.dataset.id) { document.querySelectorAll('details.acx-add').forEach((x) => { x.open = false; }); S.open.addm = false; render(); window.scrollTo(0, 0); } });
+  } else if (k === 'family') {
+    if (!v('name').trim()) return toast('Enter the family name.', true);
+    act('acda_family_save', { familyId: f.dataset.id, name: v('name').trim(), mentorId: v('mentorId'), motto: v('motto').trim() }, f.dataset.id ? 'Saved.' : 'Family created.', btn).then((ok) => { if (ok && !f.dataset.id) { document.querySelectorAll('details.acx-add').forEach((x) => { x.open = false; }); S.open.addf = false; render(); } });
+  } else if (k === 'post') {
+    if (!v('body').trim()) return toast('Write something first.', true);
+    act('acda_post', { familyId: f.dataset.fam, kind: 'Announcement', body: v('body').trim() }, 'Announcement posted.', btn);
   } else if (k === 'group') {
     if (!v('group').trim()) return toast('Enter the class group name.', true);
     act('acda_group_save', { group: v('group').trim(), meetLink: v('meetLink').trim(), telegramLink: v('telegramLink').trim(), timetable: v('timetable').trim() }, 'Class group saved.', btn);
@@ -299,8 +345,8 @@ app.addEventListener('submit', (e) => {
   } else if (k === 'assign') {
     const ids = Object.keys(S.sel).filter((x) => S.sel[x]);
     if (!ids.length) return toast('Tick at least one student.', true);
-    if (!v('teacherId') && !v('level')) return toast('Choose a mentor or a class group to apply.', true);
-    act('acda_assign', { studentIds: ids, teacherId: v('teacherId'), level: v('level') }, 'Saved for ' + plural(ids.length, 'student') + '.', btn).then((ok) => { if (ok) { S.sel = {}; render(); } });
+    if (!v('teacherId') && !v('level') && !v('familyId')) return toast('Choose a mentor, class group or family to apply.', true);
+    act('acda_assign', { studentIds: ids, teacherId: v('teacherId'), level: v('level'), familyId: v('familyId') }, 'Saved for ' + plural(ids.length, 'student') + '.', btn).then((ok) => { if (ok) { S.sel = {}; render(); } });
   } else if (k === 'password') {
     if (v('newCode').length < 8) return toast('Your new code must be at least 8 characters.', true);
     if (v('newCode') !== v('again')) return toast('The two codes do not match.', true);

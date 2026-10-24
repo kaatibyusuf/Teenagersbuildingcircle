@@ -4123,3 +4123,55 @@ body.acx-noscroll { overflow: hidden; }
 @media (max-width: 560px) { .app .acx-bars { gap: 4px; } .app .acx-bars div:nth-child(odd) span { visibility: hidden; } .app .acx-bars em { font-size: 10.5px; } }
 .page-academy-dashboard .c.w8 { grid-column: span 8; } .page-academy-dashboard .c.w4 { grid-column: span 4; }
 @media (max-width: 900px) { .page-academy-dashboard .c.w8, .page-academy-dashboard .c.w4 { grid-column: span 12; } }
+
+/* Academy Stage 2: classes timetable and mentorship family boards */
+.app .acx-h { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.app .acx-h h2 { margin-bottom: 14px; }
+.app .acx-stack { display: grid; gap: 16px; align-content: start; padding: 0 !important; background: none !important; box-shadow: none !important; }
+.app .acx-stack > .c { grid-column: auto; }
+.app .acx-warn { background: #FFF4E0; color: #7A4A00; border-radius: 12px; padding: 12px 14px; margin-bottom: 12px; font-size: 14px; }
+.app .acx-class { display: flex; gap: 14px; background: var(--wash); border-radius: 16px; padding: 14px; margin-top: 10px; }
+.app .acx-class.today { background: #fff; box-shadow: 0 0 0 2px var(--ink); }
+.app .acx-class.past { background: #F7F9FB; }
+.app .acx-day { flex: none; width: 54px; text-align: center; background: #fff; border-radius: 12px; padding: 6px 0; box-shadow: inset 0 0 0 1px var(--line); align-self: flex-start; }
+.app .acx-class.today .acx-day { background: var(--ink); color: #fff; box-shadow: none; }
+.app .acx-day b { display: block; font-family: var(--d); font-size: 20px; line-height: 1.1; color: inherit; }
+.app .acx-day span, .app .acx-day em { display: block; font-size: 11.5px; font-style: normal; color: var(--muted); }
+.app .acx-class.today .acx-day span, .app .acx-class.today .acx-day em { color: rgba(255,255,255,.75); }
+.app .acx-class-m { flex: 1; min-width: 0; }
+.app .acx-class-m b { display: block; color: var(--deep); font-size: 15px; }
+.app .acx-class-m small { display: block; color: var(--muted); font-size: 13px; margin-top: 2px; }
+.app .acx-class-m p { font-size: 14px; color: var(--text); margin-top: 8px; line-height: 1.55; overflow-wrap: anywhere; }
+.app .acx-class .acx-acts { margin-top: 10px; }
+.app .acx-compose { background: var(--wash); border-radius: 16px; padding: 14px; margin-bottom: 6px; }
+.app .acx-compose .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.app .acx-post { border-radius: 16px; padding: 14px 16px; margin-top: 10px; background: #fff; box-shadow: 0 0 0 1px var(--line); overflow-wrap: anywhere; }
+.app .acx-post.ann { background: #F0F7FD; box-shadow: 0 0 0 1px #CFE6F8; }
+.app .acx-post.hid, .app .acx-reply.hid { opacity: .55; }
+.app .acx-post p { font-size: 14.5px; line-height: 1.6; color: var(--text); margin-top: 6px; }
+.app .acx-post-h { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.app .acx-post-h b { color: var(--deep); font-size: 14.5px; }
+.app .acx-post-h small { color: var(--muted); font-size: 12.5px; }
+.app .acx-role { font-size: 11.5px; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: var(--ink); color: #fff; }
+.app .acx-pin { font-size: 11.5px; font-weight: 600; padding: 2px 8px; border-radius: 999px; background: #FFF4E0; color: #7A4A00; }
+.app .acx-post-f { display: flex; gap: 14px; align-items: center; margin-top: 8px; font-size: 13.5px; }
+.app .acx-del { color: #B42318 !important; margin-inline-start: auto; }
+.app .acx-post-f .acx-del { margin-inline-start: 0; }
+.app .acx-replies { border-inline-start: 2px solid var(--line); margin-top: 10px; padding-inline-start: 12px; display: grid; gap: 8px; }
+.app .acx-reply p { margin-top: 3px; }
+.app .acx-replyf { margin-top: 10px; }
+.app .acx-res { display: block; background: var(--wash); border-radius: 12px; padding: 10px 12px; margin-top: 8px; text-decoration: none; }
+.app .acx-res b { display: block; color: var(--ink); }
+.app .acx-res span { display: block; font-size: 12.5px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.app .acx-members { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+.app .acx-members li { display: flex; justify-content: space-between; align-items: center; gap: 10px; background: var(--wash); border-radius: 10px; padding: 9px 12px; font-size: 14px; color: var(--text); }
+.app .acx-members li.me { background: #fff; box-shadow: 0 0 0 1.5px var(--ink); }
+.app .acx-members b { color: var(--deep); font-variant-numeric: tabular-nums; }
+.app .acx-chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
+.app .acx-chips button { padding: 8px 14px; border-radius: 999px; background: #fff; box-shadow: var(--ring, 0 0 0 1px var(--line)); font-weight: 600; font-size: 13.5px; color: var(--muted); }
+.app .acx-chips button[aria-selected=true] { background: var(--ink); color: #fff; box-shadow: none; }
+.app .acx-tips { margin: 0; padding-inline-start: 18px; display: grid; gap: 6px; font-size: 14px; color: var(--muted); }
+@media (max-width: 900px) { .app .acx-stack { grid-column: span 12 !important; } }
+@media (max-width: 560px) { .app .acx-compose .row2 { grid-template-columns: 1fr; } .app .acx-class { padding: 12px; gap: 10px; } .app .acx-day { width: 46px; } }
+/* text written by students and mentors keeps its own direction (English inside the Arabic layout, and the reverse) */
+.app :is(.acx-post p, .acx-reply p, .acx-instr, .acx-mine p, .acx-fb p, .acx-class-m p, .acx-class-m b, .acx-qt, .acx-opt span:last-child, .acx-res b, .acx-sub p, .acx-test b, .acx-item > summary b, .acx-h + .sub i) { unicode-bidi: plaintext; }

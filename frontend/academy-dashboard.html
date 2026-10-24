@@ -50,7 +50,7 @@ const dd = (iso) => Math.round((new Date(String(iso).slice(0, 10) + 'T00:00:00')
 const inDays = (n) => n === 0 ? 'today' : n === 1 ? 'tomorrow' : 'in ' + n + ' days';
 const safeUrl = (u) => /^https?:\/\//i.test(String(u ?? '').trim());
 const pct = (x) => x == null ? '–' : x + '%';
-const plural = (n, w) => n + ' ' + w + (n === 1 ? '' : /(s|sh|ch|x)$/.test(w) ? 'es' : 's');
+const plural = (n, w) => n + ' ' + (n === 1 ? w : /[^aeiou]y$/.test(w) ? w.slice(0, -1) + 'ies' : /(s|sh|ch|x)$/.test(w) ? w + 'es' : w + 's');
 const linkify = (t) => esc(t).replace(/(https?:\/\/[^\s<]+)/g, '<a class="lnk" href="$1" target="_blank" rel="noopener">$1</a>').replace(/\n/g, '<br>');
 
 /* View mode: a mentor or admin opens a student's dashboard from their own portal (read-only) */
@@ -58,7 +58,7 @@ const QS = new URLSearchParams(location.search);
 const VIEW = QS.get('view') ? { id: QS.get('view'), as: QS.get('as') === 'admin' ? 'admin' : 'mentor' } : null;
 
 let D = null;
-const S = { tab: 'overview', open: {} };
+const S = { tab: 'overview', open: {}, drafts: {}, replyTo: '' };
 try { const t = sessionStorage.getItem('hc-tab'); if (t) S.tab = t; } catch (e) {}
 
 async function call(body) {
@@ -92,7 +92,8 @@ function reminders(d, status, due) {
   if (sun) out.push({ t: 'The Sunday mock “' + sun.Title + '” is open now.', tab: 'cbt', u: 1, tag: 'CBT' });
   if (s.IsUtme && !d.reading.Target) out.push({ t: 'Set your reading target for this week. The reading club is compulsory for UTME.', a: 'reading', u: 1, tag: 'Reading club' });
   if (s.ExamDate) { const n = dd(s.ExamDate); if (n >= 0 && n <= 30) out.push({ t: 'Your exam is ' + inDays(n) + '.', a: 'exam', tag: 'Exam' }); }
-  if (s.NextClass) { const n = dd(s.NextClass); if (n === 0 || n === 1) out.push({ t: 'Your next class is ' + inDays(n) + ' at ' + new Date(s.NextClass).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }) + '.', a: 'classes', tag: 'Class' }); }
+  const unread = famUnread(d); if (unread) out.push({ t: unread === 1 ? '1 new post in your mentorship family.' : unread + ' new posts in your mentorship family.', tab: 'family', tag: 'Family' });
+  if (s.NextClass) { const n = dd(s.NextClass); if (n === 0 || n === 1) out.push({ t: 'Your next class is ' + inDays(n) + ' at ' + new Date(s.NextClass).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }) + '.', tab: 'classes', tag: 'Class' }); }
   return out;
 }
 
@@ -249,8 +250,55 @@ function vBoard(d) {
     <p class="sub">Parts with no records yet are left out, and the rest count for more. Your scores: mocks ${pct(m.mocks)}, tasks ${pct(m.tasks)}, attendance ${pct(m.attendance)}, CBT ${pct(m.cbt)}, reading ${pct(m.reading)}.</p></article></div>`;
 }
 
+
+/* ---------- classes ---------- */
+const dayBox = (iso) => { const d = new Date(iso + 'T00:00:00'); return `<div class="acx-day"><b>${d.getDate()}</b><span>${d.toLocaleDateString('en-GB', { month: 'short' })}</span><em>${d.toLocaleDateString('en-GB', { weekday: 'short' })}</em></div>`; };
+const timeRange = (c) => c.Start + (c.End ? '–' + c.End : '');
+function vClasses(d) {
+  const C = d.classes || { upcoming: [], past: [] }, today = d.today;
+  const up = (c) => `<div class="acx-class${c.Date === today ? ' today' : ''}">${dayBox(c.Date)}<div class="acx-class-m"><b>${esc(c.Subject)}${c.Topic ? ': ' + esc(c.Topic) : ''}</b><small>${c.Date === today ? 'Today · ' : ''}${esc(timeRange(c))}${c.Tutor ? ' · ' + esc(c.Tutor) : ''}${c.Group && c.Group !== 'ALL' ? ' · ' + esc(c.Group) : ''}</small>${c.Notes ? `<p>${linkify(c.Notes)}</p>` : ''}
+    <div class="acx-acts">${safeUrl(c.Join) ? `<a class="btn btn-ink btn-sm" href="${esc(c.Join)}" target="_blank" rel="noopener">Join on Google Meet</a>` : ''}${safeUrl(c.MaterialLink) ? `<a class="btn btn-line btn-sm" href="${esc(c.MaterialLink)}" target="_blank" rel="noopener">Class materials</a>` : ''}</div></div></div>`;
+  const past = (c) => `<div class="acx-class past">${dayBox(c.Date)}<div class="acx-class-m"><b>${esc(c.Subject)}${c.Topic ? ': ' + esc(c.Topic) : ''}</b><small>${esc(timeRange(c))}${c.Tutor ? ' · ' + esc(c.Tutor) : ''}</small>${c.Notes ? `<p>${linkify(c.Notes)}</p>` : ''}
+    <div class="acx-acts">${safeUrl(c.RecordingLink) ? `<a class="btn btn-ink btn-sm" href="${esc(c.RecordingLink)}" target="_blank" rel="noopener">Watch the recording</a>` : ''}${safeUrl(c.MaterialLink) ? `<a class="btn btn-line btn-sm" href="${esc(c.MaterialLink)}" target="_blank" rel="noopener">Class materials</a>` : ''}${!c.RecordingLink && !c.MaterialLink ? '<span class="sub">No recording or materials posted.</span>' : ''}</div></div></div>`;
+  return `<div class="grid"><article class="c w8"><h2>Upcoming classes</h2>${C.locked ? `<div class="acx-warn">Your fee is overdue, so the join links are hidden. They come back as soon as the payment is recorded. <a class="lnk" href="pay.html?id=${encodeURIComponent(d.student.StudentID)}">Pay by card</a></div>` : ''}
+      ${C.upcoming.map(up).join('') || '<p class="empty">No classes scheduled yet. Your mentors post the timetable here.</p>'}</article>
+    <article class="c w4"><h2>Past classes</h2><p class="sub" style="margin:-6px 0 12px">Catch up with notes, materials and recordings.</p>${C.past.map(past).join('') || '<p class="empty">Nothing yet.</p>'}</article></div>`;
+}
+
+/* ---------- mentorship family ---------- */
+const famKey = () => 'hc-fam-seen-' + (D && D.student ? D.student.StudentID : '');
+function famUnread(d) {
+  if (!d.family || VIEW) return 0;
+  let seen = ''; try { seen = localStorage.getItem(famKey()) || ''; } catch (e) {}
+  let n = 0; d.family.Posts.forEach((p) => { if (!p.Mine && p.Created > seen) n++; (p.Replies || []).forEach((r) => { if (!r.Mine && r.Created > seen) n++; }); });
+  return n;
+}
+function markFamSeen(d) { if (!d.family || VIEW) return; let max = ''; d.family.Posts.forEach((p) => { if (p.Created > max) max = p.Created; (p.Replies || []).forEach((r) => { if (r.Created > max) max = r.Created; }); }); try { if (max) localStorage.setItem(famKey(), max); } catch (e) {} }
+const ROLE = { mentor: 'Mentor', admin: 'School' };
+function postHtml(p) {
+  const head = `<div class="acx-post-h"><b translate="no" dir="auto">${esc(p.AuthorName)}</b>${ROLE[p.AuthorType] ? `<span class="acx-role">${ROLE[p.AuthorType]}</span>` : ''}<small>${fdate(p.Created, true)}</small>${p.Pinned ? '<span class="acx-pin">Pinned</span>' : ''}</div>`;
+  const body = p.Kind === 'Resource' ? `<a class="acx-res" href="${esc(p.Link)}" target="_blank" rel="noopener"><b>${esc(p.Title)}</b><span>${esc(p.Link)}</span></a>${p.Body ? `<p>${linkify(p.Body)}</p>` : ''}` : `<p>${linkify(p.Body)}</p>${safeUrl(p.Link) ? `<p><a class="lnk" href="${esc(p.Link)}" target="_blank" rel="noopener">${esc(p.Link)}</a></p>` : ''}`;
+  const replies = (p.Replies || []).map((r) => `<div class="acx-reply"><div class="acx-post-h"><b translate="no" dir="auto">${esc(r.AuthorName)}</b>${ROLE[r.AuthorType] ? `<span class="acx-role">${ROLE[r.AuthorType]}</span>` : ''}<small>${fdate(r.Created, true)}</small>${r.Mine && !VIEW ? `<button class="acx-lnk acx-del" type="button" data-act="delpost" data-id="${esc(r.PostID)}">Delete</button>` : ''}</div><p>${linkify(r.Body)}</p></div>`).join('');
+  return `<div class="acx-post ${p.Kind === 'Announcement' ? 'ann' : p.Kind === 'Resource' ? 'res' : ''}">${head}${body}
+    <div class="acx-post-f">${VIEW ? '' : `<button class="acx-lnk" type="button" data-act="reply" data-id="${esc(p.PostID)}">Reply</button>`}${p.Mine && !VIEW ? `<button class="acx-lnk acx-del" type="button" data-act="delpost" data-id="${esc(p.PostID)}">Delete</button>` : ''}${p.Replies && p.Replies.length ? `<span class="sub">${plural(p.Replies.length, 'reply')}</span>` : ''}</div>
+    ${replies ? `<div class="acx-replies">${replies}</div>` : ''}
+    ${S.replyTo === p.PostID ? `<form class="acx-form acx-replyf" data-form="post" data-parent="${esc(p.PostID)}"><textarea name="body" rows="2" maxlength="2000" placeholder="Write a reply" aria-label="Reply">${esc(S.drafts['r-' + p.PostID] || '')}</textarea><div class="acx-acts" style="margin-top:0"><button class="btn btn-ink btn-sm" type="submit">Reply</button><button class="btn btn-line btn-sm" type="button" data-act="reply" data-id="">Cancel</button></div></form>` : ''}</div>`;
+}
+function vFamily(d) {
+  const f = d.family, fams = d.families || [];
+  const standings = fams.length ? `<article class="c w4"><h2>Family standings</h2><p class="sub" style="margin:-6px 0 12px">Average overall score of each family’s members, last 30 days.</p><ol class="acx-board">${fams.map((x) => `<li class="${x.Me ? 'me' : ''}"><span class="acx-rank${x.Rank ? ' r' + x.Rank : ''}">${x.Rank || '–'}</span><div><b>${esc(x.Name)}</b></div><span class="acx-pts">${x.Score == null ? '–' : x.Score}</span></li>`).join('')}</ol></article>` : '';
+  if (!f) return `<div class="grid"><article class="c w8"><h2>Mentorship family</h2><p class="empty">You are not in a mentorship family yet. The school will add you to one, with a mentor and a few other students.</p></article>${standings}</div>`;
+  const anns = f.Posts.filter((p) => p.Pinned), rest = f.Posts.filter((p) => !p.Pinned);
+  return `<div class="grid"><article class="c w8"><div class="acx-h"><h2>${esc(f.Name)}</h2><button class="btn btn-line btn-sm" type="button" data-act="refresh">Refresh</button></div>${f.Motto ? `<p class="sub" style="margin:-8px 0 14px"><i>${esc(f.Motto)}</i></p>` : ''}
+      ${VIEW ? '' : `<form class="acx-form acx-compose" data-form="post"><label for="fpb">Share with your family</label><textarea id="fpb" name="body" rows="3" maxlength="2000" placeholder="A question, a win, a useful tip…">${esc(S.drafts.post || '')}</textarea><input name="link" type="url" maxlength="500" placeholder="Link (optional)" aria-label="Link (optional)" value="${esc(S.drafts.link || '')}"><button class="btn btn-ink" type="submit">Post</button></form>`}
+      ${anns.map(postHtml).join('')}${rest.map(postHtml).join('') || (anns.length ? '' : '<p class="empty" style="margin-top:14px">No posts yet. Say salaam to your family.</p>')}
+      <p class="sub" style="margin-top:14px">Be kind and keep it about learning. Your mentor can see and remove posts.</p></article>
+    <div class="c w4 acx-stack"><article class="c"><h2>Your family</h2><p class="sub" style="margin:-6px 0 12px">Mentor: <b style="color:var(--deep)">${esc(f.Mentor || 'Not assigned yet')}</b></p>
+      <ul class="acx-members">${f.Members.map((m) => `<li class="${m.Me ? 'me' : ''}"><span translate="no" dir="auto">${esc(m.Name)}${m.Me ? ' (you)' : ''}</span><b>${m.Score == null ? '–' : m.Score}</b></li>`).join('')}</ul></article>${standings.replace('class="c w4"', 'class="c"')}</div></div>`;
+}
+
 /* ---------- page ---------- */
-const TABS = [['overview', 'Overview'], ['tasks', 'Daily tasks'], ['cbt', 'CBT'], ['board', 'Leaderboard']];
+const TABS = [['overview', 'Overview'], ['classes', 'Classes'], ['tasks', 'Daily tasks'], ['cbt', 'CBT'], ['family', 'Family'], ['board', 'Leaderboard']];
 function render() {
   const d = D, s = d.student, first = String(s.Name).split(' ')[0], status = String(s.PaymentStatus || '').toLowerCase();
   const remind = VIEW ? [] : reminders(d, status, new Date(s.NextDue));
@@ -258,16 +306,18 @@ function render() {
   document.querySelectorAll('[data-k]').forEach((x) => { if (x.tagName === 'DETAILS') S.open[x.dataset.k] = x.open; });
   const openSit = [...document.querySelectorAll('.sit[open]')].map((x) => x.dataset.k);
   const todo = (d.tasks || []).filter((t) => t.Status === 'To do').length, openT = (d.tests || []).filter((x) => x.State === 'Open' && !(x.Kind === 'Sunday mock' && x.Attempts)).length;
-  const badge = { tasks: todo, cbt: openT };
+  const todayCls = ((d.classes || {}).upcoming || []).filter((c) => c.Date === d.today).length;
+  const badge = { tasks: todo, cbt: openT, family: famUnread(d), classes: todayCls };
   $('app').innerHTML = `${VIEW ? `<div class="acx-viewbar"><span>Viewing as ${VIEW.as === 'admin' ? 'admin' : 'mentor'} (read-only)</span><button class="btn btn-line btn-sm" type="button" data-act="closeview">Close</button></div>` : ''}
   <section class="greet"><div><small>Assalaamu alaykum</small><h1>${VIEW ? esc(s.Name) : esc(first) + ', let’s get you exam-ready.'}</h1>
     <div class="chips"><span translate="no">${esc(s.StudentID)}</span>${s.Matric ? `<span translate="no">${esc(s.Matric)}</span>` : ''}<span>${esc(s.Track || 'Academy')}</span>${s.Group ? `<span>${esc(s.Group)}</span>` : ''}${s.Tutor ? `<span>Mentor: ${esc(s.Tutor)}</span>` : ''}</div></div>
     ${VIEW ? '' : `<div class="gbtn"><a class="btn btn-ghost" href="${waHelp}" target="_blank" rel="noopener">Need help?</a></div>`}</section>
   ${remind.length ? `<section class="remind" aria-label="Reminders">${remind.map((r) => `<a href="#${r.a || ''}" data-go="${r.tab || ''}" data-a="${r.a || ''}" class="${r.u ? 'urgent' : ''}">${r.t}<span>${r.tag}</span></a>`).join('')}</section>` : ''}
   <nav class="tabs acx-tabs" role="tablist" aria-label="Sections">${TABS.map(([k, l]) => `<button role="tab" type="button" data-tab="${k}" aria-selected="${S.tab === k}">${l}${badge[k] ? ` <i>${badge[k]}</i>` : ''}</button>`).join('')}</nav>
-  <div id="view">${S.tab === 'tasks' ? vTasks(d) : S.tab === 'cbt' ? vCbt(d) : S.tab === 'board' ? vBoard(d) : vOverview(d)}</div>
+  <div id="view">${S.tab === 'tasks' ? vTasks(d) : S.tab === 'cbt' ? vCbt(d) : S.tab === 'board' ? vBoard(d) : S.tab === 'classes' ? vClasses(d) : S.tab === 'family' ? vFamily(d) : vOverview(d)}</div>
   <p class="foot">Your records are updated by your mentors.${VIEW ? '' : ' Questions? Use the Need help? button.'}</p>`;
-  if (S.tab === 'tasks' || S.tab === 'cbt' || S.tab === 'board') $('view').firstElementChild.classList.add('acx-solo');
+  if (S.tab !== 'overview') $('view').firstElementChild.classList.add('acx-solo');
+  if (S.tab === 'family') markFamSeen(d);
   document.querySelectorAll('.sit').forEach((x) => { if (openSit.indexOf(x.dataset.k) >= 0) x.open = true; });
   requestAnimationFrame(() => setTimeout(() => {
     document.querySelectorAll('.bar i').forEach((b) => { b.style.width = b.dataset.w + '%'; });
@@ -310,6 +360,13 @@ $('app').addEventListener('click', async (e) => {
   const b = e.target.closest('[data-act]'); if (!b) return;
   const a = b.dataset.act;
   if (a === 'closeview') { try { parent.postMessage({ acx: 'close' }, location.origin); } catch (x) {} return; }
+  if (a === 'reply') { S.replyTo = b.dataset.id; render(); const t = document.querySelector('.acx-replyf textarea'); if (t) t.focus(); return; }
+  if (a === 'refresh') { b.disabled = true; try { const d = await api(); if (d.ok) { D = d; render(); } } catch (x) { toast('Could not reach the school server. Please try again.', true); } return; }
+  if (a === 'delpost') {
+    if (!confirmBox('Delete this post?')) return;
+    try { const d = await api('acd_post_delete', { postId: b.dataset.id }); if (d.ok) { D = d; render(); toast('Deleted.'); } else toast(d.error, true); } catch (x) { toast('Could not reach the school server. Please try again.', true); }
+    return;
+  }
   if (a === 'start') {
     b.disabled = true; const old = b.textContent; b.textContent = 'Opening…';
     try { const d = await api('acd_cbt_start', { testId: b.dataset.id }); if (d.ok) startRun(d.attempt); else { toast(d.error || 'Could not open the test.', true); b.disabled = false; b.textContent = old; } }
@@ -325,6 +382,10 @@ $('app').addEventListener('click', async (e) => {
     else if (a === 'jump') { RUN.i = Number(b.dataset.i); renderRun(); }
     else if (a === 'finish') submitRun(false);
   }
+});
+$('app').addEventListener('input', (e) => {
+  const f = e.target.closest('form[data-form=post]'); if (!f) return;
+  if (f.dataset.parent) S.drafts['r-' + f.dataset.parent] = e.target.value; else S.drafts[e.target.name === 'link' ? 'link' : 'post'] = e.target.value;
 });
 $('app').addEventListener('change', (e) => {
   if (RUN && e.target.name === 'opt') {
@@ -350,6 +411,17 @@ $('app').addEventListener('submit', async (e) => {
       bad(d.error || 'Could not save. Please try again.');
     } catch (err) { bad('Could not reach the school server. Please try again.'); }
     btn.disabled = false; btn.textContent = 'Save';
+  } else if (f.dataset.form === 'post') {
+    const body = f.elements.body.value.trim(), link = f.elements.link ? f.elements.link.value.trim() : '';
+    if (!body) return toast('Write something first.', true);
+    if (link && !safeUrl(link)) return toast('The link must start with http:// or https://', true);
+    const old = btn.textContent; btn.disabled = true; btn.textContent = 'Posting…';
+    try {
+      const d = await api('acd_post', { body, link, parentId: f.dataset.parent || '' });
+      if (d.ok) { D = d; if (f.dataset.parent) { delete S.drafts['r-' + f.dataset.parent]; S.replyTo = ''; } else { S.drafts.post = ''; S.drafts.link = ''; } render(); return; }
+      toast(d.error || 'Could not post. Please try again.', true);
+    } catch (err) { toast('Could not reach the school server. Please try again.', true); }
+    btn.disabled = false; btn.textContent = old;
   } else if (f.dataset.form === 'task') {
     const answer = f.elements.answer.value.trim(), link = f.elements.link.value.trim();
     if (!answer && !link) return toast('Write your answer or add a link to your work.', true);
@@ -363,6 +435,13 @@ $('app').addEventListener('submit', async (e) => {
     btn.disabled = false; btn.textContent = old;
   }
 });
+
+/* the family board refreshes itself every minute while it is open (not while typing) */
+setInterval(async () => {
+  if (!D || RUN || S.tab !== 'family' || document.hidden) return;
+  const a = document.activeElement; if (a && (a.tagName === 'TEXTAREA' || a.tagName === 'INPUT')) return;
+  try { const d = await api(); if (d.ok && S.tab === 'family' && !RUN) { D = d; render(); } } catch (e) {}
+}, 60000);
 
 /* ---------- start ---------- */
 if (VIEW) {

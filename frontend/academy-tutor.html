@@ -43,12 +43,12 @@ const $ = (id) => document.getElementById(id);
 const esc = (t) => String(t ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fdate = (iso, t) => { const d = new Date(iso); return isNaN(d) ? esc(iso || 'Not set') : d.toLocaleDateString('en-GB', {day:'numeric', month:'short', year:'numeric'}) + (t ? ', ' + d.toLocaleTimeString('en-GB', {hour:'2-digit', minute:'2-digit'}) : ''); };
 const pct = (x) => x == null ? '–' : x + '%';
-const plural = (n, w) => n + ' ' + w + (n === 1 ? '' : /(s|sh|ch|x)$/.test(w) ? 'es' : 's');
+const plural = (n, w) => n + ' ' + (n === 1 ? w : /[^aeiou]y$/.test(w) ? w.slice(0, -1) + 'ies' : /(s|sh|ch|x)$/.test(w) ? w + 'es' : w + 's');
 const safeUrl = (u) => /^https?:\/\//i.test(String(u ?? '').trim());
 const linkify = (t) => esc(t).replace(/(https?:\/\/[^\s<]+)/g, '<a class="lnk" href="$1" target="_blank" rel="noopener">$1</a>').replace(/\n/g, '<br>');
-const TABS = [['students', 'Mentees'], ['attendance', 'Attendance'], ['tasks', 'Daily tasks'], ['cbt', 'CBT'], ['mocks', 'Mocks'], ['goals', 'Goals and class'], ['account', 'Account']];
+const TABS = [['students', 'Mentees'], ['families', 'Families'], ['classes', 'Classes'], ['attendance', 'Attendance'], ['tasks', 'Daily tasks'], ['cbt', 'CBT'], ['mocks', 'Mocks'], ['goals', 'Goals and class'], ['account', 'Account']];
 let D = null;
-const S = { tab: 'students', q: '', type: 'Daily mock', subject: '', outOf: '100', date: '', sc: {}, attDate: '', attSession: 'Class', att: {}, open: {}, qtext: '' };
+const S = { fam: '', replyTo: '', editSession: '', tab: 'students', q: '', type: 'Daily mock', subject: '', outOf: '100', date: '', sc: {}, attDate: '', attSession: 'Class', att: {}, open: {}, qtext: '' };
 
 const creds = () => { try { return JSON.parse(sessionStorage.getItem(KEY) || 'null') || {}; } catch (e) { return {}; } };
 async function api(action, extra) {
@@ -169,6 +169,56 @@ function vCbt() {
     <article class="c w6"><h2>Your tests</h2>${list || '<p class="empty">No tests yet.</p>'}</article></div>`;
 }
 
+
+/* ---------- classes (timetable, notes, materials, recordings) ---------- */
+const grpLabel = (g) => g === 'ALL' ? 'All class groups' : g;
+function sessionForm(c) {
+  c = c || {};
+  return `<form class="frm" data-form="session" data-id="${esc(c.SessionID || '')}">
+    <div class="row3"><div><label class="fl" for="sg">Class group</label><select class="in" id="sg" name="group">${D.sessionGroups.map((g) => `<option value="${esc(g)}"${g === c.Group ? ' selected' : ''}>${esc(grpLabel(g))}</option>`).join('')}</select></div>
+      <div><label class="fl" for="sd">Date</label><input class="in" id="sd" name="date" type="date" value="${esc(c.Date || today())}" required></div>
+      <div class="row2" style="gap:8px"><div><label class="fl" for="ss">Starts</label><input class="in" id="ss" name="start" type="time" value="${esc(c.Start || '16:00')}" required></div><div><label class="fl" for="se">Ends</label><input class="in" id="se" name="end" type="time" value="${esc(c.End || '')}"></div></div></div>
+    <div class="row2"><div><label class="fl" for="ssub">Subject</label><input class="in" id="ssub" name="subject" list="subj4" maxlength="40" value="${esc(c.Subject)}" required placeholder="e.g. Mathematics"><datalist id="subj4">${D.subjects.map((x) => `<option value="${esc(x)}">`).join('')}</datalist></div><div><label class="fl" for="st">Topic</label><input class="in" id="st" name="topic" maxlength="160" value="${esc(c.Topic)}" placeholder="e.g. Indices and logarithms"></div></div>
+    <div><label class="fl" for="sn">Notes for students <small>(optional)</small></label><textarea class="in" id="sn" name="notes" rows="3" maxlength="3000" placeholder="What to prepare, what was covered, homework…">${esc(c.Notes)}</textarea></div>
+    <div class="row3"><div><label class="fl" for="sm">Meet link <small>(optional)</small></label><input class="in" id="sm" name="meetLink" type="url" maxlength="500" value="${esc(c.MeetLink)}" placeholder="Group link if empty"></div><div><label class="fl" for="sma">Materials link</label><input class="in" id="sma" name="materialLink" type="url" maxlength="500" value="${esc(c.MaterialLink)}" placeholder="https://"></div><div><label class="fl" for="sr">Recording link</label><input class="in" id="sr" name="recordingLink" type="url" maxlength="500" value="${esc(c.RecordingLink)}" placeholder="Add after the class"></div></div>
+    <div class="acx-acts" style="margin-top:4px"><button class="btn btn-ink" type="submit">${c.SessionID ? 'Save changes' : 'Add class'}</button>${c.SessionID ? '<button class="btn btn-line" type="button" data-act="newSession">Cancel</button>' : ''}</div></form>`;
+}
+function vClasses() {
+  if (!D.sessionGroups.length) return `<article class="c w12"><h2>Classes</h2><p class="empty">Your mentees are not in a class group yet, so there is nothing to schedule. The admin sets class groups in the Assign tab.</p></article>`;
+  const edit = S.editSession ? D.sessions.find((x) => x.SessionID === S.editSession) : null;
+  const up = D.sessions.filter((x) => x.Date >= today()), past = D.sessions.filter((x) => x.Date < today()).reverse();
+  const row = (c, isPast) => `<div class="acx-class${isPast ? ' past' : c.Date === today() ? ' today' : ''}"><div class="acx-day"><b>${new Date(c.Date + 'T00:00:00').getDate()}</b><span>${new Date(c.Date + 'T00:00:00').toLocaleDateString('en-GB', { month: 'short' })}</span><em>${new Date(c.Date + 'T00:00:00').toLocaleDateString('en-GB', { weekday: 'short' })}</em></div>
+    <div class="acx-class-m"><b>${esc(c.Subject)}${c.Topic ? ': ' + esc(c.Topic) : ''}</b><small>${esc(c.Start)}${c.End ? '–' + esc(c.End) : ''} · ${esc(grpLabel(c.Group))}${c.Tutor ? ' · ' + esc(c.Tutor) : ''}</small>${c.Notes ? `<p>${linkify(c.Notes)}</p>` : ''}
+    <div class="acx-acts">${c.RecordingLink ? '<span class="pill p-ink">Recording added</span>' : isPast ? '<span class="pill p-wash">No recording yet</span>' : ''}${c.MaterialLink ? '<span class="pill p-sky">Materials</span>' : ''}${c.Mine ? `<button class="btn btn-line btn-sm" type="button" data-act="editSession" data-id="${esc(c.SessionID)}">${isPast && !c.RecordingLink ? 'Add recording' : 'Edit'}</button><button class="btn btn-line btn-sm acx-danger" type="button" data-act="delSession" data-id="${esc(c.SessionID)}">Delete</button>` : ''}${isPast ? `<button class="btn btn-line btn-sm" type="button" data-act="register" data-date="${esc(c.Date)}" data-session="${esc(c.Subject)}">Take register</button>` : ''}</div></div></div>`;
+  return `<div class="grid"><article class="c w7"><h2>${edit ? 'Edit class' : 'Schedule a class'}</h2><p class="sub">Students see the timetable on their dashboard with a Join button (the group’s Google Meet link unless you add another). After the class, add the recording and materials so absent students can catch up.</p>${sessionForm(edit)}</article>
+    <article class="c w5"><h2>Upcoming</h2>${up.map((c) => row(c, false)).join('') || '<p class="empty">No classes scheduled.</p>'}<h2 style="margin-top:22px">Recent</h2>${past.map((c) => row(c, true)).join('') || '<p class="empty">No past classes in the last 30 days.</p>'}</article></div>`;
+}
+
+/* ---------- mentorship families ---------- */
+const ROLE = { mentor: 'Mentor', admin: 'School' };
+function postHtml(p, famId) {
+  const tag = (x) => ROLE[x.AuthorType] ? `<span class="acx-role">${ROLE[x.AuthorType]}</span>` : '';
+  const replies = (p.Replies || []).map((r) => `<div class="acx-reply${r.Hidden ? ' hid' : ''}"><div class="acx-post-h"><b translate="no" dir="auto">${esc(r.AuthorName)}</b>${tag(r)}<small>${fdate(r.Created, true)}</small>${r.Hidden ? '<span class="acx-pin">Hidden</span>' : ''}<button class="acx-lnk acx-del" type="button" data-act="${r.Hidden ? 'showPost' : 'hidePost'}" data-id="${esc(r.PostID)}">${r.Hidden ? 'Show' : 'Hide'}</button></div><p>${linkify(r.Body)}</p></div>`).join('');
+  const body = p.Kind === 'Resource' ? `<a class="acx-res" href="${esc(p.Link)}" target="_blank" rel="noopener"><b>${esc(p.Title)}</b><span>${esc(p.Link)}</span></a>${p.Body ? `<p>${linkify(p.Body)}</p>` : ''}` : `<p>${linkify(p.Body)}</p>${safeUrl(p.Link) ? `<p><a class="lnk" href="${esc(p.Link)}" target="_blank" rel="noopener">${esc(p.Link)}</a></p>` : ''}`;
+  return `<div class="acx-post ${p.Kind === 'Announcement' ? 'ann' : p.Kind === 'Resource' ? 'res' : ''}${p.Hidden ? ' hid' : ''}"><div class="acx-post-h"><b translate="no" dir="auto">${esc(p.AuthorName)}</b>${tag(p)}<small>${fdate(p.Created, true)}</small>${p.Pinned ? '<span class="acx-pin">Pinned</span>' : ''}${p.Hidden ? '<span class="acx-pin">Hidden</span>' : ''}</div>${body}
+    <div class="acx-post-f"><button class="acx-lnk" type="button" data-act="reply" data-id="${esc(p.PostID)}">Reply</button><button class="acx-lnk" type="button" data-act="${p.Pinned ? 'unpin' : 'pin'}" data-id="${esc(p.PostID)}">${p.Pinned ? 'Unpin' : 'Pin'}</button><button class="acx-lnk acx-del" type="button" data-act="${p.Hidden ? 'showPost' : 'hidePost'}" data-id="${esc(p.PostID)}">${p.Hidden ? 'Show' : 'Hide'}</button></div>
+    ${replies ? `<div class="acx-replies">${replies}</div>` : ''}
+    ${S.replyTo === p.PostID ? `<form class="acx-form acx-replyf" data-form="post" data-fam="${esc(famId)}" data-parent="${esc(p.PostID)}"><textarea name="body" rows="2" maxlength="2000" placeholder="Write a reply" aria-label="Reply"></textarea><div class="acx-acts" style="margin-top:0"><button class="btn btn-ink btn-sm" type="submit">Reply</button><button class="btn btn-line btn-sm" type="button" data-act="reply" data-id="">Cancel</button></div></form>` : ''}</div>`;
+}
+function vFamilies() {
+  const fs = D.families || [];
+  if (!fs.length) return `<article class="c w12"><h2>Mentorship families</h2><p class="empty">You do not lead a mentorship family yet. The admin creates families and chooses their mentor in the admin portal.</p></article>`;
+  const cur = fs.find((f) => f.FamilyID === S.fam) || fs[0]; S.fam = cur.FamilyID;
+  return `${fs.length > 1 ? `<div class="acx-chips" role="tablist" aria-label="Families">${fs.map((f) => `<button type="button" role="tab" data-act="fam" data-id="${esc(f.FamilyID)}" aria-selected="${f.FamilyID === cur.FamilyID}">${esc(f.Name)}</button>`).join('')}</div>` : ''}
+  <div class="grid"><article class="c w8"><div class="acx-h"><h2>${esc(cur.Name)}</h2><button class="btn btn-line btn-sm" type="button" data-act="refresh">Refresh</button></div>${cur.Motto ? `<p class="sub" style="margin:-8px 0 14px"><i>${esc(cur.Motto)}</i></p>` : ''}
+    <form class="acx-form acx-compose" data-form="post" data-fam="${esc(cur.FamilyID)}"><div class="row2"><div><label for="pk">Type</label><select class="in" id="pk" name="kind"><option value="Announcement">Announcement (pinned)</option><option value="Post">Post</option><option value="Resource">Resource link</option></select></div><div><label for="pt">Title <small>(for a resource)</small></label><input class="in" id="pt" name="title" maxlength="120" placeholder="e.g. JAMB syllabus 2027"></div></div>
+      <label for="pb">Message</label><textarea id="pb" name="body" rows="3" maxlength="2000" placeholder="An announcement, a check-in question, encouragement…"></textarea><input name="link" type="url" maxlength="500" placeholder="Link (optional)" aria-label="Link (optional)"><button class="btn btn-ink" type="submit">Post to the family</button></form>
+    ${cur.Posts.map((p) => postHtml(p, cur.FamilyID)).join('') || '<p class="empty" style="margin-top:14px">No posts yet. Start with a welcome announcement.</p>'}</article>
+  <div class="c w4 acx-stack"><article class="c"><h2>Members</h2><p class="sub" style="margin:-6px 0 12px">${plural(cur.Members.length, 'student')}${cur.Score != null ? ' · family score ' + cur.Score + (cur.Rank ? ' (rank ' + cur.Rank + ' of ' + D.familyCount + ')' : '') : ''}</p>
+    <ul class="acx-members">${cur.Members.map((m) => `<li><span>${esc(m.Name)}</span><button class="acx-lnk" type="button" data-act="view" data-id="${esc(m.StudentID)}">Open</button></li>`).join('') || '<li class="empty">No members yet. The admin adds students in the Assign tab.</li>'}</ul></article>
+    <article class="c"><h2>Good practice</h2><ul class="acx-tips"><li>Post a short check-in each week.</li><li>Pin the things everyone must see.</li><li>Hide anything unkind or off-topic; students cannot see hidden posts.</li></ul></article></div></div>`;
+}
+
 /* ---------- mocks, goals, account (as before) ---------- */
 function vMocks() {
   const date = S.date || today();
@@ -198,7 +248,7 @@ function vAccount() {
   <button class="btn btn-ink" type="submit">Change my code</button></form></article>`;
 }
 
-const VIEWS = { students: vStudents, attendance: vAttendance, tasks: vTasks, cbt: vCbt, mocks: vMocks, goals: vGoals, account: vAccount };
+const VIEWS = { families: vFamilies, classes: vClasses, students: vStudents, attendance: vAttendance, tasks: vTasks, cbt: vCbt, mocks: vMocks, goals: vGoals, account: vAccount };
 function render() {
   document.querySelectorAll('details[data-k]').forEach((x) => { S.open[x.dataset.k] = x.open; });
   const toMark = D.tasks.reduce((a, t) => a + t.Submissions.filter((x) => !x.Marked).length, 0), risk = (D.overview.atRisk || []).length;
@@ -233,6 +283,15 @@ app.addEventListener('click', (e) => {
   if (a === 'tab') { S.tab = b.dataset.t; render(); window.scrollTo(0, 0); }
   else if (a === 'all' || a === 'none') document.querySelectorAll('#' + b.dataset.t + ' input').forEach((x) => { x.checked = a === 'all'; });
   else if (a === 'view') openView(b.dataset.id);
+  else if (a === 'fam') { S.fam = b.dataset.id; S.replyTo = ''; render(); }
+  else if (a === 'reply') { S.replyTo = b.dataset.id; render(); const t = document.querySelector('.acx-replyf textarea'); if (t) t.focus(); }
+  else if (a === 'refresh') act('acdt_login', {}, '', b);
+  else if (a === 'pin' || a === 'unpin') act('acdt_post_pin', { postId: b.dataset.id, unpin: a === 'unpin' }, a === 'pin' ? 'Pinned.' : 'Unpinned.', b);
+  else if (a === 'hidePost' || a === 'showPost') act('acdt_post_hide', { postId: b.dataset.id, show: a === 'showPost' }, a === 'hidePost' ? 'Hidden from students.' : 'Shown again.', b);
+  else if (a === 'editSession') { S.editSession = b.dataset.id; render(); window.scrollTo(0, 0); }
+  else if (a === 'newSession') { S.editSession = ''; render(); }
+  else if (a === 'delSession') { if (window.confirm('Delete this class from the timetable?')) act('acdt_session_delete', { sessionId: b.dataset.id }, 'Class deleted.', b).then((ok) => { if (ok && S.editSession === b.dataset.id) { S.editSession = ''; render(); } }); }
+  else if (a === 'register') { S.tab = 'attendance'; S.attDate = b.dataset.date; S.attSession = b.dataset.session; S.att = {}; render(); window.scrollTo(0, 0); }
   else if (a === 'allPresent') { D.students.forEach((s) => { S.att[s.StudentID] = 'Present'; }); render(); }
   else if (a === 'closeTask' || a === 'openTask') act('acdt_task_close', { taskId: b.dataset.id, reopen: a === 'openTask' }, a === 'openTask' ? 'Task reopened.' : 'Task closed. Students no longer see it.', b);
   else if (a === 'closeTest' || a === 'openTest') act('acdt_cbt_close', { testId: b.dataset.id, reopen: a === 'openTest' }, a === 'openTest' ? 'Test reopened.' : 'Test closed.', b);
@@ -253,6 +312,23 @@ app.addEventListener('submit', async (e) => {
   const f = e.target.closest('form[data-form]'); if (!f) return;
   e.preventDefault();
   const k = f.dataset.form, v = (n) => f.elements[n] ? f.elements[n].value : '', btn = f.querySelector('button[type=submit]');
+  if (k === 'post') {
+    const body = v('body').trim(), link = v('link').trim(), kind = v('kind') || 'Post', title = v('title').trim();
+    if (kind === 'Resource' && (!title || !link)) return toast('A resource needs a title and a link.', true);
+    if (kind !== 'Resource' && !body) return toast('Write something first.', true);
+    if (link && !safeUrl(link)) return toast('The link must start with http:// or https://', true);
+    const ok = await act('acdt_post', { familyId: f.dataset.fam, parentId: f.dataset.parent || '', body, link, kind: f.dataset.parent ? 'Post' : kind, title }, f.dataset.parent ? 'Reply posted.' : 'Posted to the family.', btn);
+    if (ok) { S.replyTo = ''; render(); }
+    return;
+  }
+  if (k === 'session') {
+    if (!v('subject').trim()) return toast('Enter the subject.', true);
+    const links = ['meetLink', 'materialLink', 'recordingLink'].map((n) => v(n).trim());
+    if (links.some((l) => l && !safeUrl(l))) return toast('Links must start with http:// or https://', true);
+    const ok = await act('acdt_session', { sessionId: f.dataset.id, group: v('group'), date: v('date'), start: v('start'), end: v('end'), subject: v('subject').trim(), topic: v('topic').trim(), notes: v('notes').trim(), meetLink: links[0], materialLink: links[1], recordingLink: links[2] }, f.dataset.id ? 'Class updated.' : 'Class added to the timetable.', btn);
+    if (ok) { S.editSession = ''; render(); }
+    return;
+  }
   if (k === 'att') {
     const marks = D.students.map((s) => { const c = f.querySelector(`input[name="at-${CSS.escape(s.StudentID)}"]:checked`); return c ? { studentId: s.StudentID, status: c.value } : null; }).filter(Boolean);
     if (!marks.length) return toast('Mark at least one mentee.', true);
