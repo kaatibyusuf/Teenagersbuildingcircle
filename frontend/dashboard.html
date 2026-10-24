@@ -11,6 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600;700&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
 <script src="js/i18n.js"></script>
+<script src="js/chat.js" defer></script>
 <!-- Vercel Analytics: counts visits once enabled in the Vercel dashboard -->
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
 <script defer src="/_vercel/insights/script.js"></script>
@@ -151,7 +152,7 @@ function render(d) {
   <div class="grid">
     <article class="c" id="next" style="--i:0"><div class="k">Next class</div>${s.NextClass ? `<div class="big">${fdate(s.NextClass, true)}</div>${safeUrl(s.ClassLink) ? `<p class="sub"><a class="btn btn-ink" style="margin-top:12px" href="${esc(s.ClassLink)}" target="_blank" rel="noopener">Join class</a></p>` : '<p class="sub">Your teacher will share the join link.</p>'}` : '<p class="empty">No class scheduled yet.</p>'}</article>
     <article class="c" id="pay" style="--i:1"><div class="k">Payment</div><span class="pill ${pcls}">${esc(s.PaymentStatus || 'Due')}</span>
-      ${status === 'exempt' ? '<div class="big" style="margin-top:12px">Nothing to pay</div>' : `<div class="big" style="margin-top:12px">${isNaN(due) ? 'No date set' : fdate(s.NextDue)}</div><p class="sub">Next payment due${s.MonthlyFee ? ': ' + naira(s.MonthlyFee) : ''}. After paying, send your receipt on <a href="https://wa.me/${PAYMENT_WA}" target="_blank" rel="noopener" class="lnk">WhatsApp</a>. This page updates once the school confirms it.</p>`}</article>
+      ${status === 'exempt' ? '<div class="big" style="margin-top:12px">Nothing to pay</div>' : `<div class="big" style="margin-top:12px">${isNaN(due) ? 'No date set' : fdate(s.NextDue)}</div><p class="sub">Next payment due${s.MonthlyFee ? ': ' + naira(s.MonthlyFee) : ''}. Pay by card and this page updates straight away. If you pay by bank transfer, send the receipt on <a href="https://wa.me/${PAYMENT_WA}" target="_blank" rel="noopener" class="lnk">WhatsApp</a>.</p><p class="pay-btns"><a class="btn ${status === 'paid' ? 'btn-line' : 'btn-ink'}" href="pay.html?id=${encodeURIComponent(s.StudentID)}">${status === 'paid' ? 'Pay ahead by card' : 'Pay by card'}</a></p>`}</article>
     <article class="c" style="--i:2"><div class="k">Attendance</div><div class="big">${att === null ? 'No data yet' : att + '%'}</div>
       ${att === null ? '' : `<div class="bar"><i data-w="${att}"></i></div><div class="row"><span>${s.AttendancePresent} present</span><span>${s.AttendanceTotal} classes</span></div>`}</article>
 

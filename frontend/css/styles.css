@@ -3817,3 +3817,67 @@ html[dir="rtl"] .site.page-articles .art-go, html[dir="rtl"].site.page-articles 
 .site.page-articles .art-more { padding-top: clamp(40px, 5vw, 64px); }
 .site.page-articles .art-more .art-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 @media (max-width: 900px) { .site.page-articles .art-more .art-grid { grid-template-columns: 1fr; } }
+
+/* ==========================================================================
+   Pay fees page (pay.html)
+   ========================================================================== */
+.site.page-pay .pf-sec { padding: clamp(40px, 6vw, 80px) 0 clamp(56px, 7vw, 96px); }
+.site.page-pay .pf-wrap { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: clamp(20px, 3vw, 36px); align-items: start; max-width: 1040px; }
+.site.page-pay :is(.pf-card, .pf-side) { background: #fff; border-radius: 24px; box-shadow: var(--shadow); padding: clamp(22px, 3.2vw, 36px); }
+.site.page-pay .pf-side { background: transparent; box-shadow: inset 0 0 0 1px var(--line); }
+.site.page-pay .pf-side h2 { font-size: 22px; margin: 0 0 10px; color: var(--text); }
+.site.page-pay .pf-side p { color: var(--muted); font-size: 15px; line-height: 1.6; margin: 0 0 18px; }
+.site.page-pay .pf-side .btn { width: 100%; justify-content: center; }
+.site.page-pay .pf-small { margin: 16px 0 0 !important; font-size: 14px !important; }
+.site.page-pay .pf-small a { color: var(--ink); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+.site.page-pay label { display: block; font-size: 14px; font-weight: 600; color: var(--text); margin: 0 0 8px; }
+.site.page-pay label small { font-weight: 400; color: var(--muted); }
+.site.page-pay :is(input, select) { width: 100%; min-width: 0; font-size: 16px; color: var(--text); background: #fff; border: 1.5px solid var(--line); border-radius: 14px; padding: 13px 15px; transition: border-color .2s, box-shadow .2s; }
+.site.page-pay :is(input, select):focus { outline: none; border-color: var(--ink); box-shadow: 0 0 0 4px rgba(133,204,255,.35); }
+.site.page-pay #pfId { font-size: 18px; letter-spacing: .04em; text-transform: uppercase; }
+.site.page-pay #pfId::placeholder { text-transform: none; letter-spacing: 0; color: #93A4B3; }
+.site.page-pay .pf-row { display: flex; gap: 10px; }
+.site.page-pay .pf-row .btn { flex: none; }
+.site.page-pay .pf-help { margin: 10px 0 0; font-size: 13.5px; color: var(--muted); }
+.site.page-pay .pf-err { margin: 10px 0 0; font-size: 14px; color: #B42318; }
+.site.page-pay .pf-err:empty { display: none; }
+.site.page-pay .pf-sum { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border-radius: 16px; overflow: hidden; margin-bottom: 24px; box-shadow: 0 0 0 1px var(--line); }
+.site.page-pay .pf-sum > div { background: var(--wash, #F4F8FB); padding: 14px 16px; min-width: 0; }
+.site.page-pay .pf-sum span { display: block; font-size: 12.5px; color: var(--muted); margin-bottom: 4px; }
+.site.page-pay .pf-sum b { display: block; font-size: 15.5px; font-weight: 600; color: var(--text); overflow-wrap: anywhere; }
+.site.page-pay .pf-pill { display: inline-block; vertical-align: 1px; font-style: normal; font-size: 12px; font-weight: 600; padding: 2px 9px; border-radius: 999px; margin-inline-start: 6px; background: #EAF6EF; color: #1B7F4B; }
+.site.page-pay .pf-pill:is(.due) { background: #FFF4E0; color: #9A5B00; }
+.site.page-pay .pf-pill:is(.overdue) { background: #FDECEA; color: #B42318; }
+.site.page-pay .pf-pill:is(.exempt) { background: #EEF1F4; color: var(--muted); }
+.site.page-pay .pf-pay select { margin-bottom: 18px; }
+.site.page-pay .pf-after { margin: 14px 0 18px; font-size: 14.5px; color: var(--text); }
+.site.page-pay .pf-after:empty { display: none; }
+.site.page-pay .pf-btn { width: 100%; justify-content: center; font-size: 16px; padding-block: 15px; }
+.site.page-pay .pf-btn:disabled { opacity: .6; cursor: progress; }
+.site.page-pay .pf-note { display: flex; gap: 8px; align-items: flex-start; margin: 16px 0 0; font-size: 13.5px; color: var(--muted); line-height: 1.5; }
+.site.page-pay .pf-note svg { flex: none; margin-top: 2px; }
+.site.page-pay .pf-warn { background: #FFF4E0; color: #7A4A00; border-radius: 14px; padding: 12px 14px; margin: 0 0 18px; }
+.site.page-pay .pf-result .pf-warn { margin: 0; }
+.site.page-pay .pf-link { margin-top: 20px; background: none; border: 0; padding: 0; font: inherit; font-size: 14px; color: var(--ink); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.site.page-pay .pf-done { display: flex; gap: 14px; align-items: flex-start; background: #EAF6EF; color: #14532D; border-radius: 16px; padding: 16px 18px; margin-bottom: 22px; }
+.site.page-pay .pf-done b { display: block; margin-bottom: 2px; }
+.site.page-pay .pf-done span:not(.pf-tick) { font-size: 14px; }
+.site.page-pay .pf-tick { flex: none; width: 36px; height: 36px; border-radius: 50%; background: #1B7F4B; color: #fff; display: grid; place-items: center; }
+.site.page-pay .pf-acct { border-radius: 16px; box-shadow: 0 0 0 1px var(--line); margin-bottom: 18px; overflow: hidden; }
+.site.page-pay .pf-acct div { display: flex; justify-content: space-between; gap: 12px; padding: 12px 16px; font-size: 14.5px; }
+.site.page-pay .pf-acct div + div { border-top: 1px solid var(--line); }
+.site.page-pay .pf-acct span { color: var(--muted); }
+.site.page-pay [hidden] { display: none !important; }
+@media (max-width: 860px) {
+  .site.page-pay .pf-wrap { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  .site.page-pay .pf-row { flex-direction: column; }
+  .site.page-pay .pf-row .btn { width: 100%; justify-content: center; }
+  .site.page-pay .pf-sum { grid-template-columns: 1fr; }
+}
+/* Pay by card buttons on the student dashboards */
+.app .pay-btns { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+.app .pay-btns .btn { flex: 1 1 auto; }
+.site.page-pay header.hero { padding-bottom: clamp(56px, 7vw, 96px); }
+.site.page-pay header.hero .hero-copy p { max-width: 62ch; font-size: clamp(16px, 1.4vw, 18px); line-height: 1.6; }

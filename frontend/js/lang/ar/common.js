@@ -460,5 +460,9 @@ HS_I18N.add({
 "Tutor Login": "دخول المدرّس",
 "Live chat": "محادثة مباشرة",
 "Talk to us here, now": "تحدّث معنا هنا الآن",
-"Articles": "مقالات"
+"Articles": "مقالات",
+"Pay by card": "ادفع بالبطاقة",
+"Pay ahead by card": "ادفع مقدّمًا بالبطاقة",
+"Send a transfer receipt": "أرسل إيصال التحويل",
+"Pay fees": "دفع الرسوم"
 });

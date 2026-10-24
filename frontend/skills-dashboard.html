@@ -11,6 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600;700&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
 <script src="js/i18n.js"></script>
+<script src="js/chat.js" defer></script>
 <!-- Vercel Analytics: counts visits once enabled in the Vercel dashboard -->
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
 <script defer src="/_vercel/insights/script.js"></script>
@@ -119,6 +120,7 @@ function render(d) {
   const pct = s.Weeks ? Math.round(100 * Math.min(s.Week, s.Weeks) / s.Weeks) : 0, done = s.Status === 'Completed' || s.Status === 'Finished';
   const attPct = att.Total ? Math.round(100 * att.Present / att.Total) : 0;
   const waHelp = 'https://wa.me/' + HELP_WA + '?text=' + encodeURIComponent('Assalaamu alaykum. This is ' + s.Name + ' (' + s.StudentID + ') from the Skills School.');
+  const payUrl = 'pay.html?id=' + encodeURIComponent(s.StudentID);
   const waPay = 'https://wa.me/' + PAYMENT_WA + '?text=' + encodeURIComponent('Assalaamu alaykum. This is my payment receipt. Name: ' + s.Name + ', ID: ' + s.StudentID + ', course: ' + s.Course + '.');
   const open = [...document.querySelectorAll('.sit')].map((x) => x.dataset.k + ':' + x.open);
   $('app').innerHTML = `
@@ -131,7 +133,7 @@ function render(d) {
       <p class="sub">${s.StartDate ? 'Started ' + fdate(s.StartDate) : 'Your tutor will confirm the start date.'}</p>${safeUrl(s.Certificate) ? `<p><a class="btn btn-ink" style="margin-top:12px" href="${esc(s.Certificate)}" target="_blank" rel="noopener">View your certificate</a></p>` : ''}</article>
     <article class="c" id="classes" style="--i:1"><div class="k">Next live class</div>${s.NextClass ? `<div class="big">${fdate(s.NextClass, true)}</div>${safeUrl(s.ClassLink) ? `<p><a class="btn btn-ink" style="margin-top:12px" href="${esc(s.ClassLink)}" target="_blank" rel="noopener">Join the class</a></p>` : '<p class="sub">The join link will appear here.</p>'}` : '<div class="big">Not scheduled</div><p class="sub">Your tutor will post the next class here.</p>'}</article>
     <article class="c" id="pay" style="--i:2"><div class="k">Payment</div><span class="pill ${pcls}">${esc(s.PaymentStatus || 'Due')}</span>
-      ${status === 'exempt' ? '<div class="big" style="margin-top:12px">Nothing to pay</div>' : s.NextDue ? `<div class="big" style="margin-top:12px">${fdate(s.NextDue)}</div><p class="sub">Next payment due${s.Fee ? ' · ' + naira(s.Fee) + ' ' + esc(String(s.Period || '').toLowerCase()) : ''}.</p>${status === 'paid' ? '' : `<p><a class="btn btn-ink" style="margin-top:12px" href="${waPay}" target="_blank" rel="noopener">Send your receipt</a></p>`}` : `<div class="big" style="margin-top:12px">${status === 'paid' ? 'Paid in full' : 'Payment due'}</div><p class="sub">${s.Fee ? naira(s.Fee) + ' · ' + esc(s.Period || 'One-time') : 'One-time course fee'}</p>${status === 'paid' ? '' : `<p><a class="btn btn-ink" style="margin-top:12px" href="${waPay}" target="_blank" rel="noopener">Send your receipt</a></p>`}`}</article>
+      ${status === 'exempt' ? '<div class="big" style="margin-top:12px">Nothing to pay</div>' : s.NextDue ? `<div class="big" style="margin-top:12px">${fdate(s.NextDue)}</div><p class="sub">Next payment due${s.Fee ? ' · ' + naira(s.Fee) + ' ' + esc(String(s.Period || '').toLowerCase()) : ''}.</p>${status === 'paid' ? `<p style="margin-top:12px"><a class="lnk" href="${payUrl}">Pay ahead by card</a></p>` : `<p class="pay-btns"><a class="btn btn-ink" href="${payUrl}">Pay by card</a><a class="btn btn-line" href="${waPay}" target="_blank" rel="noopener">Send a transfer receipt</a></p>`}` : `<div class="big" style="margin-top:12px">${status === 'paid' ? 'Paid in full' : 'Payment due'}</div><p class="sub">${s.Fee ? naira(s.Fee) + ' · ' + esc(s.Period || 'One-time') : 'One-time course fee'}</p>${status === 'paid' ? '' : `<p class="pay-btns"><a class="btn btn-ink" href="${payUrl}">Pay by card</a><a class="btn btn-line" href="${waPay}" target="_blank" rel="noopener">Send a transfer receipt</a></p>`}`}</article>
 
     <article class="c w12" id="projects" style="--i:3"><h2>Projects</h2>${projectsHtml(d)}</article>
 

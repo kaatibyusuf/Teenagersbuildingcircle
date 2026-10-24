@@ -56,6 +56,9 @@ export async function POST(request) {
     ref,
     plan: meta.plan || '',
     student: meta.student || '',
+    kind: meta.kind || '',            // 'fee' for the Pay fees page (api/fees-checkout)
+    studentId: meta.studentId || '',
+    periods: meta.periods || '',
     status: d.status || '',
     amount: d.amount || '',
     currency: d.currency || '',

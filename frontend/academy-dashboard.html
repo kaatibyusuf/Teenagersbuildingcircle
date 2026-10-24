@@ -11,6 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600;700&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
 <script src="js/i18n.js"></script>
+<script src="js/chat.js" defer></script>
 <!-- Vercel Analytics: counts visits once enabled in the Vercel dashboard -->
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
 <script defer src="/_vercel/insights/script.js"></script>
@@ -128,6 +129,7 @@ function render(d) {
   const pays = d.payments || [], remind = reminders(d, status, due), ms = d.mocks || [];
   const examDays = s.ExamDate ? dd(s.ExamDate) : null;
   const waHelp = 'https://wa.me/' + HELP_WA + '?text=' + encodeURIComponent('Assalaamu alaykum. This is ' + s.Name + ' (' + s.StudentID + ') from the Academy.');
+  const payUrl = 'pay.html?id=' + encodeURIComponent(s.StudentID);
   const waPay = 'https://wa.me/' + PAYMENT_WA + '?text=' + encodeURIComponent('Assalaamu alaykum. This is my payment receipt. Name: ' + s.Name + ', ID: ' + s.StudentID + '.');
   const openSit = [...document.querySelectorAll('.sit[open]')].map((x) => x.dataset.k);
   $('app').innerHTML = `
@@ -139,7 +141,7 @@ function render(d) {
     <article class="c" id="exam" style="--i:0"><div class="k">Exam countdown</div>${examDays === null ? '<div class="big">Date not set</div><p class="sub">Your tutor will add your exam date.</p>' : examDays < 0 ? `<div class="big">Exam done</div><p class="sub">${fdate(s.ExamDate)}</p>` : `<div class="big">${examDays === 0 ? 'Today' : examDays + ' day' + (examDays === 1 ? '' : 's')}</div><p class="sub">${esc(s.Track || 'Your exam')} · ${fdate(s.ExamDate)}</p>${examDays > 0 ? `<p class="sub">About ${Math.ceil(examDays / 7)} week${Math.ceil(examDays / 7) === 1 ? '' : 's'} of prep left.</p>` : ''}`}</article>
     <article class="c" id="classes" style="--i:1"><div class="k">Next live class</div>${s.NextClass ? `<div class="big">${fdate(s.NextClass, true)}</div>${safeUrl(s.ClassLink) ? `<p><a class="btn btn-ink" style="margin-top:12px" href="${esc(s.ClassLink)}" target="_blank" rel="noopener">Join the class</a></p>` : '<p class="sub">The join link will appear here.</p>'}` : '<div class="big">Not scheduled</div><p class="sub">Your tutor will post the next class here.</p>'}</article>
     <article class="c" id="pay" style="--i:2"><div class="k">Payment</div><span class="pill ${pcls}">${esc(s.PaymentStatus || 'Due')}</span>
-      ${status === 'exempt' ? '<div class="big" style="margin-top:12px">Nothing to pay</div>' : `<div class="big" style="margin-top:12px">${isNaN(due) ? 'No date set' : fdate(s.NextDue)}</div><p class="sub">Next payment due${s.MonthlyFee ? ' · ' + naira(s.MonthlyFee) + ' a month' : ''}.</p>${status === 'paid' ? '' : `<p><a class="btn btn-ink" style="margin-top:12px" href="${waPay}" target="_blank" rel="noopener">Send your receipt</a></p>`}`}</article>
+      ${status === 'exempt' ? '<div class="big" style="margin-top:12px">Nothing to pay</div>' : `<div class="big" style="margin-top:12px">${isNaN(due) ? 'No date set' : fdate(s.NextDue)}</div><p class="sub">Next payment due${s.MonthlyFee ? ' · ' + naira(s.MonthlyFee) + ' a month' : ''}.</p>${status === 'paid' ? `<p style="margin-top:12px"><a class="lnk" href="${payUrl}">Pay ahead by card</a></p>` : `<p class="pay-btns"><a class="btn btn-ink" href="${payUrl}">Pay by card</a><a class="btn btn-line" href="${waPay}" target="_blank" rel="noopener">Send a transfer receipt</a></p>`}`}</article>
 
     <article class="c w12" id="mocks" style="--i:3"><h2>Mock exams${ms.length ? ` <span class="pill p-due" style="font-size:12px;vertical-align:middle">${ms.length} sitting${ms.length === 1 ? '' : 's'}</span>` : ''}</h2>${mockHtml(d)}</article>
 

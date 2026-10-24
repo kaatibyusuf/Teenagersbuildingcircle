@@ -59,5 +59,7 @@ HS_I18N.add({
 "re:(\\d+) classes": "$1 حصة",
 "re:(\\d+) of 30 juz memorised": "$1 من 30 جزءًا محفوظة",
 "re:Your submission \\(late\\), (.+)": "تسليمك (متأخر)، $1",
-"re:Your submission, (.+)": "تسليمك، $1"
+"re:Your submission, (.+)": "تسليمك، $1",
+"re:Next payment due: (.+)\\. Pay by card and this page updates straight away\\. If you pay by bank transfer, send the receipt on": "الدفعة القادمة: $1. ادفع بالبطاقة وتتحدّث هذه الصفحة فورًا. وإن دفعت بالتحويل البنكي فأرسل الإيصال على",
+"Next payment due. Pay by card and this page updates straight away. If you pay by bank transfer, send the receipt on": "الدفعة القادمة مستحقة. ادفع بالبطاقة وتتحدّث هذه الصفحة فورًا. وإن دفعت بالتحويل البنكي فأرسل الإيصال على"
 });

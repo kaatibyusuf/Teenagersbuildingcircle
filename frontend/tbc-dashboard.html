@@ -11,6 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600;700&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
 <script src="js/i18n.js"></script>
+<script src="js/chat.js" defer></script>
 <!-- Vercel Analytics: counts visits once enabled in the Vercel dashboard -->
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
 <script defer src="/_vercel/insights/script.js"></script>
@@ -156,6 +157,7 @@ function render(d) {
   const sessions = (d.sessions || []).slice().sort((a, b) => a.Start < b.Start ? -1 : 1);
   const up = sessions.filter((x) => x !== ns && new Date(x.Start) >= new Date()), past = sessions.filter((x) => new Date(x.Start) < new Date() && x !== ns).reverse();
   const waHelp = 'https://wa.me/' + HELP_WA + '?text=' + encodeURIComponent('Assalaamu alaykum. This is ' + s.Name + ' (' + s.StudentID + ') from the Teenagers Building Circle.');
+  const payUrl = 'pay.html?id=' + encodeURIComponent(s.StudentID);
   const waPay = 'https://wa.me/' + PAYMENT_WA + '?text=' + encodeURIComponent('Assalaamu alaykum. This is my payment receipt. Name: ' + s.Name + ', ID: ' + s.StudentID + '.');
   const rated = (d.pillars || []).filter((p) => p.Rating);
   $('app').innerHTML = `
@@ -166,7 +168,7 @@ function render(d) {
   <div class="grid">
     <article class="c" id="next" style="--i:0"><div class="k">Next live session</div>${ns ? `<div class="big">${fdate(ns.Start, true)}</div><p class="sub"><b>${esc(ns.Title)}</b>${ns.Pillar ? ' · ' + esc(ns.Pillar) : ''}</p>${ns.Notes ? `<p class="sub">${esc(ns.Notes)}</p>` : ''}${safeUrl(ns.Link) ? `<p><a class="btn btn-ink" style="margin-top:12px" href="${esc(ns.Link)}" target="_blank" rel="noopener">Join the session</a></p>` : '<p class="sub">The join link will appear here.</p>'}` : '<div class="big">Not scheduled</div><p class="sub">Your facilitator will post the next session here.</p>'}</article>
     <article class="c" id="pay" style="--i:1"><div class="k">Payment</div><span class="pill ${pcls}">${esc(s.PaymentStatus || 'Due')}</span>
-      ${status === 'exempt' ? '<div class="big" style="margin-top:12px">Nothing to pay</div>' : `<div class="big" style="margin-top:12px">${isNaN(due) ? 'No date set' : fdate(s.NextDue)}</div><p class="sub">Next payment due${s.MonthlyFee ? ' · ' + naira(s.MonthlyFee) + ' a month' : ''}.</p>${status === 'paid' ? '' : `<p><a class="btn btn-ink" style="margin-top:12px" href="${waPay}" target="_blank" rel="noopener">Send your receipt</a></p>`}`}</article>
+      ${status === 'exempt' ? '<div class="big" style="margin-top:12px">Nothing to pay</div>' : `<div class="big" style="margin-top:12px">${isNaN(due) ? 'No date set' : fdate(s.NextDue)}</div><p class="sub">Next payment due${s.MonthlyFee ? ' · ' + naira(s.MonthlyFee) + ' a month' : ''}.</p>${status === 'paid' ? `<p style="margin-top:12px"><a class="lnk" href="${payUrl}">Pay ahead by card</a></p>` : `<p class="pay-btns"><a class="btn btn-ink" href="${payUrl}">Pay by card</a><a class="btn btn-line" href="${waPay}" target="_blank" rel="noopener">Send a transfer receipt</a></p>`}`}</article>
     <article class="c" style="--i:2"><div class="k">Attendance</div><div class="big">${att === null ? 'No data yet' : att + '%'}</div>
       ${att === null ? '' : `<div class="bar"><i data-w="${att}"></i></div><div class="row"><span>${s.AttendancePresent} present</span><span>${s.AttendanceTotal} sessions</span></div>`}</article>
 
