@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tutor | Himaayah Academy</title>
+<title>Mentor | Himaayah Academy</title>
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#094570">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,15 +17,15 @@
 </head>
 <body>
 <header class="top"><div>
-<a class="brand" href="index.html"><svg width="22" height="27" viewBox="0 0 377.21 459.6" fill="#094570" aria-hidden="true"><path d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>Himaayah Schools <em>Academy tutor</em></a>
+<a class="brand" href="index.html"><svg width="22" height="27" viewBox="0 0 377.21 459.6" fill="#094570" aria-hidden="true"><path d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>Himaayah Schools <em>Academy mentor</em></a>
 <nav><a class="btn btn-line" href="index.html">Home</a><button class="btn btn-ink" id="out" hidden>Log out</button></nav>
 </div></header>
 
 <main id="login" class="login"><form class="lbox" id="lf" novalidate>
 <div class="crest" aria-hidden="true"><svg width="26" height="32" viewBox="0 0 377.21 459.6" fill="#094570"><path d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg></div>
-<span class="kick">Academy</span><h1>Tutor login</h1><p>Sign in with the Tutor ID and access code the school gave you.</p>
+<span class="kick">Academy</span><h1>Mentor login</h1><p>Sign in with the Mentor ID and access code the school gave you.</p>
 <div class="demo" id="demoNote" hidden><b>Demo mode.</b> Use ID <b>DEMO</b> and code <b>demo</b> to try it with sample data.</div>
-<div class="f"><label for="tid">Tutor ID</label><input id="tid" autocomplete="username" autocapitalize="characters" placeholder="e.g. AT-001" required></div>
+<div class="f"><label for="tid">Mentor ID</label><input id="tid" autocomplete="username" autocapitalize="characters" placeholder="e.g. AT-001" required></div>
 <div class="f"><label for="tcode">Access code</label><input id="tcode" type="password" autocomplete="new-password" data-lpignore="true" required></div>
 <div class="err" id="err" role="alert"></div>
 <button class="btn btn-ink" id="go" type="submit">Sign in</button>
@@ -35,27 +35,29 @@
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
 <script>
-/* ===== SETTINGS =====
-   Same Apps Script web app as the other portals. While it is empty the page runs in DEMO mode. */
+/* ===== SETTINGS ===== Same Apps Script web app as the other portals. */
 const API_URL = 'https://script.google.com/macros/s/AKfycby0AsifBuB_Ad7g1SjDXCipaDU27-BrzYWf67muw5jeY_C0_0uz8AhQYYXdiNRQhvqX/exec';
 const KEY = 'hct';
 
 const $ = (id) => document.getElementById(id);
 const esc = (t) => String(t ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fdate = (iso, t) => { const d = new Date(iso); return isNaN(d) ? esc(iso || 'Not set') : d.toLocaleDateString('en-GB', {day:'numeric', month:'short', year:'numeric'}) + (t ? ', ' + d.toLocaleTimeString('en-GB', {hour:'2-digit', minute:'2-digit'}) : ''); };
-const TABS = [['students', 'Students'], ['mocks', 'Mocks'], ['goals', 'Goals and class'], ['account', 'Account']];
+const pct = (x) => x == null ? '–' : x + '%';
+const plural = (n, w) => n + ' ' + w + (n === 1 ? '' : /(s|sh|ch|x)$/.test(w) ? 'es' : 's');
+const safeUrl = (u) => /^https?:\/\//i.test(String(u ?? '').trim());
+const linkify = (t) => esc(t).replace(/(https?:\/\/[^\s<]+)/g, '<a class="lnk" href="$1" target="_blank" rel="noopener">$1</a>').replace(/\n/g, '<br>');
+const TABS = [['students', 'Mentees'], ['attendance', 'Attendance'], ['tasks', 'Daily tasks'], ['cbt', 'CBT'], ['mocks', 'Mocks'], ['goals', 'Goals and class'], ['account', 'Account']];
 let D = null;
-const S = { tab: 'students', q: '', type: 'Daily mock', subject: '', outOf: '100', date: '', sc: {} };
+const S = { tab: 'students', q: '', type: 'Daily mock', subject: '', outOf: '100', date: '', sc: {}, attDate: '', attSession: 'Class', att: {}, open: {}, qtext: '' };
 
 const creds = () => { try { return JSON.parse(sessionStorage.getItem(KEY) || 'null') || {}; } catch (e) { return {}; } };
 async function api(action, extra) {
   const c = creds();
-  if (!API_URL) return demoApi(c, action, extra || {});
   const r = await fetch(API_URL, { method: 'POST', body: JSON.stringify(Object.assign({ action, id: c.id, code: c.code }, extra || {})) });
   return r.json();
 }
 let toastT;
-function toast(msg, bad) { const t = $('toast'); t.textContent = msg; t.className = 'toast' + (bad ? ' bad' : ''); t.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => { t.hidden = true; }, bad ? 5000 : 3000); }
+function toast(msg, bad) { const t = $('toast'); t.textContent = msg; t.className = 'toast' + (bad ? ' bad' : ''); t.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => { t.hidden = true; }, bad ? 6000 : 3000); }
 let busy = false;
 async function act(action, extra, okMsg, btn) {
   if (busy) return false;
@@ -71,68 +73,156 @@ async function act(action, extra, okMsg, btn) {
 
 /* ---------- helpers ---------- */
 const today = () => D.today;
-const sd = (iso) => { const d = new Date(iso); return isNaN(d) ? '' : d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }); };
 const examIn = (s) => { if (!s.ExamDate) return ''; const n = Math.round((new Date(s.ExamDate + 'T00:00:00') - new Date(new Date().toDateString())) / 864e5); return n < 0 ? 'exam done' : n + ' days to exam'; };
-const readState = (s) => { const r = s.Reading || {}; if (!r.Target) return { t: s.IsUtme ? 'No target set' : 'No target', c: s.IsUtme ? 'p-over' : 'p-wash' }; return { t: r.Done + '/' + r.Target + ' ' + D.readingUnit, c: r.Done >= r.Target ? 'p-ink' : 'p-sky' }; };
+const readState = (s) => { const r = s.Reading || {}; if (!r.Target) return { t: s.IsUtme ? 'No reading target' : 'No reading target', c: s.IsUtme ? 'p-red' : 'p-wash' }; return { t: r.Done + '/' + r.Target + ' ' + D.readingUnit, c: r.Done >= r.Target ? 'p-ink' : 'p-sky' }; };
 const noTarget = () => D.students.filter((s) => s.IsUtme && !(s.Reading && s.Reading.Target));
+const stuName = (id) => (D.students.find((s) => s.StudentID === id) || {}).Name || id;
+const audLabel = (a) => !a || a === 'TUTOR:' + D.teacher.TeacherID.toUpperCase() ? 'All my mentees' : a === 'ACADEMY' ? 'Everyone in the Academy' : a.indexOf('TUTOR:') === 0 ? 'Mentees of ' + a.slice(6) : a;
+const audOpts = (sel) => [['TUTOR:' + D.teacher.TeacherID.toUpperCase(), 'All my mentees']].concat(D.groups.map((g) => [g, 'Class group: ' + g]), D.tracks.filter((t) => D.students.some((s) => s.Track === t)).map((t) => [t, 'Track: ' + t]), D.teacher.Role === 'Admin' ? [['ACADEMY', 'Everyone in the Academy']] : [])
+  .map(([v, l]) => `<option value="${esc(v)}"${v === sel ? ' selected' : ''}>${esc(l)}</option>`).join('');
 
-/* ---------- views ---------- */
+/* ---------- mentees ---------- */
 function vStudents() {
-  const row = (s) => { const rs = readState(s), l = s.Last;
-    return `<details class="box stu" data-name="${esc((s.Name + ' ' + s.StudentID).toLowerCase())}">
-    <summary><div><b>${esc(s.Name)}</b><small>${esc(s.Track || 'Academy')}${s.Group ? ' · ' + esc(s.Group) : ''}${s.ExamDate ? ' · ' + examIn(s) : ''}</small></div><div class="sum-r"><span class="pill ${l ? 'p-ink' : 'p-wash'}">${l ? l.Percent + '%' : 'No mock'}</span><span class="pill ${rs.c}">${esc(rs.t)}</span></div></summary>
-    <div class="body"><div class="tiles" style="grid-template-columns:repeat(3,1fr)"><div class="tile"><b>${s.Sittings || 0}</b><span>mock sittings</span></div><div class="tile"><b>${s.Avg5 != null && s.Sittings ? s.Avg5 + '%' : '–'}</b><span>average, last 5</span></div><div class="tile"><b>${s.TargetPercent ? s.TargetPercent + '%' : '–'}</b><span>target</span></div></div>
-      <p class="sub">${l ? 'Latest: ' + esc(l.Type) + ', ' + fdate(l.Date) + ' (' + l.Percent + '%).' : 'No mock recorded yet.'}${s.ExamDate ? ' Exam: ' + fdate(s.ExamDate) + '.' : ''}${s.NextClass ? ' Next class: ' + fdate(s.NextClass, true) + '.' : ''}${D.teacher.Role === 'Admin' && s.PaymentStatus ? ' Payment: ' + esc(s.PaymentStatus) + '.' : ''}</p>
-      ${s.Reading && s.Reading.History && s.Reading.History.length ? `<p class="sub">Reading, last weeks: ${s.Reading.History.slice(-6).map((h) => h.Done + '/' + h.Target).join(', ')}</p>` : ''}
-      ${s.Wa ? `<p class="sub"><a class="lnk" href="https://wa.me/${esc(s.Wa)}" target="_blank" rel="noopener">Message on WhatsApp</a></p>` : ''}</div></details>`; };
-  const nt = noTarget(), withMock = D.students.filter((s) => s.Last).length;
-  return `<article class="c w12"><h2>Your students</h2>${nt.length ? `<div class="demo" style="margin-bottom:14px"><b>${nt.length} UTME student${nt.length === 1 ? ' has' : 's have'} no reading target this week:</b> ${nt.map((s) => esc(s.Name)).join(', ')}. The reading club is compulsory for UTME.</div>` : ''}
-    <div class="tiles"><div class="tile"><b>${D.students.length}</b><span>students</span></div><div class="tile"><b>${withMock}</b><span>have a mock</span></div><div class="tile ${nt.length ? 'warn' : ''}"><b>${nt.length}</b><span>UTME, no reading target</span></div></div>
-    <input class="in" id="q" type="search" placeholder="Search by name or ID" value="${esc(S.q)}" style="max-width:340px">
+  const o = D.overview || {}, risk = o.atRisk || [];
+  const row = (s) => { const rs = readState(s), l = s.Last, m = s.Metrics || {};
+    return `<details class="box stu" data-k="s-${esc(s.StudentID)}" data-name="${esc((s.Name + ' ' + s.StudentID + ' ' + s.Matric).toLowerCase())}"${S.open['s-' + s.StudentID] ? ' open' : ''}>
+    <summary><div><b>${esc(s.Name)}${risk.indexOf(s.StudentID) >= 0 ? ' <span class="pill p-red">Needs attention</span>' : ''}</b><small>${esc(s.StudentID)}${s.Matric ? ' · ' + esc(s.Matric) : ''} · ${esc(s.Track || 'Academy')}${s.Group ? ' · ' + esc(s.Group) : ''}${s.ExamDate ? ' · ' + examIn(s) : ''}</small></div><div class="sum-r">${s.Rank ? `<span class="pill p-wash">Rank ${s.Rank}</span>` : ''}<span class="pill ${m.overall == null ? 'p-wash' : 'p-ink'}">${m.overall == null ? 'No score yet' : m.overall + ' overall'}</span></div></summary>
+    <div class="body"><div class="tiles acx-tiles5"><div class="tile"><b>${pct(m.mocks)}</b><span>mocks (${m.mockCount || 0})</span></div><div class="tile"><b>${pct(m.attendance)}</b><span>attendance</span></div><div class="tile"><b>${pct(m.tasks)}</b><span>tasks (${m.tasksDone || 0}/${m.tasksSet || 0})</span></div><div class="tile"><b>${pct(m.cbt)}</b><span>CBT practice</span></div><div class="tile"><b>${pct(m.reading)}</b><span>reading</span></div></div>
+      <p class="sub">${l ? 'Latest mock: ' + esc(l.Type) + ', ' + fdate(l.Date) + ' (' + l.Percent + '%).' : 'No mock recorded yet.'}${s.TargetPercent ? ' Target: ' + s.TargetPercent + '%.' : ''}${s.ExamDate ? ' Exam: ' + fdate(s.ExamDate) + '.' : ''} Reading this week: <span class="pill ${rs.c}">${esc(rs.t)}</span>. Fees: ${esc(s.PaymentStatus)}.</p>
+      <div class="acx-acts"><button class="btn btn-ink btn-sm" type="button" data-act="view" data-id="${esc(s.StudentID)}">Open full dashboard</button>${s.Wa ? `<a class="btn btn-line btn-sm" href="https://wa.me/${esc(s.Wa)}" target="_blank" rel="noopener">Message on WhatsApp</a>` : ''}</div></div></details>`; };
+  const nt = noTarget();
+  return `<article class="c w12"><h2>Your mentees</h2>
+    <div class="tiles acx-tiles5"><div class="tile"><b>${o.students || 0}</b><span>mentees</span></div><div class="tile"><b>${o.overall == null ? '–' : o.overall}</b><span>average overall</span></div><div class="tile"><b>${pct(o.mocks)}</b><span>average mocks</span></div><div class="tile"><b>${pct(o.attendance)}</b><span>attendance</span></div><div class="tile ${risk.length ? 'warn' : ''}"><b>${risk.length}</b><span>need attention</span></div></div>
+    ${nt.length ? `<div class="demo" style="margin-bottom:14px"><b>${nt.length === 1 ? '1 UTME mentee has' : nt.length + ' UTME mentees have'} no reading target this week:</b> ${nt.map((s) => esc(s.Name)).join(', ')}.</div>` : ''}
+    <p class="sub">Scores cover the last 30 days. “Needs attention” means an overall score under 50 or attendance under 60%.</p>
+    <input class="in" id="q" type="search" placeholder="Search by name, ID or matric number" value="${esc(S.q)}" style="max-width:360px">
     <div id="stulist">${D.students.map(row).join('') || '<p class="empty" style="margin-top:12px">No Academy students are assigned to you yet.</p>'}</div></article>`;
 }
 
+/* ---------- attendance ---------- */
+function vAttendance() {
+  const date = S.attDate || today(), ses = S.attSession || 'Class';
+  const existing = {}; D.attendance.forEach((r) => { if (r.Date === date && r.Session.toLowerCase() === ses.toLowerCase()) existing[r.StudentID] = r.Status; });
+  const val = (id) => S.att[id] || existing[id] || '';
+  const sessions = {}; D.attendance.forEach((r) => { const k = r.Date + '|' + r.Session; (sessions[k] = sessions[k] || { Date: r.Date, Session: r.Session, P: 0, N: 0 }); if (r.Status !== 'Excused') { sessions[k].N++; if (r.Status === 'Present' || r.Status === 'Late') sessions[k].P++; } });
+  const recent = Object.values(sessions).sort((a, b) => a.Date < b.Date ? 1 : -1).slice(0, 10);
+  return `<div class="grid"><article class="c w8"><h2>Take the register</h2><p class="sub">Choose the date and class, mark each mentee, then save. Saving the same date and class again updates it.</p>
+    <form class="frm" data-form="att"><div class="row2"><div><label class="fl" for="ad">Date</label><input class="in" id="ad" name="date" type="date" value="${esc(date)}" max="${esc(today())}" required></div>
+      <div><label class="fl" for="as">Class</label><input class="in" id="as" name="session" maxlength="60" list="sesl" value="${esc(ses)}" placeholder="e.g. Mathematics"><datalist id="sesl">${[...new Set(D.attendance.map((r) => r.Session))].map((x) => `<option value="${esc(x)}">`).join('')}${D.subjects.map((x) => `<option value="${esc(x)}">`).join('')}</datalist></div></div>
+      ${D.students.length ? `<div class="tool"><button class="btn btn-line btn-sm" type="button" data-act="allPresent">Mark everyone present</button></div>
+      <div class="acx-reg">${D.students.map((s) => `<div class="acx-reg-r"><span><b>${esc(s.Name)}</b><small>${esc(s.Group || s.Track || '')}</small></span><div class="acx-seg" role="radiogroup" aria-label="${esc(s.Name)}">${D.statuses.map((st) => `<label class="${val(s.StudentID) === st ? 'on' : ''}"><input type="radio" name="at-${esc(s.StudentID)}" value="${st}"${val(s.StudentID) === st ? ' checked' : ''}><span>${st}</span></label>`).join('')}</div></div>`).join('')}</div>
+      <button class="btn btn-ink" type="submit">Save register</button>` : '<p class="empty">No mentees yet.</p>'}</form></article>
+    <article class="c w4"><h2>Recent classes</h2>${recent.length ? `<ul class="list">${recent.map((r) => `<li><span><b>${esc(r.Session)}</b><br><span class="sub">${fdate(r.Date)}</span></span><span>${r.P}/${r.N} present</span></li>`).join('')}</ul>` : '<p class="empty">No registers yet.</p>'}</article></div>`;
+}
+
+/* ---------- daily tasks ---------- */
+function vTasks() {
+  const due = S.taskDue || today();
+  const list = D.tasks.map((t) => {
+    const marked = t.Submissions.filter((x) => x.Marked).length, waiting = t.Submissions.length - marked;
+    return `<details class="box stu" data-k="t-${esc(t.TaskID)}"${S.open['t-' + t.TaskID] ? ' open' : ''}><summary><div><b>${esc(t.Title)}${t.Active ? '' : ' <span class="pill p-wash">Closed</span>'}</b><small>${t.Subject ? esc(t.Subject) + ' · ' : ''}Due ${fdate(t.Due)} · ${esc(audLabel(t.Audience))} · out of ${t.MaxScore}</small></div><div class="sum-r"><span class="pill p-sky">${t.Submissions.length}/${t.Expected} in</span>${waiting ? `<span class="pill p-red">${waiting} to mark</span>` : ''}</div></summary>
+      <div class="body">${t.Instructions ? `<div class="acx-instr">${linkify(t.Instructions)}</div>` : ''}
+        ${t.Submissions.length ? t.Submissions.map((x) => `<div class="acx-sub"><div class="acx-sub-h"><b>${esc(x.Name)}</b><small>${fdate(x.Submitted, true)}</small>${x.Marked ? `<span class="pill p-ink">${x.Score}/${t.MaxScore}</span>` : '<span class="pill p-red">To mark</span>'}</div>
+          ${x.Answer ? `<p>${linkify(x.Answer)}</p>` : ''}${safeUrl(x.Link) ? `<p><a class="lnk" href="${esc(x.Link)}" target="_blank" rel="noopener">Open their link</a></p>` : ''}
+          <form class="acx-markf" data-form="mark" data-id="${esc(x.SubmissionID)}" data-max="${t.MaxScore}"><input class="in" name="score" type="number" min="0" max="${t.MaxScore}" step="any" inputmode="decimal" placeholder="Score / ${t.MaxScore}" value="${x.Score == null ? '' : x.Score}" aria-label="Score for ${esc(x.Name)}"><input class="in" name="feedback" maxlength="1000" placeholder="Feedback (optional)" value="${esc(x.Feedback)}"><button class="btn btn-ink btn-sm" type="submit">${x.Marked ? 'Update' : 'Save mark'}</button></form></div>`).join('') : '<p class="empty">No submissions yet.</p>'}
+        <div class="acx-acts"><button class="btn btn-line btn-sm" type="button" data-act="${t.Active ? 'closeTask' : 'openTask'}" data-id="${esc(t.TaskID)}">${t.Active ? 'Close this task' : 'Reopen this task'}</button></div></div></details>`;
+  }).join('');
+  return `<div class="grid"><article class="c w5"><h2>Set a daily task</h2><p class="sub">Your mentees see it on their dashboard and submit their answer there.</p>
+    <form class="frm" data-form="task"><div><label class="fl" for="tt">Title</label><input class="in" id="tt" name="title" maxlength="120" required placeholder="e.g. Physics: motion, past questions 1–20"></div>
+      <div class="row2"><div><label class="fl" for="ts">Subject</label><input class="in" id="ts" name="subject" list="subj" maxlength="40" placeholder="e.g. Physics"><datalist id="subj">${D.subjects.map((x) => `<option value="${esc(x)}">`).join('')}</datalist></div><div><label class="fl" for="tm">Out of</label><input class="in" id="tm" name="maxScore" type="number" min="1" max="1000" value="10" required></div></div>
+      <div class="row2"><div><label class="fl" for="tdue">Due date</label><input class="in" id="tdue" name="due" type="date" value="${esc(due)}" required></div><div><label class="fl" for="ta">For</label><select class="in" id="ta" name="audience">${audOpts('')}</select></div></div>
+      <div><label class="fl" for="ti">Instructions</label><textarea class="in" id="ti" name="instructions" rows="5" maxlength="3000" placeholder="What to do. Links are fine."></textarea></div>
+      <button class="btn btn-ink" type="submit">Post task</button></form></article>
+    <article class="c w7"><h2>Tasks and submissions</h2>${list || '<p class="empty">No tasks yet.</p>'}</article></div>`;
+}
+
+/* ---------- CBT ---------- */
+function parseQ(text) {   // mirrors the server check, for a live preview
+  const blocks = String(text || '').replace(/\r/g, '').split(/\n\s*\n/).map((b) => b.trim()).filter(Boolean), errs = [];
+  blocks.forEach((b, i) => {
+    const q = { Q: '', o: {}, a: '' }; let last = 'Q';
+    b.split('\n').forEach((raw) => { const l = raw.trim(); let m; if (!l) return;
+      if ((m = /^\(?([A-Ea-e])[.)]\s+(.*)$/.exec(l)) && last !== 'X') { q.o[m[1].toUpperCase()] = m[2]; last = m[1].toUpperCase(); }
+      else if ((m = /^(?:answer|ans|correct)\s*[:\-]\s*\(?([A-Ea-e])\)?\b/i.exec(l))) { q.a = m[1].toUpperCase(); last = 'A'; }
+      else if (/^(?:explanation|why|note)\s*[:\-]/i.test(l)) last = 'X';
+      else if (last === 'Q') q.Q += l; });
+    if (!q.Q) errs.push('Question ' + (i + 1) + ' has no question text.');
+    else if (Object.keys(q.o).length < 2) errs.push('Question ' + (i + 1) + ' needs at least two options.');
+    else if (!q.a) errs.push('Question ' + (i + 1) + ' has no "Answer:" line.');
+    else if (!q.o[q.a]) errs.push('Question ' + (i + 1) + ': the answer is not one of its options.');
+  });
+  return { n: blocks.length, errs };
+}
+function vCbt() {
+  const p = parseQ(S.qtext);
+  const list = D.tests.map((x) => `<details class="box stu" data-k="x-${esc(x.TestID)}"${S.open['x-' + x.TestID] ? ' open' : ''}><summary><div><b>${esc(x.Title)}${x.Active ? '' : ' <span class="pill p-wash">Closed</span>'}</b><small>${esc(x.Kind)}${x.Subject ? ' · ' + esc(x.Subject) : ''} · ${plural(x.Questions, 'question')} · ${x.Minutes ? x.Minutes + ' min' : 'no time limit'} · ${esc(audLabel(x.Audience))}</small><small>${x.Opens ? 'Opens ' + fdate(x.Opens, true) : 'Open now'}${x.Closes ? ' · closes ' + fdate(x.Closes, true) : ''}</small></div><div class="sum-r"><span class="pill p-sky">${plural(x.Students, 'student')}</span>${x.Average != null ? `<span class="pill p-ink">avg ${x.Average}%</span>` : ''}</div></summary>
+    <div class="body">${x.Results.length ? `<table><thead><tr><th>Student</th><th>Best score</th></tr></thead><tbody>${x.Results.map((r) => `<tr><td>${esc(r.Name)}</td><td><b>${r.Percent}%</b> <span class="sub">(${r.Score}/${r.OutOf})</span></td></tr>`).join('')}</tbody></table>` : '<p class="empty">Nobody has taken it yet.</p>'}
+      <div class="acx-acts"><button class="btn btn-line btn-sm" type="button" data-act="${x.Active ? 'closeTest' : 'openTest'}" data-id="${esc(x.TestID)}">${x.Active ? 'Close this test' : 'Reopen this test'}</button></div></div></details>`).join('');
+  return `<div class="grid"><article class="c w6"><h2>Create a CBT test</h2><p class="sub">Paste the questions in the format below. Students get them one at a time with a timer, and the marking is automatic. A Sunday mock can be taken once and goes on each student’s mock record.</p>
+    <form class="frm" data-form="cbt"><div><label class="fl" for="xt">Title</label><input class="in" id="xt" name="title" maxlength="120" required placeholder="e.g. Sunday mock 3: English"></div>
+      <div class="row3"><div><label class="fl" for="xk">Type</label><select class="in" id="xk" name="kind">${D.kinds.map((k) => `<option>${esc(k)}</option>`).join('')}</select></div><div><label class="fl" for="xs">Subject</label><input class="in" id="xs" name="subject" list="subj2" maxlength="40" placeholder="e.g. English"><datalist id="subj2">${D.subjects.map((x) => `<option value="${esc(x)}">`).join('')}</datalist></div><div><label class="fl" for="xm">Minutes</label><input class="in" id="xm" name="minutes" type="number" min="0" max="300" value="30" title="0 means no time limit"></div></div>
+      <div class="row2"><div><label class="fl" for="xo">Opens <small>(optional for practice)</small></label><input class="in" id="xo" name="opens" type="datetime-local"></div><div><label class="fl" for="xc">Closes</label><input class="in" id="xc" name="closes" type="datetime-local"></div></div>
+      <div><label class="fl" for="xa">For</label><select class="in" id="xa" name="audience">${audOpts('')}</select></div>
+      <div><label class="fl" for="xq">Questions</label><textarea class="in acx-mono" id="xq" name="questions" rows="12" placeholder="1. What is 2 + 2?&#10;A. 3&#10;B. 4&#10;C. 5&#10;D. 6&#10;Answer: B&#10;Explanation: optional&#10;&#10;2. Next question…">${esc(S.qtext)}</textarea>
+      <p class="sub" id="xqs">${p.n ? plural(p.n, 'question') + (p.errs.length ? ' · ' + esc(p.errs[0]) : ' · ready') : 'Leave a blank line between questions. Options are A. to E., then an "Answer:" line. Minutes: 0 means no time limit.'}</p></div>
+      <button class="btn btn-ink" type="submit">Create test</button></form></article>
+    <article class="c w6"><h2>Your tests</h2>${list || '<p class="empty">No tests yet.</p>'}</article></div>`;
+}
+
+/* ---------- mocks, goals, account (as before) ---------- */
 function vMocks() {
   const date = S.date || today();
-  return `<article class="c w12"><h2>Record a mock</h2><p class="sub">Choose the mock, then enter each student’s score for one subject. Leave a score empty to skip a student. Entering the same student, date, type and subject again corrects the earlier score.</p>
+  return `<article class="c w12"><h2>Record a mock</h2><p class="sub">For mocks written on paper. Choose the mock, then enter each mentee’s score for one subject. Leave a score empty to skip someone. Entering the same student, date, type and subject again corrects the earlier score. CBT Sunday mocks are recorded automatically.</p>
   <form class="frm" data-form="mock">
     <div class="row3"><div><label class="fl" for="mt">Type</label><select class="in" id="mt" name="type">${D.types.map((t) => `<option${t === S.type ? ' selected' : ''}>${esc(t)}</option>`).join('')}</select></div>
       <div><label class="fl" for="md">Date</label><input class="in" id="md" name="date" type="date" value="${esc(date)}" max="${esc(today())}" required></div>
       <div><label class="fl" for="mo">Out of</label><input class="in" id="mo" name="outOf" type="number" min="1" max="1000" step="any" inputmode="decimal" value="${esc(S.outOf)}" required></div></div>
-    <div><label class="fl" for="ms">Subject</label><input class="in" id="ms" name="subject" list="subj" maxlength="40" placeholder="e.g. Mathematics" value="${esc(S.subject)}" autocomplete="off" required style="max-width:340px"><datalist id="subj">${D.subjects.map((x) => `<option value="${esc(x)}">`).join('')}</datalist></div>
+    <div><label class="fl" for="ms">Subject</label><input class="in" id="ms" name="subject" list="subj3" maxlength="40" placeholder="e.g. Mathematics" value="${esc(S.subject)}" autocomplete="off" required style="max-width:340px"><datalist id="subj3">${D.subjects.map((x) => `<option value="${esc(x)}">`).join('')}</datalist></div>
     ${D.students.length ? `<div class="scores">${D.students.map((s) => `<div><span><b>${esc(s.Name)}</b><br><small style="color:var(--muted)">${esc(s.Track || '')}</small></span><input class="in" name="sc-${esc(s.StudentID)}" type="number" min="0" step="any" inputmode="decimal" aria-label="Score for ${esc(s.Name)}" value="${esc(S.sc[s.StudentID] ?? '')}"></div>`).join('')}</div>
     <button class="btn btn-ink" type="submit">Save scores</button>` : '<p class="empty">No Academy students are assigned to you yet.</p>'}</form></article>`;
 }
-
 function vGoals() {
   const pick = (n) => `<div class="pick" id="${n}">${D.students.map((s) => `<label><input type="checkbox" value="${esc(s.StudentID)}"> <span>${esc(s.Name)}</span><small>${esc(s.Track || '')}</small></label>`).join('') || '<p class="empty">No students yet.</p>'}</div>
     <div class="tool"><button class="btn btn-line btn-sm" type="button" data-act="all" data-t="${n}">Select all</button><button class="btn btn-line btn-sm" type="button" data-act="none" data-t="${n}">Clear</button></div>`;
-  return `<div class="grid"><article class="c w6"><h2>Exam date and target</h2><p class="sub">Applies to the students you tick. Leave a field empty to keep what is already there.</p>
+  return `<div class="grid"><article class="c w6"><h2>Exam date and target</h2><p class="sub">Applies to the mentees you tick. Leave a field empty to keep what is already there.</p>
     <form class="frm" data-form="goals"><div class="row2"><div><label class="fl" for="ge">Exam date</label><input class="in" id="ge" name="examDate" type="date"></div><div><label class="fl" for="gt">Target score (%)</label><input class="in" id="gt" name="target" type="number" min="1" max="100" step="any" inputmode="decimal" placeholder="e.g. 75"></div></div>
     <label class="fl">Students</label>${pick('gp')}<button class="btn btn-ink" type="submit">Save</button></form></article>
-  <article class="c w6"><h2>Next live class</h2><p class="sub">Shown on each ticked student’s dashboard with a join button.</p>
-    <form class="frm" data-form="class"><div><label class="fl" for="cn">Date and time</label><input class="in" id="cn" name="nextClass" type="datetime-local"></div><div><label class="fl" for="cl">Join link</label><input class="in" id="cl" name="link" type="url" placeholder="https://meet.google.com/..."></div>
+  <article class="c w6"><h2>Next live class</h2><p class="sub">Shown on each ticked mentee’s dashboard. The class group’s Google Meet and Telegram links are set by the admin; a link here replaces the Meet link for these mentees. Links are hidden from anyone whose fees are overdue.</p>
+    <form class="frm" data-form="class"><div><label class="fl" for="cn">Date and time</label><input class="in" id="cn" name="nextClass" type="datetime-local"></div><div><label class="fl" for="cl">Meet link (optional)</label><input class="in" id="cl" name="link" type="url" placeholder="https://meet.google.com/..."></div>
     <label class="fl">Students</label>${pick('cp')}<button class="btn btn-ink" type="submit">Save class</button></form></article></div>`;
 }
-
 function vAccount() {
-  return `<article class="c w12" style="max-width:560px"><h2>Your account</h2><p class="sub">${esc(D.teacher.Name)} · ${esc(D.teacher.TeacherID)} · ${esc(D.teacher.Role)}</p>
+  return `<article class="c w12" style="max-width:560px"><h2>Your account</h2><p class="sub">${esc(D.teacher.Name)} · ${esc(D.teacher.TeacherID)} · ${D.teacher.Role === 'Admin' ? 'Lead mentor' : 'Mentor'}</p>
   <form class="frm" data-form="password"><div><label class="fl" for="np">New access code (8 characters or more)</label><input class="in" id="np" name="newCode" type="password" autocomplete="new-password" minlength="8" maxlength="40"></div>
   <div><label class="fl" for="np2">Type it again</label><input class="in" id="np2" name="again" type="password" autocomplete="new-password"></div>
   <button class="btn btn-ink" type="submit">Change my code</button></form></article>`;
 }
 
-const VIEWS = { students: vStudents, mocks: vMocks, goals: vGoals, account: vAccount };
+const VIEWS = { students: vStudents, attendance: vAttendance, tasks: vTasks, cbt: vCbt, mocks: vMocks, goals: vGoals, account: vAccount };
 function render() {
-  const nt = noTarget().length;
+  document.querySelectorAll('details[data-k]').forEach((x) => { S.open[x.dataset.k] = x.open; });
+  const toMark = D.tasks.reduce((a, t) => a + t.Submissions.filter((x) => !x.Marked).length, 0), risk = (D.overview.atRisk || []).length;
+  const badge = { tasks: toMark, students: risk };
   $('app').innerHTML = `<section class="greet"><div><small>Assalaamu alaykum</small><h1>${esc(D.teacher.Name)}</h1>
-    <div class="chips"><span>${esc(D.teacher.Role)}</span><span>${D.students.length} student${D.students.length === 1 ? '' : 's'}</span>${nt ? `<span>${nt} UTME without a reading target</span>` : ''}</div></div></section>
-  <nav class="tabs" role="tablist" aria-label="Sections">${TABS.map(([k, l]) => `<button role="tab" type="button" data-act="tab" data-t="${k}" aria-selected="${S.tab === k}">${l}</button>`).join('')}</nav>
+    <div class="chips"><span>${D.teacher.Role === 'Admin' ? 'Lead mentor' : 'Mentor'}</span><span>${plural(D.students.length, 'mentee')}</span>${toMark ? `<span>${toMark} to mark</span>` : ''}</div></div></section>
+  <nav class="tabs" role="tablist" aria-label="Sections">${TABS.map(([k, l]) => `<button role="tab" type="button" data-act="tab" data-t="${k}" aria-selected="${S.tab === k}">${l}${badge[k] ? ` <i class="acx-badge">${badge[k]}</i>` : ''}</button>`).join('')}</nav>
   <div id="view">${VIEWS[S.tab]()}</div>
-  <p class="foot">${API_URL ? '' : 'Demo mode: sample data, nothing is saved. '}Students see their mocks, reading and class details on their own dashboard.</p>`;
+  <p class="foot">Mentees see their tasks, tests, attendance and scores on their own dashboard.</p>`;
   applyFilter();
 }
 function applyFilter() { const q = S.q.trim().toLowerCase(); document.querySelectorAll('#stulist [data-name]').forEach((el) => { el.hidden = !!q && el.dataset.name.indexOf(q) < 0; }); }
+
+/* ---------- full student dashboard in an overlay ---------- */
+function openView(id) {
+  closeView();
+  const ov = document.createElement('div'); ov.className = 'acx-ov'; ov.id = 'acxOv';
+  ov.innerHTML = `<div class="acx-ov-in" role="dialog" aria-modal="true" aria-label="Student dashboard"><iframe src="academy-dashboard.html?view=${encodeURIComponent(id)}&as=mentor" title="Student dashboard"></iframe></div>`;
+  ov.addEventListener('click', (e) => { if (e.target === ov) closeView(); });
+  document.body.appendChild(ov); document.body.classList.add('acx-noscroll');
+}
+function closeView() { const o = $('acxOv'); if (o) o.remove(); document.body.classList.remove('acx-noscroll'); }
+window.addEventListener('message', (e) => { if (e.origin === location.origin && e.data && e.data.acx === 'close') closeView(); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeView(); });
 
 /* ---------- events ---------- */
 const app = $('app');
@@ -142,32 +232,63 @@ app.addEventListener('click', (e) => {
   const a = b.dataset.act;
   if (a === 'tab') { S.tab = b.dataset.t; render(); window.scrollTo(0, 0); }
   else if (a === 'all' || a === 'none') document.querySelectorAll('#' + b.dataset.t + ' input').forEach((x) => { x.checked = a === 'all'; });
+  else if (a === 'view') openView(b.dataset.id);
+  else if (a === 'allPresent') { D.students.forEach((s) => { S.att[s.StudentID] = 'Present'; }); render(); }
+  else if (a === 'closeTask' || a === 'openTask') act('acdt_task_close', { taskId: b.dataset.id, reopen: a === 'openTask' }, a === 'openTask' ? 'Task reopened.' : 'Task closed. Students no longer see it.', b);
+  else if (a === 'closeTest' || a === 'openTest') act('acdt_cbt_close', { testId: b.dataset.id, reopen: a === 'openTest' }, a === 'openTest' ? 'Test reopened.' : 'Test closed.', b);
+});
+app.addEventListener('change', (e) => {
+  const t = e.target;
+  if (t.name && t.name.indexOf('at-') === 0) { S.att[t.name.slice(3)] = t.value; t.closest('.acx-seg').querySelectorAll('label').forEach((l) => l.classList.toggle('on', l.querySelector('input').checked)); }
+  else if (t.id === 'ad' || t.id === 'as') { if (t.id === 'ad') S.attDate = t.value; else S.attSession = t.value.trim() || 'Class'; S.att = {}; render(); }
 });
 app.addEventListener('input', (e) => {
   const t = e.target;
   if (t.id === 'q') { S.q = t.value; applyFilter(); }
   else if (t.name && t.name.indexOf('sc-') === 0) S.sc[t.name.slice(3)] = t.value;
   else if (t.id === 'ms') S.subject = t.value; else if (t.id === 'mo') S.outOf = t.value; else if (t.id === 'mt') S.type = t.value; else if (t.id === 'md') S.date = t.value;
+  else if (t.id === 'xq') { S.qtext = t.value; const p = parseQ(t.value), el = $('xqs'); if (el) el.textContent = p.n ? plural(p.n, 'question') + (p.errs.length ? ' · ' + p.errs[0] : ' · ready') : 'Leave a blank line between questions.'; }
 });
 app.addEventListener('submit', async (e) => {
   const f = e.target.closest('form[data-form]'); if (!f) return;
   e.preventDefault();
   const k = f.dataset.form, v = (n) => f.elements[n] ? f.elements[n].value : '', btn = f.querySelector('button[type=submit]');
-  if (k === 'mock') {
+  if (k === 'att') {
+    const marks = D.students.map((s) => { const c = f.querySelector(`input[name="at-${CSS.escape(s.StudentID)}"]:checked`); return c ? { studentId: s.StudentID, status: c.value } : null; }).filter(Boolean);
+    if (!marks.length) return toast('Mark at least one mentee.', true);
+    const ok = await act('acdt_attendance', { date: v('date'), session: v('session').trim() || 'Class', marks }, 'Register saved for ' + plural(marks.length, 'mentee') + '.', btn);
+    if (ok) { S.att = {}; render(); }
+  } else if (k === 'task') {
+    if (!v('title').trim()) return toast('Enter a title for the task.', true);
+    if (!v('due')) return toast('Choose the due date.', true);
+    const ok = await act('acdt_task', { title: v('title').trim(), subject: v('subject').trim(), maxScore: Number(v('maxScore')), due: v('due'), audience: v('audience'), instructions: v('instructions').trim() }, 'Task posted.', btn);
+    if (ok) render();
+  } else if (k === 'mark') {
+    const sc = v('score').trim(), max = Number(f.dataset.max);
+    if (sc === '' || !(Number(sc) >= 0 && Number(sc) <= max)) return toast('Enter a score between 0 and ' + max + '.', true);
+    act('acdt_mark', { submissionId: f.dataset.id, score: Number(sc), feedback: v('feedback').trim() }, 'Mark saved.', btn);
+  } else if (k === 'cbt') {
+    const p = parseQ(v('questions'));
+    if (!v('title').trim()) return toast('Enter a title for the test.', true);
+    if (!p.n) return toast('Paste at least one question.', true);
+    if (p.errs.length) return toast(p.errs[0], true);
+    if (v('kind') === 'Sunday mock' && (!v('opens') || !v('closes'))) return toast('A Sunday mock needs an opening and a closing time.', true);
+    const ok = await act('acdt_cbt', { title: v('title').trim(), kind: v('kind'), subject: v('subject').trim(), opens: v('opens'), closes: v('closes'), minutes: Number(v('minutes') || 0), audience: v('audience'), questions: v('questions') }, 'Test created with ' + plural(p.n, 'question') + '.', btn);
+    if (ok) { S.qtext = ''; render(); }
+  } else if (k === 'mock') {
     const outOf = Number(v('outOf')), subject = v('subject').trim();
     if (!subject) return toast('Enter the subject.', true);
     if (!(outOf > 0)) return toast('Enter what the mock was out of.', true);
     const scores = D.students.map((s) => ({ studentId: s.StudentID, score: v('sc-' + s.StudentID).trim() })).filter((x) => x.score !== '');
     if (!scores.length) return toast('Enter at least one score.', true);
-    const over = scores.find((x) => !(Number(x.score) >= 0 && Number(x.score) <= outOf));
-    if (over) return toast('Each score must be between 0 and ' + outOf + '.', true);
-    const ok = await act('acdt_mock', { subject, type: v('type'), date: v('date'), outOf, scores }, scores.length + ' score' + (scores.length === 1 ? '' : 's') + ' saved for ' + subject + '.', btn);
+    if (scores.find((x) => !(Number(x.score) >= 0 && Number(x.score) <= outOf))) return toast('Each score must be between 0 and ' + outOf + '.', true);
+    const ok = await act('acdt_mock', { subject, type: v('type'), date: v('date'), outOf, scores }, plural(scores.length, 'score') + ' saved for ' + subject + '.', btn);
     if (ok) { S.sc = {}; S.subject = ''; render(); }
   } else if (k === 'goals') {
     const ids = ticked('gp'); if (!ids.length) return toast('Tick at least one student.', true);
     if (!v('examDate') && !v('target').trim()) return toast('Enter an exam date or a target score.', true);
     const t = v('target').trim(); if (t && !(Number(t) >= 1 && Number(t) <= 100)) return toast('The target is a percentage from 1 to 100.', true);
-    act('acdt_goals', { studentIds: ids, examDate: v('examDate'), target: t }, 'Saved for ' + ids.length + ' student' + (ids.length === 1 ? '' : 's') + '.', btn);
+    act('acdt_goals', { studentIds: ids, examDate: v('examDate'), target: t }, 'Saved for ' + plural(ids.length, 'student') + '.', btn);
   } else if (k === 'class') {
     const ids = ticked('cp'); if (!ids.length) return toast('Tick at least one student.', true);
     if (!v('nextClass') && !v('link').trim()) return toast('Enter a date and time, or a link.', true);
@@ -188,44 +309,13 @@ async function signIn(id, code, silent) {
   try {
     const d = await api('acdt_login');
     if (d.ok) { D = d; showApp(); } else { sessionStorage.removeItem(KEY); if (!silent) err.textContent = d.error || 'Could not sign in.'; }
-  } catch (e) { sessionStorage.removeItem(KEY); if (!silent) err.textContent = 'Could not reach the school server. Please try again.'; }
+  } catch (e) { if (!silent) { sessionStorage.removeItem(KEY); err.textContent = 'Could not reach the school server. Please try again.'; } }
   btn.disabled = false; btn.textContent = 'Sign in';
 }
-$('demoNote').hidden = !!API_URL;
+$('demoNote').hidden = true;
 $('lf').addEventListener('submit', (e) => { e.preventDefault(); const id = $('tid').value.trim(), code = $('tcode').value.trim(); if (!id || !code) { $('err').textContent = 'Enter your ID and access code.'; return; } signIn(id, code); });
-$('out').addEventListener('click', () => { sessionStorage.removeItem(KEY); D = null; S.tab = 'students'; S.sc = {}; app.hidden = true; app.innerHTML = ''; $('out').hidden = true; $('login').hidden = false; $('tcode').value = ''; });
-
-/* ---------- demo mode (only used while API_URL is empty) ---------- */
-let DEMO = null;
-const isoD = (d) => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
-const plus = (n) => { const d = new Date(); d.setDate(d.getDate() + n); return d; };
-function demoBase() {
-  const mon = isoD(plus(-((new Date().getDay() + 6) % 7)));
-  const st = (id, name, track, utme, last, avg, n, tgt, exam, read) => ({ StudentID: id, Name: name, Track: track, Group: 'Batch 1', IsUtme: utme, ExamDate: exam, TargetPercent: tgt, NextClass: '', ClassLink: '', Wa: '', PaymentStatus: '', Sittings: n, Last: last, Avg5: avg, Reading: read });
-  return { ok: true, today: isoD(new Date()), teacher: { TeacherID: 'DEMO', Name: 'Ustadh Demo', Role: 'Tutor' },
-    students: [st('HM-0201', 'Fatima Yusuf', 'UTME', true, { Date: isoD(plus(-1)), Type: 'Daily mock', Percent: 66 }, 61.4, 7, 75, isoD(plus(96)), { Week: mon, Target: 60, Done: 25, History: [{ Week: isoD(plus(-7)), Target: 50, Done: 52 }] }),
-      st('HM-0202', 'Ibrahim Salaudeen', 'UTME', true, { Date: isoD(plus(-3)), Type: 'Weekly mock', Percent: 52 }, 49, 4, 70, isoD(plus(96)), { Week: mon, Target: 0, Done: 0, History: [] }),
-      st('HM-0203', 'Zainab Oladipo', 'O-Levels', false, null, null, 0, '', '', { Week: mon, Target: 0, Done: 0, History: [] })],
-    types: ['Daily mock', 'Weekly mock'], subjects: ['English', 'Mathematics', 'Physics', 'Chemistry', 'Biology'], readingUnit: 'pages', week: mon };
-}
-async function demoApi(c, action, p) {
-  await new Promise((r) => setTimeout(r, 120));
-  if (String(c.id || '').toUpperCase() !== 'DEMO' || c.code !== 'demo') return { ok: false, error: 'Wrong ID or access code.' };
-  if (!DEMO) DEMO = demoBase();
-  const bad = (m) => ({ ok: false, error: m }), stu = (id) => DEMO.students.find((s) => s.StudentID === id);
-  if (action === 'acdt_mock') {
-    if (!p.subject) return bad('Enter the subject.');
-    if (p.date > DEMO.today) return bad('Choose a valid date that is not in the future.');
-    p.scores.forEach((x) => { const s = stu(x.studentId); if (!s) return; const pc = Math.round(1000 * Number(x.score) / p.outOf) / 10; s.Last = { Date: p.date, Type: p.type, Percent: pc }; s.Sittings += 1; s.Avg5 = Math.round(10 * ((s.Avg5 || pc) * Math.min(s.Sittings - 1, 4) + pc) / Math.min(s.Sittings, 5)) / 10; });
-  } else if (action === 'acdt_goals') {
-    p.studentIds.forEach((id) => { const s = stu(id); if (p.examDate) s.ExamDate = p.examDate; if (p.target !== '') s.TargetPercent = Number(p.target); });
-  } else if (action === 'acdt_class') {
-    if (p.link && !/^https?:\/\//i.test(p.link)) return bad('The class link must start with http:// or https://');
-    p.studentIds.forEach((id) => Object.assign(stu(id), { NextClass: p.nextClass, ClassLink: p.link }));
-  } else if (action === 'acdt_password') { if (String(p.newCode).length < 8) return bad('Your new code must be 8 to 40 characters.');
-  } else if (action !== 'acdt_login') return bad('Unknown action.');
-  return JSON.parse(JSON.stringify(DEMO));
-}
+$('out').addEventListener('click', () => { closeView(); sessionStorage.removeItem(KEY); D = null; S.tab = 'students'; S.sc = {}; app.hidden = true; app.innerHTML = ''; $('out').hidden = true; $('login').hidden = false; $('tcode').value = ''; });
+{ const c = creds(); if (c.id && c.code) signIn(c.id, c.code, true); }
 </script>
 <script>
 /* Show/hide toggle on every access-code box */

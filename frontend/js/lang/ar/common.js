@@ -470,5 +470,7 @@ HS_I18N.add({
 "Closed · Join waitlist": "مغلق · انضم لقائمة الانتظار",
 "for a group place.": "للحصول على مقعد في فصل جماعي.",
 "Admission is closed for now. Join the waitlist.": "القبول مغلق حاليًا. انضم إلى قائمة الانتظار.",
-"Newsletter": "النشرة البريدية"
+"Newsletter": "النشرة البريدية",
+"Mentor login": "دخول المرشد",
+"Mentor Login": "دخول المرشد"
 });

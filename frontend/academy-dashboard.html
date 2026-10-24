@@ -23,9 +23,9 @@
 </div></header>
 
 <main id="login" class="login"><form class="lbox" id="lf" novalidate>
-<h1>Academy login</h1><p>Sign in with the Student ID and access code the school gave you.</p>
+<h1>Academy login</h1><p>Sign in with your Student ID or matric number, and the access code the school gave you.</p>
 <div class="demo" id="demoNote" hidden><b>Demo mode.</b> Use ID <b>DEMO</b> and code <b>demo</b> to see sample data.</div>
-<div class="f"><label for="sid">Student ID</label><input id="sid" autocomplete="username" autocapitalize="characters" placeholder="e.g. AC-0001" required></div>
+<div class="f"><label for="sid">Student ID or matric number</label><input id="sid" autocomplete="username" autocapitalize="characters" placeholder="e.g. AC-0001" required></div>
 <div class="f"><label for="scode">Access code</label><input id="scode" type="password" autocomplete="new-password" data-lpignore="true" required></div>
 <div class="err" id="err" role="alert"></div>
 <button class="btn btn-ink" id="go" type="submit">Sign in</button>
@@ -35,11 +35,10 @@
 <main id="app" class="wrap" hidden></main>
 
 <script>
-/* ===== SETTINGS =====
-   Same Apps Script web app as the other portals. While it is empty the page runs in DEMO mode with sample data. */
+/* ===== SETTINGS ===== Same Apps Script web app as the other portals. */
 const API_URL = 'https://script.google.com/macros/s/AKfycby0AsifBuB_Ad7g1SjDXCipaDU27-BrzYWf67muw5jeY_C0_0uz8AhQYYXdiNRQhvqX/exec';
 const HELP_WA = '2348066043320';
-const PAYMENT_WA = '2347047226487';   /* WhatsApp number students send payment receipts to. Confirm this is the right one. */
+const PAYMENT_WA = '2347047226487';   /* WhatsApp number students send payment receipts to */
 const KEY = 'hc';
 
 const $ = (id) => document.getElementById(id);
@@ -50,147 +49,331 @@ const naira = (n) => '₦' + Number(n || 0).toLocaleString('en-NG');
 const dd = (iso) => Math.round((new Date(String(iso).slice(0, 10) + 'T00:00:00') - new Date(new Date().toDateString())) / 864e5);
 const inDays = (n) => n === 0 ? 'today' : n === 1 ? 'tomorrow' : 'in ' + n + ' days';
 const safeUrl = (u) => /^https?:\/\//i.test(String(u ?? '').trim());
+const pct = (x) => x == null ? '–' : x + '%';
+const plural = (n, w) => n + ' ' + w + (n === 1 ? '' : /(s|sh|ch|x)$/.test(w) ? 'es' : 's');
+const linkify = (t) => esc(t).replace(/(https?:\/\/[^\s<]+)/g, '<a class="lnk" href="$1" target="_blank" rel="noopener">$1</a>').replace(/\n/g, '<br>');
 
-/* ---- demo data (shown only when API_URL is empty) ---- */
-let demoData = null;
-function demo() {
-  if (demoData) return JSON.parse(JSON.stringify(demoData));
-  const p = (x) => String(x).padStart(2, '0');
-  const ymd = (n) => { const d = new Date(); d.setDate(d.getDate() + n); return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()); };
-  const mon = (n) => { const d = new Date(); d.setDate(d.getDate() - ((d.getDay() + 6) % 7) + 7 * n); return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()); };
-  const sit = (n, type, pct) => ({ Date: ymd(n), Type: type, Percent: pct, Subjects: [{ Subject: 'English', Score: Math.round(pct) + 4, OutOf: 100 }, { Subject: 'Mathematics', Score: Math.round(pct) - 6, OutOf: 100 }, { Subject: 'Physics', Score: Math.round(pct) + 2, OutOf: 100 }, { Subject: 'Chemistry', Score: Math.round(pct) - 2, OutOf: 100 }] });
-  demoData = { ok: true, today: ymd(0),
-    student: { StudentID: 'DEMO', Name: 'Sample Student', Track: 'UTME', Group: 'Batch 1', Tutor: 'Ustadh Demo', IsUtme: true, PaymentStatus: 'Due', NextDue: ymd(3), MonthlyFee: 10000, ExamDate: ymd(96), TargetPercent: 75, NextClass: ymd(1) + 'T16:00', ClassLink: 'https://meet.google.com/' },
-    cbt: 'https://example.com/cbt', readingUnit: 'pages',
-    mocks: [sit(-1, 'Daily mock', 66), sit(-3, 'Weekly mock', 63), sit(-8, 'Daily mock', 59), sit(-10, 'Weekly mock', 57), sit(-15, 'Daily mock', 52), sit(-17, 'Weekly mock', 55), sit(-24, 'Weekly mock', 48)],
-    reading: { Week: mon(0), Target: 60, Done: 25, History: [{ Week: mon(-5), Target: 40, Done: 28 }, { Week: mon(-4), Target: 40, Done: 40 }, { Week: mon(-3), Target: 50, Done: 52 }, { Week: mon(-2), Target: 50, Done: 36 }, { Week: mon(-1), Target: 60, Done: 61 }, { Week: mon(0), Target: 60, Done: 25 }] },
-    announcements: [{ Date: ymd(-1), Title: 'Sample announcement', Body: 'Notices from your tutors appear here, such as a mock timetable change.' }],
-    payments: [{ Date: ymd(-27), Amount: 10000, Months: 1, Reference: 'TRF-20931' }] };
-  return JSON.parse(JSON.stringify(demoData));
-}
-function demoReading(p) {
-  const d = demo(); const t = Number(p.target), n = Number(p.done);
-  if (!(t >= 1)) return { ok: false, error: 'Enter a whole-number reading target for this week.' };
-  if (!(n >= 0)) return { ok: false, error: 'Enter how much you have read so far (0 or more).' };
-  d.reading.Target = t; d.reading.Done = n; const h = d.reading.History; h[h.length - 1] = { Week: d.reading.Week, Target: t, Done: n };
-  demoData = d; return demo();
-}
-async function api(id, code, action, extra) {
-  if (!API_URL) {
-    await new Promise((r) => setTimeout(r, 300));
-    if (id.toUpperCase() !== 'DEMO' || code !== 'demo') return { ok: false, error: 'Wrong ID or access code.' };
-    return action === 'acd_reading' ? demoReading(extra) : demo();
-  }
-  const r = await fetch(API_URL, { method: 'POST', body: JSON.stringify(Object.assign({ action: action || 'acd_login', id, code }, extra || {})) });
+/* View mode: a mentor or admin opens a student's dashboard from their own portal (read-only) */
+const QS = new URLSearchParams(location.search);
+const VIEW = QS.get('view') ? { id: QS.get('view'), as: QS.get('as') === 'admin' ? 'admin' : 'mentor' } : null;
+
+let D = null;
+const S = { tab: 'overview', open: {} };
+try { const t = sessionStorage.getItem('hc-tab'); if (t) S.tab = t; } catch (e) {}
+
+async function call(body) {
+  const r = await fetch(API_URL, { method: 'POST', body: JSON.stringify(body) });
   return r.json();
 }
+function creds() { try { return JSON.parse(sessionStorage.getItem(KEY) || 'null'); } catch (e) { return null; } }
+async function api(action, extra) {
+  if (VIEW) {
+    const c = (() => { try { return JSON.parse(sessionStorage.getItem(VIEW.as === 'admin' ? 'hca' : 'hct') || 'null'); } catch (e) { return null; } })();
+    if (!c) return { ok: false, error: 'Please sign in to your portal again.' };
+    return call({ action: VIEW.as === 'admin' ? 'acda_student' : 'acdt_student', id: c.id, code: c.code, studentId: VIEW.id });
+  }
+  const c = creds(); if (!c) return { ok: false, error: 'Please log in again.' };
+  return call(Object.assign({ action: action || 'acd_login', id: c.id, code: c.code }, extra || {}));
+}
+let toastT;
+function toast(msg, bad) { let t = $('toast'); if (!t) { t = document.createElement('div'); t.id = 'toast'; t.setAttribute('role', 'status'); document.body.appendChild(t); } t.textContent = msg; t.className = 'toast' + (bad ? ' bad' : ''); t.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => { t.hidden = true; }, bad ? 5000 : 3000); }
 
+/* ---------- reminders ---------- */
 function reminders(d, status, due) {
   const s = d.student, out = [];
   if (status !== 'exempt' && !isNaN(due)) {
     const n = dd(s.NextDue);
-    if (n < 0) out.push({ t: 'Your payment is ' + (-n) + ' day' + (n === -1 ? '' : 's') + ' overdue.', a: '#pay', u: 1, tag: 'Pay now' });
-    else if (n <= 7) out.push({ t: 'Your payment is due ' + inDays(n) + '.', a: '#pay', tag: 'Payment' });
+    if (n < 0) out.push({ t: 'Your payment is ' + plural(-n, 'day') + ' overdue. Class links are paused until it is paid.', a: 'pay', u: 1, tag: 'Pay now' });
+    else if (n <= 7) out.push({ t: 'Your payment is due ' + inDays(n) + '.', a: 'pay', tag: 'Payment' });
   }
-  if (s.IsUtme && !d.reading.Target) out.push({ t: 'Set your reading target for this week. The reading club is compulsory for UTME.', a: '#reading', u: 1, tag: 'Reading club' });
-  if (s.ExamDate) { const n = dd(s.ExamDate); if (n >= 0 && n <= 30) out.push({ t: 'Your exam is ' + inDays(n) + '.', a: '#exam', tag: 'Exam' }); }
-  if (s.NextClass) { const n = dd(s.NextClass); if (n === 0 || n === 1) out.push({ t: 'Your next class is ' + inDays(n) + ' at ' + new Date(s.NextClass).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }) + '.', a: '#classes', tag: 'Class' }); }
+  const todo = (d.tasks || []).filter((t) => t.Status === 'To do');
+  if (todo.length) out.push({ t: todo.length === 1 ? 'You have 1 daily task to submit.' : 'You have ' + todo.length + ' daily tasks to submit.', tab: 'tasks', u: todo.some((t) => t.Due && dd(t.Due) <= 0) ? 1 : 0, tag: 'Tasks' });
+  const sun = (d.tests || []).find((x) => x.Kind === 'Sunday mock' && x.State === 'Open' && !x.Attempts);
+  if (sun) out.push({ t: 'The Sunday mock “' + sun.Title + '” is open now.', tab: 'cbt', u: 1, tag: 'CBT' });
+  if (s.IsUtme && !d.reading.Target) out.push({ t: 'Set your reading target for this week. The reading club is compulsory for UTME.', a: 'reading', u: 1, tag: 'Reading club' });
+  if (s.ExamDate) { const n = dd(s.ExamDate); if (n >= 0 && n <= 30) out.push({ t: 'Your exam is ' + inDays(n) + '.', a: 'exam', tag: 'Exam' }); }
+  if (s.NextClass) { const n = dd(s.NextClass); if (n === 0 || n === 1) out.push({ t: 'Your next class is ' + inDays(n) + ' at ' + new Date(s.NextClass).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }) + '.', a: 'classes', tag: 'Class' }); }
   return out;
 }
 
+/* ---------- overview pieces ---------- */
 function mockHtml(d) {
   const s = d.student, ms = d.mocks || [];
-  if (!ms.length) return '<p class="empty">Your first mock result will appear here. Daily and weekly mocks are marked by your tutor.</p>';
+  if (!ms.length) return '<p class="empty">Your first mock result will appear here. Daily, weekly and Sunday mocks count.</p>';
   const recent = ms.slice(0, 10).reverse();
   const best = Math.max(...ms.map((m) => m.Percent)), last5 = ms.slice(0, 5), avg = Math.round(10 * last5.reduce((a, m) => a + m.Percent, 0) / last5.length) / 10;
-  const tgt = s.TargetPercent || 0, weekly = ms.filter((m) => m.Type === 'Weekly mock').length;
+  const tgt = s.TargetPercent || 0, weekly = ms.filter((m) => m.Type !== 'Daily mock').length;
   const proj = (x) => s.IsUtme ? `<span class="sub"> ≈ ${Math.round(x * 4)}/400</span>` : '';
-  return `<div class="stats"><div><div class="k">Latest</div><div class="big">${ms[0].Percent}%</div>${proj(ms[0].Percent)}</div><div><div class="k">Average (last ${last5.length})</div><div class="big">${avg}%</div>${proj(avg)}</div><div><div class="k">Best</div><div class="big">${best}%</div>${proj(best)}</div><div><div class="k">${tgt ? 'Target' : 'Weekly mocks'}</div><div class="big">${tgt ? tgt + '%' : weekly}</div>${tgt ? `<span class="sub">${avg >= tgt ? 'You are on target' : (Math.round(10 * (tgt - avg)) / 10) + ' points to go'}</span>${proj(tgt)}` : ''}</div></div>
-    <div class="mchart" role="img" aria-label="Your last ${recent.length} mock scores">${tgt ? `<i class="tline" style="bottom:${tgt}%"><em>Target ${tgt}%</em></i>` : ''}${recent.map((m) => `<div class="${m.Type === 'Weekly mock' ? 'wk' : ''}" data-h="${m.Percent}"><em>${Math.round(m.Percent)}</em><span>${sdate(m.Date)}</span></div>`).join('')}</div>
-    <div class="legend"><span><i class="wk"></i>Weekly mock</span><span><i></i>Daily mock</span></div>
+  return `<div class="stats"><div><div class="k">Latest</div><div class="big">${ms[0].Percent}%</div>${proj(ms[0].Percent)}</div><div><div class="k">Average (last ${last5.length})</div><div class="big">${avg}%</div>${proj(avg)}</div><div><div class="k">Best</div><div class="big">${best}%</div>${proj(best)}</div><div><div class="k">${tgt ? 'Target' : 'Weekly and Sunday mocks'}</div><div class="big">${tgt ? tgt + '%' : weekly}</div>${tgt ? `<span class="sub">${avg >= tgt ? 'You are on target' : (Math.round(10 * (tgt - avg)) / 10) + ' points to go'}</span>${proj(tgt)}` : ''}</div></div>
+    <div class="mchart" role="img" aria-label="Your last ${recent.length} mock scores">${tgt ? `<i class="tline" style="bottom:${tgt}%"><em>Target ${tgt}%</em></i>` : ''}${recent.map((m) => `<div class="${m.Type === 'Daily mock' ? '' : 'wk'}" data-h="${m.Percent}"><em>${Math.round(m.Percent)}</em><span>${sdate(m.Date)}</span></div>`).join('')}</div>
+    <div class="legend"><span><i class="wk"></i>Weekly or Sunday mock</span><span><i></i>Daily mock</span></div>
     <div class="sits">${ms.slice(0, 12).map((m) => `<details class="sit" data-k="${esc(m.Type)}|${esc(m.Date)}"><summary><div><b>${esc(m.Type)}</b><small>${fdate(m.Date)}</small></div><span class="pill ${tgt && m.Percent >= tgt ? 'p-paid' : 'p-due'}">${m.Percent}%</span></summary><div class="subj">${m.Subjects.map((x) => `<span>${esc(x.Subject)} <b>${x.Score}/${x.OutOf}</b></span>`).join('')}</div></details>`).join('')}</div>`;
 }
-
 function readingHtml(d) {
-  const r = d.reading, u = esc(d.readingUnit || 'pages'), pct = r.Target ? Math.min(100, Math.round(100 * r.Done / r.Target)) : 0;
-  const hist = r.History.slice(-8);
-  const met = hist.filter((h) => h.Target && h.Done >= h.Target).length;
+  const r = d.reading, u = esc(d.readingUnit || 'pages'), p = r.Target ? Math.min(100, Math.round(100 * r.Done / r.Target)) : 0;
+  const hist = r.History.slice(-8), met = hist.filter((h) => h.Target && h.Done >= h.Target).length;
   return `<p class="sub" style="margin:-8px 0 14px">Set a target for the week, then update it as you read.${d.student.IsUtme ? ' The reading club is compulsory for UTME students.' : ''}</p>
-    ${r.Target ? `<div class="row"><b style="color:var(--deep)">${r.Done} of ${r.Target} ${u} this week</b><span>${pct}%</span></div><div class="bar"><i data-w="${pct}"></i></div>${r.Done >= r.Target ? '<p class="sub"><b>Target met.</b> Keep the habit going.</p>' : ''}` : '<p class="empty" style="margin-bottom:8px">No target set for this week yet.</p>'}
-    <form class="rform" novalidate><div class="r2"><div><label for="rt">Target (${u})</label><input id="rt" name="target" type="number" min="1" max="100000" step="1" inputmode="numeric" value="${r.Target || ''}"></div><div><label for="rd">Read so far</label><input id="rd" name="done" type="number" min="0" max="1000000" step="1" inputmode="numeric" value="${r.Done || 0}"></div></div>
-    <div class="msg" role="status"></div><button class="btn btn-ink" type="submit">Save</button></form>
-    ${hist.length > 1 ? `<p class="k" style="margin-top:20px">Last ${hist.length} weeks${met ? ' · target met ' + met + ' time' + (met === 1 ? '' : 's') : ''}</p><div class="rchart">${hist.map((h) => `<div class="${h.Target && h.Done >= h.Target ? 'hit' : ''}" data-h="${h.Target ? Math.min(100, Math.round(100 * h.Done / h.Target)) : 0}" title="${h.Done}/${h.Target}"><span>${sdate(h.Week)}</span></div>`).join('')}</div>` : ''}`;
+    ${r.Target ? `<div class="row"><b style="color:var(--deep)">${r.Done} of ${r.Target} ${u} this week</b><span>${p}%</span></div><div class="bar"><i data-w="${p}"></i></div>${r.Done >= r.Target ? '<p class="sub"><b>Target met.</b> Keep the habit going.</p>' : ''}` : '<p class="empty" style="margin-bottom:8px">No target set for this week yet.</p>'}
+    ${VIEW ? '' : `<form class="rform" novalidate><div class="r2"><div><label for="rt">Target (${u})</label><input id="rt" name="target" type="number" min="1" max="100000" step="1" inputmode="numeric" value="${r.Target || ''}"></div><div><label for="rd">Read so far</label><input id="rd" name="done" type="number" min="0" max="1000000" step="1" inputmode="numeric" value="${r.Done || 0}"></div></div>
+    <div class="msg" role="status"></div><button class="btn btn-ink" type="submit">Save</button></form>`}
+    ${hist.length > 1 ? `<p class="k" style="margin-top:20px">Last ${hist.length} weeks${met ? ' · target met ' + plural(met, 'time') : ''}</p><div class="rchart">${hist.map((h) => `<div class="${h.Target && h.Done >= h.Target ? 'hit' : ''}" data-h="${h.Target ? Math.min(100, Math.round(100 * h.Done / h.Target)) : 0}" title="${h.Done}/${h.Target}"><span>${sdate(h.Week)}</span></div>`).join('')}</div>` : ''}`;
+}
+function perfHtml(d) {
+  const m = d.metrics || {}, lb = d.leaderboard || {};
+  const tile = (k, v, s) => `<div><div class="k">${k}</div><div class="big">${v}</div>${s ? `<span class="sub">${s}</span>` : ''}</div>`;
+  return `<div class="stats acx-perf">${tile('Overall score', m.overall == null ? '–' : m.overall, lb.me ? 'Rank ' + lb.me.Rank + ' of ' + lb.total : 'Not ranked yet')}
+    ${tile('Attendance', pct(m.attendance), m.sessions ? m.present + ' of ' + plural(m.sessions, 'class') : 'No classes marked yet')}
+    ${tile('Daily tasks', pct(m.tasks), m.tasksSet ? m.tasksDone + ' of ' + m.tasksSet + ' submitted' : 'No tasks yet')}
+    ${tile('CBT practice', pct(m.cbt), m.cbtCount ? plural(m.cbtCount, 'attempt') : 'No attempts yet')}</div>
+    <p class="sub">Last ${lb.days || 30} days. <button class="acx-lnk" type="button" data-tab="board">See the leaderboard</button></p>`;
+}
+function attendanceHtml(d) {
+  const a = d.attendance || [], m = d.metrics || {};
+  if (!a.length) return '<p class="empty">Your attendance will appear here once your mentor marks the register.</p>';
+  const cls = { Present: 'p-paid', Late: 'p-due', Absent: 'p-over', Excused: 'p-wash' };
+  return `<div class="row"><b style="color:var(--deep)">${pct(m.attendance)} attendance</b><span>last ${(d.leaderboard || {}).days || 30} days</span></div><div class="bar"><i data-w="${m.attendance || 0}"></i></div>
+    <ul class="list" style="margin-top:14px">${a.slice(0, 8).map((x) => `<li><b>${esc(x.Session || 'Class')}</b><span>${sdate(x.Date)} <i class="pill ${cls[x.Status] || 'p-wash'}" style="font-style:normal;margin-inline-start:6px">${esc(x.Status)}</i></span></li>`).join('')}</ul>`;
+}
+function linksHtml(d) {
+  const L = d.links || {}, s = d.student;
+  if (L.locked) return `<div class="k">Class links</div><div class="big">Paused</div><p class="sub">Your fee is overdue, so the Google Meet and Telegram links are hidden. They come back as soon as the payment is recorded.</p><p class="pay-btns"><a class="btn btn-ink" href="pay.html?id=${encodeURIComponent(s.StudentID)}">Pay by card</a></p>`;
+  if (!L.meet && !L.telegram) return `<div class="k">Class links</div><div class="big">Coming soon</div><p class="sub">Your Google Meet and Telegram links appear here once you are placed in a class group.</p>`;
+  return `<div class="k">Class links</div>${L.timetable ? `<p class="sub" style="margin:2px 0 12px"><b style="color:var(--deep)">${esc(L.timetable)}</b></p>` : ''}<div class="acx-links">${safeUrl(L.meet) ? `<a class="btn btn-ink" href="${esc(L.meet)}" target="_blank" rel="noopener">Join on Google Meet</a>` : ''}${safeUrl(L.telegram) ? `<a class="btn btn-line" href="${esc(L.telegram)}" target="_blank" rel="noopener">Open the Telegram group</a>` : ''}</div><p class="sub">Please keep these links within the class.</p>`;
 }
 
-function render(d) {
-  const s = d.student, first = String(s.Name).split(' ')[0];
-  const due = new Date(s.NextDue), status = String(s.PaymentStatus || '').toLowerCase();
+function vOverview(d) {
+  const s = d.student, due = new Date(s.NextDue), status = String(s.PaymentStatus || '').toLowerCase();
   const pcls = status === 'paid' || status === 'exempt' ? 'p-paid' : status === 'overdue' ? 'p-over' : 'p-due';
-  const pays = d.payments || [], remind = reminders(d, status, due), ms = d.mocks || [];
-  const examDays = s.ExamDate ? dd(s.ExamDate) : null;
-  const waHelp = 'https://wa.me/' + HELP_WA + '?text=' + encodeURIComponent('Assalaamu alaykum. This is ' + s.Name + ' (' + s.StudentID + ') from the Academy.');
+  const pays = d.payments || [], ms = d.mocks || [], examDays = s.ExamDate ? dd(s.ExamDate) : null;
   const payUrl = 'pay.html?id=' + encodeURIComponent(s.StudentID);
   const waPay = 'https://wa.me/' + PAYMENT_WA + '?text=' + encodeURIComponent('Assalaamu alaykum. This is my payment receipt. Name: ' + s.Name + ', ID: ' + s.StudentID + '.');
+  return `<div class="grid">
+    <article class="c w12" id="perf" style="--i:0"><h2>Your performance</h2>${perfHtml(d)}</article>
+    <article class="c" id="exam" style="--i:1"><div class="k">Exam countdown</div>${examDays === null ? '<div class="big">Date not set</div><p class="sub">Your mentor will add your exam date.</p>' : examDays < 0 ? `<div class="big">Exam done</div><p class="sub">${fdate(s.ExamDate)}</p>` : `<div class="big">${examDays === 0 ? 'Today' : plural(examDays, 'day')}</div><p class="sub">${esc(s.Track || 'Your exam')} · ${fdate(s.ExamDate)}</p>${examDays > 0 ? `<p class="sub">About ${plural(Math.ceil(examDays / 7), 'week')} of prep left.</p>` : ''}`}</article>
+    <article class="c" id="classes" style="--i:2">${linksHtml(d)}${s.NextClass ? `<p class="sub" style="margin-top:10px">Next class: <b style="color:var(--deep)">${fdate(s.NextClass, true)}</b></p>` : ''}</article>
+    <article class="c" id="pay" style="--i:3"><div class="k">Payment</div><span class="pill ${pcls}">${esc(s.PaymentStatus || 'Due')}</span>
+      ${status === 'exempt' ? '<div class="big" style="margin-top:12px">Nothing to pay</div>' : `<div class="big" style="margin-top:12px">${isNaN(due) ? 'No date set' : fdate(s.NextDue)}</div><p class="sub">Next payment due${s.MonthlyFee ? ' · ' + naira(s.MonthlyFee) + ' a month' : ''}.</p>${VIEW ? '' : status === 'paid' ? `<p style="margin-top:12px"><a class="lnk" href="${payUrl}">Pay ahead by card</a></p>` : `<p class="pay-btns"><a class="btn btn-ink" href="${payUrl}">Pay by card</a><a class="btn btn-line" href="${waPay}" target="_blank" rel="noopener">Send a transfer receipt</a></p>`}`}</article>
+    <article class="c w12" id="mocks" style="--i:4"><h2>Mock exams${ms.length ? ` <span class="pill p-due" style="font-size:12px;vertical-align:middle">${plural(ms.length, 'sitting')}</span>` : ''}</h2>${mockHtml(d)}</article>
+    <article class="c w6" id="reading" style="--i:5"><h2>Reading club</h2>${readingHtml(d)}</article>
+    <article class="c w6" id="attendance" style="--i:6"><h2>Attendance</h2>${attendanceHtml(d)}</article>
+    <article class="c w6" style="--i:7"><h2>Announcements</h2><ul class="list">${(d.announcements || []).map((a) => `<li style="display:block"><b>${esc(a.Title)}</b> <span style="float:inline-end">${fdate(a.Date)}</span><div class="sub">${esc(a.Body)}</div></li>`).join('') || '<li class="empty">No announcements.</li>'}</ul></article>
+    <article class="c w6" style="--i:8"><h2>Payment history</h2>${pays.length ? `<table><thead><tr><th>Date</th><th>Covers</th><th>Amount</th></tr></thead><tbody>${pays.map((p) => `<tr><td>${fdate(p.Date)}</td><td>${esc(p.Months)} mo</td><td><b>${naira(p.Amount)}</b></td></tr>`).join('')}</tbody></table>` : '<p class="empty">No payments recorded yet.</p>'}</article>
+  </div>`;
+}
+
+/* ---------- daily tasks ---------- */
+const TCLS = { 'To do': 'p-due', Submitted: 'p-sky', Marked: 'p-paid', Missed: 'p-over' };
+function vTasks(d) {
+  const ts = d.tasks || [];
+  if (!ts.length) return `<article class="c w12"><h2>Daily tasks</h2><p class="empty">No tasks yet. Your mentor posts daily tasks here.</p></article>`;
+  const row = (t) => `<details class="acx-item" data-k="t-${esc(t.TaskID)}"${S.open['t-' + t.TaskID] ? ' open' : ''}><summary><div><b>${esc(t.Title)}</b><small>${t.Subject ? esc(t.Subject) + ' · ' : ''}Due ${fdate(t.Due)} · out of ${t.MaxScore}</small></div><span class="pill ${TCLS[t.Status]}">${t.Status === 'Marked' ? t.Score + '/' + t.MaxScore : esc(t.Status)}</span></summary>
+    <div class="acx-body">${t.Instructions ? `<div class="acx-instr">${linkify(t.Instructions)}</div>` : ''}
+      ${t.Status === 'Marked' ? `<div class="acx-fb"><b>Score: ${t.Score}/${t.MaxScore}</b>${t.Feedback ? `<p>${linkify(t.Feedback)}</p>` : ''}</div>` : ''}
+      ${t.Answer || t.Link ? `<div class="acx-mine"><div class="k">Your submission${t.Submitted ? ', ' + fdate(t.Submitted, true) : ''}</div>${t.Answer ? `<p>${linkify(t.Answer)}</p>` : ''}${safeUrl(t.Link) ? `<p><a class="lnk" href="${esc(t.Link)}" target="_blank" rel="noopener">Your link</a></p>` : ''}</div>` : ''}
+      ${VIEW || t.Status === 'Marked' ? '' : `<form class="acx-form" data-form="task" data-id="${esc(t.TaskID)}" novalidate>
+        <label for="ta-${esc(t.TaskID)}">${t.Answer || t.Link ? 'Update your answer' : 'Your answer'}</label><textarea id="ta-${esc(t.TaskID)}" name="answer" rows="5" maxlength="5000" placeholder="Write your answer or workings here">${esc(t.Answer)}</textarea>
+        <label for="tl-${esc(t.TaskID)}">Link to your work <small>(optional: Google Drive, Docs or a photo link)</small></label><input id="tl-${esc(t.TaskID)}" name="link" type="url" maxlength="500" placeholder="https://" value="${esc(t.Link)}">
+        <button class="btn btn-ink" type="submit">${t.Answer || t.Link ? 'Resubmit' : 'Submit'}</button>${t.Status === 'Missed' ? '<p class="sub">The due date has passed, but you can still submit.</p>' : ''}</form>`}</div></details>`;
+  const todo = ts.filter((t) => t.Status === 'To do' || t.Status === 'Missed'), rest = ts.filter((t) => t.Status === 'Submitted' || t.Status === 'Marked');
+  return `<article class="c w12"><h2>Daily tasks</h2>
+    ${todo.length ? `<p class="k">To do</p>${todo.map(row).join('')}` : '<p class="empty">All caught up. Well done.</p>'}
+    ${rest.length ? `<p class="k" style="margin-top:22px">Submitted and marked</p>${rest.map(row).join('')}` : ''}</article>`;
+}
+
+/* ---------- CBT ---------- */
+const XCLS = { Open: 'p-due', Upcoming: 'p-wash', Done: 'p-sky', Closed: 'p-wash' };
+function vCbt(d) {
+  const xs = d.tests || [];
+  const row = (x) => `<div class="acx-test"><div><b>${esc(x.Title)}</b><small>${esc(x.Kind)}${x.Subject ? ' · ' + esc(x.Subject) : ''} · ${plural(x.Questions, 'question')}${x.Minutes ? ' · ' + x.Minutes + ' min' : ' · no time limit'}</small>
+      <small>${x.State === 'Upcoming' ? 'Opens ' + fdate(x.Opens, true) : x.Closes ? 'Closes ' + fdate(x.Closes, true) : ''}${x.Best != null ? ' · best ' + x.Best + '%' : ''}</small></div>
+    <div class="acx-test-r"><span class="pill ${XCLS[x.State]}">${esc(x.State === 'Done' ? 'Submitted' : x.State)}</span>
+      ${!VIEW && x.State === 'Open' ? `<button class="btn btn-ink btn-sm" type="button" data-act="start" data-id="${esc(x.TestID)}">${x.InProgress ? 'Continue' : x.Attempts ? 'Try again' : 'Start'}</button>` : ''}
+      ${x.Last ? (x.Last.Review ? `<button class="btn btn-line btn-sm" type="button" data-act="review" data-id="${esc(x.Last.AttemptID)}">Review ${x.Last.Percent}%</button>` : `<span class="sub">${x.Last.Score}/${x.Last.OutOf} · answers after it closes</span>`) : ''}</div></div>`;
+  const sun = xs.filter((x) => x.Kind === 'Sunday mock'), prac = xs.filter((x) => x.Kind !== 'Sunday mock');
+  return `<article class="c w12"><h2>CBT</h2><p class="sub" style="margin:-6px 0 16px">Timed, computer-based tests marked instantly. Sunday mocks can be taken once while they are open, and count towards your mock record. Practice tests can be taken as often as you like.</p>
+    <p class="k">Sunday mocks</p>${sun.map(row).join('') || '<p class="empty">No Sunday mock scheduled yet.</p>'}
+    <p class="k" style="margin-top:22px">Practice tests</p>${prac.map(row).join('') || '<p class="empty">No practice tests yet.</p>'}</article>`;
+}
+/* the test itself */
+let RUN = null, tick = null;
+function saveRun() { try { sessionStorage.setItem('hc-run', JSON.stringify(RUN)); } catch (e) {} }
+function startRun(att) {
+  let prev = null; try { prev = JSON.parse(sessionStorage.getItem('hc-run') || 'null'); } catch (e) {}
+  RUN = { att, answers: prev && prev.att && prev.att.AttemptID === att.AttemptID ? prev.answers : {}, i: 0, ends: att.SecondsLeft != null ? Date.now() + att.SecondsLeft * 1000 : null };
+  saveRun(); renderRun();
+  clearInterval(tick);
+  if (RUN.ends) tick = setInterval(() => { const el = $('acxTime'); const left = Math.max(0, Math.round((RUN.ends - Date.now()) / 1000)); if (el) { el.textContent = Math.floor(left / 60) + ':' + String(left % 60).padStart(2, '0'); el.classList.toggle('low', left <= 60); } if (left <= 0) { clearInterval(tick); submitRun(true); } }, 500);
+}
+function renderRun() {
+  const a = RUN.att, q = a.Questions[RUN.i], n = a.Questions.length, done = Object.keys(RUN.answers).length;
+  $('app').innerHTML = `<section class="acx-run"><div class="acx-run-top"><div><small>${esc(a.Kind)}${a.Subject ? ' · ' + esc(a.Subject) : ''}</small><h1>${esc(a.Title)}</h1></div>${RUN.ends ? `<div class="acx-time" aria-live="off"><span>Time left</span><b id="acxTime">${(() => { const l = Math.max(0, Math.round((RUN.ends - Date.now()) / 1000)); return Math.floor(l / 60) + ':' + String(l % 60).padStart(2, '0'); })()}</b></div>` : ''}</div>
+    <div class="acx-q"><p class="k">Question ${RUN.i + 1} of ${n}</p><p class="acx-qt">${esc(q.Question)}</p>
+      <div class="acx-opts" role="radiogroup" aria-label="Options">${Object.keys(q.Options).map((k) => `<label class="acx-opt${RUN.answers[q.No] === k ? ' on' : ''}"><input type="radio" name="opt" value="${k}"${RUN.answers[q.No] === k ? ' checked' : ''}><span class="acx-key">${k}</span><span>${esc(q.Options[k])}</span></label>`).join('')}</div>
+      <div class="acx-nav"><button class="btn btn-line" type="button" data-act="prev"${RUN.i ? '' : ' disabled'}>Previous</button>${RUN.i < n - 1 ? '<button class="btn btn-ink" type="button" data-act="next">Next</button>' : '<button class="btn btn-ink" type="button" data-act="finish">Submit test</button>'}</div></div>
+    <div class="acx-grid" aria-label="Jump to a question">${a.Questions.map((x, i) => `<button type="button" data-act="jump" data-i="${i}" class="${RUN.answers[x.No] ? 'on' : ''}${i === RUN.i ? ' cur' : ''}" aria-label="Question ${i + 1}${RUN.answers[x.No] ? ', answered' : ''}">${i + 1}</button>`).join('')}</div>
+    <p class="sub acx-count">${done} of ${n} answered. <button class="acx-lnk" type="button" data-act="finish">Submit now</button></p></section>`;
+  window.scrollTo(0, 0);
+}
+async function submitRun(auto) {
+  if (!RUN || RUN.sending) return;
+  const n = RUN.att.Questions.length, done = Object.keys(RUN.answers).length;
+  if (!auto && done < n && !confirmBox(`You have answered ${done} of ${n} questions. Submit anyway?`)) return;
+  RUN.sending = true; clearInterval(tick);
+  const msg = $('app').querySelector('.acx-count'); if (msg) msg.textContent = auto ? 'Time is up. Submitting…' : 'Submitting…';
+  try {
+    const d = await api('acd_cbt_submit', { attemptId: RUN.att.AttemptID, answers: RUN.answers });
+    if (!d.ok) { RUN.sending = false; toast(d.error || 'Could not submit. Please try again.', true); if (msg) msg.textContent = 'Not submitted yet. Try again.'; return; }
+    try { sessionStorage.removeItem('hc-run'); } catch (e) {}
+    RUN = null; D = d; showResult(d.result);
+  } catch (e) { RUN.sending = false; toast('Could not reach the school server. Your answers are kept on this device. Try again.', true); if (msg) msg.textContent = 'Not submitted yet. Try again.'; }
+}
+function confirmBox(text) { return window.confirm(text); }
+function showResult(r) {
+  if (!r) { render(); return; }
+  $('app').innerHTML = `<section class="acx-run"><div class="acx-run-top"><div><small>${esc(r.Kind)}</small><h1>${esc(r.Title)}</h1></div></div>
+    <div class="acx-score"><b>${r.Percent}%</b><span>${r.Score} of ${r.OutOf} correct</span></div>
+    ${r.Review ? `<h2 class="acx-h2">Review</h2>${r.Review.map((q) => `<div class="acx-rev ${q.Yours === q.Answer ? 'good' : 'bad'}"><p class="k">Question ${q.No} · ${q.Yours === q.Answer ? 'Correct' : q.Yours ? 'Wrong' : 'Not answered'}</p><p class="acx-qt">${esc(q.Question)}</p>
+      <ul>${Object.keys(q.Options).map((k) => `<li class="${k === q.Answer ? 'ans' : ''}${k === q.Yours && k !== q.Answer ? ' mine' : ''}"><span class="acx-key">${k}</span>${esc(q.Options[k])}${k === q.Answer ? ' <em>Correct answer</em>' : k === q.Yours ? ' <em>Your answer</em>' : ''}</li>`).join('')}</ul>
+      ${q.Explanation ? `<p class="sub">${esc(q.Explanation)}</p>` : ''}</div>`).join('')}` : '<p class="sub" style="text-align:center">This is a Sunday mock: the answers are shown after it closes. Your score has been added to your mock record.</p>'}
+    <div class="acx-nav" style="justify-content:center"><button class="btn btn-ink" type="button" data-act="back">Back to the dashboard</button></div></section>`;
+  window.scrollTo(0, 0);
+}
+
+/* ---------- leaderboard ---------- */
+function vBoard(d) {
+  const lb = d.leaderboard || { top: [] }, m = d.metrics || {};
+  return `<div class="grid"><article class="c w8"><h2>Leaderboard</h2><p class="sub" style="margin:-6px 0 14px">Top students across the Academy over the last ${lb.days || 30} days.</p>
+    ${lb.top.length ? `<ol class="acx-board">${lb.top.map((x) => `<li class="${x.Me ? 'me' : ''}"><span class="acx-rank r${x.Rank}">${x.Rank}</span><div><b translate="no" dir="auto">${esc(x.Name)}${x.Me ? ' (you)' : ''}</b><small>${esc(x.Track)}${x.Group ? ' · ' + esc(x.Group) : ''}</small></div><span class="acx-pts">${x.Score}</span></li>`).join('')}</ol>` : '<p class="empty">The leaderboard fills up as mocks, tasks and attendance are recorded.</p>'}</article>
+  <article class="c w4"><h2>Your place</h2>${lb.me ? `<div class="big">${lb.me.Rank}<span class="sub" style="font-size:16px"> of ${lb.total}</span></div><p class="sub">Overall score ${lb.me.Score}</p>` : '<div class="big">Not ranked yet</div><p class="sub">Sit a mock, submit a task or attend a class to join.</p>'}
+    <p class="k" style="margin-top:18px">How the score works</p><ul class="acx-weights"><li><span>Mocks</span><b>35%</b></li><li><span>Daily tasks</span><b>25%</b></li><li><span>Attendance</span><b>20%</b></li><li><span>CBT practice</span><b>10%</b></li><li><span>Reading club</span><b>10%</b></li></ul>
+    <p class="sub">Parts with no records yet are left out, and the rest count for more. Your scores: mocks ${pct(m.mocks)}, tasks ${pct(m.tasks)}, attendance ${pct(m.attendance)}, CBT ${pct(m.cbt)}, reading ${pct(m.reading)}.</p></article></div>`;
+}
+
+/* ---------- page ---------- */
+const TABS = [['overview', 'Overview'], ['tasks', 'Daily tasks'], ['cbt', 'CBT'], ['board', 'Leaderboard']];
+function render() {
+  const d = D, s = d.student, first = String(s.Name).split(' ')[0], status = String(s.PaymentStatus || '').toLowerCase();
+  const remind = VIEW ? [] : reminders(d, status, new Date(s.NextDue));
+  const waHelp = 'https://wa.me/' + HELP_WA + '?text=' + encodeURIComponent('Assalaamu alaykum. This is ' + s.Name + ' (' + s.StudentID + ') from the Academy.');
+  document.querySelectorAll('[data-k]').forEach((x) => { if (x.tagName === 'DETAILS') S.open[x.dataset.k] = x.open; });
   const openSit = [...document.querySelectorAll('.sit[open]')].map((x) => x.dataset.k);
-  $('app').innerHTML = `
-  <section class="greet"><div><small>Assalaamu alaykum</small><h1>${esc(first)}, let’s get you exam-ready.</h1>
-    <div class="chips"><span>${esc(s.Track || 'Academy')}</span>${s.Group ? `<span>${esc(s.Group)}</span>` : ''}${s.Tutor ? `<span>Tutor: ${esc(s.Tutor)}</span>` : ''}</div></div>
-    <div class="gbtn">${safeUrl(d.cbt) ? `<a class="btn btn-sky" href="${esc(d.cbt)}" target="_blank" rel="noopener">Open CBT practice</a>` : ''}<a class="btn btn-ghost" href="${waHelp}" target="_blank" rel="noopener">Need help?</a></div></section>
-  ${remind.length ? `<section class="remind" aria-label="Reminders">${remind.map((r) => `<a href="${r.a}" class="${r.u ? 'urgent' : ''}">${r.t}<span>${r.tag}</span></a>`).join('')}</section>` : ''}
-  <div class="grid">
-    <article class="c" id="exam" style="--i:0"><div class="k">Exam countdown</div>${examDays === null ? '<div class="big">Date not set</div><p class="sub">Your tutor will add your exam date.</p>' : examDays < 0 ? `<div class="big">Exam done</div><p class="sub">${fdate(s.ExamDate)}</p>` : `<div class="big">${examDays === 0 ? 'Today' : examDays + ' day' + (examDays === 1 ? '' : 's')}</div><p class="sub">${esc(s.Track || 'Your exam')} · ${fdate(s.ExamDate)}</p>${examDays > 0 ? `<p class="sub">About ${Math.ceil(examDays / 7)} week${Math.ceil(examDays / 7) === 1 ? '' : 's'} of prep left.</p>` : ''}`}</article>
-    <article class="c" id="classes" style="--i:1"><div class="k">Next live class</div>${s.NextClass ? `<div class="big">${fdate(s.NextClass, true)}</div>${safeUrl(s.ClassLink) ? `<p><a class="btn btn-ink" style="margin-top:12px" href="${esc(s.ClassLink)}" target="_blank" rel="noopener">Join the class</a></p>` : '<p class="sub">The join link will appear here.</p>'}` : '<div class="big">Not scheduled</div><p class="sub">Your tutor will post the next class here.</p>'}</article>
-    <article class="c" id="pay" style="--i:2"><div class="k">Payment</div><span class="pill ${pcls}">${esc(s.PaymentStatus || 'Due')}</span>
-      ${status === 'exempt' ? '<div class="big" style="margin-top:12px">Nothing to pay</div>' : `<div class="big" style="margin-top:12px">${isNaN(due) ? 'No date set' : fdate(s.NextDue)}</div><p class="sub">Next payment due${s.MonthlyFee ? ' · ' + naira(s.MonthlyFee) + ' a month' : ''}.</p>${status === 'paid' ? `<p style="margin-top:12px"><a class="lnk" href="${payUrl}">Pay ahead by card</a></p>` : `<p class="pay-btns"><a class="btn btn-ink" href="${payUrl}">Pay by card</a><a class="btn btn-line" href="${waPay}" target="_blank" rel="noopener">Send a transfer receipt</a></p>`}`}</article>
-
-    <article class="c w12" id="mocks" style="--i:3"><h2>Mock exams${ms.length ? ` <span class="pill p-due" style="font-size:12px;vertical-align:middle">${ms.length} sitting${ms.length === 1 ? '' : 's'}</span>` : ''}</h2>${mockHtml(d)}</article>
-
-    <article class="c w6" id="reading" style="--i:4"><h2>Reading club</h2>${readingHtml(d)}</article>
-    <article class="c w6" style="--i:5"><h2>Announcements</h2><ul class="list">${(d.announcements || []).map((a) => `<li style="display:block"><b>${esc(a.Title)}</b> <span style="float:inline-end">${fdate(a.Date)}</span><div class="sub">${esc(a.Body)}</div></li>`).join('') || '<li class="empty">No announcements.</li>'}</ul>
-      <h2 style="margin-top:24px">Payment history</h2>${pays.length ? `<table><thead><tr><th>Date</th><th>Covers</th><th>Amount</th></tr></thead><tbody>${pays.map((p) => `<tr><td>${fdate(p.Date)}</td><td>${esc(p.Months)} mo</td><td><b>${naira(p.Amount)}</b></td></tr>`).join('')}</tbody></table>` : '<p class="empty">No payments recorded yet.</p>'}</article>
-  </div>
-  <p class="foot">${API_URL ? '' : 'Demo mode: this is sample data. '}Your records are updated by your tutors. Questions? Use the Need help? button.</p>`;
+  const todo = (d.tasks || []).filter((t) => t.Status === 'To do').length, openT = (d.tests || []).filter((x) => x.State === 'Open' && !(x.Kind === 'Sunday mock' && x.Attempts)).length;
+  const badge = { tasks: todo, cbt: openT };
+  $('app').innerHTML = `${VIEW ? `<div class="acx-viewbar"><span>Viewing as ${VIEW.as === 'admin' ? 'admin' : 'mentor'} (read-only)</span><button class="btn btn-line btn-sm" type="button" data-act="closeview">Close</button></div>` : ''}
+  <section class="greet"><div><small>Assalaamu alaykum</small><h1>${VIEW ? esc(s.Name) : esc(first) + ', let’s get you exam-ready.'}</h1>
+    <div class="chips"><span translate="no">${esc(s.StudentID)}</span>${s.Matric ? `<span translate="no">${esc(s.Matric)}</span>` : ''}<span>${esc(s.Track || 'Academy')}</span>${s.Group ? `<span>${esc(s.Group)}</span>` : ''}${s.Tutor ? `<span>Mentor: ${esc(s.Tutor)}</span>` : ''}</div></div>
+    ${VIEW ? '' : `<div class="gbtn"><a class="btn btn-ghost" href="${waHelp}" target="_blank" rel="noopener">Need help?</a></div>`}</section>
+  ${remind.length ? `<section class="remind" aria-label="Reminders">${remind.map((r) => `<a href="#${r.a || ''}" data-go="${r.tab || ''}" data-a="${r.a || ''}" class="${r.u ? 'urgent' : ''}">${r.t}<span>${r.tag}</span></a>`).join('')}</section>` : ''}
+  <nav class="tabs acx-tabs" role="tablist" aria-label="Sections">${TABS.map(([k, l]) => `<button role="tab" type="button" data-tab="${k}" aria-selected="${S.tab === k}">${l}${badge[k] ? ` <i>${badge[k]}</i>` : ''}</button>`).join('')}</nav>
+  <div id="view">${S.tab === 'tasks' ? vTasks(d) : S.tab === 'cbt' ? vCbt(d) : S.tab === 'board' ? vBoard(d) : vOverview(d)}</div>
+  <p class="foot">Your records are updated by your mentors.${VIEW ? '' : ' Questions? Use the Need help? button.'}</p>`;
+  if (S.tab === 'tasks' || S.tab === 'cbt' || S.tab === 'board') $('view').firstElementChild.classList.add('acx-solo');
   document.querySelectorAll('.sit').forEach((x) => { if (openSit.indexOf(x.dataset.k) >= 0) x.open = true; });
   requestAnimationFrame(() => setTimeout(() => {
     document.querySelectorAll('.bar i').forEach((b) => { b.style.width = b.dataset.w + '%'; });
     document.querySelectorAll('.mchart div, .rchart div').forEach((b) => { b.style.height = Math.max(4, b.dataset.h) + '%'; });
   }, 80));
 }
+function setTab(t, anchor) {
+  S.tab = t; try { sessionStorage.setItem('hc-tab', t); } catch (e) {}
+  render();
+  const el = anchor && document.getElementById(anchor);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); else window.scrollTo(0, 0);
+}
 
 function show(data, id, code) {
-  sessionStorage.setItem(KEY, JSON.stringify({ id, code }));
-  $('login').hidden = true; $('app').hidden = false; $('out').hidden = false; render(data); window.scrollTo(0, 0);
+  if (!VIEW) sessionStorage.setItem(KEY, JSON.stringify({ id, code }));
+  D = data; $('login').hidden = true; $('app').hidden = false; $('out').hidden = !!VIEW; render(); window.scrollTo(0, 0);
+  let run = null; try { run = JSON.parse(sessionStorage.getItem('hc-run') || 'null'); } catch (e) {}
+  if (run && run.att && !VIEW) resume(run.att.TestID);
 }
-async function signIn(id, code, silent) {
+async function resume(testId) {
+  try { const d = await api('acd_cbt_start', { testId }); if (d.ok) startRun(d.attempt); else { try { sessionStorage.removeItem('hc-run'); } catch (e) {} } } catch (e) {}
+}
+async function signIn(id, code) {
   const btn = $('go'), err = $('err'); err.textContent = ''; btn.disabled = true; btn.textContent = 'Signing in…';
   try {
-    const d = await api(id, code);
-    if (d.ok) show(d, id, code); else if (!silent) err.textContent = d.error || 'Could not sign in.'; else sessionStorage.removeItem(KEY);
-  } catch (e) { if (!silent) err.textContent = 'Could not reach the school server. Please try again.'; }
+    const d = await call({ action: 'acd_login', id, code });
+    if (d.ok) show(d, id, code); else err.textContent = d.error || 'Could not sign in.';
+  } catch (e) { err.textContent = 'Could not reach the school server. Please try again.'; }
   btn.disabled = false; btn.textContent = 'Sign in';
 }
-$('demoNote').hidden = !!API_URL;
-$('lf').addEventListener('submit', (e) => { e.preventDefault(); const id = $('sid').value.trim(), code = $('scode').value.trim(); if (!id || !code) { $('err').textContent = 'Enter your Student ID and access code.'; return; } signIn(id, code); });
-$('out').addEventListener('click', () => { sessionStorage.removeItem(KEY); $('app').hidden = true; $('app').innerHTML = ''; $('out').hidden = true; $('login').hidden = false; $('scode').value = ''; });
+$('demoNote').hidden = true;
+$('lf').addEventListener('submit', (e) => { e.preventDefault(); const id = $('sid').value.trim(), code = $('scode').value.trim(); if (!id || !code) { $('err').textContent = 'Enter your Student ID or matric number, and your access code.'; return; } signIn(id, code); });
+$('out').addEventListener('click', () => { if (RUN && !confirmBox('You are in the middle of a test. Log out anyway?')) return; clearInterval(tick); RUN = null; ['hc-run', KEY].forEach((k) => sessionStorage.removeItem(k)); $('app').hidden = true; $('app').innerHTML = ''; $('out').hidden = true; $('login').hidden = false; $('scode').value = ''; });
+window.addEventListener('beforeunload', (e) => { if (RUN && !RUN.sending) { e.preventDefault(); e.returnValue = ''; } });
 
-$('app').addEventListener('submit', async (e) => {
-  const f = e.target.closest('form.rform'); if (!f) return;
-  e.preventDefault();
-  const msg = f.querySelector('.msg'), btn = f.querySelector('button');
-  let saved = null; try { saved = JSON.parse(sessionStorage.getItem(KEY) || 'null'); } catch (x) {}
-  const bad = (t) => { msg.textContent = t; msg.className = 'msg bad'; };
-  if (!saved) return bad('Please log in again.');
-  const target = f.elements.target.value.trim(), done = f.elements.done.value.trim() || '0';
-  if (!/^\d+$/.test(target) || Number(target) < 1) return bad('Enter a whole-number target, 1 or more.');
-  if (!/^\d+$/.test(done)) return bad('Enter how much you have read as a whole number.');
-  const label = btn.textContent; btn.disabled = true; btn.textContent = 'Saving…'; msg.textContent = ''; msg.className = 'msg';
-  try {
-    const d = await api(saved.id, saved.code, 'acd_reading', { target: Number(target), done: Number(done) });
-    if (d.ok) { render(d); const m = document.querySelector('.rform .msg'); if (m) { m.textContent = 'Saved.'; m.className = 'msg good'; } return; }
-    bad(d.error || 'Could not save. Please try again.');
-  } catch (err) { bad('Could not reach the school server. Please try again.'); }
-  btn.disabled = false; btn.textContent = label;
+/* ---------- events ---------- */
+$('app').addEventListener('click', async (e) => {
+  const tb = e.target.closest('[data-tab]'); if (tb) { setTab(tb.dataset.tab); return; }
+  const go = e.target.closest('.remind a'); if (go) { e.preventDefault(); setTab(go.dataset.go || 'overview', go.dataset.a); return; }
+  const b = e.target.closest('[data-act]'); if (!b) return;
+  const a = b.dataset.act;
+  if (a === 'closeview') { try { parent.postMessage({ acx: 'close' }, location.origin); } catch (x) {} return; }
+  if (a === 'start') {
+    b.disabled = true; const old = b.textContent; b.textContent = 'Opening…';
+    try { const d = await api('acd_cbt_start', { testId: b.dataset.id }); if (d.ok) startRun(d.attempt); else { toast(d.error || 'Could not open the test.', true); b.disabled = false; b.textContent = old; } }
+    catch (x) { toast('Could not reach the school server. Please try again.', true); b.disabled = false; b.textContent = old; }
+  } else if (a === 'review') {
+    b.disabled = true;
+    try { const d = await api('acd_cbt_review', { attemptId: b.dataset.id }); if (d.ok) showResult(d.result); else { toast(d.error, true); b.disabled = false; } }
+    catch (x) { toast('Could not reach the school server. Please try again.', true); b.disabled = false; }
+  } else if (a === 'back') { render(); window.scrollTo(0, 0); }
+  else if (RUN) {
+    if (a === 'prev' && RUN.i > 0) { RUN.i--; renderRun(); }
+    else if (a === 'next' && RUN.i < RUN.att.Questions.length - 1) { RUN.i++; renderRun(); }
+    else if (a === 'jump') { RUN.i = Number(b.dataset.i); renderRun(); }
+    else if (a === 'finish') submitRun(false);
+  }
 });
+$('app').addEventListener('change', (e) => {
+  if (RUN && e.target.name === 'opt') {
+    const q = RUN.att.Questions[RUN.i]; RUN.answers[q.No] = e.target.value; saveRun();
+    document.querySelectorAll('.acx-opt').forEach((l) => l.classList.toggle('on', l.querySelector('input').checked));
+    const g = document.querySelector(`.acx-grid [data-i="${RUN.i}"]`); if (g) g.classList.add('on');
+    const c = $('app').querySelector('.acx-count'); if (c) c.firstChild.textContent = Object.keys(RUN.answers).length + ' of ' + RUN.att.Questions.length + ' answered. ';
+  }
+});
+$('app').addEventListener('submit', async (e) => {
+  const f = e.target.closest('form'); if (!f) return;
+  e.preventDefault();
+  const btn = f.querySelector('button[type=submit]');
+  if (f.classList.contains('rform')) {
+    const msg = f.querySelector('.msg'), bad = (t) => { msg.textContent = t; msg.className = 'msg bad'; };
+    const target = f.elements.target.value.trim(), done = f.elements.done.value.trim() || '0';
+    if (!/^\d+$/.test(target) || Number(target) < 1) return bad('Enter a whole-number target, 1 or more.');
+    if (!/^\d+$/.test(done)) return bad('Enter how much you have read as a whole number.');
+    btn.disabled = true; btn.textContent = 'Saving…'; msg.textContent = ''; msg.className = 'msg';
+    try {
+      const d = await api('acd_reading', { target: Number(target), done: Number(done) });
+      if (d.ok) { D = d; render(); const m = document.querySelector('.rform .msg'); if (m) { m.textContent = 'Saved.'; m.className = 'msg good'; } return; }
+      bad(d.error || 'Could not save. Please try again.');
+    } catch (err) { bad('Could not reach the school server. Please try again.'); }
+    btn.disabled = false; btn.textContent = 'Save';
+  } else if (f.dataset.form === 'task') {
+    const answer = f.elements.answer.value.trim(), link = f.elements.link.value.trim();
+    if (!answer && !link) return toast('Write your answer or add a link to your work.', true);
+    if (link && !safeUrl(link)) return toast('The link must start with http:// or https://', true);
+    const old = btn.textContent; btn.disabled = true; btn.textContent = 'Sending…';
+    try {
+      const d = await api('acd_task', { taskId: f.dataset.id, answer, link });
+      if (d.ok) { D = d; S.open['t-' + f.dataset.id] = true; render(); toast('Submitted. Your mentor will mark it.'); return; }
+      toast(d.error || 'Could not submit. Please try again.', true);
+    } catch (err) { toast('Could not reach the school server. Please try again.', true); }
+    btn.disabled = false; btn.textContent = old;
+  }
+});
+
+/* ---------- start ---------- */
+if (VIEW) {
+  document.documentElement.classList.add('acx-viewing');
+  $('login').hidden = true;
+  api().then((d) => { if (d.ok) show(d); else { $('app').hidden = false; $('app').innerHTML = `<p class="foot">${esc(d.error || 'Could not open this dashboard.')}</p>`; } })
+    .catch(() => { $('app').hidden = false; $('app').innerHTML = '<p class="foot">Could not reach the school server. Please try again.</p>'; });
+} else {
+  const c = creds();
+  if (c) call({ action: 'acd_login', id: c.id, code: c.code }).then((d) => { if (d.ok) show(d, c.id, c.code); else sessionStorage.removeItem(KEY); }).catch(() => {});
+}
 </script>
 <script>
 /* Show/hide toggle on every access-code box */
