@@ -163,5 +163,8 @@ HS_I18N.add({
 "See the group timetable": "اطّلع على جدول الحصص الجماعية",
 "Book a free class": "احجز حصة مجانية",
 "Group or one-to-one times": "مواعيد جماعية أو فردية",
-"Group classes run to the weekly timetable. On a one-to-one plan, your teacher agrees the days and hour with you after you enroll.": "تسير الحصص الجماعية وفق الجدول الأسبوعي. وفي الخطة الفردية يتّفق معك معلّمك على الأيام والساعة بعد التسجيل."
+"Group classes run to the weekly timetable. On a one-to-one plan, your teacher agrees the days and hour with you after you enroll.": "تسير الحصص الجماعية وفق الجدول الأسبوعي. وفي الخطة الفردية يتّفق معك معلّمك على الأيام والساعة بعد التسجيل.",
+"Steady Hifdh": "المداومة على الحفظ",
+"Ten practical steps to becoming consistent in memorising the Qur’an, with a daily routine, a sample week and a tracker for students and parents.": "عشر خطوات عملية للمداومة على حفظ القرآن، مع ورد يومي وأسبوع نموذجي وجدول متابعة للطلاب وأولياء الأمور.",
+"re:Cover of (.+)": "غلاف $1"
 });

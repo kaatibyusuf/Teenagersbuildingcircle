@@ -53,5 +53,8 @@ HS_I18N.add({
 "Live lessons through the week, plus timed mocks and a personal review.": "دروس مباشرة طوال الأسبوع، مع اختبارات تجريبية موقوتة ومراجعة شخصية.",
 "Live, with recordings": "مباشرة، مع التسجيلات",
 "Miss a class and you can watch it back.": "إن فاتتك حصة يمكنك مشاهدتها لاحقًا.",
-"Book a free class": "احجز حصة مجانية"
+"Book a free class": "احجز حصة مجانية",
+"Five Ways to Ace UTME": "خمس طرق للتفوّق في UTME",
+"What to study, how to use past questions, how to beat the CBT clock, with a 12-week plan and an exam-day checklist.": "ماذا تذاكر، وكيف تستعمل أسئلة السنوات السابقة، وكيف تسبق وقت الامتحان الإلكتروني، مع خطة لاثني عشر أسبوعًا وقائمة تحقّق ليوم الامتحان.",
+"re:Cover of (.+)": "غلاف $1"
 });

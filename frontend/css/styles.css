@@ -4396,3 +4396,36 @@ body.acx-noscroll { overflow: hidden; }
 .site.page-timetable .tt-day li { align-items: flex-start; }
 .site.page-trial .tr-slot { align-items: flex-start; }
 .app .tt-week p span[dir] { unicode-bidi: isolate; }
+
+/* Free guides (resources.html) and the guide strips on programme pages */
+.site.page-resources header.hero { padding-bottom: clamp(56px, 7vw, 96px); }
+.site.page-resources header.hero .hero-copy p { max-width: 62ch; font-size: clamp(16px, 1.4vw, 18px); line-height: 1.6; }
+.site.page-resources .res-sec { padding: clamp(40px, 6vw, 80px) 0 clamp(56px, 7vw, 96px); }
+.site.page-resources .res-wrap { max-width: 1040px; display: grid; gap: clamp(20px, 3vw, 32px); }
+.site .res-card { display: grid; grid-template-columns: minmax(0, 260px) minmax(0, 1fr); gap: clamp(20px, 3.4vw, 40px); align-items: center; background: #fff; border-radius: 28px; box-shadow: var(--shadow); padding: clamp(18px, 3vw, 32px); }
+.site .res-cover { display: block; border-radius: 14px; overflow: hidden; box-shadow: 0 18px 40px -18px rgba(6,47,77,.45); transition: transform .3s; }
+.site .res-cover:hover { transform: translateY(-4px) rotate(-1deg); }
+.site .res-cover img { display: block; width: 100%; height: auto; }
+.site .res-tag { display: inline-block; font-size: 12.5px; font-weight: 600; color: var(--ink); background: #EEF6FC; padding: 4px 12px; border-radius: 999px; }
+.site .res-body h2 { font-size: clamp(24px, 3vw, 34px); line-height: 1.1; margin: 12px 0 8px; color: var(--text); }
+.site .res-sub { color: var(--muted); font-size: 16px; line-height: 1.6; margin: 0 0 16px; }
+.site .res-pts { list-style: none; margin: 0 0 18px; padding: 0; display: grid; gap: 8px; }
+.site .res-pts li { position: relative; padding-inline-start: 26px; font-size: 15px; line-height: 1.5; color: var(--text); }
+.site .res-pts li::before { content: ''; position: absolute; inset-inline-start: 2px; top: 7px; width: 10px; height: 10px; border-radius: 50%; background: var(--sky-d, #3E97D9); }
+.site .res-meta { font-size: 13.5px; color: var(--muted); margin: 0 0 16px; }
+.site .res-acts { display: flex; flex-wrap: wrap; gap: 10px; }
+.site .res-acts .btn { gap: 8px; }
+.site.page-resources .res-note { text-align: center; color: var(--muted); font-size: 15px; margin: 8px 0 0; }
+.site.page-resources .res-note a { color: var(--ink); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+/* small strip on madrasah.html / academy.html */
+.site .res-strip { display: grid; grid-template-columns: 120px minmax(0, 1fr) auto; gap: clamp(16px, 3vw, 32px); align-items: center; background: #fff; border-radius: 24px; box-shadow: var(--shadow); padding: clamp(16px, 2.6vw, 24px) clamp(18px, 3vw, 32px); }
+.site .res-strip img { width: 100%; height: auto; border-radius: 10px; box-shadow: 0 12px 26px -14px rgba(6,47,77,.5); display: block; }
+.site .res-strip h3 { font-size: clamp(19px, 2.2vw, 24px); margin: 6px 0 6px; color: var(--text); }
+.site .res-strip p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.55; }
+.site .res-strip .btn { gap: 8px; white-space: nowrap; }
+@media (max-width: 720px) {
+  .site .res-card { grid-template-columns: 1fr; }
+  .site .res-cover { max-width: 240px; margin: 0 auto; }
+  .site .res-strip { grid-template-columns: 84px minmax(0, 1fr); }
+  .site .res-strip .btn { grid-column: 1 / -1; justify-content: center; }
+}

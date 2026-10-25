@@ -476,5 +476,8 @@ HS_I18N.add({
 "Refer and earn": "ادعُ واربح",
 "Sponsor a student": "اكفل طالبًا",
 "Timetable": "جدول الحصص",
-"Book a free class": "احجز حصة مجانية"
+"Book a free class": "احجز حصة مجانية",
+"Free guides": "أدلة مجانية",
+"Free guide": "دليل مجاني",
+"Download free PDF": "نزّل ملف PDF مجانًا"
 });
