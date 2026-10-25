@@ -127,6 +127,47 @@
   </div>
 </section>
 
+<section class="sec ss-more" id="stories" hidden>
+  <div class="wrap">
+    <div class="head">
+      <span class="kicker">From our families</span>
+      <h2>More stories.</h2>
+      <p>Shared by parents and students across the Madrasah, Academy, Skills School and Teenagers Building Circle.</p>
+    </div>
+    <div class="voice-row" id="ssList"></div>
+  </div>
+</section>
+
+<section class="sec ss-share-sec" id="share">
+  <div class="wrap pf-wrap">
+    <div class="pf-card">
+      <span class="kicker">Share your story</span>
+      <h2 class="ss-h">How has Himaayah helped you?</h2>
+      <p class="sp-p">Parents, students and former students: a few sentences about what has changed helps other families decide. We read every one, and nothing is published without your permission.</p>
+      <form class="wl-form" id="ssForm" novalidate>
+        <div class="wl-2">
+          <div class="wl-f"><label for="ssName">Your name</label><input id="ssName" name="name" maxlength="80" autocomplete="name" required></div>
+          <div class="wl-f"><label for="ssRole">You are</label><select id="ssRole" name="role"><option>Parent</option><option>Student</option><option>Former student</option><option>Other</option></select></div>
+        </div>
+        <div class="wl-2">
+          <div class="wl-f"><label for="ssProg">Programme</label><select id="ssProg" name="programme" required><option value="">Choose one</option><option>Madrasah</option><option>Academy</option><option>Skills School</option><option>Teenagers Building Circle</option></select></div>
+          <div class="wl-f"><label for="ssResult">Result or milestone <small>(optional)</small></label><input id="ssResult" name="result" maxlength="60" placeholder="e.g. 294 in UTME, finished Juz 30"></div>
+        </div>
+        <div class="wl-f"><span class="ss-lab" id="ssRateL">Your rating</span><div class="ss-rate" role="radiogroup" aria-labelledby="ssRateL"><button type="button" role="radio" aria-checked="false" data-r="1" aria-label="1 out of 5"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></button><button type="button" role="radio" aria-checked="false" data-r="2" aria-label="2 out of 5"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></button><button type="button" role="radio" aria-checked="false" data-r="3" aria-label="3 out of 5"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></button><button type="button" role="radio" aria-checked="false" data-r="4" aria-label="4 out of 5"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></button><button type="button" role="radio" aria-checked="true" data-r="5" aria-label="5 out of 5"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></button></div></div>
+        <div class="wl-f"><label for="ssText">Your experience</label><textarea id="ssText" name="text" rows="5" maxlength="1200" required placeholder="What has changed? What did you like? What would you tell another family?"></textarea></div>
+        <div class="wl-2">
+          <div class="wl-f"><label for="ssShow">Show my name as</label><select id="ssShow" name="showAs"><option value="First name">First name and initial</option><option value="Initials">Initials only</option><option value="Anonymous">Don’t show my name</option></select></div>
+          <div class="wl-f"><label for="ssEmail">Email <small>(optional, not shown)</small></label><input id="ssEmail" name="email" type="email" maxlength="120" dir="ltr" autocomplete="email"></div>
+        </div>
+        <div class="wl-hp" aria-hidden="true"><input name="website" type="text" tabindex="-1" autocomplete="off"></div>
+        <button class="btn btn-ink pf-btn" type="submit">Send my story</button>
+        <p class="pf-err" id="ssErr" role="alert"></p>
+      </form>
+      <div id="ssDone" hidden></div>
+    </div>
+  </div>
+</section>
+
 <section class="sec">
   <div class="wrap">
     <div class="cta-box reveal">
@@ -162,10 +203,12 @@
           <a href="newsletter.html">Newsletter</a>
           <a href="refer.html">Refer and earn</a>
           <a href="sponsor.html">Sponsor a student</a>
+          <a href="timetable.html">Timetable</a>
           <a href="faq.html">FAQ</a>
           <a href="contact.html">Contact</a>
           <a href="policies.html">Policies</a>
           <a href="enroll.html">Enroll</a>
+          <a href="trial.html">Book a free class</a>
           <a href="pay.html">Pay fees</a>
         </div>
         <div><h4>Contact</h4>
@@ -269,6 +312,57 @@
       mark.addEventListener('pointermove', (e) => { const r = mark.getBoundingClientRect(); mark.style.setProperty('--sx', ((e.clientX - r.left) / r.width * 100) + '%'); });
       mark.addEventListener('pointerleave', () => mark.style.removeProperty('--sx'));
     }
+  })();
+</script>
+<script>
+  // Approved stories from the school sheet, and the Share your story form
+  (function () {
+    const API_URL = 'https://script.google.com/macros/s/AKfycby0AsifBuB_Ad7g1SjDXCipaDU27-BrzYWf67muw5jeY_C0_0uz8AhQYYXdiNRQhvqX/exec';
+    const $ = (id) => document.getElementById(id);
+    const esc = (t) => String(t ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    const star = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>';
+    const post = (body) => fetch(API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(body) }).then((r) => r.json());
+    post({ action: 'tm_list' }).then((d) => {
+      if (!d || !d.ok || !d.stories.length) return;
+      $('stories').hidden = false;
+      $('ssList').innerHTML = d.stories.map((t, i) => `<figure class="voice in" style="--i:${i % 3}">
+        ${t.Rating ? `<div class="stars" aria-label="${t.Rating} out of 5 stars">${star.repeat(t.Rating)}</div>` : ''}
+        <blockquote dir="auto">“${esc(t.Text)}”</blockquote>
+        <header><span class="avatar">${esc((t.Name || '★').charAt(0))}</span><div><b translate="no" dir="auto">${esc(t.Name || 'A Himaayah family')}</b><small>${esc(t.Result || [t.Role, t.Programme].filter(Boolean).join(', '))}</small></div></header>
+      </figure>`).join('');
+      $('ssList').querySelectorAll('.stars').forEach((el) => el.querySelectorAll('svg').forEach((s, i) => s.style.setProperty('--s', i)));
+    }).catch(() => {});
+
+    let rating = 5;
+    const rates = document.querySelectorAll('.ss-rate button');
+    const paint = () => rates.forEach((b) => { b.classList.toggle('on', Number(b.dataset.r) <= rating); b.setAttribute('aria-checked', Number(b.dataset.r) === rating); });
+    rates.forEach((b) => b.addEventListener('click', () => { rating = Number(b.dataset.r); paint(); }));
+    paint();
+    const q = new URLSearchParams(location.search);
+    if (q.get('p')) { const o = [...$('ssProg').options].find((x) => x.value === q.get('p')); if (o) $('ssProg').value = q.get('p'); }
+
+    $('ssForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const f = e.target, v = (n) => (f.elements[n].value || '').trim(), err = $('ssErr'), btn = f.querySelector('button[type=submit]');
+      err.textContent = '';
+      if (!v('name')) return (err.textContent = 'Enter your name.');
+      if (!v('programme')) return (err.textContent = 'Choose a programme.');
+      if (v('text').length < 30) return (err.textContent = 'Write a few sentences about your experience.');
+      if (v('email') && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v('email'))) return (err.textContent = 'Enter a valid email address, or leave it blank.');
+      const old = btn.textContent; btn.disabled = true; btn.textContent = 'Sending…';
+      try {
+        const body = { action: 'tm_submit', rating, studentId: q.get('id') || '', source: q.get('share') ? 'email' : 'website' };
+        ['name', 'role', 'programme', 'result', 'text', 'showAs', 'email', 'website'].forEach((n) => { body[n] = v(n); });
+        const j = await post(body);
+        if (j && j.ok) {
+          f.hidden = true; $('ssDone').hidden = false;
+          $('ssDone').innerHTML = '<div class="pf-done"><span class="pf-tick"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><div><b>Jazakumullahu khayran for sharing.</b><span>We will read it and may add it to this page.</span></div></div>';
+          return;
+        }
+        err.textContent = (j && j.error) || 'Something went wrong. Please try again.';
+      } catch (x) { err.textContent = 'Could not reach the school server. Please try again.'; }
+      btn.disabled = false; btn.textContent = old;
+    });
   })();
 </script>
 </body>

@@ -61,5 +61,16 @@ HS_I18N.add({
 "re:Your submission \\(late\\), (.+)": "تسليمك (متأخر)، $1",
 "re:Your submission, (.+)": "تسليمك، $1",
 "re:Next payment due: (.+)\\. Pay by card and this page updates straight away\\. If you pay by bank transfer, send the receipt on": "الدفعة القادمة: $1. ادفع بالبطاقة وتتحدّث هذه الصفحة فورًا. وإن دفعت بالتحويل البنكي فأرسل الإيصال على",
-"Next payment due. Pay by card and this page updates straight away. If you pay by bank transfer, send the receipt on": "الدفعة القادمة مستحقة. ادفع بالبطاقة وتتحدّث هذه الصفحة فورًا. وإن دفعت بالتحويل البنكي فأرسل الإيصال على"
+"Next payment due. Pay by card and this page updates straight away. If you pay by bank transfer, send the receipt on": "الدفعة القادمة مستحقة. ادفع بالبطاقة وتتحدّث هذه الصفحة فورًا. وإن دفعت بالتحويل البنكي فأرسل الإيصال على",
+"Weekly timetable": "الجدول الأسبوعي",
+"re:(.+) · Nigeria time": "$1 · بتوقيت نيجيريا",
+"Add to my calendar": "أضف إلى تقويمي",
+"Join": "انضمّ",
+"Monday · Today": "الإثنين · اليوم",
+"Tuesday · Today": "الثلاثاء · اليوم",
+"Wednesday · Today": "الأربعاء · اليوم",
+"Thursday · Today": "الخميس · اليوم",
+"Friday · Today": "الجمعة · اليوم",
+"Saturday · Today": "السبت · اليوم",
+"Sunday · Today": "الأحد · اليوم"
 });

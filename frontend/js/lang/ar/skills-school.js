@@ -39,5 +39,6 @@ HS_I18N.add({
 "Four to eight weeks": "من أربعة إلى ثمانية أسابيع",
 "Each course runs for four, six or eight weeks, depending on the course.": "تستمر كل دورة أربعة أو ستة أو ثمانية أسابيع، بحسب الدورة.",
 "A real project at the end": "مشروع حقيقي في النهاية",
-"Every course finishes with work you can show, like a talk or a portfolio.": "تنتهي كل دورة بعمل يمكنك عرضه، مثل كلمة أمام جمهور أو ملف أعمال."
+"Every course finishes with work you can show, like a talk or a portfolio.": "تنتهي كل دورة بعمل يمكنك عرضه، مثل كلمة أمام جمهور أو ملف أعمال.",
+"Book a free class": "احجز حصة مجانية"
 });

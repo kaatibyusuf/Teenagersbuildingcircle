@@ -129,6 +129,40 @@ function assignmentHtml(a) {
     </div></details>`;
 }
 
+/* Weekly timetable for the student's level (Timetable tab), in Nigeria time */
+const TT_DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+const ttLagos = () => new Date(Date.now() + 3600000);
+const tt12 = (t) => { const [h, m] = String(t).split(':').map(Number); return ((h % 12) || 12) + ':' + String(m).padStart(2, '0') + (h < 12 ? 'am' : 'pm'); };
+function ttNext(rows) {   // the next class from the timetable, as a local-time ISO string
+  const n = ttLagos(), today = (n.getUTCDay() + 6) % 7, nowHM = String(n.getUTCHours()).padStart(2, '0') + ':' + String(n.getUTCMinutes()).padStart(2, '0');
+  for (let i = 0; i < 8; i++) {
+    const di = (today + i) % 7, c = rows.filter((r) => TT_DAYS.indexOf(r.Day) === di && (i > 0 || (r.End || r.Start) > nowHM)).sort((a, b) => a.Start < b.Start ? -1 : 1)[0];
+    if (c) { const d = new Date(Date.UTC(n.getUTCFullYear(), n.getUTCMonth(), n.getUTCDate() + i, +c.Start.slice(0, 2) - 1, +c.Start.slice(3, 5))); return { when: d.toISOString(), c }; }
+  }
+  return null;
+}
+function ttIcs(rows, level) {
+  const n = ttLagos(), stamp = new Date().toISOString().replace(/[-:]/g, '').slice(0, 15) + 'Z';
+  const lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Himaayah Schools//Timetable//EN', 'X-WR-CALNAME:Himaayah · ' + level];
+  rows.forEach((c, i) => {
+    const off = (TT_DAYS.indexOf(c.Day) - (n.getUTCDay() + 6) % 7 + 7) % 7;
+    const at = (t) => new Date(Date.UTC(n.getUTCFullYear(), n.getUTCMonth(), n.getUTCDate() + off, +t.slice(0, 2) - 1, +t.slice(3, 5))).toISOString().replace(/[-:]/g, '').slice(0, 15) + 'Z';
+    lines.push('BEGIN:VEVENT', 'UID:hs' + i + '-' + Math.random().toString(36).slice(2, 8) + '@himaayahschools.com', 'DTSTAMP:' + stamp, 'DTSTART:' + at(c.Start), 'DTEND:' + at(c.End || c.Start), 'RRULE:FREQ=WEEKLY',
+      'SUMMARY:' + (c.Subject + ' · ' + level).replace(/[,;]/g, ' '), 'DESCRIPTION:' + (c.Link ? 'Join: ' + c.Link : 'Himaayah Schools class'), c.Link ? 'URL:' + c.Link : '', 'END:VEVENT');
+  });
+  lines.push('END:VCALENDAR');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([lines.filter(Boolean).join('\r\n')], { type: 'text/calendar' }));
+  a.download = 'himaayah-timetable.ics'; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+}
+function ttCard(d) {
+  const rows = d.timetable || []; if (!rows.length) return '';
+  const today = TT_DAYS[(ttLagos().getUTCDay() + 6) % 7];
+  const days = TT_DAYS.map((day) => ({ day, c: rows.filter((r) => r.Day === day) })).filter((x) => x.c.length);
+  return `<article class="c w12" id="timetable" style="--i:3"><h2>Weekly timetable</h2><p class="sub">${esc(d.student.Level)} · Nigeria time</p>
+    <div class="tt-week">${days.map((x) => `<div class="${x.day === today ? 'today' : ''}"><h3>${x.day}${x.day === today ? ' · Today' : ''}</h3>${x.c.map((c) => `<p><b>${esc(c.Subject)}</b><span dir="ltr">${tt12(c.Start)}${c.End ? '–' + tt12(c.End) : ''}</span></p>${safeUrl(c.Link) ? `<a href="${esc(c.Link)}" target="_blank" rel="noopener">Join</a>` : ''}`).join('')}</div>`).join('')}</div>
+    <p class="sub" style="margin-top:14px"><button class="btn btn-line" type="button" id="ttIcsBtn">Add to my calendar</button></p></article>`;
+}
 function render(d) {
   const openIds = [...document.querySelectorAll('.asg[open]')].map((x) => x.dataset.id);
   const s = d.student, first = String(s.Name).split(' ')[0];
@@ -141,6 +175,7 @@ function render(d) {
   const last = res.slice(-6);
   const asg = d.assignments || [], todo = asg.filter((a) => a.Status === 'To do' || a.Status === 'Overdue').length;
   const pays = d.payments || [];
+  if (!s.NextClass && d.timetable && d.timetable.length) { const nx = ttNext(d.timetable); if (nx) { s.NextClass = nx.when; if (!s.ClassLink && nx.c.Link) s.ClassLink = nx.c.Link; } }
   const remind = reminders(s, d, status, due);
   const waHelp = 'https://wa.me/' + MADRASAH_WA + '?text=' + encodeURIComponent('Assalaamu alaykum. This is ' + s.Name + ' (' + s.StudentID + ') from the Madrasah.');
   const groups = ['Memorised','Revising','In progress','Not started'];
@@ -156,6 +191,7 @@ function render(d) {
     <article class="c" style="--i:2"><div class="k">Attendance</div><div class="big">${att === null ? 'No data yet' : att + '%'}</div>
       ${att === null ? '' : `<div class="bar"><i data-w="${att}"></i></div><div class="row"><span>${s.AttendancePresent} present</span><span>${s.AttendanceTotal} classes</span></div>`}</article>
 
+    ${ttCard(d)}
     <article class="c w12" id="tools" style="--i:3"><h2>Study tools</h2>
       <div class="tools">
         <a class="tool" href="tracker.html"><b>Daily revision</b><span>Tick off today\u2019s murajaah and keep your streak going.</span></a>
@@ -184,6 +220,7 @@ function render(d) {
     <article class="c w12" style="--i:10"><h2>Payment history</h2>${pays.length ? `<table><thead><tr><th>Date</th><th>Reference</th><th>Covers</th><th>Amount</th></tr></thead><tbody>${pays.map((p) => `<tr><td>${fdate(p.Date)}</td><td>${esc(p.Reference || '')}</td><td>${esc(p.Months)} month${Number(p.Months) === 1 ? '' : 's'}</td><td><b>${naira(p.Amount)}</b></td></tr>`).join('')}</tbody></table>` : '<p class="empty">Confirmed payments will appear here.</p>'}</article>
   </div>
   <p class="foot">${API_URL ? '' : 'Demo mode: this is sample data. '}Your records are updated by your teachers. Questions? Message the Madrasah line.</p>`;
+  { const b = document.getElementById('ttIcsBtn'); if (b) b.addEventListener('click', () => ttIcs(d.timetable, s.Level)); }
   openIds.forEach((id) => { const el = [...document.querySelectorAll('.asg')].find((x) => x.dataset.id === id); if (el) el.open = true; });
   requestAnimationFrame(() => setTimeout(() => {
     document.querySelectorAll('.bar i').forEach((b) => { b.style.width = b.dataset.w + '%'; });

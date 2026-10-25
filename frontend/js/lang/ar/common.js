@@ -474,5 +474,7 @@ HS_I18N.add({
 "Mentor login": "دخول المرشد",
 "Mentor Login": "دخول المرشد",
 "Refer and earn": "ادعُ واربح",
-"Sponsor a student": "اكفل طالبًا"
+"Sponsor a student": "اكفل طالبًا",
+"Timetable": "جدول الحصص",
+"Book a free class": "احجز حصة مجانية"
 });

@@ -52,5 +52,6 @@ HS_I18N.add({
 "Six classes a week": "ست حصص في الأسبوع",
 "Live lessons through the week, plus timed mocks and a personal review.": "دروس مباشرة طوال الأسبوع، مع اختبارات تجريبية موقوتة ومراجعة شخصية.",
 "Live, with recordings": "مباشرة، مع التسجيلات",
-"Miss a class and you can watch it back.": "إن فاتتك حصة يمكنك مشاهدتها لاحقًا."
+"Miss a class and you can watch it back.": "إن فاتتك حصة يمكنك مشاهدتها لاحقًا.",
+"Book a free class": "احجز حصة مجانية"
 });

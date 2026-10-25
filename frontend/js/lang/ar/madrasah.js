@@ -158,5 +158,10 @@ HS_I18N.add({
 "New": "جديد",
 "Completed the Qur'an? Make it firm with Muraajah.": "أتممت القرآن؟ ثبّت حفظك مع برنامج المراجعة.",
 "For students who have finished memorising and want to make their hifdh solid and lasting, through steady, structured revision with a teacher.": "للطلاب الذين أتمّوا الحفظ ويريدون تثبيته وإدامته، بمراجعة منتظمة منظّمة مع معلّم.",
-"For students who have finished memorising and want to make their hifdh solid and lasting, through steady, structured revision with a teacher. Four classes a week, in a small group or one-on-one.": "للطلاب الذين أتمّوا الحفظ ويريدون تثبيته وإدامته، بمراجعة منتظمة منظّمة مع معلّم. أربع حصص في الأسبوع، في مجموعة صغيرة أو فرديًا."
+"For students who have finished memorising and want to make their hifdh solid and lasting, through steady, structured revision with a teacher. Four classes a week, in a small group or one-on-one.": "للطلاب الذين أتمّوا الحفظ ويريدون تثبيته وإدامته، بمراجعة منتظمة منظّمة مع معلّم. أربع حصص في الأسبوع، في مجموعة صغيرة أو فرديًا.",
+"Group classes follow a weekly timetable. One-to-one classes are set to suit the student.": "تسير الحصص الجماعية وفق جدول أسبوعي، أما الحصص الفردية فتُحدَّد بما يناسب الطالب.",
+"See the group timetable": "اطّلع على جدول الحصص الجماعية",
+"Book a free class": "احجز حصة مجانية",
+"Group or one-to-one times": "مواعيد جماعية أو فردية",
+"Group classes run to the weekly timetable. On a one-to-one plan, your teacher agrees the days and hour with you after you enroll.": "تسير الحصص الجماعية وفق الجدول الأسبوعي. وفي الخطة الفردية يتّفق معك معلّمك على الأيام والساعة بعد التسجيل."
 });

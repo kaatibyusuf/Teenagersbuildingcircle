@@ -46,7 +46,7 @@ const fdate = (iso, t) => { if (!iso) return '–'; const d = new Date(iso); ret
 const mname = (m) => new Date(m + '-01T00:00').toLocaleDateString('en-GB', { month: 'short' });
 const plural = (n, w) => n + ' ' + (n === 1 ? w : /[^aeiou]y$/.test(w) ? w.slice(0, -1) + 'ies' : /(s|sh|ch|x)$/.test(w) ? w + 'es' : w + 's');
 const change = (a, b) => b ? (a >= b ? '+' : '') + Math.round(100 * (a - b) / b) + '% on last month' : a ? 'none last month' : '';
-const TABS = [['overview', 'Overview'], ['fees', 'Fees'], ['referrals', 'Referrals'], ['sponsors', 'Sponsors'], ['growth', 'Growth'], ['account', 'Account']];
+const TABS = [['overview', 'Overview'], ['fees', 'Fees'], ['trials', 'Free classes'], ['referrals', 'Referrals'], ['sponsors', 'Sponsors'], ['stories', 'Stories'], ['growth', 'Growth'], ['account', 'Account']];
 let D = null;
 const S = { tab: 'overview', open: {} };
 
@@ -96,6 +96,10 @@ function vOverview() {
   if (D.referrals.due.length) todo.push([plural(D.referrals.due.length, 'referral payout') + ' to send (' + naira(D.referrals.dueTotal) + ')', 'referrals']);
   if (sp && sp.requests.filter((r) => r.Status === 'New').length) todo.push([plural(sp.requests.filter((r) => r.Status === 'New').length, 'new sponsorship request'), 'sponsors']);
   if (sp && sp.held) todo.push([naira(sp.held) + ' of sponsorships waiting for a Student ID', 'sponsors']);
+  const tr = D.trials;
+  if (tr && tr.counts.requests) todo.push([plural(tr.counts.requests, 'free class request') + ' waiting for a time', 'trials']);
+  if (tr && tr.counts.upcoming) todo.push([plural(tr.counts.upcoming, 'free class') + ' coming up', 'trials']);
+  if (D.testimonials && D.testimonials.filter((t) => t.Status === 'New').length) todo.push([plural(D.testimonials.filter((t) => t.Status === 'New').length, 'new story') + ' to review', 'stories']);
   if (k.overdue) todo.push([plural(k.overdue, 'student') + ' with overdue fees', 'fees']);
   if (D.reports && D.reports.errors) todo.push([plural(D.reports.errors, 'progress report') + ' failed to send', 'growth']);
   return `<div class="grid">
@@ -183,7 +187,45 @@ function vAccount() {
   <div><label class="fl" for="np2">Type it again</label><input class="in" id="np2" name="again" type="password" autocomplete="new-password"></div>
   <button class="btn btn-ink" type="submit">Change my code</button></form></article>`;
 }
-const VIEWS = { overview: vOverview, fees: vFees, referrals: vReferrals, sponsors: vSponsors, growth: vGrowth, account: vAccount };
+const TRS = ['Requested', 'Booked', 'Attended', 'No-show', 'Enrolled', 'Cancelled'];
+const TRC = { Requested: 'p-red', Booked: 'p-sky', Attended: 'p-ink', Enrolled: 'p-ink', 'No-show': 'p-wash', Cancelled: 'p-wash' };
+function vTrials() {
+  const T = D.trials;
+  if (!T) return `<article class="c w12">${empty('Free classes are not set up yet. Add Trials.gs and run Himaayah → Set up trial classes.')}</article>`;
+  const c = T.counts;
+  const row = (b) => `<details class="box" data-k="t-${esc(b.Ref)}"${S.open['t-' + b.Ref] ? ' open' : ''}><summary><div><b>${esc(b.StudentName)}${b.Age ? ', ' + esc(b.Age) : ''}</b><small>${esc(b.Programme)} · ${b.Slot ? fdate(b.Slot, 1) : 'Wants: ' + esc(b.Preferred)} · <span translate="no">${esc(b.Ref)}</span></small></div><div class="sum-r"><span class="pill ${TRC[b.Status] || 'p-sky'}">${esc(b.Status)}</span></div></summary>
+    <div class="body"><p class="sub">Parent: ${esc(b.ParentName)} · <a href="mailto:${esc(b.Email)}">${esc(b.Email)}</a> · ${esc(b.WhatsApp)}${b.Plan ? ' · ' + esc(b.Plan) : ''} · booked ${fdate(b.Booked, 1)}</p>
+      <div class="acx-acts">${wa(b.WaLink, 'WhatsApp the family')}</div>
+      <form class="frm" data-form="trial" data-id="${esc(b.Ref)}">
+        <div class="row3"><div><label class="fl">Status</label><select class="in" name="status">${TRS.map((x) => `<option${x === b.Status ? ' selected' : ''}>${x}</option>`).join('')}</select></div>
+          <div><label class="fl">Class time</label><input class="in" name="slot" type="datetime-local" value="${esc(b.Slot)}"></div>
+          <div><label class="fl">Join link</label><input class="in" name="link" maxlength="300" value="${esc(b.Link)}" placeholder="https://meet.google.com/…"></div></div>
+        <div><label class="fl">Notes</label><input class="in" name="notes" maxlength="300" value="${esc(b.Notes)}"></div>
+        <label class="ow-chk"><input type="checkbox" name="notify"> Email the family the time and link</label>
+        <button class="btn btn-ink" type="submit">Save</button></form></div></details>`;
+  return `<div class="grid">
+    <article class="c w12"><div class="tiles acx-tiles6">${tile(c.month, 'booked this month')}${tile(c.upcoming, 'coming up')}${tile(c.requests, 'waiting for a time', c.requests > 0)}${tile(c.attended, 'attended')}${tile(c.enrolled, 'enrolled after')}${tile(c.rate == null ? '–' : c.rate + '%', 'of those who came enrolled')}</div></article>
+    <article class="c w12"><h2>Free class bookings</h2><p class="sub">Requests first, then upcoming classes. For a request, agree a time on WhatsApp, set the class time and link, and tick “Email the family”. Families get a reminder on the day and one follow-up two days after.</p>
+      ${T.list.length ? T.list.map(row).join('') : empty('No bookings yet. Share the Book a free class page.')}
+      <p class="sub">Open slots come from the “Trial slots” tab in the sheet (day, time, places and link).</p></article>
+  </div>`;
+}
+function vStories() {
+  const L = D.testimonials;
+  if (!L) return `<article class="c w12">${empty('Testimonials are not set up yet. Add Testimonials.gs.')}</article>`;
+  const card = (t) => `<details class="box" data-k="s-${esc(t.ID)}"${S.open['s-' + t.ID] || t.Status === 'New' ? ' open' : ''}><summary><div><b>${esc(t.Name)}</b><small>${esc(t.Role)} · ${esc(t.Programme)}${t.Result ? ' · ' + esc(t.Result) : ''} · ${'★'.repeat(t.Rating)} · ${fdate(t.Submitted)}</small></div><div class="sum-r">${t.Featured ? '<span class="pill p-ink">Featured</span> ' : ''}<span class="pill ${t.Status === 'New' ? 'p-red' : t.Status === 'Approved' ? 'p-sky' : 'p-wash'}">${esc(t.Status)}</span></div></summary>
+    <div class="body"><form class="frm" data-form="story" data-id="${esc(t.ID)}">
+      <div><label class="fl">What they wrote (you can fix typos)</label><textarea class="in" name="text" rows="4" maxlength="1200">${esc(t.Text)}</textarea></div>
+      <div class="row3"><div><label class="fl">Show name as</label><select class="in" name="showAs">${['First name', 'Initials', 'Anonymous'].map((x) => `<option${x === t.ShowAs ? ' selected' : ''}>${x}</option>`).join('')}</select></div>
+        <div><label class="fl">Result or milestone</label><input class="in" name="result" maxlength="60" value="${esc(t.Result)}"></div>
+        <div><label class="fl">Status</label><select class="in" name="status">${['New', 'Approved', 'Hidden'].map((x) => `<option${x === t.Status ? ' selected' : ''}>${x}</option>`).join('')}</select></div></div>
+      <label class="ow-chk"><input type="checkbox" name="featured"${t.Featured ? ' checked' : ''}> Feature it (shown first)</label>
+      <p class="sub">Shown on the site as: <b>${esc(t.Shown || 'A Himaayah family')}</b>${t.Email ? ' · ' + esc(t.Email) : ''}${t.StudentID ? ' · ' + esc(t.StudentID) : ''}</p>
+      <button class="btn btn-ink" type="submit">Save</button></form></div></details>`;
+  return `<div class="grid"><article class="c w12"><h2>Stories from families</h2><p class="sub">New stories are not on the website until you approve them. Approved ones appear on Success stories, featured ones first. To ask every family for a story, run Himaayah → Ask families for a testimonial in the sheet.</p>
+    ${L.length ? L.map(card).join('') : empty('No stories yet.')}</article></div>`;
+}
+const VIEWS = { overview: vOverview, fees: vFees, trials: vTrials, stories: vStories, referrals: vReferrals, sponsors: vSponsors, growth: vGrowth, account: vAccount };
 function render() {
   document.querySelectorAll('details[data-k]').forEach((x) => { S.open[x.dataset.k] = x.open; });
   const k = D.kpi;
@@ -218,6 +260,10 @@ app.addEventListener('submit', (e) => {
   } else if (k === 'request') {
     act('ow_request', { requestId: f.dataset.id, status: v('status'), publicName: v('publicName').trim(), studentId: v('studentId').trim(), monthlyFee: Number(v('monthlyFee')) || 0,
       monthsNeeded: Number(v('monthsNeeded')) || 0, notes: v('notes').trim(), blurb: v('blurb').trim() }, btn);
+  } else if (k === 'trial') {
+    act('ow_trial', { ref: f.dataset.id, status: v('status'), slot: v('slot'), link: v('link').trim(), notes: v('notes').trim(), notify: f.elements.notify.checked }, btn);
+  } else if (k === 'story') {
+    act('ow_testimonial', { testimonialId: f.dataset.id, status: v('status'), showAs: v('showAs'), result: v('result').trim(), text: v('text').trim(), featured: f.elements.featured.checked }, btn);
   } else if (k === 'password') {
     if (v('newCode').length < 8) return toast('Your new code must be at least 8 characters.', true);
     if (v('newCode') !== v('again')) return toast('The two codes do not match.', true);
