@@ -16,7 +16,7 @@ HS_I18N.add({
 "Opens in": "يفتح بعد",
 "Admission open": "القبول مفتوح",
 "Qur'an memorisation and Islamic studies": "حفظ القرآن والدراسات الإسلامية",
-"Group or personal, four classes a week. Hifdh and tajweed, with aqeedah, fiqh and seerah in the full Madrasah.": "جماعي أو فردي، أربع حصص أسبوعيًا. الحفظ والتجويد، ومعهما العقيدة والفقه والسيرة في المدرسة الشرعية الكاملة.",
+"Group or personal, five classes a week. Hifdh and tajweed, with aqeedah, fiqh and seerah in the full Madrasah.": "جماعي أو فردي، خمس حصص أسبوعيًا. الحفظ والتجويد، ومعهما العقيدة والفقه والسيرة في المدرسة الشرعية الكاملة.",
 "a month, from": "شهريًا كحد أدنى",
 "Exam prep with a daily rhythm": "تحضير للامتحانات بإيقاع يومي",
 "Live classes, a CBT simulator, weekly mocks and a reading club, for UTME, Post-UTME, O-Levels and A-Levels.": "حصص مباشرة، ومحاكي اختبار إلكتروني (CBT)، واختبارات تجريبية أسبوعية، ونادٍ للقراءة، لامتحانات UTME وPost-UTME وO-Levels وA-Levels.",

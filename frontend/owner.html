@@ -208,7 +208,16 @@ function vTrials() {
     <article class="c w12"><h2>Free class bookings</h2><p class="sub">Requests first, then upcoming classes. For a request, agree a time on WhatsApp, set the class time and link, and tick “Email the family”. Families get a reminder on the day and one follow-up two days after.</p>
       ${T.list.length ? T.list.map(row).join('') : empty('No bookings yet. Share the Book a free class page.')}
       <p class="sub">Open slots come from the “Trial slots” tab in the sheet (day, time, places and link).</p></article>
+    ${vPlacement()}
   </div>`;
+}
+function vPlacement() {
+  const P = D.placement;
+  if (!P) return `<article class="c w12">${empty('Placement tests are not set up yet. Add PlacementTests.gs and PlacementBank.gs and run Himaayah → Set up placement tests.')}</article>`;
+  const row = (r) => `<div class="box ow-pay"><div class="ow-pay-l"><b>${esc(r.name)}</b><small>${esc(r.test)} · ${fdate(r.when, 1)} · <span translate="no">${esc(r.ref)}</span></small></div><div class="sum-r"><span class="pill ${r.result === 'Passed' ? 'p-ink' : 'p-wash'}">${esc(r.result)} · ${r.percent}%</span> ${r.whatsapp ? wa('https://wa.me/' + String(r.whatsapp).replace(/\D/g, '').replace(/^0/, '234'), 'WhatsApp') : ''}</div></div>`;
+  return `<article class="c w12"><h2>Placement tests</h2><p class="sub">Last 30 days. Every result is also emailed to you and saved in the “Placement tests” tab. Madrasah pass marks follow each level (75% to 90%); the UTME cut-off is 70%, and candidates below it can still enrol.</p>
+    <div class="tiles">${tile(P.taken, 'tests taken')}${tile(P.passed, 'passed')}${tile(P.taken ? Math.round(100 * P.passed / P.taken) + '%' : '–', 'pass rate')}</div>
+    ${P.recent.length ? P.recent.map(row).join('') : empty('No tests taken yet. Share the Placement tests page.')}</article>`;
 }
 function vStories() {
   const L = D.testimonials;

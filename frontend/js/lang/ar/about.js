@@ -37,7 +37,7 @@ HS_I18N.add({
 "Start where they actually are": "البدء من حيث هو فعلًا",
 "Every student begins with an assessment or placement conversation, so the class fits them and not the other way round.": "يبدأ كل طالب بتقييم أو بحوار لتحديد المستوى، لتناسبه الحصة لا العكس.",
 "Learn live, with a dedicated teacher": "تعلّم مباشر مع معلّم مخصَّص",
-"Four classes a week in the Madrasah, live weekly sessions in the Circle, and structured tutorials in the Academy.": "أربع حصص أسبوعيًا في المدرسة الشرعية، وجلسات أسبوعية مباشرة في الحلقة، ودروس منظَّمة في الأكاديمية.",
+"Five classes a week in the Madrasah, four live sessions a week in the Circle, and classes six days a week in the Academy.": "خمس حصص أسبوعيًا في المدرسة الشرعية، وأربع جلسات مباشرة أسبوعيًا في الحلقة، وحصص ستة أيام في الأسبوع في الأكاديمية.",
 "Revise by design": "مراجعة مقصودة",
 "Murajaah is built into the schedule, so what is memorised stays memorised between sessions.": "المراجعة جزء من الجدول، ليبقى المحفوظ محفوظًا بين الجلسات.",
 "Be tested honestly": "اختبار صادق",

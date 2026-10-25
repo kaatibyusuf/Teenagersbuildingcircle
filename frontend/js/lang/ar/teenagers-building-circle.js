@@ -20,13 +20,15 @@ HS_I18N.add({
 "Character and self-management, the part no syllabus tests but every adult needs.": "الأخلاق وإدارة الذات، الجزء الذي لا يختبره أي منهج لكن يحتاجه كل بالغ.",
 "A typical week": "أسبوع نموذجي",
 "What a week actually looks like.": "كيف يبدو الأسبوع فعلًا.",
-"Every student starts with a diagnostic assessment, so the cohort isn't a guess. It's built around where each student actually is. From there, it's live weekly sessions with real facilitators, backed by a dedicated Slack workspace that keeps the conversation going the rest of the week.": "يبدأ كل طالب بتقييم تشخيصي، فلا تُبنى الدفعة على التخمين، بل على المستوى الحقيقي لكل طالب. ومن هناك تأتي جلسات أسبوعية مباشرة مع ميسّرين حقيقيين، تدعمها مساحة عمل خاصة على Slack تُبقي الحوار مستمرًا بقية الأسبوع.",
-"Live weekly sessions across all four pillars": "جلسات أسبوعية مباشرة في الركائز الأربع كلها",
+"Every student starts with a diagnostic assessment, so the cohort isn't a guess. It's built around where each student actually is. From there, it's four live sessions a week with real facilitators, backed by a dedicated Slack workspace that keeps the conversation going the rest of the week.": "يبدأ كل طالب بتقييم تشخيصي، فلا تُبنى الدفعة على التخمين، بل على المستوى الحقيقي لكل طالب. ومن هناك تأتي أربع جلسات مباشرة أسبوعيًا مع ميسّرين حقيقيين، تدعمها مساحة عمل خاصة على Slack تُبقي الحوار مستمرًا بقية الأسبوع.",
+"Four live sessions a week across all four pillars": "أربع جلسات مباشرة أسبوعيًا في الركائز الأربع كلها",
 "A dedicated Slack workspace for the cohort": "مساحة عمل خاصة على Slack للدفعة",
 "Full programme": "البرنامج الكامل",
 "Weekly cohort": "دفعة أسبوعية",
 "Questions first? Ask on WhatsApp": "لديك أسئلة أولًا؟ اسأل على واتساب",
 "Facilitator Login": "دخول الميسّرين",
 "Teenagers Building Circle — Himaayah Schools": "حلقة بناء الناشئة — مدارس حماية",
-"Session times are set with your facilitator when the cohort forms": "تُحدَّد مواعيد الجلسات مع الميسّر عند تكوين الدفعة"
+"Session times are set with your facilitator when the cohort forms": "تُحدَّد مواعيد الجلسات مع الميسّر عند تكوين الدفعة",
+"4 sessions": "4 جلسات",
+"a week, live, across all four pillars": "أسبوعيًا، مباشرة، في الركائز الأربع كلها"
 });

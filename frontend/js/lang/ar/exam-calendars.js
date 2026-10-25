@@ -2,7 +2,7 @@
    Keys starting with re: are patterns for text with numbers or names in it ($1, $2 are the parts kept). */
 HS_I18N.add({
 "UTME, Post-UTME, WAEC, NECO, IJMB and JUPEB in one place. Every date is marked as confirmed, expected, or still to be announced, so you never plan around a guess.": "UTME وPost-UTME وWAEC وNECO وIJMB وJUPEB في مكان واحد. كل موعد موسوم بأنه مؤكَّد أو متوقَّع أو لم يُعلَن بعد، فلا تخطّط أبدًا على التخمين.",
-"Book a free CBT mock test": "احجز اختبار CBT تجريبيًا مجانيًا",
+"Take a free CBT mock test": "أدِّ اختبار CBT تجريبيًا مجانيًا",
 "See the dates": "شاهد المواعيد",
 "All exams": "كل الامتحانات",
 "WAEC / NECO": "WAEC / NECO",

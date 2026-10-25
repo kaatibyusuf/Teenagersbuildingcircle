@@ -49,12 +49,15 @@ HS_I18N.add({
 "Read success stories": "اقرأ قصص النجاح",
 "Illustration of a computer-based test screen showing a multiple-choice question and a countdown timer.": "رسم توضيحي لشاشة اختبار إلكتروني تعرض سؤال اختيار من متعدد وعدّادًا تنازليًا.",
 "Academy — Himaayah Schools": "الأكاديمية — مدارس حماية",
-"Six classes a week": "ست حصص في الأسبوع",
-"Live lessons through the week, plus timed mocks and a personal review.": "دروس مباشرة طوال الأسبوع، مع اختبارات تجريبية موقوتة ومراجعة شخصية.",
+"Six days a week": "ستة أيام في الأسبوع",
+"Live lessons six days a week, plus timed mocks and a personal review.": "دروس مباشرة ستة أيام في الأسبوع، مع اختبارات تجريبية موقوتة ومراجعة شخصية.",
 "Live, with recordings": "مباشرة، مع التسجيلات",
 "Miss a class and you can watch it back.": "إن فاتتك حصة يمكنك مشاهدتها لاحقًا.",
 "Book a free class": "احجز حصة مجانية",
 "Five Ways to Ace UTME": "خمس طرق للتفوّق في UTME",
 "What to study, how to use past questions, how to beat the CBT clock, with a 12-week plan and an exam-day checklist.": "ماذا تذاكر، وكيف تستعمل أسئلة السنوات السابقة، وكيف تسبق وقت الامتحان الإلكتروني، مع خطة لاثني عشر أسبوعًا وقائمة تحقّق ليوم الامتحان.",
-"re:Cover of (.+)": "غلاف $1"
+"re:Cover of (.+)": "غلاف $1",
+"6 days": "6 أيام",
+"of classes a week": "من الحصص أسبوعيًا",
+"Take a free UTME mock": "أدِّ اختبار UTME تجريبيًا مجانيًا"
 });
