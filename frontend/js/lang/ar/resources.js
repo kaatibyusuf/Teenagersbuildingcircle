@@ -1,11 +1,19 @@
 /* Arabic for the resources page. English on the left, Arabic on the right: edit the Arabic to change what visitors see.
    Keys starting with re: are patterns for text with numbers or names in it ($1, $2 are the parts kept). */
 HS_I18N.add({
-"Free guides — Himaayah Schools": "أدلة مجانية — مدارس حماية",
-"Free downloadable guides from Himaayah Schools teachers: becoming consistent in hifdh, and five ways to ace UTME.": "أدلة مجانية للتنزيل من معلّمي مدارس حماية: المداومة على الحفظ، وخمس طرق للتفوّق في UTME.",
+"Prospectus and free guides — Himaayah Schools": "الدليل التعريفي والأدلة المجانية — مدارس حماية",
+"Download the Himaayah Schools prospectus and free guides from our teachers: becoming consistent in hifdh, and five ways to ace UTME.": "نزّل الدليل التعريفي لمدارس حماية وأدلة مجانية من معلّمينا: المداومة على الحفظ، وخمس طرق للتفوّق في UTME.",
 "Free resources": "موارد مجانية",
-"Free guides from our teachers.": "أدلة مجانية من معلّمينا.",
-"Practical, printable guides written by the teachers and mentors at Himaayah Schools. Download them, print them and share them with anyone who will benefit. No sign-up needed.": "أدلة عملية قابلة للطباعة كتبها معلّمو مدارس حماية ومرشدوها. نزّلها واطبعها وشاركها مع كل من ينتفع بها. دون تسجيل.",
+"Our prospectus and free guides.": "دليلنا التعريفي وأدلة مجانية.",
+"The full Himaayah Schools prospectus, and practical, printable guides written by our teachers and mentors. Download them, print them and share them with anyone who will benefit. No sign-up needed.": "الدليل التعريفي الكامل لمدارس حماية، وأدلة عملية قابلة للطباعة كتبها معلّمونا ومرشدونا. نزّلها واطبعها وشاركها مع كل من ينتفع بها. دون تسجيل.",
+"Prospectus": "الدليل التعريفي",
+"Himaayah Schools Prospectus 2026–2027": "الدليل التعريفي لمدارس حماية ⁦2026–2027⁩",
+"Everything a family needs to choose with confidence: our programmes, levels, fees, admissions and policies in one document.": "كل ما تحتاجه الأسرة لتختار عن ثقة: برامجنا ومستوياتنا ورسومنا والقبول والسياسات في ملف واحد.",
+"Who we are: our story, vision, mission and leadership team": "من نحن: قصتنا ورؤيتنا ورسالتنا وفريق الإدارة",
+"All four programmes: Madrasah levels and plans, Academy tracks and results, Skills School and the Circle": "البرامج الأربعة: مستويات المدرسة الشرعية وخططها، ومسارات الأكاديمية ونتائجها، ومدرسة المهارات، والحلقة",
+"Every fee in one table, with how to pay": "جميع الرسوم في جدول واحد، مع طريقة الدفع",
+"Admission steps, requirements and school policies": "خطوات القبول وشروطه وسياسات المدرسة",
+"Start enrollment": "ابدأ التسجيل",
 "Madrasah": "المدرسة الشرعية",
 "Academy": "الأكاديمية",
 "A practical guide to becoming consistent in memorising the Qur’an, for students and parents.": "دليل عملي للمداومة على حفظ القرآن، للطلاب وأولياء الأمور.",

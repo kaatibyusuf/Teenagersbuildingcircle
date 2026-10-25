@@ -121,5 +121,6 @@ HS_I18N.add({
 "Enroll in a private class": "سجّل في حصة خاصة",
 "Group classes reopen": "تُستأنف الحصص الجماعية",
 "Time until group Madrasah classes reopen": "الوقت المتبقي حتى تُستأنف الحصص الجماعية في المدرسة الشرعية",
-"Card or bank transfer. Choose Card at the last step of enrollment to pay on a secure payment page, or pay by transfer and send your receipt on WhatsApp.": "بالبطاقة أو بالتحويل البنكي. اختر «البطاقة» في الخطوة الأخيرة من التسجيل لتدفع على صفحة دفع آمنة، أو ادفع بالتحويل وأرسل إيصالك على واتساب."
+"Card or bank transfer. Choose Card at the last step of enrollment to pay on a secure payment page, or pay by transfer and send your receipt on WhatsApp.": "بالبطاقة أو بالتحويل البنكي. اختر «البطاقة» في الخطوة الأخيرة من التسجيل لتدفع على صفحة دفع آمنة، أو ادفع بالتحويل وأرسل إيصالك على واتساب.",
+"Download prospectus": "نزّل الدليل التعريفي"
 });

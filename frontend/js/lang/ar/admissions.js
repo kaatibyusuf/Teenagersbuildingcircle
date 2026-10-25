@@ -86,5 +86,10 @@ HS_I18N.add({
 "Muraajah (Group)": "المراجعة (جماعي)",
 "Muraajah (Personal)": "المراجعة (فردي)",
 "Revision after completing the Qur'an · four classes a week": "مراجعة بعد إتمام القرآن · أربع حصص أسبوعيًا",
-"Revision after completing the Qur'an · one-on-one": "مراجعة بعد إتمام القرآن · فردي"
+"Revision after completing the Qur'an · one-on-one": "مراجعة بعد إتمام القرآن · فردي",
+"Download prospectus": "نزّل الدليل التعريفي",
+"Prospectus 2026–2027": "الدليل التعريفي ⁦2026–2027⁩",
+"Read it all in one place.": "اقرأ كل شيء في مكان واحد.",
+"Our programmes, Madrasah levels, Academy results, every fee, the admission steps and our policies, in a 31-page PDF you can print or share with family.": "برامجنا، ومستويات المدرسة الشرعية، ونتائج الأكاديمية، وجميع الرسوم، وخطوات القبول، وسياساتنا، في ملف PDF من 31 صفحة يمكنك طباعته أو مشاركته مع أسرتك.",
+"Cover of the Himaayah Schools Prospectus": "غلاف الدليل التعريفي لمدارس حماية"
 });

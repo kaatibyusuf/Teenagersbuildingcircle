@@ -4429,3 +4429,8 @@ body.acx-noscroll { overflow: hidden; }
   .site .res-strip { grid-template-columns: 84px minmax(0, 1fr); }
   .site .res-strip .btn { grid-column: 1 / -1; justify-content: center; }
 }
+
+/* Prospectus download links (home, admissions) */
+.site .h-hero-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 26px; }
+.site .h-btn-dl { gap: 8px; }
+.site .hero-actions .btn-dl { gap: 8px; }
