@@ -86,5 +86,12 @@ HS_I18N.add({
 "Your new code cannot contain spaces.": "لا يمكن أن يحتوي رمزك الجديد على مسافات.",
 "Choose a code different from your current one.": "اختر رمزًا مختلفًا عن رمزك الحالي.",
 "Do not use your Student ID as your code.": "لا تستعمل رقمك الدراسي رمزًا للدخول.",
-"Could not change your code. Please try again.": "تعذّر تغيير رمزك. حاول مرة أخرى."
+"Could not change your code. Please try again.": "تعذّر تغيير رمزك. حاول مرة أخرى.",
+"You are on the Muraajah track: steady revision to keep your hifdh firm.": "أنت في مسار المراجعة: مراجعة منتظمة لتثبيت حفظك.",
+"You are on the Hifdh track.": "أنت في مسار الحفظ.",
+"Your progress is the juz and surahs in your Hifdh tracker.": "يُقاس تقدّمك بالأجزاء والسور في متابعة الحفظ.",
+"Hifdh": "الحفظ",
+"Muraajah": "المراجعة",
+"You are on the Hifdh track. Your progress is the juz and surahs in your Hifdh tracker.": "أنت في مسار الحفظ. يُقاس تقدّمك بالأجزاء والسور في متابعة الحفظ.",
+"You are on the Muraajah track: steady revision to keep your hifdh firm. Your progress is the juz and surahs in your Hifdh tracker.": "أنت في مسار المراجعة: مراجعة منتظمة لتثبيت حفظك. يُقاس تقدّمك بالأجزاء والسور في متابعة الحفظ."
 });

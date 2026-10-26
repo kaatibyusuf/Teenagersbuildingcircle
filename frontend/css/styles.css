@@ -4591,3 +4591,11 @@ html.pt-on.page-placement .pt-sec { padding-top: 100px; }
   .site.page-placement .pt-nav .btn { flex: 1; justify-content: center; }
   .site.page-placement .pt-flag { order: 3; width: 100%; }
 }
+
+/* Madrasah admin: pick up to 3 teachers */
+.page-admin .tpick { border: 0; padding: 0; margin: 0; display: grid; gap: 8px; min-width: 0; }
+.page-admin .tpick legend { padding: 0; margin-bottom: 6px; }
+.page-admin .tpick legend small { font-weight: 500; color: var(--muted); }
+.page-admin .tchk { display: grid; gap: 6px; max-height: 220px; overflow: auto; padding: 4px; border-radius: 14px; background: var(--wash); }
+.page-admin .tchk label { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 10px; background: #fff; font-size: 14px; cursor: pointer; }
+.page-admin .tchk input { width: 17px; height: 17px; accent-color: var(--ink); flex: none; }

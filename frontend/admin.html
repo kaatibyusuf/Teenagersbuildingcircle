@@ -79,6 +79,8 @@ const payPill = (s) => `<span class="pill ${PCLS[s.PaymentStatus] || 'p-sky'}">$
 const stuName = (id) => (D.students.find((s) => s.StudentID === id) || {}).Name || id;
 const opts = (list, first) => `<option value="">${esc(first)}</option>` + list.map((x) => `<option value="${esc(x.v)}">${esc(x.t)}</option>`).join('');
 const count = (fn) => D.students.filter(fn).length;
+const tids = (s) => s.TeacherIDs || (s.TeacherID ? [s.TeacherID] : []);
+const MAX_T = 3;
 
 /* ---------- views ---------- */
 function vPayments() {
@@ -105,10 +107,10 @@ function vPayments() {
 
 function vAssign() {
   const f = S.filter;
-  const shown = D.students.filter((s) => f === 'all' || (f === 'noTeacher' && !s.TeacherID) || (f === 'noLevel' && !s.Level));
-  const load = D.teachers.map((t) => ({ t, n: count((s) => s.TeacherID === t.TeacherID) }));
-  return `<div class="grid"><article class="c w8"><h2>Students</h2><p class="sub">Tick the students, then choose a teacher, level or class on the right. Only the fields you fill in are changed.</p>
-    <div class="tiles"><div class="tile"><b>${D.students.length}</b><span>students</span></div><div class="tile ${count((s) => !s.TeacherID) ? 'warn' : ''}"><b>${count((s) => !s.TeacherID)}</b><span>no teacher yet</span></div><div class="tile ${count((s) => !s.Level) ? 'warn' : ''}"><b>${count((s) => !s.Level)}</b><span>no level yet</span></div></div>
+  const shown = D.students.filter((s) => f === 'all' || (f === 'noTeacher' && !tids(s).length) || (f === 'noLevel' && !s.Level));
+  const load = D.teachers.map((t) => ({ t, n: count((s) => tids(s).includes(t.TeacherID)) }));
+  return `<div class="grid"><article class="c w8"><h2>Students</h2><p class="sub">Tick the students, then choose teachers, a level or a class on the right. Only the fields you fill in are changed. A student can have up to 3 teachers.</p>
+    <div class="tiles"><div class="tile"><b>${D.students.length}</b><span>students</span></div><div class="tile ${count((s) => !tids(s).length) ? 'warn' : ''}"><b>${count((s) => !tids(s).length)}</b><span>no teacher yet</span></div><div class="tile ${count((s) => !s.Level) ? 'warn' : ''}"><b>${count((s) => !s.Level)}</b><span>no level yet</span></div></div>
     <div class="tool"><div><label class="fl" for="q">Search</label><input class="in" id="q" type="search" placeholder="Name or ID" value="${esc(S.q)}"></div>
       <div><label class="fl" for="flt">Show</label><select class="in" id="flt"><option value="all"${f === 'all' ? ' selected' : ''}>All students</option><option value="noTeacher"${f === 'noTeacher' ? ' selected' : ''}>No teacher yet</option><option value="noLevel"${f === 'noLevel' ? ' selected' : ''}>No level yet</option></select></div>
       <button class="btn btn-line btn-sm" type="button" data-act="selAll">Select all shown</button></div>
@@ -116,7 +118,9 @@ function vAssign() {
   <div class="c w4" style="display:grid;gap:16px;align-content:start;padding:0;background:none;box-shadow:none">
     <article class="c" style="grid-column:auto"><h2>Assign selected</h2><p class="sub" id="selCount">${Object.keys(S.sel).filter((k) => S.sel[k]).length} selected</p>
       <form class="frm" data-form="assign">
-        <div><label class="fl" for="at">Teacher</label><select class="in" id="at" name="teacherId">${opts(D.teachers.map((t) => ({ v: t.TeacherID, t: t.Name })), 'No change')}</select></div>
+        <fieldset class="tpick"><legend class="fl">Teachers <small id="tCount">(choose up to ${MAX_T})</small></legend>
+          <div class="tchk">${D.teachers.map((t) => `<label><input type="checkbox" class="tsel" value="${esc(t.TeacherID)}"> <span>${esc(t.Name)}</span></label>`).join('') || '<p class="empty">No teachers yet. Add them in the Teachers tab.</p>'}</div>
+          <select class="in" name="mode" aria-label="What to do with these teachers"><option value="set">Replace the students’ teachers with these</option><option value="add">Add these teachers (keep the current ones)</option><option value="remove">Remove these teachers</option></select></fieldset>
         <div><label class="fl" for="al">Level</label><select class="in" id="al" name="level">${opts(D.levels.map((l) => ({ v: l, t: l })), 'No change')}</select></div>
         <div><label class="fl" for="ac">Next class (optional)</label><input class="in" type="datetime-local" id="ac" name="nextClass"></div>
         <div><label class="fl" for="ak">Class link (optional)</label><input class="in" type="url" id="ak" name="link" placeholder="https://meet.google.com/..."></div>
@@ -162,6 +166,11 @@ app.addEventListener('change', (e) => {
   const t = e.target;
   if (t.id === 'flt') { S.filter = t.value; render(); }
   else if (t.classList.contains('asg')) { S.sel[t.value] = t.checked; updCount(); }
+  else if (t.classList.contains('tsel')) {
+    const on = [...document.querySelectorAll('.tsel:checked')];
+    if (on.length > MAX_T) { t.checked = false; toast('Choose at most ' + MAX_T + ' teachers.', true); }
+    const n = document.querySelectorAll('.tsel:checked').length, c = $('tCount'); if (c) c.textContent = n ? '(' + n + ' of ' + MAX_T + ')' : '(choose up to ' + MAX_T + ')';
+  }
 });
 app.addEventListener('input', (e) => { if (e.target.id === 'q') { S.q = e.target.value; applyFilter(); } });
 app.addEventListener('toggle', (e) => { const d = e.target; if (d.classList && d.classList.contains('stu')) S.open = d.open ? d.dataset.id : (S.open === d.dataset.id ? '' : S.open); }, true);
@@ -175,8 +184,9 @@ app.addEventListener('submit', (e) => {
   } else if (k === 'assign') {
     const ids = Object.keys(S.sel).filter((x) => S.sel[x]);
     if (!ids.length) return toast('Tick at least one student.', true);
-    if (!v('teacherId') && !v('level') && !v('nextClass') && !v('link')) return toast('Choose a teacher, level or class to apply.', true);
-    act('admin_assign', { studentIds: ids, teacherId: v('teacherId'), level: v('level'), nextClass: v('nextClass'), link: v('link') }, 'Saved for ' + ids.length + ' student' + (ids.length === 1 ? '' : 's') + '.', btn).then((ok) => { if (ok) S.sel = {}; render(); });
+    const teacherIds = [...f.querySelectorAll('.tsel:checked')].map((x) => x.value);
+    if (!teacherIds.length && !v('level') && !v('nextClass') && !v('link')) return toast('Choose teachers, a level or a class to apply.', true);
+    act('admin_assign', { studentIds: ids, teacherIds, mode: v('mode'), level: v('level'), nextClass: v('nextClass'), link: v('link') }, 'Saved for ' + ids.length + ' student' + (ids.length === 1 ? '' : 's') + '.', btn).then((ok) => { if (ok) S.sel = {}; render(); });
   } else if (k === 'password') {
     if (v('newCode').length < 8) return toast('Your new code must be at least 8 characters.', true);
     if (v('newCode') !== v('again')) return toast('The two codes do not match.', true);
@@ -207,12 +217,12 @@ let DEMO = null;
 const isoD = (d) => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
 const plus = (n) => { const d = new Date(); d.setDate(d.getDate() + n); return d; };
 function demoBase() {
-  const T = { 'T-001': 'Ustadh Ibrahim', 'T-002': 'Ustadhah Maryam' };
-  const st = (id, name, level, plan, fee, status, due, tid) => ({ StudentID: id, Name: name, Level: level, Plan: plan, MonthlyFee: fee, PaymentStatus: status, NextDue: due, TeacherID: tid || '', Teacher: tid ? T[tid] : '', NextClass: '', ClassLink: '' });
+  const T = { 'T-001': 'Ustadh Ibrahim', 'T-002': 'Ustadhah Maryam', 'T-003': 'Ustadh Sulaiman' };
+  const st = (id, name, level, plan, fee, status, due, tid) => ({ StudentID: id, Name: name, Level: level, Plan: plan, MonthlyFee: fee, PaymentStatus: status, NextDue: due, TeacherID: tid || '', TeacherIDs: tid ? [tid] : [], Teacher: tid ? T[tid] : '', NextClass: '', ClassLink: '' });
   return { ok: true, today: isoD(new Date()), admin: { AdminID: 'DEMO', Name: 'Admin Demo' },
     students: [st('HM-0001', 'Amina Yusuf', 'Thālithah Ibtidā’iyyah', 'Full Madrasah (Personal)', 35000, 'Overdue', isoD(plus(-6)), 'T-001'), st('HM-0002', 'Bilal Adeyemi', 'Awwal Ibtidā’iyyah', 'Hifdh (Group)', 12000, 'Due', isoD(plus(3)), ''), st('HM-0003', 'Khadijah Musa', '', 'Full Madrasah (Group)', 20000, 'Paid', isoD(plus(20)), 'T-002'), st('HM-0004', 'Ibrahim Lawal', 'Rawdah', 'Hifdh (Personal)', 20000, 'Overdue', isoD(plus(-2)), ''), st('HM-0005', 'Zainab Oladipo', 'Tamheedi', 'One-year plan', 19000, 'Paid', isoD(plus(11)), 'T-001'), st('HM-0006', 'Yusuf Bello', 'Rawdah', 'Full Madrasah (Group)', 0, 'Exempt', '', 'T-002')],
-    teachers: [{ TeacherID: 'T-001', Name: 'Ustadh Ibrahim' }, { TeacherID: 'T-002', Name: 'Ustadhah Maryam' }],
-    levels: ['Rawdah', 'Tamheedi', 'Awwal Ibtidā’iyyah', 'Thāniyah Ibtidā’iyyah', 'Thālithah Ibtidā’iyyah', 'Rābiʿah Ibtidā’iyyah', 'Awwal Iʿdādiyyah'],
+    teachers: [{ TeacherID: 'T-001', Name: 'Ustadh Ibrahim' }, { TeacherID: 'T-002', Name: 'Ustadhah Maryam' }, { TeacherID: 'T-003', Name: 'Ustadh Sulaiman' }],
+    levels: ['Rawdah', 'Tamheedi', 'Awwal Ibtidā’iyyah', 'Thāniyah Ibtidā’iyyah', 'Thālithah Ibtidā’iyyah', 'Rābiʿah Ibtidā’iyyah', 'Awwal Iʿdādiyyah', 'Hifdh', 'Muraajah'],
     payments: [{ Date: isoD(plus(-9)), StudentID: 'HM-0003', Name: 'Khadijah Musa', Amount: 20000, Months: 1, Reference: 'TRF-10421' }] };
 }
 async function demoApi(c, action, p) {
@@ -230,9 +240,13 @@ async function demoApi(c, action, p) {
     DEMO.payments.unshift({ Date: p.date, StudentID: s.StudentID, Name: s.Name, Amount: Number(p.amount), Months: Number(p.months), Reference: p.reference || '' });
   } else if (action === 'admin_assign') {
     if (p.link && !/^https?:\/\//i.test(p.link)) return bad('The class link must start with http:// or https://');
-    const t = DEMO.teachers.find((x) => x.TeacherID === p.teacherId);
-    if (p.teacherId && !t) return bad('Teacher not found.');
-    p.studentIds.forEach((id) => { const s = stu(id); if (!s) return; if (t) { s.TeacherID = t.TeacherID; s.Teacher = t.Name; } if (p.level) s.Level = p.level; if (p.nextClass) s.NextClass = p.nextClass; if (p.link) s.ClassLink = p.link; });
+    const ch = (p.teacherIds || []).map((x) => DEMO.teachers.find((t) => t.TeacherID === x));
+    if (ch.some((x) => !x)) return bad('Teacher not found.');
+    if (ch.length > 3) return bad('Choose at most 3 teachers.');
+    const nextT = (s) => { let n = p.mode === 'set' ? ch.map((x) => x.TeacherID) : s.TeacherIDs.slice(); if (p.mode === 'add') ch.forEach((x) => { if (!n.includes(x.TeacherID)) n.push(x.TeacherID); }); if (p.mode === 'remove') n = n.filter((x) => !ch.some((c) => c.TeacherID === x)); return n; };
+    const over = p.studentIds.map(stu).filter((s) => s && ch.length && nextT(s).length > 3);
+    if (over.length) return bad(over[0].Name + ' would have more than 3 teachers. Remove one first, or use "Replace".');
+    p.studentIds.forEach((id) => { const s = stu(id); if (!s) return; if (ch.length) { s.TeacherIDs = nextT(s); s.TeacherID = s.TeacherIDs[0] || ''; s.Teacher = s.TeacherIDs.map((x) => (DEMO.teachers.find((t) => t.TeacherID === x) || {}).Name).join(', '); } if (p.level) s.Level = p.level; if (p.nextClass) s.NextClass = p.nextClass; if (p.link) s.ClassLink = p.link; });
   } else if (action === 'admin_password') {
     if (String(p.newCode).length < 8) return bad('Your new code must be 8 to 40 characters.');
   } else if (action !== 'admin_login') return bad('Unknown action.');
