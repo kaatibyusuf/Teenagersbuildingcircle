@@ -40,5 +40,10 @@ HS_I18N.add({
 "Each course runs for four, six or eight weeks, depending on the course.": "تستمر كل دورة أربعة أو ستة أو ثمانية أسابيع، بحسب الدورة.",
 "A real project at the end": "مشروع حقيقي في النهاية",
 "Every course finishes with work you can show, like a talk or a portfolio.": "تنتهي كل دورة بعمل يمكنك عرضه، مثل كلمة أمام جمهور أو ملف أعمال.",
-"Book a free class": "احجز حصة مجانية"
+"Book a free class": "احجز حصة مجانية",
+"Speak with Confidence": "تحدّث بثقة",
+"Find your message, build a talk people remember, calm your nerves and rehearse well, with a talk planner and a feedback sheet.": "حدّد رسالتك، وابنِ كلمة يتذكّرها الناس، وهدّئ توتّرك، وتدرّب جيدًا، مع مخطّط للكلمة وورقة ملاحظات.",
+"Free guide": "دليل مجاني",
+"Download free PDF": "نزّل ملف PDF مجانًا",
+"re:^Cover of (.+)$": "غلاف $1"
 });

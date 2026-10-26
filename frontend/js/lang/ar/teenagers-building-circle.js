@@ -30,5 +30,10 @@ HS_I18N.add({
 "Teenagers Building Circle — Himaayah Schools": "حلقة بناء الناشئة — مدارس حماية",
 "Session times are set with your facilitator when the cohort forms": "تُحدَّد مواعيد الجلسات مع الميسّر عند تكوين الدفعة",
 "4 sessions": "4 جلسات",
-"a week, live, across all four pillars": "أسبوعيًا، مباشرة، في الركائز الأربع كلها"
+"a week, live, across all four pillars": "أسبوعيًا، مباشرة، في الركائز الأربع كلها",
+"Deen and Discipline": "الدين والانضباط",
+"Seven habits for Muslim teenagers, from prayer on time to a phone that stays in its place, with a four-week tracker and a section for parents.": "سبع عادات للشباب المسلم، من الصلاة في وقتها إلى هاتف يبقى في مكانه، مع جدول متابعة لأربعة أسابيع وقسم لأولياء الأمور.",
+"Free guide": "دليل مجاني",
+"Download free PDF": "نزّل ملف PDF مجانًا",
+"re:^Cover of (.+)$": "غلاف $1"
 });

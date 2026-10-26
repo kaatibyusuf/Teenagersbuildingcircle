@@ -4599,3 +4599,7 @@ html.pt-on.page-placement .pt-sec { padding-top: 100px; }
 .page-admin .tchk { display: grid; gap: 6px; max-height: 220px; overflow: auto; padding: 4px; border-radius: 14px; background: var(--wash); }
 .page-admin .tchk label { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 10px; background: #fff; font-size: 14px; cursor: pointer; }
 .page-admin .tchk input { width: 17px; height: 17px; accent-color: var(--ink); flex: none; }
+
+/* Several free-guide strips in a row */
+.site .res-strip + .res-strip { margin-top: 16px; }
+.site .res-strip-sec { padding-bottom: clamp(24px, 4vw, 48px); }
