@@ -177,5 +177,10 @@ HS_I18N.add({
 "Print it and keep it beside your mushaf: plan each week, record new lessons and revision, and track all 30 juz and 114 surahs.": "اطبعه واحتفظ به بجوار مصحفك: خطّط لكلّ أسبوع، وسجّل الدروس الجديدة والمراجعة، وتابع الأجزاء الثلاثين والسور المئة والأربع عشرة.",
 "Ten traits of the student of knowledge, from sincerity to saying “I do not know”, each with a verse or hadith and a weekly action.": "عشر صفات لطالب العلم، من الإخلاص إلى قول «لا أدري»، لكلّ منها آية أو حديث وعمل أسبوعي.",
 "The Four Imams": "الأئمة الأربعة",
-"The full lives of Abū Ḥanīfah, Mālik, ash-Shāfiʿī and Aḥmad: their teachers, trials and methods, how they are linked, and why they differed.": "السيرة الكاملة لأبي حنيفة ومالك والشافعي وأحمد: شيوخهم ومحنهم وأصولهم، وصلة بعضهم ببعض، وأسباب اختلافهم."
+"The full lives of Abū Ḥanīfah, Mālik, ash-Shāfiʿī and Aḥmad: their teachers, trials and methods, how they are linked, and why they differed.": "السيرة الكاملة لأبي حنيفة ومالك والشافعي وأحمد: شيوخهم ومحنهم وأصولهم، وصلة بعضهم ببعض، وأسباب اختلافهم.",
+"New · Self-paced": "جديد · بالسرعة التي تناسبك",
+"Ḥadīth Bootcamp: the Forty Ḥadīth": "معسكر الحديث: الأربعون النووية",
+"All 42 ḥadīth of Imām an-Nawawī with recorded lessons, the Arabic text and translation, quizzes and a certificate. Free for current Madrasah students.": "الأحاديث الاثنان والأربعون للإمام النووي مع دروس مسجّلة، والنص العربي والترجمة، واختبارات، وشهادة. مجانًا لطلاب المدرسة الشرعية الحاليين.",
+"See the bootcamp": "تعرّف على المعسكر",
+"Ḥadīth Bootcamp cover": "غلاف معسكر الحديث"
 });

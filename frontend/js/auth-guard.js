@@ -7,7 +7,7 @@
      - nobody has used the page for IDLE_MINUTES.
    It must load before the page's own script, so it sits at the top of <head>. */
 (function () {
-  var KEYS = ['hs', 'ht', 'ha', 'hc', 'hca', 'hct', 'how', 'hcsa', 'hsk', 'hskt', 'hta', 'hf', 'hb'];
+  var KEYS = ['hs', 'ht', 'ha', 'hc', 'hca', 'hct', 'how', 'hcsa', 'hsk', 'hskt', 'hta', 'hf', 'hb', 'hbc'];
   var IDLE_MINUTES = 30, STAMP = 'hs-active';
   try {
     var ss = window.sessionStorage, now = Date.now();

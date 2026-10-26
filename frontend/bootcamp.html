@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en" class="app student page-bootcamp">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ḥadīth Bootcamp | Himaayah Schools</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#094570">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600;700&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<script src="js/auth-guard.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/chat.js" defer></script>
+<!-- Vercel Analytics: counts visits once enabled in the Vercel dashboard -->
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+<header class="top"><div>
+<a class="brand" href="./"><svg width="22" height="27" viewBox="0 0 377.21 459.6" fill="#094570" aria-hidden="true"><path d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>Himaayah Schools</a>
+<nav><a class="btn btn-line" href="./">Home</a><button class="btn btn-ink" id="out" hidden>Log out</button></nav>
+</div></header>
+
+<main id="login" class="login"><form class="lbox" id="lf" novalidate>
+<span class="kick">Ḥadīth Bootcamp</span>
+<h1>Log in</h1><p>Use the Bootcamp ID and access code from your email. Himaayah Madrasah students: use your usual Student ID and access code.</p>
+<div class="f"><label for="sid">Bootcamp ID or Student ID</label><input id="sid" autocomplete="username" autocapitalize="characters" placeholder="e.g. HB-7K2M9" required></div>
+<div class="f"><label for="scode">Access code</label><input id="scode" type="password" autocomplete="current-password" data-lpignore="true" required></div>
+<div class="err" id="err" role="alert"></div>
+<button class="btn btn-ink" id="go" type="submit">Log in</button>
+<p class="hint">Not joined yet? <a href="hadith-bootcamp#join">Join the bootcamp</a>. Lost your code? <a href="https://wa.me/2347025842849?text=Assalaamu%20alaykum.%20I%20need%20help%20with%20my%20Hadith%20Bootcamp%20login." target="_blank" rel="noopener">Message the Madrasah line</a>.</p>
+</form></main>
+
+<main id="app" class="wrap" hidden></main>
+
+<script>
+const API_URL = 'https://script.google.com/macros/s/AKfycby0AsifBuB_Ad7g1SjDXCipaDU27-BrzYWf67muw5jeY_C0_0uz8AhQYYXdiNRQhvqX/exec';
+const TITLE_AR = ["إنما الأعمال بالنيات", "حديث جبريل: الإسلام والإيمان والإحسان", "أركان الإسلام الخمسة", "خلق الإنسان والقدر", "رد المحدثات في الدين", "الحلال بيّن والحرام بيّن", "الدين النصيحة", "حرمة دم المسلم وماله", "ما نهيتكم عنه فاجتنبوه", "إن الله طيب لا يقبل إلا طيبًا", "دع ما يريبك إلى ما لا يريبك", "ترك ما لا يعني", "أن تحب لأخيك ما تحب لنفسك", "حرمة دم المسلم", "قول الخير وإكرام الجار والضيف", "لا تغضب", "الإحسان في كل شيء", "اتق الله حيثما كنت", "احفظ الله يحفظك", "الحياء", "قل آمنت بالله ثم استقم", "الطريق إلى الجنة بأداء الفرائض", "الطهور شطر الإيمان", "تحريم الظلم", "كل معروف صدقة", "على كل سُلامى صدقة", "البر حسن الخلق", "الوصية بالسنة", "أبواب الخير وحفظ اللسان", "حدود الله", "الزهد في الدنيا", "لا ضرر ولا ضرار", "البينة على المدعي", "تغيير المنكر", "أخوة المسلمين", "تفريج الكرب وطلب العلم", "كتابة الحسنات والسيئات", "أولياء الله", "رفع الخطأ والنسيان والإكراه", "كن في الدنيا كأنك غريب", "اتباع الهوى لما جاء به النبي ﷺ", "سعة مغفرة الله"];
+const $ = (id) => document.getElementById(id);
+const esc = (t) => String(t ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const KEY = 'hbc';
+let S = null, L = null;   // S = progress payload, L = open lesson
+
+async function api(action, extra) {
+  let c = null; try { c = JSON.parse(sessionStorage.getItem(KEY) || 'null'); } catch (x) {}
+  if (!c) throw new Error('login');
+  const ctl = new AbortController(), t = setTimeout(() => ctl.abort(), 30000);
+  try {
+    const r = await fetch(API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(Object.assign({ action, id: c.id, code: c.code }, extra || {})), signal: ctl.signal });
+    return await r.json();
+  } finally { clearTimeout(t); }
+}
+function fdate(iso) { const d = new Date(String(iso).slice(0, 10) + 'T12:00:00'); return isNaN(d) ? esc(iso) : d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }); }
+function status(x) { return x.passed ? 'done' : x.listened || x.best ? 'started' : 'new'; }
+
+function home() {
+  L = null; history.replaceState(null, '', location.pathname);
+  const s = S, first = String(s.student.name || '').split(' ')[0] || 'Student';
+  const pc = Math.round(100 * s.passed / s.total);
+  const next = s.lessons.find((x) => !x.passed);
+  $('app').innerHTML = `
+  <section class="greet"><div><small>Assalaamu alaykum</small><h1><span translate="no" dir="auto">${esc(first)}</span>, welcome to the Ḥadīth Bootcamp.</h1>
+    <div class="chips"><span>al-Arbaʿīn an-Nawawiyyah</span><span translate="no" dir="ltr">${esc(s.student.id)}</span>${s.student.source === 'Madrasah' ? '<span>Free for Madrasah students</span>' : ''}</div></div>
+    ${next ? `<button class="btn btn-sky" type="button" data-open="${next.n}">${s.passed ? 'Continue' : 'Start'} with ḥadīth ${next.n}</button>` : ''}</section>
+  <div class="grid">
+    <article class="c w8" style="--i:0"><h2>Your progress</h2>
+      <div class="row"><b style="color:var(--deep)">${s.passed} of ${s.total} ḥadīth passed</b><span>${pc}%</span></div><div class="bar"><i data-w="${pc}"></i></div>
+      <p class="sub">${s.listened} listened to · pass mark ${s.pass} out of 5 · retry any quiz as often as you need</p></article>
+    <article class="c bc-cert-card" style="--i:1"><h2>Certificate</h2>
+      ${s.certificate ? `<p class="sub">Completed on ${fdate(s.certificate.completed)}.</p><button class="btn btn-ink" type="button" id="certBtn">View my certificate</button>`
+        : s.passed === s.total ? `<p class="sub">Mā shāʾ Allāh, you have passed every quiz.</p><button class="btn btn-ink" type="button" id="certBtn">Get my certificate</button>`
+        : `<p class="sub">Pass all ${s.total} quizzes to unlock your certificate. ${s.total - s.passed} to go.</p>`}</article>
+    <article class="c w12" style="--i:2"><h2>The 42 ḥadīth</h2>
+      <div class="bc-leg"><span class="bc-st-done">Passed</span><span class="bc-st-started">Started</span><span class="bc-st-new">Not started</span></div>
+      <div class="bc-tiles">${s.lessons.map((x) => `<button type="button" class="bc-tile bc-st-${status(x)}" data-open="${x.n}"><span class="bc-tn">${x.n}</span><span class="bc-tt"><b>${esc(x.title)}</b><i lang="ar" dir="rtl" translate="no">${esc(TITLE_AR[x.n - 1] || '')}</i></span>${x.passed ? `<span class="bc-ok" aria-label="Passed">✓</span>` : x.best ? `<span class="bc-sc">${x.best}/5</span>` : ''}${x.recordings ? '' : '<span class="bc-na">Audio soon</span>'}</button>`).join('')}</div></article>
+  </div>
+  <p class="foot">Your progress is saved after each quiz. Questions? Message the Madrasah line on WhatsApp: +234 702 584 2849.</p>`;
+  bars();
+  const cb = $('certBtn'); if (cb) cb.addEventListener('click', certificate);
+  window.scrollTo(0, 0);
+}
+function bars() { requestAnimationFrame(() => setTimeout(() => document.querySelectorAll('.bar i').forEach((b) => { b.style.width = b.dataset.w + '%'; }), 60)); }
+
+async function openLesson(n) {
+  $('app').innerHTML = '<p class="bc-loading">Loading ḥadīth ' + n + '…</p>'; window.scrollTo(0, 0);
+  try {
+    const d = await api('bc_lesson', { n });
+    if (!d.ok) { $('app').innerHTML = `<p class="bc-loading">${esc(d.error || 'Could not load this lesson.')}</p>`; return; }
+    L = d.lesson; history.replaceState(null, '', '#h=' + n); lesson();
+  } catch (e) { if (e.message === 'login') return logout(); $('app').innerHTML = '<p class="bc-loading">Could not reach the school server. Please try again.</p>'; }
+}
+function lesson() {
+  const x = L, prev = x.n > 1 ? x.n - 1 : 0, nxt = x.n < 42 ? x.n + 1 : 0;
+  $('app').innerHTML = `
+  <nav class="bc-crumb"><button type="button" class="btn btn-line" data-home="1">← All ḥadīth</button><span>Ḥadīth ${x.n} of 42</span></nav>
+  <article class="c w12 bc-lesson">
+    <span class="bc-kick">Ḥadīth ${x.n}</span>
+    <h1>${esc(x.title)}</h1><p class="bc-tar" lang="ar" dir="rtl" translate="no">${esc(TITLE_AR[x.n - 1] || '')}</p>
+    <section class="bc-audio"><h2>Lesson recording</h2>
+      ${x.recordings.length ? x.recordings.map((r, i) => `<div class="bc-rec"><b>${esc(r.title || ('Part ' + (i + 1)))}${r.minutes ? ` <em>${r.minutes} min</em>` : ''}</b><iframe src="${esc(r.embed)}" title="${esc(r.title || 'Lesson recording')}" allow="autoplay" loading="lazy"></iframe></div>`).join('') : '<p class="sub">The recording for this ḥadīth is being added. You can still read it and take the quiz.</p>'}
+      ${x.recordings.length ? `<button class="btn ${x.listened ? 'btn-line' : 'btn-ink'}" type="button" id="heard" ${x.listened ? 'disabled' : ''}>${x.listened ? '✓ Marked as listened' : 'I have listened to this lesson'}</button>` : ''}</section>
+    <section class="bc-text"><h2>The ḥadīth</h2>
+      <p class="bc-ar" lang="ar" dir="rtl" translate="no">${esc(x.ar)}</p>
+      <p class="bc-en">${esc(x.en)}</p>
+      <p class="bc-src">Narrated by ${esc(x.narrator)}. ${esc(x.source)}.</p></section>
+    <section class="bc-keys"><h2>Key lessons</h2><ul>${x.lessons.map((t) => `<li>${esc(t)}</li>`).join('')}</ul></section>
+    <section class="bc-quiz"><h2>Quiz</h2><p class="sub">${x.passed ? `You have passed this quiz (best score ${x.best}/5). You can take it again to practise.` : `Answer all five questions. You need 4 out of 5 to pass.${x.attempts ? ` Best so far: ${x.best}/5.` : ''}`}</p>
+      <form id="qf" novalidate>${x.quiz.map((q, i) => `<fieldset class="bc-q" data-i="${i}"><legend><span>${i + 1}</span>${esc(q.q)}</legend>${q.options.map((o, j) => `<label><input type="radio" name="q${i}" value="${esc(o)}"><span>${esc(o)}</span></label>`).join('')}</fieldset>`).join('')}
+        <div class="bc-qres" id="qres" role="status"></div>
+        <button class="btn btn-ink" type="submit" id="qgo">Check my answers</button></form></section>
+    <nav class="bc-pn">${prev ? `<button type="button" class="btn btn-line" data-open="${prev}">← Ḥadīth ${prev}</button>` : '<span></span>'}${nxt ? `<button type="button" class="btn btn-line" data-open="${nxt}">Ḥadīth ${nxt} →</button>` : '<button type="button" class="btn btn-line" data-home="1">Back to all ḥadīth</button>'}</nav>
+  </article>`;
+  const hb = $('heard');
+  if (hb) hb.addEventListener('click', async () => {
+    hb.disabled = true; hb.textContent = 'Saving…';
+    try { const d = await api('bc_listened', { n: x.n }); if (d.ok) { x.listened = true; const it = S.lessons[x.n - 1]; it.listened = true; S.listened = S.lessons.filter((y) => y.listened).length; hb.textContent = '✓ Marked as listened'; hb.className = 'btn btn-line'; return; } } catch (e) {}
+    hb.disabled = false; hb.textContent = 'I have listened to this lesson';
+  });
+  $('qf').addEventListener('submit', quiz);
+}
+async function quiz(e) {
+  e.preventDefault();
+  const f = e.target, x = L, res = $('qres'), btn = $('qgo');
+  const answers = x.quiz.map((q, i) => { const c = f.querySelector(`input[name="q${i}"]:checked`); return c ? c.value : null; });
+  f.querySelectorAll('.bc-q').forEach((q) => q.classList.remove('right', 'wrong', 'miss'));
+  const missing = answers.map((a, i) => a === null ? i : -1).filter((i) => i >= 0);
+  if (missing.length) { missing.forEach((i) => f.querySelector(`.bc-q[data-i="${i}"]`).classList.add('miss')); res.className = 'bc-qres bad'; res.textContent = 'Answer every question first.'; return; }
+  btn.disabled = true; btn.textContent = 'Checking…'; res.textContent = '';
+  try {
+    const d = await api('bc_quiz', { n: x.n, answers });
+    if (!d.ok) { res.className = 'bc-qres bad'; res.textContent = d.error || 'Could not check your answers.'; }
+    else {
+      d.marks.forEach((m, i) => f.querySelector(`.bc-q[data-i="${i}"]`).classList.add(m ? 'right' : 'wrong'));
+      x.best = d.best; x.attempts = d.attempts; x.passed = d.everPassed; x.listened = true;
+      const it = S.lessons[x.n - 1]; it.best = d.best; it.passed = d.everPassed; it.listened = true;
+      S.passed = S.lessons.filter((y) => y.passed).length; S.listened = S.lessons.filter((y) => y.listened).length;
+      if (d.passed) {
+        res.className = 'bc-qres good';
+        res.innerHTML = `<b>${d.score} out of ${d.outOf}. Passed, mā shāʾ Allāh.</b> ${x.n < 42 ? `<button type="button" class="btn btn-ink" data-open="${x.n + 1}">Next: ḥadīth ${x.n + 1} →</button>` : S.passed === S.total ? '<button type="button" class="btn btn-ink" id="certNow">Get my certificate</button>' : '<button type="button" class="btn btn-ink" data-home="1">See what is left</button>'}`;
+        const cn = $('certNow'); if (cn) cn.addEventListener('click', certificate);
+      } else {
+        res.className = 'bc-qres bad';
+        res.innerHTML = `<b>${d.score} out of ${d.outOf}.</b> You need ${d.pass} to pass. The questions marked in red need another look: listen again or reread the key lessons, then try once more.`;
+      }
+    }
+  } catch (err) { if (err.message === 'login') return logout(); res.className = 'bc-qres bad'; res.textContent = 'Could not reach the school server. Please try again.'; }
+  btn.disabled = false; btn.textContent = 'Check my answers';
+}
+
+async function certificate() {
+  $('app').innerHTML = '<p class="bc-loading">Preparing your certificate…</p>'; window.scrollTo(0, 0);
+  let d;
+  try { d = await api('bc_cert'); } catch (e) { if (e.message === 'login') return logout(); $('app').innerHTML = '<p class="bc-loading">Could not reach the school server. Please try again.</p>'; return; }
+  if (!d.ok) { $('app').innerHTML = `<p class="bc-loading">${esc(d.error)}</p><p style="text-align:center"><button class="btn btn-line" data-home="1">Back</button></p>`; return; }
+  const c = d.certificate; S.certificate = { id: c.id, completed: c.completed };
+  $('app').innerHTML = `<nav class="bc-crumb"><button type="button" class="btn btn-line" data-home="1">← All ḥadīth</button><span>Certificate</span></nav>
+    <article class="c w12 bc-certv"><canvas id="cv" width="2000" height="1414" aria-label="Certificate for ${esc(c.name)}"></canvas>
+    <div class="bc-cact"><button class="btn btn-ink" type="button" id="dl">Download (PNG)</button><button class="btn btn-line" type="button" id="pr">Print or save as PDF</button></div>
+    <p class="sub">Certificate number <b translate="no" dir="ltr">${esc(c.id)}</b>. Anyone can check it at himaayahschools.com/hadith-bootcamp.</p></article>`;
+  await drawCert($('cv'), c);
+  $('dl').addEventListener('click', () => { const a = document.createElement('a'); a.download = 'Hadith-Bootcamp-Certificate-' + c.id + '.png'; a.href = $('cv').toDataURL('image/png'); a.click(); });
+  $('pr').addEventListener('click', () => { const w = window.open(''); if (!w) return; w.document.write('<title>Certificate ' + esc(c.id) + '</title><style>@page{size:A4 landscape;margin:0}body{margin:0}img{width:100%;display:block}</style><img src="' + $('cv').toDataURL('image/png') + '" onload="setTimeout(function(){print()},200)">'); w.document.close(); });
+}
+async function drawCert(cv, c) {
+  try { await Promise.all(['700 64px Amiri', '700 80px "Bricolage Grotesque"', '500 30px Inter'].map((f) => document.fonts.load(f))); } catch (e) {}
+  const x = cv.getContext('2d'), W = cv.width, H = cv.height, NAVY = '#062F4D', SKY = '#3E97D9', GOLD = '#B08D3C';
+  x.fillStyle = '#FDFBF6'; x.fillRect(0, 0, W, H);
+  x.strokeStyle = NAVY; x.lineWidth = 18; x.strokeRect(40, 40, W - 80, H - 80);
+  x.strokeStyle = GOLD; x.lineWidth = 3; x.strokeRect(78, 78, W - 156, H - 156);
+  x.save(); x.globalAlpha = .05; x.fillStyle = NAVY; x.font = '700 700px Amiri'; x.textAlign = 'center'; x.fillText('٤٢', W / 2, H / 2 + 260); x.restore();
+  x.textAlign = 'center'; x.fillStyle = NAVY;
+  x.font = '700 30px Inter'; x.fillText('HIMAAYAH SCHOOLS · MADRASAH', W / 2, 190);
+  x.fillStyle = GOLD; x.font = '700 64px Amiri'; x.fillText('شَهَادَةُ إِتْمَام', W / 2, 290);
+  x.fillStyle = NAVY; x.font = '700 82px "Bricolage Grotesque", Inter, sans-serif'; x.fillText('Certificate of Completion', W / 2, 400);
+  x.fillStyle = '#55697B'; x.font = '500 34px Inter'; x.fillText('This certifies that', W / 2, 500);
+  let size = 96; x.font = '700 ' + size + 'px "Bricolage Grotesque", Inter, sans-serif';
+  while (x.measureText(c.name).width > W - 420 && size > 50) { size -= 4; x.font = '700 ' + size + 'px "Bricolage Grotesque", Inter, sans-serif'; }
+  x.fillStyle = NAVY; x.fillText(c.name, W / 2, 625);
+  x.strokeStyle = SKY; x.lineWidth = 3; x.beginPath(); x.moveTo(W / 2 - 420, 660); x.lineTo(W / 2 + 420, 660); x.stroke();
+  x.fillStyle = '#55697B'; x.font = '500 34px Inter'; x.fillText('has studied and passed all 42 quizzes of', W / 2, 740);
+  x.fillStyle = NAVY; x.font = '700 50px "Bricolage Grotesque", Inter, sans-serif'; x.fillText('the Ḥadīth Bootcamp: al-Arbaʿīn an-Nawawiyyah', W / 2, 820);
+  x.fillStyle = GOLD; x.font = '700 50px Amiri'; x.fillText('الأربعون النووية', W / 2, 900);
+  x.fillStyle = '#55697B'; x.font = '500 30px Inter';
+  x.textAlign = 'left'; x.fillText('Completed', 220, 1110); x.textAlign = 'right'; x.fillText('Certificate number', W - 220, 1110);
+  x.fillStyle = NAVY; x.font = '700 40px Inter';
+  x.textAlign = 'left'; x.fillText(fdate(c.completed), 220, 1165); x.textAlign = 'right'; x.fillText(c.id, W - 220, 1165);
+  x.textAlign = 'center'; x.fillStyle = '#55697B'; x.font = '500 26px Inter'; x.fillText('Verify at himaayahschools.com/hadith-bootcamp?verify=' + c.id, W / 2, 1290);
+  x.beginPath(); x.arc(W / 2, 1140, 70, 0, Math.PI * 2); x.fillStyle = NAVY; x.fill(); x.strokeStyle = GOLD; x.lineWidth = 6; x.stroke();
+  x.fillStyle = '#fff'; x.font = '700 40px Amiri'; x.fillText('حماية', W / 2, 1150);
+}
+
+function show(d) { S = d; $('login').hidden = true; $('app').hidden = false; $('out').hidden = false; const m = location.hash.match(/^#h=(\d+)$/); if (m && +m[1] >= 1 && +m[1] <= 42) openLesson(+m[1]); else home(); }
+function logout() { sessionStorage.removeItem(KEY); S = L = null; history.replaceState(null, '', location.pathname); $('app').hidden = true; $('app').innerHTML = ''; $('out').hidden = true; $('login').hidden = false; $('scode').value = ''; }
+async function signIn(id, code, silent) {
+  const btn = $('go'), err = $('err'); err.textContent = ''; btn.disabled = true; btn.textContent = 'Logging in…';
+  sessionStorage.setItem(KEY, JSON.stringify({ id, code }));
+  try { const d = await api('bc_login'); if (d.ok) show(d); else { sessionStorage.removeItem(KEY); if (!silent) err.textContent = d.error || 'Could not log in.'; } }
+  catch (e) { if (!silent) err.textContent = 'Could not reach the school server. Please try again.'; }
+  btn.disabled = false; btn.textContent = 'Log in';
+}
+$('lf').addEventListener('submit', (e) => { e.preventDefault(); const id = $('sid').value.trim(), code = $('scode').value.trim(); if (!id || !code) { $('err').textContent = 'Enter your ID and access code.'; return; } signIn(id, code); });
+$('out').addEventListener('click', logout);
+$('app').addEventListener('click', (e) => {
+  const o = e.target.closest('[data-open]'); if (o) { openLesson(+o.dataset.open); return; }
+  if (e.target.closest('[data-home]')) { if (S) home(); }
+});
+(function () { let c = null; try { c = JSON.parse(sessionStorage.getItem(KEY) || 'null'); } catch (x) {} if (c && c.id && c.code) { $('sid').value = c.id; signIn(c.id, c.code, true); } })();
+</script>
+<script>
+/* Show/hide toggle on every access-code box */
+(function(){
+  function deco(){
+    document.querySelectorAll('input[type=password]:not([data-eye])').forEach(function(i){
+      i.setAttribute('data-eye','1');
+      var w=document.createElement('span');w.className='pw';i.parentNode.insertBefore(w,i);w.appendChild(i);
+      var b=document.createElement('button');b.type='button';b.textContent='Show';b.setAttribute('aria-label','Show access code');
+      b.addEventListener('click',function(){var s=i.type==='password';i.type=s?'text':'password';b.textContent=s?'Hide':'Show';b.setAttribute('aria-label',s?'Hide access code':'Show access code');});
+      w.appendChild(b);
+    });
+  }
+  deco();new MutationObserver(deco).observe(document.body,{childList:true,subtree:true});
+})();
+</script>
+</body>
+</html>

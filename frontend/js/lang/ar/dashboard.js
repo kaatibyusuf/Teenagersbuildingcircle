@@ -93,5 +93,7 @@ HS_I18N.add({
 "Hifdh": "الحفظ",
 "Muraajah": "المراجعة",
 "You are on the Hifdh track. Your progress is the juz and surahs in your Hifdh tracker.": "أنت في مسار الحفظ. يُقاس تقدّمك بالأجزاء والسور في متابعة الحفظ.",
-"You are on the Muraajah track: steady revision to keep your hifdh firm. Your progress is the juz and surahs in your Hifdh tracker.": "أنت في مسار المراجعة: مراجعة منتظمة لتثبيت حفظك. يُقاس تقدّمك بالأجزاء والسور في متابعة الحفظ."
+"You are on the Muraajah track: steady revision to keep your hifdh firm. Your progress is the juz and surahs in your Hifdh tracker.": "أنت في مسار المراجعة: مراجعة منتظمة لتثبيت حفظك. يُقاس تقدّمك بالأجزاء والسور في متابعة الحفظ.",
+"Ḥadīth Bootcamp": "معسكر الحديث",
+"The Forty Ḥadīth of an-Nawawī with lessons, quizzes and a certificate. Free for you: log in with this same ID and code.": "الأربعون النووية مع الدروس والاختبارات والشهادة. مجانًا لك: ادخل بالرقم والرمز نفسيهما."
 });
