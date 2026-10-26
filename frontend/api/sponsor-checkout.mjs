@@ -62,8 +62,8 @@ export async function POST(request) {
   const session = {
     pricing: { currency: 'NGN', amount: amount.toFixed(2) },
     customer,
-    success_url: site + '/sponsor.html?thanks=' + type,
-    cancel_url: site + '/sponsor.html?cancelled=1',
+    success_url: site + '/sponsor?thanks=' + type,
+    cancel_url: site + '/sponsor?cancelled=1',
     reference: ref + '-' + Math.random().toString(36).slice(2, 7),
     metadata: {
       kind: 'sponsor', ref, type, requestId: String(q.requestId || ''), months: String(q.months || ''),

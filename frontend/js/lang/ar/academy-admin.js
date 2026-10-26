@@ -230,7 +230,7 @@ HS_I18N.add({
 "ID": "الرقم",
 "Copied.": "نُسخ.",
 "Add a mentor": "أضف مرشدًا",
-"They sign in at academy-tutor.html with the ID and code shown after saving.": "يسجّلون الدخول في academy-tutor.html بالرقم والرمز الظاهرين بعد الحفظ.",
+"They sign in at academy-tutor with the ID and code shown after saving.": "يسجّلون الدخول في academy-tutor بالرقم والرمز الظاهرين بعد الحفظ.",
 "Name": "الاسم",
 "Role": "الدور",
 "Mentor (own mentees)": "مرشد (طلابه فقط)",

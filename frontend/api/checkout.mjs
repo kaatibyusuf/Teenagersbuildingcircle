@@ -71,8 +71,8 @@ export async function POST(request) {
     // sandbox and live without matching product IDs (the IDs below are kept for reference).
     pricing: { currency: 'NGN', amount: plan.amount.toFixed(2) },
     customer,
-    success_url: site + '/payment-success.html?ref=' + ref,
-    cancel_url: site + '/enroll.html?card=cancelled',
+    success_url: site + '/payment-success?ref=' + ref,
+    cancel_url: site + '/enroll?card=cancelled',
     // Bachs needs a new reference per attempt; the enrolment reference stays in metadata
     reference: ref + '-' + Date.now().toString(36),
     metadata: { ref, plan: b.plan, student },

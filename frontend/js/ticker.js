@@ -5,7 +5,7 @@
   var ON = true;
   var MESSAGES = [
     ['Admission is closed for the current Madrasah session.', ''],
-    ['Join the waitlist and we will email you when a place opens', 'waitlist.html'],
+    ['Join the waitlist and we will email you when a place opens', 'waitlist'],
   ];
   var LABEL = 'Notice';
 

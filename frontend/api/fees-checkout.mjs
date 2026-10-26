@@ -43,7 +43,7 @@ export async function POST(request) {
   const live = key.startsWith('sk_live_');
   const api = live ? 'https://api.bachs.io' : 'https://sandbox-api.bachs.io';
   const site = (process.env.SITE_URL || new URL(request.url).origin).replace(/\/$/, '');
-  const back = site + '/pay.html?id=' + encodeURIComponent(q.studentId || id);
+  const back = site + '/pay?id=' + encodeURIComponent(q.studentId || id);
   const customer = {};
   const typed = String(b.email || '').trim().slice(0, 200);
   if (/^\S+@\S+\.\S+$/.test(typed)) customer.email = typed;   // the parent's email, if typed on the page

@@ -19,8 +19,8 @@
 </head>
 <body>
 <header class="top"><div>
-<a class="brand" href="index.html"><svg width="22" height="27" viewBox="0 0 377.21 459.6" fill="#094570" aria-hidden="true"><path d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>Himaayah Schools</a>
-<nav><a class="btn btn-line" href="index.html">Home</a><button class="btn btn-ink" id="out" hidden>Log out</button></nav>
+<a class="brand" href="./"><svg width="22" height="27" viewBox="0 0 377.21 459.6" fill="#094570" aria-hidden="true"><path d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>Himaayah Schools</a>
+<nav><a class="btn btn-line" href="./">Home</a><button class="btn btn-ink" id="out" hidden>Log out</button></nav>
 </div></header>
 
 <main id="login" class="login"><form class="lbox" id="lf" novalidate>
@@ -30,7 +30,7 @@
 <div class="f"><label for="scode">Access code</label><input id="scode" type="password" autocomplete="new-password" data-lpignore="true" required></div>
 <div class="err" id="err" role="alert"></div>
 <button class="btn btn-ink" id="go" type="submit">Sign in</button>
-<p class="hint">Lost your code? <a href="https://wa.me/2348066043320?text=Assalaamu%20alaykum.%20I%20need%20help%20with%20my%20Skills%20School%20login." target="_blank" rel="noopener">Message the school</a>. Madrasah students sign in on the <a href="dashboard.html">student dashboard</a>, and Academy students on the <a href="academy-dashboard.html">Academy dashboard</a>.</p>
+<p class="hint">Lost your code? <a href="https://wa.me/2348066043320?text=Assalaamu%20alaykum.%20I%20need%20help%20with%20my%20Skills%20School%20login." target="_blank" rel="noopener">Message the school</a>. Madrasah students sign in on the <a href="dashboard">student dashboard</a>, and Academy students on the <a href="academy-dashboard">Academy dashboard</a>.</p>
 </form></main>
 
 <main id="app" class="wrap" hidden></main>
@@ -121,7 +121,7 @@ function render(d) {
   const pct = s.Weeks ? Math.round(100 * Math.min(s.Week, s.Weeks) / s.Weeks) : 0, done = s.Status === 'Completed' || s.Status === 'Finished';
   const attPct = att.Total ? Math.round(100 * att.Present / att.Total) : 0;
   const waHelp = 'https://wa.me/' + HELP_WA + '?text=' + encodeURIComponent('Assalaamu alaykum. This is ' + s.Name + ' (' + s.StudentID + ') from the Skills School.');
-  const payUrl = 'pay.html?id=' + encodeURIComponent(s.StudentID);
+  const payUrl = 'pay?id=' + encodeURIComponent(s.StudentID);
   const waPay = 'https://wa.me/' + PAYMENT_WA + '?text=' + encodeURIComponent('Assalaamu alaykum. This is my payment receipt. Name: ' + s.Name + ', ID: ' + s.StudentID + ', course: ' + s.Course + '.');
   const open = [...document.querySelectorAll('.sit')].map((x) => x.dataset.k + ':' + x.open);
   $('app').innerHTML = `
