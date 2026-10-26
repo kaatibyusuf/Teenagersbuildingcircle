@@ -171,5 +171,9 @@ HS_I18N.add({
 "Understand What You Recite": "افهم ما تتلو",
 "Take your first steps from reciting the Qur’an to understanding it: roots, common words and al-Fātiḥah word by word, with a 12-week plan.": "خطواتك الأولى من تلاوة القرآن إلى فهمه: الجذور، والكلمات الشائعة، والفاتحة كلمةً كلمة، مع خطة لاثني عشر أسبوعًا.",
 "Mastering the Mutashābihāt": "إتقان المتشابهات",
-"Recognise the verses that look alike, tell them apart and keep each one in its place, with real pairs, memory hooks and a self-test.": "تعرّف على الآيات المتشابهة، وميّز بينها، واحفظ كلّ آية في موضعها، مع أمثلة حقيقية وروابط للحفظ واختبار ذاتي."
+"Recognise the verses that look alike, tell them apart and keep each one in its place, with real pairs, memory hooks and a self-test.": "تعرّف على الآيات المتشابهة، وميّز بينها، واحفظ كلّ آية في موضعها، مع أمثلة حقيقية وروابط للحفظ واختبار ذاتي.",
+"My Hifdh Planner": "مخطّط الحفظ",
+"Adab Before ʿIlm": "الأدب قبل العلم",
+"Print it and keep it beside your mushaf: plan each week, record new lessons and revision, and track all 30 juz and 114 surahs.": "اطبعه واحتفظ به بجوار مصحفك: خطّط لكلّ أسبوع، وسجّل الدروس الجديدة والمراجعة، وتابع الأجزاء الثلاثين والسور المئة والأربع عشرة.",
+"Ten traits of the student of knowledge, from sincerity to saying “I do not know”, each with a verse or hadith and a weekly action.": "عشر صفات لطالب العلم، من الإخلاص إلى قول «لا أدري»، لكلّ منها آية أو حديث وعمل أسبوعي."
 });

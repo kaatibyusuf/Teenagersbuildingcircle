@@ -73,5 +73,10 @@ HS_I18N.add({
 "A WAEC and NECO study guide: plan your subjects, use past questions and write answers examiners reward.": "دليل مذاكرة لامتحانات WAEC وNECO: خطّط لموادك، واستعمل أسئلة السنوات السابقة، واكتب إجابات يكافئها المصحّحون.",
 "Speak with Confidence": "تحدّث بثقة",
 "Plan a talk people remember, calm your nerves and rehearse well, with a talk planner and a feedback sheet.": "خطّط لكلمة يتذكّرها الناس، وهدّئ توتّرك، وتدرّب جيدًا، مع مخطّط للكلمة وورقة ملاحظات.",
-"re:^Himaayah Schools · (.+)$": "مدارس حماية · $1"
+"re:^Himaayah Schools · (.+)$": "مدارس حماية · $1",
+"My Hifdh Planner": "مخطّط الحفظ",
+"Adab Before ʿIlm": "الأدب قبل العلم",
+"Character": "الأخلاق",
+"A printable planner: your goal and timeline, weekly pages for new lesson and revision, a juz tracker and a surah checklist.": "مخطّط مطبوع: هدفك وجدولك الزمني، وصفحات أسبوعية للدرس الجديد والمراجعة، وجدول متابعة للأجزاء، وقائمة بالسور.",
+"Ten traits of the student of knowledge, each with a verse or hadith and a weekly action, with a self-assessment and a 30-day tracker.": "عشر صفات لطالب العلم، لكلّ منها آية أو حديث وعمل أسبوعي، مع تقييم ذاتي وجدول متابعة لثلاثين يومًا."
 });

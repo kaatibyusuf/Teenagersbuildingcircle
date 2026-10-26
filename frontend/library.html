@@ -47,6 +47,8 @@ const safeUrl = (u) => /^https:\/\/[^\s]+$/i.test(String(u || '')) ? u : '#';
 const RES = (location.protocol === 'https:' ? location.origin : 'https://www.himaayahschools.com') + '/resources/';
 const GUIDE = (slug, Title, Subject, Description, Added) => ({ Title, Author: 'Himaayah Schools', Type: 'PDF', Subject, Level: 'All', Url: RES + slug + '.pdf', Description, Added, forMe: true, guide: true });
 const GUIDES = [
+  GUIDE('hifdh-planner', 'My Hifdh Planner', 'Hifdh', 'A printable planner: your goal and timeline, weekly pages for new lesson and revision, a juz tracker and a surah checklist.', '2026-10-26'),
+  GUIDE('adab-before-ilm', 'Adab Before ʿIlm', 'Character', 'Ten traits of the student of knowledge, each with a verse or hadith and a weekly action, with a self-assessment and a 30-day tracker.', '2026-10-26'),
   GUIDE('mastering-the-mutashabihat', 'Mastering the Mutashābihāt', 'Hifdh', 'Recognise the verses that look alike, tell them apart and keep each one in its place. Real pairs, memory hooks, a self-test and a log.', '2026-10-26'),
   GUIDE('steady-hifdh', 'Steady Hifdh', 'Hifdh', 'Ten steps to becoming consistent in memorising the Qur’an, with a daily routine, a sample week and a tracker.', '2026-10-25'),
   GUIDE('understand-what-you-recite', 'Understand What You Recite', 'Arabic', 'A first guide to the Arabic of the Qur’an: roots, common words and al-Fātiḥah word by word, with a 12-week plan.', '2026-10-26'),
