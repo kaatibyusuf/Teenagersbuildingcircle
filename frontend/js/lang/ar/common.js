@@ -481,5 +481,8 @@ HS_I18N.add({
 "Book a free class": "احجز حصة مجانية",
 "Free guides": "أدلة مجانية",
 "Free guide": "دليل مجاني",
-"Download free PDF": "نزّل ملف PDF مجانًا"
+"Download free PDF": "نزّل ملف PDF مجانًا",
+"Admission is closed for the current Madrasah session.": "باب القبول مغلق في الدورة الحالية للمدرسة الشرعية.",
+"Join the waitlist and we will email you when a place opens": "سجّل في قائمة الانتظار وسنراسلك بالبريد عند توفّر مقعد",
+"Notice": "تنبيه"
 });
