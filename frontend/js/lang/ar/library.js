@@ -78,5 +78,8 @@ HS_I18N.add({
 "Adab Before ʿIlm": "الأدب قبل العلم",
 "Character": "الأخلاق",
 "A printable planner: your goal and timeline, weekly pages for new lesson and revision, a juz tracker and a surah checklist.": "مخطّط مطبوع: هدفك وجدولك الزمني، وصفحات أسبوعية للدرس الجديد والمراجعة، وجدول متابعة للأجزاء، وقائمة بالسور.",
-"Ten traits of the student of knowledge, each with a verse or hadith and a weekly action, with a self-assessment and a 30-day tracker.": "عشر صفات لطالب العلم، لكلّ منها آية أو حديث وعمل أسبوعي، مع تقييم ذاتي وجدول متابعة لثلاثين يومًا."
+"Ten traits of the student of knowledge, each with a verse or hadith and a weekly action, with a self-assessment and a 30-day tracker.": "عشر صفات لطالب العلم، لكلّ منها آية أو حديث وعمل أسبوعي، مع تقييم ذاتي وجدول متابعة لثلاثين يومًا.",
+"The Four Imams": "الأئمة الأربعة",
+"Seerah": "السيرة",
+"The full lives of Abū Ḥanīfah, Mālik, ash-Shāfiʿī and Aḥmad: teachers, trials, methods and students, with a timeline and a self-test.": "السيرة الكاملة لأبي حنيفة ومالك والشافعي وأحمد: الشيوخ والمحن والأصول والتلاميذ، مع خطّ زمني واختبار ذاتي."
 });

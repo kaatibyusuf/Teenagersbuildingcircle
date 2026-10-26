@@ -2,7 +2,7 @@
    Keys starting with re: are patterns for text with numbers or names in it ($1, $2 are the parts kept). */
 HS_I18N.add({
 "Prospectus and free guides — Himaayah Schools": "الدليل التعريفي والأدلة المجانية — مدارس حماية",
-"Download the Himaayah Schools prospectus and free guides from our teachers on hifdh, the mutashābihāt, adab, Qur’anic Arabic, UTME, WAEC and NECO, teenage habits and public speaking, plus a printable hifdh planner.": "نزّل الدليل التعريفي لمدارس حماية وأدلة مجانية من معلّمينا في الحفظ، والمتشابهات، والأدب، وعربية القرآن، وامتحانات UTME وWAEC وNECO، وعادات الشباب، والخطابة، مع مخطّط مطبوع للحفظ.",
+"Download the Himaayah Schools prospectus and free guides from our teachers on hifdh, the mutashābihāt, adab, the four imams, Qur’anic Arabic, UTME, WAEC and NECO, teenage habits and public speaking, plus a printable hifdh planner.": "نزّل الدليل التعريفي لمدارس حماية وأدلة مجانية من معلّمينا في الحفظ، والمتشابهات، والأدب، وسير الأئمة الأربعة، وعربية القرآن، وامتحانات UTME وWAEC وNECO، وعادات الشباب، والخطابة، مع مخطّط مطبوع للحفظ.",
 "Free resources": "موارد مجانية",
 "Our prospectus and free guides.": "دليلنا التعريفي وأدلة مجانية.",
 "The full Himaayah Schools prospectus, and practical, printable guides written by our teachers and mentors. Download them, print them and share them with anyone who will benefit. No sign-up needed.": "الدليل التعريفي الكامل لمدارس حماية، وأدلة عملية قابلة للطباعة كتبها معلّمونا ومرشدونا. نزّلها واطبعها وشاركها مع كل من ينتفع بها. دون تسجيل.",
@@ -72,6 +72,12 @@ HS_I18N.add({
 "Want more? Read our": "تريد المزيد؟ اقرأ",
 "articles": "مقالاتنا",
 "on learning, hifdh, exams and parenting, or get the next guide by email below.": "عن التعلّم والحفظ والامتحانات والتربية، أو احصل على الدليل القادم بالبريد أدناه.",
+"The Four Imams": "الأئمة الأربعة",
+"The lives of Abū Ḥanīfah, Mālik, ash-Shāfiʿī and Aḥmad: how they learned, what they faced, how they reasoned and the schools they left.": "سير أبي حنيفة ومالك والشافعي وأحمد: كيف طلبوا العلم، وما لقوه من المحن، وكيف استنبطوا، والمذاهب التي تركوها.",
+"Four full biographies: family, teachers, travels, character, trials and death": "أربع تراجم كاملة: النشأة، والشيوخ، والرحلات، والأخلاق، والمحن، والوفاة",
+"How each imam reasoned, and the books and students he left": "أصول كلّ إمام في الاستنباط، والكتب والتلاميذ الذين تركهم",
+"How they are linked as teachers and students, with a timeline and comparison table": "صلة بعضهم ببعض شيوخًا وتلاميذ، مع خطّ زمني وجدول مقارنة",
+"Why they differed, their love for one another, a self-test and a reading list": "أسباب اختلافهم، ومحبّة بعضهم لبعض، واختبار ذاتي، وقائمة للقراءة",
 "My Hifdh Planner": "مخطّط الحفظ",
 "Adab Before ʿIlm": "الأدب قبل العلم",
 "A printable planner for memorising the Qur’an: set your goal, plan each week, track every juz and keep your revision firm.": "مخطّط مطبوع لحفظ القرآن: حدّد هدفك، وخطّط لكلّ أسبوع، وتابع كلّ جزء، وثبّت مراجعتك.",

@@ -47,6 +47,7 @@ const safeUrl = (u) => /^https:\/\/[^\s]+$/i.test(String(u || '')) ? u : '#';
 const RES = (location.protocol === 'https:' ? location.origin : 'https://www.himaayahschools.com') + '/resources/';
 const GUIDE = (slug, Title, Subject, Description, Added) => ({ Title, Author: 'Himaayah Schools', Type: 'PDF', Subject, Level: 'All', Url: RES + slug + '.pdf', Description, Added, forMe: true, guide: true });
 const GUIDES = [
+  GUIDE('the-four-imams', 'The Four Imams', 'Seerah', 'The full lives of Abū Ḥanīfah, Mālik, ash-Shāfiʿī and Aḥmad: teachers, trials, methods and students, with a timeline and a self-test.', '2026-10-26'),
   GUIDE('hifdh-planner', 'My Hifdh Planner', 'Hifdh', 'A printable planner: your goal and timeline, weekly pages for new lesson and revision, a juz tracker and a surah checklist.', '2026-10-26'),
   GUIDE('adab-before-ilm', 'Adab Before ʿIlm', 'Character', 'Ten traits of the student of knowledge, each with a verse or hadith and a weekly action, with a self-assessment and a 30-day tracker.', '2026-10-26'),
   GUIDE('mastering-the-mutashabihat', 'Mastering the Mutashābihāt', 'Hifdh', 'Recognise the verses that look alike, tell them apart and keep each one in its place. Real pairs, memory hooks, a self-test and a log.', '2026-10-26'),
