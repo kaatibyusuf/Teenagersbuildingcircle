@@ -43,6 +43,20 @@ const esc = (t) => String(t ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':
 const ST = { student: null, items: [], q: '', subject: 'All', type: 'All', all: false, sort: 'new' };
 const safeUrl = (u) => /^https:\/\/[^\s]+$/i.test(String(u || '')) ? u : '#';
 
+/* ---- Himaayah free guides: always in the library, alongside what teachers add in the sheet ---- */
+const RES = (location.protocol === 'https:' ? location.origin : 'https://www.himaayahschools.com') + '/resources/';
+const GUIDE = (slug, Title, Subject, Description, Added) => ({ Title, Author: 'Himaayah Schools', Type: 'PDF', Subject, Level: 'All', Url: RES + slug + '.pdf', Description, Added, forMe: true, guide: true });
+const GUIDES = [
+  GUIDE('mastering-the-mutashabihat', 'Mastering the Mutashābihāt', 'Hifdh', 'Recognise the verses that look alike, tell them apart and keep each one in its place. Real pairs, memory hooks, a self-test and a log.', '2026-10-26'),
+  GUIDE('steady-hifdh', 'Steady Hifdh', 'Hifdh', 'Ten steps to becoming consistent in memorising the Qur’an, with a daily routine, a sample week and a tracker.', '2026-10-25'),
+  GUIDE('understand-what-you-recite', 'Understand What You Recite', 'Arabic', 'A first guide to the Arabic of the Qur’an: roots, common words and al-Fātiḥah word by word, with a 12-week plan.', '2026-10-26'),
+  GUIDE('deen-and-discipline', 'Deen and Discipline', 'Personal development', 'Seven habits for Muslim teenagers, from prayer on time to a phone that stays in its place, with a four-week tracker.', '2026-10-26'),
+  GUIDE('five-ways-to-ace-utme', 'Five Ways to Ace UTME', 'Exam preparation', 'What to study, how to use past questions and how to beat the CBT clock, with a 12-week plan.', '2026-10-25'),
+  GUIDE('credit-in-every-paper', 'Credit in Every Paper', 'Exam preparation', 'A WAEC and NECO study guide: plan your subjects, use past questions and write answers examiners reward.', '2026-10-26'),
+  GUIDE('speak-with-confidence', 'Speak with Confidence', 'Public speaking', 'Plan a talk people remember, calm your nerves and rehearse well, with a talk planner and a feedback sheet.', '2026-10-26')
+];
+const withGuides = (items) => (items || []).concat(GUIDES.filter((g) => !(items || []).some((x) => String(x.Url || '').indexOf(g.Url.split('/resources/')[1]) >= 0)));
+
 /* ---- demo data (only while API_URL is empty) ---- */
 function demo() {
   const d = (n) => { const x = new Date(); x.setDate(x.getDate() - n); return x.toISOString().slice(0, 10); };
@@ -75,6 +89,7 @@ function visible() {
 const GLOBE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Website"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/></svg>';
 const tile = (x) => x.Type === 'Link' ? `<div class="tile">${GLOBE}</div>` : `<div class="tile">${x.Type === 'Book' ? 'BOOK' : 'PDF'}</div>`;
 const label = (x) => x.Type === 'Link' ? 'Visit site' : x.Type === 'Book' ? 'Read' : 'Open PDF';
+const gtag = (x) => x.guide ? '<span class="gt">Free guide</span>' : '';
 const link = (x, cls) => `<a class="btn ${cls}" href="${esc(safeUrl(x.Url))}" target="_blank" rel="noopener noreferrer">${label(x)}</a>`;
 const lvl = (x) => x.Level === 'All' || !x.Level ? '<span class="lv">All levels</span>' : `<span class="lv mine">${esc(x.Level)}</span>`;
 
@@ -84,7 +99,7 @@ function main() {
   const fHtml = feat.length ? `<section><h2>New this month</h2><div class="fgrid">${feat.map((x) => `<article class="feat"><div class="top2">${tile(x)}<span class="newp">New</span></div>
       <h3>${esc(x.Title)}</h3><div class="by">${esc([x.Author, x.Subject].filter(Boolean).join(' \u00B7 '))}</div><p class="d">${esc(x.Description)}</p>${link(x, 'btn-sky')}</article>`).join('')}</div></section>` : '';
   const rows = l.length ? `<div class="list">${l.map((x, i) => `<article class="item ${x.forMe ? '' : 'other'}" style="--i:${Math.min(i, 12)}">${tile(x)}
-      <div class="txt"><h3>${esc(x.Title)}</h3><div class="by">${esc([x.Author, x.Subject].filter(Boolean).join(' \u00B7 '))}</div><p class="d">${esc(x.Description)}</p></div>
+      <div class="txt"><h3>${esc(x.Title)}${gtag(x)}</h3><div class="by">${esc([x.Author, x.Subject].filter(Boolean).join(' \u00B7 '))}</div><p class="d">${esc(x.Description)}</p></div>
       <div class="act">${isNew(x.Added) ? '<span class="nm">New</span>' : ''}${lvl(x)}${link(x, 'btn-ink')}</div></article>`).join('')}</div>`
     : '<div class="empty">Nothing matches. Try another subject or format, or choose "Show other levels too" to see the whole library.</div>';
   $('main').innerHTML = `${fHtml}<section><div class="head"><h2>All materials <small>${l.length} item${l.length === 1 ? '' : 's'}</small></h2>
@@ -104,7 +119,7 @@ function page() {
       <div><span class="lbl">Format</span><div class="formats">${[['All', 'Everything'], ['Books', 'PDFs and books'], ['Links', 'Websites']].map(([k, t]) => `<button data-type="${k}" aria-pressed="${ST.type === k}">${t}</button>`).join('')}</div></div>
       <div class="levels"><button data-all aria-pressed="${ST.all}">${ST.all ? 'Showing all levels' : 'Show other levels too'}</button></div>
     </aside><div class="main" id="main"></div></div>
-    <p class="foot2">For Himaayah students only. Please do not share these materials. Some links lead to other websites.</p></div>`;
+    <p class="foot2">Materials from your teachers are for Himaayah students only; please do not share them. Items marked “Free guide” are free to share. Some links lead to other websites.</p></div>`;
   main();
 }
 document.addEventListener('click', (e) => {
@@ -117,7 +132,7 @@ document.addEventListener('click', (e) => {
 document.addEventListener('input', (e) => { if (e.target.id === 'q') { ST.q = e.target.value; main(); } });
 
 /* ---- sign in (shares the dashboard's session, so a student who just signed in there is already in) ---- */
-function enter(d, id, code) { sessionStorage.setItem('hs', JSON.stringify({ id, code })); Object.assign(ST, { student: d.student, items: d.items || [] }); $('login').hidden = true; $('app').hidden = false; $('out').hidden = false; page(); window.scrollTo(0, 0); }
+function enter(d, id, code) { sessionStorage.setItem('hs', JSON.stringify({ id, code })); Object.assign(ST, { student: d.student, items: withGuides(d.items) }); $('login').hidden = true; $('app').hidden = false; $('out').hidden = false; page(); window.scrollTo(0, 0); }
 async function signIn(id, code, silent) {
   const b = $('go'); $('err').textContent = ''; b.disabled = true; b.textContent = 'Signing in…';
   try { const d = await api(id, code); if (d.ok) enter(d, id, code); else if (!silent) $('err').textContent = d.error || 'Could not sign in.'; else sessionStorage.removeItem('hs'); }

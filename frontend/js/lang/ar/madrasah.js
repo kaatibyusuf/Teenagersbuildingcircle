@@ -169,5 +169,7 @@ HS_I18N.add({
 "re:Cover of (.+)": "غلاف $1",
 "Take the placement test": "أدِّ اختبار تحديد المستوى",
 "Understand What You Recite": "افهم ما تتلو",
-"Take your first steps from reciting the Qur’an to understanding it: roots, common words and al-Fātiḥah word by word, with a 12-week plan.": "خطواتك الأولى من تلاوة القرآن إلى فهمه: الجذور، والكلمات الشائعة، والفاتحة كلمةً كلمة، مع خطة لاثني عشر أسبوعًا."
+"Take your first steps from reciting the Qur’an to understanding it: roots, common words and al-Fātiḥah word by word, with a 12-week plan.": "خطواتك الأولى من تلاوة القرآن إلى فهمه: الجذور، والكلمات الشائعة، والفاتحة كلمةً كلمة، مع خطة لاثني عشر أسبوعًا.",
+"Mastering the Mutashābihāt": "إتقان المتشابهات",
+"Recognise the verses that look alike, tell them apart and keep each one in its place, with real pairs, memory hooks and a self-test.": "تعرّف على الآيات المتشابهة، وميّز بينها، واحفظ كلّ آية في موضعها، مع أمثلة حقيقية وروابط للحفظ واختبار ذاتي."
 });

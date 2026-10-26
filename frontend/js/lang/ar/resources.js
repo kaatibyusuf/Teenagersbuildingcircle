@@ -2,7 +2,7 @@
    Keys starting with re: are patterns for text with numbers or names in it ($1, $2 are the parts kept). */
 HS_I18N.add({
 "Prospectus and free guides — Himaayah Schools": "الدليل التعريفي والأدلة المجانية — مدارس حماية",
-"Download the Himaayah Schools prospectus and free guides from our teachers on hifdh, Qur’anic Arabic, UTME, WAEC and NECO, teenage habits and public speaking.": "نزّل الدليل التعريفي لمدارس حماية وأدلة مجانية من معلّمينا في الحفظ، وعربية القرآن، وامتحانات UTME وWAEC وNECO، وعادات الشباب، والخطابة.",
+"Download the Himaayah Schools prospectus and free guides from our teachers on hifdh, the mutashābihāt, Qur’anic Arabic, UTME, WAEC and NECO, teenage habits and public speaking.": "نزّل الدليل التعريفي لمدارس حماية وأدلة مجانية من معلّمينا في الحفظ، وعربية القرآن، وامتحانات UTME وWAEC وNECO، وعادات الشباب، والخطابة.",
 "Free resources": "موارد مجانية",
 "Our prospectus and free guides.": "دليلنا التعريفي وأدلة مجانية.",
 "The full Himaayah Schools prospectus, and practical, printable guides written by our teachers and mentors. Download them, print them and share them with anyone who will benefit. No sign-up needed.": "الدليل التعريفي الكامل لمدارس حماية، وأدلة عملية قابلة للطباعة كتبها معلّمونا ومرشدونا. نزّلها واطبعها وشاركها مع كل من ينتفع بها. دون تسجيل.",
@@ -34,6 +34,12 @@ HS_I18N.add({
 "See the Academy": "تعرّف على الأكاديمية",
 "See the Skills School": "تعرّف على مدرسة المهارات",
 "Understand What You Recite": "افهم ما تتلو",
+"Mastering the Mutashābihāt": "إتقان المتشابهات",
+"How to recognise the similar verses of the Qur’an and keep each one in its place, for students of hifdh and their teachers.": "كيف تتعرّف على الآيات المتشابهة في القرآن وتحفظ كلّ آية في موضعها، لطلاب الحفظ ومعلّميهم.",
+"What the mutashābihāt are, and the six kinds of difference to look for": "ما المتشابهات، وأنواع الاختلاف الستة التي تبحث عنها",
+"Fourteen real pairs side by side, with the difference marked": "أربعة عشر مثالًا حقيقيًا جنبًا إلى جنب، مع تمييز موضع الاختلاف",
+"Memory hooks, and the reasons behind some differences": "روابط للحفظ، وتوجيه بعض مواضع الاختلاف",
+"A revision routine, a self-test with answers and a log to fill in": "طريقة للمراجعة، واختبار ذاتي بالإجابات، وسجلّ تملؤه",
 "A first guide to the Arabic of the Qur’an: roots, common words and patterns, starting with al-Fātiḥah.": "دليل أوّل إلى عربية القرآن: الجذور والكلمات الشائعة والأوزان، بدءًا بالفاتحة.",
 "How Arabic words grow from three-letter roots": "كيف تتفرّع الكلمات العربية من جذور ثلاثية",
 "The particles, pronouns and common words found on every page": "الحروف والضمائر والكلمات الشائعة في كلّ صفحة",

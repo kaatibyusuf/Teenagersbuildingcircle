@@ -4603,3 +4603,6 @@ html.pt-on.page-placement .pt-sec { padding-top: 100px; }
 /* Several free-guide strips in a row */
 .site .res-strip + .res-strip { margin-top: 16px; }
 .site .res-strip-sec { padding-bottom: clamp(24px, 4vw, 48px); }
+
+/* Library: free guide tag */
+.page-library .gt { display: inline-block; margin-inline-start: 8px; padding: 2px 9px; border-radius: 999px; font-size: 11.5px; font-weight: 600; vertical-align: middle; color: #1B7F4B; background: #EAF6EF; }
