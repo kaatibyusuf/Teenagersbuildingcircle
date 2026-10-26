@@ -85,6 +85,7 @@ async function api(id, code, action, extra) {
   if (!API_URL) {
     await new Promise((r) => setTimeout(r, 400));
     if (id.toUpperCase() !== 'DEMO' || code !== 'demo') return { ok: false, error: 'Wrong ID or access code.' };
+    if (action === 'password') return String(extra.newCode || '').length < 8 ? { ok: false, error: 'Your new code must be 8 to 40 characters.' } : demo();
     return action === 'submit' ? demoSubmit(extra) : demo();
   }
   const r = await fetch(API_URL, { method: 'POST', body: JSON.stringify(Object.assign({ action: action || 'login', id, code }, extra || {})) });
@@ -217,6 +218,12 @@ function render(d) {
     <article class="c w6" style="--i:8"><h2>Announcements</h2><ul class="list">${(d.announcements || []).map((a) => `<li style="display:block"><b>${esc(a.Title)}</b> <span style="float:inline-end">${fdate(a.Date)}</span><div class="sub">${esc(a.Body)}</div></li>`).join('') || '<li class="empty">Nothing new.</li>'}</ul></article>
     <article class="c w6" style="--i:9"><h2>Materials</h2><ul class="list">${(d.materials || []).map((m) => `<li>${safeUrl(m.URL) ? `<a href="${esc(m.URL)}" target="_blank" rel="noopener">${esc(m.Title)}</a>` : esc(m.Title)}</li>`).join('') || '<li class="empty">No materials yet.</li>'}</ul></article>
 
+    <article class="c w12" id="account" style="--i:11"><h2>Your access code</h2><p class="sub">Change the code you sign in with. Use 8 characters or more, and keep it private. Your Student ID (${esc(s.StudentID)}) stays the same.</p>
+      <form class="subm codef" novalidate style="max-width:420px">
+        <label for="nc1">New access code</label><input id="nc1" name="newCode" type="password" autocomplete="new-password" minlength="8" maxlength="40">
+        <label for="nc2">Type it again</label><input id="nc2" name="again" type="password" autocomplete="new-password" maxlength="40">
+        <div class="msg" role="status"></div>
+        <button class="btn btn-ink" type="submit">Change my code</button></form></article>
     <article class="c w12" style="--i:10"><h2>Payment history</h2>${pays.length ? `<table><thead><tr><th>Date</th><th>Reference</th><th>Covers</th><th>Amount</th></tr></thead><tbody>${pays.map((p) => `<tr><td>${fdate(p.Date)}</td><td>${esc(p.Reference || '')}</td><td>${esc(p.Months)} month${Number(p.Months) === 1 ? '' : 's'}</td><td><b>${naira(p.Amount)}</b></td></tr>`).join('')}</tbody></table>` : '<p class="empty">Confirmed payments will appear here.</p>'}</article>
   </div>
   <p class="foot">${API_URL ? '' : 'Demo mode: this is sample data. '}Your records are updated by your teachers. Questions? Message the Madrasah line.</p>`;
@@ -244,10 +251,34 @@ $('demoNote').hidden = !!API_URL;
 $('lf').addEventListener('submit', (e) => { e.preventDefault(); const id = $('sid').value.trim(), code = $('scode').value.trim(); if (!id || !code) { $('err').textContent = 'Enter your Student ID and access code.'; return; } signIn(id, code); });
 $('out').addEventListener('click', () => { sessionStorage.removeItem('hs'); $('app').hidden = true; $('app').innerHTML = ''; $('out').hidden = true; $('login').hidden = false; $('scode').value = ''; });
 
+/* Change access code */
+async function changeCode(f) {
+  const msg = f.querySelector('.msg'), btn = f.querySelector('button[type=submit]');
+  let saved = null; try { saved = JSON.parse(sessionStorage.getItem('hs') || 'null'); } catch (x) {}
+  const say = (t, good) => { msg.textContent = t; msg.className = 'msg ' + (good ? 'good' : 'bad'); };
+  const code = f.elements.newCode.value.trim();
+  if (!saved) return say('Please log in again.');
+  if (code.length < 8) return say('Your new code must be at least 8 characters.');
+  if (code !== f.elements.again.value.trim()) return say('The two codes do not match.');
+  btn.disabled = true; btn.textContent = 'Saving…';
+  try {
+    const d = await api(saved.id, saved.code, 'password', { newCode: code });
+    if (d.ok) {
+      sessionStorage.setItem('hs', JSON.stringify({ id: saved.id, code }));
+      render(d);
+      const nf = document.querySelector('form.codef'); if (nf) { const m = nf.querySelector('.msg'); m.textContent = 'Code changed. Use your new code next time you sign in.'; m.className = 'msg good'; }
+      return;
+    }
+    say(d.error || 'Could not change your code. Please try again.');
+  } catch (err) { say('Could not reach the school server. Please try again.'); }
+  btn.disabled = false; btn.textContent = 'Change my code';
+}
+
 /* Assignment submissions */
 $('app').addEventListener('submit', async (e) => {
   const f = e.target.closest('form.subm'); if (!f) return;
   e.preventDefault();
+  if (f.classList.contains('codef')) return changeCode(f);
   const msg = f.querySelector('.msg'), btn = f.querySelector('button'), id = f.dataset.id;
   let saved = null; try { saved = JSON.parse(sessionStorage.getItem('hs') || 'null'); } catch (x) {}
   const bad = (t) => { msg.textContent = t; msg.className = 'msg bad'; };

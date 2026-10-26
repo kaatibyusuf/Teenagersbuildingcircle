@@ -72,5 +72,19 @@ HS_I18N.add({
 "Thursday · Today": "الخميس · اليوم",
 "Friday · Today": "الجمعة · اليوم",
 "Saturday · Today": "السبت · اليوم",
-"Sunday · Today": "الأحد · اليوم"
+"Sunday · Today": "الأحد · اليوم",
+"Your access code": "رمز الدخول",
+"re:^Change the code you sign in with\\. Use 8 characters or more, and keep it private\\. Your Student ID \\((.+)\\) stays the same\\.$": "غيّر الرمز الذي تدخل به. استعمل 8 أحرف أو أكثر واحفظه لنفسك. رقمك الدراسي ($1) يبقى كما هو.",
+"New access code": "رمز الدخول الجديد",
+"Type it again": "اكتبه مرة أخرى",
+"Change my code": "غيّر رمزي",
+"Saving…": "جارٍ الحفظ…",
+"Code changed. Use your new code next time you sign in.": "تم تغيير الرمز. استعمل رمزك الجديد عند الدخول في المرة القادمة.",
+"Your new code must be at least 8 characters.": "يجب أن يتكوّن رمزك الجديد من 8 أحرف على الأقل.",
+"Your new code must be 8 to 40 characters.": "يجب أن يتكوّن رمزك الجديد من 8 إلى 40 حرفًا.",
+"The two codes do not match.": "الرمزان غير متطابقين.",
+"Your new code cannot contain spaces.": "لا يمكن أن يحتوي رمزك الجديد على مسافات.",
+"Choose a code different from your current one.": "اختر رمزًا مختلفًا عن رمزك الحالي.",
+"Do not use your Student ID as your code.": "لا تستعمل رقمك الدراسي رمزًا للدخول.",
+"Could not change your code. Please try again.": "تعذّر تغيير رمزك. حاول مرة أخرى."
 });
