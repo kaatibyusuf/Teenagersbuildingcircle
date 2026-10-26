@@ -339,13 +339,13 @@
     } else if (mad) {
       msg = 'You have not reached the ' + r.pass + '% pass mark for this level yet. That is useful to know: starting a level lower builds a firm foundation. Try the level below, or ask us to help you choose.';
       acts = (below ? `<a class="btn btn-ink" href="placement.html?test=madrasah&level=${below}">Try the level below</a>` : `<a class="btn btn-ink" href="enroll.html?programme=madrasah">Start at Tamheedi</a>`) +
-        `<a class="btn btn-line" href="trial.html?programme=madrasah">Book a free class</a><a class="btn btn-line" href="${wa('2347025842849', 'Assalaamu alaykum. I scored ' + r.percent + '% on the ' + r.title + ' placement test (ref ' + r.ref + '). Which level should I join?')}" target="_blank" rel="noopener">Ask on WhatsApp</a>`;
+        `<a class="btn btn-line" href="${wa('2347025842849', 'Assalaamu alaykum. I scored ' + r.percent + '% on the ' + r.title + ' placement test (ref ' + r.ref + '). Which level should I join?')}" target="_blank" rel="noopener">Ask on WhatsApp</a>`;
     } else if (r.passed) {
       msg = 'That is a strong score at UTME standard. The Academy will help you turn it into a top result: live classes six days a week, daily and weekly timed mocks and mentorship from previous top scorers.';
       acts = `<a class="btn btn-ink" href="enroll.html?plan=utme">Join the Academy</a><a class="btn btn-line" href="placement.html?test=utme">Try another combination</a>`;
     } else {
       msg = 'You have not reached the ' + r.pass + '% cut-off yet, but you can still join the Academy. That is exactly what it is for: live classes six days a week, daily and weekly timed mocks and mentorship from previous top scorers. Your mentor will use this result to plan where you start.';
-      acts = `<a class="btn btn-ink" href="enroll.html?plan=utme">Start UTME prep</a><a class="btn btn-line" href="trial.html?programme=academy">Book a free class</a><a class="btn btn-line" href="resources.html#five-ways-to-ace-utme">Get the free UTME guide</a>`;
+      acts = `<a class="btn btn-ink" href="enroll.html?plan=utme">Start UTME prep</a><a class="btn btn-line" href="resources.html#five-ways-to-ace-utme">Get the free UTME guide</a>`;
     }
     const deg = Math.round(Math.min(100, r.percent) * 3.6);
     $('ptDone').innerHTML = `
@@ -413,7 +413,6 @@
           <a href="contact.html">Contact</a>
           <a href="policies.html">Policies</a>
           <a href="enroll.html">Enroll</a>
-          <a href="trial.html">Book a free class</a>
           <a href="pay.html">Pay fees</a>
         </div>
         <div><h4>Contact</h4>

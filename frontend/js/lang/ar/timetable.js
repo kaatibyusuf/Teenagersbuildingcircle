@@ -16,6 +16,7 @@ HS_I18N.add({
 ", with this timetable for your level.": "، مع جدول مستواكم.",
 "Not a student yet?": "لست طالبًا بعد؟",
 "Book a free class": "احجز حصة مجانية",
+"to join a class.": "لتنضمّ إلى حصة.",
 "to sit in on one first.": "لتحضر واحدة أولًا.",
 "Monday": "الإثنين",
 "Tuesday": "الثلاثاء",

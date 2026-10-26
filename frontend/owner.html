@@ -47,7 +47,7 @@ const fdate = (iso, t) => { if (!iso) return '–'; const d = new Date(iso); ret
 const mname = (m) => new Date(m + '-01T00:00').toLocaleDateString('en-GB', { month: 'short' });
 const plural = (n, w) => n + ' ' + (n === 1 ? w : /[^aeiou]y$/.test(w) ? w.slice(0, -1) + 'ies' : /(s|sh|ch|x)$/.test(w) ? w + 'es' : w + 's');
 const change = (a, b) => b ? (a >= b ? '+' : '') + Math.round(100 * (a - b) / b) + '% on last month' : a ? 'none last month' : '';
-const TABS = [['overview', 'Overview'], ['fees', 'Fees'], ['trials', 'Free classes'], ['referrals', 'Referrals'], ['sponsors', 'Sponsors'], ['stories', 'Stories'], ['growth', 'Growth'], ['account', 'Account']];
+const TABS = [['overview', 'Overview'], ['fees', 'Fees'], ['placement', 'Placement tests'], ['referrals', 'Referrals'], ['sponsors', 'Sponsors'], ['stories', 'Stories'], ['growth', 'Growth'], ['account', 'Account']];
 let D = null;
 const S = { tab: 'overview', open: {} };
 
@@ -97,9 +97,6 @@ function vOverview() {
   if (D.referrals.due.length) todo.push([plural(D.referrals.due.length, 'referral payout') + ' to send (' + naira(D.referrals.dueTotal) + ')', 'referrals']);
   if (sp && sp.requests.filter((r) => r.Status === 'New').length) todo.push([plural(sp.requests.filter((r) => r.Status === 'New').length, 'new sponsorship request'), 'sponsors']);
   if (sp && sp.held) todo.push([naira(sp.held) + ' of sponsorships waiting for a Student ID', 'sponsors']);
-  const tr = D.trials;
-  if (tr && tr.counts.requests) todo.push([plural(tr.counts.requests, 'free class request') + ' waiting for a time', 'trials']);
-  if (tr && tr.counts.upcoming) todo.push([plural(tr.counts.upcoming, 'free class') + ' coming up', 'trials']);
   if (D.testimonials && D.testimonials.filter((t) => t.Status === 'New').length) todo.push([plural(D.testimonials.filter((t) => t.Status === 'New').length, 'new story') + ' to review', 'stories']);
   if (k.overdue) todo.push([plural(k.overdue, 'student') + ' with overdue fees', 'fees']);
   if (D.reports && D.reports.errors) todo.push([plural(D.reports.errors, 'progress report') + ' failed to send', 'growth']);
@@ -209,9 +206,9 @@ function vTrials() {
     <article class="c w12"><h2>Free class bookings</h2><p class="sub">Requests first, then upcoming classes. For a request, agree a time on WhatsApp, set the class time and link, and tick “Email the family”. Families get a reminder on the day and one follow-up two days after.</p>
       ${T.list.length ? T.list.map(row).join('') : empty('No bookings yet. Share the Book a free class page.')}
       <p class="sub">Open slots come from the “Trial slots” tab in the sheet (day, time, places and link).</p></article>
-    ${vPlacement()}
   </div>`;
 }
+function vPlacementTab() { return `<div class="grid">${vPlacement()}</div>`; }
 function vPlacement() {
   const P = D.placement;
   if (!P) return `<article class="c w12">${empty('Placement tests are not set up yet. Add PlacementTests.gs and PlacementBank.gs and run Himaayah → Set up placement tests.')}</article>`;
@@ -235,7 +232,7 @@ function vStories() {
   return `<div class="grid"><article class="c w12"><h2>Stories from families</h2><p class="sub">New stories are not on the website until you approve them. Approved ones appear on Success stories, featured ones first. To ask every family for a story, run Himaayah → Ask families for a testimonial in the sheet.</p>
     ${L.length ? L.map(card).join('') : empty('No stories yet.')}</article></div>`;
 }
-const VIEWS = { overview: vOverview, fees: vFees, trials: vTrials, stories: vStories, referrals: vReferrals, sponsors: vSponsors, growth: vGrowth, account: vAccount };
+const VIEWS = { overview: vOverview, fees: vFees, placement: vPlacementTab, stories: vStories, referrals: vReferrals, sponsors: vSponsors, growth: vGrowth, account: vAccount };
 function render() {
   document.querySelectorAll('details[data-k]').forEach((x) => { S.open[x.dataset.k] = x.open; });
   const k = D.kpi;
