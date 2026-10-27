@@ -47,6 +47,10 @@ const safeUrl = (u) => /^https:\/\/[^\s]+$/i.test(String(u || '')) ? u : '#';
 const RES = (location.protocol === 'https:' ? location.origin : 'https://www.himaayahschools.com') + '/resources/';
 const GUIDE = (slug, Title, Subject, Description, Added) => ({ Title, Author: 'Himaayah Schools', Type: 'PDF', Subject, Level: 'All', Url: RES + slug + '.pdf', Description, Added, forMe: true, guide: true });
 const GUIDES = [
+  GUIDE('the-fiqh-of-zakah', 'The Fiqh of Zakāh', 'Fiqh', 'The Mālikī rulings of zakāh on money, gold, trade, crops and livestock, the eight recipients, examples in naira and a worksheet.', '2026-10-27'),
+  GUIDE('the-fiqh-of-janazah', 'The Fiqh of Janāzah', 'Fiqh', 'The Mālikī rulings of death and burial: washing, shrouding, the funeral prayer, burial, condolence and a checklist for families.', '2026-10-27'),
+  GUIDE('hajj-and-umrah', 'Ḥajj and ʿUmrah', 'Fiqh', 'The Mālikī rites of ʿumrah and Ḥajj step by step and day by day, with a route map, expiations, duʿāʾs and a checklist.', '2026-10-27'),
+  GUIDE('the-six-pillars-of-iman', 'The Six Pillars of Īmān', 'Aqidah', 'The six pillars of faith from the ḥadīth of Jibrīl, with their evidence: Allah, the angels, the books, the prophets, the Last Day and the decree.', '2026-10-27'),
   GUIDE('taharah-and-salah', 'Ṭahārah and Ṣalāh', 'Fiqh', 'Purification and prayer in the Mālikī school: wuḍūʾ, ghusl, tayammum, the prayer step by step and sujūd as-sahw.', '2026-10-27'),
   GUIDE('the-fiqh-of-fasting', 'The Fiqh of Fasting', 'Fiqh', 'The Mālikī rulings of fasting: intention, what breaks the fast, qaḍāʾ, kaffārah, fidyah, zakāt al-fiṭr and a Ramaḍān plan.', '2026-10-27'),
   GUIDE('tajwid-basics', 'Tajwīd Basics', 'Tajwid', 'The rules of recitation in Ḥafṣ and Warsh side by side: makhārij, ṣifāt, nūn and mīm sākinah, madd and waqf.', '2026-10-27'),

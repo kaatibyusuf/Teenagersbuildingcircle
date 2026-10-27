@@ -117,5 +117,14 @@ HS_I18N.add({
 "Everyday computer skills: files, typing, professional email, documents, spreadsheet formulas, slides, searching and online safety.": "مهارات الحاسوب اليومية: الملفات والكتابة والبريد المهني والمستندات ومعادلات الجداول والعروض والبحث والأمان.",
 "Tajwid": "التجويد",
 "Adhkar": "الأذكار",
-"Digital skills": "المهارات الرقمية"
+"Digital skills": "المهارات الرقمية",
+"The Fiqh of Zakāh": "فقه الزكاة",
+"The Mālikī rulings of zakāh on money, gold, trade, crops and livestock, the eight recipients, examples in naira and a worksheet.": "أحكام الزكاة على المذهب المالكي في النقود والذهب والتجارة والزروع والماشية، والأصناف الثمانية، وأمثلة بالنيرة.",
+"The Fiqh of Janāzah": "فقه الجنائز",
+"The Mālikī rulings of death and burial: washing, shrouding, the funeral prayer, burial, condolence and a checklist for families.": "أحكام الموت والدفن على المذهب المالكي: الغسل والتكفين وصلاة الجنازة والدفن والتعزية وقائمة للأسر.",
+"Ḥajj and ʿUmrah": "الحج والعمرة",
+"The Mālikī rites of ʿumrah and Ḥajj step by step and day by day, with a route map, expiations, duʿāʾs and a checklist.": "مناسك العمرة والحج على المذهب المالكي خطوة خطوة ويومًا بيوم، مع خريطة وأحكام الفدية والأدعية.",
+"The Six Pillars of Īmān": "أركان الإيمان الستة",
+"The six pillars of faith from the ḥadīth of Jibrīl, with their evidence: Allah, the angels, the books, the prophets, the Last Day and the decree.": "أركان الإيمان الستة من حديث جبريل بأدلتها: الله والملائكة والكتب والرسل واليوم الآخر والقدر.",
+"Aqidah": "العقيدة"
 });

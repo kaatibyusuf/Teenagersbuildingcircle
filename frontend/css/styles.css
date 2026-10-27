@@ -4430,6 +4430,17 @@ body.acx-noscroll { overflow: hidden; }
 .site.page-resources .res-card[hidden], .site.page-resources .res-empty[hidden] { display: none; }
 .site.page-resources .res-empty { text-align: center; color: var(--muted); font-size: 16px; padding: 32px 16px; background: #fff; border-radius: 24px; box-shadow: var(--shadow); margin: 0; }
 @media (max-width: 720px) { .site.page-resources .res-chips { flex-wrap: nowrap; overflow-x: auto; margin: 0 -4px; padding: 2px 4px 6px; scrollbar-width: thin; } .site.page-resources .res-chip { flex: none; } }
+/* compact guide grid on madrasah.html */
+.site .mg-head { margin-top: clamp(40px, 6vw, 72px); }
+.site .mg-group { font-size: clamp(18px, 2vw, 22px); color: var(--text); margin: clamp(24px, 3vw, 36px) 0 14px; }
+.site .mg-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: clamp(14px, 2vw, 22px); }
+.site .mg-card { display: flex; flex-direction: column; gap: 8px; background: #fff; border-radius: 18px; box-shadow: var(--shadow); padding: 12px 12px 14px; color: var(--text); text-decoration: none; transition: transform .25s; }
+.site .mg-card:hover { transform: translateY(-4px); }
+.site .mg-card img { width: 100%; height: auto; border-radius: 8px; box-shadow: 0 10px 22px -14px rgba(6,47,77,.5); display: block; }
+.site .mg-card span { font-weight: 700; font-size: 14.5px; line-height: 1.3; }
+.site .mg-card small { color: var(--muted); font-size: 12.5px; }
+.site .mg-more { margin-top: clamp(24px, 3vw, 36px); }
+@media (max-width: 480px) { .site .mg-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 /* small strip on madrasah.html / academy.html */
 .site .res-strip { display: grid; grid-template-columns: 120px minmax(0, 1fr) auto; gap: clamp(16px, 3vw, 32px); align-items: center; background: #fff; border-radius: 24px; box-shadow: var(--shadow); padding: clamp(16px, 2.6vw, 24px) clamp(18px, 3vw, 32px); }
 .site .res-strip img { width: 100%; height: auto; border-radius: 10px; box-shadow: 0 12px 26px -14px rgba(6,47,77,.5); display: block; }
