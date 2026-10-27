@@ -122,5 +122,12 @@ HS_I18N.add({
 "Group classes reopen": "تُستأنف الحصص الجماعية",
 "Time until group Madrasah classes reopen": "الوقت المتبقي حتى تُستأنف الحصص الجماعية في المدرسة الشرعية",
 "Card or bank transfer. Choose Card at the last step of enrollment to pay on a secure payment page, or pay by transfer and send your receipt on WhatsApp.": "بالبطاقة أو بالتحويل البنكي. اختر «البطاقة» في الخطوة الأخيرة من التسجيل لتدفع على صفحة دفع آمنة، أو ادفع بالتحويل وأرسل إيصالك على واتساب.",
-"Download prospectus": "نزّل الدليل التعريفي"
+"Download prospectus": "نزّل الدليل التعريفي",
+"Three short steps. Pay by card and your place is confirmed straight away; a bank transfer is confirmed within a few hours.": "ثلاث خطوات قصيرة. ادفع بالبطاقة ويُؤكَّد مقعدك فورًا، أما التحويل البنكي فيُؤكَّد خلال ساعات قليلة.",
+"Pay by card or bank transfer": "ادفع بالبطاقة أو بالتحويل البنكي",
+"Pay by card on a secure page and your login arrives by email straight away. Prefer a transfer? Send your receipt on WhatsApp; the message is already written for your plan.": "ادفع بالبطاقة عبر صفحة آمنة وتصلك بيانات الدخول بالبريد فورًا. تفضّل التحويل؟ أرسل الإيصال على واتساب، والرسالة مكتوبة مسبقًا لخطتك.",
+"Instantly by card": "فورًا بالبطاقة",
+"Pay by card": "ادفع بالبطاقة",
+"Get your login by email": "استلم بيانات الدخول بالبريد",
+"Join your first class": "احضر حصتك الأولى"
 });
