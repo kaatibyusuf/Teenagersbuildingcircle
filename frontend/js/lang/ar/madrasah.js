@@ -251,5 +251,9 @@ HS_I18N.add({
 "The Character of the Prophet ﷺ": "شمائل النبي ﷺ",
 "Cover of The Character of the Prophet ﷺ": "غلاف شمائل النبي ﷺ",
 "Stories of the Prophets": "قصص الأنبياء",
-"Cover of Stories of the Prophets": "غلاف قصص الأنبياء"
+"Cover of Stories of the Prophets": "غلاف قصص الأنبياء",
+"My Ramaḍān Planner": "مخطّط رمضان",
+"Cover of My Ramaḍān Planner": "غلاف مخطّط رمضان",
+"Prayer Tracker and Khatm Planner": "متابعة الصلاة ومخطّط الختم",
+"Cover of Prayer Tracker and Khatm Planner": "غلاف متابعة الصلاة ومخطّط الختم"
 });

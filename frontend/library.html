@@ -47,6 +47,8 @@ const safeUrl = (u) => /^https:\/\/[^\s]+$/i.test(String(u || '')) ? u : '#';
 const RES = (location.protocol === 'https:' ? location.origin : 'https://www.himaayahschools.com') + '/resources/';
 const GUIDE = (slug, Title, Subject, Description, Added) => ({ Title, Author: 'Himaayah Schools', Type: 'PDF', Subject, Level: 'All', Url: RES + slug + '.pdf', Description, Added, forMe: true, guide: true });
 const GUIDES = [
+  GUIDE('my-ramadan-planner', 'My Ramaḍān Planner', 'Adhkar', 'A printable Ramaḍān planner: goals, a khatm plan, a daily tracker, reflection pages, the last ten nights and ʿĪd.', '2026-10-27'),
+  GUIDE('prayer-tracker-and-khatm-planner', 'Prayer Tracker and Khatm Planner', 'Adhkar', 'Printable prayer trackers for adults and children, a qaḍāʾ log, khatm plans and a tracker for the thirty ajzāʾ.', '2026-10-27'),
   GUIDE('the-forty-hadith', 'The Forty Ḥadīth of an-Nawawī', 'Hadith', 'All 42 ḥadīth of al-Arbaʿīn an-Nawawiyyah in Arabic, with translation, source, lessons and a memorisation tracker.', '2026-10-27'),
   GUIDE('duas-from-the-quran', 'Duʿāʾs from the Qur’an', 'Adhkar', 'Thirty-six duʿāʾs from the Qur’an, by need, in Arabic with transliteration, meaning and who said them.', '2026-10-27'),
   GUIDE('juz-amma-explained', 'Juz ʿAmma Explained', 'Tafsir', 'A simple explanation of all 37 sūrahs of Juz ʿAmma, with lessons, authentic reports and a memorisation tracker.', '2026-10-27'),

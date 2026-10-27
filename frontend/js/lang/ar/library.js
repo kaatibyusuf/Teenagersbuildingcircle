@@ -138,5 +138,9 @@ HS_I18N.add({
 "The Character of the Prophet ﷺ": "شمائل النبي ﷺ",
 "The shamāʾil of the Prophet ﷺ: his appearance, speech, home life, worship and mercy, from the authentic Sunnah.": "شمائل النبي ﷺ: صفته وكلامه وحياته في بيته وعبادته ورحمته، من السنة الصحيحة.",
 "Stories of the Prophets": "قصص الأنبياء",
-"The stories of twenty prophets from Ādam to Yaḥyā, from the Qur’an and authentic Sunnah, with a family tree and lessons.": "قصص عشرين نبيًّا من آدم إلى يحيى من القرآن والسنة الصحيحة، مع شجرة النسب والدروس."
+"The stories of twenty prophets from Ādam to Yaḥyā, from the Qur’an and authentic Sunnah, with a family tree and lessons.": "قصص عشرين نبيًّا من آدم إلى يحيى من القرآن والسنة الصحيحة، مع شجرة النسب والدروس.",
+"My Ramaḍān Planner": "مخطّط رمضان",
+"A printable Ramaḍān planner: goals, a khatm plan, a daily tracker, reflection pages, the last ten nights and ʿĪd.": "مخطّط مطبوع لرمضان: الأهداف وخطة الختم والمتابعة اليومية وصفحات التأمل والعشر الأواخر والعيد.",
+"Prayer Tracker and Khatm Planner": "متابعة الصلاة ومخطّط الختم",
+"Printable prayer trackers for adults and children, a qaḍāʾ log, khatm plans and a tracker for the thirty ajzāʾ.": "جداول مطبوعة لمتابعة الصلاة للكبار والأطفال، وسجلّ للقضاء، وخطط للختم، وجدول للأجزاء."
 });
