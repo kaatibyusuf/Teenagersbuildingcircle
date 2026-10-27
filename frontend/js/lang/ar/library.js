@@ -126,5 +126,17 @@ HS_I18N.add({
 "The Mālikī rites of ʿumrah and Ḥajj step by step and day by day, with a route map, expiations, duʿāʾs and a checklist.": "مناسك العمرة والحج على المذهب المالكي خطوة خطوة ويومًا بيوم، مع خريطة وأحكام الفدية والأدعية.",
 "The Six Pillars of Īmān": "أركان الإيمان الستة",
 "The six pillars of faith from the ḥadīth of Jibrīl, with their evidence: Allah, the angels, the books, the prophets, the Last Day and the decree.": "أركان الإيمان الستة من حديث جبريل بأدلتها: الله والملائكة والكتب والرسل واليوم الآخر والقدر.",
-"Aqidah": "العقيدة"
+"Aqidah": "العقيدة",
+"The Forty Ḥadīth of an-Nawawī": "الأربعون النووية",
+"All 42 ḥadīth of al-Arbaʿīn an-Nawawiyyah in Arabic, with translation, source, lessons and a memorisation tracker.": "الأحاديث الاثنان والأربعون من الأربعين النووية بالعربية مع الترجمة والمصدر والفوائد وجدول للحفظ.",
+"Hadith": "الحديث",
+"Duʿāʾs from the Qur’an": "أدعية من القرآن",
+"Thirty-six duʿāʾs from the Qur’an, by need, in Arabic with transliteration, meaning and who said them.": "ستة وثلاثون دعاءً من القرآن حسب الحاجة، بالعربية مع النطق والمعنى ومن قالها.",
+"Juz ʿAmma Explained": "تفسير جزء عمّ",
+"A simple explanation of all 37 sūrahs of Juz ʿAmma, with lessons, authentic reports and a memorisation tracker.": "شرح مبسط لسور جزء عمّ السبع والثلاثين، مع الدروس وما صحّ فيها وجدول للحفظ.",
+"Tafsir": "التفسير",
+"The Character of the Prophet ﷺ": "شمائل النبي ﷺ",
+"The shamāʾil of the Prophet ﷺ: his appearance, speech, home life, worship and mercy, from the authentic Sunnah.": "شمائل النبي ﷺ: صفته وكلامه وحياته في بيته وعبادته ورحمته، من السنة الصحيحة.",
+"Stories of the Prophets": "قصص الأنبياء",
+"The stories of twenty prophets from Ādam to Yaḥyā, from the Qur’an and authentic Sunnah, with a family tree and lessons.": "قصص عشرين نبيًّا من آدم إلى يحيى من القرآن والسنة الصحيحة، مع شجرة النسب والدروس."
 });

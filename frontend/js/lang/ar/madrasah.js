@@ -240,5 +240,16 @@ HS_I18N.add({
 "Cover of The Four Imams": "غلاف الأئمة الأربعة",
 "Cover of My Hifdh Planner": "غلاف مخطّط الحفظ",
 "Cover of Adab Before ʿIlm": "غلاف الأدب قبل العلم",
-"Cover of Understand What You Recite": "غلاف افهم ما تتلو"
+"Cover of Understand What You Recite": "غلاف افهم ما تتلو",
+"Ḥadīth, adab and duʿāʾ": "الحديث والأدب والدعاء",
+"The Forty Ḥadīth of an-Nawawī": "الأربعون النووية",
+"Cover of The Forty Ḥadīth of an-Nawawī": "غلاف الأربعون النووية",
+"Duʿāʾs from the Qur’an": "أدعية من القرآن",
+"Cover of Duʿāʾs from the Qur’an": "غلاف أدعية من القرآن",
+"Juz ʿAmma Explained": "تفسير جزء عمّ",
+"Cover of Juz ʿAmma Explained": "غلاف تفسير جزء عمّ",
+"The Character of the Prophet ﷺ": "شمائل النبي ﷺ",
+"Cover of The Character of the Prophet ﷺ": "غلاف شمائل النبي ﷺ",
+"Stories of the Prophets": "قصص الأنبياء",
+"Cover of Stories of the Prophets": "غلاف قصص الأنبياء"
 });

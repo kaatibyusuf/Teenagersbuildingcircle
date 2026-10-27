@@ -47,6 +47,11 @@ const safeUrl = (u) => /^https:\/\/[^\s]+$/i.test(String(u || '')) ? u : '#';
 const RES = (location.protocol === 'https:' ? location.origin : 'https://www.himaayahschools.com') + '/resources/';
 const GUIDE = (slug, Title, Subject, Description, Added) => ({ Title, Author: 'Himaayah Schools', Type: 'PDF', Subject, Level: 'All', Url: RES + slug + '.pdf', Description, Added, forMe: true, guide: true });
 const GUIDES = [
+  GUIDE('the-forty-hadith', 'The Forty Ḥadīth of an-Nawawī', 'Hadith', 'All 42 ḥadīth of al-Arbaʿīn an-Nawawiyyah in Arabic, with translation, source, lessons and a memorisation tracker.', '2026-10-27'),
+  GUIDE('duas-from-the-quran', 'Duʿāʾs from the Qur’an', 'Adhkar', 'Thirty-six duʿāʾs from the Qur’an, by need, in Arabic with transliteration, meaning and who said them.', '2026-10-27'),
+  GUIDE('juz-amma-explained', 'Juz ʿAmma Explained', 'Tafsir', 'A simple explanation of all 37 sūrahs of Juz ʿAmma, with lessons, authentic reports and a memorisation tracker.', '2026-10-27'),
+  GUIDE('the-character-of-the-prophet', 'The Character of the Prophet ﷺ', 'Seerah', 'The shamāʾil of the Prophet ﷺ: his appearance, speech, home life, worship and mercy, from the authentic Sunnah.', '2026-10-27'),
+  GUIDE('stories-of-the-prophets', 'Stories of the Prophets', 'Seerah', 'The stories of twenty prophets from Ādam to Yaḥyā, from the Qur’an and authentic Sunnah, with a family tree and lessons.', '2026-10-27'),
   GUIDE('the-fiqh-of-zakah', 'The Fiqh of Zakāh', 'Fiqh', 'The Mālikī rulings of zakāh on money, gold, trade, crops and livestock, the eight recipients, examples in naira and a worksheet.', '2026-10-27'),
   GUIDE('the-fiqh-of-janazah', 'The Fiqh of Janāzah', 'Fiqh', 'The Mālikī rulings of death and burial: washing, shrouding, the funeral prayer, burial, condolence and a checklist for families.', '2026-10-27'),
   GUIDE('hajj-and-umrah', 'Ḥajj and ʿUmrah', 'Fiqh', 'The Mālikī rites of ʿumrah and Ḥajj step by step and day by day, with a route map, expiations, duʿāʾs and a checklist.', '2026-10-27'),
