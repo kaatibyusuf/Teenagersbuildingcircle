@@ -182,5 +182,8 @@ HS_I18N.add({
 "Ḥadīth Bootcamp: the Forty Ḥadīth": "معسكر الحديث: الأربعون النووية",
 "All 42 ḥadīth of Imām an-Nawawī with recorded lessons, the Arabic text and translation, quizzes and a certificate. Free for current Madrasah students.": "الأحاديث الاثنان والأربعون للإمام النووي مع دروس مسجّلة، والنص العربي والترجمة، واختبارات، وشهادة. مجانًا لطلاب المدرسة الشرعية الحاليين.",
 "See the bootcamp": "تعرّف على المعسكر",
-"Ḥadīth Bootcamp cover": "غلاف معسكر الحديث"
+"Ḥadīth Bootcamp cover": "غلاف معسكر الحديث",
+"The Four Rightly Guided Caliphs": "الخلفاء الراشدون الأربعة",
+"Cover of The Four Rightly Guided Caliphs": "غلاف الخلفاء الراشدون الأربعة",
+"The lives and caliphates of Abū Bakr, ʿUmar, ʿUthmān and ʿAlī, with their virtues from authentic ḥadīth, a timeline and a self-test.": "سيرة أبي بكر وعمر وعثمان وعلي وخلافتهم، مع فضائلهم من الأحاديث الصحيحة، وخط زمني، واختبار ذاتي."
 });

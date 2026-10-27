@@ -2,7 +2,7 @@
    Keys starting with re: are patterns for text with numbers or names in it ($1, $2 are the parts kept). */
 HS_I18N.add({
 "Prospectus and free guides — Himaayah Schools": "الدليل التعريفي والأدلة المجانية — مدارس حماية",
-"Download the Himaayah Schools prospectus and free guides from our teachers on hifdh, the mutashābihāt, adab, the four imams, Qur’anic Arabic, UTME, WAEC and NECO, teenage habits and public speaking, plus a printable hifdh planner.": "نزّل الدليل التعريفي لمدارس حماية وأدلة مجانية من معلّمينا في الحفظ، والمتشابهات، والأدب، وسير الأئمة الأربعة، وعربية القرآن، وامتحانات UTME وWAEC وNECO، وعادات الشباب، والخطابة، مع مخطّط مطبوع للحفظ.",
+"Download the Himaayah Schools prospectus and free guides from our teachers on hifdh, the mutashābihāt, adab, the four imams, the rightly guided caliphs, Qur’anic Arabic, UTME, WAEC and NECO, teenage habits and public speaking, plus a printable hifdh planner.": "نزّل الدليل التعريفي لمدارس حماية وأدلة مجانية من معلّمينا في الحفظ، والمتشابهات، والأدب، وسير الأئمة الأربعة، والخلفاء الراشدين، وعربية القرآن، وامتحانات UTME وWAEC وNECO، وعادات الشباب، والخطابة، مع مخطّط مطبوع للحفظ.",
 "Free resources": "موارد مجانية",
 "Our prospectus and free guides.": "دليلنا التعريفي وأدلة مجانية.",
 "The full Himaayah Schools prospectus, and practical, printable guides written by our teachers and mentors. Download them, print them and share them with anyone who will benefit. No sign-up needed.": "الدليل التعريفي الكامل لمدارس حماية، وأدلة عملية قابلة للطباعة كتبها معلّمونا ومرشدونا. نزّلها واطبعها وشاركها مع كل من ينتفع بها. دون تسجيل.",
@@ -72,6 +72,12 @@ HS_I18N.add({
 "Want more? Read our": "تريد المزيد؟ اقرأ",
 "articles": "مقالاتنا",
 "on learning, hifdh, exams and parenting, or get the next guide by email below.": "عن التعلّم والحفظ والامتحانات والتربية، أو احصل على الدليل القادم بالبريد أدناه.",
+"The Four Rightly Guided Caliphs": "الخلفاء الراشدون الأربعة",
+"The lives and caliphates of Abū Bakr, ʿUmar, ʿUthmān and ʿAlī: who they were, how they ruled, and what they left the Ummah.": "سيرة أبي بكر وعمر وعثمان وعلي وخلافتهم: من كانوا، وكيف حكموا، وماذا تركوا للأمة.",
+"Four full biographies, from their acceptance of Islām to their deaths": "أربع تراجم كاملة، من إسلامهم إلى وفاتهم",
+"How each one led: decisions, conquests, justice and institutions": "كيف قاد كل منهم: القرارات والفتوح والعدل وبناء الدولة",
+"Their virtues in authentic ḥadīth, and what they said about one another": "فضائلهم في الأحاديث الصحيحة، وما قاله بعضهم في بعض",
+"The trials of the later years as Ahl as-Sunnah understand them, with a timeline and self-test": "الفتن في السنوات الأخيرة على فهم أهل السنة، مع خط زمني واختبار ذاتي",
 "The Four Imams": "الأئمة الأربعة",
 "The lives of Abū Ḥanīfah, Mālik, ash-Shāfiʿī and Aḥmad: how they learned, what they faced, how they reasoned and the schools they left.": "سير أبي حنيفة ومالك والشافعي وأحمد: كيف طلبوا العلم، وما لقوه من المحن، وكيف استنبطوا، والمذاهب التي تركوها.",
 "Four full biographies: family, teachers, travels, character, trials and death": "أربع تراجم كاملة: النشأة، والشيوخ، والرحلات، والأخلاق، والمحن، والوفاة",

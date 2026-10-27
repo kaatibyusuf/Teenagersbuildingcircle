@@ -81,5 +81,7 @@ HS_I18N.add({
 "Ten traits of the student of knowledge, each with a verse or hadith and a weekly action, with a self-assessment and a 30-day tracker.": "عشر صفات لطالب العلم، لكلّ منها آية أو حديث وعمل أسبوعي، مع تقييم ذاتي وجدول متابعة لثلاثين يومًا.",
 "The Four Imams": "الأئمة الأربعة",
 "Seerah": "السيرة",
-"The full lives of Abū Ḥanīfah, Mālik, ash-Shāfiʿī and Aḥmad: teachers, trials, methods and students, with a timeline and a self-test.": "السيرة الكاملة لأبي حنيفة ومالك والشافعي وأحمد: الشيوخ والمحن والأصول والتلاميذ، مع خطّ زمني واختبار ذاتي."
+"The full lives of Abū Ḥanīfah, Mālik, ash-Shāfiʿī and Aḥmad: teachers, trials, methods and students, with a timeline and a self-test.": "السيرة الكاملة لأبي حنيفة ومالك والشافعي وأحمد: الشيوخ والمحن والأصول والتلاميذ، مع خطّ زمني واختبار ذاتي.",
+"The Four Rightly Guided Caliphs": "الخلفاء الراشدون الأربعة",
+"The lives and caliphates of Abū Bakr, ʿUmar, ʿUthmān and ʿAlī: their virtues, decisions and trials, with a timeline and a self-test.": "سيرة أبي بكر وعمر وعثمان وعلي وخلافتهم: فضائلهم وقراراتهم ومحنهم، مع خط زمني واختبار ذاتي."
 });
