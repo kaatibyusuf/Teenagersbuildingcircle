@@ -47,6 +47,7 @@ const safeUrl = (u) => /^https:\/\/[^\s]+$/i.test(String(u || '')) ? u : '#';
 const RES = (location.protocol === 'https:' ? location.origin : 'https://www.himaayahschools.com') + '/resources/';
 const GUIDE = (slug, Title, Subject, Description, Added) => ({ Title, Author: 'Himaayah Schools', Type: 'PDF', Subject, Level: 'All', Url: RES + slug + '.pdf', Description, Added, forMe: true, guide: true });
 const GUIDES = [
+  GUIDE('fiqh-of-hayd-nifas-istihadah', 'The Fiqh of Ḥayḍ, Nifās and Istiḥāḍah', 'Fiqh', 'The Mālikī rulings on menstruation, bleeding after childbirth and irregular bleeding, with a decision chart, worked examples and a record page.', '2026-10-27'),
   GUIDE('ulu-al-azm', 'Ūlu al-ʿAzm: The Five Resolute Messengers', 'Seerah', 'The stories of Nūḥ, Ibrāhīm, Mūsā, ʿĪsā and Muḥammad ﷺ from the Qur’an and authentic Sunnah, with their duʿāʾs and a self-test.', '2026-10-27'),
   GUIDE('the-four-rightly-guided-caliphs', 'The Four Rightly Guided Caliphs', 'Seerah', 'The lives and caliphates of Abū Bakr, ʿUmar, ʿUthmān and ʿAlī: their virtues, decisions and trials, with a timeline and a self-test.', '2026-10-27'),
   GUIDE('the-four-imams', 'The Four Imams', 'Seerah', 'The full lives of Abū Ḥanīfah, Mālik, ash-Shāfiʿī and Aḥmad: teachers, trials, methods and students, with a timeline and a self-test.', '2026-10-26'),

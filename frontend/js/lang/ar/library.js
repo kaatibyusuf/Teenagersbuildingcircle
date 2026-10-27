@@ -85,5 +85,8 @@ HS_I18N.add({
 "The Four Rightly Guided Caliphs": "الخلفاء الراشدون الأربعة",
 "The lives and caliphates of Abū Bakr, ʿUmar, ʿUthmān and ʿAlī: their virtues, decisions and trials, with a timeline and a self-test.": "سيرة أبي بكر وعمر وعثمان وعلي وخلافتهم: فضائلهم وقراراتهم ومحنهم، مع خط زمني واختبار ذاتي.",
 "Ūlu al-ʿAzm: The Five Resolute Messengers": "أولو العزم من الرسل",
-"The stories of Nūḥ, Ibrāhīm, Mūsā, ʿĪsā and Muḥammad ﷺ from the Qur’an and authentic Sunnah, with their duʿāʾs and a self-test.": "قصص نوح وإبراهيم وموسى وعيسى ومحمد ﷺ من القرآن والسنة الصحيحة، مع أدعيتهم واختبار ذاتي."
+"The stories of Nūḥ, Ibrāhīm, Mūsā, ʿĪsā and Muḥammad ﷺ from the Qur’an and authentic Sunnah, with their duʿāʾs and a self-test.": "قصص نوح وإبراهيم وموسى وعيسى ومحمد ﷺ من القرآن والسنة الصحيحة، مع أدعيتهم واختبار ذاتي.",
+"The Fiqh of Ḥayḍ, Nifās and Istiḥāḍah": "فقه الحيض والنفاس والاستحاضة",
+"Fiqh": "الفقه",
+"The Mālikī rulings on menstruation, bleeding after childbirth and irregular bleeding, with a decision chart, worked examples and a record page.": "أحكام الحيض والنفاس والاستحاضة على المذهب المالكي، مع مخطط للتمييز وأمثلة محلولة وصفحة سجل."
 });

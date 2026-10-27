@@ -188,5 +188,8 @@ HS_I18N.add({
 "The lives and caliphates of Abū Bakr, ʿUmar, ʿUthmān and ʿAlī, with their virtues from authentic ḥadīth, a timeline and a self-test.": "سيرة أبي بكر وعمر وعثمان وعلي وخلافتهم، مع فضائلهم من الأحاديث الصحيحة، وخط زمني، واختبار ذاتي.",
 "Ūlu al-ʿAzm: The Five Resolute Messengers": "أولو العزم من الرسل",
 "The stories of Nūḥ, Ibrāhīm, Mūsā, ʿĪsā and Muḥammad ﷺ from the Qur’an and authentic Sunnah, with their duʿāʾs and a self-test.": "قصص نوح وإبراهيم وموسى وعيسى ومحمد ﷺ من القرآن والسنة الصحيحة، مع أدعيتهم واختبار ذاتي.",
-"Cover of Ūlu al-ʿAzm": "غلاف أولو العزم من الرسل"
+"Cover of Ūlu al-ʿAzm": "غلاف أولو العزم من الرسل",
+"The Fiqh of Ḥayḍ, Nifās and Istiḥāḍah": "فقه الحيض والنفاس والاستحاضة",
+"Cover of The Fiqh of Ḥayḍ, Nifās and Istiḥāḍah": "غلاف فقه الحيض والنفاس والاستحاضة",
+"The Mālikī rulings every Muslim woman needs, step by step, with a decision chart, worked examples and a monthly record page.": "الأحكام المالكية التي تحتاجها كل مسلمة، خطوة خطوة، مع مخطط للتمييز وأمثلة محلولة وصفحة سجل شهري."
 });
