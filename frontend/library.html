@@ -47,6 +47,18 @@ const safeUrl = (u) => /^https:\/\/[^\s]+$/i.test(String(u || '')) ? u : '#';
 const RES = (location.protocol === 'https:' ? location.origin : 'https://www.himaayahschools.com') + '/resources/';
 const GUIDE = (slug, Title, Subject, Description, Added) => ({ Title, Author: 'Himaayah Schools', Type: 'PDF', Subject, Level: 'All', Url: RES + slug + '.pdf', Description, Added, forMe: true, guide: true });
 const GUIDES = [
+  GUIDE('taharah-and-salah', 'Ṭahārah and Ṣalāh', 'Fiqh', 'Purification and prayer in the Mālikī school: wuḍūʾ, ghusl, tayammum, the prayer step by step and sujūd as-sahw.', '2026-10-27'),
+  GUIDE('the-fiqh-of-fasting', 'The Fiqh of Fasting', 'Fiqh', 'The Mālikī rulings of fasting: intention, what breaks the fast, qaḍāʾ, kaffārah, fidyah, zakāt al-fiṭr and a Ramaḍān plan.', '2026-10-27'),
+  GUIDE('tajwid-basics', 'Tajwīd Basics', 'Tajwid', 'The rules of recitation in Ḥafṣ and Warsh side by side: makhārij, ṣifāt, nūn and mīm sākinah, madd and waqf.', '2026-10-27'),
+  GUIDE('morning-and-evening-adhkar', 'Morning and Evening Adhkār', 'Adhkar', 'The authentic morning, evening and bedtime adhkār, in Arabic with transliteration, meaning and source, and a 30-day tracker.', '2026-10-27'),
+  GUIDE('the-makkan-years', 'The Makkan Years', 'Seerah', 'The life of the Prophet ﷺ in Makkah, from his birth to the Hijrah, with a timeline, a map of the Hijrah and a self-test.', '2026-10-27'),
+  GUIDE('mothers-of-the-believers', 'The Mothers of the Believers', 'Seerah', 'The lives and virtues of the eleven wives of the Prophet ﷺ, the wisdom of his marriages, a timeline and a self-test.', '2026-10-27'),
+  GUIDE('the-ten-promised-paradise', 'The Ten Promised Paradise', 'Seerah', 'The lives and virtues of the ten Companions promised Paradise by name, with a comparison table and a self-test.', '2026-10-27'),
+  GUIDE('jamb-physics', 'JAMB Physics', 'Exam preparation', 'UTME Physics: the syllabus, a formula sheet, worked examples, traps, an 8-week plan and a practice test.', '2026-10-27'),
+  GUIDE('jamb-chemistry', 'JAMB Chemistry', 'Exam preparation', 'UTME Chemistry: the syllabus, mole and electrolysis calculations, tests, organic series, worked examples and a practice test.', '2026-10-27'),
+  GUIDE('jamb-biology', 'JAMB Biology', 'Exam preparation', 'UTME Biology: the syllabus, key facts, genetics crosses, ecology, worked examples, an 8-week plan and a practice test.', '2026-10-27'),
+  GUIDE('own-your-phone', 'Own Your Phone', 'Personal development', 'Phones, screens and social media for Muslim teens: how apps hook you, ten habits, adab and safety online, and a section for parents.', '2026-10-27'),
+  GUIDE('digital-skills-for-beginners', 'Digital Skills for Beginners', 'Digital skills', 'Everyday computer skills: files, typing, professional email, documents, spreadsheet formulas, slides, searching and online safety.', '2026-10-27'),
   GUIDE('the-battles-of-the-prophet', 'The Battles of the Prophet ﷺ', 'Seerah', 'The battles and expeditions of the Prophet ﷺ from Badr to Tabūk, with a map, battle plans, the heroes, the rules of war and a self-test.', '2026-10-27'),
   GUIDE('fiqh-of-hayd-nifas-istihadah', 'The Fiqh of Ḥayḍ, Nifās and Istiḥāḍah', 'Fiqh', 'The Mālikī rulings on menstruation, bleeding after childbirth and irregular bleeding, with a decision chart, worked examples and a record page.', '2026-10-27'),
   GUIDE('ulu-al-azm', 'Ūlu al-ʿAzm: The Five Resolute Messengers', 'Seerah', 'The stories of Nūḥ, Ibrāhīm, Mūsā, ʿĪsā and Muḥammad ﷺ from the Qur’an and authentic Sunnah, with their duʿāʾs and a self-test.', '2026-10-27'),

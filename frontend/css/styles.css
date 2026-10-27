@@ -4417,6 +4417,19 @@ body.acx-noscroll { overflow: hidden; }
 .site .res-acts .btn { gap: 8px; }
 .site.page-resources .res-note { text-align: center; color: var(--muted); font-size: 15px; margin: 8px 0 0; }
 .site.page-resources .res-note a { color: var(--ink); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+/* search and subject filter */
+.site.page-resources .res-tools { display: grid; gap: 14px; background: #fff; border-radius: 24px; box-shadow: var(--shadow); padding: clamp(16px, 2.4vw, 22px); }
+.site.page-resources .res-search { display: flex; align-items: center; gap: 10px; border: 1.5px solid var(--line, #E3EAF0); border-radius: 999px; padding: 0 16px; color: var(--muted); background: var(--wash, #F4F8FB); }
+.site.page-resources .res-search:focus-within { border-color: var(--sky-d, #3E97D9); background: #fff; }
+.site.page-resources .res-search input { flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; font: inherit; font-size: 16px; color: var(--text); padding: 12px 0; }
+.site.page-resources .res-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.site.page-resources .res-chip { font: inherit; font-size: 14px; font-weight: 600; color: var(--ink); background: #EEF6FC; border: 1.5px solid transparent; border-radius: 999px; padding: 7px 14px; cursor: pointer; transition: background .2s, color .2s; }
+.site.page-resources .res-chip:hover { border-color: var(--sky, #85CCFF); }
+.site.page-resources .res-chip[aria-pressed="true"] { background: var(--ink, #094570); color: #fff; }
+.site.page-resources .res-count { margin: 0; font-size: 13.5px; color: var(--muted); }
+.site.page-resources .res-card[hidden], .site.page-resources .res-empty[hidden] { display: none; }
+.site.page-resources .res-empty { text-align: center; color: var(--muted); font-size: 16px; padding: 32px 16px; background: #fff; border-radius: 24px; box-shadow: var(--shadow); margin: 0; }
+@media (max-width: 720px) { .site.page-resources .res-chips { flex-wrap: nowrap; overflow-x: auto; margin: 0 -4px; padding: 2px 4px 6px; scrollbar-width: thin; } .site.page-resources .res-chip { flex: none; } }
 /* small strip on madrasah.html / academy.html */
 .site .res-strip { display: grid; grid-template-columns: 120px minmax(0, 1fr) auto; gap: clamp(16px, 3vw, 32px); align-items: center; background: #fff; border-radius: 24px; box-shadow: var(--shadow); padding: clamp(16px, 2.6vw, 24px) clamp(18px, 3vw, 32px); }
 .site .res-strip img { width: 100%; height: auto; border-radius: 10px; box-shadow: 0 12px 26px -14px rgba(6,47,77,.5); display: block; }
