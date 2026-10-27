@@ -2,7 +2,7 @@
    Keys starting with re: are patterns for text with numbers or names in it ($1, $2 are the parts kept). */
 HS_I18N.add({
 "Prospectus and free guides — Himaayah Schools": "الدليل التعريفي والأدلة المجانية — مدارس حماية",
-"Download the Himaayah Schools prospectus and free guides from our teachers on hifdh, the mutashābihāt, adab, the four imams, the rightly guided caliphs, Qur’anic Arabic, UTME, WAEC and NECO, teenage habits and public speaking, plus a printable hifdh planner.": "نزّل الدليل التعريفي لمدارس حماية وأدلة مجانية من معلّمينا في الحفظ، والمتشابهات، والأدب، وسير الأئمة الأربعة، والخلفاء الراشدين، وعربية القرآن، وامتحانات UTME وWAEC وNECO، وعادات الشباب، والخطابة، مع مخطّط مطبوع للحفظ.",
+"Download the Himaayah Schools prospectus and free guides from our teachers on hifdh, the mutashābihāt, adab, the four imams, the rightly guided caliphs, Ūlu al-ʿAzm, Qur’anic Arabic, UTME, WAEC and NECO, teenage habits and public speaking, plus a printable hifdh planner.": "نزّل الدليل التعريفي لمدارس حماية وأدلة مجانية من معلّمينا في الحفظ، والمتشابهات، والأدب، وسير الأئمة الأربعة، والخلفاء الراشدين، وأولي العزم من الرسل، وعربية القرآن، وامتحانات UTME وWAEC وNECO، وعادات الشباب، والخطابة، مع مخطّط مطبوع للحفظ.",
 "Free resources": "موارد مجانية",
 "Our prospectus and free guides.": "دليلنا التعريفي وأدلة مجانية.",
 "The full Himaayah Schools prospectus, and practical, printable guides written by our teachers and mentors. Download them, print them and share them with anyone who will benefit. No sign-up needed.": "الدليل التعريفي الكامل لمدارس حماية، وأدلة عملية قابلة للطباعة كتبها معلّمونا ومرشدونا. نزّلها واطبعها وشاركها مع كل من ينتفع بها. دون تسجيل.",
@@ -72,6 +72,12 @@ HS_I18N.add({
 "Want more? Read our": "تريد المزيد؟ اقرأ",
 "articles": "مقالاتنا",
 "on learning, hifdh, exams and parenting, or get the next guide by email below.": "عن التعلّم والحفظ والامتحانات والتربية، أو احصل على الدليل القادم بالبريد أدناه.",
+"Ūlu al-ʿAzm: The Five Resolute Messengers": "أولو العزم من الرسل",
+"The stories of Nūḥ, Ibrāhīm, Mūsā, ʿĪsā and Muḥammad ﷺ, as the Qur’an and the authentic Sunnah tell them.": "قصص نوح وإبراهيم وموسى وعيسى ومحمد ﷺ كما يرويها القرآن والسنة الصحيحة.",
+"Who the Ūlu al-ʿAzm are, and the verses that name them together": "من هم أولو العزم، والآيات التي ذكرتهم معًا",
+"The full story of each messenger, with the verse or ḥadīth for every event": "القصة الكاملة لكل رسول، مع الآية أو الحديث لكل حدث",
+"Their trials, their patience, the signs Allah gave them and their shared message": "ابتلاؤهم وصبرهم والآيات التي أيّدهم الله بها ورسالتهم الواحدة",
+"Their duʿāʾs in Arabic, a comparison table, lessons and a self-test": "أدعيتهم بالعربية، وجدول مقارنة، وفوائد، واختبار ذاتي",
 "The Four Rightly Guided Caliphs": "الخلفاء الراشدون الأربعة",
 "The lives and caliphates of Abū Bakr, ʿUmar, ʿUthmān and ʿAlī: who they were, how they ruled, and what they left the Ummah.": "سيرة أبي بكر وعمر وعثمان وعلي وخلافتهم: من كانوا، وكيف حكموا، وماذا تركوا للأمة.",
 "Four full biographies, from their acceptance of Islām to their deaths": "أربع تراجم كاملة، من إسلامهم إلى وفاتهم",

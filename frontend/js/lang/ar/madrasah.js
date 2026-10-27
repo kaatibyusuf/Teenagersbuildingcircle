@@ -185,5 +185,8 @@ HS_I18N.add({
 "Ḥadīth Bootcamp cover": "غلاف معسكر الحديث",
 "The Four Rightly Guided Caliphs": "الخلفاء الراشدون الأربعة",
 "Cover of The Four Rightly Guided Caliphs": "غلاف الخلفاء الراشدون الأربعة",
-"The lives and caliphates of Abū Bakr, ʿUmar, ʿUthmān and ʿAlī, with their virtues from authentic ḥadīth, a timeline and a self-test.": "سيرة أبي بكر وعمر وعثمان وعلي وخلافتهم، مع فضائلهم من الأحاديث الصحيحة، وخط زمني، واختبار ذاتي."
+"The lives and caliphates of Abū Bakr, ʿUmar, ʿUthmān and ʿAlī, with their virtues from authentic ḥadīth, a timeline and a self-test.": "سيرة أبي بكر وعمر وعثمان وعلي وخلافتهم، مع فضائلهم من الأحاديث الصحيحة، وخط زمني، واختبار ذاتي.",
+"Ūlu al-ʿAzm: The Five Resolute Messengers": "أولو العزم من الرسل",
+"The stories of Nūḥ, Ibrāhīm, Mūsā, ʿĪsā and Muḥammad ﷺ from the Qur’an and authentic Sunnah, with their duʿāʾs and a self-test.": "قصص نوح وإبراهيم وموسى وعيسى ومحمد ﷺ من القرآن والسنة الصحيحة، مع أدعيتهم واختبار ذاتي.",
+"Cover of Ūlu al-ʿAzm": "غلاف أولو العزم من الرسل"
 });

@@ -83,5 +83,7 @@ HS_I18N.add({
 "Seerah": "السيرة",
 "The full lives of Abū Ḥanīfah, Mālik, ash-Shāfiʿī and Aḥmad: teachers, trials, methods and students, with a timeline and a self-test.": "السيرة الكاملة لأبي حنيفة ومالك والشافعي وأحمد: الشيوخ والمحن والأصول والتلاميذ، مع خطّ زمني واختبار ذاتي.",
 "The Four Rightly Guided Caliphs": "الخلفاء الراشدون الأربعة",
-"The lives and caliphates of Abū Bakr, ʿUmar, ʿUthmān and ʿAlī: their virtues, decisions and trials, with a timeline and a self-test.": "سيرة أبي بكر وعمر وعثمان وعلي وخلافتهم: فضائلهم وقراراتهم ومحنهم، مع خط زمني واختبار ذاتي."
+"The lives and caliphates of Abū Bakr, ʿUmar, ʿUthmān and ʿAlī: their virtues, decisions and trials, with a timeline and a self-test.": "سيرة أبي بكر وعمر وعثمان وعلي وخلافتهم: فضائلهم وقراراتهم ومحنهم، مع خط زمني واختبار ذاتي.",
+"Ūlu al-ʿAzm: The Five Resolute Messengers": "أولو العزم من الرسل",
+"The stories of Nūḥ, Ibrāhīm, Mūsā, ʿĪsā and Muḥammad ﷺ from the Qur’an and authentic Sunnah, with their duʿāʾs and a self-test.": "قصص نوح وإبراهيم وموسى وعيسى ومحمد ﷺ من القرآن والسنة الصحيحة، مع أدعيتهم واختبار ذاتي."
 });
