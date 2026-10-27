@@ -88,5 +88,7 @@ HS_I18N.add({
 "The stories of Nūḥ, Ibrāhīm, Mūsā, ʿĪsā and Muḥammad ﷺ from the Qur’an and authentic Sunnah, with their duʿāʾs and a self-test.": "قصص نوح وإبراهيم وموسى وعيسى ومحمد ﷺ من القرآن والسنة الصحيحة، مع أدعيتهم واختبار ذاتي.",
 "The Fiqh of Ḥayḍ, Nifās and Istiḥāḍah": "فقه الحيض والنفاس والاستحاضة",
 "Fiqh": "الفقه",
-"The Mālikī rulings on menstruation, bleeding after childbirth and irregular bleeding, with a decision chart, worked examples and a record page.": "أحكام الحيض والنفاس والاستحاضة على المذهب المالكي، مع مخطط للتمييز وأمثلة محلولة وصفحة سجل."
+"The Mālikī rulings on menstruation, bleeding after childbirth and irregular bleeding, with a decision chart, worked examples and a record page.": "أحكام الحيض والنفاس والاستحاضة على المذهب المالكي، مع مخطط للتمييز وأمثلة محلولة وصفحة سجل.",
+"The Battles of the Prophet ﷺ": "غزوات النبي ﷺ",
+"The battles and expeditions of the Prophet ﷺ from Badr to Tabūk, with a map, battle plans, the heroes, the rules of war and a self-test.": "غزوات النبي ﷺ وسراياه من بدر إلى تبوك، مع خريطة ومخططات للمعارك، والأبطال، وآداب الحرب، واختبار ذاتي."
 });

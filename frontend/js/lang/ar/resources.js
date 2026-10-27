@@ -2,7 +2,7 @@
    Keys starting with re: are patterns for text with numbers or names in it ($1, $2 are the parts kept). */
 HS_I18N.add({
 "Prospectus and free guides — Himaayah Schools": "الدليل التعريفي والأدلة المجانية — مدارس حماية",
-"Download the Himaayah Schools prospectus and free guides from our teachers on hifdh, the mutashābihāt, adab, the four imams, the rightly guided caliphs, Ūlu al-ʿAzm, the fiqh of ḥayḍ and nifās, Qur’anic Arabic, UTME, WAEC and NECO, teenage habits and public speaking, plus a printable hifdh planner.": "نزّل الدليل التعريفي لمدارس حماية وأدلة مجانية من معلّمينا في الحفظ، والمتشابهات، والأدب، وسير الأئمة الأربعة، والخلفاء الراشدين، وأولي العزم من الرسل، وفقه الحيض والنفاس، وعربية القرآن، وامتحانات UTME وWAEC وNECO، وعادات الشباب، والخطابة، مع مخطّط مطبوع للحفظ.",
+"Download the Himaayah Schools prospectus and free guides from our teachers on hifdh, the mutashābihāt, adab, the four imams, the rightly guided caliphs, Ūlu al-ʿAzm, the battles of the Prophet ﷺ, the fiqh of ḥayḍ and nifās, Qur’anic Arabic, UTME, WAEC and NECO, teenage habits and public speaking, plus a printable hifdh planner.": "نزّل الدليل التعريفي لمدارس حماية وأدلة مجانية من معلّمينا في الحفظ، والمتشابهات، والأدب، وسير الأئمة الأربعة، والخلفاء الراشدين، وأولي العزم من الرسل، وغزوات النبي ﷺ، وفقه الحيض والنفاس، وعربية القرآن، وامتحانات UTME وWAEC وNECO، وعادات الشباب، والخطابة، مع مخطّط مطبوع للحفظ.",
 "Free resources": "موارد مجانية",
 "Our prospectus and free guides.": "دليلنا التعريفي وأدلة مجانية.",
 "The full Himaayah Schools prospectus, and practical, printable guides written by our teachers and mentors. Download them, print them and share them with anyone who will benefit. No sign-up needed.": "الدليل التعريفي الكامل لمدارس حماية، وأدلة عملية قابلة للطباعة كتبها معلّمونا ومرشدونا. نزّلها واطبعها وشاركها مع كل من ينتفع بها. دون تسجيل.",
@@ -72,6 +72,12 @@ HS_I18N.add({
 "Want more? Read our": "تريد المزيد؟ اقرأ",
 "articles": "مقالاتنا",
 "on learning, hifdh, exams and parenting, or get the next guide by email below.": "عن التعلّم والحفظ والامتحانات والتربية، أو احصل على الدليل القادم بالبريد أدناه.",
+"The Battles of the Prophet ﷺ": "غزوات النبي ﷺ",
+"The maghāzī of the Messenger of Allah ﷺ, from the first expeditions and Badr to the Opening of Makkah, Ḥunayn and Tabūk.": "مغازي رسول الله ﷺ، من أولى السرايا وبدر إلى فتح مكة وحنين وتبوك.",
+"Why the Prophet ﷺ fought, and the rules of war he set": "لماذا قاتل النبي ﷺ، وآداب الحرب التي سنّها",
+"Every major battle in depth: causes, numbers, events and lessons": "كل غزوة كبرى بالتفصيل: أسبابها وأعدادها وأحداثها ودروسها",
+"A map, a timeline and battle plans of Badr, Uḥud and the Trench": "خريطة وخط زمني ومخططات لبدر وأحد والخندق",
+"All 27 ghazawāt in one table, the heroes, duʿāʾs and a self-test": "الغزوات السبع والعشرون في جدول واحد، والأبطال، والأدعية، واختبار ذاتي",
 "The Fiqh of Ḥayḍ, Nifās and Istiḥāḍah": "فقه الحيض والنفاس والاستحاضة",
 "The Mālikī rulings on menstruation, bleeding after childbirth and irregular bleeding, explained step by step with the evidence.": "أحكام الحيض والنفاس والاستحاضة على المذهب المالكي، مشروحة خطوة خطوة مع الأدلة.",
 "What each kind of bleeding is, how long it can last, and the signs of purity": "تعريف كل نوع من الدماء، وأقصى مدته، وعلامات الطهر",

@@ -191,5 +191,8 @@ HS_I18N.add({
 "Cover of Ūlu al-ʿAzm": "غلاف أولو العزم من الرسل",
 "The Fiqh of Ḥayḍ, Nifās and Istiḥāḍah": "فقه الحيض والنفاس والاستحاضة",
 "Cover of The Fiqh of Ḥayḍ, Nifās and Istiḥāḍah": "غلاف فقه الحيض والنفاس والاستحاضة",
-"The Mālikī rulings every Muslim woman needs, step by step, with a decision chart, worked examples and a monthly record page.": "الأحكام المالكية التي تحتاجها كل مسلمة، خطوة خطوة، مع مخطط للتمييز وأمثلة محلولة وصفحة سجل شهري."
+"The Mālikī rulings every Muslim woman needs, step by step, with a decision chart, worked examples and a monthly record page.": "الأحكام المالكية التي تحتاجها كل مسلمة، خطوة خطوة، مع مخطط للتمييز وأمثلة محلولة وصفحة سجل شهري.",
+"The Battles of the Prophet ﷺ": "غزوات النبي ﷺ",
+"Cover of The Battles of the Prophet ﷺ": "غلاف غزوات النبي ﷺ",
+"The maghāzī from Badr to Tabūk in depth, with a map, battle plans, the heroes of each battle and the verses revealed about them.": "المغازي من بدر إلى تبوك بالتفصيل، مع خريطة ومخططات للمعارك، وأبطال كل غزوة، والآيات التي نزلت فيها."
 });
