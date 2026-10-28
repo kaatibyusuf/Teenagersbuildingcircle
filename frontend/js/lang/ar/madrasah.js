@@ -255,5 +255,6 @@ HS_I18N.add({
 "My Ramaḍān Planner": "مخطّط رمضان",
 "Cover of My Ramaḍān Planner": "غلاف مخطّط رمضان",
 "Prayer Tracker and Khatm Planner": "متابعة الصلاة ومخطّط الختم",
-"Cover of Prayer Tracker and Khatm Planner": "غلاف متابعة الصلاة ومخطّط الختم"
+"Cover of Prayer Tracker and Khatm Planner": "غلاف متابعة الصلاة ومخطّط الختم",
+"re:^(\\d+) pages · PDF$": "$1 صفحة · PDF"
 });
