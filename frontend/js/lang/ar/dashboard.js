@@ -190,5 +190,9 @@ HS_I18N.add({
 "Not saved: check your internet. Your ticks will be sent with your next tick.": "لم يُحفظ: تحقّق من اتصالك بالإنترنت. ستُرسل علاماتك مع العلامة التالية.",
 "A new day has started. Please refresh the page.": "بدأ يوم جديد. حدّث الصفحة من فضلك.",
 "The daily routine is for Hifdh, One-Year Hifdh and Muraajah students.": "البرنامج اليومي لطلاب الحفظ والحفظ في سنة والمراجعة.",
-"The last 14 days": "آخر 14 يومًا"
+"The last 14 days": "آخر 14 يومًا",
+"re:Keep your (\\d+)-day streak: start today’s routine\\.": "حافظ على أيامك المتتالية ($1): ابدأ برنامج اليوم.",
+"You have not started today’s routine yet.": "لم تبدأ برنامج اليوم بعد.",
+"re:Finish today’s routine to keep your (\\d+)-day streak\\.": "أكمل برنامج اليوم لتحافظ على أيامك المتتالية ($1).",
+"Routine": "البرنامج"
 });

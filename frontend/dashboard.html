@@ -141,6 +141,12 @@ function reminders(s, d, status, due) {
     if (n < 0) out.push({ t: '\u201C' + esc(a.Title) + '\u201D is overdue.', a: '#assign', u: 1, tag: 'Submit' });
     else if (n <= 2) out.push({ t: '\u201C' + esc(a.Title) + '\u201D is due ' + inDays(n) + '.', a: '#assign', tag: 'Assignment' });
   });
+  const rt = d.routine;   // daily routine nudge, from mid-afternoon
+  if (rt && rt.enabled && new Date().getHours() >= 15) {
+    const all = (ROUTINES[rt.kind === 'muraajah' ? 'muraajah' : 'hifdh'] || []).length, n = (rt.done || []).length, st = rt.streak || 0;
+    if (n === 0) out.push({ t: st > 0 ? 'Keep your ' + st + '-day streak: start today\u2019s routine.' : 'You have not started today\u2019s routine yet.', a: '#routine', tag: 'Routine' });
+    else if (n < all && st >= 2) out.push({ t: 'Finish today\u2019s routine to keep your ' + st + '-day streak.', a: '#routine', tag: 'Routine', k: 'finish' });
+  }
   if (s.NextClass) { const n = dd(s.NextClass); if (n === 0 || n === 1) out.push({ t: 'Your next class is ' + inDays(n) + ' at ' + new Date(s.NextClass).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }) + '.', a: '#next', tag: 'Class' }); }
   return out;
 }
@@ -430,7 +436,15 @@ function rtCard(d) {
     <div id="rtBody">${rtBodyHtml(d)}</div></article>`;
 }
 function rtMount() { const b = $('rtBody'); if (b && window.__lastData) b.innerHTML = rtBodyHtml(window.__lastData); }
-function rtQueue() { clearTimeout(RT.timer); RT.msg = 'Saving…'; RT.timer = setTimeout(rtSave, 700); }
+function rtClearNudge() {   // the "start today's routine" reminder goes once the student ticks something
+  const all = rtSteps().length;
+  document.querySelectorAll('.remind a[href="#routine"]').forEach((el) => {
+    const finishNote = el.dataset.nudge === 'finish';
+    if (RT.done.length >= all || (RT.done.length > 0 && !finishNote)) el.remove();
+  });
+  const sec = document.querySelector('.remind'); if (sec && !sec.children.length) sec.remove();
+}
+function rtQueue() { rtClearNudge(); clearTimeout(RT.timer); RT.msg = 'Saving…'; RT.timer = setTimeout(rtSave, 700); }
 async function rtSave() {
   RT.timer = null;
   if (RT.saving) { RT.again = true; return; }
@@ -493,7 +507,7 @@ function render(d) {
   <section class="greet"><div><small>Assalaamu alaykum</small><h1>${esc(first)}, here is your progress.</h1>
     <div class="chips"><span>${esc(s.Level)}</span><span>${esc(s.Plan)}</span>${s.Teacher ? `<span>Teacher: ${esc(s.Teacher)}</span>` : ''}</div></div>
     <a class="btn btn-sky" href="${waHelp}" target="_blank" rel="noopener">Message the Madrasah line</a></section>
-  ${remind.length ? `<section class="remind" aria-label="Reminders">${remind.map((r) => `<a href="${r.a}" class="${r.u ? 'urgent' : ''}">${r.t}<span>${r.tag}</span></a>`).join('')}</section>` : ''}
+  ${remind.length ? `<section class="remind" aria-label="Reminders">${remind.map((r) => `<a href="${r.a}" class="${r.u ? 'urgent' : ''}"${r.k ? ` data-nudge="${r.k}"` : ''}>${r.t}<span>${r.tag}</span></a>`).join('')}</section>` : ''}
   <div class="grid">
     <article class="c" id="next" style="--i:0"><div class="k">Next class</div>${s.NextClass ? `<div class="big">${fdate(s.NextClass, true)}</div>${safeUrl(s.ClassLink) ? `<p class="sub"><a class="btn btn-ink" style="margin-top:12px" href="${esc(s.ClassLink)}" target="_blank" rel="noopener">Join class</a></p>` : '<p class="sub">Your teacher will share the join link.</p>'}` : '<p class="empty">No class scheduled yet.</p>'}</article>
     <article class="c" id="pay" style="--i:1"><div class="k">Payment</div><span class="pill ${pcls}">${esc(s.PaymentStatus || 'Due')}</span>
