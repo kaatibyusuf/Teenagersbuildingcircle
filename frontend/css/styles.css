@@ -4850,3 +4850,61 @@ html[dir="rtl"] :is(.page-hadith-bootcamp, .page-bootcamp) :is(.bc-t, .bc-tt) i,
 .rq-res input:focus-visible + span { border-color: var(--sky, #85CCFF); }
 .rq-adv { display: flex; gap: 8px; align-items: center; font-size: 13.5px; color: var(--muted); }
 @media (max-width: 560px) { .rq-scores { grid-template-columns: 1fr 1fr 1fr; gap: 6px; } }
+
+/* ===================== Today's hifdh routine (dashboard.html) ===================== */
+.page-dashboard #routine { --gold: #B07A1E; --mint: #E3F1EA; --green: #1B7F4B; }
+.page-dashboard #routine h2 { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; }
+.page-dashboard .rt-date { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; color: var(--muted); }
+.page-dashboard .rt-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px; align-items: center; margin-top: 16px; max-width: 820px; }
+.page-dashboard .rt-prog b { display: block; font-size: 15px; color: var(--deep); margin-bottom: 8px; }
+.page-dashboard .rt-prog .bar i { transition: width .45s var(--ease, ease); background: var(--green); }
+.page-dashboard .rt-streak { display: grid; justify-items: center; min-width: 92px; padding: 10px 14px; border-radius: 16px; background: #FFF6E6; color: var(--gold); text-align: center; line-height: 1.15; }
+.page-dashboard .rt-streak b { font-family: var(--d); font-size: 26px; }
+.page-dashboard .rt-streak span { font-size: 12px; font-weight: 600; }
+.page-dashboard .rt-streak small { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.page-dashboard .rt-lesson { margin: 14px 0 0; }
+.page-dashboard .rt-strip { display: flex; gap: 5px; margin-top: 12px; max-width: 820px; }
+.page-dashboard .rt-strip i { flex: 1; max-width: 22px; height: 8px; border-radius: 4px; background: var(--line); }
+.page-dashboard .rt-strip i.part { background: #F0D9A8; }
+.page-dashboard .rt-strip i.full { background: var(--gold); }
+.page-dashboard .rt-list { list-style: none; margin: 20px 0 0; padding: 0; display: grid; gap: 12px; position: relative; max-width: 820px; }
+.page-dashboard .rt-step { display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: 12px; align-items: center; position: relative; }
+.page-dashboard .rt-step::before { content: ''; position: absolute; inset-inline-start: 19px; top: -12px; bottom: -12px; width: 2px; background: #C9DFD3; z-index: 0; }
+.page-dashboard .rt-step:first-child::before { top: 50%; }
+.page-dashboard .rt-step:last-child::before { bottom: 50%; }
+.page-dashboard .rt-num { position: relative; z-index: 1; width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: var(--mint); color: var(--green); font-family: var(--d); font-weight: 700; font-size: 16px; transition: background .2s, color .2s; }
+.page-dashboard .rt-step.on .rt-num { background: var(--green); color: #fff; }
+.page-dashboard .rt-card { display: grid; grid-template-columns: 48px minmax(0, 1fr) 44px; gap: 14px; align-items: center; padding: 14px 16px; border-radius: 18px; background: #fff; border: 1.5px solid var(--line); transition: border-color .2s, background .2s; }
+.page-dashboard .rt-step.on .rt-card { border-color: #BFE0CD; background: #F7FCF9; }
+.page-dashboard .rt-ic { width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; background: var(--mint); color: var(--green); }
+.page-dashboard .rt-txt { min-width: 0; display: grid; gap: 3px; justify-items: start; }
+.page-dashboard .rt-txt > b { font-size: 15.5px; line-height: 1.3; color: var(--deep); }
+.page-dashboard .rt-txt em { font-style: normal; font-weight: 700; font-size: 14px; color: var(--gold); border-bottom: 1.5px solid rgba(176,122,30,.45); padding-bottom: 1px; }
+.page-dashboard .rt-txt small { font-size: 13px; color: var(--muted); line-height: 1.45; }
+.page-dashboard .rt-more { grid-column: 2 / -1; margin-top: -4px; }
+.page-dashboard .rt-count { display: inline-flex; white-space: nowrap; align-items: center; gap: 10px; font: inherit; font-size: 13px; font-weight: 600; color: var(--ink); background: var(--wash); border: 1.5px solid transparent; border-radius: 999px; padding: 7px 8px 7px 14px; cursor: pointer; touch-action: manipulation; user-select: none; -webkit-user-select: none; transition: transform .1s, border-color .2s; }
+.page-dashboard .rt-count b { background: var(--ink); color: #fff; border-radius: 999px; padding: 3px 10px; font-size: 13px; min-width: 64px; text-align: center; }
+.page-dashboard .rt-count:hover { border-color: var(--sky); }
+.page-dashboard .rt-count:active { transform: scale(.96); }
+.page-dashboard .rt-count:disabled { cursor: default; opacity: .7; transform: none; }
+.page-dashboard .rt-count:disabled b { background: var(--green); }
+.page-dashboard .rt-go { font: inherit; font-size: 13px; font-weight: 600; color: #fff; background: var(--ink); border: 0; border-radius: 999px; padding: 8px 16px; cursor: pointer; }
+.page-dashboard .rt-box { width: 40px; height: 40px; border-radius: 12px; border: 2px solid #A9CDB9; background: #fff; color: transparent; display: grid; place-items: center; cursor: pointer; transition: background .15s, border-color .15s, color .15s, transform .1s; }
+.page-dashboard .rt-box:active { transform: scale(.92); }
+.page-dashboard .rt-box[aria-checked="true"] { background: var(--green); border-color: var(--green); color: #fff; }
+.page-dashboard .rt-box:focus-visible, .page-dashboard .rt-count:focus-visible, .page-dashboard .rt-go:focus-visible { outline: 3px solid rgba(133,204,255,.8); outline-offset: 2px; }
+.page-dashboard .rt-msg { min-height: 18px; margin: 12px 0 0; font-size: 13px; color: var(--muted); }
+@media (max-width: 560px) {
+  .page-dashboard .rt-step { grid-template-columns: 30px minmax(0, 1fr); gap: 8px; }
+  .page-dashboard .rt-step::before { inset-inline-start: 14px; }
+  .page-dashboard .rt-num { width: 30px; height: 30px; font-size: 14px; }
+  .page-dashboard .rt-card { grid-template-columns: 38px minmax(0, 1fr) 38px; gap: 10px; padding: 12px; }
+  .page-dashboard .rt-ic { width: 38px; height: 38px; }
+  .page-dashboard .rt-ic svg { width: 18px; height: 18px; }
+  .page-dashboard .rt-box { width: 36px; height: 36px; border-radius: 10px; }
+  .page-dashboard .rt-txt > b { font-size: 14.5px; }
+  .page-dashboard .rt-more { grid-column: 1 / -1; margin-top: 0; }
+  .page-dashboard .rt-count { width: 100%; justify-content: space-between; }
+  .page-dashboard .rt-head { grid-template-columns: minmax(0, 1fr) auto; gap: 12px; }
+  .page-dashboard .rt-streak { min-width: 76px; padding: 8px 10px; }
+}

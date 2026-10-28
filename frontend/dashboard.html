@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600;700&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css?v=20261028b">
+<link rel="stylesheet" href="css/styles.css?v=20261028c">
 <script src="js/auth-guard.js"></script>
 <script src="js/i18n.js"></script>
 <script src="js/surahs.js"></script>
@@ -61,6 +61,7 @@ function demo() {
   if (demoData) return JSON.parse(JSON.stringify(demoData));
   const day = (n, h = 0) => { const d = new Date(); d.setDate(d.getDate() + n); d.setHours(h, 0, 0, 0); return d.toISOString().slice(0, 16); };
   const ymd = (n) => day(n).slice(0, 10);
+  const lymd = (n) => { const d = new Date(); d.setDate(d.getDate() + n); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); };
   demoData = { ok: true, student: { StudentID: 'DEMO', Name: 'Sample Student', Level: 'Thālithah Ibtidā’iyyah', Plan: 'Full Madrasah (Personal)', Teacher: 'Your teacher', PaymentStatus: 'Due', NextDue: ymd(4), MonthlyFee: 35000, AttendancePresent: 14, AttendanceTotal: 16, NextClass: day(1, 17), ClassLink: '#', Juz: 2, CurrentSurah: 'Al-Baqarah', CurrentAyah: 142 },
     hifdh: [['An-Nās','Memorised'],['Al-Falaq','Memorised'],['Al-Ikhlāṣ','Memorised'],['Al-Masad','Memorised'],['An-Naṣr','Revising'],['Al-Kāfirūn','Revising'],['Al-Baqarah','In progress'],['Āl ʿImrān','Not started']].map(([Surah, Status]) => ({ Surah, Status })),
     murajaah: [{Day:'Monday',Portion:'An-Nās to Al-Masad'},{Day:'Wednesday',Portion:'An-Naṣr and Al-Kāfirūn'},{Day:'Friday',Portion:'Al-Baqarah 1 to 141'}],
@@ -73,6 +74,8 @@ function demo() {
       { AssignmentID: 'A3', Title: 'Aqeedah worksheet', Subject: 'Tawheed', Instructions: 'Complete the worksheet and submit a photo link.', Assigned: ymd(-6), Due: ymd(3), Link: '', MaxScore: 20, Status: 'Submitted', Submission: { Submitted: day(-1, 20), Note: 'Done, Alhamdulillah.', Link: '', Score: '', Feedback: '', Late: false } },
       { AssignmentID: 'A4', Title: 'Fiqh of wudu', Subject: 'Fiqh', Instructions: 'Write the obligatory acts of wudu.', Assigned: ymd(-14), Due: ymd(-9), Link: '', MaxScore: 20, Status: 'Marked', Submission: { Submitted: day(-10, 18), Note: 'My answers are attached.', Link: '', Score: 17, Feedback: 'Good work. Revise the order of the acts.', Late: false } }],
     payments: [{Date:ymd(-26),Amount:35000,Months:1,Reference:'TRF-10421'},{Date:ymd(-56),Amount:35000,Months:1,Reference:'TRF-09877'}],
+    routine: { enabled: true, kind: 'hifdh', today: lymd(0), done: ['read', 'listen'], counts: { read: 3, listen: 3, byheart: 7 }, streak: 4, best: 9, fullDays: 12,
+      strip: [...Array(14)].map((_, i) => ({ date: lymd(i - 13), done: i === 13 ? 2 : [9, 9, 4, 9, 9, 9, 0, 9, 9, 6, 9, 9, 9, 9][i], steps: 9, full: i < 13 && [1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1][i] === 1 })) },
     recordings: { enabled: true, maxSeconds: 1200, maxMB: 15, items: [
       { RecID: 'R-DEMO2', Submitted: day(-1, 19), Type: 'New lesson', Surah: 'Al-Baqarah', FromAyah: 142, ToAyah: 152, Portion: 'Al-Baqarah 142\u2013152', Note: '', Seconds: 214, Status: 'Waiting', Memorisation: null, Tajwid: null, Fluency: null, Total: null, Result: '', Feedback: '' },
       { RecID: 'R-DEMO1', Submitted: day(-4, 18), Type: 'Revision', Surah: 'Al-Mulk', FromAyah: 1, ToAyah: 30, Portion: 'Al-Mulk 1\u201330', Note: 'I was unsure in ayah 16.', Seconds: 402, Status: 'Marked', Memorisation: 9, Tajwid: 7, Fluency: 4, Total: { Score: 20, OutOf: 25 }, Result: 'Pass', Feedback: 'Strong memorisation. Lengthen the madd in ayah 16, and slow down a little at the end.' }] } };
@@ -116,6 +119,10 @@ async function api(id, code, action, extra) {
     if (id.toUpperCase() !== 'DEMO' || code !== 'demo') return { ok: false, error: 'Wrong ID or access code.' };
     if (action === 'password') return String(extra.newCode || '').length < 8 ? { ok: false, error: 'Your new code must be 8 to 40 characters.' } : demo();
     if (/^rec_/.test(action || '')) return demoRec(action, extra || {});
+    if (action === 'rt_save') { const d = demo(), R = d.routine, full = extra.done.length >= extra.steps; R.done = extra.done.slice(); R.counts = Object.assign({}, extra.counts);
+      const last = R.strip[R.strip.length - 1]; last.done = R.done.length; last.steps = extra.steps; const was = last.full; last.full = full;
+      if (full && !was) { R.streak += 1; R.best = Math.max(R.best, R.streak); } else if (!full && was) R.streak -= 1;
+      demoData = d; return { ok: true, routine: JSON.parse(JSON.stringify(R)) }; }
     return action === 'submit' ? demoSubmit(extra) : demo();
   }
   const r = await fetch(API_URL, { method: 'POST', body: JSON.stringify(Object.assign({ action: action || 'login', id, code }, extra || {})) });
@@ -331,6 +338,140 @@ async function recWithdraw(id, btn) {
   catch (e) { btn.disabled = false; }
 }
 
+/* ===== Today's hifdh routine =====
+   The steps students tick each day. Change the wording, the counts (n) or the order here.
+   n = how many times (1 = once). way: true shows "Your way". plan: true shows today's murajaah portion.
+   Keep each id short and unique: ticks are saved by id, so renaming an id starts that step afresh. */
+const ROUTINES = {
+  hifdh: [
+    { id: 'read', icon: 'book', t: 'Read today’s portion from the muṣḥaf', n: 3, hint: 'Look carefully at every word and its ḥarakāt.' },
+    { id: 'listen', icon: 'listen', t: 'Listen to a trusted reciter', n: 3, hint: 'Follow along in the muṣḥaf as you listen.' },
+    { id: 'meaning', icon: 'meaning', t: 'Read the meaning (tafsīr)', n: 1, hint: 'Knowing what it means helps it stay.' },
+    { id: 'memorise', icon: 'bookmark', t: 'Memorise it, a few āyāt at a time', way: true, hint: 'Āyah by āyah, then join them together.' },
+    { id: 'byheart', icon: 'repeat', t: 'Recite the whole portion by heart', n: 20, hint: 'Without looking. Tap the counter each time.' },
+    { id: 'record', icon: 'mic', t: 'Record it and send it to your teacher', n: 1, action: 'record', hint: 'Your teacher listens and marks it.' },
+    { id: 'yesterday', icon: 'back', t: 'Repeat yesterday’s lesson', n: 5 },
+    { id: 'link', icon: 'link', t: 'Join today’s portion to the page before it', n: 3, hint: 'Recite both together by heart.' },
+    { id: 'revise', icon: 'cycle', t: 'Murājaʿah: revise your old portion', plan: true },
+  ],
+  muraajah: [
+    { id: 'listen', icon: 'listen', t: 'Listen to today’s portion', n: 1 },
+    { id: 'read', icon: 'book', t: 'Read it from the muṣḥaf', n: 1, hint: 'Watch for the places where you usually slip.' },
+    { id: 'byheart', icon: 'repeat', t: 'Recite it by heart', n: 3, hint: 'Without looking. Tap the counter each time.' },
+    { id: 'record', icon: 'mic', t: 'Record it and send it to your teacher', n: 1, action: 'record', hint: 'Your teacher listens and marks it.' },
+    { id: 'fix', icon: 'pen', t: 'Repeat the āyāt you stumbled on', n: 5, hint: 'Mark them lightly in pencil and repeat until firm.' },
+    { id: 'salah', icon: 'pray', t: 'Recite some of it in your ṣalāh', n: 1 },
+  ],
+};
+const RT_ICONS = {
+  book: '<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/>',
+  listen: '<path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1v-6h3zM3 19a2 2 0 0 0 2 2h1v-6H3z"/>',
+  meaning: '<path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2z"/><path d="M22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7z"/>',
+  bookmark: '<path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>',
+  repeat: '<path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/>',
+  mic: '<rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v4"/>',
+  back: '<path d="M1 4v6h6"/><path d="M3.5 15a9 9 0 1 0 2.1-9.4L1 10"/>',
+  link: '<path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/>',
+  cycle: '<path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.5 9a9 9 0 0 1 14.9-3.4L23 10M1 14l4.6 4.4A9 9 0 0 0 20.5 15"/>',
+  pen: '<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',
+  pray: '<path d="M12 3c-2 3-5 5-5 9a5 5 0 0 0 10 0c0-4-3-6-5-9z"/><path d="M5 21h14"/>',
+};
+const RT_TICK = '<svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8.5l3.2 3.2L13 4.8"/></svg>';
+const RT = { date: '', kind: '', done: [], counts: {}, meta: null, timer: null, saving: false, again: false, msg: '' };
+const rtDay = (iso) => { const d = new Date(String(iso).slice(0, 10) + 'T12:00:00'); return isNaN(d) ? esc(iso) : d.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' }); };
+const rtSteps = () => ROUTINES[RT.kind] || ROUTINES.hifdh;
+const rtTimes = (st) => st.way ? 'Your way' : st.plan ? '' : st.n === 1 ? 'Once' : st.n + ' times';
+function rtLoad(r) {   // take the saved state from the server unless the student has unsaved ticks for the same day
+  if (!r || !r.enabled) { RT.meta = null; return; }
+  RT.meta = r;
+  if (RT.timer || RT.saving) { if (RT.date === r.today) return; }
+  RT.date = r.today; RT.kind = r.kind === 'muraajah' ? 'muraajah' : 'hifdh';
+  const ids = rtSteps().map((s) => s.id);
+  RT.done = (r.done || []).filter((x) => ids.includes(x)); RT.counts = Object.assign({}, r.counts || {});
+}
+function rtToday(d) {   // today's murajaah portion from the weekly plan, if the teacher has set one
+  const w = new Date().toLocaleDateString('en-GB', { weekday: 'long' }).toLowerCase();
+  const m = (d.murajaah || []).find((x) => { const k = String(x.Day || '').trim().toLowerCase(); return k && (w.startsWith(k.slice(0, 3)) || k === 'daily' || k === 'every day'); });
+  return m ? m.Portion : '';
+}
+function rtStepHtml(st, i, d) {
+  const on = RT.done.includes(st.id), c = Math.min(Number(RT.counts[st.id]) || 0, st.n || 0);
+  const portion = st.plan ? rtToday(d) : '';
+  const times = st.plan ? (portion ? 'Today: ' + portion : 'From your revision plan') : rtTimes(st);
+  return `<li class="rt-step${on ? ' on' : ''}" data-id="${st.id}">
+    <span class="rt-num">${i + 1}</span>
+    <div class="rt-card">
+      <span class="rt-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${RT_ICONS[st.icon] || ''}</svg></span>
+      <div class="rt-txt"><b>${esc(st.t)}</b><em>${esc(times)}</em>${st.hint ? `<small>${esc(st.hint)}</small>` : ''}</div>
+      <button type="button" class="rt-box" role="checkbox" aria-checked="${on}" data-rt="tick" data-id="${st.id}" aria-label="${esc(st.t)}">${RT_TICK}</button>
+      ${st.n > 1 ? `<div class="rt-more"><button type="button" class="rt-count" data-rt="count" data-id="${st.id}"${c >= st.n ? ' disabled' : ''}><span>Tap each time</span><b dir="ltr">${c} / ${st.n}</b></button></div>` : ''}
+      ${st.action === 'record' && (d.recordings || {}).enabled ? `<div class="rt-more"><button type="button" class="rt-go" data-rt="record">Open the recorder</button></div>` : ''}
+    </div></li>`;
+}
+function rtBodyHtml(d) {
+  const steps = rtSteps(), n = RT.done.length, all = steps.length, m = RT.meta || {}, s = d.student || {};
+  const strip = (m.strip || []).map((x) => `<i class="${x.full ? 'full' : x.done ? 'part' : ''}" title="${esc(rtDay(x.date))}: ${x.done} of ${x.steps || all}"></i>`).join('');
+  const lesson = RT.kind === 'muraajah' ? 'Revise the portion your teacher set for today.'
+    : s.CurrentSurah ? `Your next lesson continues <b>${esc(s.CurrentSurah)}</b>${s.CurrentAyah ? ` after āyah ${esc(s.CurrentAyah)}` : ''}.` : 'Your teacher sets your lesson. Ask if you are not sure where to start.';
+  return `<div class="rt-head">
+      <div class="rt-prog"><b>${n === all ? 'All done for today. Mā shāʾa Allāh!' : n + ' of ' + all + ' steps done'}</b><div class="bar"><i style="width:${Math.round(100 * n / all)}%"></i></div></div>
+      <div class="rt-streak"><b>${m.streak || 0}</b><span>day streak</span>${m.best ? `<small>Best: ${m.best}</small>` : ''}</div>
+    </div>
+    <p class="sub rt-lesson">${lesson}</p>
+    ${strip ? `<div class="rt-strip" aria-label="The last 14 days">${strip}</div>` : ''}
+    <ol class="rt-list">${steps.map((st, i) => rtStepHtml(st, i, d)).join('')}</ol>
+    <p class="rt-msg" role="status">${esc(RT.msg)}</p>`;
+}
+function rtCard(d) {
+  rtLoad(d.routine);
+  if (!RT.meta) return '';
+  return `<article class="c w12" id="routine" style="--i:3"><h2>Today’s routine <span class="rt-date">${esc(rtDay(RT.date))}</span></h2>
+    <p class="sub">${RT.kind === 'muraajah' ? 'Your daily revision, step by step.' : 'Your daily hifdh, step by step.'} Tick each step as you finish it. Your ticks are saved, so you can carry on from any phone or computer.</p>
+    <div id="rtBody">${rtBodyHtml(d)}</div></article>`;
+}
+function rtMount() { const b = $('rtBody'); if (b && window.__lastData) b.innerHTML = rtBodyHtml(window.__lastData); }
+function rtQueue() { clearTimeout(RT.timer); RT.msg = 'Saving…'; RT.timer = setTimeout(rtSave, 700); }
+async function rtSave() {
+  RT.timer = null;
+  if (RT.saving) { RT.again = true; return; }
+  let saved = null; try { saved = JSON.parse(sessionStorage.getItem('hs') || 'null'); } catch (x) {}
+  if (!saved) return;
+  RT.saving = true;
+  try {
+    const r = await api(saved.id, saved.code, 'rt_save', { date: RT.date, done: RT.done, counts: RT.counts, steps: rtSteps().length });
+    if (r && r.ok) { RT.meta = Object.assign({}, RT.meta, r.routine); RT.msg = 'Saved.'; }
+    else if (r && r.stale) { RT.msg = r.error; RT.saving = false; const d = await api(saved.id, saved.code, 'login'); if (d.ok) { RT.date = ''; render(d); } return; }
+    else RT.msg = (r && r.error) || 'Could not save. Please try again.';
+  } catch (e) { RT.msg = 'Not saved: check your internet. Your ticks will be sent with your next tick.'; }
+  RT.saving = false;
+  if (RT.again) { RT.again = false; return rtSave(); }
+  rtMount();
+}
+function rtTick(id) {
+  const i = RT.done.indexOf(id);
+  if (i >= 0) RT.done.splice(i, 1); else RT.done.push(id);
+  rtQueue(); rtMount();
+}
+function rtCount(id) {
+  const st = rtSteps().find((x) => x.id === id); if (!st) return;
+  const c = Math.min((Number(RT.counts[id]) || 0) + 1, st.n);
+  RT.counts[id] = c;
+  if (c >= st.n && !RT.done.includes(id)) RT.done.push(id);
+  rtQueue(); rtMount();
+  if (navigator.vibrate) { try { navigator.vibrate(15); } catch (e) {} }
+}
+function rtRecord() {   // jump to the recorder with the lesson filled in
+  const d = window.__lastData || {}, s = d.student || {}, type = RT.kind === 'muraajah' ? 'Revision' : 'New lesson';
+  const r = document.querySelector(`input[name="rtype"][value="${type}"]`); if (r) { r.checked = true; r.dispatchEvent(new Event('change', { bubbles: true })); }
+  const sel = $('rSurah');
+  if (sel && s.CurrentSurah && !sel.value) {
+    const want = String(s.CurrentSurah).toLowerCase().replace(/[^a-z]/g, '');
+    const opt = [...sel.options].find((o) => o.value && o.value.toLowerCase().replace(/[^a-z]/g, '') === want);
+    if (opt) { sel.value = opt.value; sel.dispatchEvent(new Event('change', { bubbles: true })); }
+  }
+  const card = $('recite'); if (card) { card.scrollIntoView({ behavior: 'smooth', block: 'start' }); setTimeout(() => { const b = card.querySelector('[data-rec=start]'); if (b) b.focus({ preventScroll: true }); }, 500); }
+}
+
 function render(d) {
   window.__lastData = d;
   const openIds = [...document.querySelectorAll('.asg[open]')].map((x) => x.dataset.id);
@@ -369,6 +510,7 @@ function render(d) {
         <a class="tool" href="library"><b>Madrasah library</b><span>Books, notes and links chosen for your level.</span></a>
       </div></article>
 
+    ${rtCard(d)}
     <article class="c w12" id="assign" style="--i:3"><h2>Assignments${todo ? ` <span class="pill st-todo" style="font-size:12px;vertical-align:middle">${todo} to do</span>` : ''}</h2>
       <div class="asgs">${asg.map(assignmentHtml).join('') || '<p class="empty">No assignments yet. Your teacher will post them here.</p>'}</div></article>
     ${recCard(d)}
@@ -424,6 +566,8 @@ $('out').addEventListener('click', () => { if (REC.mr) { REC.mr.onstop = null; R
 
 /* Recitation recorder events */
 $('app').addEventListener('click', (e) => {
+  const rb = e.target.closest('[data-rt]');
+  if (rb) { const k = rb.dataset.rt; if (k === 'tick') rtTick(rb.dataset.id); else if (k === 'count') rtCount(rb.dataset.id); else if (k === 'record') rtRecord(); return; }
   const b = e.target.closest('[data-rec]'); if (!b) return;
   const k = b.dataset.rec;
   if (k === 'start') recStart();
