@@ -182,6 +182,7 @@
         <div class="pay-tabs" role="tablist" aria-label="Payment method">
           <button type="button" class="pay-tab" role="tab" data-pay-tab="card" aria-selected="true" aria-controls="payCard">Card</button>
           <button type="button" class="pay-tab" role="tab" data-pay-tab="transfer" aria-selected="false" aria-controls="payTransfer">Bank transfer</button>
+          <button type="button" class="pay-tab" role="tab" data-pay-tab="paid" aria-selected="false" aria-controls="payPaid" id="paidTab" hidden>Already paid</button>
         </div>
 
         <div class="pay-view active" data-pay-view="card" id="payCard" role="tabpanel">
@@ -219,6 +220,22 @@
           <p class="msg-title">Your message</p>
           <div class="msg-preview" id="msgPreview" translate="no" dir="ltr" lang="en"></div>
           <p class="form-note note-box"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg><span>Pay first, then send. Please attach your receipt before you press send. Payments are usually confirmed within a few hours.</span></p>
+        </div>
+
+        <div class="pay-view" data-pay-view="paid" id="payPaid" role="tabpanel">
+          <p class="paid-intro">For current students who paid this month&rsquo;s fee <b>before</b> the website. Nothing is charged now.</p>
+          <ol class="pay-steps">
+            <li><span><b>Enter the date your next fee is due.</b> That is when the month you paid for ends.</span></li>
+            <li><span><b>Tap Send my details.</b> The school checks your earlier payment.</span></li>
+            <li><span><b>You get your login by email</b>, and pay future fees on the website.</span></li>
+          </ol>
+          <div class="field">
+            <label for="paidUntil">My next fee is due on</label>
+            <input type="date" id="paidUntil">
+          </div>
+          <button type="button" class="btn btn-primary" id="paidBtn">Send my details</button>
+          <p class="form-status error" id="paidStatus"></p>
+          <p class="form-note note-box"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg><span>Not sure of the date? Check your last payment receipt, or ask the Madrasah on WhatsApp: +234 702 584 2849.</span></p>
         </div>
 
         <div class="step-actions">
@@ -647,7 +664,8 @@
       kinName: s.kinName, kinRelationship: s.kinRelationship, kinPhone: s.kinPhone, kinEmail: s.kinEmail,
       studentEmail: s.studentEmail || '', website: s.website || '',
       referral: s.referral || '',
-      payMethod: method === 'card' ? 'Card' : 'Bank transfer',
+      payMethod: method === 'card' ? 'Card' : method === 'paid' ? 'Already paid' : 'Bank transfer',
+      paidUntil: method === 'paid' ? (document.getElementById('paidUntil').value || '') : '',
       invite: invitedPlan && state.plan === invitedPlan ? INVITE : '',
     };
     const status = document.getElementById('enrolStatus');
@@ -659,7 +677,7 @@
     }).then((r) => r.json()).then((j) => {
       if (!j || !j.ok) {
         state.sent = false;
-        if (method !== 'card') {
+        if (method !== 'card' && method !== 'paid') {
           status.textContent = (j && j.error ? j.error + ' ' : '') + 'We could not save your details automatically, but your WhatsApp message has everything we need.';
           status.style.display = 'block';
         }
@@ -669,6 +687,15 @@
   }
 
   function preparePayment() {
+    // "Already paid" is offered only to current students who came through an invite link
+    const paidOk = !!(invitedPlan && state.plan === invitedPlan);
+    const paidTab = document.getElementById('paidTab');
+    paidTab.hidden = !paidOk;
+    if (!paidOk && paidTab.getAttribute('aria-selected') === 'true') document.querySelector('.pay-tab[data-pay-tab="card"]').click();
+    if (paidOk) {
+      const d = (n) => { const x = new Date(); x.setDate(x.getDate() + n); return x.toISOString().slice(0, 10); };
+      const pu = document.getElementById('paidUntil'); pu.min = d(-7); pu.max = d(70);
+    }
     document.getElementById('msgPreview').textContent = buildMessage();
     WA_NUMBERS.forEach((num, i) => {
       const a = document.getElementById('waLink' + (i + 1));
@@ -682,6 +709,26 @@
       submitEnrolment();
       setTimeout(showWhatsAppDone, 500);
     });
+  });
+
+  // Current student who paid before the website: save the details with the date the next fee is due
+  const paidBtn = document.getElementById('paidBtn');
+  paidBtn.addEventListener('click', async () => {
+    const st = document.getElementById('paidStatus'), pu = document.getElementById('paidUntil');
+    const bad = (m) => { st.textContent = m; st.style.display = 'block'; };
+    st.style.display = 'none';
+    if (!pu.value) return bad('Enter the date your next fee is due.');
+    if ((pu.min && pu.value < pu.min) || (pu.max && pu.value > pu.max)) return bad('That date looks wrong. It should be within the next two months.');
+    paidBtn.disabled = true; paidBtn.textContent = 'Sending\u2026';
+    const j = (await submitEnrolment('paid')) || {};
+    paidBtn.disabled = false; paidBtn.textContent = 'Send my details';
+    if (!j.ok) return bad((j.error ? j.error + ' ' : 'We could not send your details. ') + 'Please try again, or message the Madrasah on WhatsApp: +234 702 584 2849.');
+    document.getElementById('doneTitle').textContent = 'Thank you. We have your details.';
+    document.getElementById('doneSub').textContent =
+      'The school will check the payment you made before the website and then email ' + (state.student.studentName ? state.student.studentName + '\u2019s' : 'your') +
+      ' login. Your next fee is due on ' + pu.value + ', and you can pay it at himaayahschools.com/pay. Your reference is ' + state.ref + '.';
+    document.getElementById('doneActions').innerHTML = '<a class="btn btn-secondary" href="./">Back to Himaayah Schools</a>';
+    showStep('Done');
   });
 
   function showWhatsAppDone() {
