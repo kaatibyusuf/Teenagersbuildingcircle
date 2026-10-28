@@ -47,6 +47,19 @@ const safeUrl = (u) => /^https:\/\/[^\s]+$/i.test(String(u || '')) ? u : '#';
 const RES = (location.protocol === 'https:' ? location.origin : 'https://www.himaayahschools.com') + '/resources/';
 const GUIDE = (slug, Title, Subject, Description, Added) => ({ Title, Author: 'Himaayah Schools', Type: 'PDF', Subject, Level: 'All', Url: RES + slug + '.pdf', Description, Added, forMe: true, guide: true });
 const GUIDES = [
+  GUIDE('money-smart-muslim-teens', 'Money Smart Muslim Teens', 'Personal development', 'Money habits for Muslim teens: earning ḥalāl, spending, saving, charity, avoiding ribā and betting, and a monthly budget.', '2026-10-27'),
+  GUIDE('friends-and-peer-pressure', 'Friends and Peer Pressure', 'Personal development', 'Choosing good friends, being one, saying no to peer pressure, online pressure, and practice scenarios.', '2026-10-27'),
+  GUIDE('design-with-canva', 'Design with Canva', 'Graphic design', 'Graphic design with Canva: six principles, colour and fonts, a first flyer step by step, social media sizes and a portfolio.', '2026-10-27'),
+  GUIDE('your-first-cv-and-interview', 'Your First CV and Interview', 'Careers', 'A one-page CV template, writing with little experience, a cover letter, interview preparation and the STAR method.', '2026-10-27'),
+  GUIDE('freelancing-first-steps', 'Freelancing First Steps', 'Careers', 'Starting as a freelancer: choosing a skill, a portfolio, first clients, pricing, contracts, safe payment and scams to avoid.', '2026-10-27'),
+  GUIDE('jamb-use-of-english', 'JAMB Use of English', 'Exam preparation', 'UTME Use of English: comprehension, lexis and structure, oral English, worked examples, an 8-week plan and a practice test.', '2026-10-27'),
+  GUIDE('jamb-mathematics', 'JAMB Mathematics', 'Exam preparation', 'UTME Mathematics: the syllabus, a formula sheet, worked examples, traps, an 8-week plan and a practice test.', '2026-10-27'),
+  GUIDE('jamb-government', 'JAMB Government', 'Exam preparation', 'UTME Government: concepts, thinkers, constitutions, Nigerian history, dates, an 8-week plan and a practice test.', '2026-10-27'),
+  GUIDE('jamb-economics', 'JAMB Economics', 'Exam preparation', 'UTME Economics: the syllabus, formulas, worked examples, traps, an 8-week plan and a practice test.', '2026-10-27'),
+  GUIDE('jamb-literature-in-english', 'JAMB Literature in English', 'Exam preparation', 'UTME Literature in English: literary terms, drama, prose and poetry, sample questions, an 8-week plan and a practice test.', '2026-10-27'),
+  GUIDE('jamb-commerce', 'JAMB Commerce', 'Exam preparation', 'UTME Commerce: documents of trade, insurance, business units, calculations, an 8-week plan and a practice test.', '2026-10-27'),
+  GUIDE('jamb-islamic-studies', 'JAMB Islamic Studies', 'Exam preparation', 'UTME Islamic Studies: Qur’an, Ḥadīth, tawḥīd, fiqh, sīrah and Islām in West Africa, an 8-week plan and a practice test.', '2026-10-27'),
+  GUIDE('post-utme-and-choosing-a-course', 'Post-UTME and Choosing a Course', 'Exam preparation', 'The road to admission: choosing a course, subject combinations, O-Level rules, cut-offs, Post-UTME, JAMB CAPS and scams.', '2026-10-27'),
   GUIDE('my-ramadan-planner', 'My Ramaḍān Planner', 'Adhkar', 'A printable Ramaḍān planner: goals, a khatm plan, a daily tracker, reflection pages, the last ten nights and ʿĪd.', '2026-10-27'),
   GUIDE('prayer-tracker-and-khatm-planner', 'Prayer Tracker and Khatm Planner', 'Adhkar', 'Printable prayer trackers for adults and children, a qaḍāʾ log, khatm plans and a tracker for the thirty ajzāʾ.', '2026-10-27'),
   GUIDE('the-forty-hadith', 'The Forty Ḥadīth of an-Nawawī', 'Hadith', 'All 42 ḥadīth of al-Arbaʿīn an-Nawawiyyah in Arabic, with translation, source, lessons and a memorisation tracker.', '2026-10-27'),

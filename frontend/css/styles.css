@@ -4440,7 +4440,16 @@ body.acx-noscroll { overflow: hidden; }
 .site .mg-card span { font-weight: 700; font-size: 14.5px; line-height: 1.3; }
 .site .mg-card small { color: var(--muted); font-size: 12.5px; }
 .site .mg-more { margin-top: clamp(24px, 3vw, 36px); }
-@media (max-width: 480px) { .site .mg-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.site .mg-card span { font-family: Geist, Inter, system-ui, 'Noto Naskh Arabic', 'Amiri', sans-serif; }
+/* phones and small tablets: one swipeable row per subject, with the next card peeking in */
+@media (max-width: 720px) {
+  .site .mg-grid { display: grid; grid-auto-flow: column; grid-template-columns: none; grid-auto-columns: clamp(118px, 36vw, 150px); gap: 12px; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scroll-padding-inline: 4px; padding: 4px 4px 14px; margin: 0 -4px; scrollbar-width: thin; -webkit-overflow-scrolling: touch; }
+  .site .mg-card { scroll-snap-align: start; padding: 10px 10px 12px; border-radius: 16px; gap: 6px; }
+  .site .mg-card:hover { transform: none; }
+  .site .mg-card span { font-size: 13.5px; }
+  .site .mg-card small { font-size: 12px; }
+  .site .mg-group { margin: 22px 0 10px; }
+}
 /* small strip on madrasah.html / academy.html */
 .site .res-strip { display: grid; grid-template-columns: 120px minmax(0, 1fr) auto; gap: clamp(16px, 3vw, 32px); align-items: center; background: #fff; border-radius: 24px; box-shadow: var(--shadow); padding: clamp(16px, 2.6vw, 24px) clamp(18px, 3vw, 32px); }
 .site .res-strip img { width: 100%; height: auto; border-radius: 10px; box-shadow: 0 12px 26px -14px rgba(6,47,77,.5); display: block; }
