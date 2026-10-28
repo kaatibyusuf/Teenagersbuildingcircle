@@ -341,6 +341,11 @@
   const requestedPlanName = PLAN_SLUGS[urlParams.get('plan')];
   const planProgramme = requestedPlanName ? PROGRAMMES.find((p) => p.plans.some((pl) => pl.name === requestedPlanName)) : null;
   const linkedPlan = planProgramme ? planProgramme.plans.find((pl) => pl.name === requestedPlanName) : null;
+  // Private invite link for current students of a closed plan (?plan=one-year&invite=CODE):
+  // the plan opens for this visit only. The server checks the code before saving or charging.
+  const INVITE = (urlParams.get('invite') || '').replace(/[^A-Za-z0-9-]/g, '').toUpperCase().slice(0, 30);
+  const invitedPlan = INVITE && linkedPlan && linkedPlan.closed ? linkedPlan : null;
+  if (invitedPlan) invitedPlan.closed = false;
   // A link to a closed plan opens the programme with nothing selected
   const initialPlan = linkedPlan && !linkedPlan.closed ? linkedPlan : null;
   const initialProgrammeId = planProgramme
@@ -491,7 +496,9 @@
     if (programme.plans.some((pl) => pl.closed)) {
       const note = document.createElement('p');
       note.className = 'plan-closed-note';
-      note.innerHTML = 'Group and one-year Madrasah classes are closed for now. Private (one-on-one) classes are open. <a class="wl-inline" href="waitlist" target="_blank" rel="noopener">Join the waitlist</a> for a group place.';
+      note.innerHTML = invitedPlan && programme.plans.includes(invitedPlan)
+        ? 'Welcome back. Your invite link has opened <strong>' + invitedPlan.name.replace(/^.*\u2014 /, '') + '</strong> for you. Fill in the form as a new student and choose how to pay.'
+        : 'Group and one-year Madrasah classes are closed for now. Private (one-on-one) classes are open. <a class="wl-inline" href="waitlist" target="_blank" rel="noopener">Join the waitlist</a> for a group place.';
       planOptions.appendChild(note);
     }
     programme.plans.forEach((plan) => {
@@ -641,6 +648,7 @@
       studentEmail: s.studentEmail || '', website: s.website || '',
       referral: s.referral || '',
       payMethod: method === 'card' ? 'Card' : 'Bank transfer',
+      invite: invitedPlan && state.plan === invitedPlan ? INVITE : '',
     };
     const status = document.getElementById('enrolStatus');
     return fetch(API_URL, {
@@ -719,7 +727,7 @@
     try {
       const r = await fetch('/api/checkout', {
         method: 'POST', headers: { 'Content-Type': 'application/json' }, signal: ctl.signal,
-        body: JSON.stringify({ ref: state.ref, plan: state.plan.name, email: s.studentEmail || s.kinEmail, name: s.kinName, phone: s.kinPhone, studentName: s.studentName }),
+        body: JSON.stringify({ ref: state.ref, plan: state.plan.name, email: s.studentEmail || s.kinEmail, name: s.kinName, phone: s.kinPhone, studentName: s.studentName, invite: invitedPlan && state.plan === invitedPlan ? INVITE : '' }),
       });
       const j = await r.json().catch(() => null);
       if (j && j.ok && j.url) { window.location.href = j.url; return; }
