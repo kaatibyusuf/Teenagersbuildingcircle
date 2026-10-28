@@ -9,9 +9,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600;700&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/styles.css?v=20261028b">
 <script src="js/auth-guard.js"></script>
 <script src="js/i18n.js"></script>
+<script src="js/surahs.js"></script>
 <script src="js/chat.js" defer></script>
 <!-- Vercel Analytics: counts visits once enabled in the Vercel dashboard -->
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
@@ -71,8 +72,35 @@ function demo() {
       { AssignmentID: 'A2', Title: 'Seerah questions', Subject: 'Seerah', Instructions: 'Answer questions 1 to 5 from the handout.', Assigned: ymd(-7), Due: ymd(-1), Link: '', MaxScore: 10, Status: 'Overdue', Submission: null },
       { AssignmentID: 'A3', Title: 'Aqeedah worksheet', Subject: 'Tawheed', Instructions: 'Complete the worksheet and submit a photo link.', Assigned: ymd(-6), Due: ymd(3), Link: '', MaxScore: 20, Status: 'Submitted', Submission: { Submitted: day(-1, 20), Note: 'Done, Alhamdulillah.', Link: '', Score: '', Feedback: '', Late: false } },
       { AssignmentID: 'A4', Title: 'Fiqh of wudu', Subject: 'Fiqh', Instructions: 'Write the obligatory acts of wudu.', Assigned: ymd(-14), Due: ymd(-9), Link: '', MaxScore: 20, Status: 'Marked', Submission: { Submitted: day(-10, 18), Note: 'My answers are attached.', Link: '', Score: 17, Feedback: 'Good work. Revise the order of the acts.', Late: false } }],
-    payments: [{Date:ymd(-26),Amount:35000,Months:1,Reference:'TRF-10421'},{Date:ymd(-56),Amount:35000,Months:1,Reference:'TRF-09877'}] };
+    payments: [{Date:ymd(-26),Amount:35000,Months:1,Reference:'TRF-10421'},{Date:ymd(-56),Amount:35000,Months:1,Reference:'TRF-09877'}],
+    recordings: { enabled: true, maxSeconds: 1200, maxMB: 15, items: [
+      { RecID: 'R-DEMO2', Submitted: day(-1, 19), Type: 'New lesson', Surah: 'Al-Baqarah', FromAyah: 142, ToAyah: 152, Portion: 'Al-Baqarah 142\u2013152', Note: '', Seconds: 214, Status: 'Waiting', Memorisation: null, Tajwid: null, Fluency: null, Total: null, Result: '', Feedback: '' },
+      { RecID: 'R-DEMO1', Submitted: day(-4, 18), Type: 'Revision', Surah: 'Al-Mulk', FromAyah: 1, ToAyah: 30, Portion: 'Al-Mulk 1\u201330', Note: 'I was unsure in ayah 16.', Seconds: 402, Status: 'Marked', Memorisation: 9, Tajwid: 7, Fluency: 4, Total: { Score: 20, OutOf: 25 }, Result: 'Pass', Feedback: 'Strong memorisation. Lengthen the madd in ayah 16, and slow down a little at the end.' }] } };
   return JSON.parse(JSON.stringify(demoData));
+}
+/* Demo recordings: audio stays in this browser only */
+const demoAudio = {};
+function demoTone() {   // one second of a soft tone, so "Listen" works on the sample recordings
+  const n = 8000, buf = new ArrayBuffer(44 + n * 2), v = new DataView(buf), w = (o, t) => [...t].forEach((c, i) => v.setUint8(o + i, c.charCodeAt(0)));
+  w(0, 'RIFF'); v.setUint32(4, 36 + n * 2, true); w(8, 'WAVEfmt '); v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 1, true); v.setUint32(24, 8000, true); v.setUint32(28, 16000, true); v.setUint16(32, 2, true); v.setUint16(34, 16, true); w(36, 'data'); v.setUint32(40, n * 2, true);
+  for (let i = 0; i < n; i++) v.setInt16(44 + i * 2, Math.sin(i / 8000 * 2 * Math.PI * 330) * 4000 * Math.min(1, (n - i) / 2000), true);
+  let b = ''; new Uint8Array(buf).forEach((x) => { b += String.fromCharCode(x); }); return btoa(b);
+}
+function demoRec(action, p) {
+  const d = demo(), R = d.recordings;
+  if (action === 'rec_audio') return demoAudio[p.recId] ? { ok: true, mime: demoAudio[p.recId].mime, audio: demoAudio[p.recId].audio } : { ok: true, mime: 'audio/wav', audio: demoTone() };
+  if (action === 'rec_withdraw') {
+    const x = R.items.find((i) => i.RecID === p.recId);
+    if (!x) return { ok: false, error: 'Recording not found.' };
+    if (x.Status === 'Marked') return { ok: false, error: 'This recording has already been marked.' };
+    R.items = R.items.filter((i) => i !== x); demoData = d; return demo();
+  }
+  if (!p.surah) return { ok: false, error: 'Choose the surah.' };
+  if (R.items.filter((i) => i.Status === 'Waiting').length >= 5) return { ok: false, error: 'You have 5 recordings waiting for your teacher. Please wait for them to be marked.' };
+  const id = 'R-' + Math.random().toString(36).slice(2, 8).toUpperCase(), portion = p.surah + (p.fromAyah ? ' ' + p.fromAyah + (p.toAyah && p.toAyah !== p.fromAyah ? '\u2013' + p.toAyah : '') : '');
+  demoAudio[id] = { mime: p.mime || 'audio/webm', audio: p.audio };
+  R.items.unshift({ RecID: id, Submitted: new Date().toISOString(), Type: p.type, Surah: p.surah, FromAyah: p.fromAyah || null, ToAyah: p.toAyah || null, Portion: portion, Note: p.note || '', Seconds: p.seconds || 0, Status: 'Waiting', Memorisation: null, Tajwid: null, Fluency: null, Total: null, Result: '', Feedback: '' });
+  demoData = d; return demo();
 }
 function demoSubmit(p) {
   const d = demo(), a = d.assignments.find((x) => x.AssignmentID === p.assignmentId);
@@ -87,6 +115,7 @@ async function api(id, code, action, extra) {
     await new Promise((r) => setTimeout(r, 400));
     if (id.toUpperCase() !== 'DEMO' || code !== 'demo') return { ok: false, error: 'Wrong ID or access code.' };
     if (action === 'password') return String(extra.newCode || '').length < 8 ? { ok: false, error: 'Your new code must be 8 to 40 characters.' } : demo();
+    if (/^rec_/.test(action || '')) return demoRec(action, extra || {});
     return action === 'submit' ? demoSubmit(extra) : demo();
   }
   const r = await fetch(API_URL, { method: 'POST', body: JSON.stringify(Object.assign({ action: action || 'login', id, code }, extra || {})) });
@@ -165,7 +194,145 @@ function ttCard(d) {
     <div class="tt-week">${days.map((x) => `<div class="${x.day === today ? 'today' : ''}"><h3>${x.day}${x.day === today ? ' · Today' : ''}</h3>${x.c.map((c) => `<p><b>${esc(c.Subject)}</b><span dir="ltr">${tt12(c.Start)}${c.End ? '–' + tt12(c.End) : ''}</span></p>${safeUrl(c.Link) ? `<a href="${esc(c.Link)}" target="_blank" rel="noopener">Join</a>` : ''}`).join('')}</div>`).join('')}</div>
     <p class="sub" style="margin-top:14px"><button class="btn btn-line" type="button" id="ttIcsBtn">Add to my calendar</button></p></article>`;
 }
+/* ===== Recite to your teacher (Hifdh, One-Year Hifdh and Muraajah) =====
+   The recorder keeps its state here, outside render(), so a re-render never loses a recording. */
+const REC = { form: { type: 'New lesson', surah: '', from: '', to: '', note: '' }, blob: null, url: '', secs: 0, mime: '', ext: '', fileName: '', mr: null, stream: null, t0: 0, tick: null, sending: false, playing: {} };
+const REC_TYPES = ['New lesson', 'Revision', 'Test'];
+const mmss = (n) => Math.floor(n / 60) + ':' + String(Math.floor(n % 60)).padStart(2, '0');
+const recOK = () => !!(window.MediaRecorder && navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
+function recPickMime() {
+  const c = ['audio/webm;codecs=opus', 'audio/ogg;codecs=opus', 'audio/mp4', 'audio/webm'];
+  for (const m of c) { try { if (MediaRecorder.isTypeSupported(m)) return m; } catch (e) {} }
+  return '';
+}
+const recExt = (mime) => /ogg/.test(mime) ? 'ogg' : /mp4|m4a|aac/.test(mime) ? 'm4a' : /mpeg|mp3/.test(mime) ? 'mp3' : /wav/.test(mime) ? 'wav' : 'webm';
+function recCard(d) {
+  const R = d.recordings; if (!R || !R.enabled) return '';
+  const f = REC.form, sur = window.SURAHS || [], cur = sur.find((x) => x[0] === f.surah), max = cur ? cur[2] : 286;
+  const items = R.items || [], waiting = items.filter((x) => x.Status === 'Waiting').length;
+  const scoreLine = (x) => ['Memorisation', 'Tajwid', 'Fluency'].filter((k) => x[k] !== null && x[k] !== undefined).map((k) => `<span>${k === 'Tajwid' ? 'Tajwīd' : k} <b>${esc(x[k])}/${k === 'Fluency' ? 5 : 10}</b></span>`).join('');
+  return `<article class="c w12" id="recite" style="--i:3"><h2>Recite to your teacher${waiting ? ` <span class="pill st-sub" style="font-size:12px;vertical-align:middle">${waiting} waiting</span>` : ''}</h2>
+    <p class="sub">Record your new lesson or revision, or upload a voice note. Your teacher listens, gives you a score and tells you what to work on.</p>
+    <form class="recf" id="recForm" novalidate>
+      <div class="rec-types" role="radiogroup" aria-label="What are you reciting?">${REC_TYPES.map((t) => `<label><input type="radio" name="rtype" value="${t}"${f.type === t ? ' checked' : ''}><span>${t}</span></label>`).join('')}</div>
+      <div class="rec-row">
+        <div><label for="rSurah">Surah</label><select id="rSurah" name="surah"><option value="">Choose a surah</option>${sur.map((s, i) => `<option value="${esc(s[0])}"${f.surah === s[0] ? ' selected' : ''}>${i + 1}. ${esc(s[0])} · ${esc(s[1])}</option>`).join('')}</select></div>
+        <div><label for="rFrom">From ayah</label><input id="rFrom" name="from" type="number" inputmode="numeric" min="1" max="${max}" value="${esc(f.from)}" placeholder="1"></div>
+        <div><label for="rTo">To ayah</label><input id="rTo" name="to" type="number" inputmode="numeric" min="1" max="${max}" value="${esc(f.to)}" placeholder="${max}"></div>
+      </div>
+      <div class="rec-box" id="recBox"></div>
+      <label for="rNote">Note to your teacher (optional)</label>
+      <textarea id="rNote" name="note" rows="2" maxlength="500" placeholder="For example: I was not sure about ayah 5.">${esc(f.note)}</textarea>
+      <div class="msg" id="recMsg" role="status"></div>
+      <button class="btn btn-ink" type="submit" id="recSend"${REC.blob && !REC.sending ? '' : ' disabled'}>Send to my teacher</button>
+    </form>
+    <h3 class="rec-h">My recitations</h3>
+    ${items.length ? `<div class="rec-list">${items.map((x) => `<div class="rec-item" data-id="${esc(x.RecID)}">
+      <div class="rec-top"><div><b>${esc(x.Portion)}</b><small>${esc(x.Type)} · ${fdate(x.Submitted, true)}${x.Seconds ? ' · ' + mmss(x.Seconds) : ''}</small></div>
+        <span class="pill ${x.Status === 'Waiting' ? 'st-sub' : x.Result === 'Pass' ? 'st-mark' : 'st-over'}">${x.Status === 'Waiting' ? 'Waiting for your teacher' : esc(x.Result)}${x.Total ? ' · ' + esc(x.Total.Score) + '/' + esc(x.Total.OutOf) : ''}</span></div>
+      ${x.Status === 'Marked' ? `<div class="mark">${scoreLine(x) ? `<div class="rec-scores">${scoreLine(x)}</div>` : ''}${x.Feedback ? `<p>${esc(x.Feedback)}</p>` : ''}</div>` : ''}
+      ${x.Note ? `<p class="sub">Your note: ${esc(x.Note)}</p>` : ''}
+      <div class="rec-acts"><span class="rec-play" data-id="${esc(x.RecID)}">${REC.playing[x.RecID] ? `<audio controls preload="auto" src="${REC.playing[x.RecID]}"></audio>` : `<button type="button" class="btn btn-line btn-sm" data-rec="play" data-id="${esc(x.RecID)}">Listen</button>`}</span>
+        ${x.Status === 'Waiting' ? `<button type="button" class="btn btn-line btn-sm" data-rec="withdraw" data-id="${esc(x.RecID)}">Withdraw</button>` : ''}</div>
+    </div>`).join('')}</div>` : '<p class="empty">Your recitations will appear here with your teacher’s marks.</p>'}
+  </article>`;
+}
+function recBoxHtml() {
+  const R = (window.__lastData || {}).recordings || {}, maxMin = Math.round((R.maxSeconds || 1200) / 60);
+  if (REC.mr) return `<div class="rec-live"><span class="rec-dot" aria-hidden="true"></span><b id="recTime">${mmss((Date.now() - REC.t0) / 1000)}</b><span class="sub">Recording… up to ${maxMin} minutes</span>
+    <button type="button" class="btn btn-ink" data-rec="stop">Stop</button></div>`;
+  if (REC.blob) return `<div class="rec-ready"><audio controls src="${REC.url}"></audio>
+    <div class="sub">${REC.fileName ? esc(REC.fileName) + ' · ' : ''}${REC.secs ? mmss(REC.secs) + ' · ' : ''}${(REC.blob.size / 1048576).toFixed(1)} MB</div>
+    <button type="button" class="btn btn-line btn-sm" data-rec="discard">Remove and record again</button></div>`;
+  return `<div class="rec-start">${recOK() ? `<button type="button" class="btn btn-ink rec-btn" data-rec="start"><span class="rec-dot" aria-hidden="true"></span> Start recording</button>` : '<p class="sub">This browser cannot record. Upload a voice note instead.</p>'}
+    <label class="btn btn-line rec-up">Upload a voice note<input type="file" id="recFile" accept="audio/*,.opus,.ogg,.m4a,.mp3,.aac,.wav,.amr,.webm" hidden></label>
+    <p class="sub rec-tip">Find a quiet place and hold the phone about a hand’s length away. Up to ${maxMin} minutes.</p></div>`;
+}
+function recMount() { const b = $('recBox'); if (b) b.innerHTML = recBoxHtml(); const s = $('recSend'); if (s) s.disabled = !REC.blob || REC.sending || !!REC.mr; }
+function recSay(t, good) { const m = $('recMsg'); if (m) { m.textContent = t; m.className = 'msg' + (t ? (good ? ' good' : ' bad') : ''); } }
+function recSetBlob(blob, secs, name) {
+  if (REC.url) URL.revokeObjectURL(REC.url);
+  REC.blob = blob; REC.url = blob ? URL.createObjectURL(blob) : ''; REC.secs = secs || 0; REC.fileName = name || '';
+  REC.mime = blob ? (blob.type || '') : ''; REC.ext = name && name.includes('.') ? name.split('.').pop().toLowerCase() : recExt(REC.mime);
+  recMount();
+}
+async function recStart() {
+  recSay('');
+  let stream;
+  try { stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true } }); }
+  catch (e) { return recSay('Please allow the microphone, then try again. You can also upload a voice note instead.'); }
+  const mime = recPickMime(), chunks = [];
+  let mr;
+  try { mr = new MediaRecorder(stream, mime ? { mimeType: mime, audioBitsPerSecond: 48000 } : { audioBitsPerSecond: 48000 }); }
+  catch (e) { stream.getTracks().forEach((t) => t.stop()); return recSay('This browser cannot record. Upload a voice note instead.'); }
+  const maxS = ((window.__lastData || {}).recordings || {}).maxSeconds || 1200;
+  mr.ondataavailable = (e) => { if (e.data && e.data.size) chunks.push(e.data); };
+  mr.onstop = () => {
+    stream.getTracks().forEach((t) => t.stop()); clearInterval(REC.tick);
+    const secs = Math.round((Date.now() - REC.t0) / 1000); REC.mr = null; REC.stream = null;
+    recSetBlob(new Blob(chunks, { type: (mr.mimeType || mime || 'audio/webm').split(';')[0] }), secs, '');
+  };
+  REC.mr = mr; REC.stream = stream; REC.t0 = Date.now(); mr.start(1000);
+  REC.tick = setInterval(() => { const s = (Date.now() - REC.t0) / 1000, el = $('recTime'); if (el) el.textContent = mmss(s); if (s >= maxS && REC.mr) REC.mr.stop(); }, 500);
+  recMount();
+}
+function recFile(input) {
+  const f = input.files && input.files[0]; if (!f) return;
+  const maxMB = ((window.__lastData || {}).recordings || {}).maxMB || 15;
+  if (f.size > maxMB * 1048576) return recSay('That file is too large. The limit is ' + maxMB + ' MB.');
+  if (!/^audio\//.test(f.type) && !/\.(opus|ogg|oga|m4a|mp3|aac|wav|amr|webm|3gp)$/i.test(f.name)) return recSay('Please choose an audio file, such as a voice note.');
+  recSay('');
+  const a = new Audio(); a.preload = 'metadata';
+  const done = (secs) => recSetBlob(f, isFinite(secs) ? Math.round(secs) : 0, f.name);
+  a.onloadedmetadata = () => done(a.duration); a.onerror = () => done(0);
+  a.src = URL.createObjectURL(f);
+}
+const toB64 = (blob) => new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(String(r.result).split(',')[1] || ''); r.onerror = rej; r.readAsDataURL(blob); });
+async function recSend() {
+  const f = REC.form;
+  if (!f.surah) return recSay('Choose the surah you recited.');
+  if (f.from && f.to && Number(f.to) < Number(f.from)) return recSay('The last ayah cannot come before the first.');
+  if (!REC.blob) return recSay('Record your recitation or upload a voice note first.');
+  let saved = null; try { saved = JSON.parse(sessionStorage.getItem('hs') || 'null'); } catch (x) {}
+  if (!saved) return recSay('Please log in again.');
+  REC.sending = true; recMount(); const btn = $('recSend'); if (btn) btn.textContent = 'Sending…';
+  recSay('Sending ' + (REC.blob.size / 1048576).toFixed(1) + ' MB. Please keep this page open.', true);
+  try {
+    const audio = await toB64(REC.blob);
+    const d = await api(saved.id, saved.code, 'rec_submit', { type: f.type, surah: f.surah, fromAyah: f.from, toAyah: f.to, note: f.note, audio, mime: REC.mime, ext: REC.ext, seconds: REC.secs });
+    REC.sending = false;
+    if (d.ok) {
+      recSetBlob(null); REC.form = { type: f.type, surah: '', from: '', to: '', note: '' };
+      render(d); recSay('Sent. Your teacher will listen and mark it, in shāʾa Allāh.', true);
+      return;
+    }
+    recMount(); recSay(d.error || 'Could not send. Please try again.');
+  } catch (e) { REC.sending = false; recMount(); recSay('Could not reach the school server. Check your internet and try again.'); }
+  const b2 = $('recSend'); if (b2) b2.textContent = 'Send to my teacher';
+}
+async function recPlay(id, btn) {
+  let saved = null; try { saved = JSON.parse(sessionStorage.getItem('hs') || 'null'); } catch (x) {}
+  if (!saved) return;
+  btn.disabled = true; btn.textContent = 'Loading…';
+  try {
+    const d = await api(saved.id, saved.code, 'rec_audio', { recId: id });
+    if (!d.ok) { btn.disabled = false; btn.textContent = 'Listen'; return alert(d.error || 'Could not open the recording.'); }
+    const bin = atob(d.audio), u8 = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) u8[i] = bin.charCodeAt(i);
+    REC.playing[id] = URL.createObjectURL(new Blob([u8], { type: d.mime }));
+    const slot = btn.closest('.rec-play'); slot.innerHTML = `<audio controls autoplay src="${REC.playing[id]}"></audio>`;
+  } catch (e) { btn.disabled = false; btn.textContent = 'Listen'; }
+}
+async function recWithdraw(id, btn) {
+  if (!confirm('Withdraw this recording? Your teacher will no longer see it.')) return;
+  let saved = null; try { saved = JSON.parse(sessionStorage.getItem('hs') || 'null'); } catch (x) {}
+  if (!saved) return;
+  btn.disabled = true;
+  try { const d = await api(saved.id, saved.code, 'rec_withdraw', { recId: id }); if (d.ok) render(d); else { alert(d.error || 'Could not withdraw.'); btn.disabled = false; } }
+  catch (e) { btn.disabled = false; }
+}
+
 function render(d) {
+  window.__lastData = d;
   const openIds = [...document.querySelectorAll('.asg[open]')].map((x) => x.dataset.id);
   const s = d.student, first = String(s.Name).split(' ')[0];
   const att = s.AttendanceTotal ? Math.round(100 * s.AttendancePresent / s.AttendanceTotal) : null;
@@ -204,6 +371,7 @@ function render(d) {
 
     <article class="c w12" id="assign" style="--i:3"><h2>Assignments${todo ? ` <span class="pill st-todo" style="font-size:12px;vertical-align:middle">${todo} to do</span>` : ''}</h2>
       <div class="asgs">${asg.map(assignmentHtml).join('') || '<p class="empty">No assignments yet. Your teacher will post them here.</p>'}</div></article>
+    ${recCard(d)}
 
     <article class="c w8" style="--i:4"><h2>Hifdh tracker</h2>
       <div class="row"><b style="color:var(--deep)">${juz} of 30 juz memorised</b><span>${Math.round(juz / 30 * 100)}%</span></div><div class="bar"><i data-w="${juz / 30 * 100}"></i></div>
@@ -230,6 +398,7 @@ function render(d) {
   </div>
   <p class="foot">${API_URL ? '' : 'Demo mode: this is sample data. '}Your records are updated by your teachers. Questions? Message the Madrasah line.</p>`;
   { const b = document.getElementById('ttIcsBtn'); if (b) b.addEventListener('click', () => ttIcs(d.timetable, s.Level)); }
+  recMount();
   openIds.forEach((id) => { const el = [...document.querySelectorAll('.asg')].find((x) => x.dataset.id === id); if (el) el.open = true; });
   requestAnimationFrame(() => setTimeout(() => {
     document.querySelectorAll('.bar i').forEach((b) => { b.style.width = b.dataset.w + '%'; });
@@ -251,7 +420,32 @@ async function signIn(id, code, silent) {
 }
 $('demoNote').hidden = !!API_URL;
 $('lf').addEventListener('submit', (e) => { e.preventDefault(); const id = $('sid').value.trim(), code = $('scode').value.trim(); if (!id || !code) { $('err').textContent = 'Enter your Student ID and access code.'; return; } signIn(id, code); });
-$('out').addEventListener('click', () => { sessionStorage.removeItem('hs'); $('app').hidden = true; $('app').innerHTML = ''; $('out').hidden = true; $('login').hidden = false; $('scode').value = ''; });
+$('out').addEventListener('click', () => { if (REC.mr) { REC.mr.onstop = null; REC.mr.stop(); REC.stream && REC.stream.getTracks().forEach((t) => t.stop()); REC.mr = null; clearInterval(REC.tick); } recSetBlob(null); REC.playing = {}; REC.form = { type: 'New lesson', surah: '', from: '', to: '', note: '' }; sessionStorage.removeItem('hs'); $('app').hidden = true; $('app').innerHTML = ''; $('out').hidden = true; $('login').hidden = false; $('scode').value = ''; });
+
+/* Recitation recorder events */
+$('app').addEventListener('click', (e) => {
+  const b = e.target.closest('[data-rec]'); if (!b) return;
+  const k = b.dataset.rec;
+  if (k === 'start') recStart();
+  else if (k === 'stop') { if (REC.mr) REC.mr.stop(); }
+  else if (k === 'discard') { recSetBlob(null); recSay(''); }
+  else if (k === 'play') recPlay(b.dataset.id, b);
+  else if (k === 'withdraw') recWithdraw(b.dataset.id, b);
+});
+$('app').addEventListener('change', (e) => {
+  const t = e.target;
+  if (t.id === 'recFile') { recFile(t); t.value = ''; }
+  else if (t.name === 'rtype') REC.form.type = t.value;
+  else if (t.id === 'rSurah') {
+    REC.form.surah = t.value; const s = (window.SURAHS || []).find((x) => x[0] === t.value), max = s ? s[2] : 286;
+    ['rFrom', 'rTo'].forEach((id) => { const el = $(id); if (el) el.max = max; }); const to = $('rTo'); if (to) to.placeholder = max;
+  }
+});
+$('app').addEventListener('input', (e) => {
+  const t = e.target, map = { rFrom: 'from', rTo: 'to', rNote: 'note' };
+  if (map[t.id]) REC.form[map[t.id]] = t.value;
+});
+$('app').addEventListener('submit', (e) => { if (e.target.id === 'recForm') { e.preventDefault(); if (!REC.sending) recSend(); } });
 
 /* Change access code */
 async function changeCode(f) {

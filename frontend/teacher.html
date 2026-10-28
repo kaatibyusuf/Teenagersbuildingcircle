@@ -9,9 +9,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600;700&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/styles.css?v=20261028b">
 <script src="js/auth-guard.js"></script>
 <script src="js/i18n.js"></script>
+<script src="js/surahs.js"></script>
 <!-- Vercel Analytics: counts visits once enabled in the Vercel dashboard -->
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
 <script defer src="/_vercel/insights/script.js"></script>
@@ -47,9 +48,9 @@ const fdate = (iso, t) => { const d = new Date(iso); return isNaN(d) ? esc(iso) 
 const ATT = ['Present', 'Late', 'Absent', 'Excused'];
 const HST = ['Memorised', 'Revising', 'In progress', 'Not started'];
 const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-const TABS = [['today', 'Today'], ['students', 'Students'], ['assignments', 'Assignments'], ['results', 'Results'], ['account', 'Account']];
+const TABS = [['today', 'Today'], ['recitations', 'Recitations'], ['students', 'Students'], ['assignments', 'Assignments'], ['results', 'Results'], ['account', 'Account']];
 let D = null;
-const S = { tab: 'today', date: '', marks: {}, sel: {}, openStu: {}, openAsg: {}, q: '' };
+const S = { tab: 'today', date: '', marks: {}, sel: {}, openStu: {}, openAsg: {}, q: '', audio: {}, recShow: 'waiting' };
 
 /* ---------- talking to the school server ---------- */
 const creds = () => { try { return JSON.parse(sessionStorage.getItem('ht') || 'null') || {}; } catch (e) { return {}; } };
@@ -84,6 +85,8 @@ const stCls = { 'To do': 'p-sky', 'Overdue': 'p-red', 'Submitted': 'p-dash', 'Ma
 const opts = (list, cur) => list.map((x) => `<option${x === cur ? ' selected' : ''}>${esc(x)}</option>`).join('');
 const pick = (cls, students, checked) => `<div class="pick">${students.map((s) => `<label><input type="checkbox" class="${cls}" value="${esc(s.StudentID)}"${checked && checked[s.StudentID] ? ' checked' : ''}> ${esc(s.Name)} <span class="sub">${esc(s.Level || '')}</span></label>`).join('')}</div>`;
 const toMark = () => D.assignments.reduce((n, a) => n + a.Rows.filter((r) => r.Status === 'Submitted').length, 0);
+const recWaiting = () => (D.recordings || []).filter((r) => r.Status === 'Waiting');
+const mmss = (n) => Math.floor(n / 60) + ':' + String(Math.floor(n % 60)).padStart(2, '0');
 
 /* ---------- views ---------- */
 function vToday() {
@@ -99,7 +102,7 @@ function vToday() {
     <button class="btn btn-ink" data-act="saveAtt" type="button">Save attendance</button>` : '<p class="empty" style="margin-top:12px">No students are assigned to you yet.</p>'}
   </article>
   <div class="c w4" style="display:grid;gap:16px;align-content:start;padding:0;background:none;box-shadow:none">
-    <article class="c" style="grid-column:auto"><h2>Needs marking</h2>${queue.length ? `<ul class="list">${queue.slice(0, 8).map((q) => `<li><span><b>${esc(q.r.Name)}</b><br><span class="sub">${esc(q.a.Title)}</span></span><button data-act="goMark" data-a="${esc(q.a.AssignmentID)}" type="button">Open</button></li>`).join('')}</ul>` : '<p class="empty">Nothing is waiting for you. Well done.</p>'}</article>
+    <article class="c" style="grid-column:auto"><h2>Needs marking</h2>${recWaiting().length ? `<ul class="list" style="margin-bottom:8px">${recWaiting().slice(0, 5).map((x) => `<li><span><b>${esc(x.Name)}</b><br><span class="sub">Recitation \u00B7 ${esc(x.Portion)}</span></span><button data-act="goRec" data-id="${esc(x.RecID)}" type="button">Listen</button></li>`).join('')}</ul>` : ''}${queue.length ? `<ul class="list">${queue.slice(0, 8).map((q) => `<li><span><b>${esc(q.r.Name)}</b><br><span class="sub">${esc(q.a.Title)}</span></span><button data-act="goMark" data-a="${esc(q.a.AssignmentID)}" type="button">Open</button></li>`).join('')}</ul>` : recWaiting().length ? '' : '<p class="empty">Nothing is waiting for you. Well done.</p>'}</article>
     <article class="c" style="grid-column:auto"><h2>Next class</h2><p class="sub">Set the time and link for several students at once.</p>
       <form class="frm" data-form="class">${pick('cls', D.students, S.sel)}
       <div><label class="fl" for="ncw">Date and time</label><input class="in" type="datetime-local" id="ncw" name="nextClass"></div>
@@ -171,6 +174,40 @@ function vResults() {
   <article class="c w4"><h2>Recent</h2>${rows.length ? `<table><tbody>${rows.map((r) => `<tr><td>${esc(stuName(r.StudentID))}<br><span class="sub">${esc(r.Subject)} · ${fdate(r.Date)}</span></td><td style="text-align:end"><b>${esc(r.Score)}/${esc(r.OutOf)}</b></td></tr>`).join('')}</tbody></table>` : '<p class="empty">No results yet.</p>'}</article></div>`;
 }
 
+function vRecItem(x) {
+  const marked = x.Status === 'Marked', canAdv = x.Type === 'New lesson' && x.Surah;
+  const num = (k, max, label) => `<div><label class="fl" for="${k}-${esc(x.RecID)}">${label} <span class="sub">/${max}</span></label><input class="in" id="${k}-${esc(x.RecID)}" name="${k}" type="number" inputmode="decimal" min="0" max="${max}" step="0.5" value="${x[k.charAt(0).toUpperCase() + k.slice(1)] ?? ''}"></div>`;
+  return `<div class="rq${marked ? ' done' : ''}" data-id="${esc(x.RecID)}">
+    <div class="rq-h"><div><b>${esc(x.Name)} \u00B7 ${esc(x.Portion)}</b><small>${esc(x.Type)} \u00B7 ${fdate(x.Submitted, true)}${x.Seconds ? ' \u00B7 ' + mmss(x.Seconds) : ''}${x.SizeKB ? ' \u00B7 ' + (x.SizeKB / 1024).toFixed(1) + ' MB' : ''}</small></div>
+      <span class="pill ${marked ? (x.Result === 'Pass' ? 'p-ink' : 'p-red') : 'p-dash'}">${marked ? esc(x.Result) + (x.Total ? ' \u00B7 ' + esc(x.Total.Score) + '/' + esc(x.Total.OutOf) : '') : 'Waiting'}</span></div>
+    ${x.Note ? `<p class="rq-note"><b>Student\u2019s note:</b> ${esc(x.Note)}</p>` : ''}
+    <div class="rq-play">${S.audio[x.RecID] ? `<audio controls preload="auto" src="${S.audio[x.RecID]}"></audio>` : `<button type="button" class="btn btn-ink btn-sm" data-act="recPlay" data-id="${esc(x.RecID)}">Listen</button>`}</div>
+    <form class="frm" data-form="recmark" data-id="${esc(x.RecID)}">
+      <div class="rq-scores">${num('memorisation', 10, 'Memorisation')}${num('tajwid', 10, 'Tajw\u012Bd')}${num('fluency', 5, 'Fluency')}</div>
+      <div class="rq-res" role="radiogroup" aria-label="Result">${['Pass', 'Repeat'].map((v) => `<label><input type="radio" name="result-${esc(x.RecID)}" value="${v}"${x.Result === v ? ' checked' : ''}><span>${v}</span></label>`).join('')}</div>
+      <div><label class="fl" for="fb-${esc(x.RecID)}">Comment for the student</label><textarea class="in" id="fb-${esc(x.RecID)}" name="feedback" rows="2" maxlength="1000" placeholder="What went well, and what to work on">${esc(x.Feedback || '')}</textarea></div>
+      ${canAdv && !marked ? `<label class="rq-adv"><input type="checkbox" name="advance" checked> If it is a pass, update their current surah to ${esc(x.Surah)}${x.ToAyah ? ', ayah ' + esc(x.ToAyah) : ''}</label>` : ''}
+      <div class="inline"><button class="btn btn-ink btn-sm" type="submit">${marked ? 'Update mark' : 'Save mark'}</button>${marked ? `<button class="btn btn-line btn-sm" type="button" data-act="recUnmark" data-id="${esc(x.RecID)}">Take the mark off</button>` : ''}</div>
+    </form></div>`;
+}
+function vRecitations() {
+  const all = D.recordings || [], waiting = all.filter((x) => x.Status === 'Waiting'), marked = all.filter((x) => x.Status === 'Marked');
+  const list = S.recShow === 'marked' ? marked : waiting;
+  return `<article class="c w12"><h2>Recitations</h2><p class="sub">Recordings sent by your Hifdh, One-Year Hifdh and Muraajah students. Listen, give a score out of 10 for memorisation and tajw\u012Bd and out of 5 for fluency, then choose Pass or Repeat. Any score can be left empty.</p>
+    <div class="inline" style="margin:10px 0 4px"><button type="button" class="btn btn-sm ${S.recShow !== 'marked' ? 'btn-ink' : 'btn-line'}" data-act="recShow" data-v="waiting">Waiting (${waiting.length})</button><button type="button" class="btn btn-sm ${S.recShow === 'marked' ? 'btn-ink' : 'btn-line'}" data-act="recShow" data-v="marked">Marked (${marked.length})</button></div>
+    ${list.map(vRecItem).join('') || `<p class="empty" style="margin-top:12px">${S.recShow === 'marked' ? 'No marked recitations yet.' : 'No recitations are waiting. Students send them from their dashboard.'}</p>`}</article>`;
+}
+async function recPlay(id, btn) {
+  btn.disabled = true; btn.textContent = 'Loading\u2026';
+  try {
+    const d = await api('teacher_rec_audio', { recId: id });
+    if (!d.ok) { btn.disabled = false; btn.textContent = 'Listen'; return toast(d.error || 'Could not open the recording.', true); }
+    const bin = atob(d.audio), u8 = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) u8[i] = bin.charCodeAt(i);
+    S.audio[id] = URL.createObjectURL(new Blob([u8], { type: d.mime }));
+    btn.closest('.rq-play').innerHTML = `<audio controls autoplay src="${S.audio[id]}"></audio>`;
+  } catch (e) { btn.disabled = false; btn.textContent = 'Listen'; toast('Could not reach the school server. Please try again.', true); }
+}
+
 function vAccount() {
   return `<article class="c w12" style="max-width:560px"><h2>Your account</h2><p class="sub">${esc(D.teacher.Name)} · ${esc(D.teacher.TeacherID)} · ${esc(D.teacher.Role)}</p>
   <form class="frm" data-form="password"><div><label class="fl" for="np">New access code (8 characters or more)</label><input class="in" id="np" name="newCode" type="password" autocomplete="new-password" minlength="8" maxlength="40"></div>
@@ -178,12 +215,12 @@ function vAccount() {
   <button class="btn btn-ink" type="submit">Change my code</button></form></article>`;
 }
 
-const VIEWS = { today: vToday, students: vStudents, assignments: vAssignments, results: vResults, account: vAccount };
+const VIEWS = { today: vToday, recitations: vRecitations, students: vStudents, assignments: vAssignments, results: vResults, account: vAccount };
 function render() {
   const t = D.teacher, n = toMark();
   $('app').innerHTML = `<section class="greet"><div><small>Assalaamu alaykum</small><h1>${esc(t.Name)}</h1>
-    <div class="chips"><span>${esc(t.Role)}</span><span>${D.students.length} student${D.students.length === 1 ? '' : 's'}</span><span>${n} to mark</span></div></div></section>
-  <nav class="tabs" role="tablist" aria-label="Sections">${TABS.map(([k, l]) => `<button role="tab" type="button" data-act="tab" data-t="${k}" aria-selected="${S.tab === k}">${l}${k === 'assignments' && n ? ' (' + n + ')' : ''}</button>`).join('')}</nav>
+    <div class="chips"><span>${esc(t.Role)}</span><span>${D.students.length} student${D.students.length === 1 ? '' : 's'}</span><span>${n + recWaiting().length} to mark</span></div></div></section>
+  <nav class="tabs" role="tablist" aria-label="Sections">${TABS.map(([k, l]) => `<button role="tab" type="button" data-act="tab" data-t="${k}" aria-selected="${S.tab === k}">${l}${k === 'assignments' && n ? ' (' + n + ')' : ''}${k === 'recitations' && recWaiting().length ? ' (' + recWaiting().length + ')' : ''}</button>`).join('')}</nav>
   <div id="view">${VIEWS[S.tab]()}</div>
   <p class="foot">${API_URL ? '' : 'Demo mode: sample data, nothing is saved. '}You only see the students assigned to you.</p>`;
   applyFilter();
@@ -210,6 +247,10 @@ app.addEventListener('click', async (e) => {
   else if (a === 'goMark') { S.tab = 'assignments'; S.openAsg[b.dataset.a] = true; render(); const el = [...document.querySelectorAll('.asg')].find((x) => x.dataset.id === b.dataset.a); if (el) el.scrollIntoView(); }
   else if (a === 'hrm') { if (confirm('Remove ' + b.dataset.surah + '?')) act('teacher_hifdh', { studentId: b.dataset.id, surah: b.dataset.surah, remove: true }, 'Surah removed.'); }
   else if (a === 'archive') act('teacher_assignment_active', { assignmentId: b.dataset.a, active: b.dataset.v === '1' }, b.dataset.v === '1' ? 'Assignment restored.' : 'Assignment archived.', b);
+  else if (a === 'goRec') { S.tab = 'recitations'; S.recShow = 'waiting'; render(); window.scrollTo(0, 0); const el = [...document.querySelectorAll('.rq')].find((x) => x.dataset.id === b.dataset.id); if (el) el.scrollIntoView({ block: 'start' }); }
+  else if (a === 'recShow') { S.recShow = b.dataset.v; render(); }
+  else if (a === 'recPlay') recPlay(b.dataset.id, b);
+  else if (a === 'recUnmark') { if (confirm('Take the mark off this recitation? The student will see it as waiting again.')) act('teacher_rec_mark', { recId: b.dataset.id, result: '' }, 'Mark taken off.', b); }
   else if (a === 'unmark') act('teacher_mark', { assignmentId: b.dataset.a, studentId: b.dataset.s, score: '', feedback: '' }, 'Mark taken off.', b);
 });
 app.addEventListener('change', (e) => {
@@ -251,6 +292,13 @@ app.addEventListener('submit', (e) => {
     if (scope === 'students' && !checked('asgstu').length) return toast('Choose at least one student.', true);
     act('teacher_assignment', { title: v('title'), subject: v('subject'), instructions: v('instructions'), due: v('due'), maxScore: v('maxScore'), link: v('link'), scope, studentIds: checked('asgstu'), level: v('level') }, 'Assignment posted.', btn);
   }
+  else if (k === 'recmark') {
+    const res = f.querySelector('input[type=radio]:checked');
+    if (!res) return toast('Choose Pass or Repeat.', true);
+    const lim = { memorisation: 10, tajwid: 10, fluency: 5 };
+    for (const n of Object.keys(lim)) { const x = v(n); if (x !== '' && !(Number(x) >= 0 && Number(x) <= lim[n])) return toast('Scores must be between 0 and ' + lim[n] + '.', true); }
+    act('teacher_rec_mark', { recId: f.dataset.id, result: res.value, memorisation: v('memorisation'), tajwid: v('tajwid'), fluency: v('fluency'), feedback: v('feedback'), advance: !!(f.elements.advance && f.elements.advance.checked) }, 'Mark saved. The student can see it now.', btn);
+  }
   else if (k === 'mark') act('teacher_mark', { assignmentId: f.dataset.a, studentId: f.dataset.s, score: v('score'), feedback: v('feedback') }, 'Mark saved.', btn);
   else if (k === 'password') {
     if (v('newCode').length < 8) return toast('Your new code must be at least 8 characters.', true);
@@ -274,7 +322,7 @@ async function signIn(id, code, silent) {
 }
 $('demoNote').hidden = !!API_URL;
 $('lf').addEventListener('submit', (e) => { e.preventDefault(); const id = $('tid').value.trim(), code = $('tcode').value.trim(); if (!id || !code) { $('err').textContent = 'Enter your Teacher ID and access code.'; return; } signIn(id, code); });
-$('out').addEventListener('click', () => { sessionStorage.removeItem('ht'); D = null; S.tab = 'today'; S.marks = {}; S.sel = {}; app.hidden = true; app.innerHTML = ''; $('out').hidden = true; $('login').hidden = false; $('tcode').value = ''; });
+$('out').addEventListener('click', () => { sessionStorage.removeItem('ht'); D = null; Object.values(S.audio).forEach((u) => URL.revokeObjectURL(u)); S.audio = {}; S.recShow = 'waiting'; S.tab = 'today'; S.marks = {}; S.sel = {}; app.hidden = true; app.innerHTML = ''; $('out').hidden = true; $('login').hidden = false; $('tcode').value = ''; });
 
 /* ---------- demo mode (only used while API_URL is empty) ---------- */
 let DEMO = null;
@@ -291,6 +339,10 @@ function demoBase() {
     attendance: [{ StudentID: 'HM-0001', Date: isoD(plus(-1)), Status: 'Present' }],
     assignments: [{ AssignmentID: 'A-DEMO1', Title: 'Noon sakinah practice', Subject: 'Tajweed', Instructions: 'Recite Al-Baqarah 1 to 5 and write the rules you applied.', Level: 'All', Audience: 'All', Assigned: isoD(plus(-3)), Due: isoD(plus(2)), Link: '', MaxScore: 20, Active: true, CreatedBy: 'DEMO', Counts: { assigned: 3, submitted: 1, marked: 0 },
       Rows: [{ StudentID: 'HM-0001', Name: 'Amina Yusuf', Status: 'Submitted', Submission: { Submitted: new Date().toISOString(), Note: 'Done. I found three rules.', Link: 'https://example.com/work', Score: '', Feedback: '', Late: false } }, { StudentID: 'HM-0002', Name: 'Bilal Adeyemi', Status: 'To do', Submission: null }, { StudentID: 'HM-0003', Name: 'Khadijah Musa', Status: 'To do', Submission: null }] }],
+    recordings: [
+      { RecID: 'R-DEMO1', StudentID: 'HM-0001', Name: 'Amina Yusuf', Submitted: plus(-1).toISOString(), Type: 'New lesson', Surah: 'Al-Baqarah', FromAyah: 142, ToAyah: 152, Portion: 'Al-Baqarah 142\u2013152', Note: 'I was not sure about ayah 148.', Seconds: 214, SizeKB: 1300, Status: 'Waiting', Memorisation: null, Tajwid: null, Fluency: null, Total: null, Result: '', Feedback: '' },
+      { RecID: 'R-DEMO2', StudentID: 'HM-0003', Name: 'Khadijah Musa', Submitted: plus(-2).toISOString(), Type: 'Revision', Surah: 'Al-Mulk', FromAyah: 1, ToAyah: 30, Portion: 'Al-Mulk 1\u201330', Note: '', Seconds: 402, SizeKB: 2400, Status: 'Waiting', Memorisation: null, Tajwid: null, Fluency: null, Total: null, Result: '', Feedback: '' },
+      { RecID: 'R-DEMO3', StudentID: 'HM-0001', Name: 'Amina Yusuf', Submitted: plus(-5).toISOString(), Type: 'Revision', Surah: 'Yasin', FromAyah: 1, ToAyah: 40, Portion: 'Ya-Sin 1\u201340', Note: '', Seconds: 515, SizeKB: 3100, Status: 'Marked', Memorisation: 9, Tajwid: 8, Fluency: 4, Total: { Score: 21, OutOf: 25 }, Result: 'Pass', Feedback: 'Very good. Watch the ghunnah in ayah 12.' }],
     levels: ['Awwal Ibtidā’iyyah', 'Thālithah Ibtidā’iyyah'] };
 }
 async function demoApi(c, action, p) {
@@ -331,6 +383,22 @@ async function demoApi(c, action, p) {
     if (String(p.score) === '') { r.Status = 'Submitted'; r.Submission.Score = ''; r.Submission.Feedback = p.feedback; }
     else { const n = Number(p.score); if (!(n >= 0) || (a.MaxScore && n > Number(a.MaxScore))) return bad('The score must be between 0 and ' + a.MaxScore + '.'); r.Status = 'Marked'; r.Submission.Score = n; r.Submission.Feedback = p.feedback; }
     a.Counts.marked = a.Rows.filter((x) => x.Status === 'Marked').length;
+  } else if (action === 'teacher_rec_audio') {
+    if (!DEMO.recordings.find((r) => r.RecID === p.recId)) return bad('Recording not found.');
+    const n = 8000, buf = new ArrayBuffer(44 + n * 2), dv = new DataView(buf), w = (o, t) => [...t].forEach((ch, i) => dv.setUint8(o + i, ch.charCodeAt(0)));
+    w(0, 'RIFF'); dv.setUint32(4, 36 + n * 2, true); w(8, 'WAVEfmt '); dv.setUint32(16, 16, true); dv.setUint16(20, 1, true); dv.setUint16(22, 1, true); dv.setUint32(24, 8000, true); dv.setUint32(28, 16000, true); dv.setUint16(32, 2, true); dv.setUint16(34, 16, true); w(36, 'data'); dv.setUint32(40, n * 2, true);
+    for (let i = 0; i < n; i++) dv.setInt16(44 + i * 2, Math.sin(i / 8000 * 2 * Math.PI * 330) * 4000 * Math.min(1, (n - i) / 2000), true);
+    let bs = ''; new Uint8Array(buf).forEach((x) => { bs += String.fromCharCode(x); });
+    return { ok: true, recId: p.recId, mime: 'audio/wav', audio: btoa(bs) };
+  } else if (action === 'teacher_rec_mark') {
+    const r = DEMO.recordings.find((x) => x.RecID === p.recId); if (!r) return bad('Recording not found.');
+    if (!p.result) { Object.assign(r, { Status: 'Waiting', Memorisation: null, Tajwid: null, Fluency: null, Total: null, Result: '' }); }
+    else {
+      const sc = { Memorisation: [p.memorisation, 10], Tajwid: [p.tajwid, 10], Fluency: [p.fluency, 5] }; let got = 0, out = 0;
+      for (const k of Object.keys(sc)) { const [raw, max] = sc[k]; if (raw === '' || raw == null) { r[k] = null; continue; } const n = Number(raw); if (!(n >= 0 && n <= max)) return bad(k + ' must be between 0 and ' + max + '.'); r[k] = n; got += n; out += max; }
+      Object.assign(r, { Status: 'Marked', Result: p.result, Feedback: p.feedback || '', Total: out ? { Score: got, OutOf: out } : null });
+      if (p.advance && p.result === 'Pass' && r.Type === 'New lesson') Object.assign(stu(r.StudentID), { CurrentSurah: r.Surah, CurrentAyah: r.ToAyah || '' });
+    }
   } else if (action === 'teacher_password') {
     if (String(p.newCode).length < 8) return bad('Your new code must be 8 to 40 characters.');
   } else if (action !== 'teacher_login') return bad('Unknown action.');

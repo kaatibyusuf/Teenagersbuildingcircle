@@ -4789,3 +4789,64 @@ a.tkr-i:hover { color: #062F4D; text-decoration-color: #062F4D; }
   .page-bootcamp .bc-pn .btn, .page-bootcamp .bc-crumb .btn { padding: 11px 16px; font-size: 13.5px; }
 }
 html[dir="rtl"] :is(.page-hadith-bootcamp, .page-bootcamp) :is(.bc-t, .bc-tt) i, html[dir="rtl"] .page-bootcamp .bc-tar, html[dir="rtl"].page-bootcamp .bc-tar, html[dir="rtl"].page-bootcamp :is(.bc-t, .bc-tt) i, html[dir="rtl"].page-hadith-bootcamp :is(.bc-t, .bc-tt) i { display: none; }
+
+/* ===================== Recitation recordings (dashboard.html, teacher.html) ===================== */
+.recf { display: grid; gap: 10px; margin-top: 14px; }
+.recf label { font-size: 13px; font-weight: 600; color: var(--deep); }
+.recf select, .recf input[type=number], .recf textarea { width: 100%; padding: 12px 14px; border-radius: 14px; border: 1.5px solid transparent; background: var(--wash); font: inherit; font-size: 14.5px; color: var(--text, #0E2A3D); }
+.recf textarea { resize: vertical; }
+.recf select:focus, .recf input:focus, .recf textarea:focus { outline: none; border-color: var(--ink); background: #fff; }
+.rec-types { display: flex; flex-wrap: wrap; gap: 8px; }
+.rec-types label { cursor: pointer; }
+.rec-types input { position: absolute; opacity: 0; pointer-events: none; }
+.rec-types span { display: inline-block; padding: 8px 16px; border-radius: 999px; background: var(--wash); font-size: 14px; font-weight: 600; color: var(--ink); border: 1.5px solid transparent; }
+.rec-types input:checked + span { background: var(--ink); color: #fff; }
+.rec-types input:focus-visible + span { border-color: var(--sky, #85CCFF); }
+.rec-row { display: grid; grid-template-columns: minmax(0, 2.2fr) minmax(0, 1fr) minmax(0, 1fr); gap: 10px; }
+.rec-row > div { display: grid; gap: 6px; }
+.rec-box { background: #F4F9FD; border: 1.5px dashed #BFD6E6; border-radius: 18px; padding: 18px; }
+.rec-start { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.rec-start .rec-tip { flex-basis: 100%; margin: 2px 0 0; }
+.rec-btn { gap: 10px; }
+.rec-up { cursor: pointer; }
+.rec-dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: #E5484D; box-shadow: 0 0 0 3px rgba(229,72,77,.25); flex: none; }
+.rec-live { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+.rec-live .rec-dot { animation: recPulse 1.2s ease-in-out infinite; }
+.rec-live b { font-family: var(--d, inherit); font-size: 26px; color: var(--ink); font-variant-numeric: tabular-nums; min-width: 64px; }
+.rec-live .sub { flex: 1 1 160px; margin: 0; }
+@keyframes recPulse { 50% { opacity: .35; } }
+@media (prefers-reduced-motion: reduce) { .rec-live .rec-dot { animation: none; } }
+.rec-ready { display: grid; gap: 8px; justify-items: start; }
+.rec-ready audio, .rec-play audio, .rq audio { width: 100%; max-width: 460px; height: 40px; }
+.rec-h { font-size: 16px; color: var(--deep); margin: 26px 0 10px; }
+.rec-list { display: grid; gap: 10px; }
+.rec-item { background: var(--wash); border-radius: 16px; padding: 14px 16px; display: grid; gap: 10px; }
+.rec-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; }
+.rec-top b { display: block; color: var(--deep); font-size: 15px; }
+.rec-top small { color: var(--muted); font-size: 12.5px; }
+.rec-item .mark { background: #fff; padding: 12px 14px; }
+.rec-item .mark p { margin: 6px 0 0; font-size: 14px; }
+.rec-scores { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13.5px; color: var(--muted); }
+.rec-scores b { font-family: inherit !important; font-size: 14px !important; color: var(--ink); }
+.rec-item > .sub { margin: 0; }
+.rec-acts { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.rec-play { flex: 0 1 auto; }
+.rec-play:has(audio) { flex: 1 1 220px; }
+@media (max-width: 560px) { .rec-row { grid-template-columns: 1fr 1fr; } .rec-row > div:first-child { grid-column: 1 / -1; } }
+/* teacher side */
+.rq { background: #fff; border-radius: 14px; box-shadow: var(--ring); padding: 14px 16px; margin-top: 10px; display: grid; gap: 10px; }
+.rq.done { background: var(--wash); box-shadow: none; }
+.rq-h { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; }
+.rq-h b { display: block; color: var(--deep); font-size: 15px; }
+.rq-h small { color: var(--muted); font-size: 12.5px; }
+.rq-note { margin: 0; font-size: 14px; background: var(--wash); border-radius: 10px; padding: 8px 12px; }
+.rq-scores { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; align-items: end; }
+.rq-res { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.rq-res label { cursor: pointer; }
+.rq-res input { position: absolute; opacity: 0; pointer-events: none; }
+.rq-res span { display: inline-block; padding: 7px 16px; border-radius: 999px; font-weight: 600; font-size: 14px; background: var(--wash); color: var(--ink); border: 1.5px solid transparent; }
+.rq-res input[value=Pass]:checked + span { background: #1B7F4B; color: #fff; }
+.rq-res input[value=Repeat]:checked + span { background: #B42318; color: #fff; }
+.rq-res input:focus-visible + span { border-color: var(--sky, #85CCFF); }
+.rq-adv { display: flex; gap: 8px; align-items: center; font-size: 13.5px; color: var(--muted); }
+@media (max-width: 560px) { .rq-scores { grid-template-columns: 1fr 1fr 1fr; gap: 6px; } }
