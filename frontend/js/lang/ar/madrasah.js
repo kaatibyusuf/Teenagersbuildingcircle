@@ -271,5 +271,9 @@ HS_I18N.add({
 "to put free guides and paid books in a cart.": "لتضع الأدلة المجانية والكتب المدفوعة في سلة.",
 "re:^(\\d+) pages · ₦([\\d,]+)$": "$1 صفحة · $2 ₦",
 "re:^Buy for ₦([\\d,]+)$": "اشترِ بـ $1 ₦",
-"re:^₦([\\d,]+) guide$": "دليل بـ $1 ₦"
+"re:^₦([\\d,]+) guide$": "دليل بـ $1 ₦",
+"Guides": "أدلة",
+"Guides from our teachers.": "أدلة من معلّمينا.",
+"Printable guides on the Qur’an, fiqh, the sīrah and adab. Buy them in the Himaayah Store, download them and print them for your family.": "أدلة قابلة للطباعة في القرآن والفقه والسيرة والأدب. اشترِها من متجر حماية ونزّلها واطبعها لأسرتك.",
+"See all Madrasah guides in the store": "تصفّح جميع أدلة المدرسة في المتجر"
 });

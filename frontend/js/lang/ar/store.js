@@ -406,7 +406,7 @@ HS_I18N.add({
 "In your cart": "في سلتك",
 "Remove": "احذف",
 "Download": "نزّل",
-"Your cart is empty. Add free guides or paid books and they will appear here.": "سلتك فارغة. أضف أدلة مجانية أو كتبًا مدفوعة لتظهر هنا.",
+"Your cart is empty. Add books or guides and they will appear here.": "سلتك فارغة. أضف أدلة مجانية أو كتبًا مدفوعة لتظهر هنا.",
 "Free items": "عناصر مجانية",
 "Paid items": "عناصر مدفوعة",
 "Download all free items": "نزّل كل العناصر المجانية",
