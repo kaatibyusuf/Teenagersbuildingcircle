@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Receipt — Himaayah Store</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="logo.png">
+<style>
+:root{--ink:#0b2a3f;--blue:#094570;--mute:#5b6b78;--line:#dfe8ef}
+*{box-sizing:border-box}
+body{margin:0;background:#eef3f7;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);line-height:1.5}
+.wrap{max-width:760px;margin:0 auto;padding:24px 16px 60px}
+.bar{display:flex;gap:10px;justify-content:flex-end;margin-bottom:14px;flex-wrap:wrap}
+.btn{font:inherit;font-weight:600;border:1.5px solid var(--blue);background:var(--blue);color:#fff;border-radius:10px;padding:10px 16px;cursor:pointer;text-decoration:none}
+.btn.line{background:#fff;color:var(--blue)}
+.sheet{background:#fff;border-radius:14px;padding:36px 36px 30px;box-shadow:0 6px 28px rgba(9,69,112,.10)}
+.head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;border-bottom:3px solid var(--blue);padding-bottom:18px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:14px}
+.brand img{width:64px;height:64px;border-radius:12px;display:block}
+.brand b{display:block;font-size:1.3rem}
+.brand span{color:var(--mute);font-size:.9rem}
+.rc{text-align:right}
+.rc h1{margin:0;font-size:1.5rem;letter-spacing:.12em;color:var(--blue)}
+.rc p{margin:2px 0 0;color:var(--mute);font-size:.92rem}
+.rc strong{color:var(--ink)}
+.meta{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:22px 0}
+.meta h2{margin:0 0 4px;font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
+.meta p{margin:0}
+table{width:100%;border-collapse:collapse;margin-top:6px}
+th{font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);text-align:left;padding:8px 0;border-bottom:1.5px solid var(--line)}
+th:last-child,td:last-child{text-align:right}
+td{padding:12px 0;border-bottom:1px solid var(--line)}
+.total td{font-weight:800;font-size:1.15rem;border-bottom:0;padding-top:16px}
+.paid{display:inline-block;margin-top:14px;padding:5px 14px;border:2px solid #1b7f4b;color:#1b7f4b;border-radius:8px;font-weight:800;letter-spacing:.1em;transform:rotate(-3deg)}
+.foot{margin-top:26px;padding-top:16px;border-top:1px solid var(--line);color:var(--mute);font-size:.88rem}
+.foot p{margin:4px 0}
+.err{background:#fff;border-radius:14px;padding:30px;text-align:center}
+@media (max-width:560px){.sheet{padding:22px 18px}.meta{grid-template-columns:1fr}.rc{text-align:left}}
+@media print{body{background:#fff}.bar{display:none}.wrap{padding:0;max-width:none}.sheet{box-shadow:none;border-radius:0;padding:0}@page{margin:16mm}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="bar" id="bar" hidden><button class="btn" type="button" onclick="window.print()">Print or save as PDF</button><a class="btn line" href="store">Back to the store</a></div>
+  <div id="out"><div class="err">Loading your receipt…</div></div>
+</div>
+<script>
+(function () {
+  const out = document.getElementById('out');
+  const esc = (t) => String(t == null ? '' : t).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const naira = (n) => '₦' + Number(n).toLocaleString('en-NG');
+  const q = new URLSearchParams(location.search);
+  function fail(msg) { out.innerHTML = '<div class="err"><p>' + esc(msg) + '</p><p>Please use the link in your email, or message us on WhatsApp: <a href="https://wa.me/2347047226487">+234 704 722 6487</a>.</p></div>'; }
+  if (!q.get('d') || !q.get('t')) return fail('This receipt link is not complete.');
+  fetch('/api/store-receipt?d=' + encodeURIComponent(q.get('d')) + '&t=' + encodeURIComponent(q.get('t')))
+    .then((r) => r.json().catch(() => null))
+    .then((j) => {
+      if (!j || !j.ok) return fail((j && j.error) || 'This receipt could not be loaded.');
+      const r = j.receipt;
+      const date = r.date ? new Date(r.date).toLocaleString('en-NG', { timeZone: 'Africa/Lagos', day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: '2-digit' }) : '';
+      document.title = 'Receipt ' + r.no + ' — Himaayah Store';
+      out.innerHTML = `<div class="sheet">
+        <div class="head"><div class="brand"><img src="logo.png" alt="Himaayah Schools logo" width="64" height="64"><div><b>Himaayah Schools</b><span>Himaayah Store</span></div></div>
+          <div class="rc"><h1>RECEIPT</h1><p>No. <strong>${esc(r.no)}</strong></p><p>${esc(date)}</p></div></div>
+        <div class="meta"><div><h2>Received from</h2><p><strong>${esc(r.name)}</strong></p><p>${esc(r.email)}</p></div><div><h2>Payment</h2><p>${esc(r.method)}</p></div></div>
+        <table><thead><tr><th>Item</th><th>Price</th></tr></thead><tbody>${r.items.map((x) => `<tr><td>${esc(x.title)}<br><span style="color:var(--mute);font-size:.85rem">PDF book</span></td><td>${naira(x.price)}</td></tr>`).join('')}
+        <tr class="total"><td>Total paid</td><td>${naira(r.total)}</td></tr></tbody></table>
+        <span class="paid">PAID</span>
+        <div class="foot"><p>Thank you for your purchase. Your downloads are in the email we sent you, and the links keep working.</p><p>Himaayah Schools · www.himaayahschools.com · WhatsApp +234 704 722 6487</p><p>This receipt was issued electronically and is valid without a signature.</p></div>
+      </div>`;
+      document.getElementById('bar').hidden = false;
+    }).catch(() => fail('This receipt could not be loaded. Please try again.'));
+})();
+</script>
+</body>
+</html>

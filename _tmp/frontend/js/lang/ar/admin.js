@@ -1,0 +1,32 @@
+/* Arabic for the admin page. English on the left, Arabic on the right: edit the Arabic to change what visitors see.
+   Keys starting with re: are patterns for text with numbers or names in it ($1, $2 are the parts kept). */
+HS_I18N.add({
+"Admin | Himaayah Schools": "الإدارة | مدارس حماية",
+"Demo mode: sample data, nothing is saved. Only confirm a payment after you have seen the receipt.": "وضع التجربة: بيانات نموذجية، ولا يُحفظ شيء. لا تؤكّد أي دفع إلا بعد أن ترى الإيصال.",
+"Only confirm a payment after you have seen the receipt.": "لا تؤكّد أي دفع إلا بعد أن ترى الإيصال.",
+"Tick the students, then choose teachers, a level or a class on the right. Only the fields you fill in are changed. A student can have up to 3 teachers.": "حدّد الطلاب، ثم اختر المعلّمين أو المستوى أو الحصة من الجهة المقابلة. لا يتغيّر إلا ما تملؤه من حقول. يمكن أن يكون للطالب حتى 3 معلّمين.",
+"no teacher yet": "بلا معلّم بعد",
+"no level yet": "بلا مستوى بعد",
+"No teacher yet": "بلا معلّم بعد",
+"No teacher": "بلا معلّم",
+"No level": "بلا مستوى",
+"Next class (optional)": "الحصة القادمة (اختياري)",
+"Teacher load": "عدد طلاب كل معلّم",
+"No plan": "بلا خطة",
+"No teachers yet.": "لا يوجد معلّمون بعد.",
+"Choose teachers, a level or a class to apply.": "اختر المعلّمين أو المستوى أو الحصة لتطبيقها.",
+"One-year plan": "خطة السنة الواحدة",
+"re:(\\d+) no level yet": "$1 بلا مستوى بعد",
+"Teachers": "المعلّمون",
+"re:^\\(choose up to (\\d+)\\)$": "(اختر حتى $1)",
+"re:^\\((\\d+) of (\\d+)\\)$": "($1 من $2)",
+"Replace the students’ teachers with these": "استبدل معلّمي الطلاب بهؤلاء",
+"Add these teachers (keep the current ones)": "أضف هؤلاء المعلّمين (مع إبقاء الحاليّين)",
+"Remove these teachers": "احذف هؤلاء المعلّمين",
+"What to do with these teachers": "ماذا تفعل بهؤلاء المعلّمين",
+"No teachers yet. Add them in the Teachers tab.": "لا يوجد معلّمون بعد. أضفهم في تبويب Teachers.",
+"re:^Choose at most (\\d+) teachers\\.$": "اختر $1 معلّمين على الأكثر.",
+"re:^(.+) would have more than (\\d+) teachers\\. Remove one first, or use \"Replace\"\\.$": "سيصبح لدى $1 أكثر من $2 معلّمين. احذف أحدهم أوّلًا، أو استعمل «الاستبدال».",
+"Hifdh": "الحفظ",
+"Muraajah": "المراجعة"
+});

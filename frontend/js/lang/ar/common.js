@@ -484,5 +484,6 @@ HS_I18N.add({
 "Download free PDF": "نزّل ملف PDF مجانًا",
 "Admission is closed for the current Madrasah session.": "باب القبول مغلق في الدورة الحالية للمدرسة الشرعية.",
 "Join the waitlist and we will email you when a place opens": "سجّل في قائمة الانتظار وسنراسلك بالبريد عند توفّر مقعد",
-"Notice": "تنبيه"
+"Notice": "تنبيه",
+"Himaayah Store": "متجر حماية"
 });

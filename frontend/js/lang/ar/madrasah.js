@@ -256,5 +256,17 @@ HS_I18N.add({
 "Cover of My Ramaḍān Planner": "غلاف مخطّط رمضان",
 "Prayer Tracker and Khatm Planner": "متابعة الصلاة ومخطّط الختم",
 "Cover of Prayer Tracker and Khatm Planner": "غلاف متابعة الصلاة ومخطّط الختم",
-"re:^(\\d+) pages · PDF$": "$1 صفحة · PDF"
+"re:^(\\d+) pages · PDF$": "$1 صفحة · PDF",
+"My First Arabic Letters": "حروفي العربية الأولى",
+"Cover of My First Arabic Letters": "غلاف حروفي العربية الأولى",
+"I Can Pray!": "أستطيع أن أصلّي!",
+"Cover of I Can Pray!": "غلاف أستطيع أن أصلّي!",
+"Little Muslims, Beautiful Manners": "مسلمون صغار وأخلاق جميلة",
+"Cover of Little Muslims, Beautiful Manners": "غلاف مسلمون صغار وأخلاق جميلة",
+"My Ramadan and Eid Book": "كتابي لرمضان والعيد",
+"Cover of My Ramadan and Eid Book": "غلاف كتابي لرمضان والعيد",
+"re:^(\\d+) pages · ₦5,000$": "$1 صفحة · ٥٬٠٠٠ ₦",
+"Want everything in one place? Visit the": "تريد كل شيء في مكان واحد؟ زُر",
+"Himaayah Store": "متجر حماية",
+"to put free guides and paid books in a cart.": "لتضع الأدلة المجانية والكتب المدفوعة في سلة."
 });

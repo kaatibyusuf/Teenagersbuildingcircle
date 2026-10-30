@@ -58,7 +58,7 @@ HS_I18N.add({
 "Personal development": "التنمية الشخصية",
 "Exam preparation": "الاستعداد للامتحانات",
 "Public speaking": "الخطابة",
-"Materials from your teachers are for Himaayah students only; please do not share them. Items marked “Free guide” are free to share. Some links lead to other websites.": "المواد التي يضيفها معلّموك لطلاب حماية فقط، فلا تشاركها. أمّا ما عليه «دليل مجاني» فيمكنك مشاركته. بعض الروابط تؤدي إلى مواقع أخرى.",
+"Materials from your teachers are for Himaayah students only; please do not share them. Items marked “Free guide” are free to share; books with a price are bought once and are for your own family. Some links lead to other websites.": "المواد التي يضيفها معلّموك لطلاب حماية فقط، فلا تشاركها. أمّا ما عليه «دليل مجاني» فيمكنك مشاركته، والكتب التي لها سعر تُشترى مرة واحدة وهي لأسرتك فقط. بعض الروابط تؤدي إلى مواقع أخرى.",
 "Mastering the Mutashābihāt": "إتقان المتشابهات",
 "Recognise the verses that look alike, tell them apart and keep each one in its place. Real pairs, memory hooks, a self-test and a log.": "تعرّف على الآيات المتشابهة، وميّز بينها، واحفظ كلّ آية في موضعها. أمثلة حقيقية، وروابط للحفظ، واختبار ذاتي، وسجلّ.",
 "Steady Hifdh": "المداومة على الحفظ",
@@ -173,5 +173,15 @@ HS_I18N.add({
 "Starting as a freelancer: choosing a skill, a portfolio, first clients, pricing, contracts, safe payment and scams to avoid.": "البدء في العمل الحر: اختيار المهارة ومعرض الأعمال وأول العملاء والتسعير والعقود والدفع الآمن والاحتيالات.",
 "Little Minds, Big Questions": "عقول صغيرة وأسئلة كبيرة",
 "A workbook for children aged 5 to 10: 66 activities in observation, thinking, reading, speaking, creativity, maths, everyday skills and the signs of Allah, with a parent handbook and a 12-week plan.": "كتاب أنشطة للأطفال من 5 إلى 10 سنوات: 66 نشاطًا في الملاحظة والتفكير والقراءة والتحدث والإبداع والرياضيات والمهارات اليومية وآيات الله، مع دليل للوالدين وخطة لاثني عشر أسبوعًا.",
-"Children’s learning": "تعلّم الأطفال"
+"Children’s learning": "تعلّم الأطفال",
+"My First Arabic Letters": "حروفي العربية الأولى",
+"A large-print book for children aged 4 to 8: the 28 Arabic letters with sounds, example words, letter shapes, tracing and short vowels.": "كتاب بخط كبير للأطفال من 4 إلى 8 سنوات: الحروف العربية الثمانية والعشرون مع النطق وكلمات المثال وأشكال الحروف والتتبّع والحركات القصيرة.",
+"I Can Pray!": "أستطيع أن أصلّي!",
+"A large-print book for children aged 5 to 9: wuḍūʾ, the five prayers, how a rakʿah goes, short sūrahs, masjid manners and a prayer chart.": "كتاب بخط كبير للأطفال من 5 إلى 9 سنوات: الوضوء والصلوات الخمس وكيفية الركعة والسور القصيرة وآداب المسجد وجدول للصلاة.",
+"Little Muslims, Beautiful Manners": "مسلمون صغار وأخلاق جميلة",
+"A large-print book for children aged 5 to 9: twelve manners from the Qur’an and Sunnah, each with a story, a verse or hadith, questions and a weekly tracker.": "كتاب بخط كبير للأطفال من 5 إلى 9 سنوات: اثنا عشر خلقًا من القرآن والسنة، لكل خلق قصة وآية أو حديث وأسئلة وجدول أسبوعي.",
+"My Ramadan and Eid Book": "كتابي لرمضان والعيد",
+"A large-print activity book for children aged 5 to 10: the moon, fasting, suhoor and iftar, Qur’an and good-deed trackers, Laylat al-Qadr and Eid.": "كتاب أنشطة بخط كبير للأطفال من 5 إلى 10 سنوات: الهلال والصيام والسحور والإفطار وجداول القرآن والأعمال الصالحة وليلة القدر والعيد.",
+"Buy ₦5,000": "اشترِ بـ ٥٬٠٠٠ ₦",
+"₦5,000": "٥٬٠٠٠ ₦"
 });
