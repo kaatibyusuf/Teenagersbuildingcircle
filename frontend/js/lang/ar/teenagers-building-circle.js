@@ -35,5 +35,7 @@ HS_I18N.add({
 "Seven habits for Muslim teenagers, from prayer on time to a phone that stays in its place, with a four-week tracker and a section for parents.": "سبع عادات للشباب المسلم، من الصلاة في وقتها إلى هاتف يبقى في مكانه، مع جدول متابعة لأربعة أسابيع وقسم لأولياء الأمور.",
 "Free guide": "دليل مجاني",
 "Download free PDF": "نزّل ملف PDF مجانًا",
-"re:^Cover of (.+)$": "غلاف $1"
+"re:^Cover of (.+)$": "غلاف $1",
+"re:^Buy for ₦([\\d,]+)$": "اشترِ بـ $1 ₦",
+"re:^₦([\\d,]+) guide$": "دليل بـ $1 ₦"
 });

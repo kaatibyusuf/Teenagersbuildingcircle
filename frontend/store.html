@@ -72,7 +72,7 @@
   <div class="wrap hero-copy">
     <span class="kicker">Himaayah Store</span>
     <h1>Books and guides for your family.</h1>
-    <p>Everything we have published in one place. Free guides download straight away. Paid books are ₦5,000 each: pay securely, download, and we email you a receipt.</p>
+    <p>Every guide and book we have published, in one place. Children’s books are ₦5,000 and every other guide is ₦3,000. Add them to your cart, pay securely, download, and we email you a receipt.</p>
   </div>
 </header>
 <section class="sec st-sec">
@@ -80,7 +80,7 @@
     <div class="st-banner" id="stBanner" role="status" hidden></div>
     <div class="st-tools" role="search">
       <label class="st-search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="stQ" type="search" placeholder="Search the store" aria-label="Search the store" autocomplete="off"></label>
-      <div class="st-chips" id="stPrice" role="group" aria-label="Price"><button type="button" data-p="all" aria-pressed="true">All</button><button type="button" data-p="free" aria-pressed="false">Free</button><button type="button" data-p="paid" aria-pressed="false">Paid</button></div>
+      <div class="st-chips" id="stPrice" role="group" aria-label="Section"><button type="button" data-p="all" aria-pressed="true">All</button><button type="button" data-p="kids" aria-pressed="false">Kids’ books</button><button type="button" data-p="madrasah" aria-pressed="false">Madrasah</button><button type="button" data-p="academy" aria-pressed="false">Academy</button><button type="button" data-p="skills" aria-pressed="false">Skills School</button><button type="button" data-p="teens" aria-pressed="false">Teenagers Building Circle</button><button type="button" data-p="free" aria-pressed="false">Free</button></div>
       <div class="st-chips" id="stTopic" role="group" aria-label="Subject"></div>
       <p class="st-count" id="stCount" aria-live="polite"></p>
     </div>
@@ -165,7 +165,8 @@
   const naira = (n) => '₦' + Number(n).toLocaleString('en-NG');
   const fold = (t) => String(t || '').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[ʿʾ’]/g, '').toLowerCase();
   const WA = 'https://wa.me/2347047226487?text=' + encodeURIComponent('Assalaamu alaykum. I need help with a Himaayah Store order.');
-  const ST = { q: '', price: 'all', topic: 'all' };
+  const ST = { q: '', sec: 'all', topic: 'all' };
+  const P0 = new URLSearchParams(location.search);
   let cart = [];
   try { cart = (JSON.parse(localStorage.getItem('hs_cart') || '[]') || []).filter((s) => by[s]); } catch (e) { cart = []; }
   const save = () => { try { localStorage.setItem('hs_cart', JSON.stringify(cart)); } catch (e) {} };
@@ -177,7 +178,7 @@
 
   function visible() {
     const q = fold(ST.q).trim();
-    return D.filter((x) => (ST.price === 'all' || (ST.price === 'free') === (x.c === 0)) && (ST.topic === 'all' || x.k === ST.topic) && (!q || fold(x.t + ' ' + x.u + ' ' + x.g).includes(q)));
+    return D.filter((x) => (ST.sec === 'all' || (ST.sec === 'free' ? x.c === 0 : x.x === ST.sec)) && (ST.topic === 'all' || x.k === ST.topic) && (!q || fold(x.t + ' ' + x.u + ' ' + x.g).includes(q)));
   }
   function grid() {
     const l = visible();
@@ -256,7 +257,9 @@
 
   // filters
   $('stQ').addEventListener('input', (e) => { ST.q = e.target.value; grid(); });
-  $('stPrice').addEventListener('click', (e) => { const b = e.target.closest('button[data-p]'); if (!b) return; ST.price = b.dataset.p; [...$('stPrice').children].forEach((x) => x.setAttribute('aria-pressed', x === b)); grid(); });
+  const setSec = (v) => { ST.sec = v; [...$('stPrice').children].forEach((x) => x.setAttribute('aria-pressed', x.dataset.p === v)); };
+  $('stPrice').addEventListener('click', (e) => { const b = e.target.closest('button[data-p]'); if (!b) return; setSec(b.dataset.p); grid(); });
+  if (P0.get('cat') && $('stPrice').querySelector('[data-p="' + P0.get('cat') + '"]')) setSec(P0.get('cat'));
   $('stTopic').addEventListener('click', (e) => { const b = e.target.closest('button[data-k]'); if (!b) return; ST.topic = b.dataset.k; [...$('stTopic').children].forEach((x) => x.setAttribute('aria-pressed', x === b)); grid(); });
 
   // coming back from Bachs
@@ -271,6 +274,7 @@
   }
   if (P.get('paid') || P.get('cancelled')) { try { history.replaceState(null, '', location.pathname); } catch (e) {} }
   refresh();
+  if (location.hash.indexOf('#p-') === 0) { const el = document.getElementById(location.hash.slice(1)); if (el) { setTimeout(() => { el.scrollIntoView({ block: 'center' }); el.style.outline = '3px solid #094570'; }, 150); } }
 })();
 </script>
 <footer class="h-foot">

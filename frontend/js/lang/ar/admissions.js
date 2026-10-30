@@ -102,5 +102,7 @@ HS_I18N.add({
 "Pay by card or bank transfer": "ادفع بالبطاقة أو بالتحويل البنكي",
 "Pay by card on a secure Bachs payment page, or transfer the plan's fee to our Wema Bank account. The exact amount, and the account for transfers, are shown on the last step of the form.": "ادفع بالبطاقة عبر صفحة الدفع الآمنة Bachs، أو حوّل رسوم الخطة إلى حسابنا في بنك Wema. يظهر المبلغ الدقيق، ورقم الحساب للتحويل، في الخطوة الأخيرة من النموذج.",
 "Get confirmed": "تأكيد المقعد",
-"Card payments are confirmed straight away, and your student login is emailed to you. After a transfer, the form opens WhatsApp with a message already written for your plan: attach your receipt and send, and we confirm your place, usually within a few hours.": "يُؤكَّد الدفع بالبطاقة فورًا وتُرسل إليك بيانات دخول الطالب بالبريد. وبعد التحويل يفتح النموذج واتساب برسالة مكتوبة مسبقًا لخطتك: أرفق الإيصال وأرسله، ونؤكد مقعدك عادةً خلال ساعات قليلة."
+"Card payments are confirmed straight away, and your student login is emailed to you. After a transfer, the form opens WhatsApp with a message already written for your plan: attach your receipt and send, and we confirm your place, usually within a few hours.": "يُؤكَّد الدفع بالبطاقة فورًا وتُرسل إليك بيانات دخول الطالب بالبريد. وبعد التحويل يفتح النموذج واتساب برسالة مكتوبة مسبقًا لخطتك: أرفق الإيصال وأرسله، ونؤكد مقعدك عادةً خلال ساعات قليلة.",
+"re:^Buy for ₦([\\d,]+)$": "اشترِ بـ $1 ₦",
+"re:^₦([\\d,]+) guide$": "دليل بـ $1 ₦"
 });

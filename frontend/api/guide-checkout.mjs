@@ -26,7 +26,7 @@ export async function POST(request) {
   const name = clean(b.name, 100);
   if (name.length < 2) return json({ ok: false, error: 'Enter your name.' }, 400);
   const slugs = [...new Set((Array.isArray(b.slugs) ? b.slugs : []).map(String))];
-  if (!slugs.length || slugs.length > Object.keys(GUIDES).length || slugs.some((s) => !GUIDES[s])) return json({ ok: false, error: 'Choose at least one book.' }, 400);
+  if (!slugs.length || slugs.length > 60 || slugs.some((s) => !GUIDES[s])) return json({ ok: false, error: 'Choose at least one book.' }, 400);
   const amount = slugs.reduce((n, s) => n + GUIDES[s].price, 0);
   const store = b.ret === 'store';
 
@@ -45,7 +45,7 @@ export async function POST(request) {
     cancel_url: site + (store ? '/store?cancelled=1' : '/buy-guide?cancelled=1&g=' + encodeURIComponent(slugs.join(','))),
     reference: ref + '-' + Math.random().toString(36).slice(2, 7),
     metadata: {
-      kind: 'guide', ref, plan: clean(slugs.map((s) => GUIDES[s].title).join(', '), 100), guide: slugs.join(','),
+      kind: 'guide', ref, plan: clean(slugs.length === 1 ? GUIDES[slugs[0]].title : slugs.length + ' books from the Himaayah Store', 100), guide: slugs.map((s) => GUIDES[s].id).join(','),
       donorName: name, donorEmail: email, donorPhone: clean(b.phone, 30), student: name,
     },
     expires_in_minutes: 60,

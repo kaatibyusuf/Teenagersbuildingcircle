@@ -485,5 +485,7 @@ HS_I18N.add({
 "Admission is closed for the current Madrasah session.": "باب القبول مغلق في الدورة الحالية للمدرسة الشرعية.",
 "Join the waitlist and we will email you when a place opens": "سجّل في قائمة الانتظار وسنراسلك بالبريد عند توفّر مقعد",
 "Notice": "تنبيه",
-"Himaayah Store": "متجر حماية"
+"Himaayah Store": "متجر حماية",
+"re:^Buy for ₦([\\d,]+)$": "اشترِ بـ $1 ₦",
+"re:^₦([\\d,]+) guide$": "دليل بـ $1 ₦"
 });

@@ -62,5 +62,7 @@ HS_I18N.add({
 "Take a free UTME mock": "أدِّ اختبار UTME تجريبيًا مجانيًا",
 "Credit in Every Paper": "نجاح بتقدير في كلّ مادة",
 "For WAEC and NECO: plan your subjects, use past questions and chief examiner’s reports, and write answers examiners reward, with a 10-week plan.": "لامتحانات WAEC وNECO: خطّط لموادك، واستعمل أسئلة السنوات السابقة وتقارير كبير المصحّحين، واكتب إجابات يكافئها المصحّحون، مع خطة لعشرة أسابيع.",
-"Take the free UTME placement test": "خذ اختبار تحديد المستوى المجاني لـ UTME"
+"Take the free UTME placement test": "خذ اختبار تحديد المستوى المجاني لـ UTME",
+"re:^Buy for ₦([\\d,]+)$": "اشترِ بـ $1 ₦",
+"re:^₦([\\d,]+) guide$": "دليل بـ $1 ₦"
 });

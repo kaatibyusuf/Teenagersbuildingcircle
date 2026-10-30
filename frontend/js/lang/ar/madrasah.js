@@ -268,5 +268,8 @@ HS_I18N.add({
 "re:^(\\d+) pages · ₦5,000$": "$1 صفحة · ٥٬٠٠٠ ₦",
 "Want everything in one place? Visit the": "تريد كل شيء في مكان واحد؟ زُر",
 "Himaayah Store": "متجر حماية",
-"to put free guides and paid books in a cart.": "لتضع الأدلة المجانية والكتب المدفوعة في سلة."
+"to put free guides and paid books in a cart.": "لتضع الأدلة المجانية والكتب المدفوعة في سلة.",
+"re:^(\\d+) pages · ₦([\\d,]+)$": "$1 صفحة · $2 ₦",
+"re:^Buy for ₦([\\d,]+)$": "اشترِ بـ $1 ₦",
+"re:^₦([\\d,]+) guide$": "دليل بـ $1 ₦"
 });

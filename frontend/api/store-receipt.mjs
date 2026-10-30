@@ -1,7 +1,7 @@
 // Checks a signed receipt link from the purchase email and returns the receipt for receipt.html to show.
 // Link: /receipt?d=<payload>&t=<signature>. Apps Script (Guides.gs) makes both with the shared secret.
 import crypto from 'node:crypto';
-import { GUIDES, sign } from './_guides.mjs';
+import { GUIDES, BY_ID, sign } from './_guides.mjs';
 
 const same = (a, b) => {
   const x = Buffer.from(a, 'utf8'), y = Buffer.from(b, 'utf8');
@@ -18,6 +18,6 @@ export async function GET(request) {
   if (!d || d.length > 4000 || !same(sign(secret, d), t)) return json({ ok: false, error: 'This receipt link is not valid.' }, 403);
   let p;
   try { p = JSON.parse(Buffer.from(d, 'base64url').toString('utf8')); } catch { return json({ ok: false, error: 'This receipt link is not valid.' }, 400); }
-  const items = (Array.isArray(p.i) ? p.i : []).filter((s) => Object.prototype.hasOwnProperty.call(GUIDES, s)).map((s) => ({ title: GUIDES[s].title, price: GUIDES[s].price }));
+  const items = (Array.isArray(p.i) ? p.i : []).map((x) => BY_ID[x] || x).filter((s) => Object.prototype.hasOwnProperty.call(GUIDES, s)).map((s) => ({ title: GUIDES[s].title, price: GUIDES[s].price }));
   return json({ ok: true, receipt: { no: String(p.r || ''), date: Number(p.t) || 0, name: String(p.n || ''), email: String(p.e || ''), items, total: Number(p.a) || items.reduce((n, x) => n + x.price, 0), method: 'Online payment through Bachs (card or bank transfer)' } });
 }

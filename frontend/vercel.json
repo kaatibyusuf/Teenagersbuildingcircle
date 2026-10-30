@@ -2,5 +2,8 @@
   "cleanUrls": true,
   "rewrites": [
     { "source": "/articles", "destination": "/articles.html" }
-  ]
+  ],
+  "functions": {
+    "api/guide-download.mjs": { "includeFiles": "api/_paid/**" }
+  }
 }

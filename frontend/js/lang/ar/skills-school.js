@@ -45,5 +45,7 @@ HS_I18N.add({
 "Find your message, build a talk people remember, calm your nerves and rehearse well, with a talk planner and a feedback sheet.": "حدّد رسالتك، وابنِ كلمة يتذكّرها الناس، وهدّئ توتّرك، وتدرّب جيدًا، مع مخطّط للكلمة وورقة ملاحظات.",
 "Free guide": "دليل مجاني",
 "Download free PDF": "نزّل ملف PDF مجانًا",
-"re:^Cover of (.+)$": "غلاف $1"
+"re:^Cover of (.+)$": "غلاف $1",
+"re:^Buy for ₦([\\d,]+)$": "اشترِ بـ $1 ₦",
+"re:^₦([\\d,]+) guide$": "دليل بـ $1 ₦"
 });
