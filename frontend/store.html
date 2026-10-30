@@ -94,6 +94,9 @@
   <div class="st-cart-h"><h2>Your cart</h2><button type="button" id="stClose" aria-label="Close the cart">✕</button></div>
   <div class="st-cart-b" id="stCartBody"></div>
 </aside>
+<div class="st-modal" id="stDetail" role="dialog" aria-modal="true" aria-labelledby="stDTitle" hidden>
+  <div class="st-mbox"><button type="button" class="st-mx" id="stDClose" aria-label="Close">✕</button><div id="stDBody"></div></div>
+</div>
 <style>.site .st-sec{padding-block:28px 90px}
 .st-wrap{max-width:1180px;margin-inline:auto;padding-inline:16px}
 .st-banner{margin:0 0 18px;padding:14px 16px;border-radius:14px;background:#e8f5ec;color:#14532d;font-weight:500;line-height:1.5}
@@ -111,17 +114,18 @@
 .st-count{margin:0;color:#5b6b78;font-size:.92rem}
 .st-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}
 .st-card{background:#fff;border:1.5px solid #e1eaf1;border-radius:18px;overflow:hidden;display:flex;flex-direction:column}
-.st-cov{display:block;background:#eef3f7;aspect-ratio:640/905;max-height:340px;overflow:hidden}
+.st-cov{display:block;width:100%;padding:0;border:0;cursor:pointer;background:#eef3f7;aspect-ratio:640/905;overflow:hidden}
 .st-cov img{width:100%;height:100%;object-fit:cover;display:block}
 .st-b{padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px;flex:1}
 .st-tag{align-self:flex-start;font-size:.74rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#094570;background:#e6f0f8;border-radius:999px;padding:3px 10px}
 .st-card h3{margin:2px 0 0;font-size:1.08rem;line-height:1.3;color:#0b2a3f}
 .st-card p{margin:0;font-size:.9rem;line-height:1.45;color:#3d4f5d}
 .st-card .st-meta{color:#6b7c89;font-size:.82rem}
-.st-foot{margin-top:auto;padding-top:10px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.st-foot{margin-top:auto;padding-top:4px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
 .st-price{font-size:1.1rem;font-weight:800;color:#094570}
 .st-price.free{color:#1b7f4b}
-.st-acts{display:flex;gap:8px;flex-wrap:wrap}
+.st-acts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.st-acts button{width:100%}
 .st-acts a,.st-acts button,.st-cart button.st-go,.st-cart button.st-dl{font:inherit;font-size:.9rem;font-weight:600;border-radius:10px;padding:9px 13px;cursor:pointer;text-decoration:none;border:1.5px solid #094570;background:#fff;color:#094570}
 .st-acts button.st-add{background:#094570;color:#fff}
 .st-acts button.st-add.in{background:#e6f0f8;color:#094570}
@@ -155,6 +159,24 @@
 .st-help{margin-top:18px;font-size:.9rem}
 .st-help a{color:#094570;font-weight:600}
 @media (max-width:520px){.st-grid{grid-template-columns:1fr 1fr;gap:12px}.st-card h3{font-size:.98rem}.st-cov{max-height:240px}.st-acts a,.st-acts button{padding:8px 10px;font-size:.84rem}.st-b{padding:12px}}
+.st-acts button.st-more{background:#fff;color:#094570}
+.st-modal{position:fixed;inset:0;z-index:110;background:rgba(5,20,32,.6);display:flex;align-items:center;justify-content:center;padding:16px;overflow:auto}
+.st-modal[hidden]{display:none}
+.st-mbox{position:relative;background:#fff;border-radius:20px;max-width:820px;width:100%;max-height:calc(100vh - 32px);overflow:auto;padding:22px}
+.st-mx{position:absolute;inset-block-start:10px;inset-inline-end:12px;font:inherit;font-size:1.1rem;background:#fff;border:0;cursor:pointer;color:#0b2a3f;padding:6px 10px;z-index:1}
+.st-dgrid{display:grid;grid-template-columns:240px 1fr;gap:24px;align-items:start}
+.st-dgrid img{width:100%;height:auto;border-radius:12px;border:1px solid #e1eaf1}
+.st-dtxt{display:flex;flex-direction:column;gap:8px;color:#0b2a3f}
+.st-dtxt h2{margin:2px 0 0;font-size:1.5rem;line-height:1.25}
+.st-dsub{margin:0;color:#3d4f5d;line-height:1.5}
+.st-dtxt h4{margin:10px 0 0;font-size:.8rem;letter-spacing:.05em;text-transform:uppercase;color:#5b6b78}
+.st-dtxt ul{margin:0;padding-inline-start:20px;display:grid;gap:5px;font-size:.95rem;line-height:1.45;color:#3d4f5d}
+.st-dtxt .st-meta{margin:6px 0 0;color:#6b7c89;font-size:.85rem}
+.st-dbuy{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:8px}
+.st-dbuy button.st-add,.st-dbuy a.st-dl2{font:inherit;font-weight:600;border-radius:10px;padding:11px 18px;cursor:pointer;text-decoration:none;border:1.5px solid #094570;background:#094570;color:#fff}
+.st-dbuy button.st-add.in{background:#e6f0f8;color:#094570}
+.st-dbuy a.st-dl2{background:#fff;color:#094570}
+@media(max-width:640px){.st-dgrid{grid-template-columns:1fr}.st-dgrid img{max-width:200px;margin-inline:auto}.st-mbox{padding:16px}}
 </style>
 <script src="js/store-data.js"></script>
 <script>(function () {
@@ -182,14 +204,37 @@
   }
   function grid() {
     const l = visible();
-    $('stGrid').innerHTML = l.map((x) => `<article class="st-card" id="p-${esc(x.s)}"><a class="st-cov" href="resources#${esc(x.s)}" tabindex="-1" aria-hidden="true"><img src="${cover(x.s)}" alt="" width="640" height="905" loading="lazy"></a>
-      <div class="st-b"><span class="st-tag">${esc(x.g)}</span><h3>${esc(x.t)}</h3><p>${esc(x.u)}</p>
-      <p class="st-meta">PDF · ${x.p} pages${x.c ? '' : ' · ' + esc(x.z)}</p>
-      <div class="st-foot"><b class="st-price ${x.c ? 'paid' : 'free'}">${x.c ? naira(x.c) : 'Free'}</b><div class="st-acts">${x.c ? '' : `<a href="resources/${esc(x.s)}.pdf" download>Download</a>`}<button type="button" class="st-add${inCart(x.s) ? ' in' : ''}" data-s="${esc(x.s)}">${inCart(x.s) ? 'In your cart' : 'Add to cart'}</button></div></div></div></article>`).join('');
+    $('stGrid').innerHTML = l.map((x) => `<article class="st-card" id="p-${esc(x.s)}"><button type="button" class="st-cov" data-d="${esc(x.s)}" aria-label="Read full details: ${esc(x.t)}"><img src="${cover(x.s)}" alt="" width="640" height="905" loading="lazy"></button>
+      <div class="st-b"><span class="st-tag">${esc(x.g)}</span><h3>${esc(x.t)}</h3>
+      <div class="st-foot"><b class="st-price ${x.c ? 'paid' : 'free'}">${x.c ? naira(x.c) : 'Free'}</b></div>
+      <div class="st-acts"><button type="button" class="st-more" data-d="${esc(x.s)}">Details</button><button type="button" class="st-add${inCart(x.s) ? ' in' : ''}" data-s="${esc(x.s)}">${inCart(x.s) ? 'In your cart' : 'Add to cart'}</button></div></div></article>`).join('');
     $('stEmpty').hidden = l.length > 0;
     $('stCount').textContent = l.length + (l.length === 1 ? ' item' : ' items');
     $('stBadge').textContent = cart.length;
   }
+
+  let dSlug = null;
+  function detail(s) {
+    const x = by[s]; if (!x) return; dSlug = s;
+    $('stDBody').innerHTML = `<div class="st-dgrid"><img src="${cover(s)}" alt="Cover of ${esc(x.t)}" width="640" height="905"><div class="st-dtxt"><span class="st-tag">${esc(x.g)}</span><h2 id="stDTitle">${esc(x.t)}</h2><p class="st-dsub">${esc(x.u)}</p>
+      ${x.w && x.w.length ? `<h4>What is inside</h4><ul>${x.w.map((p) => `<li>${esc(p)}</li>`).join('')}</ul>` : ''}
+      <p class="st-meta">PDF · ${x.p} pages${x.c ? '' : ' · ' + esc(x.z)}</p>
+      <div class="st-dbuy"><b class="st-price ${x.c ? 'paid' : 'free'}">${x.c ? naira(x.c) : 'Free'}</b>${x.c ? '' : `<a class="st-dl2" href="resources/${esc(s)}.pdf" download>Download</a>`}<button type="button" class="st-add${inCart(s) ? ' in' : ''}" data-s="${esc(s)}">${inCart(s) ? 'In your cart' : 'Add to cart'}</button></div></div></div>`;
+    $('stDetail').hidden = false; document.documentElement.style.overflow = 'hidden'; $('stDClose').focus();
+    try { history.replaceState(null, '', '#p-' + s); } catch (e) {}
+  }
+  function closeDetail() {
+    if ($('stDetail').hidden) return;
+    $('stDetail').hidden = true; document.documentElement.style.overflow = $('stCart').hidden ? '' : 'hidden'; dSlug = null;
+    try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
+  }
+  $('stDClose').addEventListener('click', closeDetail);
+  $('stDetail').addEventListener('click', (e) => { if (e.target === $('stDetail')) closeDetail(); });
+  $('stDBody').addEventListener('click', (e) => {
+    const b = e.target.closest('button[data-s]'); if (!b) return;
+    const s = b.dataset.s; if (inCart(s)) cart = cart.filter((v) => v !== s); else cart.push(s);
+    save(); refresh(); detail(s);
+  });
 
   function cartBody() {
     const body = $('stCartBody');
@@ -223,9 +268,10 @@
   $('stCartBtn').addEventListener('click', () => open(true));
   $('stClose').addEventListener('click', () => open(false));
   $('stScrim').addEventListener('click', () => open(false));
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !$('stCart').hidden) open(false); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { if (!$('stDetail').hidden) closeDetail(); else if (!$('stCart').hidden) open(false); } });
 
   $('stGrid').addEventListener('click', (e) => {
+    const m = e.target.closest('[data-d]'); if (m) { detail(m.dataset.d); return; }
     const b = e.target.closest('button[data-s]'); if (!b) return;
     const s = b.dataset.s;
     if (inCart(s)) cart = cart.filter((x) => x !== s); else cart.push(s);
@@ -274,7 +320,7 @@
   }
   if (P.get('paid') || P.get('cancelled')) { try { history.replaceState(null, '', location.pathname); } catch (e) {} }
   refresh();
-  if (location.hash.indexOf('#p-') === 0) { const el = document.getElementById(location.hash.slice(1)); if (el) { setTimeout(() => { el.scrollIntoView({ block: 'center' }); el.style.outline = '3px solid #094570'; }, 150); } }
+  if (location.hash.indexOf('#p-') === 0) { const el = document.getElementById(location.hash.slice(1)); if (el) { el.scrollIntoView({ block: 'center' }); detail(location.hash.slice(3)); } }
 })();
 </script>
 <footer class="h-foot">
