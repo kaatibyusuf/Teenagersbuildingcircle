@@ -23,7 +23,7 @@ HS_I18N.add({
 "A message for the student or school": "رسالة للطالب أو المدرسة",
 "Show my name on the thank-you wall": "اعرض اسمي على لوحة الشكر",
 "Give by card": "تبرّع بالبطاقة",
-"You pay on the secure Bachs payment page by card or bank transfer. Prefer a direct transfer? Send it to Himaayah Ltd, Wema Bank, 0127584920, with the note \"Sponsor\", and message us on WhatsApp.": "تدفع في صفحة الدفع الآمنة لدى Bachs بالبطاقة أو بالتحويل البنكي. تفضّل التحويل المباشر؟ أرسله إلى Himaayah Ltd في Wema Bank، رقم 0127584920، مع ملاحظة «Sponsor»، وراسلنا على واتساب.",
+"You pay on our secure payment page by card or bank transfer. Prefer a direct transfer? Send it to Himaayah Ltd, Wema Bank, 0127584920, with the note \"Sponsor\", and message us on WhatsApp.": "تدفع في صفحة الدفع الآمنة لدينا بالبطاقة أو بالتحويل البنكي. تفضّل التحويل المباشر؟ أرسله إلى Himaayah Ltd في Wema Bank، رقم 0127584920، مع ملاحظة «Sponsor»، وراسلنا على واتساب.",
 "Where your gift goes": "إلى أين يذهب تبرّعك",
 "Straight to fees.": "إلى الرسوم مباشرة.",
 "Your gift pays the student's school fees. It is not spent on anything else.": "يدفع تبرّعك رسوم الطالب الدراسية، ولا يُنفق في شيء آخر.",

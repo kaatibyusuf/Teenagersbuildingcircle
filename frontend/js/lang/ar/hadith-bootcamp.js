@@ -46,7 +46,7 @@ HS_I18N.add({
 "Email (your login is sent here)": "البريد الإلكتروني (تُرسل إليه بيانات الدخول)",
 "WhatsApp number": "رقم واتساب",
 "Pay ₦15,000": "ادفع ١٥٬٠٠٠ نيرة",
-"You will pay on Bachs, our secure payment page, by card or bank transfer.": "ستدفع عبر صفحة الدفع الآمنة Bachs بالبطاقة أو التحويل البنكي.",
+"You will pay on our secure payment page, by card or bank transfer.": "ستدفع عبر صفحة الدفع الآمنة بالبطاقة أو التحويل البنكي.",
 "Himaayah Madrasah student?": "هل أنت طالب في المدرسة الشرعية في حماية؟",
 "The bootcamp is free for you. Log in with the Student ID and access code you use for your dashboard.": "المعسكر مجاني لك. ادخل برقم الطالب ورمز الدخول اللذين تستعملهما في لوحتك.",
 "Open the bootcamp": "افتح المعسكر",

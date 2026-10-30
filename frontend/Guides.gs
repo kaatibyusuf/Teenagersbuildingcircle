@@ -58,7 +58,7 @@ function gd_sendBooks_(name, email, ref, slugs, amount) {
     '<p>Assalaamu alaykum ' + gd_esc_(first) + ',</p><p>Thank you. Your payment is confirmed. Here is your receipt and your download' + (list.length > 1 ? 's' : '') + '.</p>' +
     '<table width="100%" style="border-collapse:collapse;font-size:15px"><tr style="color:#5b6b78;font-size:12px;text-transform:uppercase"><td style="padding-bottom:6px">Item</td><td style="text-align:right;padding-bottom:6px">Price</td></tr>' + rows +
     '<tr><td style="padding:12px 0;font-weight:bold">Total paid</td><td style="padding:12px 0;text-align:right;font-weight:bold">' + gd_esc_(naira_(amount)) + '</td></tr></table>' +
-    '<p style="color:#5b6b78;font-size:13px">' + gd_esc_(when) + ' &middot; Paid online through Bachs</p>' + buttons +
+    '<p style="color:#5b6b78;font-size:13px">' + gd_esc_(when) + ' &middot; Paid online</p>' + buttons +
     '<p><a href="' + receipt + '">View or print your receipt</a></p>' +
     '<p>Tip: print on A4 paper or open on a tablet. Keep this email, because the links work again whenever you need them.</p>' +
     '<p>Any problem? <a href="' + wa + '">Message us on WhatsApp</a>.</p><p>' + gd_esc_(SCHOOL_NAME) + '</p></div>';

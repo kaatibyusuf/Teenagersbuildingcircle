@@ -28,7 +28,7 @@ HS_I18N.add({
 "Choose": "اختر",
 "Browse the store and add guides to your cart.": "تصفّح المتجر وأضف الأدلة إلى سلتك.",
 "Pay securely": "ادفع بأمان",
-"Pay on Bachs by card or bank transfer.": "ادفع على Bachs بالبطاقة أو بالتحويل المصرفي.",
+"Pay by card or bank transfer.": "ادفع بالبطاقة أو بالتحويل المصرفي.",
 "Get your receipt": "احصل على إيصالك",
 "We email a receipt with the Himaayah logo.": "نرسل إليك إيصالًا بشعار حماية.",
 "Download": "نزّل",

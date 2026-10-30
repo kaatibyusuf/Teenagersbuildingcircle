@@ -22,7 +22,7 @@ HS_I18N.add({
 "Email for the receipt": "البريد الإلكتروني للإيصال",
 "(optional)": "(اختياري)",
 "Pay by card": "ادفع بالبطاقة",
-"Card payments are processed securely by Bachs. Your card details never reach our website.": "تُعالَج المدفوعات بالبطاقة بأمان عبر Bachs، ولا تصل بيانات بطاقتك إلى موقعنا أبدًا.",
+"Card payments are processed securely. Your card details never reach our website.": "تُعالَج المدفوعات بالبطاقة بأمان، ولا تصل بيانات بطاقتك إلى موقعنا أبدًا.",
 "Pay for a different student": "الدفع لطالب آخر",
 "Prefer bank transfer?": "تفضّل التحويل البنكي؟",
 "Transfer the fee to the account below, then send the receipt on WhatsApp with the Student ID. The school confirms it by hand, usually within a few hours.": "حوّل الرسوم إلى الحساب أدناه، ثم أرسل الإيصال عبر واتساب مع رقم الطالب. وتؤكّده المدرسة يدويًا، غالبًا خلال ساعات قليلة.",

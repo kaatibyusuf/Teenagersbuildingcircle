@@ -415,7 +415,7 @@ HS_I18N.add({
 "Your name": "اسمك",
 "Email (your receipt and download links are sent here)": "البريد الإلكتروني (يُرسل إليه الإيصال وروابط التنزيل)",
 "WhatsApp number (optional)": "رقم واتساب (اختياري)",
-"You will pay on Bachs, our secure payment page, by card or bank transfer. We email your receipt and download links within a few minutes; check your spam folder too.": "ستدفع على Bachs، صفحة الدفع الآمنة لدينا، بالبطاقة أو بالتحويل المصرفي. نرسل إليك الإيصال وروابط التنزيل خلال دقائق؛ تفقّد مجلد الرسائل غير المرغوبة أيضًا.",
+"You will pay on our secure payment page, by card or bank transfer. We email your receipt and download links within a few minutes; check your spam folder too.": "ستدفع على صفحة الدفع الآمنة لدينا بالبطاقة أو بالتحويل المصرفي. نرسل إليك الإيصال وروابط التنزيل خلال دقائق؛ تفقّد مجلد الرسائل غير المرغوبة أيضًا.",
 "Opening the secure payment page…": "جارٍ فتح صفحة الدفع الآمنة…",
 "Enter your name.": "أدخل اسمك.",
 "Enter a valid email address. Your receipt is sent there.": "أدخل بريدًا إلكترونيًا صحيحًا. يُرسل الإيصال إليه.",

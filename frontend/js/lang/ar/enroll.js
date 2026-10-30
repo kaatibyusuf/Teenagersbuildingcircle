@@ -153,7 +153,7 @@ HS_I18N.add({
 "Pay by card": "ادفع بالبطاقة",
 "re:Pay ₦([\\d,]+) by card": "ادفع ₦$1 بالبطاقة",
 "Opening the secure payment page…": "جارٍ فتح صفحة الدفع الآمنة…",
-"Card payments are processed securely by Bachs. Your card details never reach our website.": "تُعالَج المدفوعات بالبطاقة بأمان عبر Bachs، ولا تصل بيانات بطاقتك إلى موقعنا أبدًا.",
+"Card payments are processed securely. Your card details never reach our website.": "تُعالَج المدفوعات بالبطاقة بأمان، ولا تصل بيانات بطاقتك إلى موقعنا أبدًا.",
 "Card payment isn’t available right now. You can pay by bank transfer instead.": "الدفع بالبطاقة غير متاح الآن. يمكنك الدفع بالتحويل البنكي بدلًا من ذلك.",
 "Card payments are not set up yet. You can pay by bank transfer instead.": "الدفع بالبطاقة لم يُفعَّل بعد. يمكنك الدفع بالتحويل البنكي بدلًا من ذلك.",
 "The card payment page could not be opened. You can pay by bank transfer instead.": "تعذّر فتح صفحة الدفع بالبطاقة. يمكنك الدفع بالتحويل البنكي بدلًا من ذلك.",

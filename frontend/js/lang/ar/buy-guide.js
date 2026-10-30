@@ -18,7 +18,7 @@ HS_I18N.add({
 "Email (the PDF link is sent here)": "البريد الإلكتروني (يُرسل رابط الملف إليه)",
 "WhatsApp number (optional)": "رقم واتساب (اختياري)",
 "Pay": "ادفع",
-"You will pay on Bachs, our secure payment page, by card or bank transfer. The email arrives within a few minutes; check your spam folder too.": "ستدفع على Bachs، صفحة الدفع الآمنة لدينا، بالبطاقة أو بالتحويل المصرفي. يصل البريد خلال دقائق؛ تفقّد مجلد الرسائل غير المرغوبة أيضًا.",
+"You will pay on our secure payment page, by card or bank transfer. The email arrives within a few minutes; check your spam folder too.": "ستدفع على صفحة الدفع الآمنة لدينا بالبطاقة أو بالتحويل المصرفي. يصل البريد خلال دقائق؛ تفقّد مجلد الرسائل غير المرغوبة أيضًا.",
 "Need help?": "تحتاج مساعدة؟",
 "If your email does not arrive, message us on WhatsApp with the name and email you used.": "إن لم يصلك البريد، راسلنا على واتساب بالاسم والبريد الذي استخدمته.",
 "WhatsApp the school": "راسل المدرسة على واتساب",
