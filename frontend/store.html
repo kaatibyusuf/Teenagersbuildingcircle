@@ -81,6 +81,7 @@
       <label class="st-search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="stQ" type="search" placeholder="Search the store" aria-label="Search the store" autocomplete="off"></label>
       <div class="st-chips" id="stPrice" role="group" aria-label="Section"><button type="button" data-p="all" aria-pressed="true">All</button><button type="button" data-p="kids" aria-pressed="false">Kids’ books</button><button type="button" data-p="madrasah" aria-pressed="false">Madrasah</button><button type="button" data-p="academy" aria-pressed="false">Academy</button><button type="button" data-p="skills" aria-pressed="false">Skills School</button><button type="button" data-p="teens" aria-pressed="false">Teenagers Building Circle</button><button type="button" data-p="free" aria-pressed="false">Free</button></div>
       <div class="st-chips" id="stTopic" role="group" aria-label="Subject"></div>
+      <label class="st-sel"><select id="stTopicSel" aria-label="Subject"></select></label>
     </div><p class="st-count" id="stCount" aria-live="polite"></p></div>
     <div class="st-grid" id="stGrid"></div>
     <p class="st-empty" id="stEmpty" hidden>Nothing matches your search. Try another word, or choose All.</p>
@@ -228,6 +229,20 @@
 .st-card h3{min-height:0}
 .st-cartbtn{bottom:88px;padding:10px 14px}
 }
+
+.site .st-sel{display:none!important}
+@media (max-width:640px){
+.st-panel{padding:10px}
+.site .st-search{padding-inline:12px}
+.site .st-search input{padding:11px 0!important;font-size:.95rem}
+.st-panel .st-chips{gap:6px;margin-inline:-10px;padding-inline:10px}
+.st-panel .st-chips button{font-size:.84rem;padding:7px 13px;line-height:1.2}
+.st-panel #stTopic{display:none}
+.site .st-sel{display:block!important;position:relative}
+.st-sel::after{content:'';position:absolute;inset-inline-end:14px;top:50%;width:8px;height:8px;border-inline-end:2px solid #094570;border-bottom:2px solid #094570;transform:translateY(-70%) rotate(45deg);pointer-events:none}
+.site .st-sel select{width:100%;appearance:none;-webkit-appearance:none;font:inherit;font-size:.92rem;font-weight:500;color:#0b2a3f;background:#f3f6f9;border:1.5px solid transparent;border-radius:12px;padding:11px 36px 11px 14px;min-height:44px;box-sizing:border-box}
+.site .st-sel select:focus{outline:0;border-color:#094570;background:#fff}
+}
 </style>
 <script src="js/store-data.js"></script>
 <script>(function () {
@@ -248,6 +263,9 @@
 
   // topic chips
   $('stTopic').innerHTML = F.map(([k, v]) => `<button type="button" data-k="${esc(k)}" aria-pressed="${k === 'all'}">${k === 'all' ? 'All subjects' : esc(v)}</button>`).join('');
+
+  $('stTopicSel').innerHTML = F.map(([k, v]) => `<option value="${esc(k)}">${k === 'all' ? 'All subjects' : esc(v)}</option>`).join('');
+  $('stTopicSel').addEventListener('change', (e) => { ST.topic = e.target.value; [...$('stTopic').children].forEach((x) => x.setAttribute('aria-pressed', x.dataset.k === ST.topic)); grid(); });
 
   function visible() {
     const q = fold(ST.q).trim();
@@ -357,7 +375,7 @@
   const setSec = (v) => { ST.sec = v; [...$('stPrice').children].forEach((x) => x.setAttribute('aria-pressed', x.dataset.p === v)); };
   $('stPrice').addEventListener('click', (e) => { const b = e.target.closest('button[data-p]'); if (!b) return; setSec(b.dataset.p); grid(); });
   if (P0.get('cat') && $('stPrice').querySelector('[data-p="' + P0.get('cat') + '"]')) setSec(P0.get('cat'));
-  $('stTopic').addEventListener('click', (e) => { const b = e.target.closest('button[data-k]'); if (!b) return; ST.topic = b.dataset.k; [...$('stTopic').children].forEach((x) => x.setAttribute('aria-pressed', x === b)); grid(); });
+  $('stTopic').addEventListener('click', (e) => { const b = e.target.closest('button[data-k]'); if (!b) return; ST.topic = b.dataset.k; $('stTopicSel').value = ST.topic; [...$('stTopic').children].forEach((x) => x.setAttribute('aria-pressed', x === b)); grid(); });
 
   // coming back from Bachs
   const P = new URLSearchParams(location.search), ban = $('stBanner');
