@@ -170,5 +170,8 @@ HS_I18N.add({
 "A one-page CV template, writing with little experience, a cover letter, interview preparation and the STAR method.": "نموذج سيرة ذاتية في صفحة واحدة، والكتابة بخبرة قليلة، ورسالة التقديم، والاستعداد للمقابلة، وطريقة STAR.",
 "Careers": "المهن والوظائف",
 "Freelancing First Steps": "الخطوات الأولى في العمل الحر",
-"Starting as a freelancer: choosing a skill, a portfolio, first clients, pricing, contracts, safe payment and scams to avoid.": "البدء في العمل الحر: اختيار المهارة ومعرض الأعمال وأول العملاء والتسعير والعقود والدفع الآمن والاحتيالات."
+"Starting as a freelancer: choosing a skill, a portfolio, first clients, pricing, contracts, safe payment and scams to avoid.": "البدء في العمل الحر: اختيار المهارة ومعرض الأعمال وأول العملاء والتسعير والعقود والدفع الآمن والاحتيالات.",
+"Little Minds, Big Questions": "عقول صغيرة وأسئلة كبيرة",
+"A workbook for children aged 5 to 10: 66 activities in observation, thinking, reading, speaking, creativity, maths, everyday skills and the signs of Allah, with a parent handbook and a 12-week plan.": "كتاب أنشطة للأطفال من 5 إلى 10 سنوات: 66 نشاطًا في الملاحظة والتفكير والقراءة والتحدث والإبداع والرياضيات والمهارات اليومية وآيات الله، مع دليل للوالدين وخطة لاثني عشر أسبوعًا.",
+"Children’s learning": "تعلّم الأطفال"
 });

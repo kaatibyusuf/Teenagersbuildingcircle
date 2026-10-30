@@ -47,6 +47,7 @@ const safeUrl = (u) => /^https:\/\/[^\s]+$/i.test(String(u || '')) ? u : '#';
 const RES = (location.protocol === 'https:' ? location.origin : 'https://www.himaayahschools.com') + '/resources/';
 const GUIDE = (slug, Title, Subject, Description, Added) => ({ Title, Author: 'Himaayah Schools', Type: 'PDF', Subject, Level: 'All', Url: RES + slug + '.pdf', Description, Added, forMe: true, guide: true });
 const GUIDES = [
+  GUIDE('little-minds-big-questions', 'Little Minds, Big Questions', 'Children’s learning', 'A workbook for children aged 5 to 10: 66 activities in observation, thinking, reading, speaking, creativity, maths, everyday skills and the signs of Allah, with a parent handbook and a 12-week plan.', '2026-10-27'),
   GUIDE('money-smart-muslim-teens', 'Money Smart Muslim Teens', 'Personal development', 'Money habits for Muslim teens: earning ḥalāl, spending, saving, charity, avoiding ribā and betting, and a monthly budget.', '2026-10-27'),
   GUIDE('friends-and-peer-pressure', 'Friends and Peer Pressure', 'Personal development', 'Choosing good friends, being one, saying no to peer pressure, online pressure, and practice scenarios.', '2026-10-27'),
   GUIDE('design-with-canva', 'Design with Canva', 'Graphic design', 'Graphic design with Canva: six principles, colour and fonts, a first flyer step by step, social media sizes and a portfolio.', '2026-10-27'),
