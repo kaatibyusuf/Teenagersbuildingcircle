@@ -350,14 +350,13 @@ async function recWithdraw(id, btn) {
    Keep each id short and unique: ticks are saved by id, so renaming an id starts that step afresh. */
 const ROUTINES = {
   hifdh: [
-    { id: 'read', icon: 'book', t: 'Read today’s portion from the muṣḥaf', n: 3, hint: 'Look carefully at every word and its ḥarakāt.' },
-    { id: 'listen', icon: 'listen', t: 'Listen to a trusted reciter', n: 3, hint: 'Follow along in the muṣḥaf as you listen.' },
+    { id: 'listen', icon: 'listen', t: 'Listen to a trusted reciter', n: 3, hint: 'Follow along in your own muṣḥaf. Always use the same muṣḥaf, so your eyes remember the page.' },
     { id: 'meaning', icon: 'meaning', t: 'Read the meaning (tafsīr)', n: 1, hint: 'Knowing what it means helps it stay.' },
-    { id: 'memorise', icon: 'bookmark', t: 'Memorise it, a few āyāt at a time', way: true, hint: 'Āyah by āyah, then join them together.' },
-    { id: 'byheart', icon: 'repeat', t: 'Recite the whole portion by heart', n: 20, hint: 'Without looking. Tap the counter each time.' },
+    { id: 'memorise', icon: 'bookmark', t: 'Memorise it from your muṣḥaf, a few āyāt at a time', way: true, hint: 'Use only one muṣḥaf for the whole hifdh. Āyah by āyah, then join them together.' },
+    { id: 'byheart', icon: 'repeat', t: 'Recite the whole portion by heart', n: 40, hint: 'Without looking. Tap the counter each time.' },
     { id: 'record', icon: 'mic', t: 'Record it and send it to your teacher', n: 1, action: 'record', hint: 'Your teacher listens and marks it.' },
     { id: 'yesterday', icon: 'back', t: 'Repeat yesterday’s lesson', n: 5 },
-    { id: 'link', icon: 'link', t: 'Join today’s portion to the page before it', n: 3, hint: 'Recite both together by heart.' },
+    { id: 'link', icon: 'link', t: 'Join today’s portion to the pages before it', n: 1, hint: 'Recite them together by heart. Yesterday’s lesson already holds the page before.' },
     { id: 'revise', icon: 'cycle', t: 'Murājaʿah: revise your old portion', plan: true },
   ],
   muraajah: [

@@ -196,5 +196,10 @@ HS_I18N.add({
 "re:Finish today’s routine to keep your (\\d+)-day streak\\.": "أكمل برنامج اليوم لتحافظ على أيامك المتتالية ($1).",
 "Routine": "البرنامج",
 "Recordings are for Madrasah students.": "التسجيلات لطلاب المدرسة القرآنية.",
-"The daily routine is for Madrasah students.": "البرنامج اليومي لطلاب المدرسة القرآنية."
+"The daily routine is for Madrasah students.": "البرنامج اليومي لطلاب المدرسة القرآنية.",
+"Follow along in your own muṣḥaf. Always use the same muṣḥaf, so your eyes remember the page.": "تابع في مصحفك أنت. استعمل المصحف نفسه دائمًا، لتحفظ عينك صورة الصفحة.",
+"Memorise it from your muṣḥaf, a few āyāt at a time": "احفظه من مصحفك، بضع آيات في كل مرة",
+"Use only one muṣḥaf for the whole hifdh. Āyah by āyah, then join them together.": "اعتمد مصحفًا واحدًا طوال الحفظ. آيةً آيةً، ثم اربطها معًا.",
+"Join today’s portion to the pages before it": "صِل مقطع اليوم بالصفحات التي قبله",
+"Recite them together by heart. Yesterday’s lesson already holds the page before.": "اقرأها معًا غيبًا. درس الأمس يثبّت لك الصفحة التي قبلها."
 });
