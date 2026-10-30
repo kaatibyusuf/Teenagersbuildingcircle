@@ -107,5 +107,6 @@ HS_I18N.add({
 "Mark saved. The student can see it now.": "حُفظت الدرجة. يستطيع الطالب رؤيتها الآن.",
 "Could not open the recording.": "تعذّر فتح التسجيل.",
 "New lesson": "درس جديد",
-"Revision": "مراجعة"
+"Revision": "مراجعة",
+"Recordings sent by your Madrasah students. Listen, give a score out of 10 for memorisation and tajwīd and out of 5 for fluency, then choose Pass or Repeat. Any score can be left empty.": "تسجيلات يرسلها طلابك في المدرسة القرآنية. استمع، وأعطِ درجة من 10 للحفظ والتجويد ومن 5 للطلاقة، ثم اختر «ناجح» أو «أعِد». يمكن ترك أي درجة فارغة."
 });

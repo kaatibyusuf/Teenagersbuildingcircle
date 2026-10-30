@@ -193,7 +193,7 @@ function vRecItem(x) {
 function vRecitations() {
   const all = D.recordings || [], waiting = all.filter((x) => x.Status === 'Waiting'), marked = all.filter((x) => x.Status === 'Marked');
   const list = S.recShow === 'marked' ? marked : waiting;
-  return `<article class="c w12"><h2>Recitations</h2><p class="sub">Recordings sent by your Hifdh, One-Year Hifdh and Muraajah students. Listen, give a score out of 10 for memorisation and tajw\u012Bd and out of 5 for fluency, then choose Pass or Repeat. Any score can be left empty.</p>
+  return `<article class="c w12"><h2>Recitations</h2><p class="sub">Recordings sent by your Madrasah students. Listen, give a score out of 10 for memorisation and tajw\u012Bd and out of 5 for fluency, then choose Pass or Repeat. Any score can be left empty.</p>
     <div class="inline" style="margin:10px 0 4px"><button type="button" class="btn btn-sm ${S.recShow !== 'marked' ? 'btn-ink' : 'btn-line'}" data-act="recShow" data-v="waiting">Waiting (${waiting.length})</button><button type="button" class="btn btn-sm ${S.recShow === 'marked' ? 'btn-ink' : 'btn-line'}" data-act="recShow" data-v="marked">Marked (${marked.length})</button></div>
     ${list.map(vRecItem).join('') || `<p class="empty" style="margin-top:12px">${S.recShow === 'marked' ? 'No marked recitations yet.' : 'No recitations are waiting. Students send them from their dashboard.'}</p>`}</article>`;
 }

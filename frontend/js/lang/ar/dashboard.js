@@ -194,5 +194,7 @@ HS_I18N.add({
 "re:Keep your (\\d+)-day streak: start today’s routine\\.": "حافظ على أيامك المتتالية ($1): ابدأ برنامج اليوم.",
 "You have not started today’s routine yet.": "لم تبدأ برنامج اليوم بعد.",
 "re:Finish today’s routine to keep your (\\d+)-day streak\\.": "أكمل برنامج اليوم لتحافظ على أيامك المتتالية ($1).",
-"Routine": "البرنامج"
+"Routine": "البرنامج",
+"Recordings are for Madrasah students.": "التسجيلات لطلاب المدرسة القرآنية.",
+"The daily routine is for Madrasah students.": "البرنامج اليومي لطلاب المدرسة القرآنية."
 });

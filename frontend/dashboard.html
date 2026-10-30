@@ -207,7 +207,7 @@ function ttCard(d) {
     <div class="tt-week">${days.map((x) => `<div class="${x.day === today ? 'today' : ''}"><h3>${x.day}${x.day === today ? ' · Today' : ''}</h3>${x.c.map((c) => `<p><b>${esc(c.Subject)}</b><span dir="ltr">${tt12(c.Start)}${c.End ? '–' + tt12(c.End) : ''}</span></p>${safeUrl(c.Link) ? `<a href="${esc(c.Link)}" target="_blank" rel="noopener">Join</a>` : ''}`).join('')}</div>`).join('')}</div>
     <p class="sub" style="margin-top:14px"><button class="btn btn-line" type="button" id="ttIcsBtn">Add to my calendar</button></p></article>`;
 }
-/* ===== Recite to your teacher (Hifdh, One-Year Hifdh and Muraajah) =====
+/* ===== Recite to your teacher (all Madrasah students) =====
    The recorder keeps its state here, outside render(), so a re-render never loses a recording. */
 const REC = { form: { type: 'New lesson', surah: '', from: '', to: '', note: '' }, blob: null, url: '', secs: 0, mime: '', ext: '', fileName: '', mr: null, stream: null, t0: 0, tick: null, sending: false, playing: {} };
 const REC_TYPES = ['New lesson', 'Revision', 'Test'];
