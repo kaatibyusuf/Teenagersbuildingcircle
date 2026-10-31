@@ -69,5 +69,8 @@ HS_I18N.add({
 "Focus in a Digital World": "التركيز في عالم رقمي",
 "Service and Leadership": "الخدمة والقيادة",
 "Work and Enterprise": "العمل وريادة الأعمال",
-"Looking Back, Moving Forward": "نظرة إلى الوراء ومضيّ إلى الأمام"
+"Looking Back, Moving Forward": "نظرة إلى الوراء ومضيّ إلى الأمام",
+"Next cohort starts 1 December 2026.": "تبدأ الدفعة القادمة في 1 ديسمبر 2026.",
+"Enrol now to secure a place.": "سجّل الآن لتحجز مقعدك.",
+"Starts 1 Dec 2026": "تبدأ في 1 ديسمبر 2026"
 });
