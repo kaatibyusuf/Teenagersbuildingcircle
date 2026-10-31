@@ -26,13 +26,109 @@
 <script>document.documentElement.classList.add('js');</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Inter:wght@400;500;600;700&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
 <script src="js/i18n.js"></script>
 <script src="js/chat.js" defer></script>
 <!-- Vercel Analytics: counts visits once enabled in the Vercel dashboard -->
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
 <script defer src="/_vercel/insights/script.js"></script>
+<style>
+.tb-page{--tb-ink:#0A1B2A;--tb-bg:#FFF9EE;--tb-g:#1FA463;--tb-b:#3B82D6;--tb-y:#FFB627;--tb-p:#8B5CF6;--tb-navy:#062F4D;font-family:Inter,system-ui,sans-serif;color:var(--tb-ink);background:var(--tb-bg);line-height:1.5;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+.tb-page *{box-sizing:border-box;margin:0}
+:where(.tb-page a){color:inherit;text-decoration:none}
+.tb-wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+.tb-d{font-family:"Bricolage Grotesque",Inter,sans-serif;letter-spacing:-.045em;line-height:.9;font-weight:800}
+.tb-page h1,.tb-page h2,.tb-page h3{color:inherit;font-family:"Bricolage Grotesque",Inter,sans-serif!important;font-weight:800!important;letter-spacing:-.04em}
+.tb-page .tb-band h3{letter-spacing:-.04em}
+.tb-btn{display:inline-flex;align-items:center;gap:10px;border-radius:999px;padding:17px 30px;font-weight:700;font-size:17px;border:3px solid var(--tb-ink);transition:transform .15s,box-shadow .15s}
+.tb-btn:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--tb-ink)}
+.tb-btn-k{background:var(--tb-ink);color:#fff}.tb-btn-k:hover{box-shadow:5px 5px 0 var(--tb-y)}
+.tb-btn-o{background:transparent}
+/* hero */
+.tb-hero{position:relative;padding:170px 0 90px;overflow:hidden}
+.tb-hero-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:40px;align-items:center}
+.tb-tag{display:inline-block;background:var(--tb-ink);color:#fff;border-radius:999px;padding:9px 18px;font-weight:700;font-size:14px;letter-spacing:.04em;margin-bottom:28px}
+.tb-tag b{color:var(--tb-y)}
+.tb-hero h1{font-size:clamp(58px,9.4vw,138px)}
+.tb-hero h1 .tb-hl{display:inline-block;padding:0 .12em;border-radius:.16em;color:#fff;transform:rotate(-2deg)}
+.tb-hero p{font-size:21px;max-width:520px;margin:34px 0 36px;color:#2c4155}
+.tb-cta{display:flex;gap:14px;flex-wrap:wrap}
+.tb-facts{display:flex;gap:10px;flex-wrap:wrap;margin-top:34px}
+.tb-facts span{border:2.5px solid var(--tb-ink);border-radius:999px;padding:8px 16px;font-weight:600;font-size:15px;background:#fff}
+/* quadrant */
+.tb-quad{position:relative;aspect-ratio:1;max-width:420px;margin-left:auto;width:100%}
+.tb-quad div{position:absolute;width:52%;height:52%;border-radius:34px;display:grid;place-items:center;font-family:"Bricolage Grotesque",Inter,sans-serif;font-weight:800;font-size:clamp(54px,8vw,104px);color:#fff;border:4px solid var(--tb-ink);box-shadow:8px 8px 0 var(--tb-ink)}
+.tb-quad .tb-q1{left:0;top:0;background:var(--tb-g);transform:rotate(-6deg)}
+.tb-quad .tb-q2{right:0;top:6%;background:var(--tb-b);transform:rotate(5deg)}
+.tb-quad .tb-q3{left:4%;bottom:0;background:var(--tb-y);color:var(--tb-ink);transform:rotate(4deg)}
+.tb-quad .tb-q4{right:2%;bottom:4%;background:var(--tb-p);transform:rotate(-4deg)}
+/* marquee */
+.tb-mq{background:var(--tb-ink);color:#fff;transform:rotate(-1.2deg);margin:0 -20px;padding:18px 0;overflow:hidden;white-space:nowrap}
+.tb-mq div{display:inline-block;font-family:"Bricolage Grotesque",Inter,sans-serif;font-weight:800;font-size:30px;letter-spacing:-.02em;animation:tb-mv 28s linear infinite}
+.tb-mq span{margin:0 26px;color:var(--tb-y)}
+@keyframes tb-mv{to{transform:translateX(-50%)}}
+/* pillars */
+.tb-sec{padding:110px 0}
+.tb-sec h2{font-size:clamp(44px,6.4vw,92px);margin-bottom:46px}
+.tb-bands{display:grid;gap:14px}
+.tb-band{display:grid;grid-template-columns:90px 1fr 1.1fr;gap:24px;align-items:center;border:4px solid var(--tb-ink);border-radius:30px;padding:26px 34px;color:#fff;box-shadow:8px 8px 0 var(--tb-ink);transition:transform .15s,box-shadow .15s}
+.tb-band:hover{transform:translate(-4px,-4px);box-shadow:12px 12px 0 var(--tb-ink)}
+.tb-band .tb-n{font-family:"Bricolage Grotesque",Inter,sans-serif;font-weight:800;font-size:64px;line-height:1;opacity:.55}
+.tb-band h3{font-family:"Bricolage Grotesque",Inter,sans-serif;font-weight:800;font-size:clamp(34px,4.4vw,58px);letter-spacing:-.04em;line-height:.95}
+.tb-band p{font-size:18px;line-height:1.45}
+.tb-band.tb-y{color:var(--tb-ink)}
+/* numbers */
+.tb-nums{background:var(--tb-ink);color:#fff;border-radius:44px;padding:70px 56px;margin:0 auto;max-width:1180px;width:calc(100% - 48px);display:grid;grid-template-columns:repeat(3,1fr);gap:40px}
+.tb-nums b{display:block;font-family:"Bricolage Grotesque",Inter,sans-serif;font-weight:800;font-size:clamp(70px,9vw,128px);letter-spacing:-.05em;line-height:.88}
+.tb-nums div:nth-child(1) b{color:var(--tb-y)}.tb-nums div:nth-child(2) b{color:#7DD3A8}.tb-nums div:nth-child(3) b{color:#C4B5FD}
+.tb-nums span{display:block;font-size:20px;margin-top:14px;color:#cfdce8;max-width:280px}
+/* price */
+.tb-price{display:grid;grid-template-columns:1fr 1fr;gap:0;border:4px solid var(--tb-ink);border-radius:40px;overflow:hidden;box-shadow:12px 12px 0 var(--tb-ink)}
+.tb-price>div{padding:56px 52px}
+.tb-price .tb-l{background:var(--tb-y)}.tb-price .tb-r{background:#fff;display:flex;flex-direction:column;justify-content:center;gap:20px}
+.tb-price small{font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:13px}
+.tb-price .tb-big{white-space:nowrap;font-family:"Bricolage Grotesque",Inter,sans-serif;font-weight:800;font-size:clamp(56px,7vw,100px);letter-spacing:-.05em;line-height:.9;margin:14px 0 8px}
+.tb-price .tb-big span{font-size:26px;letter-spacing:0;font-weight:600}
+.tb-price .tb-r p{font-size:20px;line-height:1.5}
+.tb-price .tb-r p b{background:linear-gradient(transparent 62%,#FFE08A 62%)}
+.tb-foot{padding:70px 0 90px;text-align:center;color:#6b7a88;font-size:14px}
+@media(max-width:900px){
+ .tb-hero-grid{grid-template-columns:1fr}.tb-quad{margin:20px auto 0;max-width:340px}
+ .tb-band{grid-template-columns:1fr;gap:10px;padding:24px 24px 28px}.tb-band .tb-n{font-size:44px}
+ .tb-nums{grid-template-columns:1fr;padding:44px 28px;gap:34px}.tb-price{grid-template-columns:1fr}.tb-price>div{padding:38px 28px}
+}
+@media(max-width:560px){.tb-hero{padding:76px 0 60px}.tb-sec{padding:76px 0}.tb-hero p{font-size:18px}.tb-btn{padding:15px 24px;font-size:16px}}
+
+/* ---- motion ---- */
+.tb-rv{opacity:0;transform:translateY(40px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1);transition-delay:var(--tb-dl,0s)}
+.tb-rv.tb-in{opacity:1;transform:none}
+.tb-band.tb-rv{transform:translateX(-80px) rotate(-1.5deg)}.tb-band.tb-rv.tb-in{transform:none}
+.tb-band:nth-child(even).tb-rv{transform:translateX(80px) rotate(1.5deg)}.tb-band:nth-child(even).tb-rv.tb-in{transform:none}
+.tb-w{display:inline-block;opacity:0;transform:translateY(.7em) rotate(4deg);animation:tb-wd .75s cubic-bezier(.2,.9,.25,1.2) forwards;animation-delay:calc(var(--tb-i)*.11s + .15s)}
+@keyframes tb-wd{to{opacity:1;transform:none}}
+.tb-hero h1 .tb-hl{animation-name:tb-wd,tb-wig;animation-duration:.75s,3.8s;animation-delay:.6s,1.8s;animation-iteration-count:1,infinite;animation-timing-function:cubic-bezier(.2,.9,.25,1.2),ease-in-out}
+@keyframes tb-wig{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(1.5deg) scale(1.03)}}
+.tb-tag{animation:tb-pop .6s cubic-bezier(.2,.9,.25,1.4) both}.tb-hero p,.tb-cta,.tb-facts{animation:tb-up .8s .8s cubic-bezier(.2,.7,.2,1) both}.tb-facts{animation-delay:1s}
+@keyframes tb-pop{from{opacity:0;transform:scale(.6)}}@keyframes tb-up{from{opacity:0;transform:translateY(24px)}}
+.tb-quad div{animation:tb-drop .9s cubic-bezier(.2,.9,.25,1.3) both,tb-bob 5s ease-in-out infinite;transition:transform .2s}
+.tb-quad .tb-q1{animation-delay:.2s,1.1s}.tb-quad .tb-q2{animation-delay:.35s,1.4s}.tb-quad .tb-q3{animation-delay:.5s,1.7s}.tb-quad .tb-q4{animation-delay:.65s,2s}
+@keyframes tb-drop{from{opacity:0;translate:0 -140px;scale:.5}}
+@keyframes tb-bob{0%,100%{translate:0 0}50%{translate:0 -12px}}
+.tb-quad div:hover{scale:1.1;z-index:3;cursor:pointer}
+.tb-spark{position:absolute;pointer-events:none;font-size:26px;animation:tb-tw 2.6s ease-in-out infinite}
+@keyframes tb-tw{0%,100%{opacity:.2;transform:scale(.6) rotate(0)}50%{opacity:1;transform:scale(1.2) rotate(40deg)}}
+.tb-btn-k{position:relative;overflow:hidden}.tb-btn-k:after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.35) 50%,transparent 70%);transform:translateX(-120%);animation:tb-shine 3.6s 2s infinite}
+@keyframes tb-shine{to{transform:translateX(120%)}}
+.tb-band .tb-n{transition:transform .3s}.tb-band:hover .tb-n{transform:scale(1.25) rotate(-6deg)}
+.tb-price .tb-big{transition:transform .3s}.tb-price:hover .tb-big{transform:scale(1.03)}
+.tb-cdot{display:inline-block;animation:tb-pulse 1.6s ease-in-out infinite}@keyframes tb-pulse{50%{transform:scale(1.35)}}
+@media (prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}.tb-rv,.tb-w{opacity:1!important;transform:none!important}.tb-mq div{animation:none!important}}
+.tb-price .tb-r .tb-gd{font-size:16px;color:#2c4155;border-top:2px dashed #d9cfb8;padding-top:16px}
+.tb-mq{direction:ltr}
+.tb-tag i{font-style:normal;opacity:.55;margin:0 .35em}
+@media(max-width:560px){.tb-hero{padding:130px 0 60px}}
+</style>
 </head>
 <body>
 <script src="js/ticker.js"></script>
@@ -76,129 +172,49 @@
   Home
 </a>
 
-<header class="hero">
-  <div class="wrap">
-    <div class="hero-grid">
-      <div class="hero-copy">
-        <h1>Building who they'll become.</h1>
-        <p class="lead">A weekly circle for ages 13–19, built on four pillars: deen, educational development, skills, and personal development, with live sessions.</p>
-        <p class="start-note"><b>Next cohort starts 1 December 2026.</b> Enrol now to secure a place.</p>
-        <div class="hero-actions">
-          <a href="enroll?programme=circle" class="btn btn-ink lift">Enroll now</a>
-          <a href="#pillars" class="btn btn-line lift">See the pillars</a>
-        </div>
-      </div>
-      <div class="quad" aria-hidden="true">
-        <div class="q"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h6a4 4 0 0 1 4 4v12a3 3 0 0 0-3-3H2z"/><path d="M22 4h-6a4 4 0 0 0-4 4v12a3 3 0 0 1 3-3h7z"/></svg></span><b>Deen</b></div>
-        <div class="q"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg></span><b>Education</b></div>
-        <div class="q"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.8-3.8a6 6 0 0 1-7.9 7.9l-6.9 6.9a2.1 2.1 0 0 1-3-3l6.9-6.9a6 6 0 0 1 7.9-7.9z"/></svg></span><b>Skills</b></div>
-        <div class="q"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></span><b>Personal growth</b></div>
-        <div class="core"><svg viewBox="0 0 377.21 459.6"><path fill="#85CCFF" d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg></div>
-      </div>
+<div class="tb-page">
+<header class="tb-hero">
+  <div class="tb-wrap tb-hero-grid">
+    <div>
+      <span class="tb-tag"><span class="tb-cdot">●</span> <span>Ages 13–19</span><i>·</i><b>Starts 1 December 2026</b></span>
+      <h1 class="tb-d"><span class="tb-w" style="--tb-i:0">Build</span> <span class="tb-w" style="--tb-i:1">who</span> <span class="tb-w tb-hl" style="background:var(--tb-p);--tb-i:2">you’ll become.</span></h1>
+      <p>A live circle for teenagers. Faith, study, skills and character, four sessions a week on Google Meet.</p>
+      <div class="tb-cta"><a class="tb-btn tb-btn-k" href="enroll?programme=circle">Enrol now →</a><a class="tb-btn tb-btn-o" href="#pillars">See what we build</a></div>
+      <div class="tb-facts"><span>4 live sessions a week</span><span>Google Meet</span><span>₦40,000 a month</span></div>
     </div>
-
-    <div class="facts-wrap">
-      <div class="facts reveal">
-        <div class="fact"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><path d="M17 5.5a3.2 3.2 0 0 1 0 6"/><path d="M21.5 20c0-2.6-1.6-4.5-3.8-5.3"/></svg></span><div><b>Ages 13–19</b><span>in a weekly cohort</span></div></div>
-        <div class="fact"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg></span><div><b>4 sessions</b><span>a week, live, across all four pillars</span></div></div>
-        <div class="fact"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.7-5.2A8.5 8.5 0 1 1 21 11.5z"/></svg></span><div><b>Google Meet</b><span>live, with your facilitator</span></div></div>
-        <div class="fact"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="20" height="13" rx="2"/><circle cx="12" cy="12.5" r="2.5"/><path d="M6 10v5M18 10v5"/></svg></span><div><b>&#8358;40,000</b><span>a month</span></div></div>
-        <a href="enroll?programme=circle" class="btn btn-ink lift">Enroll now</a>
-      </div>
-    </div>
+    <div class="tb-quad" aria-hidden="true"><span class="tb-spark" style="left:-6%;top:40%">✦</span><span class="tb-spark" style="right:-4%;top:-2%;animation-delay:.8s">✦</span><span class="tb-spark" style="left:46%;bottom:-8%;animation-delay:1.5s">✦</span><div class="tb-q1">D</div><div class="tb-q2">E</div><div class="tb-q3">S</div><div class="tb-q4">P</div></div>
   </div>
 </header>
 
-<section class="sec" id="pillars">
-  <div class="wrap">
-    <div class="head reveal">
-      <h2>One programme, built on four sides.</h2>
-      <p>Every week touches all four, not a semester of one and a semester of another.</p>
-    </div>
-    <div class="pillars">
-      <article class="pillar reveal">
-        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 4h6a4 4 0 0 1 4 4v12a3 3 0 0 0-3-3H2z"/><path d="M22 4h-6a4 4 0 0 0-4 4v12a3 3 0 0 1 3-3h7z"/></svg></div>
-        <small>01</small><h3>Deen</h3><p>Grounding in faith and practice that holds up outside the classroom, not just inside it.</p>
-      </article>
-      <article class="pillar reveal delay-1">
-        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg></div>
-        <small>02</small><h3>Educational Development</h3><p>Study habits and academic footing that carry into every other subject a student takes.</p>
-      </article>
-      <article class="pillar reveal delay-2">
-        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.8-3.8a6 6 0 0 1-7.9 7.9l-6.9 6.9a2.1 2.1 0 0 1-3-3l6.9-6.9a6 6 0 0 1 7.9-7.9z"/></svg></div>
-        <small>03</small><h3>Skills</h3><p>Practical ability, the kind you can actually use, not just describe on a form.</p>
-      </article>
-      <article class="pillar reveal delay-3">
-        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></div>
-        <small>04</small><h3>Personal Development</h3><p>Character and self-management, the part no syllabus tests but every adult needs.</p>
-      </article>
-    </div>
-  </div>
-</section>
+<div style="overflow:hidden;padding:14px 0"><div class="tb-mq" aria-hidden="true"><div>
+ <span>✦</span>Deen<span>✦</span>Education<span>✦</span>Skills<span>✦</span>Character<span>✦</span>Deen<span>✦</span>Education<span>✦</span>Skills<span>✦</span>Character<span>✦</span>Deen<span>✦</span>Education<span>✦</span>Skills<span>✦</span>Character<span>✦</span>Deen<span>✦</span>Education<span>✦</span>Skills<span>✦</span>Character
+</div></div></div>
 
-<section class="sec">
-  <div class="wrap detail-grid">
-    <div class="detail-copy reveal">
-      <h2>What a week actually looks like.</h2>
-      <p>Every student starts with a diagnostic assessment, so the cohort isn't a guess. It's built around where each student actually is. From there, it's four live sessions a week with real facilitators, all on Google Meet, with a progress report sent to parents every month.</p>
-      <ul class="steps">
-        <li>A diagnostic assessment before the cohort begins</li>
-        <li>Four live sessions a week across all four pillars</li>
-        <li>Session times are set with your facilitator when the cohort forms</li>
-        <li>A monthly progress report sent to parents and guardians</li>
-        <li>Progress check-ins built around each pillar</li>
-      </ul>
-    </div>
-    <aside class="plan reveal delay-1">
-      <small class="k">Full programme</small>
-      <h3>Teenagers Building Circle</h3>
-      <div class="price">₦40,000 <span>/ month</span></div>
-      <div class="ages"><span>Ages 13–19</span><span>Weekly cohort</span><span>Starts 1 Dec 2026</span></div>
-      <a href="enroll?programme=circle" class="btn btn-ink lift">Enroll now</a>
-      <a href="https://wa.me/2348066043320?text=Assalaamu%20alaykum.%20I%27d%20like%20to%20ask%20about%20the%20Teenagers%20Building%20Circle." target="_blank" rel="noopener" class="alt">Questions first? Ask on WhatsApp</a>
-    </aside>
+<section class="tb-sec" id="pillars"><div class="tb-wrap">
+  <h2 class="tb-d tb-rv">Four sides.<br>Every week.</h2>
+  <div class="tb-bands">
+    <div class="tb-band tb-rv" style="background:var(--tb-g);--tb-dl:0s"><span class="tb-n">01</span><h3>Deen</h3><p>Grounding in faith and practice that holds up outside the classroom, not just inside it.</p></div>
+    <div class="tb-band tb-rv" style="background:var(--tb-b);--tb-dl:.08s"><span class="tb-n">02</span><h3>Educational Development</h3><p>Study habits and academic footing that carry into every other subject a student takes.</p></div>
+    <div class="tb-band tb-y tb-rv" style="background:var(--tb-y);--tb-dl:.16s"><span class="tb-n">03</span><h3>Skills</h3><p>Practical ability, the kind you can actually use, not just describe on a form.</p></div>
+    <div class="tb-band tb-rv" style="background:var(--tb-p);--tb-dl:.24s"><span class="tb-n">04</span><h3>Personal Development</h3><p>Character and self-management, the part no syllabus tests but every adult needs.</p></div>
   </div>
-</section>
+</div></section>
 
-<section class="sec tbc-extra">
-<style>
-.start-note{margin:14px 0 4px;display:inline-block;background:#fff;border:1px solid #d9cdea;border-left:4px solid #6B4C9A;border-radius:10px;padding:9px 14px;font-size:15px;color:#3a2b57 !important;max-width:none}.hero .start-note b{color:#6B4C9A}
-
-.tbc-extra .tx{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
-.tbc-extra h2{margin:0 0 12px}.tbc-extra p{max-width:560px}
-.rep{background:#fff;border:1px solid #dbe5ee;border-radius:18px;box-shadow:0 18px 40px -22px rgba(6,47,77,.35);overflow:hidden;font-size:14.5px}
-.rep-h{background:#094570;color:#fff;padding:16px 20px}.rep-h small{display:block;color:#85CCFF;letter-spacing:.14em;text-transform:uppercase;font-size:11.5px;font-weight:700}.rep-h b{font-size:18px}
-.rep-b{padding:16px 20px;display:grid;gap:12px}.rep-row{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid #eef2f6;padding-bottom:9px}.rep-row span{color:#4b6275}
-.rep-p{display:grid;grid-template-columns:1fr 1fr;gap:8px}.rep-p div{background:#f3f8fc;border-radius:10px;padding:9px 12px}.rep-p b{display:block;font-size:12px;color:#094570}.rep-p i{font-style:normal;color:#094570;font-weight:700;letter-spacing:.1em}
-.rep-n{background:#faf6ee;border-left:4px solid #C98A1E;border-radius:8px;padding:10px 14px;color:#3a4a58;font-style:italic}
-.gd12{list-style:none;margin:18px 0 0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:8px}.gd12 li{display:flex;gap:10px;align-items:center;background:#fff;border:1px solid #dbe5ee;border-radius:12px;padding:9px 12px;font-size:14px}.gd12 b{flex:none;width:26px;height:26px;border-radius:8px;background:#6B4C9A;color:#fff;display:grid;place-items:center;font-size:13px}
-@media(max-width:860px){.tbc-extra .tx{grid-template-columns:1fr}.gd12{grid-template-columns:1fr}}
-</style>
-<div class="wrap tx">
-  <div class="reveal">
-    <h2>A report parents can read in two minutes.</h2>
-    <p>At the end of every month, the facilitator closes the month and the full report goes straight to the parent or guardian by email. It can also be sent on WhatsApp in one tap. Nothing is left to guesswork.</p>
-    <ul class="steps"><li>Attendance for the month</li><li>A rating for each of the four pillars</li><li>Assignments handed in and the average score</li><li>A personal note from the facilitator and a focus for next month</li></ul>
-  </div>
-  <div class="rep reveal delay-1" aria-label="Sample monthly report">
-    <div class="rep-h"><small>Sample report · November</small><b>Aisha’s Teenagers Building Circle report</b></div>
-    <div class="rep-b">
-      <div class="rep-row"><span>Attendance</span><b>14 of 16 sessions (88%)</b></div>
-      <div class="rep-p"><div><b>Deen</b><i>★★★★☆</i></div><div><b>Educational Development</b><i>★★★★☆</i></div><div><b>Skills</b><i>★★★☆☆</i></div><div><b>Personal Development</b><i>★★★★★</i></div></div>
-      <div class="rep-row"><span>Assignments</span><b>7 of 8 handed in · 78% average</b></div>
-      <div class="rep-n">“Aisha spoke with real confidence in this month’s presentation. Next month we will work on starting her study blocks on time.”</div>
-    </div>
-  </div>
-</div></div>
-</section>
-
-<section class="sec tbc-extra">
-<div class="wrap">
-  <div class="reveal"><h2>A session guide for every month of the year.</h2>
-  <p>Each student can get a guide for the month: a page for every live session, a daily habit tracker, a month review and a page for parents. Guides are ₦4,000 each and are bought from the student dashboard after enrolment. Facilitators use them free.</p></div>
-  <ul class="gd12 reveal delay-1"><li><b>1</b><span>Starting Strong</span></li><li><b>2</b><span>Discipline and Time</span></li><li><b>3</b><span>Character That Lasts</span></li><li><b>4</b><span>The Qur’an and Knowledge</span></li><li><b>5</b><span>Speaking with Confidence</span></li><li><b>6</b><span>Money and Responsibility</span></li><li><b>7</b><span>Friends and Influence</span></li><li><b>8</b><span>Body, Mind and Rest</span></li><li><b>9</b><span>Focus in a Digital World</span></li><li><b>10</b><span>Service and Leadership</span></li><li><b>11</b><span>Work and Enterprise</span></li><li><b>12</b><span>Looking Back, Moving Forward</span></li></ul>
+<div class="tb-nums tb-rv">
+  <div><b data-to="4">4</b><span>live sessions every week, across all four pillars</span></div>
+  <div><b data-to="12">12</b><span>monthly session guides, one for every month of the year</span></div>
+  <div><b data-to="1">1</b><span>full report to parents every month, by email and WhatsApp</span></div>
 </div>
-</section>
+
+<section class="tb-sec" id="price"><div class="tb-wrap">
+  <div class="tb-price tb-rv">
+    <div class="tb-l"><small>Full programme</small><div class="tb-big">₦40,000<span> / month</span></div><small>Teenagers Building Circle · ages 13–19</small></div>
+    <div class="tb-r"><p><b>Next cohort starts 1 December 2026.</b> It begins with a diagnostic assessment, so the circle is built around where each student actually is.</p>
+      <div class="tb-cta"><a class="tb-btn tb-btn-k" href="enroll?programme=circle">Enrol now →</a><a class="tb-btn tb-btn-o" href="https://wa.me/2348066043320?text=Assalaamu%20alaykum.%20I%27d%20like%20to%20ask%20about%20the%20Teenagers%20Building%20Circle." target="_blank" rel="noopener">Ask on WhatsApp</a></div>
+      <p class="tb-gd">Optional monthly session guides cost ₦4,000 each and are bought from the student dashboard.</p></div>
+  </div>
+</div></section>
+</div>
 
 <section class="sec res-strip-sec"><div class="wrap">
   <div class="res-strip reveal"><a href="store#p-deen-and-discipline"><img src="resources/deen-and-discipline-cover.jpg" alt="Cover of Deen and Discipline" width="640" height="905" loading="lazy"></a>
@@ -326,6 +342,20 @@
       mark.addEventListener('pointermove', (e) => { const r = mark.getBoundingClientRect(); mark.style.setProperty('--sx', ((e.clientX - r.left) / r.width * 100) + '%'); });
       mark.addEventListener('pointerleave', () => mark.style.removeProperty('--sx'));
     }
+  })();
+</script>
+<script>
+  // Teenagers page motion
+  (function () {
+    const rm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const count = (el) => { const to = +el.dataset.to; if (rm) { el.textContent = to; return; } let t0 = null; const f = (t) => { if (!t0) t0 = t; const k = Math.min(1, (t - t0) / 1100); el.textContent = Math.round(to * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(f); }; requestAnimationFrame(f); };
+    const els = document.querySelectorAll('.tb-rv');
+    if ('IntersectionObserver' in window && !rm) {
+      const io = new IntersectionObserver((es) => es.forEach((e) => { if (!e.isIntersecting) return; e.target.classList.add('tb-in'); e.target.querySelectorAll('[data-to]').forEach(count); io.unobserve(e.target); }), { threshold: .18 });
+      els.forEach((el) => io.observe(el));
+    } else { els.forEach((el) => el.classList.add('tb-in')); }
+    const q = document.querySelector('.tb-quad');
+    if (q && !rm && matchMedia('(hover: hover)').matches) document.addEventListener('mousemove', (e) => { q.style.transform = 'translate(' + ((e.clientX / innerWidth - .5) * 16) + 'px,' + ((e.clientY / innerHeight - .5) * 16) + 'px)'; });
   })();
 </script>
 </body>
