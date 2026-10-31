@@ -169,11 +169,21 @@ function vSponsors() {
     <article class="c w12"><h2>Recent gifts</h2>${sp.recent.length ? `<div class="acx-scroll"><table><thead><tr><th>Date</th><th>Type</th><th>From</th><th>For</th><th>Amount</th><th>Status</th></tr></thead><tbody>${sp.recent.map((g) => `<tr><td>${fdate(g.Date, 1)}</td><td>${esc(g.Type)}</td><td>${esc(g.Donor || '–')}${g.Message ? `<br><span class="sub" dir="auto">“${esc(g.Message)}”</span>` : ''}</td><td translate="no">${esc(g.StudentID || g.RequestID || 'Fund')}</td><td>${naira(g.Amount)}${g.Type === 'Fund' && g.Remaining ? `<br><span class="sub">${naira(g.Remaining)} unused</span>` : ''}</td><td>${esc(g.Status)}</td></tr>`).join('')}</tbody></table></div>` : empty('No gifts yet.')}</article>
   </div>`;
 }
+function mailCard(m) {
+  if (!m) return '';
+  const pct = Math.min(100, Math.round(100 * m.used / m.limit)), warn = m.left < 20;
+  return `<article class="c w6"><h2>Email allowance today</h2><div class="tiles">${tile(m.left, 'emails left today', warn)}${tile(m.used, 'used of ' + m.limit)}${tile(m.tbcWaiting || 0, 'Circle reports waiting', (m.tbcWaiting || 0) > 0)}</div>
+    <div role="img" aria-label="${pct}% of today’s email allowance used" style="height:10px;border-radius:999px;background:#e3ecf3;overflow:hidden;margin:12px 0 4px"><i style="display:block;height:100%;width:${pct}%;background:${warn ? '#B42318' : '#094570'};border-radius:999px"></i></div>
+    <p class="sub">Receipts, newsletters, reminders and monthly reports all share this allowance. It refills about 24 hours after it is used. Reports and newsletters that hit the limit wait and are sent automatically.</p></article>`;
+}
 function vGrowth() {
   const n = D.newsletter, w = D.waitlist, r = D.reports;
   return `<div class="grid">
     <article class="c w6"><h2>Newsletter</h2><div class="tiles">${tile(n.active, 'subscribers')}${tile(n.month, 'joined this month', false, change(n.month, n.last))}</div>
       <p class="sub">${n.lastCampaign ? 'Last sent: ' + esc(n.lastCampaign.Subject) + ' (' + fdate(n.lastCampaign.Date) + ')' : 'No newsletter sent yet.'}</p></article>
+    ${mailCard(D.mail)}
+    <article class="c w6"><h2>Subscribers by interest</h2><p class="sub">What your subscribers asked to hear about. One person can choose several.</p>${hbars(n.byInterest || {})}</article>
+    <article class="c w6"><h2>Subscribers by source</h2><p class="sub">Where each person signed up.</p>${hbars(n.bySource || {})}</article>
     <article class="c w6"><h2>Waitlist</h2><div class="tiles">${tile(w.total, 'families waiting')}</div>${hbars(w.byPlan)}</article>
     <article class="c w12"><h2>Monthly progress reports</h2>${r && r.total ? `<p class="sub">Reports for ${esc(r.month)}</p><div class="tiles acx-tiles6">${tile(r.sent, 'sent')}${tile(r.queued, 'waiting for email quota')}${tile(r.noEmail, 'no email on file', r.noEmail > 0)}${tile(r.errors, 'failed', r.errors > 0)}</div>` : empty(r ? 'The reports for ' + esc(r.month) + ' go out on the 1st of the month.' : 'Progress reports are not set up yet (Reports.gs).')}
       <p class="sub">Teachers can add a note for a student’s report in the “Report notes” tab before the 1st.</p></article>

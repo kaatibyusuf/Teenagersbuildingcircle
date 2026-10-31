@@ -124,5 +124,6 @@ HS_I18N.add({
 "Focus in a Digital World": "التركيز في عالم رقمي",
 "Service and Leadership": "الخدمة والقيادة",
 "Work and Enterprise": "العمل وريادة الأعمال",
-"Looking Back, Moving Forward": "نظرة إلى الوراء ومضيّ إلى الأمام"
+"Looking Back, Moving Forward": "نظرة إلى الوراء ومضيّ إلى الأمام",
+"re:(\\d+) reports? (?:is|are) waiting for the daily email limit\\. They will be sent automatically tomorrow morning\\. You can also press “End month and send reports” again once the limit has refilled\\.": "$1 من التقارير بانتظار حد البريد اليومي. ستُرسل تلقائيًا صباح الغد، ويمكنك أيضًا الضغط على «إنهاء الشهر وإرسال التقارير» مرة أخرى بعد تجدد الحد."
 });

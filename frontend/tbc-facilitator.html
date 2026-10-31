@@ -20,6 +20,7 @@
 .gd{border:1px solid #dfe7ee;border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:8px;background:#fff}.gd.now{box-shadow:0 0 0 2px #85CCFF}
 .gd-top{display:flex;justify-content:space-between;align-items:center;font-size:13px}.gd-top b{color:#094570;letter-spacing:.04em;text-transform:uppercase;font-size:12px}
 .gd-tag{background:#094570;color:#fff;border-radius:999px;padding:2px 9px;font-size:11px;font-weight:600}.gd-t{font-weight:600;line-height:1.3;flex:1;color:#0b2a3f}
+.rwait{margin:14px 0 0;padding:12px 14px;border-radius:12px;background:#fff6e0;border:1px solid #f0d9a0;color:#5b4310;font-size:14px}
 .rbtns{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}.rend{margin:16px 0;padding:16px;border-radius:14px;background:#f3f8fc;border:1px solid #d6e6f3}.rend .sub{margin-top:8px}
 .ratepills{display:flex;flex-wrap:wrap;gap:6px}textarea.in{resize:vertical;min-height:70px}
 .pv{border:0;border-radius:16px;padding:0;width:min(680px,94vw);height:min(86vh,820px);box-shadow:0 20px 60px rgba(6,47,77,.35)}.pv::backdrop{background:rgba(6,47,77,.55)}
@@ -166,7 +167,7 @@ function vReports() {
   const head = `<article class="c w12"><h2>Monthly reports</h2><p class="sub">Write a short note for each student, then press “End month and send reports”. Each report goes straight to the parent or guardian’s email with attendance, the four pillars, assignments and your notes. After sending, use the WhatsApp button to send the same summary on WhatsApp.</p>
     <div class="bar2"><div><label class="fl" for="rmonth">Month</label><select class="in" id="rmonth" style="max-width:240px">${monthOpts().map(([v, l]) => `<option value="${v}"${v === R.month ? ' selected' : ''}>${esc(l)}</option>`).join('')}</select></div></div>`;
   if (!R.data) return head + (R.failed ? `<p class="empty" style="margin-top:12px">Could not load the report. <button class="btn btn-line btn-sm" type="button" data-act="rretry">Try again</button></p></article>` : `<p class="empty" style="margin-top:12px">Loading the report…</p></article>`);
-  const rows = R.data.rows, sent = rows.filter((r) => r.Status === 'Sent').length, left = rows.length - sent;
+  const rows = R.data.rows, sent = rows.filter((r) => r.Status === 'Sent').length, left = rows.length - sent, waiting = rows.filter((r) => r.Status === 'Waiting').length;
   const pill = (r) => `<span class="pill ${r.Status === 'Sent' ? 'p-ink' : r.Status === 'Waiting' || r.Status === 'Failed' || r.Status === 'No email' ? 'p-sky' : 'p-wash'}">${r.Status === 'Sent' ? 'Sent' + (r.Sent ? ' ' + fdate(r.Sent) : '') : esc(r.Status)}</span>`;
   const card = (r) => { const e = rEdit(r), a = r.Att;
     return `<details class="box stu rp" data-id="${esc(r.StudentID)}" data-name="${esc((r.Name + ' ' + r.StudentID).toLowerCase())}"><summary><div><b>${esc(r.Name)}</b><small>${a.total ? a.attended + ' of ' + a.total + ' sessions (' + a.pct + '%)' : 'No attendance this month'} · ${r.Asg.given ? r.Asg.handed + ' of ' + r.Asg.given + ' assignments' : 'No assignments'}</small></div><div class="sum-r">${pill(r)}</div></summary>
@@ -180,6 +181,7 @@ function vReports() {
         <button class="btn btn-line btn-sm" type="button" data-act="rcopy" data-id="${esc(r.StudentID)}">Copy message</button></div>
       <p class="sub">${r.Emails ? 'Goes to ' + r.Emails + ' email address' + (r.Emails > 1 ? 'es' : '') + ' on file.' : 'No parent or guardian email on file. Use WhatsApp.'} Save your note before using WhatsApp so the message includes it.</p></div></div></details>`; };
   return head + `<div class="tiles"><div class="tile"><b>${rows.length}</b><span>students</span></div><div class="tile"><b>${sent}</b><span>sent</span></div><div class="tile ${left ? 'warn' : ''}"><b>${left}</b><span>not sent yet</span></div><div class="tile"><b>${R.data.quota}</b><span>emails left today</span></div></div>
+    ${waiting ? `<div class="rwait" role="status"><b>${waiting} report${waiting === 1 ? ' is' : 's are'} waiting for the daily email limit.</b> They will be sent automatically tomorrow morning. You can also press “End month and send reports” again once the limit has refilled.</div>` : ''}
     <div class="rend"><button class="btn btn-ink" type="button" data-act="rend"${left ? '' : ' disabled'}>End month and send reports</button><p class="sub">Sends to the ${left} student${left === 1 ? '' : 's'} not yet sent. If the daily email limit is reached, the rest wait; press it again tomorrow.</p></div>
     <div id="rlist">${rows.map(card).join('') || '<p class="empty" style="margin-top:12px">No Teenagers Building Circle students are assigned to you yet.</p>'}</div></article>`;
 }

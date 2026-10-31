@@ -211,5 +211,15 @@ HS_I18N.add({
 "re:(\\d+) new stor(?:y|ies) to review": "$1 قصة جديدة للمراجعة",
 "Parent": "وليّ أمر",
 "Former student": "طالب سابق",
-"Other": "أخرى"
+"Other": "أخرى",
+"Email allowance today": "رصيد البريد الإلكتروني اليوم",
+"emails left today": "رسائل متبقية اليوم",
+"re:used of (\\d+)": "المستخدم من $1",
+"Circle reports waiting": "تقارير الحلقة المنتظرة",
+"Receipts, newsletters, reminders and monthly reports all share this allowance. It refills about 24 hours after it is used. Reports and newsletters that hit the limit wait and are sent automatically.": "تشترك الإيصالات والنشرات والتذكيرات والتقارير الشهرية في هذا الرصيد، ويتجدد بعد نحو 24 ساعة من استخدامه. التقارير والنشرات التي تبلغ الحد تنتظر ثم تُرسل تلقائيًا.",
+"Subscribers by interest": "المشتركون حسب الاهتمام",
+"What your subscribers asked to hear about. One person can choose several.": "ما طلب مشتركوك أن يصلهم عنه. يمكن للشخص الواحد اختيار أكثر من اهتمام.",
+"Subscribers by source": "المشتركون حسب المصدر",
+"Where each person signed up.": "المكان الذي اشترك منه كل شخص.",
+"Not recorded": "غير مسجَّل"
 });
