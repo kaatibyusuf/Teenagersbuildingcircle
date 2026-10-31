@@ -61,6 +61,11 @@ export const GUIDES = {
   "freelancing-first-steps": { id: "81874", title: "Freelancing First Steps", file: "bfebaffb4a8d593b0b22.pdf", price: 3000 },
 };
 export const BY_ID = Object.fromEntries(Object.entries(GUIDES).map(([slug, g]) => [g.id, slug]));
+// Free items (price 0) are not charged for, but are listed on the receipt when they were in the cart.
+export const FREE = {
+  "himaayah-prospectus-2026-2027": { id: "76b97", title: "Himaayah Schools Prospectus 2026–2027" },
+};
+export const FREE_BY_ID = Object.fromEntries(Object.entries(FREE).map(([slug, g]) => [g.id, slug]));
 
 // The signed token for one purchase of one book. Apps Script makes the same token (Guides.gs gd_token_) when it emails the link.
 export const token = (secret, slug, ref) => crypto.createHmac('sha256', secret).update('guide|' + slug + '|' + ref).digest('hex').slice(0, 40);

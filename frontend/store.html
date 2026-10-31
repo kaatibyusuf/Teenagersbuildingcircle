@@ -356,13 +356,13 @@
   $('stCartBody').addEventListener('submit', async (e) => {
     e.preventDefault();
     const err = $('stErr'), btn = $('stPay'); err.textContent = '';
-    const slugs = cart.filter((s) => by[s].c), name = $('stName').value.trim(), email = $('stEmail').value.trim();
+    const slugs = cart.filter((s) => by[s].c), freeItems = cart.filter((s) => !by[s].c), name = $('stName').value.trim(), email = $('stEmail').value.trim();
     if (!slugs.length) return;
     if (name.length < 2) return (err.textContent = 'Enter your name.');
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return (err.textContent = 'Enter a valid email address. Your receipt is sent there.');
     const old = btn.textContent; btn.disabled = true; btn.textContent = 'Opening the secure payment page…';
     try {
-      const r = await fetch('/api/guide-checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ slugs, name, email, phone: $('stPhone').value.trim(), ret: 'store' }) });
+      const r = await fetch('/api/guide-checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ slugs, free: freeItems, name, email, phone: $('stPhone').value.trim(), ret: 'store' }) });
       const j = await r.json().catch(() => null);
       if (j && j.ok && j.url) { location.href = j.url; return; }
       err.textContent = (j && j.error) || 'The payment page could not be opened.';

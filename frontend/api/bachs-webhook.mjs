@@ -61,6 +61,7 @@ export async function POST(request) {
     periods: meta.periods || '',
     type: meta.type || '',            // sponsorships (api/sponsor-checkout): 'fund' or 'student'
     requestId: meta.requestId || '',
+    free: meta.free || '',           // free store items that were in the cart (listed on the receipt)
     guide: meta.guide || '',          // paid children's books (api/guide-checkout): comma-separated slugs
     months: meta.months || '',
     donorName: meta.donorName || '',

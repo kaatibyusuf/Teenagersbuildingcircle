@@ -64,7 +64,7 @@ td{padding:12px 0;border-bottom:1px solid var(--line)}
         <div class="head"><div class="brand"><img src="logo.png" alt="Himaayah Schools logo" width="64" height="64"><div><b>Himaayah Schools</b><span>Himaayah Store</span></div></div>
           <div class="rc"><h1>RECEIPT</h1><p>No. <strong>${esc(r.no)}</strong></p><p>${esc(date)}</p></div></div>
         <div class="meta"><div><h2>Received from</h2><p><strong>${esc(r.name)}</strong></p><p>${esc(r.email)}</p></div><div><h2>Payment</h2><p>${esc(r.method)}</p></div></div>
-        <table><thead><tr><th>Item</th><th>Price</th></tr></thead><tbody>${r.items.map((x) => `<tr><td>${esc(x.title)}<br><span style="color:var(--mute);font-size:.85rem">PDF book</span></td><td>${naira(x.price)}</td></tr>`).join('')}
+        <table><thead><tr><th>Item</th><th>Price</th></tr></thead><tbody>${r.items.map((x) => `<tr><td>${esc(x.title)}<br><span style="color:var(--mute);font-size:.85rem">PDF book</span></td><td>${x.price ? naira(x.price) : 'Free'}</td></tr>`).join('')}
         <tr class="total"><td>Total paid</td><td>${naira(r.total)}</td></tr></tbody></table>
         <span class="paid">PAID</span>
         <div class="foot"><p>Thank you for your purchase. Your downloads are in the email we sent you, and the links keep working.</p><p>Himaayah Schools · www.himaayahschools.com · WhatsApp +234 704 722 6487</p><p>This receipt was issued electronically and is valid without a signature.</p></div>

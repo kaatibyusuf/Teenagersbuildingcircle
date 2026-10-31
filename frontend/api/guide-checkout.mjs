@@ -2,7 +2,7 @@
 // The price is fixed in api/_guides.mjs. When Bachs confirms the payment, api/bachs-webhook passes it to
 // Apps Script (CardPayments.gs → Guides.gs), which emails the buyer a signed download link.
 // Uses BACHS_SECRET_KEY and optionally SITE_URL.
-import { GUIDES } from './_guides.mjs';
+import { GUIDES, FREE } from './_guides.mjs';
 
 const json = (body, status = 200) =>
   new Response(JSON.stringify(body), { status, headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' } });
@@ -27,6 +27,7 @@ export async function POST(request) {
   if (name.length < 2) return json({ ok: false, error: 'Enter your name.' }, 400);
   const slugs = [...new Set((Array.isArray(b.slugs) ? b.slugs : []).map(String))];
   if (!slugs.length || slugs.length > 60 || slugs.some((s) => !GUIDES[s])) return json({ ok: false, error: 'Choose at least one book.' }, 400);
+  const freeSlugs = [...new Set((Array.isArray(b.free) ? b.free : []).map(String))].filter((s) => Object.prototype.hasOwnProperty.call(FREE, s)).slice(0, 10);
   const amount = slugs.reduce((n, s) => n + GUIDES[s].price, 0);
   const store = b.ret === 'store';
 
@@ -45,7 +46,7 @@ export async function POST(request) {
     cancel_url: site + (store ? '/store?cancelled=1' : '/buy-guide?cancelled=1&g=' + encodeURIComponent(slugs.join(','))),
     reference: ref + '-' + Math.random().toString(36).slice(2, 7),
     metadata: {
-      kind: 'guide', ref, plan: clean(slugs.length === 1 ? GUIDES[slugs[0]].title : slugs.length + ' books from the Himaayah Store', 100), guide: slugs.map((s) => GUIDES[s].id).join(','),
+      kind: 'guide', ref, plan: clean(slugs.length === 1 ? GUIDES[slugs[0]].title : slugs.length + ' books from the Himaayah Store', 100), guide: slugs.map((s) => GUIDES[s].id).join(','), free: freeSlugs.map((s) => FREE[s].id).join(','),
       donorName: name, donorEmail: email, donorPhone: clean(b.phone, 30), student: name,
     },
     expires_in_minutes: 60,
