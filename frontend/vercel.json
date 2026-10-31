@@ -1,9 +1,26 @@
 {
   "cleanUrls": true,
   "rewrites": [
-    { "source": "/articles", "destination": "/articles.html" }
+    {
+      "source": "/articles",
+      "destination": "/articles.html"
+    }
   ],
   "functions": {
-    "api/guide-download.mjs": { "includeFiles": "api/_paid/**" }
-  }
+    "api/guide-download.mjs": {
+      "includeFiles": "api/_paid/**"
+    }
+  },
+  "redirects": [
+    {
+      "source": "/buy-guide",
+      "destination": "/store",
+      "permanent": false
+    },
+    {
+      "source": "/buy-guide.html",
+      "destination": "/store",
+      "permanent": false
+    }
+  ]
 }
