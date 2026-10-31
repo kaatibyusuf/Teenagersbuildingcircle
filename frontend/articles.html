@@ -253,6 +253,52 @@ html[lang="ar"] .jr-gl{display:none}
 .jr-feat::before{opacity:.08}
 @media(max-width:900px){.jr-paths{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;margin-inline:-28px;padding-inline:28px;scrollbar-width:none}.jr-paths::-webkit-scrollbar{display:none}.jr-path{flex:0 0 82%;scroll-snap-align:start}}
 @media(max-width:600px){.jr-paths{margin-inline:-18px;padding-inline:18px}}
+/* article pages */
+body.jr-art .ja-cover{position:relative;overflow:hidden;color:#fff;padding:clamp(112px,13vw,150px) 0 clamp(40px,6vw,68px)}
+body.jr-art .ja-cover::before{content:"";position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='90' viewBox='0 0 90 90' fill='none' stroke='%23fff' stroke-width='1.6'%3E%3Ccircle cx='45' cy='45' r='16'/%3E%3Crect x='25' y='25' width='40' height='40' transform='rotate(45 45 45)'/%3E%3Crect x='28' y='28' width='34' height='34'/%3E%3C/svg%3E");opacity:.11}
+.ja-in{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:clamp(24px,5vw,64px);align-items:center}
+.ja-txt{max-width:720px}
+.ja-txt .art-back{display:flex;width:max-content;margin-bottom:18px;font-size:14px;color:rgba(255,255,255,.8)!important;text-decoration:none}
+.ja-txt .jr-tag{display:inline-block;color:#fff;opacity:.85}
+.ja-txt h1{font-family:"Bricolage Grotesque",Inter,sans-serif;font-size:clamp(32px,5vw,54px);line-height:1.04;letter-spacing:-.03em;font-weight:800;color:#fff;margin:12px 0 16px;text-align:start}
+.ja-txt .art-sub{font-size:clamp(16px,1.6vw,19px);line-height:1.55;color:rgba(255,255,255,.88);margin:0}
+.ja-txt .art-byline{margin:18px 0 0;font-size:13.5px;color:rgba(255,255,255,.7)}
+.ja-term{text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px}
+.ja-term .jr-ar{font-family:Amiri,serif;font-size:clamp(84px,12vw,170px);line-height:1.15;direction:rtl}
+.ja-term .jr-gl{font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;opacity:.8}
+html[lang="ar"] .ja-term .jr-gl{display:none}
+@media(max-width:760px){.ja-in{grid-template-columns:1fr}.ja-term{order:-1;align-items:flex-start;text-align:start}.ja-term .jr-ar{font-size:76px}}
+body.jr-art .art-body{padding-top:clamp(40px,5vw,64px)}
+body.jr-art .art-body>p:first-child{font-size:clamp(19px,2vw,21px);line-height:1.7;color:#0B2A3F}
+body.jr-art .art-body h2{font-family:"Bricolage Grotesque",Inter,sans-serif;letter-spacing:-.02em;color:#062F4D}
+.ja-path{max-width:720px;margin:48px auto 0;padding:0 20px}
+.ja-pc{border-radius:24px;padding:26px;color:#fff;display:flex;flex-direction:column;gap:14px}
+.ja-pc h3{font-family:"Bricolage Grotesque",Inter,sans-serif;font-size:24px;line-height:1.1;margin:0;color:#fff}
+.ja-pc ol{margin:0;padding:0;list-style:none;display:grid;gap:8px;counter-reset:p}
+.ja-pc li{counter-increment:p;display:flex;gap:10px;font-size:15px;line-height:1.35;color:#fff}
+.ja-pc li::before{content:counter(p);flex:none;width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,.22);font-size:12px;font-weight:700;display:grid;place-items:center}
+.ja-pc li a{color:#fff;opacity:.9;text-decoration:none}.ja-pc li a:hover{text-decoration:underline}
+.ja-pc li.is-cur{font-weight:700}.ja-pc li.is-cur::before{background:#fff;color:#062F4D}
+.ja-nb{margin-top:6px;display:grid;grid-template-columns:1fr auto;gap:2px 12px;align-items:center;background:rgba(255,255,255,.16);border-radius:16px;padding:16px 18px;color:#fff;text-decoration:none;transition:background .2s}
+.ja-nb:hover{background:rgba(255,255,255,.26)}
+.ja-nb small{grid-column:1;font-size:11px;letter-spacing:.14em;text-transform:uppercase;opacity:.8;font-weight:700}
+.ja-nb b{grid-column:1;font-size:17px;line-height:1.3;font-weight:600}
+.ja-nb span{grid-column:2;grid-row:1/3;font-size:20px}
+html[dir="rtl"] .ja-nb span,html[dir="rtl"] .ja-nxa{transform:scaleX(-1)}
+.ja-nx{display:flex;align-items:center;gap:18px;background:#fff;border-radius:22px;padding:14px;box-shadow:0 1px 0 #E6DFD1;text-decoration:none;color:inherit;transition:transform .25s}
+.ja-nx:hover{transform:translateY(-2px)}
+.ja-nxc{flex:none;width:96px;height:96px;border-radius:16px;display:grid;place-items:center;color:#fff}
+.ja-nxc .jr-ar{font-family:Amiri,serif;font-size:42px;line-height:1.2;direction:rtl}
+.ja-nxt{flex:1;display:grid;gap:3px}
+.ja-nxt small{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:#1B7F4B}
+.ja-nxt b{font-family:"Bricolage Grotesque",Inter,sans-serif;font-size:19px;line-height:1.2;color:#062F4D;font-weight:700}
+.ja-nxt i{font-style:normal;font-size:13px;color:#6B7C88}
+.ja-nxa{padding-inline-end:10px;color:#6B7C88;font-size:20px}
+.ja-more{padding:clamp(44px,6vw,72px) 0 clamp(40px,5vw,64px)}
+.ja-more h2{font-family:"Bricolage Grotesque",Inter,sans-serif;font-size:clamp(26px,3vw,34px);letter-spacing:-.02em;color:#062F4D;margin:0}
+.ja-more .jr-grid{margin-top:22px}
+.ja-term{gap:20px}.ja-term .jr-ar{line-height:1.5;padding-top:12px}
+@media(max-width:760px){.ja-term{gap:6px}.ja-term .jr-ar{padding-top:0;line-height:1.35}}
 </style>
 </head>
 <body class="jr">
