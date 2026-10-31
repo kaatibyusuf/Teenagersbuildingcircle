@@ -48,7 +48,7 @@ HS_I18N.add({
 "Show details": "عرض التفاصيل",
 "Hide details": "إخفاء التفاصيل",
 "All four pillars: deen, educational development, skills, personal development": "الركائز الأربع كلها: الدين، والتطوير التعليمي، والمهارات، والتطوير الشخصي",
-"Four live sessions a week, with a dedicated Slack workspace": "أربع جلسات مباشرة أسبوعيًا مع مساحة عمل خاصة على Slack",
+"Four live sessions a week on Google Meet, with a monthly report for parents": "أربع جلسات مباشرة أسبوعيًا على Google Meet مع تقرير شهري لأولياء الأمور",
 "Select a plan to continue.": "اختر خطة للمتابعة.",
 "Pay by bank transfer, then send us your receipt on WhatsApp. That's how we confirm your place.": "ادفع بالتحويل البنكي، ثم أرسل إلينا إيصالك على واتساب. هكذا نؤكّد مقعدك.",
 "Transfer the amount": "حوّل المبلغ",

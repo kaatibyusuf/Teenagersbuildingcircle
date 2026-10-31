@@ -15,6 +15,14 @@
 <!-- Vercel Analytics: counts visits once enabled in the Vercel dashboard -->
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
 <script defer src="/_vercel/insights/script.js"></script>
+<style>
+.gd-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;margin-top:14px}
+.gd{border:1px solid #dfe7ee;border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:8px;background:#fff}.gd.now{box-shadow:0 0 0 2px #85CCFF}
+.gd-top{display:flex;justify-content:space-between;align-items:center;font-size:13px}.gd-top b{color:#094570;letter-spacing:.04em;text-transform:uppercase;font-size:12px}
+.gd-tag{background:#094570;color:#fff;border-radius:999px;padding:2px 9px;font-size:11px;font-weight:600}.gd-t{font-weight:600;line-height:1.3;flex:1;color:#0b2a3f}
+.rbtns{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}.rend{margin:16px 0;padding:16px;border-radius:14px;background:#f3f8fc;border:1px solid #d6e6f3}.rend .sub{margin-top:8px}
+.ratepills{display:flex;flex-wrap:wrap;gap:6px}textarea.in{resize:vertical;min-height:70px}
+</style>
 </head>
 <body>
 <header class="top"><div>
@@ -45,9 +53,10 @@ const ATT = ['Present', 'Late', 'Absent', 'Excused'];
 const $ = (id) => document.getElementById(id);
 const esc = (t) => String(t ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fdate = (iso, t) => { const d = new Date(iso); return isNaN(d) ? esc(iso || 'Not set') : d.toLocaleDateString('en-GB', {day:'numeric', month:'short', year:'numeric'}) + (t ? ', ' + d.toLocaleTimeString('en-GB', {hour:'2-digit', minute:'2-digit'}) : ''); };
-const TABS = [['checkins', 'Check-ins'], ['attendance', 'Attendance'], ['sessions', 'Sessions'], ['account', 'Account']];
+const TABS = [['checkins', 'Check-ins'], ['attendance', 'Attendance'], ['sessions', 'Sessions'], ['reports', 'Monthly reports'], ['guides', 'Session guides'], ['account', 'Account']];
 let D = null;
 const S = { tab: 'checkins', q: '', open: '', date: '', marks: {} };
+const R = { month: '', data: null, edits: {}, loading: false, failed: false };
 
 const creds = () => { try { return JSON.parse(sessionStorage.getItem(KEY) || 'null') || {}; } catch (e) { return {}; } };
 async function api(action, extra) {
@@ -112,17 +121,63 @@ function vSessions() {
   const mineOrAdmin = (x) => D.teacher.Role === 'Admin' || String(x.CreatedBy).toUpperCase() === String(D.teacher.TeacherID).toUpperCase();
   const li = (x) => `<li style="display:block"><div style="display:flex;justify-content:space-between;gap:10px"><span style="text-align:start"><b>${esc(x.Title)}</b><br><span class="sub">${fdate(x.Start, true)}${x.Pillar ? ' · ' + esc(x.Pillar) : ''}${x.Audience ? ' · ' + esc(x.Audience) : ' · All cohorts'}</span></span>${mineOrAdmin(x) ? `<button class="btn btn-line btn-sm" type="button" data-act="delSession" data-id="${esc(x.SessionID)}" style="align-self:flex-start">Remove</button>` : ''}</div></li>`;
   const up = list.filter((x) => new Date(x.Start) >= new Date(now.getTime() - 90 * 60000)), past = list.filter((x) => !up.includes(x)).reverse();
-  return `<div class="grid"><article class="c w6"><h2>Post a session</h2><p class="sub">Students see it on their dashboard with the join link.</p>
+  return `<div class="grid"><article class="c w6"><h2>Post a session</h2><p class="sub">Students see it on their dashboard with the Google Meet link you add.</p>
     <form class="frm" data-form="session">
       <div><label class="fl" for="st">Title</label><input class="in" id="st" name="title" maxlength="100" placeholder="e.g. Week 6: Public speaking" required></div>
       <div class="row2"><div><label class="fl" for="ss">Starts</label><input class="in" id="ss" name="start" type="datetime-local" required></div>
       <div><label class="fl" for="sp">Pillar (optional)</label><select class="in" id="sp" name="pillar"><option value="">Not specific</option>${D.pillars.map((p) => `<option>${esc(p)}</option>`).join('')}</select></div></div>
-      <div class="row2"><div><label class="fl" for="sa">For</label><select class="in" id="sa" name="audience"><option value="">All cohorts</option>${D.cohorts.map((c) => `<option>${esc(c)}</option>`).join('')}</select></div>
-      <div><label class="fl" for="sl">Join link (optional)</label><input class="in" id="sl" name="link" type="url" placeholder="https://meet.google.com/..."></div></div>
+      <div class="row2"><div><label class="fl" for="sa">For</label><select class="in" id="sa" name="audience"><option value="">All cohorts</option>${D.cohorts.map((c) => `<option>${esc(c)}</option>`).join('')}<optgroup label="One student only">${D.students.map((s) => `<option value="${esc(s.StudentID)}">${esc(s.Name)} (${esc(s.StudentID)})</option>`).join('')}</optgroup></select></div>
+      <div><label class="fl" for="sl">Google Meet link</label><input class="in" id="sl" name="link" type="url" placeholder="https://meet.google.com/..."></div></div>
+      <p class="sub" style="margin:-4px 0 0">Choose a student to give one student their own Meet link. Choose a cohort to share one link with everyone in it.</p>
       <div><label class="fl" for="sn">Note for students (optional)</label><input class="in" id="sn" name="notes" maxlength="500" placeholder="e.g. Bring your weekly plan"></div>
       <button class="btn btn-ink" type="submit">Post session</button></form></article>
     <article class="c w6"><h2>Upcoming</h2><ul class="list">${up.map(li).join('') || '<li class="empty">Nothing scheduled.</li>'}</ul>
       ${past.length ? `<p class="k" style="margin-top:18px;font-size:12.5px;font-weight:700;color:var(--sky-d)">Recent</p><ul class="list">${past.slice(0, 4).map(li).join('')}</ul>` : ''}</article></div>`;
+}
+
+function vGuides() {
+  const list = D.guides || [], short = (t) => String(t).replace(/^Session Guide, Month \d+:\s*/, '');
+  return `<article class="c w12"><h2>Session guides</h2><p class="sub">One guide for each month of the year, with a page for every live session. Facilitators can download all of them free to use in sessions. Students buy their own copy for ₦4,000 from their dashboard.${D.guideMonth ? ' It is Month ' + D.guideMonth + ' of the programme.' : ''}</p>
+    <div class="gd-grid">${list.map((g) => `<div class="gd ${D.guideMonth === g.Month ? 'now' : ''}"><div class="gd-top"><b>Month ${esc(g.Month)}</b>${D.guideMonth === g.Month ? '<span class="gd-tag">This month</span>' : ''}</div><div class="gd-t">${esc(short(g.Title))}</div>
+      <a class="btn btn-ink btn-sm" href="${esc(g.Url)}" target="_blank" rel="noopener">Download PDF</a></div>`).join('') || '<p class="empty">No guides yet.</p>'}</div></article>`;
+}
+
+/* ---------- monthly reports ---------- */
+const monthOpts = () => { const t = new Date(D.today + 'T00:00:00'), out = []; for (let i = 0; i < 4; i++) { const d = new Date(t.getFullYear(), t.getMonth() - i, 1), v = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0'); out.push([v, d.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })]); } return out; };
+async function rcall(action, extra, okMsg, btn) {
+  if (busy) return null;
+  busy = true; const old = btn && btn.textContent; if (btn) { btn.disabled = true; btn.textContent = 'Working…'; }
+  try {
+    const d = await api(action, Object.assign({ month: R.month }, extra || {}));
+    if (d.ok && d.report) { R.data = d.report; if (okMsg) toast(okMsg); render(); return d; }
+    toast(d.error || 'Could not complete that. Please try again.', true);
+  } catch (e) { toast('Could not reach the school server. Please try again.', true); }
+  finally { busy = false; if (btn && document.contains(btn)) { btn.disabled = false; btn.textContent = old; } }
+  return null;
+}
+function loadReport() { if (!R.month) R.month = D.today.slice(0, 7); R.loading = true; rcall('tbcf_report_load').then((d) => { R.loading = false; if (!d) R.failed = true; render(); }); }
+const rEdit = (r) => R.edits[r.StudentID] || (R.edits[r.StudentID] = { note: r.Note || '', focus: r.Focus || '' });
+function vReports() {
+  if (!R.month) R.month = D.today.slice(0, 7);
+  if (!R.data && !R.loading && !R.failed) { loadReport(); }
+  const head = `<article class="c w12"><h2>Monthly reports</h2><p class="sub">Write a short note for each student, then press <b>End month and send reports</b>. Each report goes straight to the parent or guardian’s email with attendance, the four pillars, assignments and your notes. After sending, use the WhatsApp button to send the same summary on WhatsApp.</p>
+    <div class="bar2"><div><label class="fl" for="rmonth">Month</label><select class="in" id="rmonth" style="max-width:240px">${monthOpts().map(([v, l]) => `<option value="${v}"${v === R.month ? ' selected' : ''}>${esc(l)}</option>`).join('')}</select></div></div>`;
+  if (!R.data) return head + (R.failed ? `<p class="empty" style="margin-top:12px">Could not load the report. <button class="btn btn-line btn-sm" type="button" data-act="rretry">Try again</button></p></article>` : `<p class="empty" style="margin-top:12px">Loading the report…</p></article>`);
+  const rows = R.data.rows, sent = rows.filter((r) => r.Status === 'Sent').length, left = rows.length - sent;
+  const pill = (r) => `<span class="pill ${r.Status === 'Sent' ? 'p-ink' : r.Status === 'Waiting' || r.Status === 'Failed' || r.Status === 'No email' ? 'p-sky' : 'p-wash'}">${r.Status === 'Sent' ? 'Sent' + (r.Sent ? ' ' + fdate(r.Sent) : '') : esc(r.Status)}</span>`;
+  const card = (r) => { const e = rEdit(r), a = r.Att;
+    return `<details class="box stu rp" data-id="${esc(r.StudentID)}" data-name="${esc((r.Name + ' ' + r.StudentID).toLowerCase())}"><summary><div><b>${esc(r.Name)}</b><small>${a.total ? a.attended + ' of ' + a.total + ' sessions (' + a.pct + '%)' : 'No attendance this month'} · ${r.Asg.given ? r.Asg.handed + ' of ' + r.Asg.given + ' assignments' : 'No assignments'}</small></div><div class="sum-r">${pill(r)}</div></summary>
+      <div class="body"><div class="ratepills">${r.Pillars.map((p) => `<span class="pill ${p.Rating >= 3 ? 'p-ink' : p.Rating ? 'p-sky' : 'p-wash'}" title="${esc(p.Pillar)}">${esc(shortP[p.Pillar] || p.Pillar[0])} ${p.Rating || '–'}</span>`).join('')}${r.Asg.avg !== null ? `<span class="pill p-wash">Average ${r.Asg.avg}%</span>` : ''}</div>
+      <div class="frm" style="margin-top:10px"><div><label class="fl" for="rn-${esc(r.StudentID)}">Your note to the parent (overall)</label><textarea class="in" id="rn-${esc(r.StudentID)}" data-rn="${esc(r.StudentID)}" rows="3" maxlength="1200" placeholder="What went well this month, and what you noticed">${esc(e.note)}</textarea></div>
+      <div><label class="fl" for="rf-${esc(r.StudentID)}">Focus for next month</label><textarea class="in" id="rf-${esc(r.StudentID)}" data-rf="${esc(r.StudentID)}" rows="2" maxlength="600" placeholder="One or two things to work on">${esc(e.focus)}</textarea></div>
+      <div class="rbtns"><button class="btn btn-line btn-sm" type="button" data-act="rsave" data-id="${esc(r.StudentID)}">Save note</button>
+        <button class="btn btn-ink btn-sm" type="button" data-act="rsend" data-id="${esc(r.StudentID)}">${r.Status === 'Sent' ? 'Resend email' : 'Send this one'}</button>
+        ${r.Wa ? `<a class="btn btn-line btn-sm" href="${esc(r.Wa)}" target="_blank" rel="noopener">WhatsApp</a>` : '<span class="sub">No WhatsApp number</span>'}
+        <button class="btn btn-line btn-sm" type="button" data-act="rcopy" data-id="${esc(r.StudentID)}">Copy message</button></div>
+      <p class="sub">${r.Emails ? 'Goes to ' + r.Emails + ' email address' + (r.Emails > 1 ? 'es' : '') + ' on file.' : 'No parent or guardian email on file. Use WhatsApp.'} Save your note before using WhatsApp so the message includes it.</p></div></div></details>`; };
+  return head + `<div class="tiles"><div class="tile"><b>${rows.length}</b><span>students</span></div><div class="tile"><b>${sent}</b><span>sent</span></div><div class="tile ${left ? 'warn' : ''}"><b>${left}</b><span>not sent yet</span></div><div class="tile"><b>${R.data.quota}</b><span>emails left today</span></div></div>
+    <div class="rend"><button class="btn btn-ink" type="button" data-act="rend"${left ? '' : ' disabled'}>End month and send reports</button><p class="sub">Sends to the ${left} student${left === 1 ? '' : 's'} not yet sent. If the daily email limit is reached, the rest wait; press it again tomorrow.</p></div>
+    <div id="rlist">${rows.map(card).join('') || '<p class="empty" style="margin-top:12px">No Teenagers Building Circle students are assigned to you yet.</p>'}</div></article>`;
 }
 
 function vAccount() {
@@ -132,7 +187,7 @@ function vAccount() {
   <button class="btn btn-ink" type="submit">Change my code</button></form></article>`;
 }
 
-const VIEWS = { checkins: vCheckins, attendance: vAttendance, sessions: vSessions, account: vAccount };
+const VIEWS = { checkins: vCheckins, attendance: vAttendance, sessions: vSessions, reports: vReports, guides: vGuides, account: vAccount };
 function render() {
   const next = D.sessions.filter((x) => new Date(x.Start) >= new Date()).sort((a, b) => a.Start < b.Start ? -1 : 1)[0];
   $('app').innerHTML = `<section class="greet"><div><small>Assalaamu alaykum</small><h1>${esc(D.teacher.Name)}</h1>
@@ -157,10 +212,19 @@ app.addEventListener('click', async (e) => {
     if (!marks.length) return toast('Mark at least one student.', true);
     const ok = await act('tbcf_attendance', { date, marks }, 'Attendance saved for ' + fdate(date) + '.', b); if (ok) S.marks = {}; render();
   }
+  else if (a === 'rretry') { R.failed = false; render(); }
+  else if (a === 'rsave') { const id = b.dataset.id, e = rEdit({ StudentID: id }); await rcall('tbcf_report_save', { studentId: id, note: e.note, focus: e.focus }, 'Note saved.', b); }
+  else if (a === 'rsend') { const id = b.dataset.id, e = rEdit({ StudentID: id }), r = R.data.rows.find((x) => x.StudentID === id); if (!confirm('Email ' + r.Name + '’s report for ' + R.data.label + ' to the parent or guardian now?')) return;
+    const d = await rcall('tbcf_report_end', { items: [{ studentId: id, note: e.note, focus: e.focus }], only: [id], resend: true }, null, b); if (d) toast(resultMsg(d.results)); }
+  else if (a === 'rend') { const n = R.data.rows.filter((r) => r.Status !== 'Sent').length; if (!confirm('End ' + R.data.label + ' and email ' + n + ' report' + (n === 1 ? '' : 's') + ' to parents and guardians now? This cannot be undone.')) return;
+    const items = R.data.rows.map((r) => { const e = rEdit(r); return { studentId: r.StudentID, note: e.note, focus: e.focus }; });
+    const d = await rcall('tbcf_report_end', { items }, null, b); if (d) toast(resultMsg(d.results)); }
+  else if (a === 'rcopy') { const r = R.data.rows.find((x) => x.StudentID === b.dataset.id); try { await navigator.clipboard.writeText(r.Text); toast('Message copied. Paste it into WhatsApp or SMS.'); } catch (e) { toast('Could not copy. Use the WhatsApp button instead.', true); } }
   else if (a === 'delSession') { if (confirm('Remove this session? Students will no longer see it.')) act('tbcf_session_delete', { sessionId: b.dataset.id }, 'Session removed.', b); }
 });
-app.addEventListener('input', (e) => { if (e.target.id === 'q') { S.q = e.target.value; applyFilter(); } });
-app.addEventListener('change', (e) => { if (e.target.id === 'adate') { S.date = e.target.value; S.marks = {}; render(); } });
+function resultMsg(res) { const c = {}; (res || []).forEach((x) => { c[x.Result] = (c[x.Result] || 0) + 1; }); const parts = []; if (c.Sent) parts.push(c.Sent + ' sent'); if (c.Waiting) parts.push(c.Waiting + ' waiting for the email limit'); if (c['No email']) parts.push(c['No email'] + ' with no email on file'); if (c.Failed) parts.push(c.Failed + ' failed'); if (c['Already sent']) parts.push(c['Already sent'] + ' already sent'); return parts.join(', ') || 'Nothing to send.'; }
+app.addEventListener('input', (e) => { if (e.target.id === 'q') { S.q = e.target.value; applyFilter(); } const t = e.target; if (t.dataset && (t.dataset.rn || t.dataset.rf)) { const id = t.dataset.rn || t.dataset.rf, ed = rEdit({ StudentID: id }); if (t.dataset.rn) ed.note = t.value; else ed.focus = t.value; } });
+app.addEventListener('change', (e) => { if (e.target.id === 'adate') { S.date = e.target.value; S.marks = {}; render(); } if (e.target.id === 'rmonth') { R.month = e.target.value; R.data = null; R.edits = {}; R.failed = false; render(); } });
 app.addEventListener('toggle', (e) => { const d = e.target; if (d.classList && d.classList.contains('stu')) S.open = d.open ? d.dataset.id : (S.open === d.dataset.id ? '' : S.open); }, true);
 app.addEventListener('submit', (e) => {
   const f = e.target.closest('form[data-form]'); if (!f) return;
@@ -195,7 +259,7 @@ async function signIn(id, code, silent) {
 }
 $('demoNote').hidden = !!API_URL;
 $('lf').addEventListener('submit', (e) => { e.preventDefault(); const id = $('tid').value.trim(), code = $('tcode').value.trim(); if (!id || !code) { $('err').textContent = 'Enter your ID and access code.'; return; } signIn(id, code); });
-$('out').addEventListener('click', () => { sessionStorage.removeItem(KEY); D = null; S.tab = 'checkins'; S.marks = {}; S.open = ''; app.hidden = true; app.innerHTML = ''; $('out').hidden = true; $('login').hidden = false; $('tcode').value = ''; });
+$('out').addEventListener('click', () => { sessionStorage.removeItem(KEY); D = null; S.tab = 'checkins'; S.marks = {}; S.open = ''; R.month = ''; R.data = null; R.edits = {}; R.failed = false; app.hidden = true; app.innerHTML = ''; $('out').hidden = true; $('login').hidden = false; $('tcode').value = ''; });
 
 /* ---------- demo mode (only used while API_URL is empty) ---------- */
 let DEMO = null;
@@ -207,7 +271,7 @@ function demoBase() {
   const a = st('HM-0101', 'Aisha Bello', 'Cohort 1', 7, 8), b = st('HM-0102', 'Yusuf Adeyemi', 'Cohort 1', 5, 8), c = st('HM-0103', 'Maryam Lawal', '', 0, 0);
   a.Pillars[0] = { Pillar: 'Deen', Rating: 4, Note: 'Consistent with adhkar.', Date: isoD(plus(-3)), History: [{ Date: isoD(plus(-10)), Rating: 3 }, { Date: isoD(plus(-3)), Rating: 4 }] };
   return { ok: true, today: isoD(new Date()), teacher: { TeacherID: 'DEMO', Name: 'Ustadh Demo', Role: 'Facilitator' }, students: [a, b, c],
-    pillars: ['Deen', 'Educational Development', 'Skills', 'Personal Development'], ratings: ['Needs support', 'Developing', 'On track', 'Strong', 'Excelling'], cohorts: ['Cohort 1'], slack: '',
+    pillars: ['Deen', 'Educational Development', 'Skills', 'Personal Development'], ratings: ['Needs support', 'Developing', 'On track', 'Strong', 'Excelling'], cohorts: ['Cohort 1'], guides: [],
     attendance: [], sessions: [{ SessionID: 'S1', Start: isoD(plus(2)) + 'T17:00', Title: 'Week 5: Time and attention', Pillar: 'Personal Development', Link: '', Notes: '', Audience: '', CreatedBy: 'DEMO' }] };
 }
 async function demoApi(c, action, p) {

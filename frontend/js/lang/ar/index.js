@@ -21,7 +21,7 @@ HS_I18N.add({
 "Exam prep with a daily rhythm": "تحضير للامتحانات بإيقاع يومي",
 "Live classes, a CBT simulator, weekly mocks and a reading club, for UTME, Post-UTME, O-Levels and A-Levels.": "حصص مباشرة، ومحاكي اختبار إلكتروني (CBT)، واختبارات تجريبية أسبوعية، ونادٍ للقراءة، لامتحانات UTME وPost-UTME وO-Levels وA-Levels.",
 "Building who they will become": "نبني من سيصبحون",
-"A weekly circle for ages 13 to 19, with live sessions and a Slack workspace. Every week touches deen, education, skills and personal development.": "حلقة أسبوعية للأعمار من 13 إلى 19، بجلسات مباشرة ومساحة عمل على Slack. كل أسبوع يتناول الدين والتعليم والمهارات والتطوير الشخصي.",
+"A weekly circle for ages 13 to 19, with live sessions on Google Meet and a monthly report for parents. Every week touches deen, education, skills and personal development.": "حلقة أسبوعية للأعمار من 13 إلى 19، بجلسات مباشرة على Google Meet وتقرير شهري لأولياء الأمور. كل أسبوع يتناول الدين والتعليم والمهارات والتطوير الشخصي.",
 "Explore the Circle": "تعرّف على الحلقة",
 "Learn it, then build it": "تعلّمها، ثم اصنعها",
 "Public Speaking · 4 weeks": "الخطابة · 4 أسابيع",

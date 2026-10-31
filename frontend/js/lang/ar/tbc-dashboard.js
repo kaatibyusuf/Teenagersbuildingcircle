@@ -2,7 +2,6 @@
    Keys starting with re: are patterns for text with numbers or names in it ($1, $2 are the parts kept). */
 HS_I18N.add({
 "Teenagers Building Circle | Himaayah Schools": "حلقة بناء الناشئة | مدارس حماية",
-"Open the cohort Slack": "افتح Slack الخاص بالدفعة",
 "Session": "الجلسة",
 "Next live session": "الجلسة المباشرة القادمة",
 "Bring your weekly plan.": "أحضر خطتك الأسبوعية.",

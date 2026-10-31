@@ -16,6 +16,21 @@
 <!-- Vercel Analytics: counts visits once enabled in the Vercel dashboard -->
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
 <script defer src="/_vercel/insights/script.js"></script>
+<style>
+.gd-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.gd{border:1px solid var(--line,#dfe7ee);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:8px;background:#fff}
+.gd.own{background:#eef7f1;border-color:#b9dcc6}.gd.now{box-shadow:0 0 0 2px #85CCFF}
+.gd-top{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#5b6b78}.gd-top b{color:#094570;letter-spacing:.04em;text-transform:uppercase;font-size:12px}
+.gd-tag{background:#094570;color:#fff;border-radius:999px;padding:2px 9px;font-size:11px;font-weight:600}
+.gd-t{font-weight:600;line-height:1.3;flex:1;color:#0b2a3f}
+.gd-pick{display:flex;align-items:center;gap:8px;font-weight:600;cursor:pointer}.gd-pick input{width:18px;height:18px}
+.gd-buy{margin-top:16px;padding:16px;border-radius:14px;background:#f3f8fc;border:1px solid #d6e6f3}
+.gd-sum{display:flex;justify-content:space-between;gap:10px;margin-bottom:10px;font-size:15px}
+.gd-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}@media(max-width:640px){.gd-row{grid-template-columns:1fr}}
+.gd-buy .msg{min-height:0;font-size:13.5px}.gd-buy .msg.bad{color:#B42318;margin-bottom:8px}
+.gd-in{width:100%;padding:11px 12px;border:1px solid #cdd9e3;border-radius:10px;font:inherit}
+.gd-banner{margin:0 0 14px;padding:14px 16px;border-radius:12px;background:#e6f4ea;color:#14532d;font-weight:500}.gd-banner.warn{background:#fff4d6;color:#7a5b00}
+</style>
 </head>
 <body>
 <header class="top"><div>
@@ -66,7 +81,7 @@ function demo() {
   const ymd = (n) => day(n).slice(0, 10);
   const pil = (name, r, note, hist) => ({ Pillar: name, Rating: r, Note: note, Date: r ? ymd(-3) : '', History: hist.map((x, i) => ({ Date: ymd(-7 * (hist.length - i)), Rating: x })) });
   demoData = { ok: true, student: { StudentID: 'DEMO', Name: 'Sample Student', Cohort: 'Cohort 1', Plan: 'Full Programme', Facilitator: 'Ustadh Demo', PaymentStatus: 'Due', NextDue: ymd(4), MonthlyFee: 40000, AttendancePresent: 7, AttendanceTotal: 8 },
-    slack: 'https://slack.com',
+    guideMonth: 2, guides: [1,2,3,4,5,6,7,8,9,10,11,12].map((n) => ({ Slug: 'tbc-month-' + n, Title: 'Session Guide, Month ' + n + ': ' + ['Starting Strong','Discipline and Time','Character That Lasts','The Qur’an and Knowledge','Speaking with Confidence','Money and Responsibility','Friends and Influence','Body, Mind and Rest','Focus in a Digital World','Service and Leadership','Work and Enterprise','Looking Back, Moving Forward'][n - 1], Month: n, Price: 4000, Owned: n === 1, Url: n === 1 ? 'https://www.himaayahschools.com/' : '' })),
     pillars: [pil('Deen', 4, 'Consistent with the daily adhkar. Next, lead a short reminder in the circle.', [2, 3, 3, 4]), pil('Educational Development', 3, 'Planning homework better. Keep the weekly study timetable going.', [2, 2, 3]), pil('Skills', 2, 'Started the public speaking track. Practise the 2 minute talk twice this week.', [1, 2]), pil('Personal Development', 0, '', [])],
     sessions: [{ SessionID: 'S1', Start: day(1, 17), Title: 'Week 5: Time and attention', Pillar: 'Personal Development', Link: 'https://meet.google.com/', Notes: 'Bring your weekly plan.', Audience: '' }, { SessionID: 'S2', Start: day(8, 17), Title: 'Week 6: Public speaking', Pillar: 'Skills', Link: '', Notes: '', Audience: '' }, { SessionID: 'S0', Start: day(-6, 17), Title: 'Week 4: Study habits', Pillar: 'Educational Development', Link: '', Notes: '', Audience: '' }],
     attendance: [{ Date: ymd(-6), Status: 'Present' }, { Date: ymd(-13), Status: 'Present' }, { Date: ymd(-20), Status: 'Late' }, { Date: ymd(-27), Status: 'Absent' }, { Date: ymd(-34), Status: 'Present' }],
@@ -147,7 +162,61 @@ function pillarHtml(p) {
     ${p.Note ? `<blockquote>${esc(p.Note)}<cite>${fdate(p.Date)}</cite></blockquote>` : `<p class="empty" style="margin-top:8px">Your facilitator will add feedback here.</p>`}${hist}</div>`;
 }
 
+/* ---------- session guides (4,000 naira each; recommended for every student) ---------- */
+const GD_PRICE = 4000;
+const gdShort = (t) => String(t || '').replace(/^Session Guide, Month \d+:\s*/, '');
+function guidesHtml(d) {
+  const list = d.guides || [];
+  if (!list.length) return '';
+  const owned = list.filter((g) => g.Owned).length;
+  const card = (g) => `<div class="gd ${g.Owned ? 'own' : ''} ${d.guideMonth === g.Month ? 'now' : ''}">
+    <div class="gd-top"><b>Month ${esc(g.Month)}</b>${d.guideMonth === g.Month ? '<span class="gd-tag">This month</span>' : ''}</div>
+    <div class="gd-t">${esc(gdShort(g.Title))}</div>
+    ${g.Owned ? (safeUrl(g.Url) ? `<a class="btn btn-ink btn-sm" href="${esc(g.Url)}" target="_blank" rel="noopener">Download PDF</a>` : '<span class="sub">Ready soon</span>')
+      : `<label class="gd-pick"><input type="checkbox" data-gd="${esc(g.Slug)}"> <span>${naira(g.Price || GD_PRICE)}</span></label>`}</div>`;
+  return `<article class="c w12" id="guides" style="--i:4"><h2>Session guides${owned ? ` <span class="pill p-paid" style="font-size:12px;vertical-align:middle">${owned} of ${list.length} yours</span>` : ''}</h2>
+    <p class="sub" style="margin:-8px 0 14px">A printable workbook for each month of the programme, with a page for every live session, a habit tracker and a month review. Recommended for every student. ${naira(GD_PRICE)} each; once bought, you can download it here any time.</p>
+    <div class="gd-grid">${list.map(card).join('')}</div>
+    <form class="gd-buy" id="gdBuy" hidden novalidate>
+      <div class="gd-sum"><b id="gdCount"></b><span id="gdTotal"></span></div>
+      <div class="gd-row"><input class="gd-in" id="gdEmail" type="email" autocomplete="email" placeholder="Email for the receipt (yours or a parent’s)" required><input class="gd-in" id="gdPhone" type="tel" autocomplete="tel" placeholder="Phone (optional)"></div>
+      <div class="msg" id="gdMsg" role="alert"></div>
+      <button class="btn btn-ink" type="submit" id="gdPay">Pay by card</button>
+      <p class="sub" style="margin-top:8px">You will pay on a secure page. After payment the guide appears here within a few minutes, and a receipt is emailed.</p></form></article>`;
+}
+function gdUpdate() {
+  const picks = [...document.querySelectorAll('#guides [data-gd]:checked')], f = document.getElementById('gdBuy'); if (!f) return;
+  f.hidden = !picks.length;
+  document.getElementById('gdCount').textContent = picks.length + (picks.length === 1 ? ' guide selected' : ' guides selected');
+  document.getElementById('gdTotal').textContent = naira(picks.length * GD_PRICE);
+  document.getElementById('gdPay').textContent = 'Pay ' + naira(picks.length * GD_PRICE) + ' by card';
+}
+document.addEventListener('change', (e) => { if (e.target.matches && e.target.matches('#guides [data-gd]')) gdUpdate(); });
+document.addEventListener('submit', async (e) => {
+  if (!e.target.matches || !e.target.matches('#gdBuy')) return;
+  e.preventDefault();
+  const msg = $('gdMsg'), btn = $('gdPay'), slugs = [...document.querySelectorAll('#guides [data-gd]:checked')].map((x) => x.dataset.gd), email = $('gdEmail').value.trim();
+  let saved = null; try { saved = JSON.parse(sessionStorage.getItem(KEY) || 'null'); } catch (x) {}
+  const bad = (t) => { msg.textContent = t; msg.className = 'msg bad'; };
+  if (!saved || !LAST) return bad('Please log in again.');
+  if (!slugs.length) return bad('Choose at least one guide.');
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return bad('Enter a valid email address. Your receipt is sent there.');
+  if (!API_URL) return bad('Payments are off in demo mode.');
+  const label = btn.textContent; btn.disabled = true; btn.textContent = 'Opening the secure payment page…'; msg.textContent = ''; msg.className = 'msg';
+  try {
+    try { localStorage.setItem('hb_gd_email', email); } catch (x) {}
+    const r = await fetch('/api/guide-checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ slugs, name: LAST.student.Name, email, phone: $('gdPhone').value.trim(), ret: 'tbc', studentId: LAST.student.StudentID }) });
+    const j = await r.json().catch(() => null);
+    if (j && j.ok && j.url) { location.href = j.url; return; }
+    bad((j && j.error) || 'The payment page could not be opened.');
+  } catch (x) { bad('Payment is not available right now. Please try again, or message the school on WhatsApp.'); }
+  btn.disabled = false; btn.textContent = label;
+});
+
+let LAST = null;
+const GP = new URLSearchParams(location.search).get('guide');
 function render(d) {
+  LAST = d;
   const openIds = [...document.querySelectorAll('.asg[open]')].map((x) => x.dataset.id);
   const s = d.student, first = String(s.Name).split(' ')[0];
   const att = s.AttendanceTotal ? Math.round(100 * s.AttendancePresent / s.AttendanceTotal) : null;
@@ -164,7 +233,7 @@ function render(d) {
   $('app').innerHTML = `
   <section class="greet"><div><small>Assalaamu alaykum</small><h1>${esc(first)}, here is your week.</h1>
     <div class="chips"><span>${esc(s.Cohort || 'Teenagers Building Circle')}</span><span>${esc(s.Plan)}</span>${s.Facilitator ? `<span>Facilitator: ${esc(s.Facilitator)}</span>` : ''}</div></div>
-    <div class="gbtn">${safeUrl(d.slack) ? `<a class="btn btn-sky" href="${esc(d.slack)}" target="_blank" rel="noopener">Open the cohort Slack</a>` : ''}<a class="btn btn-ghost" href="${waHelp}" target="_blank" rel="noopener">Need help?</a></div></section>
+    <div class="gbtn"><a class="btn btn-ghost" href="${waHelp}" target="_blank" rel="noopener">Need help?</a></div></section>
   ${remind.length ? `<section class="remind" aria-label="Reminders">${remind.map((r) => `<a href="${r.a}" class="${r.u ? 'urgent' : ''}">${r.t}<span>${r.tag}</span></a>`).join('')}</section>` : ''}
   <div class="grid">
     <article class="c" id="next" style="--i:0"><div class="k">Next live session</div>${ns ? `<div class="big">${fdate(ns.Start, true)}</div><p class="sub"><b>${esc(ns.Title)}</b>${ns.Pillar ? ' · ' + esc(ns.Pillar) : ''}</p>${ns.Notes ? `<p class="sub">${esc(ns.Notes)}</p>` : ''}${safeUrl(ns.Link) ? `<p><a class="btn btn-ink" style="margin-top:12px" href="${esc(ns.Link)}" target="_blank" rel="noopener">Join the session</a></p>` : '<p class="sub">The join link will appear here.</p>'}` : '<div class="big">Not scheduled</div><p class="sub">Your facilitator will post the next session here.</p>'}</article>
@@ -179,6 +248,8 @@ function render(d) {
     <article class="c w12" id="assign" style="--i:4"><h2>Assignments${todo ? ` <span class="pill st-todo" style="font-size:12px;vertical-align:middle">${todo} to do</span>` : ''}</h2>
       <div class="asgs">${asg.map(assignmentHtml).join('') || '<p class="empty">No assignments yet. Your facilitator will post them here.</p>'}</div></article>
 
+    ${guidesHtml(d)}
+
     <article class="c w6" style="--i:5"><h2>Upcoming sessions</h2><ul class="list">${up.map((x) => `<li style="display:block"><b>${esc(x.Title)}</b> <span style="float:inline-end">${fdate(x.Start, true)}</span>${x.Pillar ? `<div class="sub">${esc(x.Pillar)}</div>` : ''}${safeUrl(x.Link) ? `<div class="sub"><a class="lnk" href="${esc(x.Link)}" target="_blank" rel="noopener">Join link</a></div>` : ''}</li>`).join('') || '<li class="empty">No more sessions scheduled yet.</li>'}</ul>
       ${past.length ? `<p class="k" style="margin-top:18px">Recent sessions</p><ul class="list">${past.slice(0, 3).map((x) => `<li><b>${esc(x.Title)}</b><span>${fdate(x.Start)}</span></li>`).join('')}</ul>` : ''}</article>
     <article class="c w6" style="--i:6"><h2>Your attendance</h2><div class="att">${(d.attendance || []).map((a) => `<span class="a-${esc(a.Status)}" title="${esc(a.Status)}"><b>${esc(a.Status)}</b>${fdate(a.Date)}</span>`).join('') || '<p class="empty">No sessions recorded yet.</p>'}</div></article>
@@ -187,6 +258,13 @@ function render(d) {
     <article class="c w6" style="--i:8"><h2>Payment history</h2>${pays.length ? `<table><thead><tr><th>Date</th><th>Reference</th><th>Covers</th><th>Amount</th></tr></thead><tbody>${pays.map((p) => `<tr><td>${fdate(p.Date)}</td><td>${esc(p.Reference || '')}</td><td>${esc(p.Months)} mo</td><td><b>${naira(p.Amount)}</b></td></tr>`).join('')}</tbody></table>` : '<p class="empty">No payments recorded yet.</p>'}</article>
   </div>
   <p class="foot">${API_URL ? '' : 'Demo mode: this is sample data. '}Your records are updated by your facilitators. Questions? Use the Need help? button.</p>`;
+  try { const em = localStorage.getItem('hb_gd_email'); if (em && $('gdEmail')) $('gdEmail').value = em; } catch (x) {}
+  const gp = GP;
+  if (gp) {
+    const b = document.createElement('div'); b.className = 'gd-banner' + (gp === 'paid' ? '' : ' warn'); b.setAttribute('role', 'status');
+    b.textContent = gp === 'paid' ? 'Thank you. Your payment went through. Your guide appears in Session guides within a few minutes (refresh the page), and a receipt is on its way to your email.' : 'Payment was cancelled. You have not been charged.';
+    $('app').prepend(b); try { history.replaceState(null, '', location.pathname); } catch (x) {}
+  }
   openIds.forEach((id) => { const el = [...document.querySelectorAll('.asg')].find((x) => x.dataset.id === id); if (el) el.open = true; });
   requestAnimationFrame(() => setTimeout(() => { document.querySelectorAll('.bar i').forEach((b) => { b.style.width = b.dataset.w + '%'; }); }, 80));
 }

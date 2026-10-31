@@ -59,6 +59,18 @@ export const GUIDES = {
   "design-with-canva": { id: "96403", title: "Design with Canva", file: "3204219dbdd427a36ab5.pdf", price: 3000 },
   "your-first-cv-and-interview": { id: "4bfef", title: "Your First CV and Interview", file: "6335559a272f41d84a21.pdf", price: 3000 },
   "freelancing-first-steps": { id: "81874", title: "Freelancing First Steps", file: "bfebaffb4a8d593b0b22.pdf", price: 3000 },
+  "tbc-month-01-starting-strong": { id: "8d78f", title: "Session Guide, Month 1: Starting Strong", file: "66babee8ccaa7c266e56.pdf", price: 4000, month: 1 },
+  "tbc-month-02-discipline-and-time": { id: "5b5ea", title: "Session Guide, Month 2: Discipline and Time", file: "3138110854d19756c130.pdf", price: 4000, month: 2 },
+  "tbc-month-03-character-that-lasts": { id: "47a07", title: "Session Guide, Month 3: Character That Lasts", file: "a67bd421296adffc4828.pdf", price: 4000, month: 3 },
+  "tbc-month-04-the-quran-and-knowledge": { id: "669b9", title: "Session Guide, Month 4: The Qur’an and Knowledge", file: "4edb7572a9c0c12bde8c.pdf", price: 4000, month: 4 },
+  "tbc-month-05-speaking-with-confidence": { id: "db6b7", title: "Session Guide, Month 5: Speaking with Confidence", file: "8cb2aebec1b500b7f472.pdf", price: 4000, month: 5 },
+  "tbc-month-06-money-and-responsibility": { id: "b75e9", title: "Session Guide, Month 6: Money and Responsibility", file: "1bbda83173367c6ee55f.pdf", price: 4000, month: 6 },
+  "tbc-month-07-friends-and-influence": { id: "4ffee", title: "Session Guide, Month 7: Friends and Influence", file: "176994bfa91821f0f5e6.pdf", price: 4000, month: 7 },
+  "tbc-month-08-body-mind-and-rest": { id: "ea313", title: "Session Guide, Month 8: Body, Mind and Rest", file: "b22c3ee24330f0ce98d0.pdf", price: 4000, month: 8 },
+  "tbc-month-09-focus-in-a-digital-world": { id: "72c6e", title: "Session Guide, Month 9: Focus in a Digital World", file: "4325bdb9ff0249de4e68.pdf", price: 4000, month: 9 },
+  "tbc-month-10-service-and-leadership": { id: "6cc48", title: "Session Guide, Month 10: Service and Leadership", file: "d47f6b69983a50247a7a.pdf", price: 4000, month: 10 },
+  "tbc-month-11-work-and-enterprise": { id: "f8e9d", title: "Session Guide, Month 11: Work and Enterprise", file: "116232e5f99918f96e7a.pdf", price: 4000, month: 11 },
+  "tbc-month-12-looking-back-moving-forward": { id: "6c622", title: "Session Guide, Month 12: Looking Back, Moving Forward", file: "c7b299bd48a11153fe7c.pdf", price: 4000, month: 12 },
 };
 export const BY_ID = Object.fromEntries(Object.entries(GUIDES).map(([slug, g]) => [g.id, slug]));
 // Free items (price 0) are not charged for, but are listed on the receipt when they were in the cart.

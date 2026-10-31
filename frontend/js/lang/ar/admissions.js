@@ -49,7 +49,7 @@ HS_I18N.add({
 "A weekly cohort built on four pillars.": "دفعة أسبوعية قائمة على أربع ركائز.",
 "Ages 13 to 19.": "الأعمار من 13 إلى 19.",
 "A diagnostic assessment before the cohort begins.": "تقييم تشخيصي قبل بدء الدفعة.",
-"Four live sessions a week and a dedicated Slack workspace.": "أربع جلسات مباشرة أسبوعيًا ومساحة عمل خاصة على Slack.",
+"Four live sessions a week on Google Meet and a monthly progress report for parents.": "أربع جلسات مباشرة أسبوعيًا على Google Meet وتقرير تقدّم شهري لأولياء الأمور.",
 "View the programme": "شاهد البرنامج",
 "Madrasah levels and minimum scores.": "مستويات المدرسة الشرعية والحد الأدنى للدرجات.",
 "These levels are not taking new students right now. Private (one-on-one) classes for Full Madrasah and Hifdh Only are still open.": "هذه المستويات لا تقبل طلابًا جددًا حاليًا. الحصص الخاصة (الفردية) للمدرسة الشرعية كاملة وللحفظ فقط ما زالت مفتوحة.",

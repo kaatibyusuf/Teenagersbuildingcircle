@@ -29,7 +29,9 @@ export async function POST(request) {
   if (!slugs.length || slugs.length > 60 || slugs.some((s) => !GUIDES[s])) return json({ ok: false, error: 'Choose at least one book.' }, 400);
   const freeSlugs = [...new Set((Array.isArray(b.free) ? b.free : []).map(String))].filter((s) => Object.prototype.hasOwnProperty.call(FREE, s)).slice(0, 10);
   const amount = slugs.reduce((n, s) => n + GUIDES[s].price, 0);
-  const store = b.ret === 'store';
+  const store = b.ret === 'store', tbc = b.ret === 'tbc';
+  const studentId = tbc ? clean(b.studentId, 40).toUpperCase() : '';
+  if (tbc && !studentId) return json({ ok: false, error: 'Sign in again and retry.' }, 400);
 
   const live = key.startsWith('sk_live_');
   const api = live ? 'https://api.bachs.io' : 'https://sandbox-api.bachs.io';
@@ -42,12 +44,12 @@ export async function POST(request) {
   const session = {
     pricing: { currency: 'NGN', amount: amount.toFixed(2) },
     customer,
-    success_url: site + (store ? '/store?paid=1' : '/guide-success'),
-    cancel_url: site + (store ? '/store?cancelled=1' : '/buy-guide?cancelled=1&g=' + encodeURIComponent(slugs.join(','))),
+    success_url: site + (tbc ? '/tbc-dashboard?guide=paid' : store ? '/store?paid=1' : '/guide-success'),
+    cancel_url: site + (tbc ? '/tbc-dashboard?guide=cancelled' : store ? '/store?cancelled=1' : '/buy-guide?cancelled=1&g=' + encodeURIComponent(slugs.join(','))),
     reference: ref + '-' + Math.random().toString(36).slice(2, 7),
     metadata: {
       kind: 'guide', ref, plan: clean(slugs.length === 1 ? GUIDES[slugs[0]].title : slugs.length + ' books from the Himaayah Store', 100), guide: slugs.map((s) => GUIDES[s].id).join(','), free: freeSlugs.map((s) => FREE[s].id).join(','),
-      donorName: name, donorEmail: email, donorPhone: clean(b.phone, 30), student: name,
+      donorName: name, donorEmail: email, donorPhone: clean(b.phone, 30), student: name, studentId,
     },
     expires_in_minutes: 60,
   };
