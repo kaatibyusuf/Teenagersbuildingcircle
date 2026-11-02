@@ -137,5 +137,12 @@ HS_I18N.add({
 "Four simple steps.": "أربع خطوات بسيطة.",
 "The standard": "المعيار",
 "Benefits": "المزايا",
-"Apply": "قدّم"
+"Apply": "قدّم",
+"Apply to be an Ambassador.": "قدّم طلبك لتصبح سفيرًا.",
+"Be the face of Himaayah. Earn 10% of the fee.": "كن وجه حماية. واكسب 10% من الرسوم.",
+"Questions.": "أسئلة.",
+"Represent the school in your community and introduce families to what we teach. For every family you bring, 10% of their first fee is paid to your bank account. Open to anyone from age 16.": "مثّل المدرسة في مجتمعك وعرّف الأسر بما نُدرّسه. عن كل أسرة تجلبها يُدفع 10% من رسومها الأولى إلى حسابك المصرفي. التقديم مفتوح لكل من بلغ 16 عامًا فأكثر.",
+"Three levels of recognition.": "ثلاثة مستويات للتقدير.",
+"What an Ambassador does.": "ماذا يفعل السفير.",
+"What you receive.": "ما تحصل عليه."
 });

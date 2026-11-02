@@ -33,102 +33,17 @@
 <!-- Vercel Analytics: counts visits once enabled in the Vercel dashboard -->
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
 <script defer src="/_vercel/insights/script.js"></script>
-<style>
-.tb-page{--tb-ink:#062F4D;--tb-bg:#F4F8FB;--tb-g:#062F4D;--tb-b:#1F78B8;--tb-y:#85CCFF;--tb-p:#094570;--tb-navy:#062F4D;font-family:Inter,system-ui,sans-serif;color:var(--tb-ink);background:var(--tb-bg);line-height:1.5;overflow-x:hidden;-webkit-font-smoothing:antialiased}
-.tb-page *{box-sizing:border-box;margin:0}
-:where(.tb-page a){color:inherit;text-decoration:none}
-.tb-wrap{max-width:1180px;margin:0 auto;padding:0 24px}
-.tb-d{font-family:"Bricolage Grotesque",Inter,sans-serif;letter-spacing:-.045em;line-height:.9;font-weight:800}
-.tb-page h1,.tb-page h2,.tb-page h3{color:inherit;font-family:"Bricolage Grotesque",Inter,sans-serif!important;font-weight:800!important;letter-spacing:-.04em}
-.tb-page .tb-band h3{letter-spacing:-.04em}
-.tb-btn{display:inline-flex;align-items:center;gap:10px;border-radius:999px;padding:17px 30px;font-weight:700;font-size:17px;border:3px solid var(--tb-ink);transition:transform .15s,box-shadow .15s}
-.tb-btn:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--tb-ink)}
-.tb-btn-k{background:var(--tb-ink);color:#fff}.tb-btn-k:hover{box-shadow:5px 5px 0 var(--tb-y)}
-.tb-btn-o{background:transparent}
-/* hero */
-.tb-hero{position:relative;padding:170px 0 90px;overflow:hidden}
-.tb-hero-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:40px;align-items:center}
-.tb-tag{display:inline-block;background:var(--tb-ink);color:#fff;border-radius:999px;padding:9px 18px;font-weight:700;font-size:14px;letter-spacing:.04em;margin-bottom:28px}
-.tb-tag b{color:var(--tb-y)}
-.tb-hero h1{font-size:clamp(58px,9.4vw,138px)}
-.tb-hero h1 .tb-hl{display:inline-block;padding:0 .12em;border-radius:.16em;color:#fff;transform:rotate(-2deg)}
-.tb-hero p{font-size:21px;max-width:520px;margin:34px 0 36px;color:#2c4155}
-.tb-cta{display:flex;gap:14px;flex-wrap:wrap}
-.tb-facts{display:flex;gap:10px;flex-wrap:wrap;margin-top:34px}
-.tb-facts span{border:2.5px solid var(--tb-ink);border-radius:999px;padding:8px 16px;font-weight:600;font-size:15px;background:#fff}
-/* quadrant */
-.tb-quad{position:relative;aspect-ratio:1;max-width:420px;margin-left:auto;width:100%}
-.tb-quad div{position:absolute;width:52%;height:52%;border-radius:34px;display:grid;place-items:center;font-family:"Bricolage Grotesque",Inter,sans-serif;font-weight:800;font-size:clamp(54px,8vw,104px);color:#fff;border:4px solid var(--tb-ink);box-shadow:8px 8px 0 var(--tb-ink)}
-.tb-quad .tb-q1{left:0;top:0;background:var(--tb-g);transform:rotate(-6deg)}
-.tb-quad .tb-q2{right:0;top:6%;background:var(--tb-b);transform:rotate(5deg)}
-.tb-quad .tb-q3{left:4%;bottom:0;background:var(--tb-y);color:var(--tb-ink);transform:rotate(4deg)}
-.tb-quad .tb-q4{right:2%;bottom:4%;background:var(--tb-p);transform:rotate(-4deg)}
-/* marquee */
-.tb-mq{background:var(--tb-ink);color:#fff;transform:rotate(-1.2deg);margin:0 -20px;padding:18px 0;overflow:hidden;white-space:nowrap}
-.tb-mq div{display:inline-block;font-family:"Bricolage Grotesque",Inter,sans-serif;font-weight:800;font-size:30px;letter-spacing:-.02em;animation:tb-mv 28s linear infinite}
-.tb-mq span{margin:0 26px;color:var(--tb-y)}
-@keyframes tb-mv{to{transform:translateX(-50%)}}
-/* pillars */
-.tb-sec{padding:110px 0}
-.tb-sec h2{font-size:clamp(44px,6.4vw,92px);margin-bottom:46px}
-.tb-bands{display:grid;gap:14px}
-.tb-band{display:grid;grid-template-columns:90px 1fr 1.1fr;gap:24px;align-items:center;border:4px solid var(--tb-ink);border-radius:30px;padding:26px 34px;color:#fff;box-shadow:8px 8px 0 var(--tb-ink);transition:transform .15s,box-shadow .15s}
-.tb-band:hover{transform:translate(-4px,-4px);box-shadow:12px 12px 0 var(--tb-ink)}
-.tb-band .tb-n{font-family:"Bricolage Grotesque",Inter,sans-serif;font-weight:800;font-size:64px;line-height:1;opacity:.55}
-.tb-band h3{font-family:"Bricolage Grotesque",Inter,sans-serif;font-weight:800;font-size:clamp(34px,4.4vw,58px);letter-spacing:-.04em;line-height:.95}
-.tb-band p{font-size:18px;line-height:1.45}
-.tb-band.tb-y{color:var(--tb-ink)}
-/* numbers */
-.tb-nums{background:var(--tb-ink);color:#fff;border-radius:44px;padding:70px 56px;margin:0 auto;max-width:1180px;width:calc(100% - 48px);display:grid;grid-template-columns:repeat(3,1fr);gap:40px}
-.tb-nums b{display:block;font-family:"Bricolage Grotesque",Inter,sans-serif;font-weight:800;font-size:clamp(70px,9vw,128px);letter-spacing:-.05em;line-height:.88}
-.tb-nums div:nth-child(1) b{color:var(--tb-y)}.tb-nums div:nth-child(2) b{color:#E3F2FD}.tb-nums div:nth-child(3) b{color:#3E97D9}
-.tb-nums span{display:block;font-size:20px;margin-top:14px;color:#cfdce8;max-width:280px}
-/* price */
-.tb-price{display:grid;grid-template-columns:1fr 1fr;gap:0;border:4px solid var(--tb-ink);border-radius:40px;overflow:hidden;box-shadow:12px 12px 0 var(--tb-ink)}
-.tb-price>div{padding:56px 52px}
-.tb-price .tb-l{background:var(--tb-y)}.tb-price .tb-r{background:#fff;display:flex;flex-direction:column;justify-content:center;gap:20px}
-.tb-price small{font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:13px}
-.tb-price .tb-big{white-space:nowrap;font-family:"Bricolage Grotesque",Inter,sans-serif;font-weight:800;font-size:clamp(56px,7vw,100px);letter-spacing:-.05em;line-height:.9;margin:14px 0 8px}
-.tb-price .tb-big span{font-size:26px;letter-spacing:0;font-weight:600}
-.tb-price .tb-r p{font-size:20px;line-height:1.5}
-.tb-price .tb-r p b{background:linear-gradient(transparent 62%,#85CCFF 62%)}
-.tb-foot{padding:70px 0 90px;text-align:center;color:#6b7a88;font-size:14px}
-@media(max-width:900px){
- .tb-hero-grid{grid-template-columns:1fr}.tb-quad{margin:20px auto 0;max-width:340px}
- .tb-band{grid-template-columns:1fr;gap:10px;padding:24px 24px 28px}.tb-band .tb-n{font-size:44px}
- .tb-nums{grid-template-columns:1fr;padding:44px 28px;gap:34px}.tb-price{grid-template-columns:1fr}.tb-price>div{padding:38px 28px}
-}
-@media(max-width:560px){.tb-hero{padding:76px 0 60px}.tb-sec{padding:76px 0}.tb-hero p{font-size:18px}.tb-btn{padding:15px 24px;font-size:16px}}
-
-/* ---- motion ---- */
-.tb-rv{opacity:0;transform:translateY(40px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1);transition-delay:var(--tb-dl,0s)}
-.tb-rv.tb-in{opacity:1;transform:none}
-.tb-band.tb-rv{transform:translateX(-80px) rotate(-1.5deg)}.tb-band.tb-rv.tb-in{transform:none}
-.tb-band:nth-child(even).tb-rv{transform:translateX(80px) rotate(1.5deg)}.tb-band:nth-child(even).tb-rv.tb-in{transform:none}
-.tb-w{display:inline-block;opacity:0;transform:translateY(.7em) rotate(4deg);animation:tb-wd .75s cubic-bezier(.2,.9,.25,1.2) forwards;animation-delay:calc(var(--tb-i)*.11s + .15s)}
-@keyframes tb-wd{to{opacity:1;transform:none}}
-.tb-hero h1 .tb-hl{animation-name:tb-wd,tb-wig;animation-duration:.75s,3.8s;animation-delay:.6s,1.8s;animation-iteration-count:1,infinite;animation-timing-function:cubic-bezier(.2,.9,.25,1.2),ease-in-out}
-@keyframes tb-wig{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(1.5deg) scale(1.03)}}
-.tb-tag{animation:tb-pop .6s cubic-bezier(.2,.9,.25,1.4) both}.tb-hero p,.tb-cta,.tb-facts{animation:tb-up .8s .8s cubic-bezier(.2,.7,.2,1) both}.tb-facts{animation-delay:1s}
-@keyframes tb-pop{from{opacity:0;transform:scale(.6)}}@keyframes tb-up{from{opacity:0;transform:translateY(24px)}}
-.tb-quad div{animation:tb-drop .9s cubic-bezier(.2,.9,.25,1.3) both,tb-bob 5s ease-in-out infinite;transition:transform .2s}
-.tb-quad .tb-q1{animation-delay:.2s,1.1s}.tb-quad .tb-q2{animation-delay:.35s,1.4s}.tb-quad .tb-q3{animation-delay:.5s,1.7s}.tb-quad .tb-q4{animation-delay:.65s,2s}
-@keyframes tb-drop{from{opacity:0;translate:0 -140px;scale:.5}}
-@keyframes tb-bob{0%,100%{translate:0 0}50%{translate:0 -12px}}
-.tb-quad div:hover{scale:1.1;z-index:3;cursor:pointer}
-.tb-spark{position:absolute;pointer-events:none;font-size:26px;animation:tb-tw 2.6s ease-in-out infinite}
-@keyframes tb-tw{0%,100%{opacity:.2;transform:scale(.6) rotate(0)}50%{opacity:1;transform:scale(1.2) rotate(40deg)}}
-.tb-btn-k{position:relative;overflow:hidden}.tb-btn-k:after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.35) 50%,transparent 70%);transform:translateX(-120%);animation:tb-shine 3.6s 2s infinite}
-@keyframes tb-shine{to{transform:translateX(120%)}}
-.tb-band .tb-n{transition:transform .3s}.tb-band:hover .tb-n{transform:scale(1.25) rotate(-6deg)}
-.tb-price .tb-big{transition:transform .3s}.tb-price:hover .tb-big{transform:scale(1.03)}
-.tb-cdot{display:inline-block;animation:tb-pulse 1.6s ease-in-out infinite}@keyframes tb-pulse{50%{transform:scale(1.35)}}
-@media (prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}.tb-rv,.tb-w{opacity:1!important;transform:none!important}.tb-mq div{animation:none!important}}
-.tb-price .tb-r .tb-gd{font-size:16px;color:#2c4155;border-top:2px dashed #cfe0ee;padding-top:16px}
-.tb-mq{direction:ltr}
-.tb-tag i{font-style:normal;opacity:.55;margin:0 .35em}
-@media(max-width:560px){.tb-hero{padding:130px 0 60px}}
-</style>
+<style>.perk{padding:28px 24px;border-radius:var(--r,20px);background:#fff;box-shadow:var(--shadow,0 10px 30px -18px rgba(6,47,77,.25))}
+.perk .ic{width:48px;height:48px;border-radius:50%;background:var(--wash,#F4F8FB);color:var(--ink,#0E2A3D);display:grid;place-items:center;margin-bottom:18px}
+.perk h3{font-family:var(--display);font-weight:700;font-size:19px;line-height:1.25;color:var(--deep,#062F4D);margin-bottom:8px}
+.perk p{font-size:15px;color:var(--muted)}
+.sec .head{text-align:center;max-width:680px;margin:0 auto clamp(28px,4vw,44px)}
+.sec .head h2{margin-bottom:10px}
+.perks{max-width:1040px;margin-inline:auto}
+.hero-actions{justify-content:flex-start!important;margin-top:28px}
+.hero-copy .hero-actions .btn{flex:0 0 auto!important}
+@media(max-width:900px){.perks{grid-template-columns:1fr 1fr!important}}@media(max-width:560px){.perks{grid-template-columns:1fr!important}}
+.calbar-box .hero-actions{margin-top:0}.calbar-box .btn-line{color:#fff!important;border-color:rgba(255,255,255,.5)!important;background:transparent!important}.hero{padding-bottom:clamp(60px,8vw,96px)}.hero-copy{max-width:680px}.hero-copy h1{font-size:clamp(38px,5.4vw,64px);line-height:1.05}.hero-copy p{margin-top:18px}</style>
 </head>
 <body>
 <script src="js/ticker.js"></script>
@@ -172,49 +87,51 @@
   Home
 </a>
 
-<div class="tb-page">
-<header class="tb-hero">
-  <div class="tb-wrap tb-hero-grid">
-    <div>
-      <span class="tb-tag"><span class="tb-cdot">●</span> <span>Ages 13–19</span><i>·</i><b>Starts 1 December 2026</b></span>
-      <h1 class="tb-d"><span class="tb-w" style="--tb-i:0">Build</span> <span class="tb-w" style="--tb-i:1">who</span> <span class="tb-w tb-hl" style="background:var(--tb-p);--tb-i:2">you’ll become.</span></h1>
-      <p>A live circle for teenagers. Faith, study, skills and character, four sessions a week on Google Meet.</p>
-      <div class="tb-cta"><a class="tb-btn tb-btn-k" href="enroll?programme=circle">Enrol now →</a><a class="tb-btn tb-btn-o" href="#pillars">See what we build</a></div>
-      <div class="tb-facts"><span>4 live sessions a week</span><span>Google Meet</span><span>₦40,000 a month</span></div>
-    </div>
-    <div class="tb-quad" aria-hidden="true"><span class="tb-spark" style="left:-6%;top:40%">✦</span><span class="tb-spark" style="right:-4%;top:-2%;animation-delay:.8s">✦</span><span class="tb-spark" style="left:46%;bottom:-8%;animation-delay:1.5s">✦</span><div class="tb-q1">D</div><div class="tb-q2">E</div><div class="tb-q3">S</div><div class="tb-q4">P</div></div>
-  </div>
+<header class="hero">
+  <div class="wrap"><div class="hero-copy">
+    <h1>Build who you’ll become.</h1>
+    <p>A live circle for teenagers aged 13 to 19. Faith, study, skills and character, four sessions a week on Google Meet. The next cohort starts 1 December 2026.</p>
+    <div class="hero-actions"><a href="enroll?programme=circle" class="btn btn-ink lift">Enrol now</a><a href="#pillars" class="btn btn-line lift">See what we build</a></div>
+  </div></div>
 </header>
 
-<div style="overflow:hidden;padding:14px 0"><div class="tb-mq" aria-hidden="true"><div>
- <span>✦</span>Deen<span>✦</span>Education<span>✦</span>Skills<span>✦</span>Character<span>✦</span>Deen<span>✦</span>Education<span>✦</span>Skills<span>✦</span>Character<span>✦</span>Deen<span>✦</span>Education<span>✦</span>Skills<span>✦</span>Character<span>✦</span>Deen<span>✦</span>Education<span>✦</span>Skills<span>✦</span>Character
-</div></div></div>
-
-<section class="tb-sec" id="pillars"><div class="tb-wrap">
-  <h2 class="tb-d tb-rv">Four sides.<br>Every week.</h2>
-  <div class="tb-bands">
-    <div class="tb-band tb-rv" style="background:var(--tb-g);--tb-dl:0s"><span class="tb-n">01</span><h3>Deen</h3><p>Grounding in faith and practice that holds up outside the classroom, not just inside it.</p></div>
-    <div class="tb-band tb-rv" style="background:var(--tb-b);--tb-dl:.08s"><span class="tb-n">02</span><h3>Educational Development</h3><p>Study habits and academic footing that carry into every other subject a student takes.</p></div>
-    <div class="tb-band tb-y tb-rv" style="background:var(--tb-y);--tb-dl:.16s"><span class="tb-n">03</span><h3>Skills</h3><p>Practical ability, the kind you can actually use, not just describe on a form.</p></div>
-    <div class="tb-band tb-rv" style="background:var(--tb-p);--tb-dl:.24s"><span class="tb-n">04</span><h3>Personal Development</h3><p>Character and self-management, the part no syllabus tests but every adult needs.</p></div>
+<section class="sec" id="pillars">
+  <div class="wrap">
+    <div class="head reveal"><h2>Four sides. Every week.</h2><p>Every session sits under one of four pillars, so a teenager grows in all of them together.</p></div>
+    <div class="perks">
+      <article class="perk reveal"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a8 8 0 1 0 8 9 6 6 0 0 1-8-9z"/></svg></div><h3>Deen</h3><p>Grounding in faith and practice that holds up outside the classroom, not just inside it.</p></article>
+      <article class="perk reveal delay-1"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11.5V16c0 1.5 3 3 6 3s6-1.5 6-3v-4.5"/></svg></div><h3>Educational Development</h3><p>Study habits and academic footing that carry into every other subject a student takes.</p></article>
+      <article class="perk reveal delay-2"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></div><h3>Skills</h3><p>Practical ability, the kind you can actually use, not just describe on a form.</p></article>
+      <article class="perk reveal delay-3"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.6 3-6 7-6s7 2.4 7 6"/></svg></div><h3>Personal Development</h3><p>Character and self-management, the part no syllabus tests but every adult needs.</p></article>
+    </div>
   </div>
-</div></section>
+</section>
 
-<div class="tb-nums tb-rv">
-  <div><b data-to="4">4</b><span>live sessions every week, across all four pillars</span></div>
-  <div><b data-to="12">12</b><span>monthly session guides, one for every month of the year</span></div>
-  <div><b data-to="1">1</b><span>full report to parents every month, by email and WhatsApp</span></div>
-</div>
-
-<section class="tb-sec" id="price"><div class="tb-wrap">
-  <div class="tb-price tb-rv">
-    <div class="tb-l"><small>Full programme</small><div class="tb-big">₦40,000<span> / month</span></div><small>Teenagers Building Circle · ages 13–19</small></div>
-    <div class="tb-r"><p><b>Next cohort starts 1 December 2026.</b> It begins with a diagnostic assessment, so the circle is built around where each student actually is.</p>
-      <div class="tb-cta"><a class="tb-btn tb-btn-k" href="enroll?programme=circle">Enrol now →</a><a class="tb-btn tb-btn-o" href="https://wa.me/2348066043320?text=Assalaamu%20alaykum.%20I%27d%20like%20to%20ask%20about%20the%20Teenagers%20Building%20Circle." target="_blank" rel="noopener">Ask on WhatsApp</a></div>
-      <p class="tb-gd">Optional monthly session guides cost ₦4,000 each and are bought from the student dashboard.</p></div>
+<section class="sec">
+  <div class="wrap">
+    <div class="head reveal"><h2>What a month looks like.</h2></div>
+    <div class="perks" style="grid-template-columns:repeat(3,minmax(0,1fr))">
+      <article class="perk reveal"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="14" height="14" rx="2"/><path d="m17 10 4-2v8l-4-2"/></svg></div><h3>4 live sessions a week</h3><p>Held on Google Meet, across all four pillars.</p></article>
+      <article class="perk reveal delay-1"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5"/></svg></div><h3>12 monthly session guides</h3><p>One for every month of the year, optional at ₦4,000 each from the student dashboard.</p></article>
+      <article class="perk reveal delay-2"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></div><h3>A monthly report to parents</h3><p>Sent in full by email and WhatsApp, every month.</p></article>
+    </div>
   </div>
-</div></section>
-</div>
+</section>
+
+<section class="sec" id="price">
+  <div class="wrap">
+    <div class="calbar-box reveal">
+      <div class="calbar-l">
+        <span class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span>
+        <div>
+          <h2>₦40,000 a month.</h2>
+          <p>Next cohort starts 1 December 2026. It begins with a diagnostic assessment, so the circle is built around where each student actually is.</p>
+        </div>
+      </div>
+      <div class="hero-actions"><a href="enroll?programme=circle" class="btn btn-sky lift">Enrol now</a><a href="https://wa.me/2348066043320?text=Assalaamu%20alaykum.%20I%27d%20like%20to%20ask%20about%20the%20Teenagers%20Building%20Circle." target="_blank" rel="noopener" class="btn btn-line lift">Ask on WhatsApp</a></div>
+    </div>
+  </div>
+</section>
 
 <section class="sec res-strip-sec"><div class="wrap">
   <div class="res-strip reveal"><a href="store#p-deen-and-discipline"><img src="resources/deen-and-discipline-cover.jpg" alt="Cover of Deen and Discipline" width="640" height="905" loading="lazy"></a>
@@ -355,8 +272,6 @@
       const io = new IntersectionObserver((es) => es.forEach((e) => { if (!e.isIntersecting) return; e.target.classList.add('tb-in'); e.target.querySelectorAll('[data-to]').forEach(count); io.unobserve(e.target); }), { threshold: .18 });
       els.forEach((el) => io.observe(el));
     } else { els.forEach((el) => el.classList.add('tb-in')); }
-    const q = document.querySelector('.tb-quad');
-    if (q && !rm && matchMedia('(hover: hover)').matches) document.addEventListener('mousemove', (e) => { q.style.transform = 'translate(' + ((e.clientX / innerWidth - .5) * 16) + 'px,' + ((e.clientY / innerHeight - .5) * 16) + 'px)'; });
   })();
 </script>
 </body>

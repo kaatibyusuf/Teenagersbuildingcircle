@@ -97,5 +97,20 @@ HS_I18N.add({
 "Teenagers Building Circle · ages 13–19": "حلقة بناء الناشئة · من 13 إلى 19 سنة",
 "It begins with a diagnostic assessment, so the circle is built around where each student actually is.": "تبدأ بتقييم تشخيصي، فتُبنى الحلقة على المستوى الفعلي لكل طالب.",
 "Ask on WhatsApp": "اسأل عبر واتساب",
-"Optional monthly session guides cost ₦4,000 each and are bought from the student dashboard.": "أدلة الجلسات الشهرية اختيارية، وسعر الدليل ₦4,000، وتُشترى من لوحة الطالب."
+"Optional monthly session guides cost ₦4,000 each and are bought from the student dashboard.": "أدلة الجلسات الشهرية اختيارية، وسعر الدليل ₦4,000، وتُشترى من لوحة الطالب.",
+"Build who": "ابنِ مَن",
+"Personal development": "التطوير الشخصي",
+"The programme": "البرنامج",
+"Four sides. Every week.": "أربعة أبعاد. كل أسبوع.",
+"12 monthly session guides": "12 دليلًا شهريًا للجلسات",
+"A live circle for teenagers aged 13 to 19. Faith, study, skills and character, four sessions a week on Google Meet. The next cohort starts 1 December 2026.": "حلقة مباشرة للمراهقين من 13 إلى 19 عامًا. الدين والدراسة والمهارات والشخصية، أربع جلسات أسبوعيًا على Google Meet. تبدأ الدفعة القادمة في 1 ديسمبر 2026.",
+"A monthly report to parents": "تقرير شهري لأولياء الأمور",
+"Build who you’ll become.": "ابنِ من ستكونه.",
+"Every session sits under one of four pillars, so a teenager grows in all of them together.": "كل جلسة تندرج تحت أحد أربعة أعمدة، فينمو المراهق فيها جميعًا معًا.",
+"Held on Google Meet, across all four pillars.": "تُعقد على Google Meet، وتشمل الأعمدة الأربعة كلها.",
+"Next cohort starts 1 December 2026. It begins with a diagnostic assessment, so the circle is built around where each student actually is.": "تبدأ الدفعة القادمة في 1 ديسمبر 2026. وتنطلق بتقييم تشخيصي، لتُبنى الحلقة على مستوى كل طالب فعليًا.",
+"One for every month of the year, optional at ₦4,000 each from the student dashboard.": "دليل لكل شهر من السنة، اختياري بسعر ₦4,000 للدليل، ويُشترى من لوحة الطالب.",
+"Sent in full by email and WhatsApp, every month.": "يُرسل كاملًا بالبريد الإلكتروني وواتساب كل شهر.",
+"What a month looks like.": "كيف يبدو الشهر.",
+"₦40,000 a month.": "₦40,000 شهريًا."
 });
