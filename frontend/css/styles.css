@@ -3819,7 +3819,7 @@ html[dir="rtl"] .site.page-articles .art-go, html[dir="rtl"].site.page-articles 
 @media (max-width: 900px) { .site.page-articles .art-more .art-grid { grid-template-columns: 1fr; } }
 
 /* ==========================================================================
-   Pay fees page (pay.html)
+   Pay fees page (pay)
    ========================================================================== */
 .site:is(.page-pay, .page-waitlist, .page-refer, .page-sponsor, .page-hadith-bootcamp, .page-success-stories, .page-timetable, .page-trial, .page-placement) .pf-sec { padding: clamp(40px, 6vw, 80px) 0 clamp(56px, 7vw, 96px); }
 .site:is(.page-pay, .page-waitlist, .page-refer, .page-sponsor, .page-hadith-bootcamp, .page-success-stories, .page-timetable, .page-trial, .page-placement) .pf-wrap { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: clamp(20px, 3vw, 36px); align-items: start; max-width: 1040px; }
@@ -3882,7 +3882,7 @@ html[dir="rtl"] .site.page-articles .art-go, html[dir="rtl"].site.page-articles 
 .site:is(.page-pay, .page-waitlist, .page-refer, .page-sponsor, .page-hadith-bootcamp, .page-timetable, .page-trial, .page-placement) header.hero { padding-bottom: clamp(56px, 7vw, 96px); }
 .site:is(.page-pay, .page-waitlist, .page-refer, .page-sponsor, .page-hadith-bootcamp, .page-timetable, .page-trial, .page-placement) header.hero .hero-copy p { max-width: 62ch; font-size: clamp(16px, 1.4vw, 18px); line-height: 1.6; }
 
-/* Waitlist page (waitlist.html); shares the Pay fees layout */
+/* Waitlist page (waitlist); shares the Pay fees layout */
 .site:is(.page-waitlist, .page-refer, .page-sponsor, .page-hadith-bootcamp, .page-success-stories, .page-timetable, .page-trial, .page-placement) .wl-f { margin-bottom: 18px; min-width: 0; }
 .site:is(.page-waitlist, .page-refer, .page-sponsor, .page-hadith-bootcamp, .page-success-stories, .page-timetable, .page-trial, .page-placement) .wl-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 14px; }
 .site:is(.page-waitlist, .page-refer, .page-sponsor, .page-hadith-bootcamp, .page-success-stories, .page-timetable, .page-trial, .page-placement) textarea { width: 100%; font: inherit; font-size: 16px; color: var(--text); background: #fff; border: 1.5px solid var(--line); border-radius: 14px; padding: 13px 15px; resize: vertical; }
@@ -3906,7 +3906,7 @@ a.wl-shut:hover { color: var(--ink); border-color: var(--ink); background: #fff;
 .plan-opt.closed .plan-opt-shut.wl-shut { cursor: pointer; }
 
 /* ==========================================================================
-   Newsletter signup box (articles pages, newsletter.html)
+   Newsletter signup box (articles pages, newsletter)
    ========================================================================== */
 .site .nl-wrap { max-width: 920px; margin: 0 auto; }
 .site.page-articles .nl-wrap { padding-top: clamp(32px, 4vw, 48px); padding-bottom: 8px; }
@@ -4176,7 +4176,7 @@ body.acx-noscroll { overflow: hidden; }
 /* text written by students and mentors keeps its own direction (English inside the Arabic layout, and the reverse) */
 .app :is(.acx-post p, .acx-reply p, .acx-instr, .acx-mine p, .acx-fb p, .acx-class-m p, .acx-class-m b, .acx-qt, .acx-opt span:last-child, .acx-res b, .acx-sub p, .acx-test b, .acx-item > summary b, .acx-h + .sub i) { unicode-bidi: plaintext; }
 
-/* Refer and earn (refer.html); shares the Pay fees and waitlist layout */
+/* Refer and earn (refer); shares the Pay fees and waitlist layout */
 .site.page-refer .rf-steps { list-style: none; margin: 0 auto clamp(28px, 4vw, 44px); padding: 0; max-width: 1040px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; counter-reset: rf; }
 .site.page-refer .rf-steps li { counter-increment: rf; background: #fff; border-radius: 20px; box-shadow: var(--shadow); padding: 20px 18px; min-width: 0; }
 .site.page-refer .rf-steps li::before { content: counter(rf); display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--h-ink); color: #fff; font-size: 13px; font-weight: 600; margin-bottom: 12px; }
@@ -4226,7 +4226,7 @@ body.acx-noscroll { overflow: hidden; }
   .site.page-refer .rf-linkbox { flex-direction: column; }
   .site.page-refer .rf-share > * { flex: 1 1 auto; justify-content: center; }
 }
-/* Referral field on enroll.html */
+/* Referral field on enroll */
 .ref-ok { margin: 8px 0 0; font-size: 13.5px; color: #1B7F4B; }
 .ref-ok.bad { color: #B42318; }
 .ref-ok:empty { display: none; }
@@ -4242,7 +4242,7 @@ body.acx-noscroll { overflow: hidden; }
 .site.page-refer .rf-l2 { flex: none; display: flex; flex-direction: column; align-items: flex-end; gap: 4px; text-align: end; }
 .site.page-refer .rf-l2 b { color: var(--text); font-size: 17px; font-weight: 600; }
 
-/* Sponsor a student (sponsor.html); shares the Pay fees, waitlist and refer layout */
+/* Sponsor a student (sponsor); shares the Pay fees, waitlist and refer layout */
 .site.page-sponsor .sp-stats { max-width: 1040px; margin: 0 auto clamp(20px, 3vw, 32px); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
 .site.page-sponsor .sp-stats div { background: #fff; border-radius: 20px; box-shadow: var(--shadow); padding: 18px 20px; min-width: 0; }
 .site.page-sponsor .sp-stats b { display: block; font-size: clamp(20px, 2.6vw, 28px); color: var(--text); font-weight: 600; overflow-wrap: anywhere; }
@@ -4288,7 +4288,7 @@ body.acx-noscroll { overflow: hidden; }
 @media (max-width: 640px) { .site.page-sponsor .sp-stats { grid-template-columns: 1fr 1fr 1fr; gap: 8px; } .site.page-sponsor .sp-stats div { padding: 14px; border-radius: 16px; } }
 @media (max-width: 420px) { .site.page-sponsor .sp-amounts { grid-template-columns: 1fr; } .site.page-sponsor .sp-apply .btn { width: 100%; } }
 
-/* Owner dashboard (owner.html) */
+/* Owner dashboard (owner) */
 .app.page-owner .c.w7 { grid-column: span 7; }
 .app.page-owner .c.w5 { grid-column: span 5; }
 .app.page-owner .greet { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
@@ -4331,7 +4331,7 @@ body.acx-noscroll { overflow: hidden; }
 .app.page-owner .ow-chk input { width: 18px; height: 18px; accent-color: var(--ink); }
 .app.page-owner textarea.in { width: 100%; resize: vertical; font: inherit; }
 
-/* Class timetable (timetable.html) */
+/* Class timetable (timetable) */
 .site.page-timetable .tt-wrap { max-width: 1040px; }
 .site.page-timetable .tt-pick { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 14px 20px; margin-bottom: 22px; }
 .site.page-timetable .tt-progs { display: flex; flex-wrap: wrap; gap: 6px; background: #fff; border-radius: 999px; padding: 5px; box-shadow: var(--shadow); }
@@ -4372,7 +4372,7 @@ body.acx-noscroll { overflow: hidden; }
 .app .tt-week a { color: var(--ink); font-weight: 600; font-size: 13px; }
 .when .when-acts { margin-top: 18px; }
 
-/* Book a free class (trial.html) */
+/* Book a free class (trial) */
 .site.page-trial .tr-step { display: flex; align-items: center; gap: 10px; margin: 6px 0 12px; }
 .site.page-trial .tr-step span { width: 26px; height: 26px; border-radius: 50%; background: var(--h-ink, #0B1F2E); color: #fff; font-size: 13px; display: grid; place-items: center; flex: none; }
 .site.page-trial .tr-step small { font-weight: 400; color: var(--muted); }
@@ -4397,7 +4397,7 @@ body.acx-noscroll { overflow: hidden; }
 .site.page-trial .tr-slot { align-items: flex-start; }
 .app .tt-week p span[dir] { unicode-bidi: isolate; }
 
-/* Free guides (resources.html) and the guide strips on programme pages */
+/* Free guides (resources) and the guide strips on programme pages */
 .site.page-resources header.hero { padding-bottom: clamp(56px, 7vw, 96px); }
 .site.page-resources header.hero .hero-copy p { max-width: 62ch; font-size: clamp(16px, 1.4vw, 18px); line-height: 1.6; }
 .site.page-resources .res-sec { padding: clamp(40px, 6vw, 80px) 0 clamp(56px, 7vw, 96px); }
@@ -4430,7 +4430,7 @@ body.acx-noscroll { overflow: hidden; }
 .site.page-resources .res-card[hidden], .site.page-resources .res-empty[hidden] { display: none; }
 .site.page-resources .res-empty { text-align: center; color: var(--muted); font-size: 16px; padding: 32px 16px; background: #fff; border-radius: 24px; box-shadow: var(--shadow); margin: 0; }
 @media (max-width: 720px) { .site.page-resources .res-chips { flex-wrap: nowrap; overflow-x: auto; margin: 0 -4px; padding: 2px 4px 6px; scrollbar-width: thin; } .site.page-resources .res-chip { flex: none; } }
-/* compact guide grid on madrasah.html */
+/* compact guide grid on madrasah */
 .site .mg-head { margin-top: clamp(40px, 6vw, 72px); }
 .site .mg-group { font-size: clamp(17px, 1.8vw, 20px); color: var(--text); margin: clamp(20px, 2.4vw, 28px) 0 10px; }
 .site .mg-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(108px, 1fr)); gap: 14px; }
@@ -4450,7 +4450,7 @@ body.acx-noscroll { overflow: hidden; }
   .site .mg-card small { font-size: 12px; }
   .site .mg-group { margin: 22px 0 10px; }
 }
-/* small strip on madrasah.html / academy.html */
+/* small strip on madrasah / academy */
 .site .res-strip { display: grid; grid-template-columns: 120px minmax(0, 1fr) auto; gap: clamp(16px, 3vw, 32px); align-items: center; background: #fff; border-radius: 24px; box-shadow: var(--shadow); padding: clamp(16px, 2.6vw, 24px) clamp(18px, 3vw, 32px); }
 .site .res-strip img { width: 100%; height: auto; border-radius: 10px; box-shadow: 0 12px 26px -14px rgba(6,47,77,.5); display: block; }
 .site .res-strip h3 { font-size: clamp(19px, 2.2vw, 24px); margin: 6px 0 6px; color: var(--text); }
@@ -4468,7 +4468,7 @@ body.acx-noscroll { overflow: hidden; }
 .site .h-btn-dl { gap: 8px; }
 .site .hero-actions .btn-dl { gap: 8px; }
 
-/* ===================== Placement tests (placement.html) ===================== */
+/* ===================== Placement tests (placement) ===================== */
 .site.page-placement { --pt-mad: #1B7F4B; --pt-aca: #2A86C8; --pt-ok: #1B7F4B; --pt-bad: #B42318; }
 .site.page-placement .pt-sec { padding: clamp(32px, 5vw, 64px) 0 clamp(56px, 7vw, 96px); }
 .site.page-placement .pt-wrap { max-width: 1080px; }
@@ -4790,7 +4790,7 @@ a.tkr-i:hover { color: #062F4D; text-decoration-color: #062F4D; }
 }
 html[dir="rtl"] :is(.page-hadith-bootcamp, .page-bootcamp) :is(.bc-t, .bc-tt) i, html[dir="rtl"] .page-bootcamp .bc-tar, html[dir="rtl"].page-bootcamp .bc-tar, html[dir="rtl"].page-bootcamp :is(.bc-t, .bc-tt) i, html[dir="rtl"].page-hadith-bootcamp :is(.bc-t, .bc-tt) i { display: none; }
 
-/* ===================== Recitation recordings (dashboard.html, teacher.html) ===================== */
+/* ===================== Recitation recordings (dashboard, teacher) ===================== */
 .recf { display: grid; gap: 10px; margin-top: 14px; }
 .recf label { font-size: 13px; font-weight: 600; color: var(--deep); }
 .recf select, .recf input[type=number], .recf textarea { width: 100%; padding: 12px 14px; border-radius: 14px; border: 1.5px solid transparent; background: var(--wash); font: inherit; font-size: 14.5px; color: var(--text, #0E2A3D); }
@@ -4851,7 +4851,7 @@ html[dir="rtl"] :is(.page-hadith-bootcamp, .page-bootcamp) :is(.bc-t, .bc-tt) i,
 .rq-adv { display: flex; gap: 8px; align-items: center; font-size: 13.5px; color: var(--muted); }
 @media (max-width: 560px) { .rq-scores { grid-template-columns: 1fr 1fr 1fr; gap: 6px; } }
 
-/* ===================== Today's hifdh routine (dashboard.html) ===================== */
+/* ===================== Today's hifdh routine (dashboard) ===================== */
 .page-dashboard #routine { --gold: #B07A1E; --mint: #E3F1EA; --green: #1B7F4B; }
 .page-dashboard #routine h2 { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; }
 .page-dashboard .rt-date { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; color: var(--muted); }

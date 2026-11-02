@@ -488,5 +488,6 @@ HS_I18N.add({
 "Himaayah Store": "متجر حماية",
 "re:^Buy for ₦([\\d,]+)$": "اشترِ بـ $1 ₦",
 "re:^₦([\\d,]+) guide$": "دليل بـ $1 ₦",
-"Resources": "الموارد"
+"Resources": "الموارد",
+"Renew early any time. Whatever you pay is added to your current due date.": "جدّد مبكرًا في أي وقت. يُضاف ما تدفعه إلى موعد استحقاقك الحالي."
 });

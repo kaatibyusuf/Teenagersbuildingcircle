@@ -1,4 +1,4 @@
-// Starts a Bachs card payment for a sponsorship (the Sponsor a student page, sponsor.html).
+// Starts a Bachs card payment for a sponsorship (the Sponsor a student page, sponsor).
 //   type "fund"     a gift of any amount to the Sponsorship Fund
 //   type "student"  N months of fees for a student listed on the page
 // The amount is checked by Apps Script (action "sp_quote", protected by APPS_SCRIPT_SECRET),

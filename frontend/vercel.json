@@ -3,7 +3,7 @@
   "rewrites": [
     {
       "source": "/articles",
-      "destination": "/articles.html"
+      "destination": "/articles"
     }
   ],
   "functions": {
@@ -18,7 +18,7 @@
       "permanent": false
     },
     {
-      "source": "/buy-guide.html",
+      "source": "/buy-guide",
       "destination": "/store",
       "permanent": false
     }

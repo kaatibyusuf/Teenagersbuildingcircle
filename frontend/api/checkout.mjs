@@ -10,7 +10,7 @@
 // Plan name (exactly as on the enrolment page) → price in naira and Bachs product IDs.
 // Monthly and two-monthly plans are charged as a one-time payment of one period's fee
 // (Bachs NGN subscriptions are not enabled, and the school's own reminders handle renewals).
-// Keep the amounts in step with enroll.html and Enrol.gs.
+// Keep the amounts in step with enroll and Enrol.gs.
 const PLANS = {
   'Teenagers Building Circle — Full Programme': { amount: 40000, recurring: true, live: 'prod_cbd46cdefa0e4d75a31c', sandbox: 'prod_4be17e80bcc74b9f8e3a' },
   'Madrasah — Hifdh Only (Group)':              { amount: 12000, recurring: true, live: 'prod_1518dd1ab1ba4cfea0e8', sandbox: 'prod_f6d40928f10a42c8a5fe', closed: true },

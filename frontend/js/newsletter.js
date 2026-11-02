@@ -1,4 +1,4 @@
-/* Newsletter signup boxes (.nl-form) and the unsubscribe page (newsletter.html?unsub=…).
+/* Newsletter signup boxes (.nl-form) and the unsubscribe page (newsletter?unsub=…).
    Sends to the Apps Script web app: action "subscribe" / "unsubscribe" (Newsletter.gs). */
 (function () {
   var API_URL = 'https://script.google.com/macros/s/AKfycby0AsifBuB_Ad7g1SjDXCipaDU27-BrzYWf67muw5jeY_C0_0uz8AhQYYXdiNRQhvqX/exec';

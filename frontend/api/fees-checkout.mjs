@@ -1,4 +1,4 @@
-// Starts a Bachs card payment for a current student's fee (the Pay fees page, pay.html).
+// Starts a Bachs card payment for a current student's fee (the Pay fees page, pay).
 // The page sends only the Student ID and how many periods to pay. The amount comes from
 // the Google Sheet through Apps Script (action "feeQuote", protected by APPS_SCRIPT_SECRET),
 // so it can't be changed in the browser. When Bachs confirms the payment, api/bachs-webhook
@@ -20,7 +20,7 @@ export async function POST(request) {
   try { b = await request.json(); } catch { return json({ ok: false, error: 'Bad request.' }, 400); }
   const id = String(b.id || '').trim().toUpperCase();
   if (!/^[A-Z]{1,4}-?\d{1,6}$/.test(id)) return json({ ok: false, error: 'Enter a valid Student ID.' }, 400);
-  const periods = Math.max(1, Math.min(3, Math.round(Number(b.periods) || 1)));
+  const periods = Math.max(1, Math.min(12, Math.round(Number(b.periods) || 1)));
 
   // 1. the trusted amount from the sheet
   let q;
