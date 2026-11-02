@@ -489,5 +489,18 @@ HS_I18N.add({
 "re:^Buy for ₦([\\d,]+)$": "اشترِ بـ $1 ₦",
 "re:^₦([\\d,]+) guide$": "دليل بـ $1 ₦",
 "Resources": "الموارد",
-"Renew early any time. Whatever you pay is added to your current due date.": "جدّد مبكرًا في أي وقت. يُضاف ما تدفعه إلى موعد استحقاقك الحالي."
+"Renew early any time. Whatever you pay is added to your current due date.": "جدّد مبكرًا في أي وقت. يُضاف ما تدفعه إلى موعد استحقاقك الحالي.",
+"Join the conversation": "شاركنا الحوار",
+"re:Join the conversation \\((\\d+)\\)": "شاركنا الحوار ($1)",
+"Share a thought, a question or your own experience. Comments are read before they appear.": "شاركنا فكرة أو سؤالًا أو تجربتك. تُراجَع التعليقات قبل ظهورها.",
+"No comments yet. Be the first to share a thought.": "لا توجد تعليقات بعد. كن أول من يشارك رأيه.",
+"Leave a comment": "اترك تعليقًا",
+"Your name": "اسمك",
+"Email (optional, never shown)": "البريد الإلكتروني (اختياري ولا يُعرض أبدًا)",
+"Your comment": "تعليقك",
+"Please keep it kind and on topic. We review comments before they are shown.": "نرجو أن يكون التعليق لطيفًا ومتعلقًا بالموضوع. نراجع التعليقات قبل عرضها.",
+"Post comment": "انشر التعليق",
+"Posting…": "جارٍ النشر…",
+"Thank you. Your comment has been received and will appear once it has been reviewed.": "شكرًا لك. وصل تعليقك وسيظهر بعد مراجعته.",
+"Write a short comment first.": "اكتب تعليقًا قصيرًا أولًا."
 });
