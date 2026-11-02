@@ -95,7 +95,7 @@ HS_I18N.add({
 "Can I change my plan?": "هل يمكنني تغيير خطتي؟",
 "Once your payment is confirmed, the plan can't be changed, so choose the plan that fits before you pay. If you are unsure, message us on WhatsApp first.": "بعد تأكيد الدفع لا يمكن تغيير الخطة، فاختر الخطة المناسبة قبل أن تدفع. وإن لم تكن متأكدًا، راسلنا على واتساب أولًا.",
 "Can I get a refund?": "هل يمكنني استرداد المبلغ؟",
-"Refunds can't be made after a week of classes.": "لا يمكن الاسترداد بعد أسبوع من بدء الحصص.",
+"Refunds can't be made after a week of classes. Charges by payment service providers are deducted from any refund.": "لا يمكن الاسترداد بعد أسبوع من بدء الحصص. وتُخصم رسوم مزوّدي خدمة الدفع من أي مبلغ يُسترد.",
 "How do I check my progress, payments and assignments?": "كيف أتابع تقدّمي ومدفوعاتي وواجباتي؟",
 "Sign in to the student dashboard with your Student ID and access code. We email these to you once your payment is confirmed.": "سجّل الدخول إلى لوحة الطالب برقم الطالب ورمز الدخول. نرسلهما إليك بالبريد الإلكتروني بعد تأكيد الدفع.",
 "Start the Qur'an at the right level, with the right teacher.": "ابدأ القرآن من المستوى المناسب، مع المعلّم المناسب.",

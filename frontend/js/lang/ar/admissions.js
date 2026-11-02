@@ -77,7 +77,7 @@ HS_I18N.add({
 "6 weeks · intermediate": "6 أسابيع · متوسط",
 "8 weeks · advanced": "8 أسابيع · متقدّم",
 "Know our refund rule before you pay.": "اعرف قاعدة الاسترداد لدينا قبل أن تدفع.",
-"A refund is available before classes start and during the first week of classes. After one week from the start of classes, no refund is given.": "الاسترداد متاح قبل بدء الحصص وخلال الأسبوع الأول منها. وبعد مرور أسبوع على بدء الحصص لا يُرد أي مبلغ.",
+"A refund is available before classes start and during the first week of classes. After one week from the start of classes, no refund is given. Charges by payment service providers are deducted from any refund.": "الاسترداد متاح قبل بدء الحصص وخلال الأسبوع الأول منها. وبعد مرور أسبوع على بدء الحصص لا يُرد أي مبلغ. وتُخصم رسوم مزوّدي خدمة الدفع من أي مبلغ يُسترد.",
 "Read the full policy": "اقرأ السياسة كاملة",
 "Questions about admission?": "أسئلة عن القبول؟",
 "Message either school line on WhatsApp, call us, or read the FAQ. We are glad to help you choose.": "راسل أيًّا من خطَّي المدرسة على واتساب، أو اتصل بنا، أو اقرأ الأسئلة الشائعة. يسعدنا أن نساعدك على الاختيار.",

@@ -4,7 +4,7 @@ HS_I18N.add({
 "How enrollment, payment, refunds, plan changes, and your information work at Himaayah Schools, so there are no surprises.": "كيف يتم التسجيل والدفع والاسترداد وتغيير الخطط والتعامل مع بياناتك في مدارس حماية، حتى لا تكون هناك مفاجآت.",
 "Last updated: October 2026": "آخر تحديث: أكتوبر 2026",
 "Refunds within 1 week": "الاسترداد خلال أسبوع",
-"No refund once one week has passed since classes started.": "لا استرداد بعد مرور أسبوع على بدء الحصص.",
+"No refund once one week has passed since classes started. Payment provider charges are deducted from any refund.": "لا استرداد بعد مرور أسبوع على بدء الحصص. وتُخصم رسوم مزوّدي خدمة الدفع من أي مبلغ يُسترد.",
 "Change plans by email": "غيّر خطتك عبر البريد الإلكتروني",
 "Write to us with your name and current plan.": "راسلنا باسمك وخطتك الحالية.",
 "Your data stays with us": "بياناتك تبقى لدينا",
@@ -29,7 +29,7 @@ HS_I18N.add({
 "No refund is available one week after classes have started.": "لا يتوفر استرداد بعد مرور أسبوع على بدء الحصص.",
 "In practice, this means:": "وعمليًا يعني ذلك:",
 "Before classes start:": "قبل بدء الحصص:",
-"you may request a full refund at any time.": "يمكنك طلب استرداد كامل في أي وقت.",
+"you may request a refund at any time.": "يمكنك طلب الاسترداد في أي وقت.",
 "In the first week of classes:": "في الأسبوع الأول من الحصص:",
 "you may request a refund, and we will process it.": "يمكنك طلب الاسترداد، وسنعالجه.",
 "After one week from the start of classes:": "بعد أسبوع من بدء الحصص:",
@@ -37,7 +37,7 @@ HS_I18N.add({
 "Recurring plans": "الخطط المتكرّرة",
 "The one-week window runs from the day the student's classes first begin. Later monthly payments are not refundable once their billing period has started, so please tell us before your next billing date if you want to stop.": "تبدأ مهلة الأسبوع من اليوم الذي تبدأ فيه حصص الطالب أول مرة. والدفعات الشهرية اللاحقة لا تُسترد بعد بدء فترتها، فأخبرنا قبل موعد الدفع التالي إن أردت التوقف.",
 "If we cancel": "إذا ألغينا نحن",
-"If we cancel a class or cohort and cannot offer a suitable alternative, you will receive a full refund for the affected period.": "إذا ألغينا حصة أو دفعة ولم نستطع تقديم بديل مناسب، فستحصل على استرداد كامل عن الفترة المتأثرة.",
+"If we cancel a class or cohort and cannot offer a suitable alternative, you will receive a refund for the affected period.": "إذا ألغينا حصة أو دفعة ولم نستطع تقديم بديل مناسب، فستحصل على استرداد عن الفترة المتأثرة.",
 "How to request a refund": "كيف تطلب الاسترداد",
 "with the student's name, the plan, and the date and method of payment. Approved refunds are returned to the original payment method.": "باسم الطالب، والخطة، وتاريخ الدفع وطريقته. وتُعاد المبالغ المعتمدة بطريقة الدفع الأصلية نفسها.",
 "Plan changes & cancellation": "تغيير الخطط والإلغاء",
@@ -78,5 +78,7 @@ HS_I18N.add({
 "and the Madrasah line is": "، وخط المدرسة الشرعية هو",
 ". We are in Ado-Ekiti, Nigeria, and classes run online.": ". نحن في أدو إكيتي، نيجيريا، والحصص عبر الإنترنت.",
 "Clear rules, written plainly.": "قواعد واضحة، مكتوبة ببساطة.",
-"Policies — Himaayah Schools": "السياسات — مدارس حماية"
+"Policies — Himaayah Schools": "السياسات — مدارس حماية",
+"Payment service provider charges": "رسوم مزوّدي خدمة الدفع",
+"For every refund, the charges taken by the payment service provider (the card, bank or transfer processor that handled your payment) shall be deducted. You receive the amount you paid less those charges.": "تُخصم من كل مبلغ يُسترد الرسوم التي يحتسبها مزوّد خدمة الدفع (جهة معالجة البطاقة أو البنك أو التحويل التي تولّت دفعتك). وتحصل على المبلغ الذي دفعته بعد خصم تلك الرسوم."
 });
