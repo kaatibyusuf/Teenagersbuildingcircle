@@ -148,8 +148,36 @@
     try { const r = await fetch(API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(body), signal: ctl.signal }); return await r.json(); }
     finally { clearTimeout(t); }
   }
+  document.addEventListener('click', (e) => { const b = e.target.closest('[data-ambcopy]'); if (!b) return; const t = b.getAttribute('data-ambcopy'); (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(() => { b.textContent = 'Copied'; setTimeout(() => { b.textContent = 'Copy message'; }, 1800); }).catch(() => {}); });
   const creds = () => { try { return JSON.parse(sessionStorage.getItem(KEY) || 'null'); } catch (e) { return null; } };
   function busy(btn, on, txt) { if (on) { btn.dataset.l = btn.textContent; btn.textContent = txt; btn.disabled = true; } else { btn.textContent = btn.dataset.l || btn.textContent; btn.disabled = false; } }
+
+  function ambCard(a, r) {
+    const n = a.next, plural = (k, w) => k + ' ' + w + (k === 1 ? '' : 's');
+    const prog = n ? (n.moreEnrolments || n.moreMonths ? 'To reach ' + n.level + ': ' + [n.moreEnrolments ? plural(n.moreEnrolments, 'more confirmed enrolment') : '', n.moreMonths ? plural(n.moreMonths, 'more month') + ' in good standing' : ''].filter(Boolean).join(' and ') + '.' : 'You qualify for ' + n.level + '. We will confirm it shortly.') : 'You are at the highest level. Thank you for leading.';
+    const msgs = [
+      ['General', 'Assalaamu alaykum. I am a Himaayah Schools Ambassador. They teach the Qur\'an, exam preparation (UTME, WAEC, NECO), practical skills and a programme for teenagers, all live online. You can take a free placement test and read the details here, then enrol with my link: ' + r.Link],
+      ['Qur\'an and Islamic studies', 'Assalaamu alaykum. If you or your child want to learn the Qur\'an and Islamic knowledge properly, with a teacher who tracks progress, have a look at the Himaayah Madrasah. Details and enrolment: ' + r.Link],
+      ['Exam preparation', 'Assalaamu alaykum. Preparing for UTME, WAEC or NECO? Himaayah Academy runs live tutorials, weekly mocks and a reading club. Take the free placement test first, then enrol here: ' + r.Link]];
+    return `<div class="pf-card" style="max-width:1040px;margin:0 auto 22px;border-top:5px solid #85CCFF">
+      <p class="rf-sub" style="margin:0">Himaayah Ambassador</p>
+      <h2 class="rf-h" style="margin-top:4px">${esc(a.level)}</h2>
+      <p class="pf-small" style="font-size:15px">Ambassador since ${fdate(a.since)}. ${plural(a.count, 'confirmed enrolment')} so far. ${esc(prog)}</p>
+      <details class="rf-forgot"><summary>Your duties and code of conduct</summary>
+        <ul style="padding-inline-start:20px;line-height:1.7;margin:10px 0 0">
+          <li>Speak about Himaayah honestly, using only what the school publishes.</li>
+          <li>Send enquiries to the right WhatsApp line: Academy, Madrasah or General.</li>
+          <li>Never promise results, discounts or admission, or quote fees that are not on the website.</li>
+          <li>Never collect money for the school. Payments go only to the school account or the card checkout.</li>
+          <li>Never spam or pressure anyone, and never share a student\u2019s private details.</li>
+          <li>Do not say you are staff, and do not refer yourself or your own household.</li>
+        </ul></details>
+      <details class="rf-forgot"><summary>Approved messages to share</summary>
+        ${msgs.map((m) => `<div style="margin-top:12px"><b style="color:#062F4D">${esc(m[0])}</b><p class="pf-small" style="margin:4px 0 8px;font-size:14.5px;line-height:1.6">${esc(m[1])}</p><button class="btn btn-line" type="button" data-ambcopy="${esc(m[1])}">Copy message</button></div>`).join('')}
+      </details>
+      <p class="pf-small" style="margin-top:12px"><a href="resources/himaayah-prospectus-2026-2027.pdf" target="_blank" rel="noopener">Download the school prospectus</a> to share with families.</p>
+    </div>`;
+  }
 
   function show(d, fresh) {
     $('rfStart').hidden = true; $('rfApp').hidden = false;
@@ -157,6 +185,7 @@
     const share = 'Assalaamu alaykum. I recommend Himaayah Schools for Qur\'an, exam prep and skills, all live online. Enrol with my link: ' + r.Link;
     $('rfApp').innerHTML = `
       ${fresh ? `<div class="pf-done"><span class="pf-tick"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><div><b>You are in. Your link is ready.</b><span>We have emailed your referral code and access code. Keep the access code to come back to this page: <b translate="no" dir="ltr">${esc(fresh)}</b></span></div></div>` : ''}
+      ${d.ambassador ? ambCard(d.ambassador, r) : ''}
       <div class="rf-grid">
         <div class="pf-card rf-link"><p class="rf-sub" style="margin-top:0">Your referral link</p>
           <div class="rf-linkbox"><code translate="no" dir="ltr" id="rfLinkText">${esc(r.Link)}</code><button class="btn btn-ink" type="button" id="rfCopy">Copy link</button></div>
@@ -270,6 +299,7 @@
           <a href="placement">Placement tests</a>
           <a href="newsletter">Newsletter</a>
           <a href="refer">Refer and earn</a>
+          <a href="ambassadors">Ambassadors</a>
           <a href="sponsor">Sponsor a student</a>
           <a href="administrators">Administrators</a>
           <a href="timetable">Timetable</a>

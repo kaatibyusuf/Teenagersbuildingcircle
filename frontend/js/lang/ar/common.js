@@ -502,5 +502,6 @@ HS_I18N.add({
 "Post comment": "انشر التعليق",
 "Posting…": "جارٍ النشر…",
 "Thank you. Your comment has been received and will appear once it has been reviewed.": "شكرًا لك. وصل تعليقك وسيظهر بعد مراجعته.",
-"Write a short comment first.": "اكتب تعليقًا قصيرًا أولًا."
+"Write a short comment first.": "اكتب تعليقًا قصيرًا أولًا.",
+"Ambassadors": "السفراء"
 });
