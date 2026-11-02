@@ -1,0 +1,16 @@
+BEGIN:VCARD
+VERSION:3.0
+N:;Himaayah Schools;;;
+FN:Himaayah Schools
+ORG:Himaayah Schools
+item1.TEL;TYPE=VOICE:+2348066043320
+item1.X-ABLabel:Academy
+item2.TEL;TYPE=VOICE:+2347025842849
+item2.X-ABLabel:Madrasah
+item3.TEL;TYPE=VOICE:+2347047226487
+item3.X-ABLabel:General
+EMAIL;TYPE=INTERNET:himaayahschools@gmail.com
+URL:https://www.himaayahschools.com
+ADR;TYPE=WORK:;;;Ado-Ekiti;Ekiti;;Nigeria
+NOTE:Academy: UTME, Post-UTME, WAEC, NECO, A-Levels. Madrasah: Hifdh, Tajweed, Islamic studies. General: Skills School, Teenagers Circle, payments and anything else.
+END:VCARD
