@@ -136,7 +136,8 @@
 <script>
 (function () {
   const API_URL = 'https://script.google.com/macros/s/AKfycby0AsifBuB_Ad7g1SjDXCipaDU27-BrzYWf67muw5jeY_C0_0uz8AhQYYXdiNRQhvqX/exec';
-  const WA = '2347047226487';
+  const WA_BY = { 'Madrasah': '2347025842849', 'Academy': '2348066043320', 'Skills School': '2348066043320', 'Teenagers Building Circle': '2348066043320' };   // each programme's own number
+  const WA_DEFAULT = '2347047226487';
   const $ = (id) => document.getElementById(id);
   const tr = (s) => s;   // js/i18n.js translates new text on the page by itself (dictionary in i18n/ar/pay.txt)
   const naira = (n) => '\u20A6' + Math.round(Number(n) || 0).toLocaleString('en-NG');
@@ -203,7 +204,7 @@
       const base = cur.nextDue && cur.nextDue >= cur.today ? cur.nextDue : cur.today;
       $('pfAfter').textContent = tr('After this payment, the next due date becomes ' + nice(addMonths(base, cur.months * n)) + '.');
     } else $('pfAfter').textContent = '';
-    $('pfWa').href = 'https://wa.me/' + WA + '?text=' + encodeURIComponent('Assalaamu alaykum. I have paid the fee for ' + cur.studentId + ' by bank transfer. Here is my receipt.');
+    $('pfWa').href = 'https://wa.me/' + (WA_BY[cur.programme] || WA_DEFAULT) + '?text=' + encodeURIComponent('Assalaamu alaykum. I have paid the fee for ' + cur.studentId + ' by bank transfer. Here is my receipt.');
   }
   $('pfPeriods').addEventListener('change', update);
 
