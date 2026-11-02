@@ -33,37 +33,106 @@
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
 <script defer src="/_vercel/insights/script.js"></script>
 <style>
-.page-ambassadors .am-lede{max-width:760px;margin:0 auto;text-align:center}
-.page-ambassadors .am-h{font-family:"Bricolage Grotesque",Inter,sans-serif;color:#062F4D;letter-spacing:-.02em;font-size:clamp(26px,3.4vw,36px);margin:0 0 10px;text-align:center}
-.page-ambassadors .am-sub{color:#5B6E7F;text-align:center;max-width:680px;margin:0 auto 28px;font-size:17px;line-height:1.65}
-.page-ambassadors .am-block{padding:clamp(28px,5vw,56px) 0}
-.page-ambassadors .am-levels{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:1040px;margin:0 auto}
-.page-ambassadors .am-lv{background:#fff;border-radius:20px;padding:24px;box-shadow:0 1px 2px rgba(6,47,77,.04),0 12px 32px -18px rgba(6,47,77,.18);border-top:5px solid #85CCFF}
-.page-ambassadors .am-lv:nth-child(2){border-top-color:#3E97D9}.page-ambassadors .am-lv:nth-child(3){border-top-color:#062F4D}
-.page-ambassadors .am-lv small{display:block;color:#3E97D9;font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:12px;margin-bottom:6px}
-.page-ambassadors .am-lv b{display:block;font-family:"Bricolage Grotesque",Inter,sans-serif;color:#062F4D;font-size:22px;margin-bottom:8px}
-.page-ambassadors .am-lv p{margin:0;color:#24323B;line-height:1.6;font-size:15.5px}
-.page-ambassadors .am-two{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:1040px;margin:0 auto}
-.page-ambassadors .am-card{background:#fff;border-radius:20px;padding:26px;box-shadow:0 1px 2px rgba(6,47,77,.04),0 12px 32px -18px rgba(6,47,77,.18)}
-.page-ambassadors .am-card h3{font-family:"Bricolage Grotesque",Inter,sans-serif;color:#062F4D;font-size:21px;margin:0 0 12px}
-.page-ambassadors .am-card.no{background:#FFF6F5}.page-ambassadors .am-card.no h3{color:#9B2C22}
-.page-ambassadors .am-card ul{margin:0;padding-inline-start:20px;display:grid;gap:9px}
-.page-ambassadors .am-card li{line-height:1.6;color:#24323B;font-size:15.5px}
-.page-ambassadors .am-perks{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:1040px;margin:0 auto}
-.page-ambassadors .am-perk{background:#E3F2FD;border-radius:18px;padding:20px}
-.page-ambassadors .am-perk b{display:block;color:#062F4D;margin-bottom:4px;font-size:16px}
-.page-ambassadors .am-perk span{color:#24323B;font-size:14.5px;line-height:1.55}
-.page-ambassadors .am-form{max-width:760px;margin:0 auto}
-.page-ambassadors .am-form .pf-card{max-width:none}
-.page-ambassadors .am-parent{border:1.5px dashed #85CCFF;border-radius:16px;padding:16px;margin:4px 0 12px;background:#F4F8FB}
-.page-ambassadors .wl-f select{font:inherit;width:100%;padding:13px 14px;border:1.5px solid #E3EAF0;border-radius:12px;background:#fff;color:#0E2A3D;box-sizing:border-box}
-.page-ambassadors .am-done{text-align:center;padding:24px 8px}.page-ambassadors .am-done h3{font-family:"Bricolage Grotesque",Inter,sans-serif;color:#062F4D;font-size:26px;margin:10px 0}
-.page-ambassadors .am-signin{text-align:center;margin-top:18px;color:#5B6E7F}
-.page-ambassadors .am-faq details{background:#fff;border-radius:14px;padding:14px 18px;margin-bottom:10px;box-shadow:0 1px 2px rgba(6,47,77,.05)}
-.page-ambassadors .am-faq summary{font-weight:700;color:#062F4D;cursor:pointer}.page-ambassadors .am-faq p{margin:10px 0 0;line-height:1.65;color:#24323B}
-@media(max-width:860px){.page-ambassadors .am-levels,.page-ambassadors .am-two,.page-ambassadors .am-perks{grid-template-columns:1fr}}
-@media(min-width:861px) and (max-width:1020px){.page-ambassadors .am-perks{grid-template-columns:1fr 1fr}}
+.am{--navy:#062F4D;--ink:#0E2A3D;--mid:#094570;--sky:#85CCFF;--sky2:#E3F2FD;--wash:#F4F8FB;--line:#E3EAF0;--muted:#5B6E7F;font-family:Inter,system-ui,sans-serif;color:var(--ink);background:#fff;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+.am *{box-sizing:border-box;margin:0}
+:where(.am a){color:inherit;text-decoration:none}
+.am-wrap{max-width:1120px;margin:0 auto;padding:0 28px}
+.am h1,.am h2,.am h3{color:inherit;font-family:"Bricolage Grotesque",Inter,sans-serif!important;font-weight:600!important;letter-spacing:-.025em}
+.am-eyebrow{display:inline-block;font-size:13px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--mid);margin-bottom:16px}
+.am-btn{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:15px 28px;font-weight:600;font-size:16px;font-family:inherit;cursor:pointer;border:1.5px solid transparent;transition:transform .25s,background .25s,box-shadow .25s,border-color .25s}
+.am-btn.p{background:var(--sky);color:var(--navy)}.am-btn.p:hover{transform:translateY(-2px);box-shadow:0 12px 28px -12px rgba(133,204,255,.9)}
+.am-btn.g{border-color:rgba(255,255,255,.35);color:#fff}.am-btn.g:hover{border-color:#fff;background:rgba(255,255,255,.08)}
+.am-btn.d{background:var(--navy);color:#fff}.am-btn.d:hover{background:var(--mid);transform:translateY(-2px)}
+/* hero */
+.am-hero{position:relative;background:radial-gradient(120% 90% at 85% 10%,#0d4b78 0%,#062F4D 55%,#04243B 100%);color:#fff;padding:170px 0 110px;overflow:hidden}
+.am-hero::after{content:"";position:absolute;inset:auto 0 0 0;height:90px;background:linear-gradient(180deg,rgba(255,255,255,0),#fff)}
+.am-hgrid{position:relative;display:grid;grid-template-columns:1.3fr .7fr;gap:56px;align-items:center}
+.am-hero .am-eyebrow{color:var(--sky)}
+.am-hero h1{font-size:clamp(42px,5.6vw,76px);line-height:1.04;max-width:12ch}
+.am-hero h1 em{font-style:normal;color:var(--sky)}
+.am-hero p.lede{font-size:19px;line-height:1.65;color:#c9dcea;max-width:520px;margin:26px 0 34px}
+.am-cta{display:flex;gap:12px;flex-wrap:wrap}
+.am-note{margin-top:22px;font-size:14.5px;color:#9fbad0}
+.am-crest{position:relative;display:grid;place-items:center;aspect-ratio:1;max-width:340px;margin-left:auto;width:100%}
+.am-crest::before,.am-crest::after{content:"";position:absolute;inset:0;border-radius:50%;border:1px solid rgba(133,204,255,.28);animation:am-ring 6s ease-out infinite}
+.am-crest::after{animation-delay:3s}
+@keyframes am-ring{0%{transform:scale(.62);opacity:.9}100%{transform:scale(1.08);opacity:0}}
+.am-crest .core{position:absolute;inset:18%;border-radius:50%;background:rgba(255,255,255,.05);border:1px solid rgba(133,204,255,.35);backdrop-filter:blur(2px)}
+.am-crest svg{position:relative;width:34%;fill:#fff;filter:drop-shadow(0 10px 30px rgba(133,204,255,.35));animation:am-float 7s ease-in-out infinite}
+@keyframes am-float{50%{transform:translateY(-8px)}}
+/* sections */
+.am-sec{padding:96px 0}
+.am-sec.wash{background:var(--wash)}
+.am-head{max-width:640px;margin-bottom:52px}
+.am-head h2{font-size:clamp(32px,4vw,48px);line-height:1.1;margin-bottom:14px;color:var(--navy)}
+.am-head p{font-size:18px;color:var(--muted)}
+/* steps */
+.am-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;position:relative}
+.am-steps::before{content:"";position:absolute;left:22px;right:22px;top:22px;height:1px;background:var(--line)}
+.am-st{position:relative}
+.am-st i{position:relative;display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:#fff;border:1px solid var(--line);font-style:normal;font-weight:600;color:var(--mid);margin-bottom:18px;box-shadow:0 0 0 6px #fff}
+.am-st h3{font-size:21px;color:var(--navy);margin-bottom:6px}
+.am-st p{font-size:15.5px;color:var(--muted)}
+/* stats */
+.am-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:70px}
+.am-stats div{padding:34px 28px;border-inline-start:1px solid var(--line)}
+.am-stats div:first-child{border-inline-start:0;padding-inline-start:0}
+.am-stats b{display:block;font-family:"Bricolage Grotesque",Inter,sans-serif;font-weight:500;font-size:clamp(44px,5vw,64px);letter-spacing:-.04em;color:var(--navy);line-height:1}
+.am-stats span.l{display:block;margin-top:8px;font-size:15.5px;color:var(--muted);max-width:260px}
+/* levels */
+.am-lv{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.am-card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:34px 30px;box-shadow:0 1px 2px rgba(6,47,77,.04),0 18px 40px -26px rgba(6,47,77,.2);transition:transform .35s,box-shadow .35s}
+.am-card:hover{transform:translateY(-4px);box-shadow:0 1px 2px rgba(6,47,77,.04),0 26px 50px -26px rgba(6,47,77,.28)}
+.am-card .bar{display:block;width:34px;height:3px;border-radius:3px;background:var(--sky);margin-bottom:22px}
+.am-card:nth-child(2) .bar{width:58px;background:#3E97D9}.am-card:nth-child(3) .bar{width:84px;background:var(--navy)}
+.am-card small{display:block;font-size:12.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.am-card h3{font-size:25px;color:var(--navy);margin-bottom:10px}
+.am-card p{font-size:16px;color:#3b4f5f}
+/* duties */
+.am-two{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.am-box{border-radius:24px;padding:40px 38px}
+.am-box.yes{background:var(--sky2)}.am-box.no{background:#fff;border:1px solid var(--line)}
+.am-box h3{font-size:26px;color:var(--navy);margin-bottom:22px}
+.am-box ul{list-style:none;padding:0;display:grid;gap:14px}
+.am-box li{position:relative;padding-inline-start:32px;font-size:16.5px;line-height:1.55;color:#24323B}
+.am-box li::before{content:"";position:absolute;inset-inline-start:0;top:3px;width:18px;height:18px;border-radius:50%;background:var(--navy) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2385CCFF' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center/11px no-repeat}
+.am-box.no li::before{background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23B3261E' stroke-width='3.2' stroke-linecap='round'%3E%3Cpath d='M6 6l12 12M18 6 6 18'/%3E%3C/svg%3E") center/10px no-repeat;box-shadow:inset 0 0 0 1.5px #E7B9B5}
+/* perks */
+.am-perks{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--line)}
+.am-perk{padding:30px 26px 6px 0}
+.am-perk b{display:block;font-family:"Bricolage Grotesque",Inter,sans-serif;font-weight:600;font-size:20px;letter-spacing:-.02em;color:var(--navy);margin-bottom:8px}
+.am-perk span{font-size:15.5px;color:var(--muted);line-height:1.55}
+/* form */
+.am-formsec{background:linear-gradient(180deg,var(--wash),#fff)}
+.am-formbox{max-width:760px;margin:0 auto}
+.am-formbox .pf-card{max-width:none;border:1px solid var(--line);box-shadow:0 1px 2px rgba(6,47,77,.04),0 30px 60px -34px rgba(6,47,77,.3);border-radius:26px}
+.am-formbox .am-parent{border:1.5px dashed #9fd2f6;border-radius:16px;padding:16px;margin:4px 0 12px;background:var(--wash)}
+.am-formbox .wl-f select{font:inherit;width:100%;padding:13px 14px;border:1.5px solid #E3EAF0;border-radius:12px;background:#fff;color:#0E2A3D}
+.am-done{text-align:center;padding:24px 8px}.am-done h3{font-size:30px;margin:12px 0;color:var(--navy)}
+.am-signin{text-align:center;margin-top:22px;color:var(--muted)}.am-signin a{color:var(--mid);font-weight:600;text-decoration:underline}
+/* faq */
+.am-faq{max-width:780px;margin:0 auto}
+.am-faq details{border-bottom:1px solid var(--line);padding:20px 4px}
+.am-faq details:first-child{border-top:1px solid var(--line)}
+.am-faq summary{font-family:"Bricolage Grotesque",Inter,sans-serif;font-weight:600;font-size:20px;letter-spacing:-.015em;color:var(--navy);cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px}
+.am-faq summary::-webkit-details-marker{display:none}
+.am-faq summary::after{content:"+";font-weight:400;font-size:26px;line-height:1;color:var(--mid);transition:transform .3s}
+.am-faq details[open] summary::after{transform:rotate(45deg)}
+.am-faq p{margin-top:12px;font-size:17px;color:#3b4f5f;line-height:1.65}
+/* gentle reveal */
+.am-rv{opacity:0;transform:translateY(22px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+.am-rv.in{opacity:1;transform:none}
+.am-steps .am-rv:nth-child(2),.am-lv .am-rv:nth-child(2),.am-perks .am-rv:nth-child(2){transition-delay:.1s}
+.am-steps .am-rv:nth-child(3),.am-lv .am-rv:nth-child(3),.am-perks .am-rv:nth-child(3){transition-delay:.2s}
+.am-steps .am-rv:nth-child(4),.am-perks .am-rv:nth-child(4){transition-delay:.3s}
+.js .am-hero .am-eyebrow,.js .am-hero h1,.js .am-hero .lede,.js .am-hero .am-cta,.js .am-hero .am-note{animation:am-up 1s cubic-bezier(.2,.7,.2,1) both}
+.js .am-hero h1{animation-delay:.1s}.js .am-hero .lede{animation-delay:.22s}.js .am-hero .am-cta{animation-delay:.34s}.js .am-hero .am-note{animation-delay:.46s}
+@keyframes am-up{from{opacity:0;transform:translateY(24px)}}
+@media(prefers-reduced-motion:reduce){.am-rv{opacity:1;transform:none;transition:none}.am-crest::before,.am-crest::after,.am-crest svg{animation:none}.js .am-hero *{animation:none!important}}
+@media(max-width:900px){.am-hgrid,.am-two,.am-lv,.am-perks,.am-stats,.am-steps{grid-template-columns:1fr}.am-crest{margin:10px auto 0;max-width:230px}.am-hero{padding:130px 0 80px}.am-sec{padding:68px 0}.am-steps::before{display:none}.am-stats div{border-inline-start:0;border-top:1px solid var(--line);padding-inline-start:0}.am-stats div:first-child{border-top:0}.am-perk{padding-right:0}.am-box{padding:30px 24px}.am-hero h1{max-width:none}}
 </style>
+
+
 </head>
 <body>
 <script src="js/ticker.js"></script>
@@ -99,71 +168,79 @@
     <button class="h-tog" id="navToggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span></button>
   </div>
 </nav>
-<header class="hero">
-  <div class="wrap hero-copy">
-    <h1>Become a Himaayah Ambassador</h1>
-    <p>Represent the school in your community, introduce families to what we teach, and earn 10% of the first fee for every family you bring. Open to anyone 16 and over.</p>
+<div class="am">
+<header class="am-hero">
+  <div class="am-wrap am-hgrid">
+    <div>
+      <span class="am-eyebrow">Himaayah Ambassadors</span>
+      <h1>Be the face of <em>Himaayah.</em></h1>
+      <p class="lede">Represent the school in your community, introduce families to what we teach, and earn 10% of the first fee for every family you bring. Open to anyone 16 and over.</p>
+      <div class="am-cta"><a class="am-btn p" href="#apply">Apply now →</a><a class="am-btn g" href="refer#rfStart">Ambassador sign in</a></div>
+      <p class="am-note">Paid to your bank account. Free to join.</p>
+    </div>
+    <div class="am-crest" id="amCrest" aria-hidden="true"><div class="core"></div>
+      <svg viewBox="0 0 377.21 459.6"><path d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg></div>
   </div>
 </header>
 
-<section class="sec pf-sec">
-  <div class="wrap">
-    <ol class="rf-steps">
-      <li><b>Apply.</b><span>Tell us who you are and where you would represent us.</span></li>
-      <li><b>Get approved.</b><span>Our team reads every application and speaks to your referee.</span></li>
-      <li><b>Represent us.</b><span>You get your own link, code and dashboard.</span></li>
-      <li><b>Earn 10%.</b><span>Paid to your bank account on every enrolment you bring.</span></li>
-    </ol>
+<section class="am-sec"><div class="am-wrap">
+  <div class="am-head am-rv"><span class="am-eyebrow">How it works</span><h2>Four simple steps.</h2></div>
+  <div class="am-steps">
+    <div class="am-st am-rv"><i>1</i><h3>Apply.</h3><p>Tell us who you are and where you would represent us.</p></div>
+    <div class="am-st am-rv"><i>2</i><h3>Get approved.</h3><p>Our team reads every application and speaks to your referee.</p></div>
+    <div class="am-st am-rv"><i>3</i><h3>Represent us.</h3><p>You get your own link, code and dashboard.</p></div>
+    <div class="am-st am-rv"><i>4</i><h3>Earn 10%.</h3><p>Paid to your bank account on every enrolment you bring.</p></div>
   </div>
-
-  <div class="wrap am-block">
-    <h2 class="am-h">Three levels of recognition</h2>
-    <p class="am-sub">Everyone earns the same 10%. Levels recognise your standing and what you have brought to the school.</p>
-    <div class="am-levels">
-      <div class="am-lv"><small>Level 1</small><b>Ambassador</b><p>Approved by our team. You get your own code and link, your dashboard and ready-to-share wording.</p></div>
-      <div class="am-lv"><small>Level 2</small><b>Senior Ambassador</b><p>5 confirmed enrolments and 3 months in good standing. You can recommend new ambassadors to us.</p></div>
-      <div class="am-lv"><small>Level 3</small><b>Lead Ambassador</b><p>15 confirmed enrolments, or leading a campus or city team. You help coordinate others and may speak at events.</p></div>
-    </div>
+  <div class="am-stats am-rv">
+    <div><b><span data-to="10">0</span>%</b><span class="l">of the first fee, paid to your bank account</span></div>
+    <div><b data-to="3">0</b><span class="l">levels of recognition, from Ambassador to Lead</span></div>
+    <div><b data-to="16">0</b><span class="l">is the youngest age we accept, with a parent’s agreement</span></div>
   </div>
+</div></section>
 
-  <div class="wrap am-block">
-    <h2 class="am-h">What an Ambassador does</h2>
-    <p class="am-sub">An Ambassador is a trusted face of Himaayah. These are the duties, and the lines you must never cross.</p>
-    <div class="am-two">
-      <div class="am-card"><h3>Your duties</h3><ul>
-        <li>Represent Himaayah honestly, using only what the school publishes.</li>
-        <li>Introduce the programmes to families, students and communities, online and in person.</li>
-        <li>Share your own link or code, and point people to the free placement test and free guides.</li>
-        <li>Send enquiries to the right WhatsApp line: Academy, Madrasah or General.</li>
-        <li>Join a monthly check-in and pass on what families tell you.</li>
-        <li>Help at events such as open days, campus talks and Ramadan drives.</li>
-      </ul></div>
-      <div class="am-card no"><h3>What you must never do</h3><ul>
-        <li>Promise results, discounts or admission, or quote fees that are not on our website.</li>
-        <li>Collect money for the school. Payments go only to the school account or the card checkout.</li>
-        <li>Pressure, mislead or spam people, or message anyone who has not agreed to hear from you.</li>
-        <li>Say you are staff, or use our name and crest in ways our brand rules do not allow.</li>
-        <li>Share any student’s private details.</li>
-        <li>Refer yourself or your own household for a reward.</li>
-      </ul></div>
-    </div>
+<section class="am-sec wash"><div class="am-wrap">
+  <div class="am-head am-rv"><span class="am-eyebrow">Recognition</span><h2>Three levels of recognition</h2><p>Everyone earns the same 10%. Levels recognise your standing and what you have brought to the school.</p></div>
+  <div class="am-lv">
+    <div class="am-card am-rv"><span class="bar"></span><small>Level 1</small><h3>Ambassador</h3><p>Approved by our team. You get your own code and link, your dashboard and ready-to-share wording.</p></div>
+    <div class="am-card am-rv"><span class="bar"></span><small>Level 2</small><h3>Senior Ambassador</h3><p>5 confirmed enrolments and 3 months in good standing. You can recommend new ambassadors to us.</p></div>
+    <div class="am-card am-rv"><span class="bar"></span><small>Level 3</small><h3>Lead Ambassador</h3><p>15 confirmed enrolments, or leading a campus or city team. You help coordinate others and may speak at events.</p></div>
   </div>
+</div></section>
 
-  <div class="wrap am-block">
-    <h2 class="am-h">What you receive</h2>
-    <div class="am-perks">
-      <div class="am-perk"><b>10% of the first fee</b><span>Paid by bank transfer for every confirmed enrolment you bring, in any programme.</span></div>
-      <div class="am-perk"><b>Your own dashboard</b><span>Your link, your code, every referral and every payment in one place.</span></div>
-      <div class="am-perk"><b>Recognition</b><span>A certificate, an optional public listing, and a reference letter after 6 active months.</span></div>
-      <div class="am-perk"><b>Early access</b><span>Free guides and first notice of new intakes to share with your community.</span></div>
-    </div>
+<section class="am-sec"><div class="am-wrap">
+  <div class="am-head am-rv"><span class="am-eyebrow">The standard</span><h2>What an Ambassador does</h2><p>An Ambassador is a trusted face of Himaayah. These are the duties, and the lines you must never cross.</p></div>
+  <div class="am-two">
+    <div class="am-box yes am-rv"><h3>Your duties</h3><ul>
+      <li>Represent Himaayah honestly, using only what the school publishes.</li>
+      <li>Introduce the programmes to families, students and communities, online and in person.</li>
+      <li>Share your own link or code, and point people to the free placement test and free guides.</li>
+      <li>Send enquiries to the right WhatsApp line: Academy, Madrasah or General.</li>
+      <li>Join a monthly check-in and pass on what families tell you.</li>
+      <li>Help at events such as open days, campus talks and Ramadan drives.</li></ul></div>
+    <div class="am-box no am-rv"><h3>What you must never do</h3><ul>
+      <li>Promise results, discounts or admission, or quote fees that are not on our website.</li>
+      <li>Collect money for the school. Payments go only to the school account or the card checkout.</li>
+      <li>Pressure, mislead or spam people, or message anyone who has not agreed to hear from you.</li>
+      <li>Say you are staff, or use our name and crest in ways our brand rules do not allow.</li>
+      <li>Share any student’s private details.</li>
+      <li>Refer yourself or your own household for a reward.</li></ul></div>
   </div>
+</div></section>
 
-  <div class="wrap am-block" id="apply">
-    <h2 class="am-h">Apply to be an Ambassador</h2>
-    <p class="am-sub">Takes about five minutes. You must be 16 or older. If you are 16 or 17, a parent or guardian must agree.</p>
-    <div class="am-form">
-      <div class="pf-card" id="amCard">
+<section class="am-sec wash"><div class="am-wrap">
+  <div class="am-head am-rv"><span class="am-eyebrow">Benefits</span><h2>What you receive</h2></div>
+  <div class="am-perks">
+    <div class="am-perk am-rv"><b>10% of the first fee</b><span>Paid by bank transfer for every confirmed enrolment you bring, in any programme.</span></div>
+    <div class="am-perk am-rv"><b>Your own dashboard</b><span>Your link, your code, every referral and every payment in one place.</span></div>
+    <div class="am-perk am-rv"><b>Recognition</b><span>A certificate, an optional public listing, and a reference letter after 6 active months.</span></div>
+    <div class="am-perk am-rv"><b>Early access</b><span>Free guides and first notice of new intakes to share with your community.</span></div>
+  </div>
+</div></section>
+
+<section class="am-sec am-formsec" id="apply"><div class="am-wrap">
+  <div class="am-head am-rv" style="margin-inline:auto;text-align:center"><span class="am-eyebrow">Apply</span><h2>Apply to be an Ambassador</h2><p>Takes about five minutes. You must be 16 or older. If you are 16 or 17, a parent or guardian must agree.</p></div>
+  <div class="am-formbox">
+    <div class="pf-card" id="amCard">
         <form class="wl-form" id="amForm" novalidate>
           <div class="wl-f"><label for="amName">Full name</label><input id="amName" name="name" type="text" autocomplete="name" maxlength="80" required></div>
           <div class="wl-2">
@@ -207,21 +284,21 @@
           <p>Thank you. Our team will read your application and contact your referee. We will email you as soon as a decision is made, in shā’ Allāh.</p>
         </div>
       </div>
-      <p class="am-signin">Already an Ambassador? <a href="refer#rfStart">Sign in to your dashboard</a>.</p>
-    </div>
+    <p class="am-signin">Already an Ambassador? <a href="refer#rfStart">Sign in to your dashboard</a>.</p>
   </div>
+</div></section>
 
-  <div class="wrap am-block am-faq">
-    <h2 class="am-h">Questions</h2>
-    <div style="max-width:760px;margin:0 auto">
-      <details><summary>Is it free to join?</summary><p>Yes. Joining costs nothing, and you are never asked to pay or to buy anything.</p></details>
-      <details><summary>When do I get paid?</summary><p>When someone enrols through your link or code and their payment is confirmed, 10% of their first fee goes to the bank account you gave us. Your dashboard shows each referral, and we email you when a payment is sent.</p></details>
-      <details><summary>Can I apply if I am under 18?</summary><p>Yes, from age 16, with a parent or guardian’s agreement. We contact them as part of the review, and you may be paid into their account.</p></details>
-      <details><summary>What is the difference between this and Refer and Earn?</summary><p>Refer and Earn is open to everyone with no review. Ambassadors are chosen, held to a code of conduct and recognised for it. The 10% reward is the same.</p></details>
-      <details><summary>How long does approval take?</summary><p>We aim to reply within a week. A decision is sent to the email you gave us.</p></details>
-    </div>
+<section class="am-sec"><div class="am-wrap">
+  <div class="am-head am-rv" style="margin-inline:auto;text-align:center"><span class="am-eyebrow">FAQ</span><h2>Questions</h2></div>
+  <div class="am-faq am-rv">
+    <details><summary>Is it free to join?</summary><p>Yes. Joining costs nothing, and you are never asked to pay or to buy anything.</p></details>
+    <details><summary>When do I get paid?</summary><p>When someone enrols through your link or code and their payment is confirmed, 10% of their first fee goes to the bank account you gave us. Your dashboard shows each referral, and we email you when a payment is sent.</p></details>
+    <details><summary>Can I apply if I am under 18?</summary><p>Yes, from age 16, with a parent or guardian’s agreement. We contact them as part of the review, and you may be paid into their account.</p></details>
+    <details><summary>What is the difference between this and Refer and Earn?</summary><p>Refer and Earn is open to everyone with no review. Ambassadors are chosen, held to a code of conduct and recognised for it. The 10% reward is the same.</p></details>
+    <details><summary>How long does approval take?</summary><p>We aim to reply within a week. A decision is sent to the email you gave us.</p></details>
   </div>
-</section>
+</div></section>
+</div>
 
 <script>
 (function () {
@@ -259,7 +336,19 @@
   });
 })();
 </script>
-
+<script>
+(function () {
+  const rm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const count = (el) => { const to = +el.dataset.to; if (rm) { el.textContent = to; return; } let t0 = null; const f = (t) => { if (!t0) t0 = t; const k = Math.min(1, (t - t0) / 1100); el.textContent = Math.round(to * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(f); }; requestAnimationFrame(f); };
+  const els = document.querySelectorAll('.am-rv');
+  if ('IntersectionObserver' in window && !rm) {
+    const io = new IntersectionObserver((es) => es.forEach((e) => { if (!e.isIntersecting) return; e.target.classList.add('in'); e.target.querySelectorAll('[data-to]').forEach(count); if (e.target.dataset.to) count(e.target); io.unobserve(e.target); }), { threshold: .15 });
+    els.forEach((el) => io.observe(el));
+  } else { els.forEach((el) => { el.classList.add('in'); el.querySelectorAll('[data-to]').forEach((n) => { n.textContent = n.dataset.to; }); }); }
+  const c = null;
+  if (c && !rm && matchMedia('(hover: hover)').matches) document.addEventListener('mousemove', (e) => { c.style.transform = 'translate(' + ((e.clientX / innerWidth - .5) * 22) + 'px,' + ((e.clientY / innerHeight - .5) * 22) + 'px)'; });
+})();
+</script>
 <footer class="h-foot">
   <div class="h-wrap">
     <div class="h-foot-top">
