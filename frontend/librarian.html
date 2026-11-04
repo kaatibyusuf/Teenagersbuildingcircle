@@ -20,7 +20,7 @@
 <body>
 <header class="top"><div>
 <a class="brand" href="./"><svg width="22" height="27" viewBox="0 0 377.21 459.6" fill="#094570" aria-hidden="true"><path d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>Himaayah Schools <em>Librarian</em></a>
-<nav><a class="btn btn-line" href="./">Home</a><button class="btn btn-ink" id="out" hidden>Log out</button></nav>
+<nav><a class="btn btn-line" href="my-card">My cards</a><a class="btn btn-line" href="./">Home</a><button class="btn btn-ink" id="out" hidden>Log out</button></nav>
 </div></header>
 
 <main id="login" class="login"><form class="lbox" id="lf" novalidate>
@@ -44,9 +44,9 @@ const API_URL = 'https://script.google.com/macros/s/AKfycby0AsifBuB_Ad7g1SjDXCip
 const $ = (id) => document.getElementById(id);
 const esc = (t) => String(t ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fdate = (iso) => { const d = new Date(iso); return isNaN(d) ? esc(iso || '') : d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }); };
-const TABS = [['items', 'Items'], ['add', 'Add an item'], ['links', 'Check links'], ['account', 'Account']];
+const TABS = [['items', 'Items'], ['add', 'Add an item'], ['links', 'Check links'], ['card', 'Check a card'], ['account', 'Account']];
 let D = null;
-const S = { tab: 'items', q: '', subject: '', level: '', status: 'all', open: '', checks: {}, checking: false };
+const S = { tab: 'items', q: '', subject: '', level: '', status: 'all', open: '', checks: {}, checking: false, member: null, memberQ: '' };
 
 /* ---------- talking to the school server ---------- */
 const creds = () => { try { return JSON.parse(sessionStorage.getItem('hl') || 'null') || {}; } catch (e) { return {}; } };
@@ -141,7 +141,17 @@ function vAccount() {
   <div><label class="fl" for="np2">Type it again</label><input class="in" id="np2" name="again" type="password" autocomplete="new-password"></div>
   <button class="btn btn-ink" type="submit">Change my code</button></form></article>`;
 }
-const VIEWS = { items: vItems, add: vAdd, links: vLinks, account: vAccount };
+function vCard() {
+  const m = S.member;
+  const res = m === null ? '' : m === false
+    ? '<p class="empty">No active member has that number. Check it and try again.</p>'
+    : `<div class="box" style="margin-top:14px"><b>${esc(m.name)}</b> <span class="pill ${m.status === 'Active' ? 'p-ink' : 'p-wash'}">${m.status === 'Active' ? 'Card active' : 'Renewal due'}</span>
+      <div class="meta" style="margin-top:6px">${esc(m.libraryNo)} · ${m.kind === 'staff' ? 'Staff' : 'Student'} · ${esc(m.programme)}${m.validUntil ? ' · valid until ' + fdate(m.validUntil) : ''}</div></div>`;
+  return `<article class="c w12"><h2>Check a library card</h2><p class="meta">Type the library number from the card (for example LIB-HM-0001), or scan the QR code with a phone and read the number under it.</p>
+  <form class="frm" data-form="member"><div><label class="fl" for="mn">Library number</label><input class="in" id="mn" name="member" autocapitalize="characters" autocomplete="off" value="${esc(S.memberQ)}" placeholder="LIB-…" required></div>
+  <button class="btn btn-ink" type="submit">Check card</button></form>${res}</article>`;
+}
+const VIEWS = { items: vItems, add: vAdd, links: vLinks, card: vCard, account: vAccount };
 function render() {
   const hidden = D.items.filter((i) => !i.Active).length;
   $('app').innerHTML = `<section class="greet"><div><small>Assalaamu alaykum</small><h1>${esc(D.librarian.Name)}</h1>
@@ -201,6 +211,11 @@ app.addEventListener('submit', async (e) => {
     const ok = await act('lb_save', { ItemID: id, Title: v('Title'), Author: v('Author'), Type: v('Type'), Subject: v('Subject'), Url: v('Url'), Description: v('Description'), Added: v('Added'), Level: all ? 'All' : lv.join(', ') },
       id ? 'Saved.' : 'Added to the library.', btn);
     if (ok && !id) { S.tab = 'items'; S.open = ''; S.q = ''; S.subject = ''; S.level = ''; S.status = 'all'; render(); window.scrollTo(0, 0); }
+  } else if (k === 'member') {
+    S.memberQ = v('member').trim(); btn.disabled = true;
+    try { const d = await api('lb_member', { member: S.memberQ }); if (!d.ok) toast(d.error || 'Could not check that card.', true); else S.member = d.found ? d.member : false; }
+    catch (x) { toast('Could not reach the school server. Please try again.', true); }
+    render();
   } else if (k === 'password') {
     if (v('newCode').length < 8) return toast('Your new code must be at least 8 characters.', true);
     if (v('newCode') !== v('again')) return toast('The two codes do not match.', true);
@@ -244,6 +259,7 @@ async function demoApi(c, action, p) {
   if (String(c.id || '').toUpperCase() !== 'DEMO' || c.code !== 'demo') return { ok: false, error: 'Wrong ID or access code.' };
   if (!DEMO) DEMO = demoBase();
   const bad = (m) => ({ ok: false, error: m }), done = () => { DEMO.subjects = [...new Set(DEMO.items.map((i) => i.Subject).filter(Boolean))].sort(); return JSON.parse(JSON.stringify(DEMO)); };
+  if (action === 'lb_member') return String(p.member || '').toUpperCase().replace(/^LIB-/, '') === 'HM-0001' ? { ok: true, found: true, member: { name: 'Amina Yusuf', libraryNo: 'LIB-HM-0001', kind: 'student', programme: 'Madrasah · Rawdah', plan: 'Madrasah', validUntil: '', status: 'Active' } } : { ok: true, found: false };
   if (action === 'lb_check') return { ok: true, checked: Object.fromEntries((p.ids || []).map((id, k) => [id, id === 'L-002' ? { status: 'bad', text: 'Broken (404)' } : id === 'L-003' ? { status: 'maybe', text: 'The site blocks checks (403). Open it yourself to be sure.' } : { status: 'ok', text: 'Opens (200)' }])) };
   if (action === 'lb_save') {
     if (!String(p.Title || '').trim()) return bad('Add a title.');

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My cards | Himaayah Schools</title>
+<meta name="description" content="Your Himaayah Schools library card and printable ID card.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#062F4D">
+<link rel="icon" type="image/png" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="js/cookie-notice.js" defer></script>
+<style>
+:root { --deep: #062F4D; --ink: #094570; --sky: #85CCFF; --sand: #E8D3A2; --wash: #EEF6FC; --text: #0E2A3D; --muted: #3D5568; --line: #D6E3EE; }
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; font-family: 'Inter', system-ui, sans-serif; color: var(--text); background: var(--wash); line-height: 1.5; }
+a { color: var(--ink); }
+:focus-visible { outline: 2px solid #3E97D9; outline-offset: 3px; }
+.top { background: #fff; border-bottom: 1px solid var(--line); }
+.top > div { max-width: 920px; margin: 0 auto; padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 700; color: var(--deep); text-decoration: none; }
+.brand img { width: 32px; height: 32px; border-radius: 8px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 20px; border: 0; border-radius: 12px; font: 600 15px 'Inter', sans-serif; cursor: pointer; text-decoration: none; background: var(--ink); color: #fff; }
+.btn.line { background: #fff; color: var(--ink); border: 1px solid var(--line); }
+.btn.sky { background: var(--sky); color: var(--deep); }
+main { max-width: 920px; margin: 0 auto; padding: 28px 20px 56px; }
+h1 { font: 700 30px/1.15 'Fraunces', serif; color: var(--deep); margin: 0 0 6px; }
+.sub { margin: 0 0 22px; color: var(--muted); }
+.box { background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 24px; max-width: 440px; }
+.f { margin-bottom: 14px; }
+.f label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--deep); }
+.f input { width: 100%; min-height: 46px; border: 1px solid #B9CCDB; border-radius: 12px; padding: 0 14px; font: 16px 'Inter', sans-serif; }
+.err { min-height: 22px; margin: 0 0 10px; color: #A4262C; font-size: 14px; font-weight: 500; }
+.tabs { display: flex; gap: 8px; margin: 0 0 20px; flex-wrap: wrap; }
+.tab { min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid var(--line); background: #fff; font: 600 14px 'Inter', sans-serif; color: var(--ink); cursor: pointer; }
+.tab[aria-selected="true"] { background: var(--deep); border-color: var(--deep); color: #fff; }
+.note { background: #FFF6E0; border: 1px solid #EBD28A; color: #5A4300; border-radius: 12px; padding: 12px 14px; font-size: 14px; margin: 0 0 18px; }
+.note a { color: #5A4300; font-weight: 700; }
+.how { margin: 18px 0 0; padding: 0 0 0 18px; color: var(--muted); font-size: 14px; }
+.how li { margin-bottom: 4px; }
+.actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+
+/* ----- digital library card ----- */
+.lib { width: 100%; max-width: 390px; border-radius: 22px; background: var(--deep); color: #fff; padding: 22px; position: relative; overflow: hidden; box-shadow: 0 10px 30px rgba(6,47,77,.28); display: flex; flex-direction: column; gap: 18px; }
+.lib::before { content: ""; position: absolute; right: -70px; top: -80px; width: 220px; height: 220px; border-radius: 50%; background: #094570; opacity: .75; }
+.lib > * { position: relative; }
+.lib .row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.lib .who { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 14px; }
+.lib .who img { width: 36px; height: 36px; border-radius: 9px; box-shadow: 0 0 0 1px rgba(133,204,255,.45); }
+.lib .tag { font-size: 10px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--sand); }
+.lib .nm { font: 700 26px/1.1 'Fraunces', serif; overflow-wrap: anywhere; }
+.lib .pg { margin-top: 6px; font-size: 13px; color: #BFE3FB; }
+.lib .kv { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 16px; }
+.lib .k { font-size: 10px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--sky); }
+.lib .v { margin-top: 3px; font-size: 15px; font-weight: 700; letter-spacing: .03em; overflow-wrap: anywhere; }
+.lib .qr { background: #fff; border-radius: 14px; padding: 14px; display: flex; flex-direction: column; align-items: center; gap: 10px; color: var(--deep); }
+.lib .qr svg { width: 148px; height: 148px; display: block; }
+.lib .qr b { font-size: 12px; letter-spacing: .3em; }
+.pillstate { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; padding: 6px 12px; border-radius: 999px; background: #D6EBFA; color: var(--ink); }
+.pillstate.renew { background: #FBE3B5; color: #6B4A00; }
+
+/* ----- printable ID card: designed at 648 x 408 px, scaled with --s ----- */
+.idwrap { --s: 1; }
+.cardbox { width: calc(648px * var(--s)); height: calc(408px * var(--s)); overflow: hidden; border-radius: calc(18px * var(--s)); box-shadow: 0 8px 24px rgba(6,47,77,.18); background: #fff; flex-shrink: 0; }
+.card { width: 648px; height: 408px; transform: scale(var(--s)); transform-origin: top left; position: relative; overflow: hidden; display: flex; flex-direction: column; font-family: 'Inter', sans-serif; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.sheet { display: flex; flex-wrap: wrap; gap: 20px; }
+.side { font-size: 12px; font-weight: 600; color: var(--muted); margin: 0 0 8px; }
+.card.front { background: #062F4D; color: #fff; padding: 28px 32px 0; }
+.card .c1 { position: absolute; right: -90px; top: -110px; width: 300px; height: 300px; border-radius: 50%; background: #094570; opacity: .7; }
+.card .c2 { position: absolute; left: -120px; bottom: 20px; width: 240px; height: 240px; border-radius: 50%; background: #094570; opacity: .35; }
+.card .hd { position: relative; display: flex; align-items: center; justify-content: space-between; }
+.card .hd .b { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 15px; }
+.card .hd img { width: 40px; height: 40px; border-radius: 10px; box-shadow: 0 0 0 1px rgba(133,204,255,.45); }
+.card .pill { font-size: 11px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; border: 1px solid; border-radius: 999px; padding: 5px 12px; }
+.card .mid { position: relative; margin-top: 24px; display: flex; gap: 26px; flex-grow: 1; }
+.card .photo { width: 154px; height: 198px; flex-shrink: 0; border: 2px dashed rgba(133,204,255,.7); border-radius: 12px; background: rgba(255,255,255,.06); }
+.card .info { min-width: 0; flex-grow: 1; }
+.card .name { font: 700 30px/1.08 'Fraunces', serif; overflow-wrap: anywhere; }
+.card .rule { margin-top: 8px; width: 48px; height: 3px; border-radius: 2px; }
+.card .grid { margin-top: 16px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 16px; }
+.card .gk { font-size: 10px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: #85CCFF; }
+.card .gv { margin-top: 3px; font-size: 14px; font-weight: 600; overflow-wrap: anywhere; }
+.card .bar { position: relative; margin: 0 -32px; padding: 12px 32px; display: flex; align-items: center; justify-content: space-between; color: #062F4D; font-size: 12px; font-weight: 700; letter-spacing: .04em; }
+.card.back { background: #fff; color: #062F4D; }
+.card.back .strip { height: 14px; flex-shrink: 0; }
+.card.back .body { padding: 22px 32px 0; display: flex; gap: 28px; flex-grow: 1; }
+.card.back .l { display: flex; flex-direction: column; flex-grow: 1; min-width: 0; }
+.card.back h3 { margin: 0; font: 700 20px/1.2 'Fraunces', serif; }
+.card.back .tx { margin-top: 8px; font-size: 12px; line-height: 1.55; color: #3D5568; }
+.card.back .gk { color: #094570; }
+.card.back .sig { margin-bottom: 22px; }
+.card.back .sig i { display: block; height: 1px; background: #062F4D; width: 230px; }
+.card.back .sig span { display: block; margin-top: 5px; font-size: 10px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: #094570; }
+.card.back .r { width: 132px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.card.back .r svg { width: 124px; height: 124px; display: block; }
+.card.back .r small { font-size: 10px; line-height: 1.4; text-align: center; color: #3D5568; }
+.card.back .foot { margin-top: 14px; padding: 12px 32px; display: flex; align-items: center; justify-content: space-between; background: #062F4D; color: #fff; font-size: 12px; font-weight: 700; letter-spacing: .04em; }
+
+[hidden] { display: none !important; }
+.printonly { display: none; }
+
+@media print {
+  @page { size: A4; margin: 12mm; }
+  body { background: #fff; }
+  .top, .tabs, .actions, .how, .note, h1, .sub, .side, #libPanel, footer.pg { display: none !important; }
+  main { padding: 0; max-width: none; }
+  #idPanel { display: block !important; }
+  .idwrap { --s: .4992 !important; }
+  .sheet { gap: 8mm; }
+  .cardbox { box-shadow: none; border-radius: 3mm; outline: .2mm solid #8aa; }
+  .printonly { display: block; font-size: 11px; color: #555; margin: 0 0 6mm; }
+}
+</style>
+</head>
+<body>
+<header class="top"><div>
+<a class="brand" href="./"><img src="logo.png" alt="">Himaayah Schools</a>
+<a class="btn line" href="./">Home</a>
+</div></header>
+
+<main>
+<section id="login">
+<h1>My cards</h1>
+<p class="sub">Sign in with your ID and access code to see your library card and print your ID card.</p>
+<form class="box" id="lf" novalidate>
+<div class="f"><label for="cid">Your ID</label><input id="cid" autocomplete="username" autocapitalize="characters" placeholder="The ID on your login email" required></div>
+<div class="f"><label for="ccode">Access code</label><input id="ccode" type="password" autocomplete="current-password" required></div>
+<div class="err" id="err" role="alert"></div>
+<button class="btn" id="go" type="submit">Show my cards</button>
+</form>
+</section>
+
+<section id="app" hidden>
+<h1 id="hello">My cards</h1>
+<p class="sub" id="sub"></p>
+<div class="note" id="renew" hidden><b>Your plan is due for renewal.</b> Your cards stay visible, but the library may pause your card until you <a href="pay">pay your fees</a>.</div>
+<div class="tabs" role="tablist">
+<button class="tab" role="tab" id="t1" aria-selected="true" aria-controls="libPanel" type="button">Library card</button>
+<button class="tab" role="tab" id="t2" aria-selected="false" aria-controls="idPanel" type="button">ID card</button>
+</div>
+
+<div id="libPanel" role="tabpanel" aria-labelledby="t1">
+<div class="lib">
+<div class="row"><div class="who"><img src="logo.png" alt="">Himaayah Schools</div><div class="tag">Library</div></div>
+<div><div class="nm" id="lName"></div><div class="pg" id="lProg"></div></div>
+<div class="kv">
+<div><div class="k">Library no.</div><div class="v" id="lNo"></div></div>
+<div><div class="k" id="lKey">Valid until</div><div class="v" id="lVal"></div></div>
+</div>
+<div class="qr"><div id="lQr" aria-label="QR code for the library desk" role="img"></div><b id="lNo2"></b></div>
+</div>
+<div class="row" style="margin-top:14px;max-width:390px;display:flex;align-items:center;justify-content:space-between"><span class="pillstate" id="lState"></span><span style="font-size:13px;color:var(--muted)">Show this at the library desk.</span></div>
+</div>
+
+<div id="idPanel" role="tabpanel" aria-labelledby="t2" hidden>
+<p class="printonly">Himaayah Schools ID card. Cut out along the outline, paste your passport photo in the empty frame, then fold or put the two sides back to back and laminate.</p>
+<div class="idwrap" id="idwrap">
+<div class="sheet">
+<div><p class="side">Front</p>
+<div class="cardbox"><div class="card front" id="cf">
+<div class="c1"></div><div class="c2"></div>
+<div class="hd"><div class="b"><img src="logo.png" alt="">Himaayah Schools</div><div class="pill" id="fPill"></div></div>
+<div class="mid"><div class="photo" aria-hidden="true"></div>
+<div class="info"><div class="name" id="fName"></div><div class="rule" id="fRule"></div>
+<div class="grid">
+<div><div class="gk" id="fK1"></div><div class="gv" id="fV1"></div></div>
+<div><div class="gk" id="fK2"></div><div class="gv" id="fV2"></div></div>
+<div><div class="gk">Programme</div><div class="gv" id="fV3"></div></div>
+<div><div class="gk">Valid until</div><div class="gv" id="fV4"></div></div>
+</div></div></div>
+<div class="bar" id="fBar"><span>www.himaayahschools.com</span><span id="fLib"></span></div>
+</div></div></div>
+<div><p class="side">Back</p>
+<div class="cardbox"><div class="card back" id="cb">
+<div class="strip" id="bStrip"></div>
+<div class="body"><div class="l">
+<h3 id="bTitle"></h3>
+<div class="tx" id="bText"></div>
+<div class="grid">
+<div><div class="gk">Library no.</div><div class="gv" id="bLib"></div></div>
+<div><div class="gk">Card no.</div><div class="gv" id="bId"></div></div>
+</div>
+<div style="flex-grow:1"></div>
+<div class="sig"><i></i><span>Holder's signature</span></div>
+</div>
+<div class="r"><div id="bQr" role="img" aria-label="QR code to check this card"></div><small>Scan to check this card is valid</small></div></div>
+<div class="foot"><span>www.himaayahschools.com</span><span id="bTag" style="font-weight:600"></span></div>
+</div></div></div>
+</div>
+</div>
+<div class="actions"><button class="btn" id="print" type="button">Print ID card</button></div>
+<ol class="how">
+<li>Print on A4 paper. Choose "Background graphics" in the print window so the colours show.</li>
+<li>Cut out both sides and paste a passport photo in the empty frame on the front.</li>
+<li>Stick the two sides back to back, sign the back, and laminate or keep it in a card holder.</li>
+</ol>
+</div>
+
+<div class="actions"><button class="btn line" id="out" type="button">Hide my cards</button></div>
+</section>
+</main>
+
+<script src="js/qrcode.js"></script>
+<script>
+/* Same Apps Script web app as the other portals. */
+const API_URL = 'https://script.google.com/macros/s/AKfycby0AsifBuB_Ad7g1SjDXCipaDU27-BrzYWf67muw5jeY_C0_0uz8AhQYYXdiNRQhvqX/exec';
+const $ = (id) => document.getElementById(id);
+const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+function qrSvg(text) {
+  const q = qrcode(0, 'M'); q.addData(text); q.make();
+  return q.createSvgTag({ cellSize: 4, margin: 0, scalable: true });
+}
+function niceDate(iso) {
+  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso || ''); if (!m) return '';
+  return Number(m[3]) + ' ' + MON[Number(m[2]) - 1] + ' ' + m[1];
+}
+function fit() {   // scale the ID card down to the screen width (the print rule sets its own scale)
+  const w = Math.min(648, Math.max(260, document.documentElement.clientWidth - 40));
+  $('idwrap').style.setProperty('--s', String(w / 648));
+}
+window.addEventListener('resize', fit);
+
+function show(c) {
+  const staff = c.kind === 'staff', url = location.origin + '/verify?c=' + encodeURIComponent(c.id) + '&k=' + c.check;
+  const valid = c.validUntil ? niceDate(c.validUntil) : (staff ? 'While you work here' : 'Renews with your plan');
+  const first = (c.name || '').split(/\s+/)[0] || 'there';
+  $('hello').textContent = 'Salaam, ' + first;
+  $('sub').textContent = staff ? 'Your staff ID card and library card.' : 'Your library card and printable ID card.';
+  $('renew').hidden = c.status !== 'Renew';
+
+  $('lName').textContent = c.name; $('lProg').textContent = (staff ? 'Staff · ' : '') + c.programme;
+  $('lNo').textContent = c.libraryNo; $('lNo2').textContent = c.libraryNo;
+  $('lKey').textContent = 'Valid until'; $('lVal').textContent = valid;
+  $('lQr').innerHTML = qrSvg(url);
+  $('lState').textContent = c.status === 'Renew' ? 'Renewal due' : 'Active';
+  $('lState').className = 'pillstate' + (c.status === 'Renew' ? ' renew' : '');
+
+  const accent = staff ? '#85CCFF' : '#E8D3A2', bar = staff ? '#E8D3A2' : '#85CCFF';
+  $('fPill').textContent = staff ? 'Staff' : 'Student'; $('fPill').style.color = staff ? '#85CCFF' : '#E8D3A2'; $('fPill').style.borderColor = staff ? '#85CCFF' : '#E8D3A2';
+  $('fName').textContent = c.name; $('fRule').style.background = accent;
+  $('fK1').textContent = staff ? 'Staff ID' : 'Student ID'; $('fV1').textContent = c.id;
+  $('fK2').textContent = staff ? 'Role' : 'Library no.'; $('fV2').textContent = staff ? c.plan : c.libraryNo;
+  $('fV3').textContent = c.programme; $('fV4').textContent = valid;
+  $('fBar').style.background = bar; $('fLib').textContent = staff ? c.libraryNo : '';
+  $('bStrip').style.background = staff ? '#E8D3A2' : '#062F4D';
+  $('bTitle').textContent = staff ? 'Himaayah Schools staff' : 'This card belongs to Himaayah Schools';
+  $('bText').textContent = staff
+    ? 'The holder is a member of staff of Himaayah Schools. This card is not transferable and must be shown on school premises and in live classes when asked. If found, please return it to the school.'
+    : 'It identifies the holder as a student and is not transferable. Show it when you borrow from the library or enter a class or exam. If found, please return it to the school.';
+  $('bLib').textContent = c.libraryNo; $('bId').textContent = c.id;
+  $('bQr').innerHTML = qrSvg(url); $('bTag').textContent = 'Deen · Knowledge · Skill'; $('bTag').style.color = staff ? '#E8D3A2' : '#85CCFF';
+  $('login').hidden = true; $('app').hidden = false; fit(); $('hello').scrollIntoView({ block: 'start' });
+}
+
+$('lf').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const id = $('cid').value.trim(), code = $('ccode').value;
+  const err = $('err'), go = $('go'); err.textContent = '';
+  if (!id || !code) { err.textContent = 'Enter your ID and access code.'; return; }
+  go.disabled = true; go.textContent = 'Checking…';
+  try {
+    const r = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'cards', op: 'get', id, code }) });
+    const j = await r.json();
+    if (j && j.ok && j.card) { $('ccode').value = ''; show(j.card); }
+    else err.textContent = (j && j.error) || 'Could not load your cards.';
+  } catch (x) { err.textContent = 'Could not reach the school server. Check your connection and try again.'; }
+  go.disabled = false; go.textContent = 'Show my cards';
+});
+
+function tab(which) {
+  const lib = which === 'lib';
+  $('libPanel').hidden = !lib; $('idPanel').hidden = lib;
+  $('t1').setAttribute('aria-selected', String(lib)); $('t2').setAttribute('aria-selected', String(!lib));
+  if (!lib) fit();
+}
+$('t1').addEventListener('click', () => tab('lib'));
+$('t2').addEventListener('click', () => tab('id'));
+$('print').addEventListener('click', () => window.print());
+$('out').addEventListener('click', () => { $('app').hidden = true; $('login').hidden = false; $('lQr').innerHTML = ''; $('bQr').innerHTML = ''; $('cid').value = ''; tab('lib'); });
+</script>
+</body>
+</html>
