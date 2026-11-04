@@ -1,7 +1,7 @@
 /* Arabic for the waitlist page. English on the left, Arabic on the right: edit the Arabic to change what visitors see.
    Keys starting with re: are patterns for text with numbers or names in it ($1, $2 are the parts kept). */
 HS_I18N.add({
-"Join the waitlist — Himaayah Schools": "قائمة الانتظار — مدارس حماية",
+"Join the waitlist — Himaayah Schools": "قائمة الانتظار — مدرسة حماية",
 "Madrasah group and one-year Hifdh classes are full for now. Join the waitlist and we will email you as soon as a place opens.": "فصول المدرسة الشرعية الجماعية ومسار حفظ السنة الواحدة ممتلئة حاليًا. انضم إلى قائمة الانتظار وسنراسلك فور توفّر مقعد.",
 "Waitlist": "قائمة الانتظار",
 "These classes are full. Save a place in line.": "هذه الفصول ممتلئة. احجز مكانك في الدور.",

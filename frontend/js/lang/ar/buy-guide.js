@@ -1,7 +1,7 @@
 /* Arabic for the buy-guide page. English on the left, Arabic on the right: edit the Arabic to change what visitors see.
    Keys starting with re: are patterns for text with numbers or names in it ($1, $2 are the parts kept). */
 HS_I18N.add({
-"Buy a children’s book — Himaayah Schools": "شراء كتاب للأطفال — مدارس حماية",
+"Buy a children’s book — Himaayah Schools": "شراء كتاب للأطفال — مدرسة حماية",
 "Children’s books": "كتب الأطفال",
 "Get the book by email.": "احصل على الكتاب عبر البريد.",
 "Large-print books for children, written by our teachers. Each is ₦5,000. Pay on a secure page and the PDF link is sent to your email straight away.": "كتب بخط كبير للأطفال كتبها معلّمونا. سعر الكتاب ٥٬٠٠٠ ₦. ادفع في صفحة آمنة ويُرسل رابط الملف إلى بريدك فورًا.",

@@ -50,5 +50,5 @@ HS_I18N.add({
 "Who would you like to talk to?": "مع من تريد أن تتحدّث؟",
 "Parent or student's name": "اسم ولي الأمر أو الطالب",
 "Tell us what you would like to know": "أخبرنا بما تريد أن تعرفه",
-"Contact — Himaayah Schools": "تواصل — مدارس حماية"
+"Contact — Himaayah Schools": "تواصل — مدرسة حماية"
 });

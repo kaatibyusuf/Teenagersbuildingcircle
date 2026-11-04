@@ -1,7 +1,7 @@
 /* Arabic for the sponsor page. English on the left, Arabic on the right: edit the Arabic to change what visitors see.
    Keys starting with re: are patterns for text with numbers or names in it ($1, $2 are the parts kept). */
 HS_I18N.add({
-"Sponsor a student — Himaayah Schools": "اكفل طالبًا — مدارس حماية",
+"Sponsor a student — Himaayah Schools": "اكفل طالبًا — مدرسة حماية",
 "Pay school fees for a student whose family cannot afford them, or give to the Himaayah Sponsorship Fund. Families can also apply for support.": "ادفع رسوم الدراسة عن طالب لا تستطيع أسرته تحمّلها، أو تبرّع لصندوق حماية للكفالة. ويمكن للأسر أيضًا التقدّم بطلب دعم.",
 "Sponsor a student": "اكفل طالبًا",
 "Help a child keep learning.": "أعِن طفلًا على مواصلة التعلّم.",

@@ -71,14 +71,14 @@ HS_I18N.add({
 "Pay first, then send. Please attach your receipt before you press send. Payments are usually confirmed within a few hours.": "ادفع أولًا، ثم أرسل. يُرجى إرفاق إيصالك قبل الضغط على إرسال. يُؤكَّد الدفع عادةً خلال ساعات قليلة.",
 "You're enrolled.": "تم تسجيلك.",
 "Send your receipt on WhatsApp so we can confirm your place.": "أرسل إيصالك على واتساب لنؤكّد مقعدك.",
-"© 2026 Himaayah Schools ·": "© 2026 مدارس حماية ·",
+"© 2026 Himaayah Schools ·": "© 2026 مدرسة حماية ·",
 "Refund & privacy policies": "سياسات الاسترداد والخصوصية",
 "Empowering tomorrow's leaders.": "نمكّن قادة الغد.",
 "Student's full name": "الاسم الكامل للطالب",
 "Where the student's login details should be sent": "حيث تُرسَل بيانات دخول الطالب",
 "Parent or guardian's full name": "الاسم الكامل لولي الأمر",
 "For enrollment updates and payment receipts": "لتحديثات التسجيل وإيصالات الدفع",
-"Enroll — Himaayah Schools": "التسجيل — مدارس حماية",
+"Enroll — Himaayah Schools": "التسجيل — مدرسة حماية",
 "Teenagers Building Circle — Full Programme": "حلقة بناء الناشئة — البرنامج الكامل",
 "Madrasah — Hifdh Only (Group)": "المدرسة الشرعية — الحفظ فقط (جماعي)",
 "Madrasah — Full Madrasah (Group)": "المدرسة الشرعية — المدرسة الشرعية كاملة (جماعي)",
@@ -198,5 +198,5 @@ HS_I18N.add({
 "Thank you. We have your details.": "شكرًا لك. وصلتنا بياناتك.",
 "re:^The school will check the payment you made before the website and then email (.+?) login\\. Your next fee is due on (\\S+), and you can pay it at himaayahschools\\.com/pay\\. Your reference is (\\S+)\\.$": "ستتحقّق المدرسة من الدفعة التي سبقت الموقع، ثم ترسل بيانات الدخول بالبريد الإلكتروني. تُستحق رسومك القادمة في $2، ويمكنك دفعها عبر himaayahschools.com/pay. رقمك المرجعي هو $3.",
 "re:^(.*)Please try again, or message the Madrasah on WhatsApp: \\+234 702 584 2849\\.$": "$1حاول مرة أخرى، أو راسل المدرسة القرآنية على واتساب: ‎+234 702 584 2849‎.",
-"Back to Himaayah Schools": "العودة إلى مدارس حماية"
+"Back to Himaayah Schools": "العودة إلى مدرسة حماية"
 });

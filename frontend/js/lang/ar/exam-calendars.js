@@ -47,7 +47,7 @@ HS_I18N.add({
 "Filter by exam": "تصفية حسب الامتحان",
 "Previous month": "الشهر السابق",
 "Next month": "الشهر التالي",
-"Exam Calendars — Himaayah Schools": "تقويمات الامتحانات — مدارس حماية",
+"Exam Calendars — Himaayah Schools": "تقويمات الامتحانات — مدرسة حماية",
 "The 2026 mock was held on 28 March.": "عُقد الامتحان التجريبي لعام 2026 في 28 مارس.",
 "The 2026 exam ran 16 to 25 April, with results on 7 May.": "أُجري امتحان 2026 من 16 إلى 25 أبريل، وأُعلنت النتائج في 7 مايو.",
 "JAMB 2027 timetable expected": "جدول JAMB لعام 2027 متوقَّع",

@@ -3,5 +3,5 @@
 HS_I18N.add({
 "This page isn't here.": "هذه الصفحة غير موجودة.",
 "The link may be old or mistyped. Head home, or go straight to one of our programmes.": "ربما يكون الرابط قديمًا أو مكتوبًا بخطأ. عُد إلى الرئيسية، أو انتقل مباشرة إلى أحد برامجنا.",
-"Page not found — Himaayah Schools": "الصفحة غير موجودة — مدارس حماية"
+"Page not found — Himaayah Schools": "الصفحة غير موجودة — مدرسة حماية"
 });

@@ -1,7 +1,7 @@
 /* Arabic for the tbc-admin page. English on the left, Arabic on the right: edit the Arabic to change what visitors see.
    Keys starting with re: are patterns for text with numbers or names in it ($1, $2 are the parts kept). */
 HS_I18N.add({
-"TBC Admin | Himaayah Schools": "إدارة الحلقة | مدارس حماية",
+"TBC Admin | Himaayah Schools": "إدارة الحلقة | مدرسة حماية",
 "TBC admin": "إدارة الحلقة",
 "Demo mode: sample data, nothing is saved. Only confirm a payment after you have seen the receipt. Session times and join links are posted by facilitators.": "وضع التجربة: بيانات نموذجية، ولا يُحفظ شيء. لا تؤكّد أي دفع إلا بعد أن ترى الإيصال. مواعيد الجلسات وروابط الانضمام ينشرها الميسّرون.",
 "Only confirm a payment after you have seen the receipt. Session times and join links are posted by facilitators.": "لا تؤكّد أي دفع إلا بعد أن ترى الإيصال. مواعيد الجلسات وروابط الانضمام ينشرها الميسّرون.",

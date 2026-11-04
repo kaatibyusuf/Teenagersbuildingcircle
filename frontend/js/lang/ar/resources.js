@@ -1,7 +1,7 @@
 /* Arabic for the resources page. English on the left, Arabic on the right: edit the Arabic to change what visitors see.
    Keys starting with re: are patterns for text with numbers or names in it ($1, $2 are the parts kept). */
 HS_I18N.add({
-"Resources: guides and books from Himaayah Schools": "الموارد: أدلة وكتب من مدارس حماية",
+"Resources: guides and books from Himaayah Schools": "الموارد: أدلة وكتب من مدرسة حماية",
 "Resources": "الموارد",
 "Guides and books from our teachers.": "أدلة وكتب من معلّمينا.",
 "55 printable guides and books for children, students and families, now all in the Himaayah Store. Choose what you need, pay once, and download.": "55 دليلًا وكتابًا قابلًا للطباعة للأطفال والطلاب والأسر، وكلها الآن في متجر حماية. اختر ما تحتاج وادفع مرة واحدة ونزّل.",
@@ -33,7 +33,7 @@ HS_I18N.add({
 "We email a receipt with the Himaayah logo.": "نرسل إليك إيصالًا بشعار حماية.",
 "Download": "نزّل",
 "Your email has the download links. They keep working.": "في بريدك روابط التنزيل، وتبقى تعمل.",
-"The Himaayah Schools prospectus is free.": "الدليل التعريفي لمدارس حماية مجاني.",
+"The Himaayah Schools prospectus is free.": "الدليل التعريفي لمدرسة حماية مجاني.",
 "Programmes, fees, how to apply and what to expect. Download it with no sign-up.": "البرامج والرسوم وكيفية التقديم وما تتوقعه. نزّله دون تسجيل.",
 "Download the prospectus": "نزّل الدليل التعريفي",
 "Go to the Himaayah Store": "اذهب إلى متجر حماية",

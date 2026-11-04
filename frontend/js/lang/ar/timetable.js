@@ -1,8 +1,8 @@
 /* Arabic for the timetable page. English on the left, Arabic on the right: edit the Arabic to change what visitors see.
    Keys starting with re: are patterns for text with numbers or names in it ($1, $2 are the parts kept). */
 HS_I18N.add({
-"Class timetable — Himaayah Schools": "جدول الحصص — مدارس حماية",
-"Weekly class times for Himaayah Schools group classes, in Nigeria time. Add your class to your calendar.": "مواعيد الحصص الجماعية الأسبوعية في مدارس حماية بتوقيت نيجيريا. أضف حصتك إلى تقويمك.",
+"Class timetable — Himaayah Schools": "جدول الحصص — مدرسة حماية",
+"Weekly class times for Himaayah Schools group classes, in Nigeria time. Add your class to your calendar.": "مواعيد الحصص الجماعية الأسبوعية في مدرسة حماية بتوقيت نيجيريا. أضف حصتك إلى تقويمك.",
 "Class timetable": "جدول الحصص",
 "When group classes meet.": "مواعيد الحصص الجماعية.",
 "Weekly times for each group class, in Nigeria time (WAT). Add your class to your phone's calendar so you never miss one. One-to-one classes are arranged with your teacher and are not shown here.": "المواعيد الأسبوعية لكل حصة جماعية بتوقيت نيجيريا. أضف حصتك إلى تقويم هاتفك حتى لا تفوتك. أما الحصص الفردية فتُرتَّب مع معلّمك ولا تظهر هنا.",

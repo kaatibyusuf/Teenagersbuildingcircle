@@ -27,7 +27,7 @@ HS_I18N.add({
 "Weekly cohort": "دفعة أسبوعية",
 "Questions first? Ask on WhatsApp": "لديك أسئلة أولًا؟ اسأل على واتساب",
 "Facilitator Login": "دخول الميسّرين",
-"Teenagers Building Circle — Himaayah Schools": "حلقة بناء الناشئة — مدارس حماية",
+"Teenagers Building Circle — Himaayah Schools": "حلقة بناء الناشئة — مدرسة حماية",
 "Session times are set with your facilitator when the cohort forms": "تُحدَّد مواعيد الجلسات مع الميسّر عند تكوين الدفعة",
 "4 sessions": "4 جلسات",
 "a week, live, across all four pillars": "أسبوعيًا، مباشرة، في الركائز الأربع كلها",

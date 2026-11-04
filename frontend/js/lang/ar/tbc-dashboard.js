@@ -1,7 +1,7 @@
 /* Arabic for the tbc-dashboard page. English on the left, Arabic on the right: edit the Arabic to change what visitors see.
    Keys starting with re: are patterns for text with numbers or names in it ($1, $2 are the parts kept). */
 HS_I18N.add({
-"Teenagers Building Circle | Himaayah Schools": "حلقة بناء الناشئة | مدارس حماية",
+"Teenagers Building Circle | Himaayah Schools": "حلقة بناء الناشئة | مدرسة حماية",
 "Session": "الجلسة",
 "Next live session": "الجلسة المباشرة القادمة",
 "Bring your weekly plan.": "أحضر خطتك الأسبوعية.",

@@ -841,7 +841,7 @@ HS_I18N.add({
 "Classes are live online. Card or bank transfer.": "الحصص مباشرة عبر الإنترنت. الدفع بالبطاقة أو التحويل البنكي.",
 "Not sure where to start?": "لا تعرف من أين تبدأ؟",
 "Tell us about the student and we will suggest the right programme.": "أخبرنا عن الطالب ونقترح عليك البرنامج المناسب.",
-"Himaayah Schools ·": "مدارس حماية ·",
+"Himaayah Schools ·": "مدرسة حماية ·",
 "The Himaayah Journal": "مجلة حماية",
 "Read well.": "اقرأ جيدًا.",
 "Learn well.": "وتعلّم جيدًا.",

@@ -2,7 +2,7 @@
    Keys starting with re: are patterns for text with numbers or names in it ($1, $2 are the parts kept). */
 HS_I18N.add({
 "Academy login": "دخول الأكاديمية",
-"Academy | Himaayah Schools": "الأكاديمية | مدارس حماية",
+"Academy | Himaayah Schools": "الأكاديمية | مدرسة حماية",
 "Open CBT practice": "افتح تدريب CBT",
 "Exam countdown": "العدّ التنازلي للامتحان",
 "Join the class": "انضم إلى الحصة",

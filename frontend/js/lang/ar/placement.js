@@ -1,8 +1,8 @@
 /* Arabic for the placement page. English on the left, Arabic on the right: edit the Arabic to change what visitors see.
    Keys starting with re: are patterns for text with numbers or names in it ($1, $2 are the parts kept). */
 HS_I18N.add({
-"Placement tests — Himaayah Schools": "اختبارات تحديد المستوى — مدارس حماية",
-"Take a free Himaayah Schools placement test online: Madrasah level tests in Arabic, and a timed UTME mock for Science and Arts. Marked instantly.": "اختبارات مجانية لتحديد المستوى من مدارس حماية: اختبارات مستويات المدرسة الشرعية بالعربية، واختبار UTME تجريبي موقوت للعلوم والآداب. تُصحَّح فورًا، والنجاح بنسبة 70%.",
+"Placement tests — Himaayah Schools": "اختبارات تحديد المستوى — مدرسة حماية",
+"Take a free Himaayah Schools placement test online: Madrasah level tests in Arabic, and a timed UTME mock for Science and Arts. Marked instantly.": "اختبارات مجانية لتحديد المستوى من مدرسة حماية: اختبارات مستويات المدرسة الشرعية بالعربية، واختبار UTME تجريبي موقوت للعلوم والآداب. تُصحَّح فورًا، والنجاح بنسبة 70%.",
 "Placement tests": "اختبارات تحديد المستوى",
 "Find your level. Know where you stand.": "اعرف مستواك، واعرف أين تقف.",
 "Free online tests, marked the moment you finish. Madrasah students sit a test in Arabic for the level they are applying to. UTME candidates sit a timed mock in English and three subjects from their department. Each Madrasah level keeps its own pass mark, from 75% to 90%; the UTME cut-off is 70%.": "اختبارات مجانية عبر الإنترنت تُصحَّح لحظة انتهائك. يؤدي طلاب المدرسة الشرعية اختبارًا بالعربية للمستوى الذي يتقدّمون إليه، ويؤدي مرشّحو UTME اختبارًا تجريبيًّا موقوتًا في الإنجليزية وثلاث موادّ من قسمهم. لكلّ مستوى في المدرسة الشرعية درجة نجاح خاصّة به من 75% إلى 90%، والحدّ الأدنى في UTME هو 70%.",

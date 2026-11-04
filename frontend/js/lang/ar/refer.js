@@ -1,8 +1,8 @@
 /* Arabic for the refer page. English on the left, Arabic on the right: edit the Arabic to change what visitors see.
    Keys starting with re: are patterns for text with numbers or names in it ($1, $2 are the parts kept). */
 HS_I18N.add({
-"Refer and earn — Himaayah Schools": "ادعُ واربح — مدارس حماية",
-"Share Himaayah Schools and earn 10% of the fee when someone you invite enrols. Anyone can join.": "شارك مدارس حماية واربح 10% من الرسوم عندما يسجّل من تدعوه. الانضمام متاح للجميع.",
+"Refer and earn — Himaayah Schools": "ادعُ واربح — مدرسة حماية",
+"Share Himaayah Schools and earn 10% of the fee when someone you invite enrols. Anyone can join.": "شارك مدرسة حماية واربح 10% من الرسوم عندما يسجّل من تدعوه. الانضمام متاح للجميع.",
 "Refer and earn": "ادعُ واربح",
 "We could not find that referral code.": "لم نعثر على رمز الإحالة هذا.",
 "Referred by": "بإحالة من",
@@ -115,7 +115,7 @@ HS_I18N.add({
 "5 confirmed enrolments and 3 months in good standing. You can recommend new ambassadors to us.": "٥ تسجيلات مؤكدة و٣ أشهر بسمعة حسنة. يمكنك ترشيح سفراء جدد لنا.",
 "15 confirmed enrolments, or leading a campus or city team. You help coordinate others and may speak at events.": "١٥ تسجيلًا مؤكدًا، أو قيادة فريق في حرم جامعي أو مدينة. تساعد في تنسيق الآخرين وقد تتحدث في الفعاليات.",
 "What an Ambassador does": "ماذا يفعل السفير",
-"An Ambassador is a trusted face of Himaayah. These are the duties, and the lines you must never cross.": "السفير وجه موثوق لمدارس حماية. هذه هي الواجبات، وهذه الحدود التي لا يجوز تجاوزها.",
+"An Ambassador is a trusted face of Himaayah. These are the duties, and the lines you must never cross.": "السفير وجه موثوق لمدرسة حماية. هذه هي الواجبات، وهذه الحدود التي لا يجوز تجاوزها.",
 "Your duties": "واجباتك",
 "Represent Himaayah honestly, using only what the school publishes.": "مثّل حماية بأمانة، ولا تعتمد إلا على ما تنشره المدرسة.",
 "Introduce the programmes to families, students and communities, online and in person.": "عرّف الأسر والطلاب والمجتمعات بالبرامج، عبر الإنترنت وشخصيًا.",
@@ -156,7 +156,7 @@ HS_I18N.add({
 "Their phone number": "رقم هاتفه",
 "Parent or guardian (required under 18)": "ولي الأمر (مطلوب لمن هم دون ١٨)",
 "Parent or guardian name": "اسم ولي الأمر",
-"My parent or guardian agrees that I may become a Himaayah Ambassador.": "يوافق ولي أمري على أن أصبح سفيرًا لمدارس حماية.",
+"My parent or guardian agrees that I may become a Himaayah Ambassador.": "يوافق ولي أمري على أن أصبح سفيرًا لمدرسة حماية.",
 "Where should we pay your rewards?": "أين نُرسل مكافآتك؟",
 "If you are under 18, you may use your parent or guardian’s account.": "إن كان عمرك أقل من ١٨ فيمكنك استخدام حساب ولي أمرك.",
 "I have read the duties above and agree to the Ambassador code of conduct. I understand that breaking it can end my ambassadorship.": "قرأت الواجبات أعلاه وأوافق على مدونة سلوك السفراء. وأفهم أن مخالفتها قد تنهي سفارتي.",

@@ -1,13 +1,13 @@
 /* Arabic for the store page. English on the left, Arabic on the right: edit the Arabic to change what visitors see.
    Keys starting with re: are patterns for text with numbers or names in it ($1, $2 are the parts kept). */
 HS_I18N.add({
-"Prospectus and free guides — Himaayah Schools": "الدليل التعريفي والأدلة المجانية — مدارس حماية",
-"Download the Himaayah Schools prospectus and free guides on tajwīd, hifdh, ṭahārah, ṣalāh, fasting, the sīrah, the Mothers of the Believers and the Companions, adhkār, Qur’anic Arabic, JAMB Physics, Chemistry and Biology, WAEC and NECO, phones and teenage habits, digital skills and public speaking.": "نزّل الدليل التعريفي لمدارس حماية وأدلة مجانية في التجويد، والحفظ، والطهارة والصلاة، والصيام، والسيرة، وأمهات المؤمنين والصحابة، والأذكار، وعربية القرآن، والفيزياء والكيمياء والأحياء لامتحان جامب، وامتحانات WAEC وNECO، والهواتف وعادات الشباب، والمهارات الرقمية، والخطابة.",
+"Prospectus and free guides — Himaayah Schools": "الدليل التعريفي والأدلة المجانية — مدرسة حماية",
+"Download the Himaayah Schools prospectus and free guides on tajwīd, hifdh, ṭahārah, ṣalāh, fasting, the sīrah, the Mothers of the Believers and the Companions, adhkār, Qur’anic Arabic, JAMB Physics, Chemistry and Biology, WAEC and NECO, phones and teenage habits, digital skills and public speaking.": "نزّل الدليل التعريفي لمدرسة حماية وأدلة مجانية في التجويد، والحفظ، والطهارة والصلاة، والصيام، والسيرة، وأمهات المؤمنين والصحابة، والأذكار، وعربية القرآن، والفيزياء والكيمياء والأحياء لامتحان جامب، وامتحانات WAEC وNECO، والهواتف وعادات الشباب، والمهارات الرقمية، والخطابة.",
 "Free resources": "موارد مجانية",
 "Our prospectus and free guides.": "دليلنا التعريفي وأدلة مجانية.",
-"The full Himaayah Schools prospectus, and practical, printable guides written by our teachers and mentors. Download them, print them and share them with anyone who will benefit. No sign-up needed.": "الدليل التعريفي الكامل لمدارس حماية، وأدلة عملية قابلة للطباعة كتبها معلّمونا ومرشدونا. نزّلها واطبعها وشاركها مع كل من ينتفع بها. دون تسجيل.",
+"The full Himaayah Schools prospectus, and practical, printable guides written by our teachers and mentors. Download them, print them and share them with anyone who will benefit. No sign-up needed.": "الدليل التعريفي الكامل لمدرسة حماية، وأدلة عملية قابلة للطباعة كتبها معلّمونا ومرشدونا. نزّلها واطبعها وشاركها مع كل من ينتفع بها. دون تسجيل.",
 "Prospectus": "الدليل التعريفي",
-"Himaayah Schools Prospectus 2026–2027": "الدليل التعريفي لمدارس حماية ⁦2026–2027⁩",
+"Himaayah Schools Prospectus 2026–2027": "الدليل التعريفي لمدرسة حماية ⁦2026–2027⁩",
 "Everything a family needs to choose with confidence: our programmes, levels, fees, admissions and policies in one document.": "كل ما تحتاجه الأسرة لتختار عن ثقة: برامجنا ومستوياتنا ورسومنا والقبول والسياسات في ملف واحد.",
 "Who we are: our story, vision, mission and leadership team": "من نحن: قصتنا ورؤيتنا ورسالتنا وفريق الإدارة",
 "All four programmes: Madrasah levels and plans, Academy tracks and results, Skills School and the Circle": "البرامج الأربعة: مستويات المدرسة الشرعية وخططها، ومسارات الأكاديمية ونتائجها، ومدرسة المهارات، والحلقة",
@@ -386,7 +386,7 @@ HS_I18N.add({
 "You are subscribed. A welcome email is on its way.": "تم اشتراكك. رسالة الترحيب في طريقها إليك.",
 "We could not subscribe you. Check your connection and try again.": "تعذّر الاشتراك. تحقّق من اتصالك وحاول مرة أخرى.",
 "Too many requests right now. Please try again later.": "طلبات كثيرة الآن. يُرجى المحاولة لاحقًا.",
-"Himaayah Store: books and guides for Muslim families — Himaayah Schools": "متجر حماية: كتب وأدلة للأسر المسلمة — مدارس حماية",
+"Himaayah Store: books and guides for Muslim families — Himaayah Schools": "متجر حماية: كتب وأدلة للأسر المسلمة — مدرسة حماية",
 "Himaayah Store": "متجر حماية",
 "Books and guides for your family.": "كتب وأدلة لأسرتك.",
 "Every guide and book we have published, in one place. Children’s books are ₦5,000 and every other guide is ₦3,000. Add them to your cart, pay securely, download, and we email you a receipt.": "كل دليل وكتاب نشرناه في مكان واحد. كتب الأطفال بسعر ٥٬٠٠٠ ₦ وكل دليل آخر بسعر ٣٬٠٠٠ ₦. أضفها إلى سلتك وادفع بأمان ونزّل، ونرسل لك إيصالًا بالبريد.",

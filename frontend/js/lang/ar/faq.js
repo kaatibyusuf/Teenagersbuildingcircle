@@ -1,7 +1,7 @@
 /* Arabic for the faq page. English on the left, Arabic on the right: edit the Arabic to change what visitors see.
    Keys starting with re: are patterns for text with numbers or names in it ($1, $2 are the parts kept). */
 HS_I18N.add({
-"Everything about enrolling, paying, and studying at Himaayah Schools. Can't find your answer? Reach out directly.": "كل شيء عن التسجيل والدفع والدراسة في مدارس حماية. لم تجد إجابتك؟ تواصل معنا مباشرة.",
+"Everything about enrolling, paying, and studying at Himaayah Schools. Can't find your answer? Reach out directly.": "كل شيء عن التسجيل والدفع والدراسة في مدرسة حماية. لم تجد إجابتك؟ تواصل معنا مباشرة.",
 "and work through three short steps: student information, then your programme and plan, then payment. It takes about two minutes. At the end, you pay by bank transfer and send your receipt to us on WhatsApp using a message that is already written for you.": "واتبع ثلاث خطوات قصيرة: بيانات الطالب، ثم البرنامج والخطة، ثم الدفع. يستغرق ذلك نحو دقيقتين. وفي النهاية تدفع بالتحويل البنكي وترسل إلينا إيصالك على واتساب برسالة مكتوبة لك مسبقًا.",
 "Bank transfer. After you pay, the enrollment page opens WhatsApp with your details and plan already filled in. Attach your receipt and send it, and we confirm your place, usually within a few hours. Card payment is coming soon.": "التحويل البنكي. بعد الدفع تفتح صفحة التسجيل واتساب وبياناتك وخطتك معبّأة مسبقًا. أرفق إيصالك وأرسله، ونؤكّد مقعدك عادةً خلال ساعات قليلة. الدفع بالبطاقة قريبًا.",
 "Which programmes do you offer?": "ما البرامج التي تقدّمونها؟",
@@ -15,7 +15,7 @@ HS_I18N.add({
 "Teenagers Building Circle is specifically for ages 13–19. Madrasah, Academy, and Skills School are open more broadly — from school-age students to adult learners, depending on the plan.": "حلقة بناء الناشئة مخصّصة للأعمار 13–19. أما المدرسة الشرعية والأكاديمية ومدرسة المهارات فمفتوحة على نطاق أوسع، من طلاب المدارس إلى المتعلّمين البالغين، بحسب الخطة.",
 "Yes — email us at": "نعم، راسلنا على",
 "with your name and current plan, and we'll help you switch.": "باسمك وخطتك الحالية، وسنساعدك على التغيير.",
-"How do I contact Himaayah Schools?": "كيف أتواصل مع مدارس حماية؟",
+"How do I contact Himaayah Schools?": "كيف أتواصل مع مدرسة حماية؟",
 ", or find us on Instagram and X at": "، أو تابعنا على إنستغرام وإكس عبر",
 "No matching questions": "لا توجد أسئلة مطابقة",
 "Try another word, or ask us directly and we'll answer.": "جرّب كلمة أخرى، أو اسألنا مباشرة وسنجيبك.",
@@ -25,7 +25,7 @@ HS_I18N.add({
 "Helpful pages": "صفحات مفيدة",
 "Search questions, e.g. payment": "ابحث في الأسئلة، مثل: الدفع",
 "Search the FAQ": "ابحث في الأسئلة الشائعة",
-"FAQ — Himaayah Schools": "الأسئلة الشائعة — مدارس حماية",
+"FAQ — Himaayah Schools": "الأسئلة الشائعة — مدرسة حماية",
 "Card or bank transfer. At the last step of enrollment, choose Card to pay on a secure payment page, or Bank transfer to pay into our account. After a transfer, the page opens WhatsApp with your details and plan already filled in. Attach your receipt and send it, and we confirm your place, usually within a few hours.": "بالبطاقة أو بالتحويل البنكي. في الخطوة الأخيرة من التسجيل اختر «البطاقة» لتدفع على صفحة دفع آمنة، أو «التحويل البنكي» لتدفع إلى حسابنا. بعد التحويل تفتح الصفحة واتساب وبياناتك وخطتك معبّأة مسبقًا. أرفق إيصالك وأرسله، ونؤكّد مقعدك عادةً خلال ساعات قليلة.",
 "and work through three short steps: student information, then your programme and plan, then payment. It takes about two minutes. At the end, pay by card on a secure payment page and your place is confirmed straight away, or pay by bank transfer and send your receipt to us on WhatsApp using a message that is already written for you.": "واتبع ثلاث خطوات قصيرة: بيانات الطالب، ثم البرنامج والخطة، ثم الدفع. يستغرق ذلك نحو دقيقتين. وفي النهاية ادفع بالبطاقة عبر صفحة دفع آمنة ويُؤكَّد مقعدك فورًا، أو ادفع بالتحويل البنكي وأرسل إلينا إيصالك على واتساب برسالة مكتوبة لك مسبقًا.",
 "Card or bank transfer. At the last step of enrollment, choose Card to pay on a secure payment page, or Bank transfer to pay into our account. Card payments are confirmed straight away, and your student login is emailed to you. After a transfer, the page opens WhatsApp with your details and plan already filled in. Attach your receipt and send it, and we confirm your place, usually within a few hours.": "بالبطاقة أو بالتحويل البنكي. في الخطوة الأخيرة من التسجيل اختر «البطاقة» للدفع عبر صفحة الدفع الآمنة، أو «التحويل البنكي» للدفع إلى حسابنا. يُؤكَّد الدفع بالبطاقة فورًا وتُرسل إليك بيانات دخول الطالب بالبريد. وبعد التحويل تفتح الصفحة واتساب ببياناتك وخطتك جاهزة، فأرفق الإيصال وأرسله، ونؤكد مقعدك عادةً خلال ساعات قليلة."

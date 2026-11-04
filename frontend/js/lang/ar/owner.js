@@ -1,7 +1,7 @@
 /* Arabic for the owner page. English on the left, Arabic on the right: edit the Arabic to change what visitors see.
    Keys starting with re: are patterns for text with numbers or names in it ($1, $2 are the parts kept). */
 HS_I18N.add({
-"Owner dashboard | Himaayah Schools": "لوحة المالك | مدارس حماية",
+"Owner dashboard | Himaayah Schools": "لوحة المالك | مدرسة حماية",
 "Owner": "المالك",
 "Owner login": "دخول المالك",
 "Sign in with your Owner ID and access code.": "سجّل الدخول برقم المالك ورمز الدخول.",

@@ -105,7 +105,7 @@ HS_I18N.add({
 "Admin Login": "دخول الإدارة",
 "Madrasah levels": "مستويات المدرسة الشرعية",
 "Class format": "نظام الحصص",
-"Madrasah | Himaayah Schools": "المدرسة الشرعية | مدارس حماية",
+"Madrasah | Himaayah Schools": "المدرسة الشرعية | مدرسة حماية",
 "No minimum score. A short placement conversation instead.": "لا حد أدنى للدرجة، بل حوار قصير لتحديد المستوى.",
 "Read and write the Arabic letters, and begin the basics of worship.": "قراءة الحروف العربية وكتابتها، والبدء بأساسيات العبادة.",
 "No prior Arabic reading or writing is needed.": "لا يلزم أي معرفة سابقة بقراءة العربية أو كتابتها.",

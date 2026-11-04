@@ -1,7 +1,7 @@
 /* Arabic for the policies page. English on the left, Arabic on the right: edit the Arabic to change what visitors see.
    Keys starting with re: are patterns for text with numbers or names in it ($1, $2 are the parts kept). */
 HS_I18N.add({
-"How enrollment, payment, refunds, plan changes, and your information work at Himaayah Schools, so there are no surprises.": "كيف يتم التسجيل والدفع والاسترداد وتغيير الخطط والتعامل مع بياناتك في مدارس حماية، حتى لا تكون هناك مفاجآت.",
+"How enrollment, payment, refunds, plan changes, and your information work at Himaayah Schools, so there are no surprises.": "كيف يتم التسجيل والدفع والاسترداد وتغيير الخطط والتعامل مع بياناتك في مدرسة حماية، حتى لا تكون هناك مفاجآت.",
 "Last updated: October 2026": "آخر تحديث: أكتوبر 2026",
 "Refunds within 1 week": "الاسترداد خلال أسبوع",
 "No refund once one week has passed since classes started. Payment provider charges are deducted from any refund.": "لا استرداد بعد مرور أسبوع على بدء الحصص. وتُخصم رسوم مزوّدي خدمة الدفع من أي مبلغ يُسترد.",
@@ -44,7 +44,7 @@ HS_I18N.add({
 "You can change plans at any time. Email": "يمكنك تغيير خطتك في أي وقت. راسلنا على",
 "with your name and current plan, and we will help you switch. Changes take effect from the next billing period, unless we agree otherwise.": "باسمك وخطتك الحالية، وسنساعدك على التغيير. ويسري التغيير من فترة الدفع التالية، ما لم نتفق على غير ذلك.",
 "To stop a recurring plan, tell us before your next billing date. Cancelling does not trigger a refund for a period that has already started (see the refund policy above).": "لإيقاف خطة متكرّرة، أخبرنا قبل موعد الدفع التالي. والإلغاء لا يترتب عليه استرداد عن فترة بدأت بالفعل (راجع سياسة الاسترداد أعلاه).",
-"Himaayah Schools is built on deen, discipline, and respect. We expect all students and parents to:": "تقوم مدارس حماية على الدين والانضباط والاحترام. ونتوقع من جميع الطلاب وأولياء الأمور أن:",
+"Himaayah Schools is built on deen, discipline, and respect. We expect all students and parents to:": "تقوم مدرسة حماية على الدين والانضباط والاحترام. ونتوقع من جميع الطلاب وأولياء الأمور أن:",
 "Treat teachers and classmates with courtesy, in class and in group chats.": "يعاملوا المعلّمين والزملاء بلطف، في الحصة وفي المحادثات الجماعية.",
 "Attend live sessions on time and complete assigned practice.": "يحضروا الجلسات المباشرة في موعدها ويُنجزوا التدريبات المطلوبة.",
 "Keep class links, materials and recordings private, and not share or resell them.": "يحافظوا على خصوصية روابط الحصص وموادها وتسجيلاتها، فلا يشاركوها ولا يعيدوا بيعها.",
@@ -78,7 +78,7 @@ HS_I18N.add({
 "and the Madrasah line is": "، وخط المدرسة الشرعية هو",
 ". We are in Ado-Ekiti, Nigeria, and classes run online.": ". نحن في أدو إكيتي، نيجيريا، والحصص عبر الإنترنت.",
 "Clear rules, written plainly.": "قواعد واضحة، مكتوبة ببساطة.",
-"Policies — Himaayah Schools": "السياسات — مدارس حماية",
+"Policies — Himaayah Schools": "السياسات — مدرسة حماية",
 "Payment service provider charges": "رسوم مزوّدي خدمة الدفع",
 "For every refund, the charges taken by the payment service provider (the card, bank or transfer processor that handled your payment) shall be deducted. You receive the amount you paid less those charges.": "تُخصم من كل مبلغ يُسترد الرسوم التي يحتسبها مزوّد خدمة الدفع (جهة معالجة البطاقة أو البنك أو التحويل التي تولّت دفعتك). وتحصل على المبلغ الذي دفعته بعد خصم تلك الرسوم.",
 "Cookies & storage": "ملفات الارتباط والتخزين",

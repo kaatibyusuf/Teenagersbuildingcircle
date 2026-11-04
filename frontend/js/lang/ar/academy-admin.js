@@ -1,7 +1,7 @@
 /* Arabic for the academy-admin page. English on the left, Arabic on the right: edit the Arabic to change what visitors see.
    Keys starting with re: are patterns for text with numbers or names in it ($1, $2 are the parts kept). */
 HS_I18N.add({
-"Academy Admin | Himaayah Schools": "إدارة الأكاديمية | مدارس حماية",
+"Academy Admin | Himaayah Schools": "إدارة الأكاديمية | مدرسة حماية",
 "Academy admin": "إدارة الأكاديمية",
 "Demo mode: sample data, nothing is saved. Only confirm a payment after you have seen the receipt. Session times and join links are posted by tutors.": "وضع التجربة: بيانات نموذجية، ولا يُحفظ شيء. لا تؤكّد أي دفع إلا بعد أن ترى الإيصال. مواعيد الجلسات وروابط الانضمام ينشرها المدرّسون.",
 "Only confirm a payment after you have seen the receipt. Session times and join links are posted by tutors.": "لا تؤكّد أي دفع إلا بعد أن ترى الإيصال. مواعيد الجلسات وروابط الانضمام ينشرها المدرّسون.",

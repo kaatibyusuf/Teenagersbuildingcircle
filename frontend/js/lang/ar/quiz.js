@@ -3,7 +3,7 @@
 HS_I18N.add({
 "Quizzes": "الاختبارات القصيرة",
 "Short quizzes marked for you straight away. Sign in with your Student ID and access code.": "اختبارات قصيرة تُصحَّح لك فورًا. سجّل الدخول برقم الطالب ورمز الدخول.",
-"Quizzes | Himaayah Schools": "الاختبارات القصيرة | مدارس حماية",
+"Quizzes | Himaayah Schools": "الاختبارات القصيرة | مدرسة حماية",
 "Pick a quiz for": "اختر اختبارًا لمستوى",
 ". You see your score at once, and your best score is saved for your teachers.": ". ترى درجتك فورًا، وتُحفظ أفضل درجاتك لمعلّميك.",
 "Arabic letters (demo)": "الحروف العربية (تجريبي)",

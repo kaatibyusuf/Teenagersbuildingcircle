@@ -1,7 +1,7 @@
 /* Arabic for the admin page. English on the left, Arabic on the right: edit the Arabic to change what visitors see.
    Keys starting with re: are patterns for text with numbers or names in it ($1, $2 are the parts kept). */
 HS_I18N.add({
-"Admin | Himaayah Schools": "الإدارة | مدارس حماية",
+"Admin | Himaayah Schools": "الإدارة | مدرسة حماية",
 "Demo mode: sample data, nothing is saved. Only confirm a payment after you have seen the receipt.": "وضع التجربة: بيانات نموذجية، ولا يُحفظ شيء. لا تؤكّد أي دفع إلا بعد أن ترى الإيصال.",
 "Only confirm a payment after you have seen the receipt.": "لا تؤكّد أي دفع إلا بعد أن ترى الإيصال.",
 "Tick the students, then choose teachers, a level or a class on the right. Only the fields you fill in are changed. A student can have up to 3 teachers.": "حدّد الطلاب، ثم اختر المعلّمين أو المستوى أو الحصة من الجهة المقابلة. لا يتغيّر إلا ما تملؤه من حقول. يمكن أن يكون للطالب حتى 3 معلّمين.",

@@ -65,6 +65,6 @@ HS_I18N.add({
 "Not sure which one fits?": "لست متأكدًا أيّها يناسبك؟",
 "Message us and we will point you to the right programme and level, and answer any question before you pay.": "راسلنا وسندلّك على البرنامج والمستوى المناسبين، ونجيب عن أي سؤال قبل أن تدفع.",
 "See how admission works": "اعرف كيف يتم القبول",
-"Programmes — Himaayah Schools": "البرامج — مدارس حماية",
+"Programmes — Himaayah Schools": "البرامج — مدرسة حماية",
 "4 live sessions a week": "4 جلسات مباشرة أسبوعيًا"
 });

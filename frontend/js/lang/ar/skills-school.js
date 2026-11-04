@@ -35,7 +35,7 @@ HS_I18N.add({
 "Master the skills of tomorrow.": "أتقن مهارات الغد.",
 "Search courses, e.g. design or data": "ابحث في الدورات، مثل: التصميم أو البيانات",
 "Search courses": "ابحث في الدورات",
-"Skills School — Himaayah Schools": "مدرسة المهارات — مدارس حماية",
+"Skills School — Himaayah Schools": "مدرسة المهارات — مدرسة حماية",
 "Four to eight weeks": "من أربعة إلى ثمانية أسابيع",
 "Each course runs for four, six or eight weeks, depending on the course.": "تستمر كل دورة أربعة أو ستة أو ثمانية أسابيع، بحسب الدورة.",
 "A real project at the end": "مشروع حقيقي في النهاية",

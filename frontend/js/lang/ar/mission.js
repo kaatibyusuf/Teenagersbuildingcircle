@@ -1,7 +1,7 @@
 /* Arabic for the mission page. English on the left, Arabic on the right: edit the Arabic to change what visitors see.
    Keys starting with re: are patterns for text with numbers or names in it ($1, $2 are the parts kept). */
 HS_I18N.add({
-"The future Himaayah Schools is working toward, and the four commitments that guide every class.": "المستقبل الذي تعمل مدارس حماية من أجله، والالتزامات الأربعة التي توجّه كل حصة.",
+"The future Himaayah Schools is working toward, and the four commitments that guide every class.": "المستقبل الذي تعمل مدرسة حماية من أجله، والالتزامات الأربعة التي توجّه كل حصة.",
 "Our vision": "رؤيتنا",
 "Our mission": "رسالتنا",
 "A generation grounded in": "جيل راسخ في",
@@ -25,5 +25,5 @@ HS_I18N.add({
 "Be part of what we are building.": "كن جزءًا مما نبنيه.",
 "Choose the programme that fits where you are, and start with us.": "اختر البرنامج الذي يناسب موقعك، وابدأ معنا.",
 "What we are here to do, and where we are headed.": "ما جئنا لنفعله، وإلى أين نتجه.",
-"Mission & Vision — Himaayah Schools": "الرسالة والرؤية — مدارس حماية"
+"Mission & Vision — Himaayah Schools": "الرسالة والرؤية — مدرسة حماية"
 });

@@ -1,8 +1,8 @@
 /* Arabic for the trial page. English on the left, Arabic on the right: edit the Arabic to change what visitors see.
    Keys starting with re: are patterns for text with numbers or names in it ($1, $2 are the parts kept). */
 HS_I18N.add({
-"Book a free class — Himaayah Schools": "احجز حصة مجانية — مدارس حماية",
-"Sit in on a live Himaayah Schools class before you enrol. Free, online, no payment and no obligation.": "احضر حصة مباشرة في مدارس حماية قبل التسجيل. مجانًا وعبر الإنترنت، دون دفع ودون التزام.",
+"Book a free class — Himaayah Schools": "احجز حصة مجانية — مدرسة حماية",
+"Sit in on a live Himaayah Schools class before you enrol. Free, online, no payment and no obligation.": "احضر حصة مباشرة في مدرسة حماية قبل التسجيل. مجانًا وعبر الإنترنت، دون دفع ودون التزام.",
 "Free class": "حصة مجانية",
 "Try a class before you enrol.": "جرّب حصة قبل أن تسجّل.",
 "Sit in on a live class with one of our teachers. It's free, it's online, and there's nothing to pay and no obligation to enrol afterwards.": "احضر حصة مباشرة مع أحد معلّمينا. مجانًا وعبر الإنترنت، دون أي دفع ودون التزام بالتسجيل بعدها.",

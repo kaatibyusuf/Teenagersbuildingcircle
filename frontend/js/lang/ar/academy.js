@@ -48,7 +48,7 @@ HS_I18N.add({
 "Read how Academy students scored in UTME, or start your prep today.": "اقرأ كيف حصل طلاب الأكاديمية على درجاتهم في UTME، أو ابدأ تحضيرك اليوم.",
 "Read success stories": "اقرأ قصص النجاح",
 "Illustration of a computer-based test screen showing a multiple-choice question and a countdown timer.": "رسم توضيحي لشاشة اختبار إلكتروني تعرض سؤال اختيار من متعدد وعدّادًا تنازليًا.",
-"Academy — Himaayah Schools": "الأكاديمية — مدارس حماية",
+"Academy — Himaayah Schools": "الأكاديمية — مدرسة حماية",
 "Six days a week": "ستة أيام في الأسبوع",
 "Live lessons six days a week, plus timed mocks and a personal review.": "دروس مباشرة ستة أيام في الأسبوع، مع اختبارات تجريبية موقوتة ومراجعة شخصية.",
 "Live, with recordings": "مباشرة، مع التسجيلات",

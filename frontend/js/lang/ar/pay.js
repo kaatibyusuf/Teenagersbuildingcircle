@@ -1,8 +1,8 @@
 /* Arabic for the pay page. English on the left, Arabic on the right: edit the Arabic to change what visitors see.
    Keys starting with re: are patterns for text with numbers or names in it ($1, $2 are the parts kept). */
 HS_I18N.add({
-"Pay fees — Himaayah Schools": "دفع الرسوم — مدارس حماية",
-"Pay school fees for a current Himaayah Schools student by card. Enter the Student ID, see what is due and pay securely.": "ادفع الرسوم الدراسية لطالب حالي في مدارس حماية بالبطاقة. أدخل رقم الطالب، واطّلع على المستحقّ، وادفع بأمان.",
+"Pay fees — Himaayah Schools": "دفع الرسوم — مدرسة حماية",
+"Pay school fees for a current Himaayah Schools student by card. Enter the Student ID, see what is due and pay securely.": "ادفع الرسوم الدراسية لطالب حالي في مدرسة حماية بالبطاقة. أدخل رقم الطالب، واطّلع على المستحقّ، وادفع بأمان.",
 "Pay fees": "دفع الرسوم",
 "Pay school fees online.": "ادفع الرسوم الدراسية عبر الإنترنت.",
 "For current students. Enter the Student ID from your login email, check what is due and pay by card. The next due date moves forward as soon as the payment goes through.": "للطلاب الحاليين. أدخل رقم الطالب الموجود في بريد الدخول، واطّلع على المستحقّ، وادفع بالبطاقة. ويتقدّم موعد الاستحقاق التالي فور إتمام الدفع.",

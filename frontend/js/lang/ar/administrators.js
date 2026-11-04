@@ -21,7 +21,7 @@ HS_I18N.add({
 "The administrators who look after the school day to day. Tap a name to read their profile.": "الإداريون الذين يرعون المدرسة يومًا بيوم. اضغط على الاسم لقراءة ملفه.",
 "Director of Student Affairs": "مدير شؤون الطلاب",
 "Abdullah Adedokun": "عبد الله أديدوكون",
-"Abdullah leads student affairs at Himaayah Schools. He is also a software engineering enthusiast.": "يقود عبد الله شؤون الطلاب في مدارس حماية، وهو أيضًا شغوف بهندسة البرمجيات.",
+"Abdullah leads student affairs at Himaayah Schools. He is also a software engineering enthusiast.": "يقود عبد الله شؤون الطلاب في مدرسة حماية، وهو أيضًا شغوف بهندسة البرمجيات.",
 "Read profile": "اقرأ الملف",
 "Director of the Academy": "مدير الأكاديمية",
 "Dauda Mubarak": "داود مبارك",
@@ -43,7 +43,7 @@ HS_I18N.add({
 "He currently tutors across several institutes, including the Naasir Institute, a UK-based institute, where he prepares students for major exams such as GCSE. He has been part of Himaayah Institute since 2024, where he tutored UTME students. He now serves the Himaayah Institute of Arabic and Islamic Studies and the Himaayah Teenage Circle, training the younger generation to grow into responsible adults in society.": "ويدرّس حاليًا في عدة معاهد، منها معهد ناصر، وهو معهد مقرّه المملكة المتحدة، حيث يُعدّ الطلاب لامتحانات كبرى مثل GCSE. وهو جزء من معهد حماية منذ 2024، حيث درّس طلاب UTME. ويخدم الآن معهد حماية للدراسات العربية والإسلامية وحلقة حماية للناشئة، مدرّبًا الجيل الأصغر ليكبر راشدين مسؤولين في المجتمع.",
 "Have a question for the team?": "لديك سؤال للفريق؟",
 "Ask us anything about how the school is run, who will be teaching, or which programme fits.": "اسألنا أي شيء عن طريقة إدارة المدرسة، أو عمّن سيدرّس، أو عن البرنامج المناسب.",
-"Meet the people behind Himaayah Schools": "تعرّف على الأشخاص وراء مدارس حماية",
+"Meet the people behind Himaayah Schools": "تعرّف على الأشخاص وراء مدرسة حماية",
 "Close profile": "إغلاق الملف",
-"Our Administrators — Himaayah Schools": "إدارتنا — مدارس حماية"
+"Our Administrators — Himaayah Schools": "إدارتنا — مدرسة حماية"
 });

@@ -1,8 +1,8 @@
 /* Arabic for the newsletter page. English on the left, Arabic on the right: edit the Arabic to change what visitors see.
    Keys starting with re: are patterns for text with numbers or names in it ($1, $2 are the parts kept). */
 HS_I18N.add({
-"Newsletter — Himaayah Schools": "النشرة البريدية — مدارس حماية",
-"Get new articles from Himaayah Schools by email, with news when new terms and classes open.": "احصل على مقالات مدارس حماية الجديدة بالبريد، مع أخبار افتتاح الفصول والدورات الجديدة.",
+"Newsletter — Himaayah Schools": "النشرة البريدية — مدرسة حماية",
+"Get new articles from Himaayah Schools by email, with news when new terms and classes open.": "احصل على مقالات مدرسة حماية الجديدة بالبريد، مع أخبار افتتاح الفصول والدورات الجديدة.",
 "Newsletter": "النشرة البريدية",
 "Learning that lasts, in your inbox.": "تعلّم يدوم، في بريدك.",
 "New guides on the Qur'an, examinations, study methods and skills, and news when new terms and classes open.": "أدلّة جديدة في القرآن والامتحانات وطرق المذاكرة والمهارات، وأخبار عند افتتاح فصول ودورات جديدة.",

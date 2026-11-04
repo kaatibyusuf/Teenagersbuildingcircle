@@ -27,7 +27,7 @@ HS_I18N.add({
 "Same structure, same teachers, same standard, for whichever exam is ahead of you.": "البنية نفسها، والمعلّمون أنفسهم، والمعيار نفسه، أيًّا كان الامتحان الذي أمامك.",
 "See the Academy": "شاهد الأكاديمية",
 "5 out of 5 stars": "5 من 5 نجوم",
-"Success Stories — Himaayah Schools": "قصص النجاح — مدارس حماية",
+"Success Stories — Himaayah Schools": "قصص النجاح — مدرسة حماية",
 "From our families": "من أسرنا",
 "More stories.": "مزيد من القصص.",
 "Shared by parents and students across the Madrasah, Academy, Skills School and Teenagers Building Circle.": "شاركها أولياء الأمور والطلاب في المدرسة الشرعية والأكاديمية ومدرسة المهارات وحلقة بناء الناشئة.",

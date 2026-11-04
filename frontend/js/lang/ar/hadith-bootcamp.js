@@ -1,7 +1,7 @@
 /* Arabic for the hadith-bootcamp page. English on the left, Arabic on the right: edit the Arabic to change what visitors see.
    Keys starting with re: are patterns for text with numbers or names in it ($1, $2 are the parts kept). */
 HS_I18N.add({
-"Ḥadīth Bootcamp: the Forty Ḥadīth of an-Nawawī — Himaayah Schools": "معسكر الحديث: الأربعون النووية — مدارس حماية",
+"Ḥadīth Bootcamp: the Forty Ḥadīth of an-Nawawī — Himaayah Schools": "معسكر الحديث: الأربعون النووية — مدرسة حماية",
 "Study all 42 ḥadīth of al-Arbaʿīn an-Nawawiyyah at your own pace: audio lessons, the Arabic text with translation, key lessons, quizzes and a certificate. ₦15,000, free for Himaayah Madrasah students.": "ادرس الأحاديث الاثنين والأربعين من الأربعين النووية بالسرعة التي تناسبك: دروس صوتية، والنص العربي مع الترجمة، والفوائد، واختبارات قصيرة، وشهادة. ١٥٬٠٠٠ نيرة، ومجانًا لطلاب المدرسة الشرعية في حماية.",
 "Ḥadīth Bootcamp": "معسكر الحديث",
 "The Forty Ḥadīth of Imām an-Nawawī, at your own pace.": "الأربعون النووية، بالسرعة التي تناسبك.",
