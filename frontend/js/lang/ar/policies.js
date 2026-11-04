@@ -39,7 +39,7 @@ HS_I18N.add({
 "If we cancel": "إذا ألغينا نحن",
 "If we cancel a class or cohort and cannot offer a suitable alternative, you will receive a refund for the affected period.": "إذا ألغينا حصة أو دفعة ولم نستطع تقديم بديل مناسب، فستحصل على استرداد عن الفترة المتأثرة.",
 "How to request a refund": "كيف تطلب الاسترداد",
-"with the student's name, the plan, and the date and method of payment. Approved refunds are returned to the original payment method.": "باسم الطالب، والخطة، وتاريخ الدفع وطريقته. وتُعاد المبالغ المعتمدة بطريقة الدفع الأصلية نفسها.",
+"with the student's name, the plan, and the date and method of payment. Approved refunds are returned to the original payment method within one week.": "باسم الطالب، والخطة، وتاريخ الدفع وطريقته. وتُعاد المبالغ المعتمدة بطريقة الدفع الأصلية نفسها خلال أسبوع.",
 "Plan changes & cancellation": "تغيير الخطط والإلغاء",
 "You can change plans at any time. Email": "يمكنك تغيير خطتك في أي وقت. راسلنا على",
 "with your name and current plan, and we will help you switch. Changes take effect from the next billing period, unless we agree otherwise.": "باسمك وخطتك الحالية، وسنساعدك على التغيير. ويسري التغيير من فترة الدفع التالية، ما لم نتفق على غير ذلك.",
