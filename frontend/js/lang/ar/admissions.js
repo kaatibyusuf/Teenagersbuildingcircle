@@ -63,7 +63,7 @@ HS_I18N.add({
 "The whole Forty Hadeeth of an-Nawawī, al-Uṣūl ath-Thalāthah, the Lāmiyyah of Ibn Taymiyyah, the prescribed Dīwān of Imām ash-Shāfiʿī, the first series of Durūs completed, and fluent reading with correct basic writing.": "الأربعون النووية كاملةً، و«الأصول الثلاثة»، ولاميّة ابن تيميّة، والمقرَّر من ديوان الإمام الشافعيّ، وإتمام السلسلة الأولى من «الدروس»، وقراءة بطلاقة مع كتابة أساسية صحيحة.",
 "The Forty Aḥādīth of an-Nawawī, al-Uṣūl ath-Thalāthah, Lāmiyyah of Ibn Taymiyyah, the prescribed Dīwān of Imām ash-Shāfiʿī, both series of Durūs, and strong Arabic reading and writing. These are non-negotiable.": "الأربعون النووية، و«الأصول الثلاثة»، و«لامية ابن تيمية»، والمقرَّر من «ديوان الإمام الشافعي»، وسلسلتا «الدروس»، وإجادة قراءة العربية وكتابتها. وهذه شروط غير قابلة للتفاوض.",
 "Fees at a glance.": "الرسوم في لمحة.",
-"All prices are in Nigerian naira. Tap Enroll to start with that plan already selected.": "كل الأسعار بالنيرة النيجيرية. اضغط «سجّل» لتبدأ والخطة محدَّدة مسبقًا.",
+"All prices are in Nigerian naira. A one-time registration fee of ₦3,000 is added to your first payment, whatever the programme. Tap Enroll to start with that plan already selected.": "كل الأسعار بالنيرة النيجيرية. تُضاف رسوم تسجيل لمرة واحدة قدرها ٣٬٠٠٠ ₦ إلى دفعتك الأولى، أيًّا كان البرنامج. اضغط «سجّل» لتبدأ والخطة محدَّدة مسبقًا.",
 "Ages 13–19 · weekly cohort": "الأعمار 13–19 · دفعة أسبوعية",
 "Five classes a week · admission closed": "خمس حصص أسبوعيًا · القبول مغلق",
 "Hifdh plus Islamic studies · admission closed": "الحفظ مع الدراسات الإسلامية · القبول مغلق",

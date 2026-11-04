@@ -29,6 +29,9 @@ const PLANS = {
   'Skills School — Data Analysis':              { amount: 80000, recurring: true, live: 'prod_0a4ba5e2488546b4aa8c', sandbox: 'prod_0161d06903fb4680a671' },
 };
 
+// One-time registration fee added to every enrolment's first payment (waived for invited returning students).
+const REG_FEE = 3000;
+
 const json = (body, status = 200) =>
   new Response(JSON.stringify(body), { status, headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' } });
 
@@ -50,6 +53,8 @@ export async function POST(request) {
   const plan = PLANS[b.plan];
   if (!plan) return json({ ok: false, error: 'Unknown plan.' }, 400);
   if (plan.closed && !(plan.invite && String(b.invite || '').toUpperCase() === plan.invite)) return json({ ok: false, error: 'This plan is closed for now.' }, 400);
+  const invited = !!(plan.invite && String(b.invite || '').toUpperCase() === plan.invite);
+  const total = plan.amount + (invited ? 0 : REG_FEE);
   const ref = String(b.ref || '');
   if (!/^ENR-[A-Z0-9]{6}$/.test(ref)) return json({ ok: false, error: 'Bad reference.' }, 400);
   const email = String(b.email || '').trim();
@@ -69,7 +74,7 @@ export async function POST(request) {
   const session = {
     // Every plan is charged as a plain naira amount set here, so it works the same in
     // sandbox and live without matching product IDs (the IDs below are kept for reference).
-    pricing: { currency: 'NGN', amount: plan.amount.toFixed(2) },
+    pricing: { currency: 'NGN', amount: total.toFixed(2) },
     customer,
     success_url: site + '/payment-success?ref=' + ref,
     cancel_url: site + '/enroll?card=cancelled',

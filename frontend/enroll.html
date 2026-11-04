@@ -568,7 +568,9 @@
     document.getElementById('paySummary').innerHTML = `
       <div class="row"><span>Student</span><b>${escapeHtml(s.studentName || '')}</b></div>
       <div class="row"><span>Plan</span><b>${state.plan.name}</b></div>
-      <div class="row"><span>Amount to pay</span><b>${amountText(state.plan)}</b></div>
+      <div class="row"><span>Programme fee</span><b>${amountText(state.plan)}</b></div>
+      ${regFee() ? `<div class="row"><span>Registration fee (one-time)</span><b>\u20a6${REG_FEE.toLocaleString()}</b></div>` : ''}
+      <div class="row"><span>Total to pay now</span><b>\u20a6${firstTotal(state.plan).toLocaleString()}</b></div>
       <div class="row"><span>Your reference</span><b>${state.ref}</b></div>
     `;
     preparePayment();
@@ -612,9 +614,17 @@
   // =================================================================
   const WA_NUMBERS = ['2348066043320', '2347025842849'];
 
+  // One-time registration fee, added to the first payment of every enrolment.
+  // Returning students on an invite link don't pay it. Keep in step with api/checkout.mjs and Enrol.gs.
+  const REG_FEE = 3000;
+  function regFee() { return invitedPlan && state.plan === invitedPlan ? 0 : REG_FEE; }
+  function firstTotal(plan) { return plan.amount + regFee(); }
   function amountText(plan) {
     const per = plan.period === '/mo' ? ' per month' : plan.period === '/2mo' ? ' every 2 months' : ' (one-time)';
     return '\u20a6' + plan.amount.toLocaleString() + per;
+  }
+  function firstPayText(plan) {
+    return regFee() ? '\u20a6' + firstTotal(plan).toLocaleString() + ' (\u20a6' + plan.amount.toLocaleString() + ' fee + \u20a6' + REG_FEE.toLocaleString() + ' registration, once)' : amountText(plan);
   }
 
   function buildMessage() {
@@ -627,7 +637,7 @@
       'Reference: ' + state.ref,
       'Programme: ' + programme,
       'Plan: ' + state.plan.name,
-      'Amount paid: ' + amountText(state.plan),
+      'Amount paid: ' + firstPayText(state.plan),
       'Paid to: Himaayah Ltd, Wema Bank, 0127584920',
       '',
       'STUDENT',
@@ -750,7 +760,7 @@
   // the sheet by /api/bachs-webhook once Bachs confirms it.
   // =================================================================
   const cardBtn = document.getElementById('cardBtn');
-  function cardLabel() { if (state.plan) cardBtn.textContent = 'Pay \u20a6' + state.plan.amount.toLocaleString() + ' by card'; }
+  function cardLabel() { if (state.plan) cardBtn.textContent = 'Pay \u20a6' + firstTotal(state.plan).toLocaleString() + ' by card'; }
   function cardError(msg) {
     const st = document.getElementById('cardStatus');
     st.textContent = msg + ' You can pay by bank transfer instead.';
