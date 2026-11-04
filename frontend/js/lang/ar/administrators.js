@@ -45,5 +45,13 @@ HS_I18N.add({
 "Ask us anything about how the school is run, who will be teaching, or which programme fits.": "اسألنا أي شيء عن طريقة إدارة المدرسة، أو عمّن سيدرّس، أو عن البرنامج المناسب.",
 "Meet the people behind Himaayah Schools": "تعرّف على الأشخاص وراء مدرسة حماية",
 "Close profile": "إغلاق الملف",
-"Our Administrators — Himaayah Schools": "إدارتنا — مدرسة حماية"
+"Our Administrators — Himaayah Schools": "إدارتنا — مدرسة حماية",
+"The people": "الأشخاص",
+"Founder and administrators": "المؤسس والإداريون",
+"Meet the people": "تعرّف على الأشخاص",
+"behind Himaayah Schools": "وراء مدرسة حماية",
+"Meet the founder": "تعرّف على المؤسس",
+"The team": "الفريق",
+"The team that runs": "الفريق الذي يدير",
+"the school": "المدرسة"
 });

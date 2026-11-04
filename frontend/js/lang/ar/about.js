@@ -59,5 +59,12 @@ HS_I18N.add({
 "Download the anthem": "تنزيل النشيد",
 "The words": "كلمات النشيد",
 "Show English meaning": "إظهار المعنى بالإنجليزية",
-"Hide English meaning": "إخفاء المعنى بالإنجليزية"
+"Hide English meaning": "إخفاء المعنى بالإنجليزية",
+"We teach so that": "نعلّم ليبقى",
+"learning lasts.": "العلم.",
+"Why we exist": "لماذا وُجدنا",
+"How we teach": "كيف نعلّم",
+"In their words": "بكلماتهم",
+"Results and voices": "نتائج وأصوات",
+"from our students.": "من طلابنا."
 });
