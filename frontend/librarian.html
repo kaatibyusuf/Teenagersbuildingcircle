@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en" class="app staff page-librarian">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Librarian | Himaayah Schools</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#094570">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600;700&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<script src="js/auth-guard.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/cookie-notice.js" defer></script>
+<!-- Vercel Analytics: counts visits once enabled in the Vercel dashboard -->
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+<header class="top"><div>
+<a class="brand" href="./"><svg width="22" height="27" viewBox="0 0 377.21 459.6" fill="#094570" aria-hidden="true"><path d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>Himaayah Schools <em>Librarian</em></a>
+<nav><a class="btn btn-line" href="./">Home</a><button class="btn btn-ink" id="out" hidden>Log out</button></nav>
+</div></header>
+
+<main id="login" class="login"><form class="lbox" id="lf" novalidate>
+<div class="crest" aria-hidden="true"><svg width="26" height="32" viewBox="0 0 377.21 459.6" fill="#094570"><path d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg></div>
+<h1>Librarian login</h1><p>Sign in with your Librarian ID and access code.</p>
+<div class="demo" id="demoNote" hidden><b>Demo mode.</b> Use ID <b>DEMO</b> and code <b>demo</b> to try it with sample data.</div>
+<div class="f"><label for="tid">Librarian ID</label><input id="tid" autocomplete="username" autocapitalize="characters" placeholder="e.g. LB-001" required></div>
+<div class="f"><label for="tcode">Access code</label><input id="tcode" type="password" autocomplete="current-password" required></div>
+<div class="err" id="err" role="alert"></div>
+<button class="btn btn-ink" id="go" type="submit">Sign in</button>
+</form></main>
+
+<main id="app" class="wrap" hidden></main>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script>
+/* ===== SETTINGS =====
+   Same Apps Script web app as the other portals. While it is empty the page runs in DEMO mode. */
+const API_URL = 'https://script.google.com/macros/s/AKfycby0AsifBuB_Ad7g1SjDXCipaDU27-BrzYWf67muw5jeY_C0_0uz8AhQYYXdiNRQhvqX/exec';
+
+const $ = (id) => document.getElementById(id);
+const esc = (t) => String(t ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fdate = (iso) => { const d = new Date(iso); return isNaN(d) ? esc(iso || '') : d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }); };
+const TABS = [['items', 'Items'], ['add', 'Add an item'], ['links', 'Check links'], ['account', 'Account']];
+let D = null;
+const S = { tab: 'items', q: '', subject: '', level: '', status: 'all', open: '', checks: {}, checking: false };
+
+/* ---------- talking to the school server ---------- */
+const creds = () => { try { return JSON.parse(sessionStorage.getItem('hl') || 'null') || {}; } catch (e) { return {}; } };
+async function api(action, extra) {
+  const c = creds();
+  if (!API_URL) return demoApi(c, action, extra || {});
+  const r = await fetch(API_URL, { method: 'POST', body: JSON.stringify(Object.assign({ action, id: c.id, code: c.code }, extra || {})) });
+  return r.json();
+}
+let toastT;
+function toast(msg, bad) {
+  const t = $('toast'); t.textContent = msg; t.className = 'toast' + (bad ? ' bad' : ''); t.hidden = false;
+  clearTimeout(toastT); toastT = setTimeout(() => { t.hidden = true; }, bad ? 5000 : 3000);
+}
+let busy = false;
+async function act(action, extra, okMsg, btn) {
+  if (busy) return false;
+  busy = true; const old = btn && btn.textContent; if (btn) { btn.disabled = true; btn.textContent = 'Saving…'; }
+  try {
+    const d = await api(action, extra);
+    if (d.ok) { D = d; if (okMsg) toast(okMsg); render(); return true; }
+    toast(d.error || 'Could not save. Please try again.', true);
+  } catch (e) { toast('Could not reach the school server. Please try again.', true); }
+  finally { busy = false; if (btn && document.contains(btn)) { btn.disabled = false; btn.textContent = old; } }
+  return false;
+}
+
+/* ---------- form pieces ---------- */
+const levelBoxes = (cur) => {
+  const set = String(cur || 'All').split(',').map((x) => x.trim()).filter(Boolean), all = !set.length || set.includes('All');
+  return `<div class="tchk"><label><input type="checkbox" class="lv-all"${all ? ' checked' : ''}> <span><b>All levels</b></span></label>`
+    + D.levels.map((l) => `<label><input type="checkbox" class="lv" value="${esc(l)}"${!all && set.includes(l) ? ' checked' : ''}> <span>${esc(l)}</span></label>`).join('') + '</div>';
+};
+const form = (it, kind) => {
+  const n = it || { Title: '', Author: '', Type: 'PDF', Subject: '', Level: 'All', Url: '', Description: '', Added: D.today };
+  return `<form class="frm" data-form="save" data-id="${esc(n.ItemID || '')}">
+    <div><label class="fl">Title</label><input class="in" name="Title" maxlength="200" value="${esc(n.Title)}" required></div>
+    <div class="row3"><div><label class="fl">Author (optional)</label><input class="in" name="Author" maxlength="120" value="${esc(n.Author)}"></div>
+      <div><label class="fl">Format</label><select class="in" name="Type">${D.types.map((t) => `<option${t === n.Type ? ' selected' : ''}>${t}</option>`).join('')}</select></div>
+      <div><label class="fl">Subject</label><input class="in" name="Subject" maxlength="40" list="subjects" value="${esc(n.Subject)}" required></div></div>
+    <div><label class="fl">Link</label><input class="in" name="Url" type="url" maxlength="500" placeholder="https://" value="${esc(n.Url)}" required></div>
+    <div><label class="fl">Description (one or two sentences)</label><textarea class="in" name="Description" rows="3" maxlength="500">${esc(n.Description)}</textarea></div>
+    <div class="row3"><div><label class="fl">Date added</label><input class="in" name="Added" type="date" value="${esc(n.Added || D.today)}" max="${esc(D.today)}"></div></div>
+    <fieldset class="tpick"><legend class="fl">Who it is for <small>(choose All levels, or one or more levels)</small></legend>${levelBoxes(n.Level)}</fieldset>
+    <button class="btn btn-ink" type="submit">${kind === 'add' ? 'Add to the library' : 'Save changes'}</button></form>`;
+};
+
+/* ---------- views ---------- */
+function filtered() {
+  const q = S.q.trim().toLowerCase();
+  return D.items.filter((i) => (!q || (i.Title + ' ' + i.Author + ' ' + i.Subject).toLowerCase().includes(q))
+    && (!S.subject || i.Subject === S.subject)
+    && (!S.level || i.Level === 'All' || i.Level.split(',').map((x) => x.trim()).includes(S.level))
+    && (S.status === 'all' || (S.status === 'hidden' ? !i.Active : i.Active)));
+}
+function vItems() {
+  const list = filtered().slice().sort((a, b) => String(b.Added).localeCompare(String(a.Added)) || a.Title.localeCompare(b.Title));
+  const hidden = D.items.filter((i) => !i.Active).length, noDesc = D.items.filter((i) => !i.Description.trim()).length;
+  const row = (i) => `<details class="box stu" data-id="${esc(i.ItemID)}"${i.ItemID === S.open ? ' open' : ''}>
+    <summary><div><b>${esc(i.Title)}</b><small>${esc(i.Type)} · ${esc(i.Subject)} · ${esc(i.Level)} · added ${fdate(i.Added)}</small></div>
+      <div class="sum-r"><span class="pill ${i.Active ? 'p-ink' : 'p-wash'}">${i.Active ? 'Visible' : 'Hidden'}</span></div></summary>
+    <div class="body">${form(i, 'edit')}
+      <div class="tool"><a class="btn btn-line btn-sm" href="${esc(i.Url)}" target="_blank" rel="noopener noreferrer">Open the link</a>
+        <button class="btn btn-line btn-sm" type="button" data-act="toggle" data-id="${esc(i.ItemID)}" data-on="${i.Active ? '0' : '1'}">${i.Active ? 'Hide from students' : 'Show to students'}</button></div>
+      ${i.UpdatedBy ? `<p class="sub">Last changed by ${esc(i.UpdatedBy)}${i.Updated ? ' on ' + fdate(i.Updated) : ''}.</p>` : ''}</div></details>`;
+  return `<article class="c w12"><h2>Library items</h2><p class="sub">Open an item to change it, hide it or check its link. Hidden items stay here but students do not see them. Nothing is ever deleted.</p>
+    <div class="tiles"><div class="tile"><b>${D.items.length}</b><span>items</span></div><div class="tile"><b>${D.items.length - hidden}</b><span>visible</span></div><div class="tile ${hidden ? 'warn' : ''}"><b>${hidden}</b><span>hidden</span></div></div>
+    ${noDesc ? `<p class="sub">${noDesc} item${noDesc === 1 ? ' has' : 's have'} no description.</p>` : ''}
+    <div class="tool"><div><label class="fl" for="q">Search</label><input class="in" id="q" type="search" placeholder="Title, author or subject" value="${esc(S.q)}"></div>
+      <div><label class="fl" for="fs">Subject</label><select class="in" id="fs"><option value="">All subjects</option>${D.subjects.map((s) => `<option${s === S.subject ? ' selected' : ''}>${esc(s)}</option>`).join('')}</select></div>
+      <div><label class="fl" for="fl">Level</label><select class="in" id="fl"><option value="">All levels</option>${D.levels.map((s) => `<option${s === S.level ? ' selected' : ''}>${esc(s)}</option>`).join('')}</select></div>
+      <div><label class="fl" for="ft">Show</label><select class="in" id="ft"><option value="all"${S.status === 'all' ? ' selected' : ''}>Everything</option><option value="visible"${S.status === 'visible' ? ' selected' : ''}>Visible</option><option value="hidden"${S.status === 'hidden' ? ' selected' : ''}>Hidden</option></select></div></div>
+    <div id="itemlist">${list.map(row).join('') || '<p class="empty" style="margin-top:12px">Nothing matches. Try another search or filter.</p>'}</div></article>`;
+}
+function vAdd() {
+  return `<article class="c w12" style="max-width:760px"><h2>Add an item</h2><p class="sub">Only add material a teacher has approved. Check that we may share it, or link to the owner’s own site.</p>${form(null, 'add')}</article>`;
+}
+function vLinks() {
+  const live = D.items.filter((i) => i.Active), done = live.filter((i) => S.checks[i.ItemID]);
+  const bad = live.filter((i) => (S.checks[i.ItemID] || {}).status === 'bad'), maybe = live.filter((i) => (S.checks[i.ItemID] || {}).status === 'maybe');
+  const line = (i) => `<li><span><b>${esc(i.Title)}</b><br><span class="sub">${esc(S.checks[i.ItemID].text)}</span></span><a class="btn btn-line btn-sm" href="${esc(i.Url)}" target="_blank" rel="noopener noreferrer">Open</a> <button class="btn btn-line btn-sm" type="button" data-act="edit" data-id="${esc(i.ItemID)}">Fix</button></li>`;
+  return `<article class="c w12" style="max-width:820px"><h2>Check the links</h2><p class="sub">Tests the link of every visible item. Do this once a month. Some sites refuse automatic checks, so open those yourself.</p>
+    <button class="btn btn-ink" type="button" data-act="check"${S.checking ? ' disabled' : ''}>${S.checking ? 'Checking ' + done.length + ' of ' + live.length + '…' : done.length ? 'Check again' : 'Check all links'}</button>
+    ${done.length ? `<div class="tiles" style="margin-top:16px"><div class="tile ${bad.length ? 'warn' : ''}"><b>${bad.length}</b><span>broken</span></div><div class="tile"><b>${maybe.length}</b><span>check by hand</span></div><div class="tile"><b>${done.length - bad.length - maybe.length}</b><span>open fine</span></div></div>` : ''}
+    ${bad.length ? `<h3 style="margin-top:14px">Broken</h3><ul class="list">${bad.map(line).join('')}</ul>` : ''}
+    ${maybe.length ? `<h3 style="margin-top:14px">Open these yourself</h3><ul class="list">${maybe.map(line).join('')}</ul>` : ''}
+    ${done.length && !bad.length && !maybe.length ? '<p class="empty" style="margin-top:14px">Every link opens.</p>' : ''}</article>`;
+}
+function vAccount() {
+  return `<article class="c w12" style="max-width:560px"><h2>Your account</h2><p class="sub">${esc(D.librarian.Name)} · ${esc(D.librarian.LibrarianID)}</p>
+  <form class="frm" data-form="password"><div><label class="fl" for="np">New access code (8 characters or more)</label><input class="in" id="np" name="newCode" type="password" autocomplete="new-password" minlength="8" maxlength="40"></div>
+  <div><label class="fl" for="np2">Type it again</label><input class="in" id="np2" name="again" type="password" autocomplete="new-password"></div>
+  <button class="btn btn-ink" type="submit">Change my code</button></form></article>`;
+}
+const VIEWS = { items: vItems, add: vAdd, links: vLinks, account: vAccount };
+function render() {
+  const hidden = D.items.filter((i) => !i.Active).length;
+  $('app').innerHTML = `<section class="greet"><div><small>Assalaamu alaykum</small><h1>${esc(D.librarian.Name)}</h1>
+    <div class="chips"><span>Librarian</span><span>${D.items.length} items</span><span>${hidden} hidden</span></div></div></section>
+  <nav class="tabs" role="tablist" aria-label="Sections">${TABS.map(([k, l]) => `<button role="tab" type="button" data-act="tab" data-t="${k}" aria-selected="${S.tab === k}">${l}</button>`).join('')}</nav>
+  <datalist id="subjects">${D.subjects.map((s) => `<option value="${esc(s)}">`).join('')}</datalist>
+  <div id="view">${VIEWS[S.tab]()}</div>
+  <p class="foot">${API_URL ? '' : 'Demo mode: sample data, nothing is saved. '}Students see an item as soon as you save it.</p>`;
+}
+
+/* ---------- link check ---------- */
+async function checkAll() {
+  if (S.checking) return;
+  S.checking = true; S.checks = {}; render();
+  const ids = D.items.filter((i) => i.Active).map((i) => i.ItemID);
+  try {
+    for (let k = 0; k < ids.length; k += 20) {
+      const d = await api('lb_check', { ids: ids.slice(k, k + 20) });
+      if (!d.ok) { toast(d.error || 'The check stopped. Please try again.', true); break; }
+      Object.assign(S.checks, d.checked); if (S.tab === 'links') render();
+    }
+  } catch (e) { toast('Could not reach the school server. Please try again.', true); }
+  S.checking = false; render();
+}
+
+/* ---------- events ---------- */
+const app = $('app');
+app.addEventListener('click', (e) => {
+  const b = e.target.closest('[data-act]'); if (!b) return;
+  const a = b.dataset.act;
+  if (a === 'tab') { S.tab = b.dataset.t; render(); window.scrollTo(0, 0); }
+  else if (a === 'toggle') act('lb_active', { ItemID: b.dataset.id, active: b.dataset.on === '1' }, b.dataset.on === '1' ? 'Now visible to students.' : 'Hidden from students.', b);
+  else if (a === 'check') checkAll();
+  else if (a === 'edit') { S.tab = 'items'; S.open = b.dataset.id; S.q = ''; S.subject = ''; S.level = ''; S.status = 'all'; render(); const el = document.querySelector('details[data-id="' + b.dataset.id + '"]'); if (el) el.scrollIntoView({ block: 'center' }); }
+});
+app.addEventListener('change', (e) => {
+  const t = e.target;
+  if (t.id === 'fs') { S.subject = t.value; render(); }
+  else if (t.id === 'fl') { S.level = t.value; render(); }
+  else if (t.id === 'ft') { S.status = t.value; render(); }
+  else if (t.classList.contains('lv-all') && t.checked) t.closest('.tchk').querySelectorAll('.lv').forEach((x) => { x.checked = false; });
+  else if (t.classList.contains('lv') && t.checked) { const all = t.closest('.tchk').querySelector('.lv-all'); if (all) all.checked = false; }
+  else if (t.classList.contains('lv') && !t.checked) { const box = t.closest('.tchk'); if (!box.querySelector('.lv:checked')) box.querySelector('.lv-all').checked = true; }
+});
+app.addEventListener('input', (e) => {
+  if (e.target.id !== 'q') return;
+  S.q = e.target.value; const pos = e.target.selectionStart; render(); const q = $('q'); q.focus(); q.setSelectionRange(pos, pos);
+});
+app.addEventListener('toggle', (e) => { const d = e.target; if (d.classList && d.classList.contains('stu')) S.open = d.open ? d.dataset.id : (S.open === d.dataset.id ? '' : S.open); }, true);
+app.addEventListener('submit', async (e) => {
+  const f = e.target.closest('form[data-form]'); if (!f) return;
+  e.preventDefault();
+  const k = f.dataset.form, v = (n) => f.elements[n] ? f.elements[n].value : '', btn = f.querySelector('button[type=submit]');
+  if (k === 'save') {
+    const lv = [...f.querySelectorAll('.lv:checked')].map((x) => x.value), all = !lv.length || f.querySelector('.lv-all').checked;
+    const id = f.dataset.id;
+    const ok = await act('lb_save', { ItemID: id, Title: v('Title'), Author: v('Author'), Type: v('Type'), Subject: v('Subject'), Url: v('Url'), Description: v('Description'), Added: v('Added'), Level: all ? 'All' : lv.join(', ') },
+      id ? 'Saved.' : 'Added to the library.', btn);
+    if (ok && !id) { S.tab = 'items'; S.open = ''; S.q = ''; S.subject = ''; S.level = ''; S.status = 'all'; render(); window.scrollTo(0, 0); }
+  } else if (k === 'password') {
+    if (v('newCode').length < 8) return toast('Your new code must be at least 8 characters.', true);
+    if (v('newCode') !== v('again')) return toast('The two codes do not match.', true);
+    const code = v('newCode');
+    act('lb_password', { newCode: code }, 'Code changed.', btn).then((ok) => { if (ok) sessionStorage.setItem('hl', JSON.stringify({ id: creds().id, code })); });
+  }
+});
+
+/* ---------- login ---------- */
+function showApp() { $('login').hidden = true; app.hidden = false; $('out').hidden = false; render(); window.scrollTo(0, 0); }
+async function signIn(id, code, silent) {
+  const btn = $('go'), err = $('err'); err.textContent = ''; btn.disabled = true; btn.textContent = 'Signing in…';
+  sessionStorage.setItem('hl', JSON.stringify({ id, code }));
+  try {
+    const d = await api('lb_login');
+    if (d.ok) { D = d; showApp(); }
+    else { sessionStorage.removeItem('hl'); if (!silent) err.textContent = d.error || 'Could not sign in.'; }
+  } catch (e) { sessionStorage.removeItem('hl'); if (!silent) err.textContent = 'Could not reach the school server. Please try again.'; }
+  btn.disabled = false; btn.textContent = 'Sign in';
+}
+$('demoNote').hidden = !!API_URL;
+$('lf').addEventListener('submit', (e) => { e.preventDefault(); const id = $('tid').value.trim(), code = $('tcode').value.trim(); if (!id || !code) { $('err').textContent = 'Enter your Librarian ID and access code.'; return; } signIn(id, code); });
+$('out').addEventListener('click', () => { sessionStorage.removeItem('hl'); D = null; S.tab = 'items'; S.checks = {}; app.hidden = true; app.innerHTML = ''; $('out').hidden = true; $('login').hidden = false; $('tcode').value = ''; });
+{ const c = creds(); if (c.id && c.code) signIn(c.id, c.code, true); }
+
+/* ---------- demo mode (only used while API_URL is empty) ---------- */
+let DEMO = null;
+const isoD = (d) => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+const ago = (n) => { const d = new Date(); d.setDate(d.getDate() - n); return isoD(d); };
+function demoBase() {
+  const it = (n, Title, Author, Type, Subject, Level, Description, days, Active) => ({ ItemID: 'L-00' + n, Title, Author, Type, Subject, Level, Url: 'https://example.com/' + n, Description, Added: ago(days), Active, UpdatedBy: '', Updated: '' });
+  return { ok: true, today: isoD(new Date()), librarian: { LibrarianID: 'DEMO', Name: 'Librarian Demo' }, types: ['PDF', 'Book', 'Link'],
+    levels: ['Rawdah', 'Tamheedi', 'Awwal Ibtidā’iyyah', 'Thāniyah Ibtidā’iyyah', 'Thālithah Ibtidā’iyyah', 'Rābiʿah Ibtidā’iyyah', 'Awwal Iʿdādiyyah', 'Hifdh', 'Muraajah'], subjects: [],
+    items: [it(1, 'Tajweed rules at a glance', 'Himaayah teachers', 'PDF', 'Tajweed', 'All', 'A one-page summary to keep beside you when you recite.', 4, true),
+      it(2, 'Arabic reading practice', 'Himaayah teachers', 'PDF', 'Arabic', 'Thālithah Ibtidā’iyyah', 'Practice sheets for this level.', 20, true),
+      it(3, 'Forty Hadith revision notes', 'Himaayah teachers', 'PDF', 'Hadith', 'All', '', 45, true),
+      it(4, 'Trusted tafsir website', '', 'Link', 'Fiqh', 'All', 'Links to other websites open in a new tab.', 90, false)] };
+}
+async function demoApi(c, action, p) {
+  await new Promise((r) => setTimeout(r, 120));
+  if (String(c.id || '').toUpperCase() !== 'DEMO' || c.code !== 'demo') return { ok: false, error: 'Wrong ID or access code.' };
+  if (!DEMO) DEMO = demoBase();
+  const bad = (m) => ({ ok: false, error: m }), done = () => { DEMO.subjects = [...new Set(DEMO.items.map((i) => i.Subject).filter(Boolean))].sort(); return JSON.parse(JSON.stringify(DEMO)); };
+  if (action === 'lb_check') return { ok: true, checked: Object.fromEntries((p.ids || []).map((id, k) => [id, id === 'L-002' ? { status: 'bad', text: 'Broken (404)' } : id === 'L-003' ? { status: 'maybe', text: 'The site blocks checks (403). Open it yourself to be sure.' } : { status: 'ok', text: 'Opens (200)' }])) };
+  if (action === 'lb_save') {
+    if (!String(p.Title || '').trim()) return bad('Add a title.');
+    if (!/^https?:\/\//i.test(p.Url || '')) return bad('The link must start with https:// and be under 500 characters.');
+    if (!String(p.Subject || '').trim()) return bad('Add a subject.');
+    const rec = { Title: p.Title.trim(), Author: p.Author || '', Type: p.Type, Subject: p.Subject.trim(), Level: p.Level || 'All', Url: p.Url, Description: p.Description || '', Added: p.Added || DEMO.today, UpdatedBy: 'Librarian Demo', Updated: DEMO.today };
+    if (p.ItemID) { const i = DEMO.items.find((x) => x.ItemID === p.ItemID); if (!i) return bad('That item no longer exists. Refresh the page.'); Object.assign(i, rec); }
+    else DEMO.items.push(Object.assign({ ItemID: 'L-' + Math.random().toString(36).slice(2, 8).toUpperCase(), Active: true }, rec));
+  } else if (action === 'lb_active') {
+    const i = DEMO.items.find((x) => x.ItemID === p.ItemID); if (!i) return bad('That item no longer exists. Refresh the page.'); i.Active = !!p.active;
+  } else if (action === 'lb_password') { if (String(p.newCode).length < 8) return bad('Your new code must be 8 to 40 characters.'); }
+  else if (action !== 'lb_login') return bad('Unknown action.');
+  return done();
+}
+</script>
+</body>
+</html>
