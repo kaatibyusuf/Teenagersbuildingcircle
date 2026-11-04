@@ -80,5 +80,17 @@ HS_I18N.add({
 "Clear rules, written plainly.": "قواعد واضحة، مكتوبة ببساطة.",
 "Policies — Himaayah Schools": "السياسات — مدارس حماية",
 "Payment service provider charges": "رسوم مزوّدي خدمة الدفع",
-"For every refund, the charges taken by the payment service provider (the card, bank or transfer processor that handled your payment) shall be deducted. You receive the amount you paid less those charges.": "تُخصم من كل مبلغ يُسترد الرسوم التي يحتسبها مزوّد خدمة الدفع (جهة معالجة البطاقة أو البنك أو التحويل التي تولّت دفعتك). وتحصل على المبلغ الذي دفعته بعد خصم تلك الرسوم."
+"For every refund, the charges taken by the payment service provider (the card, bank or transfer processor that handled your payment) shall be deducted. You receive the amount you paid less those charges.": "تُخصم من كل مبلغ يُسترد الرسوم التي يحتسبها مزوّد خدمة الدفع (جهة معالجة البطاقة أو البنك أو التحويل التي تولّت دفعتك). وتحصل على المبلغ الذي دفعته بعد خصم تلك الرسوم.",
+"Cookies & storage": "ملفات الارتباط والتخزين",
+"This is what our website keeps in your browser, and why.": "هذا ما يحتفظ به موقعنا في متصفحك، وسبب ذلك.",
+"Essential storage": "التخزين الأساسي",
+"We store small items in your browser so the site works: your sign-in, your shopping cart, a referral code from a link you followed, and your language choice. Without these, parts of the site will not work. They stay on your device and you can clear them in your browser settings.": "نخزّن عناصر صغيرة في متصفحك ليعمل الموقع: تسجيل دخولك وسلة التسوق ورمز الإحالة من رابط اتبعته واختيارك للغة. من دونها لن تعمل أجزاء من الموقع. وتبقى على جهازك ويمكنك مسحها من إعدادات المتصفح.",
+"Visit counts": "عدد الزيارات",
+"We use Vercel Analytics to count visits and see which pages are read. It does not use cookies and does not follow you across other websites.": "نستخدم Vercel Analytics لعدّ الزيارات ومعرفة الصفحات التي تُقرأ. وهي لا تستخدم ملفات الارتباط ولا تتبعك عبر المواقع الأخرى.",
+"Translation": "الترجمة",
+"If you choose a language other than English or Arabic, the page loads Google Translate, which sets its own cookie to remember that choice.": "إذا اخترت لغة غير الإنجليزية أو العربية، تحمّل الصفحة ترجمة Google التي تضع ملف ارتباط خاصًا بها لتذكّر اختيارك.",
+"What we do not do": "ما لا نفعله",
+"We do not use advertising cookies, and we do not sell information collected through cookies.": "لا نستخدم ملفات ارتباط إعلانية، ولا نبيع المعلومات التي تُجمع عبرها.",
+"Your choices": "خياراتك",
+"You can delete or block cookies and site storage in your browser settings. Some features, such as signing in, may stop working if you do.": "يمكنك حذف ملفات الارتباط والتخزين أو حظرها من إعدادات المتصفح. وقد تتوقف بعض الميزات مثل تسجيل الدخول إذا فعلت ذلك."
 });
