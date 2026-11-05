@@ -48,3 +48,22 @@ Fixed-time exams for Madrasah students. Teachers set and mark them on **exam-tea
 
 - A resit or "reopen" button for a student who had a network problem. For now, enter their oral score and ask a teacher to mark manually, or create a short make-up exam for them.
 - Arabic translation of the two new pages.
+
+## Term report: CA 1, CA 2 and Exam (the Gradebook)
+
+Every subject is marked out of 100: **CA 1 out of 20, CA 2 out of 20 (so CA is out of 40) and the Exam out of 60.**
+
+1. When a teacher creates an exam, they choose **Counts as** (CA 1, CA 2 or Exam) and type the **Term** (for example `2026/27 Term 2`). Use exactly the same wording for the whole term. An exam set to "Not in the term report" works as before.
+2. On `exam-teacher`, press **Gradebook**, choose the term and the level, and press **Show scores**.
+   - Each subject shows CA 1, CA 2, CA /40, Exam /60, Total /100 and the grade (A to F).
+   - Scores from portal exams fill in by themselves once the exam has ended and is fully marked. A student who did not sit counts as 0 and is marked "absent".
+   - For a test taken on paper, type the score in the box. A typed score replaces the portal score; clear the box to go back to the portal score.
+   - A total and grade appear once all three parts are in. "All subjects" shows each student's total per subject, the average and the overall grade.
+   - **Download CSV** and **Print** are at the bottom.
+3. Teachers see their own students; admins see the whole level. If one subject has two exams of the same kind in a term, their percentages are averaged.
+4. The Exams tab gets two new columns (**Kind**, **Term**) and a **Gradebook** tab is created automatically the first time the new script runs. Nothing to do by hand.
+
+## Final exams start on 20 January 2027, fees must be up to date
+
+- `EX_EXAMS_FROM` (top of `Exams.gs`) is `2027-01-20`. An exam whose kind is **Exam** cannot be saved with an earlier start, and a student cannot start one earlier even if the sheet is edited by hand. CA 1 and CA 2 are not affected. Change the date in one place if the plan moves.
+- `EX_BLOCK_OVERDUE` is now `true`: a student whose fees are **Overdue** (their NextDue date has passed) cannot start any exam. They still see the exam, with a message to pay first. Once the office confirms a payment and the due date moves forward, they can start straight away. Set it to `false` to switch this off.

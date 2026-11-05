@@ -4,12 +4,13 @@
  * Fixed-time exams for Madrasah students, set and marked by teachers. Add this as a NEW file next to Code.gs, then run
  * Himaayah > "Set up the exam portal" once. Pages: exams.html (students) and exam-teacher.html (teachers).
  *
- * Four tabs are created for you:
+ * Five tabs are created for you:
  *
- *   Exams          ExamID, Title, Subject, Level, Start, Minutes, PassMark, OralMarks, Instructions, Shuffle, State, CreatedBy, Created
+ *   Exams          ExamID, Title, Subject, Level, Start, Minutes, PassMark, OralMarks, Instructions, Shuffle, State, CreatedBy, Created, Kind, Term
  *   ExamQuestions  ExamID, QID, Type, Question, A, B, C, D, Correct, Marks, Explanation, ModelAnswer
  *   ExamSittings   ExamID, StudentID, Started, Deadline, Submitted, Answers, McqScore, WrittenScores, WrittenMarked, Comment, MarkedBy
  *   ExamOral       ExamID, StudentID, Slot, Score, Comment, MarkedBy
+ *   Gradebook      Term, Subject, StudentID, Component, Score, EnteredBy, Updated   (CA scores typed in by a teacher; see below)
  *
  * Teachers create and mark exams on exam-teacher.html, so you rarely need to touch these tabs by hand.
  *
@@ -23,19 +24,30 @@
  *   - Students see nothing of their marks until the teacher presses Publish results. Correct answers never leave the script
  *     before that.
  *
+ * Term report (the Gradebook on exam-teacher.html)
+ *   Every exam has a Kind: CA1, CA2 or Exam, and a Term (for example "2026/27 Term 2"). A subject's total is out of 100:
+ *   CA1 out of 20, CA2 out of 20 (so CA is out of 40) and the Exam out of 60. The gradebook turns each exam's percentage into its
+ *   share of those marks and adds them up. A teacher can also type a CA score (for a test taken on paper); a typed score
+ *   replaces the one worked out from the portal. Grades use the same A-F bands as below.
+ *   The Exam kind cannot be scheduled before EX_EXAMS_FROM, and students cannot start any exam while their fees are overdue
+ *   (EX_BLOCK_OVERDUE).
+ *
  * Grades (on the rounded percentage): A 90-100, B 79-89, C 60-78, D 50-59, E 49, F 0-48.
  */
 
 const EX_TABS = {
-  Exams: ['ExamID', 'Title', 'Subject', 'Level', 'Start', 'Minutes', 'PassMark', 'OralMarks', 'Instructions', 'Shuffle', 'State', 'CreatedBy', 'Created'],
+  Exams: ['ExamID', 'Title', 'Subject', 'Level', 'Start', 'Minutes', 'PassMark', 'OralMarks', 'Instructions', 'Shuffle', 'State', 'CreatedBy', 'Created', 'Kind', 'Term'],
   ExamQuestions: ['ExamID', 'QID', 'Type', 'Question', 'A', 'B', 'C', 'D', 'Correct', 'Marks', 'Explanation', 'ModelAnswer'],
   ExamSittings: ['ExamID', 'StudentID', 'Started', 'Deadline', 'Submitted', 'Answers', 'McqScore', 'WrittenScores', 'WrittenMarked', 'Comment', 'MarkedBy'],
-  ExamOral: ['ExamID', 'StudentID', 'Slot', 'Score', 'Comment', 'MarkedBy']
+  ExamOral: ['ExamID', 'StudentID', 'Slot', 'Score', 'Comment', 'MarkedBy'],
+  Gradebook: ['Term', 'Subject', 'StudentID', 'Component', 'Score', 'EnteredBy', 'Updated']
 };
 const EX_LATE_MINUTES = 15;          // a student may still begin this long after the start time (their exam still ends on time)
 const EX_GRACE_SECONDS = 45;         // answers are still accepted this long after the deadline (slow networks)
 const EX_DEFAULT_PASS = 50;          // percent, used when an exam has no PassMark
-const EX_BLOCK_OVERDUE = false;      // true = a student whose fees are overdue cannot start an exam
+const EX_BLOCK_OVERDUE = true;       // true = a student whose fees are overdue cannot start an exam
+const EX_EXAMS_FROM = '2027-01-20';  // the final exams (Kind "Exam") cannot be set for, or started on, any earlier day
+const EX_WEIGHTS = { CA1: 20, CA2: 20, Exam: 60 };   // marks each part carries; the subject total is out of 100
 const EX_MAX_QUESTIONS = 100;
 const EX_MAX_WRITTEN_CHARS = 3000;
 const EX_DT = "yyyy-MM-dd'T'HH:mm";
@@ -52,6 +64,13 @@ function ex_table_(name) {
     sh = ss.insertSheet(name);
     sh.getRange(1, 1, 1, EX_TABS[name].length).setValues([EX_TABS[name]]).setFontWeight('bold');
     sh.setFrozenRows(1);
+  } else {                                           // a tab made by an older version: add any new columns at the end
+    const have = sh.getRange(1, 1, 1, Math.max(1, sh.getLastColumn())).getValues()[0].map(function (h) { return String(h).trim(); });
+    const miss = EX_TABS[name].filter(function (h) { return have.indexOf(h) < 0; });
+    if (miss.length) {
+      const last = have.filter(function (h) { return h !== ''; }).length;
+      sh.getRange(1, last + 1, 1, miss.length).setValues([miss]).setFontWeight('bold');
+    }
   }
   return table_(name);
 }
@@ -81,6 +100,8 @@ function ex_grade_(percent) {
 }
 const EX_REMARK = { A: 'Excellent', B: 'Very good', C: 'Good', D: 'Fair', E: 'Weak', F: 'Fail' };
 
+function ex_kind_(e) { const k = String(e.Kind || '').trim().toUpperCase(); return k === 'CA1' ? 'CA1' : k === 'CA2' ? 'CA2' : k === 'EXAM' ? 'Exam' : ''; }
+function ex_beforeExams_(e) { return ex_kind_(e) === 'Exam' && iso_(e.Start).slice(0, 10) < EX_EXAMS_FROM; }
 function ex_isWritten_(q) { return String(q.Type || '').trim().toLowerCase() === 'written'; }
 function ex_marks_(q) { const n = Math.round(Number(q.Marks)); return n > 0 ? n : 1; }
 function ex_options_(q) {
@@ -215,7 +236,7 @@ function ex_studentList_(st) {
     else if (now < start) status = 'upcoming';
     else if (now <= Math.min(end, start + EX_LATE_MINUTES * 60000)) status = 'open';
     else status = 'missed';
-    const out = { ExamID: String(e.ExamID).trim(), Title: String(e.Title), Subject: String(e.Subject || 'General'), Start: iso_(e.Start, true), Minutes: ex_num_(e.Minutes),
+    const out = { Kind: ex_kind_(e), ExamID: String(e.ExamID).trim(), Title: String(e.Title), Subject: String(e.Subject || 'General'), Start: iso_(e.Start, true), Minutes: ex_num_(e.Minutes),
       Instructions: String(e.Instructions || ''), Questions: qs.length, Marks: t.all, PassMark: ex_pass_(e), HasOral: t.oral > 0, OralMarks: t.oral,
       OralSlot: or ? String(or.Slot || '') : '', Status: status,
       StartsInSec: Math.max(0, Math.round((start - now) / 1000)), RemainingSec: sit && sit.Started && status === 'inprogress' ? Math.max(0, Math.round((ex_epoch_(String(sit.Deadline)) - now) / 1000)) : 0,
@@ -230,7 +251,7 @@ function ex_studentList_(st) {
   const done = exams.filter(function (x) { return x.Result && !x.Result.pending && !x.Result.absent; });
   const avg = done.length ? Math.round(done.reduce(function (s, x) { return s + x.Result.percent; }, 0) / done.length) : null;
   return { ok: true, student: { name: st.Name, level: st.Level }, exams: exams, average: avg, averageGrade: avg == null ? '' : ex_grade_(avg),
-    blocked: EX_BLOCK_OVERDUE && payStatus_(st) === 'Overdue' };
+    blocked: EX_BLOCK_OVERDUE && payStatus_(st) === 'Overdue', examsFrom: EX_EXAMS_FROM, examsFromText: ex_nice_(EX_EXAMS_FROM) };
 }
 
 function ex_studentExam_(st, examId) {
@@ -239,9 +260,11 @@ function ex_studentExam_(st, examId) {
   return e;
 }
 
+function ex_nice_(day) { const m = String(day).split('-'); return Number(m[2]) + ' ' + ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][Number(m[1]) - 1] + ' ' + m[0]; }
 function ex_studentStart_(st, p) {
   const e = ex_studentExam_(st, p.examId);
   if (ex_state_(e) !== 'Live') ex_fail_('This exam is closed.');
+  if (ex_beforeExams_(e) || (ex_kind_(e) === 'Exam' && today_() < EX_EXAMS_FROM)) ex_fail_('The exams begin on ' + ex_nice_(EX_EXAMS_FROM) + '.');
   if (EX_BLOCK_OVERDUE && payStatus_(st) === 'Overdue') ex_fail_('Please pay your fees before you sit exams.');
   const qs = ex_questions_(e.ExamID);
   if (!qs.length) ex_fail_('This exam has no written paper. Your teacher will tell you about the oral part.');
@@ -329,6 +352,7 @@ function examtRequest(p) {
     if (op === 'detail') return ex_tDetail_(me, p);
     if (op === 'sitting') return ex_tSitting_(me, p);
     if (op === 'exam') return ex_tExam_(me, p);
+    if (op === 'book') return ex_tBook_(me, p);
     const lock = LockService.getScriptLock(); lock.waitLock(20000);
     try {
       if (op === 'save') return ex_tSave_(me, p);
@@ -336,6 +360,7 @@ function examtRequest(p) {
       if (op === 'delete') return ex_tDelete_(me, p);
       if (op === 'mark') return ex_tMark_(me, p);
       if (op === 'oral') return ex_tOral_(me, p);
+      if (op === 'gscore') return ex_tGscore_(me, p);
     } finally { lock.releaseLock(); }
     return { ok: false, error: 'Unknown action.' };
   } catch (err) {
@@ -378,11 +403,11 @@ function ex_tList_(me) {
       if (t.oral > 0 && !c.oralDone) oralLeft++;
     });
     out.push({ ExamID: String(e.ExamID).trim(), Title: String(e.Title), Subject: String(e.Subject || ''), Level: String(e.Level || ''), Start: iso_(e.Start, true), Minutes: ex_num_(e.Minutes),
-      State: ex_state_(e), Questions: qs.length, Marks: t.all, OralMarks: t.oral, Students: studs.length, Sat: sat, ToMark: toMark, OralLeft: oralLeft,
+      Kind: ex_kind_(e), Term: String(e.Term || ''), State: ex_state_(e), Questions: qs.length, Marks: t.all, OralMarks: t.oral, Students: studs.length, Sat: sat, ToMark: toMark, OralLeft: oralLeft,
       CanEdit: ex_tCanEdit_(me, e), Ended: !isNaN(start) && now > ex_end_(e) + EX_GRACE_SECONDS * 1000, Started: !isNaN(start) && now >= start, CreatedBy: String(e.CreatedBy || '') });
   });
   out.sort(function (x, y) { return x.Start < y.Start ? 1 : -1; });
-  return { ok: true, teacher: { name: me.Name, admin: tchAdmin_(me) }, exams: out, levels: Object.keys(levels).sort(), now: ex_fmt_(now, false), bands: [['A', '90-100'], ['B', '79-89'], ['C', '60-78'], ['D', '50-59'], ['E', '49'], ['F', '0-48']] };
+  return { ok: true, teacher: { name: me.Name, admin: tchAdmin_(me) }, exams: out, levels: Object.keys(levels).sort(), now: ex_fmt_(now, false), terms: ex_gTerms_(), weights: EX_WEIGHTS, examsFrom: EX_EXAMS_FROM, examsFromText: ex_nice_(EX_EXAMS_FROM), bands: [['A', '90-100'], ['B', '79-89'], ['C', '60-78'], ['D', '50-59'], ['E', '49'], ['F', '0-48']] };
 }
 
 function ex_tExam_(me, p) {            // the full exam, for the editor (teachers only; includes the answer key)
@@ -392,7 +417,7 @@ function ex_tExam_(me, p) {            // the full exam, for the editor (teacher
   const locked = ex_table_('ExamSittings').rows.some(function (r) { return key_(r.ExamID) === key_(e.ExamID); }) ||
     ex_table_('ExamOral').rows.some(function (r) { return key_(r.ExamID) === key_(e.ExamID) && String(r.Score == null ? '' : r.Score) !== ''; });
   return { ok: true, locked: locked, exam: { ExamID: String(e.ExamID).trim(), Title: String(e.Title), Subject: String(e.Subject || ''), Level: String(e.Level || ''), Start: iso_(e.Start, true),
-    Minutes: ex_num_(e.Minutes), PassMark: ex_pass_(e), OralMarks: Math.round(ex_num_(e.OralMarks)), Instructions: String(e.Instructions || ''), Shuffle: String(e.Shuffle).toUpperCase() !== 'FALSE', State: ex_state_(e) },
+    Minutes: ex_num_(e.Minutes), PassMark: ex_pass_(e), OralMarks: Math.round(ex_num_(e.OralMarks)), Instructions: String(e.Instructions || ''), Shuffle: String(e.Shuffle).toUpperCase() !== 'FALSE', State: ex_state_(e), Kind: ex_kind_(e), Term: String(e.Term || '') },
     questions: qs.map(function (q) { return { type: ex_isWritten_(q) ? 'written' : 'mcq', question: String(q.Question), A: String(q.A || ''), B: String(q.B || ''), C: String(q.C || ''), D: String(q.D || ''),
       correct: key_(q.Correct), marks: ex_marks_(q), explanation: String(q.Explanation || ''), modelAnswer: String(q.ModelAnswer || '') }; }) };
 }
@@ -408,6 +433,11 @@ function ex_tSave_(me, p) {
   const title = ex_str_(d.Title, 120), subject = ex_str_(d.Subject, 60), level = ex_str_(d.Level, 120);
   const start = ex_str_(d.Start, 16), minutes = Math.round(ex_num_(d.Minutes)), pass = Math.round(ex_num_(d.PassMark)) || EX_DEFAULT_PASS;
   const oralMarks = Math.max(0, Math.min(100, Math.round(ex_num_(d.OralMarks))));
+  const kindRaw = String(d.Kind || '').trim().toUpperCase(), kind = kindRaw === 'CA1' ? 'CA1' : kindRaw === 'CA2' ? 'CA2' : kindRaw === 'EXAM' ? 'Exam' : '';
+  if (kindRaw && !kind) ex_fail_('Choose CA 1, CA 2 or Exam.');
+  const term = ex_str_(d.Term, 40);
+  if (kind && !term) ex_fail_('Enter the term (for example 2026/27 Term 2) so the scores reach the right report.');
+  if (kind === 'Exam' && (!e || locked === false) && start.slice(0, 10) < EX_EXAMS_FROM) ex_fail_('The exams begin on ' + ex_nice_(EX_EXAMS_FROM) + '. Choose that day or later.');
   if (!title) ex_fail_('Give the exam a title.');
   if (!level) ex_fail_('Choose the level (or levels) that sit this exam.');
   if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(start) || isNaN(ex_epoch_(start))) ex_fail_('Choose the start date and time.');
@@ -443,7 +473,7 @@ function ex_tSave_(me, p) {
   if (e) {
     examId = String(e.ExamID).trim();
     put_(t, e._row, 'Title', title, true); put_(t, e._row, 'Subject', subject, true); put_(t, e._row, 'PassMark', pass);
-    put_(t, e._row, 'Instructions', ex_str_(d.Instructions, 1500), true);
+    put_(t, e._row, 'Instructions', ex_str_(d.Instructions, 1500), true); put_(t, e._row, 'Kind', kind, true); put_(t, e._row, 'Term', term, true);
     if (!locked) {
       put_(t, e._row, 'Level', level, true); put_(t, e._row, 'Start', start, true); put_(t, e._row, 'Minutes', minutes);
       put_(t, e._row, 'OralMarks', oralMarks); put_(t, e._row, 'Shuffle', d.Shuffle === false ? 'FALSE' : 'TRUE');
@@ -453,8 +483,8 @@ function ex_tSave_(me, p) {
     t.rows.forEach(function (r) { const m = /^EX-(\d+)$/.exec(String(r.ExamID).trim().toUpperCase()); if (m) n = Math.max(n, Number(m[1])); });
     examId = 'EX-' + ('000' + (n + 1)).slice(-3);
     append_(t, { ExamID: examId, Title: title, Subject: subject, Level: level, Start: start, Minutes: minutes, PassMark: pass, OralMarks: oralMarks,
-      Instructions: ex_str_(d.Instructions, 1500), Shuffle: d.Shuffle === false ? 'FALSE' : 'TRUE', State: 'Draft', CreatedBy: String(me.TeacherID).trim(), Created: ex_fmt_(ex_now_(), false) },
-      ['ExamID', 'Title', 'Subject', 'Level', 'Start', 'Instructions', 'CreatedBy', 'Created']);
+      Instructions: ex_str_(d.Instructions, 1500), Shuffle: d.Shuffle === false ? 'FALSE' : 'TRUE', State: 'Draft', CreatedBy: String(me.TeacherID).trim(), Created: ex_fmt_(ex_now_(), false), Kind: kind, Term: term },
+      ['ExamID', 'Title', 'Subject', 'Level', 'Start', 'Instructions', 'CreatedBy', 'Created', 'Kind', 'Term']);
   }
   if (!locked) {
     const qt = ex_table_('ExamQuestions');
@@ -578,5 +608,111 @@ function ex_tOral_(me, p) {
     append_(oral, { ExamID: String(e.ExamID).trim(), StudentID: String(s.StudentID).trim(), Slot: slot, Score: score, Comment: comment, MarkedBy: String(me.TeacherID).trim() },
       ['ExamID', 'StudentID', 'Slot', 'Comment', 'MarkedBy']);
   }
+  return { ok: true };
+}
+
+
+/* ===== GRADEBOOK (term report: CA1 /20 + CA2 /20 + Exam /60 = /100) ===== */
+const EX_PARTS = ['CA1', 'CA2', 'Exam'];
+function ex_r1_(n) { return Math.round(n * 10) / 10; }
+
+/* The students whose scores this teacher may see in a level: admins see the whole level, others only their own students. */
+function ex_gStudents_(me, level) {
+  return table_('Students').rows.filter(function (r) {
+    return r.StudentID && key_(r.Active) !== 'FALSE' && key_(r.Level) === key_(level) && tchOwns_(me, r);
+  });
+}
+function ex_gTerms_() {
+  const seen = {};
+  ex_table_('Exams').rows.forEach(function (e) { if (String(e.Term || '').trim()) seen[String(e.Term).trim()] = true; });
+  ex_table_('Gradebook').rows.forEach(function (r) { if (String(r.Term || '').trim()) seen[String(r.Term).trim()] = true; });
+  return Object.keys(seen).sort().reverse();
+}
+
+function ex_tBook_(me, p) {
+  const term = ex_str_(p.term, 40), level = ex_str_(p.level, 120);
+  const terms = ex_gTerms_();
+  const levels = {};
+  (tchAdmin_(me) ? table_('Students').rows : tchMine_(me).rows).forEach(function (r) { if (String(r.Level || '').trim()) levels[String(r.Level).trim()] = true; });
+  const base = { ok: true, terms: terms, levels: Object.keys(levels).sort(), weights: EX_WEIGHTS, bands: [['A', '90-100'], ['B', '79-89'], ['C', '60-78'], ['D', '50-59'], ['E', '49'], ['F', '0-48']] };
+  if (!term || !level) return Object.assign(base, { students: [], subjects: [], cells: {} });
+  const studs = ex_gStudents_(me, level);
+  const exams = ex_table_('Exams').rows.filter(function (e) {
+    return e.ExamID && ex_kind_(e) && String(e.Term || '').trim() === term && ex_state_(e) !== 'Draft';
+  });
+  // finish any sitting whose time has run out, so absent students and unsubmitted work are not guessed at
+  const lock = LockService.getScriptLock(); lock.waitLock(20000);
+  try { const st0 = ex_table_('ExamSittings'); exams.forEach(function (e) { ex_sweep_(st0, e, ex_questions_(e.ExamID)); }); } finally { lock.releaseLock(); }
+  const sittings = ex_table_('ExamSittings'), oral = ex_table_('ExamOral'), manual = ex_table_('Gradebook'), now = ex_now_();
+  const qsBy = {}; exams.forEach(function (e) { qsBy[key_(e.ExamID)] = ex_questions_(e.ExamID); });
+
+  const subjects = {};
+  const subjOf = function (e) { return String(e.Subject || '').trim() || 'General'; };
+  exams.forEach(function (e) { if (ex_tStudentsIn_(studs, e).length) subjects[subjOf(e)] = true; });
+  manual.rows.forEach(function (r) { if (String(r.Term || '').trim() === term && studs.some(function (s) { return key_(s.StudentID) === key_(r.StudentID); })) subjects[String(r.Subject || '').trim() || 'General'] = true; });
+  const subjectList = Object.keys(subjects).sort();
+
+  const students = [], cells = {};
+  studs.sort(function (a, b) { return String(a.Name) < String(b.Name) ? -1 : 1; });
+  studs.forEach(function (s) {
+    const sid = String(s.StudentID).trim();
+    students.push({ StudentID: sid, Name: String(s.Name || ''), Level: String(s.Level || '') });
+    cells[sid] = {};
+    let sum = 0, nDone = 0;
+    subjectList.forEach(function (sub) {
+      const cell = { CA1: null, CA2: null, Exam: null, src: {}, flag: {} };
+      EX_PARTS.forEach(function (part) {
+        const man = manual.rows.filter(function (r) {
+          return String(r.Term || '').trim() === term && key_(r.Subject || 'General') === key_(sub) && key_(r.StudentID) === key_(sid) && String(r.Component) === part && r.Score !== '' && r.Score != null;
+        })[0];
+        if (man) { cell[part] = ex_r1_(Math.min(EX_WEIGHTS[part], Math.max(0, ex_num_(man.Score)))); cell.src[part] = 'typed'; return; }
+        const mine = exams.filter(function (e) { return ex_kind_(e) === part && key_(subjOf(e)) === key_(sub) && matches_(e.Level, [key_(s.Level), key_(sid)]); });
+        if (!mine.length) return;
+        const pcts = []; let waiting = false, absent = false;
+        mine.forEach(function (e) {
+          const qs = qsBy[key_(e.ExamID)], c = ex_compute_(e, qs, ex_sitting_(sittings, e.ExamID, sid), ex_oralRow_(oral, e.ExamID, sid));
+          const over = !isNaN(ex_start_(e)) && now > ex_end_(e) + EX_GRACE_SECONDS * 1000;
+          if (c.absent && !over) { waiting = true; return; }
+          if (!c.complete) { waiting = true; return; }
+          if (c.absent) absent = true;
+          pcts.push(c.outOf > 0 ? c.score / c.outOf * 100 : 0);
+        });
+        if (pcts.length) { cell[part] = ex_r1_(pcts.reduce(function (a, b) { return a + b; }, 0) / pcts.length * EX_WEIGHTS[part] / 100); cell.src[part] = 'exam'; if (absent) cell.flag[part] = 'absent'; }
+        else if (waiting) cell.flag[part] = 'waiting';
+      });
+      const have = EX_PARTS.filter(function (k) { return cell[k] != null; });
+      cell.ca = (cell.CA1 != null || cell.CA2 != null) ? ex_r1_((cell.CA1 || 0) + (cell.CA2 || 0)) : null;
+      cell.total = have.length ? ex_r1_(have.reduce(function (a, k) { return a + cell[k]; }, 0)) : null;
+      cell.complete = have.length === 3;
+      cell.grade = cell.complete ? ex_grade_(Math.round(cell.total)) : '';
+      if (cell.complete) { sum += cell.total; nDone++; }
+      cells[sid][sub] = cell;
+    });
+    const o = { subjects: subjectList.length, done: nDone, average: nDone ? ex_r1_(sum / nDone) : null };
+    o.grade = nDone === subjectList.length && nDone > 0 ? ex_grade_(Math.round(o.average)) : '';
+    cells[sid]._all = o;
+  });
+  return Object.assign(base, { term: term, level: level, students: students, subjects: subjectList, cells: cells });
+}
+function ex_tStudentsIn_(studs, e) { return studs.filter(function (r) { return matches_(e.Level, [key_(r.Level), key_(r.StudentID)]); }); }
+
+/* A teacher types a CA (or paper exam) score for one student and subject. An empty score removes it, so the portal's own score is used again. */
+function ex_tGscore_(me, p) {
+  const term = ex_str_(p.term, 40), sub = ex_str_(p.subject, 60) || 'General', part = String(p.component || '');
+  if (!term) ex_fail_('Choose the term first.');
+  if (EX_PARTS.indexOf(part) < 0) ex_fail_('Unknown score type.');
+  const s = table_('Students').rows.filter(function (r) { return key_(r.StudentID) === key_(p.studentId) && tchOwns_(me, r); })[0];
+  if (!s) ex_fail_('That student is not yours.');
+  let score = '';
+  if (p.score !== '' && p.score != null) {
+    const n = Number(p.score), max = EX_WEIGHTS[part];
+    if (!isFinite(n) || n < 0 || n > max) ex_fail_('The ' + (part === 'Exam' ? 'exam' : part) + ' score must be between 0 and ' + max + '.');
+    score = Math.round(n * 2) / 2;
+  }
+  const t = ex_table_('Gradebook');
+  const row = t.rows.filter(function (r) { return String(r.Term || '').trim() === term && key_(r.Subject || 'General') === key_(sub) && key_(r.StudentID) === key_(s.StudentID) && String(r.Component) === part; })[0];
+  const when = ex_fmt_(ex_now_(), false), by = String(me.TeacherID).trim();
+  if (row) { put_(t, row._row, 'Score', score); put_(t, row._row, 'EnteredBy', by, true); put_(t, row._row, 'Updated', when, true); }
+  else if (score !== '') append_(t, { Term: term, Subject: sub, StudentID: String(s.StudentID).trim(), Component: part, Score: score, EnteredBy: by, Updated: when }, ['Term', 'Subject', 'StudentID', 'Component', 'EnteredBy', 'Updated']);
   return { ok: true };
 }

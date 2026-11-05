@@ -33,7 +33,7 @@ first payment. `pay` handles later fees. Staff set a row to Confirmed and the st
 | `academy-dashboard`, `academy-tutor`, `academy-admin` | Academy | `Academy.gs` |
 | `skills-dashboard`, `skills-tutor`, `skills-admin` | Skills School | `Skills.gs` |
 | `tbc-dashboard`, `tbc-facilitator`, `tbc-admin` | Teenagers Building Circle | `TBC.gs` |
-| `exams` (students), `exam-teacher` (teachers) | Madrasah exams | `Exams.gs` |
+| `exams` (students), `exam-teacher` (teachers) | Madrasah exams and the term Gradebook (CA 1 /20, CA 2 /20, Exam /60) | `Exams.gs` |
 | "Reset code" tab on every admin page | Admin gives a forgotten code a new value | `Resets.gs` |
 | `librarian` | Librarian | `Librarian.gs` |
 | `admin`, `owner` | Administrators and owner | `Admin.gs`, `Owner.gs` |

@@ -38,6 +38,14 @@
 .page-exam-teacher .orow{display:flex;gap:10px;align-items:center}
 .page-exam-teacher .orow input[type=radio]{width:18px;height:18px;accent-color:var(--ink);flex:none}
 .page-exam-teacher .orow span{font-weight:700;color:var(--ink);width:18px}
+.page-exam-teacher .sw{display:inline-flex;gap:4px;padding:4px;background:#fff;border-radius:999px;box-shadow:var(--ring,0 0 0 1px rgba(0,0,0,.1))}
+.page-exam-teacher .sw button{border:0;background:transparent;padding:8px 16px;border-radius:999px;font:600 14px var(--f,inherit);cursor:pointer;color:var(--deep)}
+.page-exam-teacher .sw button[aria-pressed=true]{background:var(--deep);color:#fff}
+.page-exam-teacher .gb input.sc{width:68px;padding:7px 8px;text-align:center}.page-exam-teacher .gb td small{display:block;font-size:11px;color:var(--sky-d)}
+.page-exam-teacher .gb .tot{font-weight:700}.page-exam-teacher .stabs{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}
+.page-exam-teacher .stabs button{border:0;padding:7px 14px;border-radius:999px;background:#fff;font:600 13.5px var(--f,inherit);cursor:pointer;box-shadow:inset 0 0 0 1px rgba(0,0,0,.14)}
+.page-exam-teacher .stabs button[aria-pressed=true]{background:var(--deep);color:#fff}
+@media print{.page-exam-teacher header,.page-exam-teacher .sw,.page-exam-teacher .noprint,.page-exam-teacher .stabs{display:none!important}}
 .page-exam-teacher .tbl{width:100%;border-collapse:collapse;font-size:14px}
 .page-exam-teacher .tbl th{text-align:start;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--sky-d);padding:8px 10px;border-bottom:1.5px solid var(--line);white-space:nowrap}
 .page-exam-teacher .tbl td{padding:10px;border-bottom:1px solid var(--line);vertical-align:middle}
@@ -110,12 +118,14 @@ const STP = { Draft: 'p-wash', Live: 'p-sky', Published: 'p-ink' };
 const STU = { 'To mark': 'p-red', Marked: 'p-ink', Writing: 'p-sky', Absent: 'p-red', 'Not yet': 'p-wash', 'Oral only': 'p-dash' };
 
 /* ---------- list ---------- */
+const KL = { CA1: 'CA 1', CA2: 'CA 2', Exam: 'Exam' };
+const switcher = () => `<div class="sw noprint" role="group" aria-label="Section" style="margin:0 0 14px"><button type="button" data-view="list" aria-pressed="${S.view !== 'book'}">Exams</button><button type="button" data-view="book" aria-pressed="${S.view === 'book'}">Gradebook</button></div>`;
 function vList() {
   const ex = D.exams;
-  return `<div class="hd"><div><h1>Exams</h1><p class="sub">Hello, ${esc(D.teacher.name)}. Everyone in a level sits at the same time. Grades: ${D.bands.map((b) => b[0] + ' ' + b[1]).join(', ')}.</p></div>
+  return `${switcher()}<div class="hd"><div><h1>Exams</h1><p class="sub">Hello, ${esc(D.teacher.name)}. Everyone in a level sits at the same time. Grades: ${D.bands.map((b) => b[0] + ' ' + b[1]).join(', ')}.</p></div>
     <button class="btn btn-ink" data-new>+ New exam</button></div>
     ${ex.length ? `<div class="cards">${ex.map((e) => `<article class="xc"><div><span class="pill ${STP[e.State]}">${e.State === 'Live' ? (e.Ended ? 'Ended' : e.Started ? 'Running' : 'Scheduled') : e.State}</span> <span class="pill p-wash">${esc(e.Level)}</span></div>
-      <h3>${esc(e.Title)}</h3><div class="meta">${esc(e.Subject)} &middot; ${when(e.Start)} &middot; ${e.Minutes} min &middot; ${e.Marks} marks</div>
+      <h3>${esc(e.Title)}</h3><div class="meta">${e.Kind ? `<b>${KL[e.Kind]}</b> &middot; ` : ''}${esc(e.Subject)} &middot; ${when(e.Start)} &middot; ${e.Minutes} min &middot; ${e.Marks} marks</div>
       <div class="nums"><span><b>${e.Sat}</b> of ${e.Students} sat</span>${e.ToMark ? `<span><b>${e.ToMark}</b> to mark</span>` : ''}${e.OralMarks ? `<span><b>${e.OralLeft}</b> oral to score</span>` : ''}</div>
       <div class="tools"><button class="btn btn-ink btn-sm" data-open="${esc(e.ExamID)}">Open</button>${e.CanEdit ? `<button class="btn btn-line btn-sm" data-edit="${esc(e.ExamID)}">Edit</button>` : ''}</div></article>`).join('')}</div>`
       : '<div class="empty" style="margin-top:16px">No exams yet. Press <b>New exam</b> to set the first one.</div>'}`;
@@ -131,6 +141,8 @@ function vEdit() {
     <div class="panel"><h2>Details</h2><div class="f2">
       <div class="full"><label class="fl">Title</label><input class="in" data-e="Title" value="${esc(e.Title)}" placeholder="e.g. Fiqh term test"></div>
       <div><label class="fl">Subject</label><input class="in" data-e="Subject" value="${esc(e.Subject)}" placeholder="Fiqh, Tajweed, Aqeedah…"></div>
+      <div><label class="fl">Counts as</label><select class="in" data-e="Kind"><option value="">Not in the term report</option>${['CA1', 'CA2', 'Exam'].map((k) => `<option value="${k}"${e.Kind === k ? ' selected' : ''}>${KL[k]} (out of ${D.weights[k]})</option>`).join('')}</select>${e.Kind === 'Exam' ? `<div class="sub" style="margin-top:4px">Exams begin on ${esc(D.examsFromText)}.</div>` : ''}</div>
+      <div><label class="fl">Term</label><input class="in" data-e="Term" list="tm" value="${esc(e.Term)}" placeholder="e.g. 2026/27 Term 2"><datalist id="tm">${D.terms.map((t) => `<option value="${esc(t)}">`).join('')}</datalist></div>
       <div><label class="fl">Level (or levels, separated by commas)</label><input class="in" data-e="Level" list="lv" value="${esc(e.Level)}"${dis}><datalist id="lv">${D.levels.map((l) => `<option value="${esc(l)}">`).join('')}</datalist></div>
       <div><label class="fl">Start (same time for everyone)</label><input class="in" type="datetime-local" data-e="Start" value="${esc(e.Start)}"${dis}></div>
       <div><label class="fl">Length (minutes)</label><input class="in" type="number" min="5" max="300" data-e="Minutes" value="${esc(e.Minutes)}"${dis}></div>
@@ -156,7 +168,7 @@ function vQ(q, i, dis) {
 }
 function payload() {
   const e = S.ex;
-  return { exam: { ExamID: e.ExamID || '', Title: e.Title, Subject: e.Subject, Level: e.Level, Start: e.Start, Minutes: Number(e.Minutes), PassMark: Number(e.PassMark), OralMarks: Number(e.OralMarks) || 0, Instructions: e.Instructions, Shuffle: !!e.Shuffle },
+  return { exam: { ExamID: e.ExamID || '', Title: e.Title, Subject: e.Subject, Level: e.Level, Start: e.Start, Minutes: Number(e.Minutes), PassMark: Number(e.PassMark), OralMarks: Number(e.OralMarks) || 0, Instructions: e.Instructions, Shuffle: !!e.Shuffle, Kind: e.Kind || '', Term: e.Term || '' },
     questions: S.locked ? undefined : S.qs.map((q) => Object.assign({}, q, { marks: Number(q.marks) })) };
 }
 async function saveExam(live, btn) {
@@ -198,8 +210,53 @@ function vMark() {
     <div class="panel"><label class="fl">Comment for the student (optional)</label><textarea class="in" id="mc">${esc(m.comment)}</textarea><div class="tools" style="margin-top:12px"><button class="btn btn-ink" data-savemark>Save marks</button></div></div>`;
 }
 
+/* ---------- gradebook ---------- */
+const GB = { term: '', level: '', sub: '', data: null, extra: [] };
+const num = (v) => (v == null ? '' : v);
+const emptyCell = () => ({ CA1: null, CA2: null, Exam: null, ca: null, total: null, complete: false, grade: '', src: {}, flag: {} });
+const cellOf = (sid, sub) => (GB.data.cells[sid] && GB.data.cells[sid][sub]) || emptyCell();
+const subjectsNow = () => GB.data.subjects.concat(GB.extra.filter((x) => GB.data.subjects.indexOf(x) < 0));
+async function loadBook(btn) {
+  if (!GB.term.trim() || !GB.level) { toast('Choose the term and the level.', true); return; }
+  const d = await run('book', { term: GB.term.trim(), level: GB.level }, '', btn); if (!d) return;
+  GB.data = d; if (GB.sub && subjectsNow().indexOf(GB.sub) < 0 && GB.sub !== '*') GB.sub = ''; if (!GB.sub) GB.sub = '*'; render();
+}
+function partCell(sid, sub, part, c) {
+  const w = D.weights[part], v = c[part], flag = c.flag[part];
+  const note = c.src[part] === 'exam' ? '<small>from portal</small>' : c.src[part] === 'typed' ? '<small>typed</small>' : flag === 'waiting' ? '<small>waiting</small>' : '';
+  return `<td><input class="in sc" type="number" min="0" max="${w}" step="0.5" inputmode="decimal" data-gs="${esc(sid)}" data-sub="${esc(sub)}" data-part="${part}" value="${num(v)}" aria-label="${part} for ${esc(sid)}, out of ${w}">${flag === 'absent' ? '<small>absent</small>' : note}</td>`;
+}
+function vBook() {
+  const d = GB.data, w = D.weights;
+  const head = `${switcher()}<div class="hd"><div><h1>Gradebook</h1><p class="sub">Each subject is out of ${w.CA1 + w.CA2 + w.Exam}: CA 1 out of ${w.CA1}, CA 2 out of ${w.CA2} (CA ${w.CA1 + w.CA2} in all) and the exam out of ${w.Exam}. Scores from portal exams are added automatically; type a score for a test taken on paper. Grades: ${(d ? d.bands : D.bands).map((b) => b[0] + ' ' + b[1]).join(', ')}.</p></div></div>
+    <div class="panel noprint"><div class="f2"><div><label class="fl" for="gt">Term</label><input class="in" id="gt" list="gtl" value="${esc(GB.term)}" placeholder="e.g. 2026/27 Term 2"><datalist id="gtl">${D.terms.map((t) => `<option value="${esc(t)}">`).join('')}</datalist></div>
+      <div><label class="fl" for="gl">Level</label><select class="in" id="gl"><option value="">Choose a level</option>${D.levels.map((l) => `<option${GB.level === l ? ' selected' : ''}>${esc(l)}</option>`).join('')}</select></div></div>
+      <div class="tools" style="margin-top:14px"><button class="btn btn-ink" data-loadbook>Show scores</button></div></div>`;
+  if (!d) return head + '<div class="empty" style="margin-top:16px">Choose a term and level to see the scores.</div>';
+  if (!d.students.length) return head + '<div class="empty" style="margin-top:16px">No students of yours in that level.</div>';
+  const subs = subjectsNow();
+  const tabs = `<div class="stabs noprint"><button type="button" data-sub="*" aria-pressed="${GB.sub === '*'}">All subjects</button>${subs.map((x) => `<button type="button" data-sub="${esc(x)}" aria-pressed="${GB.sub === x}">${esc(x)}</button>`).join('')}
+    <span style="display:inline-flex;gap:6px"><input class="in" id="gnew" placeholder="Add a subject" style="width:150px;padding:7px 10px"><button class="btn btn-line btn-sm" type="button" data-addsub>Add</button></span></div>`;
+  let body;
+  if (GB.sub === '*') {
+    body = `<div class="panel"><h2>${esc(d.level)} &middot; ${esc(d.term)} <span class="sub">&middot; all subjects (totals out of 100)</span></h2><div class="scroll"><table class="tbl gb"><thead><tr><th>Name</th>${subs.map((x) => `<th>${esc(x)}</th>`).join('')}<th>Average</th><th>Grade</th></tr></thead><tbody>
+      ${d.students.map((s) => { const a = (d.cells[s.StudentID] || {})._all || {}; return `<tr><td><b>${esc(s.Name)}</b><div class="sub">${esc(s.StudentID)}</div></td>${subs.map((x) => { const c = cellOf(s.StudentID, x); return `<td>${c.total == null ? '-' : `<span class="tot">${c.total}</span>${c.complete ? ` <span class="g ${c.grade}">${c.grade}</span>` : '<small>incomplete</small>'}`}</td>`; }).join('')}<td class="tot">${a.average == null ? '-' : a.average}</td><td>${a.grade ? `<span class="g ${a.grade}">${a.grade}</span>` : ''}</td></tr>`; }).join('')}</tbody></table></div>
+      <p class="sub">The average counts only subjects that have all three scores. A grade shows once every subject is complete.</p></div>`;
+  } else {
+    body = `<div class="panel"><h2>${esc(GB.sub)} <span class="sub">&middot; ${esc(d.level)} &middot; ${esc(d.term)}</span></h2><div class="scroll"><table class="tbl gb"><thead><tr><th>Name</th><th>CA 1 /${w.CA1}</th><th>CA 2 /${w.CA2}</th><th>CA /${w.CA1 + w.CA2}</th><th>Exam /${w.Exam}</th><th>Total /100</th><th>Grade</th></tr></thead><tbody>
+      ${d.students.map((s) => { const c = cellOf(s.StudentID, GB.sub); return `<tr><td><b>${esc(s.Name)}</b><div class="sub">${esc(s.StudentID)}</div></td>${partCell(s.StudentID, GB.sub, 'CA1', c)}${partCell(s.StudentID, GB.sub, 'CA2', c)}<td>${num(c.ca) === '' ? '-' : c.ca}</td>${partCell(s.StudentID, GB.sub, 'Exam', c)}<td class="tot">${c.total == null ? '-' : c.total}${c.total != null && !c.complete ? '<small>incomplete</small>' : ''}</td><td>${c.grade ? `<span class="g ${c.grade}">${c.grade}</span>` : ''}</td></tr>`; }).join('')}</tbody></table></div></div>`;
+  }
+  return head + tabs + body + '<div class="tools noprint" style="margin-top:14px"><button class="btn btn-line" data-csv>Download CSV</button><button class="btn btn-line" data-print>Print</button></div>';
+}
+function csvBook() {
+  const d = GB.data, subs = subjectsNow(), w = D.weights, q = (v) => '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"';
+  const rows = [['StudentID', 'Name'].concat(...subs.map((x) => [x + ' CA1/' + w.CA1, x + ' CA2/' + w.CA2, x + ' Exam/' + w.Exam, x + ' Total/100', x + ' Grade']), ['Average', 'Grade'])];
+  d.students.forEach((s) => { const a = (d.cells[s.StudentID] || {})._all || {}; rows.push([s.StudentID, s.Name].concat(...subs.map((x) => { const c = cellOf(s.StudentID, x); return [c.CA1, c.CA2, c.Exam, c.total, c.grade]; }), [a.average, a.grade])); });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob(['\ufeff' + rows.map((r) => r.map(q).join(',')).join('\n')], { type: 'text/csv' })); a.download = 'gradebook-' + d.level.replace(/\W+/g, '-') + '-' + d.term.replace(/\W+/g, '-') + '.csv'; a.click();
+}
+
 function render() {
-  app.innerHTML = S.view === 'edit' ? vEdit() : S.view === 'detail' ? vDetail() : S.view === 'mark' ? vMark() : vList();
+  app.innerHTML = S.view === 'book' ? vBook() : S.view === 'edit' ? vEdit() : S.view === 'detail' ? vDetail() : S.view === 'mark' ? vMark() : vList();
   window.scrollTo(0, 0);
 }
 async function refresh() { const d = await api('list'); if (d.ok) D = d; return d; }
@@ -212,12 +269,27 @@ async function openEdit(id) {
 /* ---------- events ---------- */
 app.addEventListener('input', (e) => {
   const t = e.target;
-  if (t.dataset.e) S.ex[t.dataset.e] = t.type === 'checkbox' ? t.checked : t.value;
+  if (t.dataset.e) { S.ex[t.dataset.e] = t.type === 'checkbox' ? t.checked : t.value; if (t.dataset.e === 'Kind') render(); }
   else if (t.dataset.q != null) S.qs[+t.dataset.q][t.dataset.f] = t.value;
+});
+app.addEventListener('change', async (e) => {
+  const i = e.target.closest('[data-gs]'); if (!i) return;
+  const d = await run('gscore', { term: GB.data.term, subject: i.dataset.sub, studentId: i.dataset.gs, component: i.dataset.part, score: i.value.trim() }, '');
+  if (!d) { i.value = ''; }
+  const ae = document.activeElement, keep = ae && ae.dataset && ae.dataset.gs ? { g: ae.dataset.gs, s: ae.dataset.sub, p: ae.dataset.part } : null, y = window.scrollY;
+  const x = await run('book', { term: GB.term.trim(), level: GB.level }, ''); if (!x) return;
+  GB.data = x; render(); window.scrollTo(0, y);
+  if (keep) { const n = [...app.querySelectorAll('[data-gs]')].find((el) => el.dataset.gs === keep.g && el.dataset.sub === keep.s && el.dataset.part === keep.p); if (n) { n.focus(); n.select && n.select(); } }
 });
 app.addEventListener('click', async (e) => {
   const t = (s) => e.target.closest(s);
-  if (t('[data-new]')) { S.ex = { ExamID: '', Title: '', Subject: '', Level: D.levels[0] || '', Start: '', Minutes: 45, PassMark: 50, OralMarks: 0, Instructions: '', Shuffle: true, State: 'Draft' }; S.qs = [blankQ('mcq')]; S.locked = false; S.view = 'edit'; render(); }
+  if (t('[data-view]')) { const v = t('[data-view]').dataset.view; if (v === 'book') { S.view = 'book'; render(); } else { await refresh(); S.view = 'list'; render(); } }
+  else if (t('[data-loadbook]')) { GB.term = $('gt').value; GB.level = $('gl').value; loadBook(t('[data-loadbook]')); }
+  else if (t('[data-sub]') && !t('[data-gs]')) { GB.sub = t('[data-sub]').dataset.sub; render(); }
+  else if (t('[data-addsub]')) { const v = $('gnew').value.trim(); if (v) { if (subjectsNow().indexOf(v) < 0) GB.extra.push(v); GB.sub = v; render(); } }
+  else if (t('[data-csv]')) csvBook();
+  else if (t('[data-print]')) window.print();
+  else if (t('[data-new]')) { S.ex = { ExamID: '', Title: '', Subject: '', Level: D.levels[0] || '', Start: '', Minutes: 45, PassMark: 50, OralMarks: 0, Instructions: '', Shuffle: true, State: 'Draft', Kind: '', Term: D.terms[0] || '' }; S.qs = [blankQ('mcq')]; S.locked = false; S.view = 'edit'; render(); }
   else if (t('[data-back]')) { await refresh(); S.view = 'list'; render(); }
   else if (t('[data-open]')) { if (await openDetail(t('[data-open]').dataset.open)) render(); }
   else if (t('[data-edit]')) { if (await openEdit(t('[data-edit]').dataset.edit)) render(); }
@@ -255,7 +327,7 @@ async function signIn(id, code, silent) {
   sessionStorage.setItem('ht', JSON.stringify({ id, code }));
   try {
     const d = await api('list');
-    if (d.ok && d.exams) { D = d; $('login').hidden = true; app.hidden = false; $('out').hidden = false; S.view = 'list'; render(); }
+    if (d.ok && d.exams) { D = d; $('login').hidden = true; app.hidden = false; $('out').hidden = false; S.view = location.hash === '#gradebook' ? 'book' : 'list'; render(); }
     else { sessionStorage.removeItem('ht'); if (!silent) err.textContent = d.ok ? 'The exam portal is not switched on yet. Run Himaayah > Set up the exam portal, then publish a new version of the web app.' : (d.error || 'Could not sign in.'); }
   } catch (e) { sessionStorage.removeItem('ht'); if (!silent) err.textContent = 'Could not reach the school server. Please try again.'; }
   btn.disabled = false; btn.textContent = 'Sign in';

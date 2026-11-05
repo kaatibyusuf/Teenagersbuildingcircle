@@ -115,7 +115,7 @@ function card(x, i) {
   else if (x.Status === 'missed') note = '<div class="cd">You did not sit this exam. Please speak to your teacher.</div>';
   else if (x.Status === 'published' && x.Result && x.Result.pending) note = '<div class="cd">Some marking is still to be finished.</div>';
   const oral = x.HasOral ? `<div class="cd">Oral part: ${x.OralMarks} marks${x.OralSlot ? ' &middot; <b>' + esc(x.OralSlot) + '</b>' : ' &middot; your teacher will give you a time'}</div>` : '';
-  return `<article class="item" style="--i:${Math.min(i, 10)}"><div><span class="pill t">${esc(x.Subject)}</span> <span class="st ${cls}">${label}</span></div>
+  return `<article class="item" style="--i:${Math.min(i, 10)}"><div><span class="pill t">${x.Kind ? ({ CA1: 'CA 1', CA2: 'CA 2', Exam: 'Exam' })[x.Kind] + ' &middot; ' : ''}${esc(x.Subject)}</span> <span class="st ${cls}">${label}</span></div>
     <h3>${esc(x.Title)}</h3><p>${when(x.Start)}${x.Questions ? ` &middot; ${x.Minutes} min &middot; ${x.Questions} questions` : ''} &middot; ${x.Marks} marks</p>${note}${oral}
     <div class="foot"><span>${res}</span>${action}</div></article>`;
 }
@@ -128,7 +128,8 @@ function listView() {
   const avg = ST.average == null ? '' : `<span class="st out" style="margin-inline-start:8px">Average ${ST.average}% &middot; ${esc(ST.averageGrade)}</span>`;
   $('app').innerHTML = `<div class="not-t"><section class="hero"><small>Assalaamu alaykum</small><h1>${first}, your exams.</h1>
     <p>Exams start at the same time for everyone. Your teacher releases results once marking is done.${avg}</p></section>
-    ${ST.blocked ? '<div class="panel"><b>Your fees are overdue.</b> Please pay them before you sit an exam.</div>' : ''}
+    ${ST.blocked ? '<div class="panel"><b>Your fees are overdue.</b> You cannot start an exam until your fees are up to date. Please pay, then ask the office to confirm your payment.</div>' : ''}
+    ${ex.some((x) => x.Kind === 'Exam' && ['upcoming', 'open'].includes(x.Status)) ? `<div class="panel">The final exams begin on <b>${esc(ST.examsFromText || '20 January 2027')}</b>.</div>` : ''}
     ${live.length ? `<h2 class="sect">Coming up</h2><div class="grid">${live.map(card).join('')}</div>` : ''}
     ${wait.length ? `<h2 class="sect">Waiting for results</h2><div class="grid">${wait.map(card).join('')}</div>` : ''}
     ${out.length ? `<h2 class="sect">Results</h2><div class="grid">${out.map(card).join('')}</div>` : ''}
@@ -154,7 +155,7 @@ async function loadList() {
   const d = await call({ op: 'list' });
   if (!d.ok) return fail(d.error);
   if (!d.exams) { $('app').innerHTML = '<div class="empty">The exam portal is not switched on yet. Please check again soon.</div>'; return; }
-  Object.assign(ST, { student: d.student, exams: d.exams, average: d.average, averageGrade: d.averageGrade, blocked: d.blocked, run: null, listAt: performance.now() });
+  Object.assign(ST, { student: d.student, exams: d.exams, average: d.average, averageGrade: d.averageGrade, blocked: d.blocked, examsFromText: d.examsFromText, run: null, listAt: performance.now() });
   listView(); window.scrollTo(0, 0);
 }
 
