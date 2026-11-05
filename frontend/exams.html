@@ -52,6 +52,7 @@
 .page-exams .ro{display:none}
 @media(max-width:560px){.page-exams .top nav a[href="quiz"]{display:none}}
 @media(max-width:640px){.page-exams .grid{grid-template-columns:1fr}.page-exams .parts{grid-template-columns:1fr}.page-exams .tbar{top:60px}}
+@media(max-width:640px){.page-exams table.rep th,.page-exams table.rep td{padding:8px 4px;font-size:12.5px}.page-exams table.rep th{letter-spacing:0;text-transform:none;font-size:11.5px}}
 @media print{.top,.hero,.no-print,.toast{display:none!important}.page-exams .panel,.page-exams .item{box-shadow:none;border:1px solid #ccc}body.pr-t .not-t{display:none!important}body.pr-t .ro{display:block}}
 </style>
 </head>
@@ -134,7 +135,7 @@ function listView() {
     ${wait.length ? `<h2 class="sect">Waiting for results</h2><div class="grid">${wait.map(card).join('')}</div>` : ''}
     ${out.length ? `<h2 class="sect">Results</h2><div class="grid">${out.map(card).join('')}</div>` : ''}
     ${ex.length ? '' : '<div class="empty">No exams for your level yet. Please check again soon.</div>'}
-    ${out.length ? '<p style="margin-top:18px"><button class="btn btn-line btn-sm no-print" data-print-t>Print report card</button></p>' : ''}
+    <p style="margin-top:18px" class="no-print"><button class="btn btn-ink btn-sm" data-report>Term report card</button>${out.length ? ' <button class="btn btn-line btn-sm" data-print-t>Print exam results</button>' : ''}</p>
     <div class="msg" id="msg" role="alert"></div></div>
     <section class="ro panel"><h2>Himaayah Schools &mdash; Report card</h2><p>${esc(ST.student.name)} &middot; ${esc(ST.student.level || '')}${ST.term ? ' &middot; ' + esc(ST.term.Label) : ''}</p>
     <table class="tr"><thead><tr><th>Subject</th><th>Exam</th><th>Date</th><th>Score</th><th>Grade</th></tr></thead><tbody>${out.filter((x) => x.Result && !x.Result.pending).map((x) => `<tr><td>${esc(x.Subject)}</td><td>${esc(x.Title)}</td><td>${dayOnly(x.Start)}</td><td>${x.Result.absent ? 'Absent' : x.Result.percent + '%'}</td><td><b>${esc(x.Result.grade)}</b> ${esc(x.Result.remark || '')}</td></tr>`).join('')}</tbody></table>
@@ -273,6 +274,39 @@ function resultView(d) {
   window.scrollTo(0, 0);
 }
 
+/* ---------- term report card (CA 1 /20 + CA 2 /20 + Exam /60) ---------- */
+const AR_REMARK = { A: 'ممتاز', B: 'جيد جدًا', C: 'جيد', D: 'مقبول', E: 'ضعيف', F: 'راسب' };
+const AR_DIG = (v) => String(v).replace(/\d/g, (c) => '٠١٢٣٤٥٦٧٨٩'[c]);
+function termAr(d) {                                   // the term in Arabic: the saved Arabic label for the current term, otherwise worked out from "2025/2026 First Term"
+  if (d.term && d.termKey === d.term.Key && d.term.LabelAr) return d.term.LabelAr;
+  const m = /^(\d{4}\/\d{4})\s+(First|Second|Third|Fourth)\s+Term$/i.exec(d.termKey || '');
+  const ord = { first: 'الأول', second: 'الثاني', third: 'الثالث', fourth: 'الرابع' };
+  return m ? 'الفصل الدراسي ' + ord[m[2].toLowerCase()] + ' · ' + AR_DIG(m[1]) : d.termKey;
+}
+function reportView(d) {
+  stopTimers();
+  const w = d.weights, rows = d.subjects;
+  const pick = d.terms.length > 1 ? `<label class="no-print" dir="ltr" style="display:block;margin:0 0 14px;text-align:center">Term <select class="in" id="rterm" style="max-width:280px;display:inline-block">${d.terms.map((t) => `<option${t === d.termKey ? ' selected' : ''}>${esc(t)}</option>`).join('')}</select></label>` : '';
+  const n = (v) => (v == null ? '&ndash;' : v);
+  $('app').innerHTML = `<section class="panel rc" dir="rtl" lang="ar" style="font-family:var(--ar),serif">
+    <div style="text-align:center;margin-bottom:14px"><h2 style="font-size:30px;margin:0">مدرسة حماية</h2><div style="font-size:19px;font-weight:700;margin-top:6px;color:var(--deep)">${esc(termAr(d))}</div><div style="font-size:17px;margin-top:10px">بطاقة التقرير الدراسي</div></div>
+    ${pick}
+    <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:6px 0 4px"><span><b>الاسم:</b> ${esc(d.student.name)}</span><span><b>المستوى:</b> ${esc(d.student.level)}</span><span><b>الرقم:</b> <bdi>${esc(d.student.id)}</bdi></span></div>
+    ${rows.length ? `<div style="overflow-x:auto"><table class="tr rep" style="text-align:center"><thead><tr><th style="text-align:start">المادة</th><th>التقويم ١ <bdi>/${w.CA1}</bdi></th><th>التقويم ٢ <bdi>/${w.CA2}</bdi></th><th>المجموع <bdi>/${w.CA1 + w.CA2}</bdi></th><th>الاختبار <bdi>/${w.Exam}</bdi></th><th>الإجمالي <bdi>/100</bdi></th><th>التقدير</th></tr></thead><tbody>
+      ${rows.map((r) => `<tr><td style="text-align:start"><b>${esc(r.subject)}</b></td><td>${n(r.CA1)}</td><td>${n(r.CA2)}</td><td>${n(r.ca)}</td><td>${n(r.Exam)}</td><td><b>${r.total}</b>${r.complete ? '' : '<div style="font-size:11px;color:var(--muted)">غير مكتمل</div>'}</td><td>${r.grade ? `<b>${esc(r.grade)}</b> ${AR_REMARK[r.grade] || ''}` : ''}</td></tr>`).join('')}</tbody></table></div>
+      <p style="margin-top:14px;text-align:center;font-size:17px"><b>المعدل: ${d.average == null ? '-' : d.average + '%'}${d.grade ? ' (' + esc(d.grade) + ' · ' + AR_REMARK[d.grade] + ')' : ''}</b></p>
+      ${d.complete ? '' : '<p style="color:var(--muted);font-size:14px;text-align:center">بعض الدرجات لم تُرصد بعد، وستظهر النتيجة النهائية والتقدير عند اكتمالها.</p>'}`
+    : '<div class="empty" style="text-align:center">لا توجد درجات لهذا الفصل بعد. ستظهر هنا عندما يرصدها معلّمك أو ينشرها.</div>'}
+    <p style="color:var(--muted);font-size:13px;margin-top:12px;text-align:center">كل مادة من ١٠٠ درجة: التقويم الأول من ${AR_DIG(w.CA1)}، والتقويم الثاني من ${AR_DIG(w.CA2)}، والاختبار النهائي من ${AR_DIG(w.Exam)}. التقديرات: <bdi dir="rtl" style="white-space:nowrap"><span dir="ltr">A</span> = ٩٠ إلى ١٠٠</bdi> · <bdi dir="rtl" style="white-space:nowrap"><span dir="ltr">B</span> = ٧٩ إلى ٨٩</bdi> · <bdi dir="rtl" style="white-space:nowrap"><span dir="ltr">C</span> = ٦٠ إلى ٧٨</bdi> · <bdi dir="rtl" style="white-space:nowrap"><span dir="ltr">D</span> = ٥٠ إلى ٥٩</bdi> · <bdi dir="rtl" style="white-space:nowrap"><span dir="ltr">E</span> = ٤٩</bdi> · <bdi dir="rtl" style="white-space:nowrap"><span dir="ltr">F</span> = ٠ إلى ٤٨</bdi></p>
+    <p class="no-print" dir="ltr" style="margin-top:18px;text-align:center"><button class="btn btn-line btn-sm" data-list>All exams</button> <button class="btn btn-ink btn-sm" data-print>Print or save as PDF</button></p></section>`;
+  window.scrollTo(0, 0);
+}
+async function loadReport(term, btn) {
+  if (btn) btn.disabled = true;
+  try { const d = await call({ op: 'report', term: term || '' }); if (btn) btn.disabled = false; if (!d.ok) return fail(d.error); reportView(d); }
+  catch (e) { if (btn) btn.disabled = false; fail('Could not reach the school server. Please try again.'); }
+}
+
 /* ---------- clicks ---------- */
 document.addEventListener('click', async (e) => {
   if (!ST.student) return;
@@ -283,6 +317,7 @@ document.addEventListener('click', async (e) => {
     const b = t('[data-result]'); b.disabled = true;
     try { const d = await call({ op: 'result', examId: b.dataset.result }); b.disabled = false; if (!d.ok) return fail(d.error); if (d.pending) return fail('Some marking is still to be finished. Please check again soon.'); resultView(d); } catch (x) { b.disabled = false; fail('Could not reach the school server.'); }
   }
+  else if (t('[data-report]')) loadReport('', t('[data-report]'));
   else if (t('[data-list]')) { document.body.classList.remove('pr-t'); loadList(); }
   else if (t('[data-print]')) window.print();
   else if (t('[data-print-t]')) { document.body.classList.add('pr-t'); window.print(); setTimeout(() => document.body.classList.remove('pr-t'), 500); }
@@ -295,6 +330,7 @@ document.addEventListener('click', async (e) => {
   else if (r && t('[data-resume]')) { run(); }
   else if (t('[data-final]') && !ST.busy) submit(false);
 });
+document.addEventListener('change', (e) => { if (e.target.id === 'rterm') loadReport(e.target.value); });
 document.addEventListener('input', (e) => {
   const r = ST.run; if (!r || e.target.id !== 'wa') return;
   r.ans[r.qs[r.i].id] = e.target.value; remember(); const c = $('cn'); if (c) c.textContent = e.target.value.length;
