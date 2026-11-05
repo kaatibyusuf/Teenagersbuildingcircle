@@ -215,6 +215,7 @@ const GB = { term: '', level: '', sub: '', data: null, extra: [] };
 const num = (v) => (v == null ? '' : v);
 const emptyCell = () => ({ CA1: null, CA2: null, Exam: null, ca: null, total: null, complete: false, grade: '', src: {}, flag: {} });
 const cellOf = (sid, sub) => (GB.data.cells[sid] && GB.data.cells[sid][sub]) || emptyCell();
+const unitsOf = (x) => (GB.data.units && GB.data.units[x]) || GB.data.defaultUnits || 2;
 const subjectsNow = () => GB.data.subjects.concat(GB.extra.filter((x) => GB.data.subjects.indexOf(x) < 0));
 async function loadBook(btn) {
   if (!GB.term.trim() || !GB.level) { toast('Choose the term and the level.', true); return; }
@@ -239,11 +240,12 @@ function vBook() {
     <span style="display:inline-flex;gap:6px"><input class="in" id="gnew" placeholder="Add a subject" style="width:150px;padding:7px 10px"><button class="btn btn-line btn-sm" type="button" data-addsub>Add</button></span></div>`;
   let body;
   if (GB.sub === '*') {
-    body = `<div class="panel"><h2>${esc(d.level)} &middot; ${esc(d.termKey)} <span class="sub">&middot; all subjects (totals out of 100)</span></h2><div class="scroll"><table class="tbl gb"><thead><tr><th>Name</th>${subs.map((x) => `<th>${esc(x)}</th>`).join('')}<th>Average</th><th>Grade</th><th>GPA /5</th></tr></thead><tbody>
+    body = `<div class="panel"><h2>${esc(d.level)} &middot; ${esc(d.termKey)} <span class="sub">&middot; all subjects (totals out of 100)</span></h2><div class="scroll"><table class="tbl gb"><thead><tr><th>Name</th>${subs.map((x) => `<th>${esc(x)}<div class="sub" style="text-transform:none;letter-spacing:0">${unitsOf(x)} unit${unitsOf(x) === 1 ? '' : 's'}</div></th>`).join('')}<th>Average</th><th>Grade</th><th>GPA /5</th></tr></thead><tbody>
       ${d.students.map((s) => { const a = (d.cells[s.StudentID] || {})._all || {}; return `<tr><td><b>${esc(s.Name)}</b><div class="sub">${esc(s.StudentID)}</div></td>${subs.map((x) => { const c = cellOf(s.StudentID, x); return `<td>${c.total == null ? '-' : `<span class="tot">${c.total}</span>${c.complete ? ` <span class="g ${c.grade}">${c.grade}</span>` : '<small>incomplete</small>'}`}</td>`; }).join('')}<td class="tot">${a.average == null ? '-' : a.average}</td><td>${a.grade ? `<span class="g ${a.grade}">${a.grade}</span>` : ''}</td><td class="tot">${a.gpa == null ? '-' : a.gpa.toFixed(2)}</td></tr>`; }).join('')}</tbody></table></div>
       <p class="sub">The average counts only subjects that have all three scores. A grade shows once every subject is complete.</p></div>`;
   } else {
-    body = `<div class="panel"><h2>${esc(GB.sub)} <span class="sub">&middot; ${esc(d.level)} &middot; ${esc(d.termKey)}</span></h2><div class="scroll"><table class="tbl gb"><thead><tr><th>Name</th><th>CA 1 /${w.CA1}</th><th>CA 2 /${w.CA2}</th><th>CA /${w.CA1 + w.CA2}</th><th>Exam /${w.Exam}</th><th>Total /100</th><th>Grade</th></tr></thead><tbody>
+    body = `<div class="panel"><h2>${esc(GB.sub)} <span class="sub">&middot; ${esc(d.level)} &middot; ${esc(d.termKey)}</span></h2>
+      <p class="sub noprint" style="margin:0 0 10px">Course units: ${d.canSetUnits ? `<input class="in sc" type="number" min="1" max="${d.maxUnits}" step="1" data-units="${esc(GB.sub)}" value="${unitsOf(GB.sub)}" aria-label="Units for ${esc(GB.sub)}" style="width:70px"> <span>(1 to ${d.maxUnits}. The GPA weighs this course by its units. New courses start at ${d.defaultUnits}.)</span>` : `<b>${unitsOf(GB.sub)}</b> (set by an admin)`}</p><div class="scroll"><table class="tbl gb"><thead><tr><th>Name</th><th>CA 1 /${w.CA1}</th><th>CA 2 /${w.CA2}</th><th>CA /${w.CA1 + w.CA2}</th><th>Exam /${w.Exam}</th><th>Total /100</th><th>Grade</th></tr></thead><tbody>
       ${d.students.map((s) => { const c = cellOf(s.StudentID, GB.sub); return `<tr><td><b>${esc(s.Name)}</b><div class="sub">${esc(s.StudentID)}</div></td>${partCell(s.StudentID, GB.sub, 'CA1', c)}${partCell(s.StudentID, GB.sub, 'CA2', c)}<td>${num(c.ca) === '' ? '-' : c.ca}</td>${partCell(s.StudentID, GB.sub, 'Exam', c)}<td class="tot">${c.total == null ? '-' : c.total}${c.total != null && !c.complete ? '<small>incomplete</small>' : ''}</td><td>${c.grade ? `<span class="g ${c.grade}">${c.grade}</span>` : ''}</td></tr>`; }).join('')}</tbody></table></div></div>`;
   }
   return head + tabs + body + '<div class="tools noprint" style="margin-top:14px"><button class="btn btn-line" data-csv>Download CSV</button><button class="btn btn-line" data-print>Print</button></div>';
@@ -273,6 +275,8 @@ app.addEventListener('input', (e) => {
   else if (t.dataset.q != null) S.qs[+t.dataset.q][t.dataset.f] = t.value;
 });
 app.addEventListener('change', async (e) => {
+  const u = e.target.closest('[data-units]');
+  if (u) { const d = await run('units', { subject: u.dataset.units, units: u.value }, 'Units saved.'); const y = window.scrollY; const x = await run('book', { term: GB.term.trim(), level: GB.level }, ''); if (x) { GB.data = x; render(); window.scrollTo(0, y); } return; }
   const i = e.target.closest('[data-gs]'); if (!i) return;
   const d = await run('gscore', { term: GB.data.termKey, subject: i.dataset.sub, studentId: i.dataset.gs, component: i.dataset.part, score: i.value.trim() }, '');
   if (!d) { i.value = ''; }

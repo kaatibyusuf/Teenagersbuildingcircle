@@ -4,13 +4,14 @@
  * Fixed-time exams for Madrasah students, set and marked by teachers. Add this as a NEW file next to Code.gs, then run
  * Himaayah > "Set up the exam portal" once. Pages: exams.html (students) and exam-teacher.html (teachers).
  *
- * Five tabs are created for you:
+ * Six tabs are created for you:
  *
  *   Exams          ExamID, Title, Subject, Level, Start, Minutes, PassMark, OralMarks, Instructions, Shuffle, State, CreatedBy, Created, Kind, Term
  *   ExamQuestions  ExamID, QID, Type, Question, A, B, C, D, Correct, Marks, Explanation, ModelAnswer
  *   ExamSittings   ExamID, StudentID, Started, Deadline, Submitted, Answers, McqScore, WrittenScores, WrittenMarked, Comment, MarkedBy
  *   ExamOral       ExamID, StudentID, Slot, Score, Comment, MarkedBy
  *   Gradebook      Term, Subject, StudentID, Component, Score, EnteredBy, Updated   (CA scores typed in by a teacher; see below)
+ *   SubjectUnits   Subject, Units   (credit units: Hadeeth, Fiqh, Tawheed 3; Adhkaar 1; Sarf, Nahw and every other course 2. An admin can change them in the Gradebook)
  *
  * Teachers create and mark exams on exam-teacher.html, so you rarely need to touch these tabs by hand.
  *
@@ -40,7 +41,8 @@ const EX_TABS = {
   ExamQuestions: ['ExamID', 'QID', 'Type', 'Question', 'A', 'B', 'C', 'D', 'Correct', 'Marks', 'Explanation', 'ModelAnswer'],
   ExamSittings: ['ExamID', 'StudentID', 'Started', 'Deadline', 'Submitted', 'Answers', 'McqScore', 'WrittenScores', 'WrittenMarked', 'Comment', 'MarkedBy'],
   ExamOral: ['ExamID', 'StudentID', 'Slot', 'Score', 'Comment', 'MarkedBy'],
-  Gradebook: ['Term', 'Subject', 'StudentID', 'Component', 'Score', 'EnteredBy', 'Updated']
+  Gradebook: ['Term', 'Subject', 'StudentID', 'Component', 'Score', 'EnteredBy', 'Updated'],
+  SubjectUnits: ['Subject', 'Units']
 };
 const EX_LATE_MINUTES = 15;          // a student may still begin this long after the start time (their exam still ends on time)
 const EX_GRACE_SECONDS = 45;         // answers are still accepted this long after the deadline (slow networks)
@@ -64,6 +66,10 @@ function ex_table_(name) {
     sh = ss.insertSheet(name);
     sh.getRange(1, 1, 1, EX_TABS[name].length).setValues([EX_TABS[name]]).setFontWeight('bold');
     sh.setFrozenRows(1);
+    if (name === 'SubjectUnits') {                    // start with the school's own units, so they can be seen and changed here
+      const seed = [['Hadeeth', 3], ['Fiqh', 3], ['Tawheed', 3], ['Adhkaar', 1], ['Sarf', 2], ['Nahw', 2]];
+      sh.getRange(2, 1, seed.length, 2).setValues(seed);
+    }
   } else {                                           // a tab made by an older version: add any new columns at the end
     const have = sh.getRange(1, 1, 1, Math.max(1, sh.getLastColumn())).getValues()[0].map(function (h) { return String(h).trim(); });
     const miss = EX_TABS[name].filter(function (h) { return have.indexOf(h) < 0; });
@@ -362,6 +368,7 @@ function examtRequest(p) {
       if (op === 'mark') return ex_tMark_(me, p);
       if (op === 'oral') return ex_tOral_(me, p);
       if (op === 'gscore') return ex_tGscore_(me, p);
+      if (op === 'units') return ex_tUnits_(me, p);
     } finally { lock.releaseLock(); }
     return { ok: false, error: 'Unknown action.' };
   } catch (err) {
@@ -614,7 +621,26 @@ function ex_tOral_(me, p) {
 
 /* ===== GRADEBOOK (term report: CA1 /20 + CA2 /20 + Exam /60 = /100) ===== */
 const EX_PARTS = ['CA1', 'CA2', 'Exam'];
+const EX_DEFAULT_UNITS = 2;     // credit units of a course nobody has set units for
+const EX_MAX_UNITS = 6;
+/* Units the school has fixed for its courses. Spelling variations are matched too (letters only, any case). A row in the SubjectUnits tab always wins. Everything else is EX_DEFAULT_UNITS. */
+const EX_UNIT_RULES = [
+  [3, ['hadith', 'hadeeth', 'hadis', 'fiqh', 'fiqhi', 'tawheed', 'tawhid', 'tawhead']],
+  [1, ['adhkaar', 'adhkar', 'athkar', 'athkaar', 'azkar', 'azkaar', 'dhikr']],
+  [2, ['sarf', 'sarfu', 'nahw', 'nahu', 'nahwu']]
+];
 const EX_POINTS = { A: 5, B: 4, C: 3, D: 2, E: 1, F: 0 };   // grade points for the GPA / CGPA (out of 5.0); every subject counts equally
+function ex_units_() {                  // { SUBJECT: units } from the SubjectUnits tab
+  const m = {};
+  ex_table_('SubjectUnits').rows.forEach(function (r) { const u = Math.round(ex_num_(r.Units)); if (String(r.Subject || '').trim() && u >= 1) m[key_(r.Subject)] = Math.min(EX_MAX_UNITS, u); });
+  return m;
+}
+function ex_unitOf_(map, subject) {
+  if (map[key_(subject)]) return map[key_(subject)];
+  const letters = String(subject || '').toLowerCase().replace(/[^a-z]/g, '');
+  for (let i = 0; i < EX_UNIT_RULES.length; i++) if (EX_UNIT_RULES[i][1].indexOf(letters) >= 0) return EX_UNIT_RULES[i][0];
+  return EX_DEFAULT_UNITS;
+}
 function ex_r1_(n) { return Math.round(n * 10) / 10; }
 
 /* The students whose scores this teacher may see in a level: admins see the whole level, others only their own students. */
@@ -638,7 +664,7 @@ function ex_tBook_(me, p) {
   const base = { ok: true, term: schoolTerm_(), terms: terms, levels: Object.keys(levels).sort(), weights: EX_WEIGHTS, bands: [['A', '90-100'], ['B', '79-89'], ['C', '60-78'], ['D', '50-59'], ['E', '49'], ['F', '0-48']] };
   if (!term || !level) return Object.assign(base, { students: [], subjects: [], cells: {} });
   const g = ex_gbCompute_(term, ex_gStudents_(me, level), false);
-  return Object.assign(base, { term: schoolTerm_(), termKey: term, level: level, students: g.students, subjects: g.subjects, cells: g.cells });
+  return Object.assign(base, { term: schoolTerm_(), termKey: term, level: level, students: g.students, subjects: g.subjects, cells: g.cells, units: g.units, defaultUnits: EX_DEFAULT_UNITS, maxUnits: EX_MAX_UNITS, canSetUnits: tchAdmin_(me) });
 }
 
 /* The scores of some students for one term. publishedOnly (the student's own report) leaves out exams that are not published yet. */
@@ -650,7 +676,7 @@ function ex_gbCompute_(term, studs, publishedOnly) {
     const lock = LockService.getScriptLock(); lock.waitLock(20000);
     try { const st0 = ex_table_('ExamSittings'); exams.forEach(function (e) { ex_sweep_(st0, e, ex_questions_(e.ExamID)); }); } finally { lock.releaseLock(); }
   }
-  const sittings = ex_table_('ExamSittings'), oral = ex_table_('ExamOral'), manual = ex_table_('Gradebook'), now = ex_now_();
+  const sittings = ex_table_('ExamSittings'), oral = ex_table_('ExamOral'), manual = ex_table_('Gradebook'), now = ex_now_(), unitMap = ex_units_();
   const qsBy = {}; exams.forEach(function (e) { qsBy[key_(e.ExamID)] = ex_questions_(e.ExamID); });
 
   const subjects = {};
@@ -665,7 +691,7 @@ function ex_gbCompute_(term, studs, publishedOnly) {
     const sid = String(s.StudentID).trim();
     students.push({ StudentID: sid, Name: String(s.Name || ''), Level: String(s.Level || '') });
     cells[sid] = {};
-    let sum = 0, nDone = 0, pts = 0;
+    let sum = 0, nDone = 0, pts = 0, uSum = 0;
     subjectList.forEach(function (sub) {
       const cell = { CA1: null, CA2: null, Exam: null, src: {}, flag: {} };
       EX_PARTS.forEach(function (part) {
@@ -693,14 +719,16 @@ function ex_gbCompute_(term, studs, publishedOnly) {
       cell.complete = have.length === 3;
       cell.grade = cell.complete ? ex_grade_(Math.round(cell.total)) : '';
       cell.points = cell.complete ? EX_POINTS[cell.grade] : null;
-      if (cell.complete) { sum += cell.total; nDone++; pts += cell.points; }
+      cell.units = ex_unitOf_(unitMap, sub);
+      if (cell.complete) { sum += cell.total; nDone++; pts += cell.points * cell.units; uSum += cell.units; }
       cells[sid][sub] = cell;
     });
-    const o = { subjects: subjectList.length, done: nDone, average: nDone ? ex_r1_(sum / nDone) : null, points: pts, gpa: nDone ? Math.round(pts / nDone * 100) / 100 : null };
+    const o = { subjects: subjectList.length, done: nDone, average: nDone ? ex_r1_(sum / nDone) : null, points: pts, units: uSum, gpa: uSum ? Math.round(pts / uSum * 100) / 100 : null };
     o.grade = nDone === subjectList.length && nDone > 0 ? ex_grade_(Math.round(o.average)) : '';
     cells[sid]._all = o;
   });
-  return { subjects: subjectList, students: students, cells: cells };
+  const unitsOut = {}; subjectList.forEach(function (x) { unitsOut[x] = ex_unitOf_(unitMap, x); });
+  return { subjects: subjectList, students: students, cells: cells, units: unitsOut };
 }
 function ex_tStudentsIn_(studs, e) { return studs.filter(function (r) { return matches_(e.Level, [key_(r.Level), key_(r.StudentID)]); }); }
 
@@ -734,14 +762,26 @@ function ex_studentReport_(st, p) {
   ex_table_('Gradebook').rows.forEach(function (r) { if (key_(r.StudentID) === key_(sid) && String(r.Term || '').trim() && r.Score !== '' && r.Score != null) terms[String(r.Term).trim()] = true; });
   const rows = g.subjects.map(function (sub) {
     const c = cells[sub];
-    return { points: c.points, subject: sub, CA1: c.CA1, CA2: c.CA2, ca: c.ca, Exam: c.Exam, total: c.total, complete: c.complete, grade: c.grade, remark: c.grade ? EX_REMARK[c.grade] : '', absent: !!(c.flag.CA1 === 'absent' || c.flag.CA2 === 'absent' || c.flag.Exam === 'absent') };
+    return { points: c.points, units: c.units, subject: sub, CA1: c.CA1, CA2: c.CA2, ca: c.ca, Exam: c.Exam, total: c.total, complete: c.complete, grade: c.grade, remark: c.grade ? EX_REMARK[c.grade] : '', absent: !!(c.flag.CA1 === 'absent' || c.flag.CA2 === 'absent' || c.flag.Exam === 'absent') };
   }).filter(function (r) { return r.total != null; });
   const all = cells._all || {};
   let cp = 0, cn = 0;                                  // CGPA: every finished subject of every term, each counting equally
   Object.keys(terms).forEach(function (tk) {
     const gg = tk === term ? g : ex_gbCompute_(tk, [st], true), a = (gg.cells[sid] || {})._all;
-    if (a && a.done) { cp += a.points; cn += a.done; }
+    if (a && a.units) { cp += a.points; cn += a.units; }
   });
-  return { ok: true, gpa: all.gpa == null ? null : all.gpa, cgpa: cn ? Math.round(cp / cn * 100) / 100 : null, cgpaSubjects: cn, maxPoints: 5, student: { name: String(st.Name || ''), id: sid, level: String(st.Level || '') }, termKey: term, term: cur, terms: Object.keys(terms).sort().reverse(), weights: EX_WEIGHTS,
+  return { ok: true, gpa: all.gpa == null ? null : all.gpa, cgpa: cn ? Math.round(cp / cn * 100) / 100 : null, cgpaUnits: cn, units: rows.filter(function (r) { return r.complete; }).reduce(function (n, r) { return n + r.units; }, 0), maxPoints: 5, student: { name: String(st.Name || ''), id: sid, level: String(st.Level || '') }, termKey: term, term: cur, terms: Object.keys(terms).sort().reverse(), weights: EX_WEIGHTS,
     subjects: rows, average: all.average == null ? null : all.average, grade: all.grade || '', complete: rows.length > 0 && rows.every(function (r) { return r.complete; }) && all.grade !== '' };
+}
+
+/* An admin sets the credit units of a course (1 to EX_MAX_UNITS). The GPA and CGPA weigh each course by its units. */
+function ex_tUnits_(me, p) {
+  if (!tchAdmin_(me)) ex_fail_('Only an admin can set course units.');
+  const sub = ex_str_(p.subject, 60);
+  if (!sub) ex_fail_('Choose the course.');
+  const u = Math.round(Number(p.units));
+  if (!isFinite(u) || u < 1 || u > EX_MAX_UNITS) ex_fail_('Units must be a whole number from 1 to ' + EX_MAX_UNITS + '.');
+  const t = ex_table_('SubjectUnits'), row = t.rows.filter(function (r) { return key_(r.Subject) === key_(sub); })[0];
+  if (row) put_(t, row._row, 'Units', u); else append_(t, { Subject: sub, Units: u }, ['Subject']);
+  return { ok: true };
 }

@@ -87,3 +87,12 @@ Each finished subject earns grade points: **A = 5, B = 4, C = 3, D = 2, E = 1, F
 - **CGPA** = the average points of every finished subject across all the student's terms. Every subject counts equally (there are no credit units).
 - Both show on the student's Arabic report card, with each subject's points. The teacher's Gradebook "All subjects" view shows each student's term GPA, and the CSV includes it.
 - A subject counts only once CA 1, CA 2 and the Exam are all in. While some subjects are still waiting, the term GPA is marked provisional.
+
+## Course units (credit weighting)
+
+The GPA and CGPA now weigh each course by its **credit units**: GPA = (grade points x units, added up) divided by (total units). A 3-unit course counts three times as much as a 1-unit course.
+
+- The school's units: **Hadeeth, Fiqh and Tawheed 3 units; Adhkaar 1 unit; Sarf, Nahw and every other course 2 units.** The **SubjectUnits** tab (Subject, Units) is created with these rows. Common spellings are matched too (for example Hadith, Tawhid, Adhkar), so a teacher typing the subject slightly differently still gets the right units. A row in the tab always wins over the built-in list, and a course not in either gets `EX_DEFAULT_UNITS` (2).
+- An **admin** sets a course's units in the Gradebook: open the subject and change **Course units** (1 to 6). Other teachers see the units but cannot change them.
+- Changing a course's units changes the GPA and CGPA of every term that includes that course.
+- The student's report card shows each course's units and the total units.
