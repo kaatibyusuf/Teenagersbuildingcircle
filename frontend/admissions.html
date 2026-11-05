@@ -34,59 +34,84 @@
 <!-- Vercel Analytics: counts visits once enabled in the Vercel dashboard -->
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
 <script defer src="/_vercel/insights/script.js"></script>
+<style>
+.site .h-sec .h-head{margin-bottom:44px}
+.site #steps .step-i,.site #requirements .req,.site #fees .fee-group,.site .res-strip,.site .card-light{border:0;box-shadow:0 0 0 1px rgba(19,33,43,.08)}
+.site .step-i h3,.site .req h3,.site .fee-group h3,.site .levels-head,.site .card-dark h3,.site .card-light h3,.site .res-strip h3{font-family:var(--h-f);font-weight:600;letter-spacing:-.015em;color:var(--h-text)}
+.site .card-dark h3{color:#fff}
+.site .step-i .n,.site .step-i::before{background:var(--h-ink)}
+.site .more{color:var(--h-tide)}
+@media(max-width:620px){.site .h-sec .h-head{margin-bottom:30px}}
+
+</style>
 </head>
 <body>
 <script src="js/ticker.js"></script>
 <svg width="0" height="0" aria-hidden="true" class="sprite"><symbol id="lk" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></g></symbol></svg>
 
-<a class="home-fab" href="./" aria-label="Back to home">
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
-  Home
-</a>
+<svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
+  <symbol id="lg" viewBox="0 0 377.21 459.6"><path d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></symbol>
+  <symbol id="go" viewBox="0 0 24 24"><path d="M7 17L17 7M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="down" viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="tick" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="spark" viewBox="0 0 24 24"><path d="M12 3l1.8 5.4L19 10l-5.2 1.6L12 17l-1.8-5.4L5 10l5.2-1.6z" fill="currentColor"/></symbol>
+  <symbol id="wa" viewBox="0 0 24 24"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.7-5.2A8.5 8.5 0 1 1 21 11.5z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="ig" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/></symbol>
+  <symbol id="x" viewBox="0 0 24 24"><path fill="currentColor" d="M18.24 2H21.5l-7.3 8.34L22.8 22h-6.73l-5.27-6.9L4.7 22H1.4l7.8-8.92L1 2h6.9l4.76 6.3L18.24 2zm-1.18 18h1.86L7.03 3.9H5.03L17.06 20z"/></symbol>
+  <symbol id="li" viewBox="0 0 24 24"><path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></symbol>
+</svg>
+<!-- ============ Hero ============ -->
+<header class="h-hero" id="top">
+  <div class="h-aura" aria-hidden="true"></div>
 
-<nav class="h-nav" aria-label="Main">
-  <div class="h-pill">
-    <a class="h-brand" href="./"><svg width="20" height="25" viewBox="0 0 377.21 459.6" aria-hidden="true"><path fill="currentColor" d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>Himaayah Schools</a>
-    <div class="h-links" id="navLinks">
-<div class="dd">
-<button aria-expanded="false" aria-haspopup="true" class="dd-btn" type="button">Programmes
-          <svg aria-hidden="true" fill="none" height="12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.8" viewbox="0 0 24 24" width="12"><path d="M6 9l6 6 6-6"></path></svg></button>
-<div class="dd-menu">
-<a href="programmes">All programmes</a>
-<a href="teenagers-building-circle">Teenagers Building Circle</a>
-<a href="madrasah">Madrasah</a>
-<a href="academy">Academy</a>
-<a href="skills-school">Skills School</a>
-</div>
-</div>
-<a aria-current="page" href="admissions">Admissions</a>
-<a href="about">About</a>
-<a href="success-stories">Success Stories</a>
+  <nav class="h-nav" aria-label="Main">
+    <div class="h-pill">
+      <a class="h-brand" href="./"><svg width="20" height="25" aria-hidden="true"><use href="#lg"/></svg>Himaayah Schools</a>
+      <div class="h-links" id="navLinks">
+        <div class="dd">
+          <button type="button" class="dd-btn" aria-haspopup="true" aria-expanded="false">Programmes <svg width="11" height="11" aria-hidden="true"><use href="#chev"/></svg></button>
+          <div class="dd-menu">
+            <a href="programmes">All programmes</a>
+            <a href="teenagers-building-circle">Teenagers Building Circle</a>
+            <a href="madrasah">Madrasah</a>
+            <a href="academy">Academy</a>
+            <a href="skills-school">Skills School</a>
+          </div>
+        </div>
+        <a aria-current="page" href="admissions">Admissions</a>
+        <a href="about">About</a>
+        <a href="success-stories">Success Stories</a>
 <a href="articles">Articles</a>
-<a href="faq">FAQ</a>
-<a href="contact">Contact</a>
-<a class="h-btn h-btn-light h-nav-cta" href="enroll">Enroll Now</a>
-</div>
-    <button class="h-tog" id="navToggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span></button>
-  </div>
-</nav>
-
-<header class="hero">
-  <div class="wrap hero-copy">
-    <h1 data-dot-word="Admission">Admission, step by step.</h1>
-    <p>Whichever programme you choose, getting in follows the same clear path: choose, get placed, enroll, pay, and confirm. Here is everything you need before you begin.</p>
-    <div class="hero-actions">
-      <a href="enroll" class="btn btn-ink lift">Start enrollment</a>
-      <a href="https://wa.me/2348066043320?text=Assalaamu%20alaykum.%20I%27d%20like%20to%20ask%20about%20admission%20at%20Himaayah%20Schools." target="_blank" rel="noopener" class="btn btn-line lift">Ask on WhatsApp</a>
-      <a href="resources/himaayah-prospectus-2026-2027.pdf" download="Himaayah-Schools-Prospectus-2026-2027.pdf" class="btn btn-line lift btn-dl"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg><span>Download prospectus</span></a>
+        <a href="faq">FAQ</a>
+        <a href="contact">Contact</a>
+        <div class="dd dd-r">
+          <button type="button" class="dd-btn" aria-haspopup="true" aria-expanded="false">Login <svg width="11" height="11" aria-hidden="true"><use href="#chev"/></svg></button>
+          <div class="dd-menu"><a href="dashboard">Student login</a><a href="teacher">Teacher login</a></div>
+        </div>
+        <a href="enroll" class="h-btn h-btn-light h-nav-cta">Enroll Now</a>
+      </div>
+      <button class="h-tog" id="navToggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="h-hero-in">
+    <a class="h-badge" href="#steps"><em>Admissions</em>Five clear steps<svg width="13" height="13" aria-hidden="true"><use href="#go"/></svg></a>
+    <h1><span>Admission,</span> <span class="h-soft">step by step.</span></h1>
+    <p class="h-lead">Whichever programme you choose, getting in follows the same clear path: choose, get placed, enroll, pay, and confirm. Here is everything you need before you begin.</p>
+    <div class="h-acts h-acts-c" style="margin-top:34px">
+      <a href="enroll" class="h-btn h-btn-light">Start enrollment<span class="h-go"><svg width="14" height="14" aria-hidden="true"><use href="#go"/></svg></span></a>
+      <a href="https://wa.me/2348066043320?text=Assalaamu%20alaykum.%20I%27d%20like%20to%20ask%20about%20admission%20at%20Himaayah%20Schools." target="_blank" rel="noopener" class="h-btn h-btn-glass">Ask on WhatsApp</a>
+      <a href="resources/himaayah-prospectus-2026-2027.pdf" download="Himaayah-Schools-Prospectus-2026-2027.pdf" class="h-btn h-btn-glass h-btn-dl">Download prospectus</a>
     </div>
   </div>
 </header>
 
-<section class="sec sec-first" id="steps">
-  <div class="wrap">
-    <div class="head reveal">
-      <h2>Five steps from interest to first class.</h2>
+
+<section class="h-sec h-paper" id="steps">
+  <div class="h-wrap">
+    <div class="h-head h-head-c">
+      <p class="h-eye"><i class="h-dot"></i>The path</p>
+      <h2><span>Five steps from interest to first class.</span></h2>
       <p>It takes about two minutes online. Pay by card and your place is confirmed straight away; bank transfers are usually confirmed within a few hours.</p>
     </div>
     <div class="steps">
@@ -99,10 +124,11 @@
   </div>
 </section>
 
-<section class="sec" id="requirements">
-  <div class="wrap">
-    <div class="head reveal">
-      <h2>What each programme asks of you.</h2>
+<section class="h-sec h-paper" id="requirements">
+  <div class="h-wrap">
+    <div class="h-head h-head-c">
+      <p class="h-eye"><i class="h-dot"></i>Requirements</p>
+      <h2><span>What each programme asks of you.</span></h2>
       <p>Some programmes simply need the right age or level. The Madrasah has admission scores, set out in full below.</p>
     </div>
     <div class="req-grid">
@@ -152,10 +178,11 @@
   </div>
 </section>
 
-<section class="sec" id="fees">
-  <div class="wrap">
-    <div class="head reveal">
-      <h2>Fees at a glance.</h2>
+<section class="h-sec h-paper" id="fees">
+  <div class="h-wrap">
+    <div class="h-head h-head-c">
+      <p class="h-eye"><i class="h-dot"></i>Fees</p>
+      <h2><span>Fees at a glance.</span></h2>
       <p>All prices are in Nigerian naira. A one-time registration fee of ₦3,000 is added to your first payment, whatever the programme. Tap Enroll to start with that plan already selected.</p>
     </div>
     <div class="fee-cols">
@@ -194,8 +221,8 @@
   </div>
 </section>
 
-<section class="sec" id="before-you-pay">
-  <div class="wrap two">
+<section class="h-sec h-paper" id="before-you-pay" style="padding-top:0">
+  <div class="h-wrap two">
     <div class="card-dark reveal">
       <span class="card-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12a8 8 0 0 1 14-5.3L20 9"/><path d="M20 4v5h-5"/><path d="M20 12a8 8 0 0 1-14 5.3L4 15"/><path d="M4 20v-5h5"/></svg></span>
       <h3>Know our refund rule before you pay.</h3>
@@ -211,18 +238,20 @@
   </div>
 </section>
 
-<section class="sec res-strip-sec"><div class="wrap">
+<section class="h-sec h-paper res-strip-sec" style="padding-top:0"><div class="h-wrap">
   <div class="res-strip reveal"><a href="resources"><img src="resources/himaayah-prospectus-2026-2027-cover.jpg" alt="Cover of the Himaayah Schools Prospectus" width="640" height="905" loading="lazy"></a>
     <div><span class="res-tag">Prospectus 2026–2027</span><h3>Read it all in one place.</h3><p>Our programmes, Madrasah levels, Academy results, every fee, the admission steps and our policies, in a 30-page PDF you can print or share with family.</p></div>
     <a class="btn btn-ink" href="resources/himaayah-prospectus-2026-2027.pdf" download="Himaayah-Schools-Prospectus-2026-2027.pdf"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg><span>Download prospectus</span></a></div>
 </div></section>
 
-<section class="sec">
-  <div class="wrap">
-    <div class="cta-box reveal">
-      <h2>Ready to begin? Your seat is open.</h2>
-      <p>Enrollment takes about two minutes. We confirm your place as soon as we see your receipt.</p>
-      <div class="acts"><a href="enroll" class="btn btn-ink lift">Start enrollment</a><a href="exam-calendars" class="btn btn-line lift">See exam dates</a></div>
+<section class="h-cta" aria-label="Get started">
+  <div class="h-cta-aura" aria-hidden="true"></div>
+  <div class="h-wrap">
+    <h2><span>Ready to begin? Your seat is open.</span></h2>
+    <p>Enrollment takes about two minutes. We confirm your place as soon as we see your receipt.</p>
+    <div class="h-acts h-acts-c">
+      <a href="enroll" class="h-btn h-btn-light">Start enrollment<span class="h-go"><svg width="14" height="14" aria-hidden="true"><use href="#go"/></svg></span></a>
+      <a href="exam-calendars" class="h-btn h-btn-glass">See exam dates</a>
     </div>
   </div>
 </section>
@@ -298,93 +327,6 @@
   } else { items.forEach((el) => el.classList.add('in')); }
 </script>
 
-<script>
-  // Heading: letters reveal one by one, then a ball hops along the tops of the
-  // letters and lands as the dot on the first "i" of the word in data-dot-word.
-  (function () {
-    const h = document.querySelector('.hero h1'); if (!h || document.documentElement.lang === 'ar') return;  // Arabic keeps the heading whole
-    const text = h.textContent.trim(), word0 = (h.dataset.dotWord || '').toLowerCase();
-    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    h.setAttribute('aria-label', text);
-    h.textContent = '';
-    const hop = []; let target = null, n = 0;
-    text.split(' ').forEach((word, wi, arr) => {
-      const w = document.createElement('span'); w.className = 'w'; w.setAttribute('aria-hidden', 'true');
-      [...word].forEach((c) => {
-        const sp = document.createElement('span'); sp.className = 'ch';
-        let ch = c;
-        if (!target && word0 && word.toLowerCase().startsWith(word0) && c === 'i') { ch = 'ı'; target = sp; }
-        sp.textContent = ch; sp.style.setProperty('--d', (n++ * 38) + 'ms');
-        w.appendChild(sp);
-        if (/[A-Za-z]/.test(ch) && !target) hop.push(sp);
-      });
-      h.appendChild(w);
-      if (wi < arr.length - 1) h.appendChild(document.createTextNode(' '));
-    });
-    if (!target) return;
-    const ball = document.createElement('span'); ball.className = 'ball'; ball.setAttribute('aria-hidden', 'true');
-    h.appendChild(ball);
-
-    const ctx = document.createElement('canvas').getContext('2d');
-    function geo() {
-      const cs = getComputedStyle(h), f = parseFloat(cs.fontSize);
-      ctx.font = cs.fontWeight + ' ' + cs.fontSize + ' ' + cs.fontFamily;
-      const m = ctx.measureText('Hg'), fa = m.fontBoundingBoxAscent, fd = m.fontBoundingBoxDescent;
-      const hr = h.getBoundingClientRect(), dm = ctx.measureText('ı'), stem = (dm.actualBoundingBoxRight || 0) + (dm.actualBoundingBoxLeft || 0);
-      const size = Math.max(6, stem > 2 && stem < f * 0.3 ? stem * 1.05 : f * 0.15);
-      const base = (r) => (fa ? r.top + (r.height - (fa + fd)) / 2 + fa : r.top + r.height * 0.8);
-      const at = (sp) => {
-        const r = sp.getBoundingClientRect(), asc = ctx.measureText(sp.textContent).actualBoundingBoxAscent || f * 0.7;
-        return { x: r.left + r.width / 2 - hr.left, y: base(r) - asc - size / 2 - 1 - hr.top };
-      };
-      const dot = () => {
-        const r = target.getBoundingClientRect(), ai = ctx.measureText('i').actualBoundingBoxAscent || f * 0.75;
-        return { x: r.left + r.width / 2 - hr.left, y: base(r) - ai + size / 2 - hr.top };
-      };
-      return { f, size, at, dot };
-    }
-    const tf = (p, extra) => 'translate(' + p.x + 'px,' + p.y + 'px) translate(-50%,-50%)' + (extra || '');
-    let final = null;
-    function place() { const g = geo(); ball.style.width = ball.style.height = g.size + 'px'; final = g.dot(); ball.style.transform = tf(final); ball.style.opacity = 1; }
-
-    function run() {
-      const g = geo(); ball.style.width = ball.style.height = g.size + 'px';
-      const pts = hop.map(g.at); final = g.dot(); pts.push(final);
-      const start = { x: pts[0].x - g.f * 0.9, y: pts[0].y - g.f * 1.3 };
-      const frames = [], add = (p, t) => frames.push({ p, t });
-      let t = 0; add(start, 0);
-      t += 380; add(pts[0], t);
-      for (let i = 1; i < pts.length; i++) {
-        const a = pts[i - 1], b = pts[i], last = i === pts.length - 1;
-        const dist = Math.hypot(b.x - a.x, b.y - a.y);
-        const H = g.f * (last ? 0.55 : 0.22) + dist * 0.12, d = last ? 540 : Math.min(320, 150 + dist * 0.25);
-        [0.2, 0.4, 0.6, 0.8, 1].forEach((k) => {
-          const x = a.x + (b.x - a.x) * k, y = a.y + (b.y - a.y) * k - 4 * H * k * (1 - k);
-          add({ x, y }, t + d * k);
-        });
-        t += d;
-      }
-      ball.style.opacity = 1;
-      const anim = ball.animate(frames.map((fr) => ({ transform: tf(fr.p), offset: fr.t / t })), { duration: t, easing: 'linear', fill: 'forwards' });
-      anim.onfinish = () => {
-        ball.style.transform = tf(final); anim.cancel();
-        const sq = ball.animate([
-          { transform: tf(final, ' scale(1.5,.55)') },
-          { transform: tf(final, ' scale(.85,1.15)') },
-          { transform: tf(final, ' scale(1)') }
-        ], { duration: 380, easing: 'cubic-bezier(.2,.7,.2,1)' });
-        sq.onfinish = () => ball.classList.add('landed');
-      };
-    }
-
-    const revealMs = n * 38 + 700;
-    (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(() => {
-      if (reduce || !ball.animate) { place(); return; }
-      setTimeout(run, revealMs);
-    });
-    let rz; addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { if (final) place(); }, 120); });
-  })();
-</script>
 
 <div class="wa-widget" id="waWidget">
   <div class="wa-menu" id="waMenu">

@@ -104,5 +104,9 @@ HS_I18N.add({
 "Get confirmed": "تأكيد المقعد",
 "Card payments are confirmed straight away, and your student login is emailed to you. After a transfer, the form opens WhatsApp with a message already written for your plan: attach your receipt and send, and we confirm your place, usually within a few hours.": "يُؤكَّد الدفع بالبطاقة فورًا وتُرسل إليك بيانات دخول الطالب بالبريد. وبعد التحويل يفتح النموذج واتساب برسالة مكتوبة مسبقًا لخطتك: أرفق الإيصال وأرسله، ونؤكد مقعدك عادةً خلال ساعات قليلة.",
 "re:^Buy for ₦([\\d,]+)$": "اشترِ بـ $1 ₦",
-"re:^₦([\\d,]+) guide$": "دليل بـ $1 ₦"
+"re:^₦([\\d,]+) guide$": "دليل بـ $1 ₦",
+"Five clear steps": "خمس خطوات واضحة",
+"Admission,": "القبول،",
+"step by step.": "خطوةً بخطوة.",
+"The path": "الطريق"
 });
