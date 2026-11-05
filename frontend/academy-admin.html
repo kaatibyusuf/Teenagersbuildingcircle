@@ -36,6 +36,7 @@
 <main id="app" class="wrap" hidden></main>
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
+<script src="js/reset-panel.js"></script>
 <script>
 /* ===== SETTINGS ===== Same Apps Script web app as the other portals. */
 const API_URL = 'https://script.google.com/macros/s/AKfycby0AsifBuB_Ad7g1SjDXCipaDU27-BrzYWf67muw5jeY_C0_0uz8AhQYYXdiNRQhvqX/exec';
@@ -48,7 +49,7 @@ const fdate = (iso, t) => { const d = new Date(iso); return isNaN(d) ? esc(iso |
 const pct = (x) => x == null ? '–' : x + '%';
 const num = (x) => x == null ? '–' : x;
 const plural = (n, w) => n + ' ' + (n === 1 ? w : /[^aeiou]y$/.test(w) ? w.slice(0, -1) + 'ies' : /(s|sh|ch|x)$/.test(w) ? w + 'es' : w + 's');
-const TABS = [['reports', 'Reports'], ['students', 'Students'], ['mentors', 'Mentors'], ['families', 'Families'], ['assign', 'Assign'], ['groups', 'Class groups'], ['payments', 'Payments'], ['account', 'Account']];
+const TABS = [['reports', 'Reports'], ['students', 'Students'], ['mentors', 'Mentors'], ['families', 'Families'], ['assign', 'Assign'], ['groups', 'Class groups'], ['payments', 'Payments'], ['reset', 'Reset code'], ['account', 'Account']];
 let D = null;
 const S = { tab: 'reports', q: '', filter: 'all', sel: {}, open: {}, created: null, addOpen: false };
 
@@ -265,7 +266,7 @@ function vAccount() {
   <button class="btn btn-ink" type="submit">Change my code</button></form></article>`;
 }
 
-const VIEWS = { families: vFamilies, reports: vReports, students: vStudents, mentors: vMentors, assign: vAssign, groups: vGroups, payments: vPayments, account: vAccount };
+const VIEWS = { families: vFamilies, reports: vReports, students: vStudents, mentors: vMentors, assign: vAssign, groups: vGroups, payments: vPayments, reset: () => ResetPanel.view(), account: vAccount };
 function render() {
   document.querySelectorAll('details[data-k]').forEach((x) => { S.open[x.dataset.k] = x.open; });
   S.addOpen = !!S.open.add;
@@ -293,6 +294,7 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeView(
 
 /* ---------- events ---------- */
 const app = $('app');
+ResetPanel.init({ role: 'academy', api, toast, root: app });
 const updCount = () => { const el = $('selCount'); if (el) el.textContent = Object.keys(S.sel).filter((k) => S.sel[k]).length + ' selected'; };
 app.addEventListener('click', async (e) => {
   const b = e.target.closest('[data-act]'); if (!b) return;
@@ -371,7 +373,7 @@ async function signIn(id, code, silent) {
 }
 $('demoNote').hidden = true;
 $('lf').addEventListener('submit', (e) => { e.preventDefault(); const id = $('tid').value.trim(), code = $('tcode').value.trim(); if (!id || !code) { $('err').textContent = 'Enter your Admin ID and access code.'; return; } signIn(id, code); });
-$('out').addEventListener('click', () => { closeView(); sessionStorage.removeItem(KEY); D = null; S.tab = 'reports'; S.sel = {}; S.created = null; app.hidden = true; app.innerHTML = ''; $('out').hidden = true; $('login').hidden = false; $('tcode').value = ''; });
+$('out').addEventListener('click', () => { ResetPanel.reset(); closeView(); sessionStorage.removeItem(KEY); D = null; S.tab = 'reports'; S.sel = {}; S.created = null; app.hidden = true; app.innerHTML = ''; $('out').hidden = true; $('login').hidden = false; $('tcode').value = ''; });
 { const c = creds(); if (c.id && c.code) signIn(c.id, c.code, true); }
 </script>
 <script>

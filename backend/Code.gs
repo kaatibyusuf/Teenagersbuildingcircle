@@ -265,6 +265,7 @@ function doPost(e) {
     if (p.action === 'cards') return json_(cardsRequest(p));                             // library and ID cards (Cards.gs)
     if (p.action === 'library') return json_(libraryRequest(p));                         // Madrasah library (Library.gs)
     if (p.action === 'tracker') return json_(trackerRequest(p));                         // daily revision tracker (Tracker.gs)
+    if (/^rs_/.test(String(p.action || ''))) return json_(resetsFromRequest(p));          // reset access codes, admin portals (Resets.gs)
     if (p.action === 'exams') return json_(examsRequest(p));                             // Madrasah exams, student side (Exams.gs)
     if (p.action === 'examt') return json_(examtRequest(p));                             // Madrasah exams, teacher side (Exams.gs)
     if (p.action === 'quiz') return json_(quizRequest(p));                               // student quizzes (Quiz.gs)

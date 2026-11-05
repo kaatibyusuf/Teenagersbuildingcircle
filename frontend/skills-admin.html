@@ -36,6 +36,7 @@
 <main id="app" class="wrap" hidden></main>
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
+<script src="js/reset-panel.js"></script>
 <script>
 /* ===== SETTINGS =====
    Same Apps Script web app as the other portals. While it is empty the page runs in DEMO mode. */
@@ -45,7 +46,7 @@ const $ = (id) => document.getElementById(id);
 const esc = (t) => String(t ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const naira = (n) => '₦' + Number(n || 0).toLocaleString('en-NG');
 const fdate = (iso, t) => { const d = new Date(iso); return isNaN(d) ? esc(iso || 'Not set') : d.toLocaleDateString('en-GB', {day:'numeric', month:'short', year:'numeric'}) + (t ? ', ' + d.toLocaleTimeString('en-GB', {hour:'2-digit', minute:'2-digit'}) : ''); };
-const TABS = [['payments', 'Payments'], ['assign', 'Assign'], ['account', 'Account']];
+const TABS = [['payments', 'Payments'], ['assign', 'Assign'], ['reset', 'Reset code'], ['account', 'Account']];
 let D = null;
 const S = { tab: 'payments', q: '', filter: 'all', sel: {} };
 
@@ -133,7 +134,7 @@ function vAccount() {
   <button class="btn btn-ink" type="submit">Change my code</button></form></article>`;
 }
 
-const VIEWS = { payments: vPayments, assign: vAssign, account: vAccount };
+const VIEWS = { payments: vPayments, assign: vAssign, reset: () => ResetPanel.view(), account: vAccount };
 function render() {
   const a = D.admin, od = count((s) => s.PaymentStatus === 'Overdue'), nt = count((s) => !s.TeacherID);
   $('app').innerHTML = `<section class="greet"><div><small>Assalaamu alaykum</small><h1>${esc(a.Name)}</h1>
@@ -150,6 +151,7 @@ function applyFilter() {
 
 /* ---------- events ---------- */
 const app = $('app');
+ResetPanel.init({ role: 'skills', api, toast, root: app });
 app.addEventListener('click', (e) => {
   const b = e.target.closest('[data-act]'); if (!b) return;
   if (b.dataset.act === 'tab') { S.tab = b.dataset.t; render(); window.scrollTo(0, 0); }
@@ -200,7 +202,7 @@ async function signIn(id, code, silent) {
 }
 $('demoNote').hidden = !!API_URL;
 $('lf').addEventListener('submit', (e) => { e.preventDefault(); const id = $('tid').value.trim(), code = $('tcode').value.trim(); if (!id || !code) { $('err').textContent = 'Enter your Admin ID and access code.'; return; } signIn(id, code); });
-$('out').addEventListener('click', () => { sessionStorage.removeItem('hcsa'); D = null; S.tab = 'payments'; S.sel = {}; app.hidden = true; app.innerHTML = ''; $('out').hidden = true; $('login').hidden = false; $('tcode').value = ''; });
+$('out').addEventListener('click', () => { ResetPanel.reset(); sessionStorage.removeItem('hcsa'); D = null; S.tab = 'payments'; S.sel = {}; app.hidden = true; app.innerHTML = ''; $('out').hidden = true; $('login').hidden = false; $('tcode').value = ''; });
 
 /* ---------- demo mode (only used while API_URL is empty) ---------- */
 let DEMO = null;

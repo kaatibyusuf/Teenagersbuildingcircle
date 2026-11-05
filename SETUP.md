@@ -62,7 +62,7 @@ Feature guides: `backend/SETUP-STUDENT-TOOLS.md` (library, tracker, quizzes), `b
 - **Closing or opening a plan:** the closed-plan lists in `enroll.html`, `api/checkout.mjs` and `EN_CLOSED_PLANS` in `Enrol.gs`.
 - **A programme that is not open yet:** add `opens: 'YYYY-MM-DD'` to the plan in `enroll.html` and `api/checkout.mjs`, and `'Plan name': 'YYYY-MM-DD'` to `EN_OPENS` in `Enrol.gs`. Until that day the plan shows "Opens <date>", and the form, card checkout and the sheet all refuse it. It opens by itself on the date; later you can delete the date.
 - **Arabic text:** edit `i18n/ar/<page>.txt`, run `python3 i18n/build_ar.py`, then deploy `frontend/js/lang/ar/`.
-- **A staff member forgot their code:** reset it in the admin portal; it makes a new code and shows it once.
+- **Someone forgot their code:** an admin opens the **Reset code** tab in their portal, finds the person and presses Reset. A new code is shown once (and can be emailed or sent on WhatsApp). The owner can reset anyone; see `backend/SETUP-RESETS.md` for who can reset whom.
 
 ## 5. Checklist before going live
 

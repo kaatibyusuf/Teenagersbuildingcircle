@@ -34,12 +34,13 @@ first payment. `pay` handles later fees. Staff set a row to Confirmed and the st
 | `skills-dashboard`, `skills-tutor`, `skills-admin` | Skills School | `Skills.gs` |
 | `tbc-dashboard`, `tbc-facilitator`, `tbc-admin` | Teenagers Building Circle | `TBC.gs` |
 | `exams` (students), `exam-teacher` (teachers) | Madrasah exams | `Exams.gs` |
+| "Reset code" tab on every admin page | Admin gives a forgotten code a new value | `Resets.gs` |
 | `librarian` | Librarian | `Librarian.gs` |
 | `admin`, `owner` | Administrators and owner | `Admin.gs`, `Owner.gs` |
 | `my-card`, `verify` | Library and ID cards (everyone) | `Cards.gs` |
 
 **Other backend files:** `Enrol.gs` (enrolments), `CardPayments.gs` (Bachs payments), `Fees.gs` (later fees), `Credentials.gs`
-(login emails), `Codes.gs` (access-code protection), `Referrals.gs` and `Ambassadors.gs`, `Sponsors.gs`, `Bootcamp.gs`,
+(login emails), `Codes.gs` (access-code protection), `Resets.gs` (admin-assigned code resets), `Referrals.gs` and `Ambassadors.gs`, `Sponsors.gs`, `Bootcamp.gs`,
 `Trials.gs`, `PlacementTests.gs`, `Timetable.gs`, `Reports.gs`, `Nudges.gs`, `Newsletter.gs`, `Waitlist.gs`, `Comments.gs`,
 `Testimonials.gs`, `Recordings.gs`, `Routine.gs`, `Guides.gs`.
 

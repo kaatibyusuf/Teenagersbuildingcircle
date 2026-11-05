@@ -35,6 +35,7 @@
 <main id="app" class="wrap" hidden></main>
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
+<script src="js/reset-panel.js"></script>
 <script>
 /* ===== SETTINGS ===== Same Apps Script web app as the other portals. */
 const API_URL = 'https://script.google.com/macros/s/AKfycby0AsifBuB_Ad7g1SjDXCipaDU27-BrzYWf67muw5jeY_C0_0uz8AhQYYXdiNRQhvqX/exec';
@@ -48,7 +49,7 @@ const fdate = (iso, t) => { if (!iso) return '–'; const d = new Date(iso); ret
 const mname = (m) => new Date(m + '-01T00:00').toLocaleDateString('en-GB', { month: 'short' });
 const plural = (n, w) => n + ' ' + (n === 1 ? w : /[^aeiou]y$/.test(w) ? w.slice(0, -1) + 'ies' : /(s|sh|ch|x)$/.test(w) ? w + 'es' : w + 's');
 const change = (a, b) => b ? (a >= b ? '+' : '') + Math.round(100 * (a - b) / b) + '% on last month' : a ? 'none last month' : '';
-const TABS = [['overview', 'Overview'], ['fees', 'Fees'], ['placement', 'Placement tests'], ['referrals', 'Referrals'], ['sponsors', 'Sponsors'], ['stories', 'Stories'], ['growth', 'Growth'], ['account', 'Account']];
+const TABS = [['overview', 'Overview'], ['fees', 'Fees'], ['placement', 'Placement tests'], ['referrals', 'Referrals'], ['sponsors', 'Sponsors'], ['stories', 'Stories'], ['growth', 'Growth'], ['reset', 'Reset code'], ['account', 'Account']];
 let D = null;
 const S = { tab: 'overview', open: {} };
 
@@ -243,7 +244,7 @@ function vStories() {
   return `<div class="grid"><article class="c w12"><h2>Stories from families</h2><p class="sub">New stories are not on the website until you approve them. Approved ones appear on Success stories, featured ones first. To ask every family for a story, run Himaayah → Ask families for a testimonial in the sheet.</p>
     ${L.length ? L.map(card).join('') : empty('No stories yet.')}</article></div>`;
 }
-const VIEWS = { overview: vOverview, fees: vFees, placement: vPlacementTab, stories: vStories, referrals: vReferrals, sponsors: vSponsors, growth: vGrowth, account: vAccount };
+const VIEWS = { overview: vOverview, fees: vFees, placement: vPlacementTab, stories: vStories, referrals: vReferrals, sponsors: vSponsors, growth: vGrowth, reset: () => ResetPanel.view(), account: vAccount };
 function render() {
   document.querySelectorAll('details[data-k]').forEach((x) => { S.open[x.dataset.k] = x.open; });
   const k = D.kpi;
@@ -257,6 +258,7 @@ function render() {
 
 /* ---------- events ---------- */
 const app = $('app');
+ResetPanel.init({ role: 'owner', api, toast, root: app });
 app.addEventListener('click', async (e) => {
   const b = e.target.closest('[data-act]'); if (!b) return;
   const a = b.dataset.act;
@@ -303,7 +305,7 @@ async function signIn(id, code, silent) {
   btn.disabled = false; btn.textContent = 'Sign in';
 }
 $('lf').addEventListener('submit', (e) => { e.preventDefault(); const id = $('tid').value.trim(), code = $('tcode').value.trim(); if (!id || !code) { $('err').textContent = 'Enter your Owner ID and access code.'; return; } signIn(id, code); });
-$('out').addEventListener('click', () => { sessionStorage.removeItem(KEY); D = null; S.tab = 'overview'; app.hidden = true; app.innerHTML = ''; $('out').hidden = true; $('login').hidden = false; $('tcode').value = ''; });
+$('out').addEventListener('click', () => { ResetPanel.reset(); sessionStorage.removeItem(KEY); D = null; S.tab = 'overview'; app.hidden = true; app.innerHTML = ''; $('out').hidden = true; $('login').hidden = false; $('tcode').value = ''; });
 { const c = creds(); if (c.id && c.code) signIn(c.id, c.code, true); }
 </script>
 <script>
