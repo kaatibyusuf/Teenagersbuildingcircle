@@ -47,7 +47,8 @@ first payment. `pay` handles later fees. Staff set a row to Confirmed and the st
 - **Prices are set in three places and must match:** the plan list in `frontend/enroll.html`, `PLANS` in
   `frontend/api/checkout.mjs`, and `EN_PLANS` in `backend/Enrol.gs`. The registration fee is also in three places
   (`REG_FEE` in `enroll.html` and `checkout.mjs`, `EN_REG_FEE` in `Enrol.gs`). Closed plans are listed in `enroll.html`,
-  `checkout.mjs` and `EN_CLOSED_PLANS` in `Enrol.gs`.
+  `checkout.mjs` and `EN_CLOSED_PLANS` in `Enrol.gs`. A programme that has not opened yet gets an opening date in the same three places
+  (`opens` in `enroll.html` and `checkout.mjs`, `EN_OPENS` in `Enrol.gs`); it is refused everywhere until that day.
 - **Access codes are stored as hashes** and cannot be read back. Reset a code in the admin portal instead (see
   `backend/SETUP-CODES.md`).
 - **The Apps Script web app URL is public** (it is in the page code). Every backend action must check the person's access

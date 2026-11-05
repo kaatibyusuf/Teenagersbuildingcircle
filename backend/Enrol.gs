@@ -20,6 +20,8 @@ const EN_MAX_PER_HOUR = 8;       // new submissions allowed per email address pe
 const EN_CLOSED_PLANS = ['Madrasah \u2014 Hifdh Only (Group)', 'Madrasah \u2014 Full Madrasah (Group)', 'Madrasah \u2014 One-Year Hifdh'];   // keep in step with enroll.html
 const EN_INVITES = { 'Madrasah \u2014 One-Year Hifdh': 'HIFDH-1Y7K' };   // invite code that opens a closed plan for current students (keep in step with api/checkout.mjs)
 
+const EN_OPENS = {};   // plan name -> 'YYYY-MM-DD' it opens (West Africa time). Before then it cannot be enrolled in. Keep in step with enroll.html and api/checkout.mjs. Example: { 'Skills School \u2014 Graphic Design': '2026-12-01' }
+
 const EN_REG_FEE = 3000;   // one-time registration fee on the first payment (waived for invited returning students); keep in step with enroll.html and api/checkout.mjs
 
 const EN_HEADERS = ['Ref', 'Submitted', 'Status', 'StudentName', 'DOB', 'Age', 'GradeLevel', 'Programme', 'Plan', 'Amount', 'Period',
@@ -55,6 +57,8 @@ function enrolFromRequest(req) {
     if (!plan) return { ok: false, error: 'Unknown plan.' };
     const invited = EN_INVITES[d.plan] && en_str(req.invite, 30).toUpperCase() === EN_INVITES[d.plan];
     if (EN_CLOSED_PLANS.indexOf(d.plan) >= 0 && !invited) return { ok: false, error: 'Admission for this plan is closed.' };
+
+    if (EN_OPENS[d.plan] && Utilities.formatDate(new Date(), 'Africa/Lagos', 'yyyy-MM-dd') < EN_OPENS[d.plan]) return { ok: false, error: 'This programme has not opened yet. It opens on ' + EN_OPENS[d.plan] + '.' };
 
     const card = req.payMethod === 'Card';
     const prepaid = req.payMethod === 'Already paid';                                   // current student who paid before the website (invite link only)

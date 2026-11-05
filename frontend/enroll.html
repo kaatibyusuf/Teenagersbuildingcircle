@@ -338,6 +338,12 @@
     },
   ];
 
+  // A plan may carry opens: 'YYYY-MM-DD' (West Africa time). Until that day it is treated as closed,
+  // and the server (api/checkout and the sheet script) refuses it too. Remove the date to open it for good.
+  const TODAY = new Date(Date.now() + 36e5).toISOString().slice(0, 10);
+  const opensText = (d) => new Date(d + 'T12:00:00Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'long', timeZone: 'UTC' });
+  PROGRAMMES.forEach((pr) => pr.plans.forEach((pl) => { if (pl.opens && TODAY < pl.opens) { pl.closed = true; pl.notYet = true; } }));
+
   const urlParams = new URLSearchParams(window.location.search);
   const requestedProgramme = urlParams.get('programme');
   // Plan slugs used in links from the Academy, Skills School and Madrasah pages
@@ -511,7 +517,14 @@
   function renderPlanOptions() {
     const programme = PROGRAMMES.find((p) => p.id === state.programmeId);
     planOptions.innerHTML = '';
-    if (programme.plans.some((pl) => pl.closed)) {
+    const soon = programme.plans.filter((pl) => pl.notYet);
+    if (soon.length) {
+      const n2 = document.createElement('p');
+      n2.className = 'plan-closed-note';
+      n2.textContent = soon.map((pl) => pl.name.replace(/^.*\u2014 /, '') + ' opens on ' + opensText(pl.opens)).join('. ') + '. You can enrol from that day.';
+      planOptions.appendChild(n2);
+    }
+    if (programme.plans.some((pl) => pl.closed && !pl.notYet)) {
       const note = document.createElement('p');
       note.className = 'plan-closed-note';
       note.innerHTML = invitedPlan && programme.plans.includes(invitedPlan)
@@ -527,7 +540,7 @@
         <div class="plan-opt-head">
           <div class="plan-opt-radio"></div>
           <div class="plan-opt-name">${plan.name.split('—').pop().trim()}<small>${plan.tag}</small></div>
-          <div class="plan-opt-price">${plan.closed ? `<a class="plan-opt-shut wl-shut" href="waitlist?plan=${Object.keys(PLAN_SLUGS).find((k) => PLAN_SLUGS[k] === plan.name) || ''}" target="_blank" rel="noopener">Closed · Join waitlist</a>` : '\u20a6' + plan.amount.toLocaleString() + plan.period}</div>
+          <div class="plan-opt-price">${plan.notYet ? `<span class="plan-opt-shut">Opens ${opensText(plan.opens)}</span>` : plan.closed ? `<a class="plan-opt-shut wl-shut" href="waitlist?plan=${Object.keys(PLAN_SLUGS).find((k) => PLAN_SLUGS[k] === plan.name) || ''}" target="_blank" rel="noopener">Closed · Join waitlist</a>` : '\u20a6' + plan.amount.toLocaleString() + plan.period}</div>
         </div>
         <span class="plan-opt-toggle" data-toggle>Show details</span>
         <div class="plan-opt-details" data-details>

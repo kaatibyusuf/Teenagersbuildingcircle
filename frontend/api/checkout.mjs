@@ -29,6 +29,10 @@ const PLANS = {
   'Skills School — Data Analysis':              { amount: 80000, recurring: true, live: 'prod_0a4ba5e2488546b4aa8c', sandbox: 'prod_0161d06903fb4680a671' },
 };
 
+// A plan can carry opens: 'YYYY-MM-DD' (West Africa time). It cannot be enrolled in or paid for before that day.
+// Keep in step with enroll.html and Enrol.gs (EN_OPENS).
+const notYetOpen = (plan) => !!plan.opens && new Date(Date.now() + 36e5).toISOString().slice(0, 10) < plan.opens;
+
 // One-time registration fee added to every enrolment's first payment (waived for invited returning students).
 const REG_FEE = 3000;
 
@@ -53,6 +57,7 @@ export async function POST(request) {
   const plan = PLANS[b.plan];
   if (!plan) return json({ ok: false, error: 'Unknown plan.' }, 400);
   if (plan.closed && !(plan.invite && String(b.invite || '').toUpperCase() === plan.invite)) return json({ ok: false, error: 'This plan is closed for now.' }, 400);
+  if (notYetOpen(plan)) return json({ ok: false, error: 'This programme has not opened yet. It opens on ' + plan.opens + '.' }, 400);
   const invited = !!(plan.invite && String(b.invite || '').toUpperCase() === plan.invite);
   const total = plan.amount + (invited ? 0 : REG_FEE);
   const ref = String(b.ref || '');
