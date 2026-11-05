@@ -140,10 +140,10 @@ function vEdit() {
   return `<div class="hd"><div><h1>${e.ExamID ? 'Edit exam' : 'New exam'}</h1><p class="sub">Times are West Africa time. Students see nothing until you make the exam live.</p></div><button class="btn btn-line" data-back>Back</button></div>
     ${L ? '<div class="banner">Students have already started this exam, so its time, length, questions and oral marks are fixed. You can still change the title, subject, instructions and pass mark.</div>' : ''}
     <div class="panel"><h2>Details</h2><div class="f2">
-      <div class="full"><label class="fl">Title</label><input class="in" data-e="Title" value="${esc(e.Title)}" placeholder="e.g. Fiqh term test"></div>
+      <div class="full"><label class="fl">Title</label><input class="in" data-e="Title" value="${esc(e.Title)}" placeholder="e.g. Fiqh semester test"></div>
       <div><label class="fl">Subject</label><input class="in" data-e="Subject" value="${esc(e.Subject)}" placeholder="Fiqh, Tajweed, Aqeedah…"></div>
-      <div><label class="fl">Counts as</label><select class="in" data-e="Kind"><option value="">Not in the term report</option>${['CA1', 'CA2', 'Exam'].map((k) => `<option value="${k}"${e.Kind === k ? ' selected' : ''}>${KL[k]} (out of ${D.weights[k]})</option>`).join('')}</select>${e.Kind === 'Exam' ? `<div class="sub" style="margin-top:4px">Exams begin on ${esc(D.examsFromText)}.</div>` : ''}</div>
-      <div><label class="fl">Term</label><input class="in" data-e="Term" list="tm" value="${esc(e.Term)}" placeholder="e.g. 2026/2027 Second Term"><datalist id="tm">${D.terms.map((t) => `<option value="${esc(t)}">`).join('')}</datalist></div>
+      <div><label class="fl">Counts as</label><select class="in" data-e="Kind"><option value="">Not in the semester report</option>${['CA1', 'CA2', 'Exam'].map((k) => `<option value="${k}"${e.Kind === k ? ' selected' : ''}>${KL[k]} (out of ${D.weights[k]})</option>`).join('')}</select>${e.Kind === 'Exam' ? `<div class="sub" style="margin-top:4px">Exams begin on ${esc(D.examsFromText)}.</div>` : ''}</div>
+      <div><label class="fl">Semester</label><input class="in" data-e="Term" list="tm" value="${esc(e.Term)}" placeholder="e.g. 2026/2027 Second Semester"><datalist id="tm">${D.terms.map((t) => `<option value="${esc(t)}">`).join('')}</datalist></div>
       <div><label class="fl">Level (or levels, separated by commas)</label><input class="in" data-e="Level" list="lv" value="${esc(e.Level)}"${dis}><datalist id="lv">${D.levels.map((l) => `<option value="${esc(l)}">`).join('')}</datalist></div>
       <div><label class="fl">Start (same time for everyone)</label><input class="in" type="datetime-local" data-e="Start" value="${esc(e.Start)}"${dis}></div>
       <div><label class="fl">Length (minutes)</label><input class="in" type="number" min="5" max="300" data-e="Minutes" value="${esc(e.Minutes)}"${dis}></div>
@@ -221,7 +221,7 @@ const cellOf = (sid, sub) => (GB.data.cells[sid] && GB.data.cells[sid][sub]) || 
 const unitsOf = (x) => (GB.data.units && GB.data.units[x]) || GB.data.defaultUnits || 2;
 const subjectsNow = () => GB.data.subjects.concat(GB.extra.filter((x) => GB.data.subjects.indexOf(x) < 0));
 async function loadBook(btn) {
-  if (!GB.term.trim() || !GB.level) { toast('Choose the term and the level.', true); return; }
+  if (!GB.term.trim() || !GB.level) { toast('Choose the semester and the level.', true); return; }
   const d = await run('book', { term: GB.term.trim(), level: GB.level }, '', btn); if (!d) return;
   GB.data = d; if (GB.sub && subjectsNow().indexOf(GB.sub) < 0 && GB.sub !== '*') GB.sub = ''; if (!GB.sub) GB.sub = '*'; render();
 }
@@ -233,10 +233,10 @@ function partCell(sid, sub, part, c) {
 function vBook() {
   const d = GB.data, w = D.weights;
   const head = `${switcher()}<div class="hd"><div><h1>Gradebook</h1><p class="sub">Each subject is out of ${w.CA1 + w.CA2 + w.Exam}: CA 1 out of ${w.CA1}, CA 2 out of ${w.CA2} (CA ${w.CA1 + w.CA2} in all) and the exam out of ${w.Exam}. Scores from portal exams are added automatically; type a score for a test taken on paper. Grades: ${(d ? d.bands : D.bands).map((b) => b[0] + ' ' + b[1]).join(', ')}.</p></div></div>
-    <div class="panel noprint"><div class="f2"><div><label class="fl" for="gt">Term</label><input class="in" id="gt" list="gtl" value="${esc(GB.term)}" placeholder="e.g. 2026/2027 Second Term"><datalist id="gtl">${D.terms.map((t) => `<option value="${esc(t)}">`).join('')}</datalist></div>
+    <div class="panel noprint"><div class="f2"><div><label class="fl" for="gt">Semester</label><input class="in" id="gt" list="gtl" value="${esc(GB.term)}" placeholder="e.g. 2026/2027 Second Semester"><datalist id="gtl">${D.terms.map((t) => `<option value="${esc(t)}">`).join('')}</datalist></div>
       <div><label class="fl" for="gl">Level</label><select class="in" id="gl"><option value="">Choose a level</option>${D.levels.map((l) => `<option${GB.level === l ? ' selected' : ''}>${esc(l)}</option>`).join('')}</select></div></div>
       <div class="tools" style="margin-top:14px"><button class="btn btn-ink" data-loadbook>Show scores</button></div></div>`;
-  if (!d) return head + '<div class="empty" style="margin-top:16px">Choose a term and level to see the scores.</div>';
+  if (!d) return head + '<div class="empty" style="margin-top:16px">Choose a semester and level to see the scores.</div>';
   if (!d.students.length) return head + '<div class="empty" style="margin-top:16px">No students of yours in that level.</div>';
   const subs = subjectsNow();
   const tabs = `<div class="stabs noprint"><button type="button" data-sub="*" aria-pressed="${GB.sub === '*'}">All subjects</button>${subs.map((x) => `<button type="button" data-sub="${esc(x)}" aria-pressed="${GB.sub === x}">${esc(x)}</button>`).join('')}

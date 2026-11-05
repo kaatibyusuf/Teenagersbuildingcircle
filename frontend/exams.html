@@ -137,7 +137,7 @@ function listView() {
     ${wait.length ? `<h2 class="sect">Waiting for results</h2><div class="grid">${wait.map(card).join('')}</div>` : ''}
     ${out.length ? `<h2 class="sect">Results</h2><div class="grid">${out.map(card).join('')}</div>` : ''}
     ${ex.length ? '' : '<div class="empty">No exams for your level yet. Please check again soon.</div>'}
-    <p style="margin-top:18px" class="no-print"><button class="btn btn-ink btn-sm" data-report>Term report card</button>${out.length ? ' <button class="btn btn-line btn-sm" data-print-t>Print exam results</button>' : ''}</p>
+    <p style="margin-top:18px" class="no-print"><button class="btn btn-ink btn-sm" data-report>Semester report card</button>${out.length ? ' <button class="btn btn-line btn-sm" data-print-t>Print exam results</button>' : ''}</p>
     <div class="msg" id="msg" role="alert"></div></div>
     <section class="ro panel"><h2>Himaayah Schools &mdash; Report card</h2><p>${esc(ST.student.name)} &middot; ${esc(ST.student.level || '')}${ST.term ? ' &middot; ' + esc(ST.term.Label) : ''}</p>
     <table class="tr"><thead><tr><th>Subject</th><th>Exam</th><th>Date</th><th>Score</th><th>Grade</th></tr></thead><tbody>${out.filter((x) => x.Result && !x.Result.pending).map((x) => `<tr><td>${esc(x.Subject)}</td><td>${esc(x.Title)}</td><td>${dayOnly(x.Start)}</td><td>${x.Result.absent ? 'Absent' : x.Result.percent + '%'}</td><td><b>${esc(x.Result.grade)}</b> ${esc(x.Result.remark || '')}</td></tr>`).join('')}</tbody></table>
@@ -276,19 +276,19 @@ function resultView(d) {
   window.scrollTo(0, 0);
 }
 
-/* ---------- term report card (CA 1 /20 + CA 2 /20 + Exam /60) ---------- */
+/* ---------- semester report card (CA 1 /20 + CA 2 /20 + Exam /60) ---------- */
 const AR_REMARK = { A: 'ممتاز', B: 'جيد جدًا', C: 'جيد', D: 'مقبول', E: 'ضعيف', F: 'راسب' };
 const AR_DIG = (v) => String(v).replace(/\d/g, (c) => '٠١٢٣٤٥٦٧٨٩'[c]);
-function termAr(d) {                                   // the term in Arabic: the saved Arabic label for the current term, otherwise worked out from "2025/2026 First Term"
+function termAr(d) {                                   // the term in Arabic: the saved Arabic label for the current term, otherwise worked out from "2025/2026 First Semester"
   if (d.term && d.termKey === d.term.Key && d.term.LabelAr) return d.term.LabelAr;
-  const m = /^(\d{4}\/\d{4})\s+(First|Second|Third|Fourth)\s+Term$/i.exec(d.termKey || '');
+  const m = /^(\d{4}\/\d{4})\s+(First|Second|Third|Fourth)\s+(?:Semester|Term)$/i.exec(d.termKey || '');
   const ord = { first: 'الأول', second: 'الثاني', third: 'الثالث', fourth: 'الرابع' };
   return m ? 'الفصل الدراسي ' + ord[m[2].toLowerCase()] + ' · ' + AR_DIG(m[1]) : d.termKey;
 }
 function reportView(d) {
   stopTimers();
   const w = d.weights, rows = d.subjects;
-  const pick = d.terms.length > 1 ? `<label class="no-print" dir="ltr" style="display:block;margin:0 0 14px;text-align:center">Term <select class="in" id="rterm" style="max-width:280px;display:inline-block">${d.terms.map((t) => `<option${t === d.termKey ? ' selected' : ''}>${esc(t)}</option>`).join('')}</select></label>` : '';
+  const pick = d.terms.length > 1 ? `<label class="no-print" dir="ltr" style="display:block;margin:0 0 14px;text-align:center">Semester <select class="in" id="rterm" style="max-width:280px;display:inline-block">${d.terms.map((t) => `<option${t === d.termKey ? ' selected' : ''}>${esc(t)}</option>`).join('')}</select></label>` : '';
   const n = (v) => (v == null ? '&ndash;' : v);
   $('app').innerHTML = `<section class="panel rc" dir="rtl" lang="ar" style="font-family:var(--ar),serif">
     <div style="text-align:center;margin-bottom:14px"><h2 style="font-size:30px;margin:0">مدرسة حماية</h2><div style="font-size:19px;font-weight:700;margin-top:6px;color:var(--deep)">${esc(termAr(d))}</div><div style="font-size:17px;margin-top:10px">بطاقة التقرير الدراسي</div></div>

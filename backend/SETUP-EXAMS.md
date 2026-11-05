@@ -49,18 +49,18 @@ Fixed-time exams for Madrasah students. Teachers set and mark them on **exam-tea
 - A resit or "reopen" button for a student who had a network problem. For now, enter their oral score and ask a teacher to mark manually, or create a short make-up exam for them.
 - Arabic translation of the two new pages.
 
-## Term report: CA 1, CA 2 and Exam (the Gradebook)
+## Semester report: CA 1, CA 2 and Exam (the Gradebook)
 
 Every subject is marked out of 100: **CA 1 out of 20, CA 2 out of 20 (so CA is out of 40) and the Exam out of 60.**
 
-1. When a teacher creates an exam, they choose **Counts as** (CA 1, CA 2 or Exam) and type the **Term** (for example `2026/27 Term 2`). Use exactly the same wording for the whole term. An exam set to "Not in the term report" works as before.
-2. On `exam-teacher`, press **Gradebook**, choose the term and the level, and press **Show scores**.
+1. When a teacher creates an exam, they choose **Counts as** (CA 1, CA 2 or Exam) and type the **Semester** (for example `2026/2027 Second Semester`). Use exactly the same wording for the whole semester. An exam set to "Not in the term report" works as before.
+2. On `exam-teacher`, press **Gradebook**, choose the semester and the level, and press **Show scores**.
    - Each subject shows CA 1, CA 2, CA /40, Exam /60, Total /100 and the grade (A to F).
    - Scores from portal exams fill in by themselves once the exam has ended and is fully marked. A student who did not sit counts as 0 and is marked "absent".
    - For a test taken on paper, type the score in the box. A typed score replaces the portal score; clear the box to go back to the portal score.
    - A total and grade appear once all three parts are in. "All subjects" shows each student's total per subject, the average and the overall grade.
    - **Download CSV** and **Print** are at the bottom.
-3. Teachers see their own students; admins see the whole level. If one subject has two exams of the same kind in a term, their percentages are averaged.
+3. Teachers see their own students; admins see the whole level. If one subject has two exams of the same kind in a semester, their percentages are averaged.
 4. The Exams tab gets two new columns (**Kind**, **Term**) and a **Gradebook** tab is created automatically the first time the new script runs. Nothing to do by hand.
 
 ## Final exams start on 20 January 2027, fees must be up to date
@@ -68,13 +68,13 @@ Every subject is marked out of 100: **CA 1 out of 20, CA 2 out of 20 (so CA is o
 - `EX_EXAMS_FROM` (top of `Exams.gs`) is `2027-01-20`. An exam whose kind is **Exam** cannot be saved with an earlier start, and a student cannot start one earlier even if the sheet is edited by hand. CA 1 and CA 2 are not affected. Change the date in one place if the plan moves.
 - `EX_BLOCK_OVERDUE` is now `true`: a student whose fees are **Overdue** (their NextDue date has passed) cannot start any exam. They still see the exam, with a message to pay first. Once the office confirms a payment and the due date moves forward, they can start straight away. Set it to `false` to switch this off.
 
-## The current term
+## The current semester
 
-The term is set once, in `Code.gs` (`SCHOOL_TERM`: `Second Term`, `2026/2027`, `1448/1449 AH`). Exams and the Gradebook use "2026/2027 Second Term" automatically, so teachers no longer type it. When the next term begins, change those three values and redeploy.
+the semester is set once, in `Code.gs` (`SCHOOL_TERM`: `Second Semester`, `2026/2027`, `1448/1449 AH`). Exams and the Gradebook use "2026/2027 Second Semester" automatically, so teachers no longer type it. When the next semester begins, change those three values and redeploy.
 
-## Student term report card
+## Student semester report card
 
-Students press **Term report card** on the exams page. It shows each subject with CA 1 /20, CA 2 /20, CA /40, Exam /60, Total /100 and the grade, then the average and overall grade, with the school name, the student's level and the term. They can print it or save it as a PDF, and switch to an earlier term if they have scores in one.
+Students press **Semester report card** on the exams page. It shows each subject with CA 1 /20, CA 2 /20, CA /40, Exam /60, Total /100 and the grade, then the average and overall grade, with the school name, the student's level and the term. They can print it or save it as a PDF, and switch to an earlier semester if they have scores in one.
 
 - A part appears only when it is final: a score a teacher has typed in the Gradebook, or a portal exam whose results have been **published**. Draft and live (unpublished) exams are never counted, so nothing leaks early.
 - A subject's total and grade appear only when all three parts are in; the average counts completed subjects; the overall grade appears once every subject is complete.
@@ -83,10 +83,10 @@ Students press **Term report card** on the exams page. It shows each subject wit
 
 Each finished subject earns grade points: **A = 5, B = 4, C = 3, D = 2, E = 1, F = 0** (`EX_POINTS` in `Exams.gs`).
 
-- **Term GPA** = the average points of that term's finished subjects.
+- **Semester GPA** = the average points of that term's finished subjects.
 - **CGPA** = the average points of every finished subject across all the student's terms. Every subject counts equally (there are no credit units).
-- Both show on the student's Arabic report card, with each subject's points. The teacher's Gradebook "All subjects" view shows each student's term GPA, and the CSV includes it.
-- A subject counts only once CA 1, CA 2 and the Exam are all in. While some subjects are still waiting, the term GPA is marked provisional.
+- Both show on the student's Arabic report card, with each subject's points. The teacher's Gradebook "All subjects" view shows each student's semester GPA, and the CSV includes it.
+- A subject counts only once CA 1, CA 2 and the Exam are all in. While some subjects are still waiting, the semester GPA is marked provisional.
 
 ## Course units (credit weighting)
 
@@ -94,7 +94,7 @@ The GPA and CGPA now weigh each course by its **credit units**: GPA = (grade poi
 
 - The school's units: **Hadeeth, Fiqh and Tawheed 3 units; Adhkaar 1 unit; Sarf, Nahw and every other course 2 units.** The **SubjectUnits** tab (Subject, Units) is created with these rows. Common spellings are matched too (for example Hadith, Tawhid, Adhkar), so a teacher typing the subject slightly differently still gets the right units. A row in the tab always wins over the built-in list, and a course not in either gets `EX_DEFAULT_UNITS` (2).
 - An **admin** sets a course's units in the Gradebook: open the subject and change **Course units** (1 to 6). Other teachers see the units but cannot change them.
-- Changing a course's units changes the GPA and CGPA of every term that includes that course.
+- Changing a course's units changes the GPA and CGPA of every semester that includes that course.
 - The student's report card shows each course's units and the total units.
 
 ## Resits and late sittings

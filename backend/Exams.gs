@@ -32,7 +32,7 @@
  *   submitted keeps their saved answers and continues; their written marks are cleared so the teacher marks it again.
  *
  * Term report (the Gradebook on exam-teacher.html)
- *   Every exam has a Kind: CA1, CA2 or Exam, and a Term (filled in for you as the current term, for example "2026/2027 Second Term"). A subject's total is out of 100:
+ *   Every exam has a Kind: CA1, CA2 or Exam, and a Term (filled in for you as the current semester, for example "2026/2027 Second Semester"). A subject's total is out of 100:
  *   CA1 out of 20, CA2 out of 20 (so CA is out of 40) and the Exam out of 60. The gradebook turns each exam's percentage into its
  *   share of those marks and adds them up. A teacher can also type a CA score (for a test taken on paper); a typed score
  *   replaces the one worked out from the portal. Grades use the same A-F bands as below.
@@ -751,7 +751,7 @@ function ex_tStudentsIn_(studs, e) { return studs.filter(function (r) { return m
 /* A teacher types a CA (or paper exam) score for one student and subject. An empty score removes it, so the portal's own score is used again. */
 function ex_tGscore_(me, p) {
   const term = ex_str_(p.term, 40), sub = ex_str_(p.subject, 60) || 'General', part = String(p.component || '');
-  if (!term) ex_fail_('Choose the term first.');
+  if (!term) ex_fail_('Choose the semester first.');
   if (EX_PARTS.indexOf(part) < 0) ex_fail_('Unknown score type.');
   const s = table_('Students').rows.filter(function (r) { return key_(r.StudentID) === key_(p.studentId) && tchOwns_(me, r); })[0];
   if (!s) ex_fail_('That student is not yours.');

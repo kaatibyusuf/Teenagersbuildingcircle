@@ -17,11 +17,11 @@ const SHEET_ID = '1noglfG4gtK9ZzDw94Bm6-p8yNrkKbHetNsXE3LAY7z0';                
 const SCHOOL_NAME = 'Himaayah Schools';
 const DASHBOARD_URL = 'https://www.himaayahschools.com/dashboard.html';
 /* The current Madrasah term, in English and Arabic. Change these lines when a new term begins; every Madrasah portal and exam page follows. */
-const SCHOOL_TERM = { Name: 'Second Term', Session: '2026/2027', Hijri: '1448/1449 AH',
+const SCHOOL_TERM = { Name: 'Second Semester', Session: '2026/2027', Hijri: '1448/1449 AH',
   NameAr: '\u0627\u0644\u0641\u0635\u0644 \u0627\u0644\u062f\u0631\u0627\u0633\u064a \u0627\u0644\u062b\u0627\u0646\u064a', SessionAr: '\u0662\u0660\u0662\u0666/\u0662\u0660\u0662\u0667', HijriAr: '\u0661\u0664\u0664\u0668/\u0661\u0664\u0664\u0669 \u0647\u0640' };
 function schoolTerm_() {
   return { Name: SCHOOL_TERM.Name, Session: SCHOOL_TERM.Session, Hijri: SCHOOL_TERM.Hijri,
-    Key: SCHOOL_TERM.Session + ' ' + SCHOOL_TERM.Name,                                              // what exams and the gradebook store, e.g. "2026/2027 Second Term"
+    Key: SCHOOL_TERM.Session + ' ' + SCHOOL_TERM.Name,                                              // what exams and the gradebook store, e.g. "2026/2027 Second Semester"
     Label: SCHOOL_TERM.Name + ' \u00b7 ' + SCHOOL_TERM.Session + ' \u00b7 ' + SCHOOL_TERM.Hijri,
     LabelAr: SCHOOL_TERM.NameAr + ' \u00b7 ' + SCHOOL_TERM.SessionAr + ' \u00b7 ' + SCHOOL_TERM.HijriAr };   // the same in Arabic, for the report card    // what people see
 }
