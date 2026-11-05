@@ -265,6 +265,8 @@ function doPost(e) {
     if (p.action === 'cards') return json_(cardsRequest(p));                             // library and ID cards (Cards.gs)
     if (p.action === 'library') return json_(libraryRequest(p));                         // Madrasah library (Library.gs)
     if (p.action === 'tracker') return json_(trackerRequest(p));                         // daily revision tracker (Tracker.gs)
+    if (p.action === 'exams') return json_(examsRequest(p));                             // Madrasah exams, student side (Exams.gs)
+    if (p.action === 'examt') return json_(examtRequest(p));                             // Madrasah exams, teacher side (Exams.gs)
     if (p.action === 'quiz') return json_(quizRequest(p));                               // student quizzes (Quiz.gs)
     const a = auth_(p.id, p.code);
     if (a.error) out = { ok: false, error: a.error };
@@ -469,6 +471,7 @@ function onOpen() {
       .addItem('Set up the Skills School tabs', 'skillsSetup')
       .addItem('Set up the Library, Tracker and Quiz tabs', 'setupStudentTools')
       .addItem('Set up the Librarians tab', 'librarianSetup')
+      .addItem('Set up the exam portal', 'examSetup')
       .addItem('Email the waitlist (reopened plans)', 'emailWaitlist')
       .addItem('Progress reports: send me a sample', 'reportSample')
       .addItem("Progress reports: send this month's now", 'reportsSendNow')

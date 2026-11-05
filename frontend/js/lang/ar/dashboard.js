@@ -8,6 +8,8 @@ HS_I18N.add({
 "Study tools": "أدوات الدراسة",
 "Tick off today’s murajaah and keep your streak going.": "أنجز مراجعة اليوم وحافظ على استمرارك.",
 "Short quizzes on tajweed, Arabic and more, marked straight away.": "اختبارات قصيرة في التجويد والعربية وغيرها، تُصحَّح فورًا.",
+"Exams": "الاختبارات",
+"Sit your timed exams and see your results and grades.": "أدِّ اختباراتك المؤقّتة واطّلع على نتائجك ودرجاتك.",
 "Books, notes and links chosen for your level.": "كتب وملاحظات وروابط مختارة لمستواك.",
 "Recite Al-Baqarah 1 to 5 and write down each rule you applied.": "اقرأ البقرة من 1 إلى 5 واكتب كل حكم طبّقته.",
 "Note to your teacher": "ملاحظة لمعلّمك",

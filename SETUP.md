@@ -39,13 +39,13 @@ Google Sheet as the database). You deploy them separately, and a change that tou
    1. **Set up or upgrade tabs**: creates the main tabs.
    2. **Install automatic jobs**: the daily reminder job and the edit trigger.
    3. Then the setup item for each feature you use: Admins tab, Teenagers Circle tabs, Academy tabs, Skills School tabs,
-      Library, Tracker and Quiz tabs, Librarians tab, owner dashboard, sponsorship tabs, timetable, trial classes,
+      Library, Tracker and Quiz tabs, Librarians tab, exam portal, owner dashboard, sponsorship tabs, timetable, trial classes,
       placement tests, Hadith Bootcamp, newsletter tabs. Each creates its tabs and tells you what to fill in.
    4. **Protect access codes (one time)**, after everything else is working. See `backend/SETUP-CODES.md`.
 6. Add the first admin in the Admins tab (ID, name, a strong access code, `TRUE`), the first librarian in the Librarians tab,
    and so on, then sign in on the matching page and change the code.
 
-Feature guides: `backend/SETUP-STUDENT-TOOLS.md` (library, tracker, quizzes), `backend/SETUP-LIBRARIAN.md`,
+Feature guides: `backend/SETUP-STUDENT-TOOLS.md` (library, tracker, quizzes), `backend/SETUP-EXAMS.md` (Madrasah exams), `backend/SETUP-LIBRARIAN.md`,
 `backend/SETUP-RECORDINGS.md`, `backend/SETUP-CODES.md`.
 
 ## 3. How a new student is created

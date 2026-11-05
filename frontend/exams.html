@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en" class="app page-quiz page-exams">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exams | Himaayah Schools</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#094570">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600;700&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<script src="js/auth-guard.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/cookie-notice.js" defer></script>
+<!-- Vercel Analytics: counts visits once enabled in the Vercel dashboard -->
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
+<style>
+.page-exams .tbar{position:sticky;top:68px;z-index:40;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-radius:16px;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:var(--shadow);margin-bottom:14px}
+.page-exams .tbar b{font-family:var(--d);color:var(--deep);font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.page-exams .clock{font-variant-numeric:tabular-nums;font-weight:700;font-size:20px;color:var(--ink);background:var(--sky-l);padding:6px 14px;border-radius:12px;white-space:nowrap}
+.page-exams .clock.low{background:#FEE4E2;color:#B42318;animation:pulse 1s infinite}
+@keyframes pulse{50%{opacity:.6}}
+.page-exams .dots{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0 4px}
+.page-exams .dots button{width:34px;height:34px;border-radius:10px;border:1.5px solid var(--line);background:#fff;font-weight:700;font-size:13px;color:var(--muted)}
+.page-exams .dots button.done{background:var(--sky-l);color:var(--ink);border-color:var(--sky-d)}
+.page-exams .dots button.cur{outline:2.5px solid var(--ink);outline-offset:1px}
+.page-exams .dots button.flag{border-color:#B7791F;box-shadow:inset 0 -3px 0 #B7791F}
+.page-exams textarea{width:100%;min-height:200px;padding:14px 16px;border-radius:14px;border:1.5px solid var(--line);font:inherit;font-size:16px;line-height:1.55;resize:vertical;background:#fff}
+.page-exams textarea:focus{outline:none;border-color:var(--ink);box-shadow:0 0 0 4px rgba(62,151,217,.15)}
+.page-exams .cnt{font-size:12px;color:var(--muted);text-align:end;margin-top:4px}
+.page-exams .flagbtn{font-size:13px;font-weight:600;color:var(--muted);padding:6px 10px;border-radius:10px;background:var(--wash)}
+.page-exams .flagbtn.on{background:#FEF0D6;color:#8A5A0B}
+.page-exams .st{font-size:11.5px;font-weight:700;padding:4px 11px;border-radius:99px;display:inline-block}
+.page-exams .st.now{background:#DDF3E4;color:#1B6B3A}.page-exams .st.soon{background:var(--sky-l);color:var(--ink)}.page-exams .st.wait{background:#FEF0D6;color:#8A5A0B}.page-exams .st.miss{background:#FEE4E2;color:#B42318}.page-exams .st.out{background:var(--ink);color:#fff}
+.page-exams .g{display:inline-grid;place-items:center;width:42px;height:42px;border-radius:12px;font-family:var(--d);font-weight:700;font-size:22px;background:var(--sky-l);color:var(--ink)}
+.page-exams .g.A,.page-exams .g.B{background:#DDF3E4;color:#1B6B3A}.page-exams .g.D,.page-exams .g.E{background:#FEF0D6;color:#8A5A0B}.page-exams .g.F{background:#FEE4E2;color:#B42318}
+.page-exams .big{width:92px;height:92px;border-radius:24px;font-size:52px}
+.page-exams .panel{background:#fff;border-radius:20px;padding:28px;box-shadow:var(--shadow);margin-top:14px}
+.page-exams .panel h2{font-family:var(--d);color:var(--deep);font-size:clamp(22px,3vw,30px);line-height:1.15;margin-bottom:8px}
+.page-exams .panel ul{margin:12px 0 18px 20px;color:var(--text);display:grid;gap:6px;font-size:14.5px}
+.page-exams .facts{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
+.page-exams .facts span{background:var(--wash);border-radius:12px;padding:8px 14px;font-size:13.5px;font-weight:600;color:var(--ink)}
+.page-exams .parts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0}
+.page-exams .parts div{background:var(--wash);border-radius:14px;padding:14px}.page-exams .parts b{display:block;font-family:var(--d);font-size:22px;color:var(--ink)}.page-exams .parts span{font-size:12.5px;color:var(--muted)}
+.page-exams .cmt{background:var(--sky-l);border-radius:14px;padding:14px 16px;margin-top:12px;font-size:14.5px}
+.page-exams .ans{background:var(--wash);border-radius:12px;padding:12px 14px;white-space:pre-wrap;font-size:14.5px;margin:8px 0}
+.page-exams table.tr{width:100%;border-collapse:collapse;font-size:14px;margin-top:10px}.page-exams table.tr th{text-align:start;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--sky-d);padding:8px 10px;border-bottom:1.5px solid var(--line)}.page-exams table.tr td{padding:10px;border-bottom:1px solid var(--line)}
+.page-exams .sect{font-family:var(--d);color:var(--deep);font-size:22px;margin:28px 0 4px}
+.page-exams .item p{flex:none}.page-exams .cd{display:block;width:100%;font-size:13.5px;color:var(--muted);line-height:1.5}.page-exams .cd b{color:var(--ink)}
+.page-exams .ro{display:none}
+@media(max-width:560px){.page-exams .top nav a[href="quiz"]{display:none}}
+@media(max-width:640px){.page-exams .grid{grid-template-columns:1fr}.page-exams .parts{grid-template-columns:1fr}.page-exams .tbar{top:60px}}
+@media print{.top,.hero,.no-print,.toast{display:none!important}.page-exams .panel,.page-exams .item{box-shadow:none;border:1px solid #ccc}body.pr-t .not-t{display:none!important}body.pr-t .ro{display:block}}
+</style>
+</head>
+<body>
+<header class="top"><div>
+<a class="brand" href="./"><svg width="22" height="27" viewBox="0 0 377.21 459.6" fill="#094570" aria-hidden="true"><path d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>Himaayah Schools <em>Exams</em></a>
+<nav><a class="btn btn-line btn-sm" href="quiz">Practice quizzes</a><a class="btn btn-line btn-sm" href="dashboard">My dashboard</a><button class="btn btn-ink btn-sm" id="out" hidden>Log out</button></nav>
+</div></header>
+
+<main id="login" class="login"><form class="lbox" id="lf" novalidate>
+<div class="crest" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#094570" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 3.5V5h6V3.5"/><path d="M9 11l2 2 4-4"/><path d="M9 17h6"/></svg></div>
+<span class="kick">Students</span><h1>Madrasah exams</h1><p>Sit your timed exams and see your results here. Sign in with your Student ID and access code.</p>
+<div class="f"><label for="sid">Student ID</label><input id="sid" autocomplete="username" autocapitalize="characters" required></div>
+<div class="f"><label for="scode">Access code</label><input id="scode" type="password" autocomplete="current-password" required></div>
+<div class="err" id="err" role="alert"></div><button class="btn btn-ink" id="go" type="submit">Sign in</button>
+<div class="lnote">Signed in on your dashboard already? You'll go straight in.</div>
+</form></main>
+
+<main id="app" class="wrap" hidden></main>
+
+<script>
+/* The Apps Script web-app URL. It must be the SAME address your dashboard uses. */
+const API_URL = 'https://script.google.com/macros/s/AKfycby0AsifBuB_Ad7g1SjDXCipaDU27-BrzYWf67muw5jeY_C0_0uz8AhQYYXdiNRQhvqX/exec';
+
+const $ = (id) => document.getElementById(id);
+const esc = (t) => String(t ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const arCls = (t) => (/[؀-ۿ]/.test(String(t)) ? ' ar' : '');
+const ST = { id: '', code: '', student: null, exams: [], listAt: 0, run: null, busy: false, timer: 0, saveT: 0 };
+const LBL = ['A', 'B', 'C', 'D'];
+
+/* dates arrive as plain West Africa text ("2026-12-01T09:00"), so they are shown as written, never shifted by the phone's time zone */
+function when(iso) {
+  const m = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/.exec(String(iso)); if (!m) return esc(iso);
+  const d = new Date(Date.UTC(+m[1], +m[2] - 1, +m[3]));
+  const wd = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][d.getUTCDay()], mo = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][+m[2] - 1];
+  const h = +m[4], ap = h >= 12 ? 'pm' : 'am', h12 = h % 12 || 12;
+  return `${wd} ${+m[3]} ${mo}, ${h12}:${m[5]} ${ap}`;
+}
+function dayOnly(iso) { const s = when(iso); return s.split(',')[0]; }
+const mmss = (n) => { n = Math.max(0, Math.round(n)); const h = Math.floor(n / 3600), m = Math.floor(n % 3600 / 60), s = n % 60; return (h ? h + ':' + String(m).padStart(2, '0') : m) + ':' + String(s).padStart(2, '0'); };
+const left = (x) => Math.max(0, Math.round(x - (performance.now() - ST.listAt) / 1000));   // seconds left, from the server's figure and this phone's own stopwatch
+
+async function call(body) {
+  const r = await fetch(API_URL, { method: 'POST', body: JSON.stringify(Object.assign({ action: 'exams', id: ST.id, code: ST.code }, body)) });
+  return r.json();
+}
+const fail = (m) => { const el = $('msg'); if (el) el.textContent = m || 'Something went wrong. Please try again.'; };
+
+/* ---------- list ---------- */
+const STATUS = { open: ['now', 'Open now'], upcoming: ['soon', 'Upcoming'], inprogress: ['now', 'In progress'], submitted: ['wait', 'Submitted · awaiting results'], missed: ['miss', 'Missed'], oral: ['soon', 'Oral exam'], published: ['out', 'Results out'] };
+function card(x, i) {
+  const [cls, label] = STATUS[x.Status] || ['soon', x.Status];
+  let action = '';
+  if (x.Status === 'open') action = `<button class="btn btn-ink btn-sm" data-intro="${esc(x.ExamID)}">Start exam</button>`;
+  else if (x.Status === 'inprogress') action = `<button class="btn btn-ink btn-sm" data-intro="${esc(x.ExamID)}">Continue</button>`;
+  else if (x.Status === 'published') action = `<button class="btn btn-ink btn-sm" data-result="${esc(x.ExamID)}">View result</button>`;
+  const res = x.Result && !x.Result.pending ? `<span class="g ${esc(x.Result.grade)}">${esc(x.Result.grade)}</span>` : '';
+  let note = '';
+  if (x.Status === 'upcoming') note = `<div class="cd" data-s="${x.StartsInSec}" data-k="Starts in ">Starts in ${mmss(left(x.StartsInSec))}</div>`;
+  else if (x.Status === 'open') note = `<div class="cd" data-s="${x.LateSec}" data-k="You can begin for another ">You can begin for another ${mmss(left(x.LateSec))}</div>`;
+  else if (x.Status === 'missed') note = '<div class="cd">You did not sit this exam. Please speak to your teacher.</div>';
+  else if (x.Status === 'published' && x.Result && x.Result.pending) note = '<div class="cd">Some marking is still to be finished.</div>';
+  const oral = x.HasOral ? `<div class="cd">Oral part: ${x.OralMarks} marks${x.OralSlot ? ' &middot; <b>' + esc(x.OralSlot) + '</b>' : ' &middot; your teacher will give you a time'}</div>` : '';
+  return `<article class="item" style="--i:${Math.min(i, 10)}"><div><span class="pill t">${esc(x.Subject)}</span> <span class="st ${cls}">${label}</span></div>
+    <h3>${esc(x.Title)}</h3><p>${when(x.Start)}${x.Questions ? ` &middot; ${x.Minutes} min &middot; ${x.Questions} questions` : ''} &middot; ${x.Marks} marks</p>${note}${oral}
+    <div class="foot"><span>${res}</span>${action}</div></article>`;
+}
+function listView() {
+  stopTimers();
+  const ex = ST.exams, first = esc(String(ST.student.name).split(' ')[0]);
+  const live = ex.filter((x) => ['open', 'inprogress', 'upcoming', 'oral'].includes(x.Status));
+  const wait = ex.filter((x) => ['submitted', 'missed'].includes(x.Status));
+  const out = ex.filter((x) => x.Status === 'published');
+  const avg = ST.average == null ? '' : `<span class="st out" style="margin-inline-start:8px">Average ${ST.average}% &middot; ${esc(ST.averageGrade)}</span>`;
+  $('app').innerHTML = `<div class="not-t"><section class="hero"><small>Assalaamu alaykum</small><h1>${first}, your exams.</h1>
+    <p>Exams start at the same time for everyone. Your teacher releases results once marking is done.${avg}</p></section>
+    ${ST.blocked ? '<div class="panel"><b>Your fees are overdue.</b> Please pay them before you sit an exam.</div>' : ''}
+    ${live.length ? `<h2 class="sect">Coming up</h2><div class="grid">${live.map(card).join('')}</div>` : ''}
+    ${wait.length ? `<h2 class="sect">Waiting for results</h2><div class="grid">${wait.map(card).join('')}</div>` : ''}
+    ${out.length ? `<h2 class="sect">Results</h2><div class="grid">${out.map(card).join('')}</div>` : ''}
+    ${ex.length ? '' : '<div class="empty">No exams for your level yet. Please check again soon.</div>'}
+    ${out.length ? '<p style="margin-top:18px"><button class="btn btn-line btn-sm no-print" data-print-t>Print report card</button></p>' : ''}
+    <div class="msg" id="msg" role="alert"></div></div>
+    <section class="ro panel"><h2>Himaayah Schools &mdash; Report card</h2><p>${esc(ST.student.name)} &middot; ${esc(ST.student.level || '')}</p>
+    <table class="tr"><thead><tr><th>Subject</th><th>Exam</th><th>Date</th><th>Score</th><th>Grade</th></tr></thead><tbody>${out.filter((x) => x.Result && !x.Result.pending).map((x) => `<tr><td>${esc(x.Subject)}</td><td>${esc(x.Title)}</td><td>${dayOnly(x.Start)}</td><td>${x.Result.absent ? 'Absent' : x.Result.percent + '%'}</td><td><b>${esc(x.Result.grade)}</b> ${esc(x.Result.remark || '')}</td></tr>`).join('')}</tbody></table>
+    <p style="margin-top:12px"><b>Average: ${ST.average == null ? '-' : ST.average + '% (' + ST.averageGrade + ')'}</b></p>
+    <p style="margin-top:10px;font-size:12.5px;color:#5b6b78">Grades: A 90-100, B 79-89, C 60-78, D 50-59, E 49, F 0-48.</p></section>`;
+  tickCountdowns();
+}
+function tickCountdowns() {
+  ST.timer = setInterval(() => {
+    let hit = false;
+    document.querySelectorAll('.cd[data-s]').forEach((el) => { const n = left(+el.dataset.s); el.textContent = el.dataset.k + mmss(n); if (n <= 0) hit = true; });
+    if (hit) { stopTimers(); setTimeout(loadList, 1200); }
+  }, 1000);
+}
+function stopTimers() { clearInterval(ST.timer); ST.timer = 0; }
+
+async function loadList() {
+  const d = await call({ op: 'list' });
+  if (!d.ok) return fail(d.error);
+  if (!d.exams) { $('app').innerHTML = '<div class="empty">The exam portal is not switched on yet. Please check again soon.</div>'; return; }
+  Object.assign(ST, { student: d.student, exams: d.exams, average: d.average, averageGrade: d.averageGrade, blocked: d.blocked, run: null, listAt: performance.now() });
+  listView(); window.scrollTo(0, 0);
+}
+
+/* ---------- before the exam ---------- */
+function introView(x) {
+  stopTimers();
+  $('app').innerHTML = `<section class="panel"><span class="pill t">${esc(x.Subject)}</span><h2>${esc(x.Title)}</h2>
+    <div class="facts"><span>${x.Minutes} minutes</span><span>${x.Questions} questions</span><span>${x.Marks} marks</span><span>Pass mark ${x.PassMark}%</span></div>
+    ${x.Instructions ? `<p>${esc(x.Instructions)}</p>` : ''}
+    <ul><li>The timer starts when you press <b>Begin</b>, but the exam always ends at the same time for everyone.</li>
+    <li>Your answers save as you go. If you lose your connection, keep writing; it will save when it returns.</li>
+    <li>You can only sit this exam once. When time is up your answers are sent automatically.</li>
+    <li>You will see your marks after your teacher releases the results.</li></ul>
+    <button class="btn btn-ink" data-begin="${esc(x.ExamID)}">Begin exam</button> <button class="btn btn-line" data-list>Back</button>
+    <div class="msg" id="msg" role="alert"></div></section>`;
+}
+
+/* ---------- the exam ---------- */
+const bk = (id) => 'hx-' + id;
+function run() {
+  const r = ST.run, q = r.qs[r.i], n = r.qs.length;
+  const answered = (qq) => { const v = r.ans[qq.id]; return v != null && String(v).trim() !== ''; };
+  const doneCount = r.qs.filter(answered).length;
+  const body = q.type === 'written'
+    ? `<textarea id="wa" maxlength="${r.maxChars}" aria-labelledby="qt" placeholder="Write your answer here" dir="auto">${esc(r.ans[q.id] || '')}</textarea><div class="cnt"><span id="cn">${(r.ans[q.id] || '').length}</span> / ${r.maxChars}</div>`
+    : `<div role="radiogroup" aria-labelledby="qt">${q.options.map((o, k) => `<button class="opt" role="radio" aria-checked="${r.ans[q.id] === o.k}" data-k="${esc(o.k)}"><span class="k">${LBL[k]}</span><span class="tx${arCls(o.t)}">${esc(o.t)}</span></button>`).join('')}</div>`;
+  const last = r.i === n - 1;
+  $('app').innerHTML = `<div class="tbar"><b>${esc(r.exam.Title)}</b><span class="clock${r.rem <= 300 ? ' low' : ''}" id="clock" role="timer">${mmss(r.rem)}</span></div>
+    <section class="q"><div class="pmeta"><b>Question ${r.i + 1} of ${n}</b><span>${q.marks} mark${q.marks === 1 ? '' : 's'}${q.type === 'written' ? ' &middot; written' : ''}</span></div>
+    <div class="prog" role="progressbar" aria-valuemin="0" aria-valuemax="${n}" aria-valuenow="${doneCount}"><i style="width:${doneCount / n * 100}%"></i></div>
+    <h2 id="qt" class="${arCls(q.question)}">${esc(q.question)}</h2>${body}
+    <div style="margin-top:10px"><button class="flagbtn${r.flag[q.id] ? ' on' : ''}" data-flag>${r.flag[q.id] ? '&#9873; Flagged for review' : '&#9872; Flag for review'}</button></div>
+    <div class="nav"><button class="btn btn-line" data-back ${r.i === 0 ? 'disabled' : ''}>Back</button>
+    ${last ? `<button class="btn btn-ink" data-review>Review and submit</button>` : `<button class="btn btn-ink" data-next>Next</button>`}</div>
+    <div class="dots" aria-label="Jump to a question">${r.qs.map((qq, j) => `<button class="${answered(qq) ? 'done ' : ''}${j === r.i ? 'cur ' : ''}${r.flag[qq.id] ? 'flag' : ''}" data-go="${j}" aria-label="Question ${j + 1}${answered(qq) ? ', answered' : ''}">${j + 1}</button>`).join('')}</div>
+    <div class="msg" id="msg" role="alert"></div></section>`;
+}
+function reviewView() {
+  const r = ST.run, un = r.qs.filter((q) => { const v = r.ans[q.id]; return v == null || String(v).trim() === ''; }), fl = r.qs.filter((q) => r.flag[q.id]);
+  $('app').innerHTML = `<div class="tbar"><b>${esc(r.exam.Title)}</b><span class="clock${r.rem <= 300 ? ' low' : ''}" id="clock" role="timer">${mmss(r.rem)}</span></div>
+    <section class="panel"><h2>Ready to submit?</h2>
+    <p>You answered <b>${r.qs.length - un.length} of ${r.qs.length}</b> questions.${un.length ? ` Not answered: <b>${un.map((q) => r.qs.indexOf(q) + 1).join(', ')}</b>.` : ''}${fl.length ? ` Flagged: <b>${fl.map((q) => r.qs.indexOf(q) + 1).join(', ')}</b>.` : ''}</p>
+    <p style="margin-top:8px">After you submit you cannot change your answers.</p>
+    <div class="nav"><button class="btn btn-line" data-resume>Go back to questions</button><button class="btn btn-ink" data-final ${ST.busy ? 'disabled' : ''}>${ST.busy ? 'Submitting…' : 'Submit exam'}</button></div>
+    <div class="msg" id="msg" role="alert"></div></section>`;
+}
+function startClock() {
+  const r = ST.run; r.t0 = performance.now(); r.rem0 = r.rem;
+  clearInterval(ST.timer);
+  ST.timer = setInterval(() => {
+    r.rem = Math.max(0, Math.round(r.rem0 - (performance.now() - r.t0) / 1000));
+    const c = $('clock'); if (c) { c.textContent = mmss(r.rem); c.classList.toggle('low', r.rem <= 300); }
+    if (r.rem <= 0 && !r.ending) { r.ending = true; submit(true); }
+  }, 500);
+  clearInterval(ST.saveT);
+  ST.saveT = setInterval(() => save(), 20000);
+}
+function remember() { try { sessionStorage.setItem(bk(ST.run.exam.ExamID), JSON.stringify({ ans: ST.run.ans, flag: ST.run.flag })); } catch (e) {} }
+let saving = false;
+async function save() {
+  const r = ST.run; if (!r || saving || r.ending) return;
+  saving = true;
+  try { const d = await call({ op: 'save', examId: r.exam.ExamID, answers: r.ans }); if (d && d.ok && d.submitted) { ST.run = null; stopRun(); loadList(); } }
+  catch (e) { /* offline: keep writing, it saves on the next tick */ }
+  saving = false;
+}
+function stopRun() { clearInterval(ST.timer); clearInterval(ST.saveT); ST.timer = ST.saveT = 0; }
+
+async function begin(id, btn) {
+  btn.disabled = true;
+  try {
+    const d = await call({ op: 'start', examId: id });
+    if (!d.ok) { btn.disabled = false; return fail(d.error); }
+    let ans = d.answers || {}, flag = {};
+    try { const b = JSON.parse(sessionStorage.getItem(bk(id)) || 'null'); if (b) { ans = Object.assign({}, b.ans || {}, ans); flag = b.flag || {}; } } catch (e) {}
+    ST.run = { exam: d.exam, qs: d.questions, ans, flag, i: 0, rem: d.remainingSec, maxChars: d.maxChars || 3000, ending: false };
+    run(); startClock(); window.scrollTo(0, 0);
+  } catch (e) { btn.disabled = false; fail('Could not reach the school server. Please try again.'); }
+}
+async function submit(auto) {
+  const r = ST.run; if (!r) return;
+  ST.busy = true; if (!auto) reviewView();
+  let tries = 0, d = null;
+  while (tries < 4 && !(d && d.ok)) {
+    try { d = await call({ op: 'submit', examId: r.exam.ExamID, answers: r.ans }); } catch (e) { d = null; }
+    if (d && d.ok) break; tries++; await new Promise((res) => setTimeout(res, 1500 * tries));
+  }
+  ST.busy = false;
+  if (d && d.ok) {
+    try { sessionStorage.removeItem(bk(r.exam.ExamID)); } catch (e) {}
+    stopRun(); ST.run = null;
+    $('app').innerHTML = `<section class="panel" style="text-align:center"><div class="g big" style="background:#DDF3E4;color:#1B6B3A">&#10003;</div><h2 style="margin-top:14px">${auto ? 'Time is up. Your answers were sent.' : 'Your answers are in. Mashaa Allah!'}</h2>
+      <p>Your teacher will mark your paper. You will see your result here once it is released.</p><p style="margin-top:16px"><button class="btn btn-ink" data-list>Back to my exams</button></p></section>`;
+    window.scrollTo(0, 0);
+  } else {
+    r.ending = false;
+    if (auto) { $('app').innerHTML = '<section class="panel"><h2>We could not send your answers yet</h2><p>Check your connection and press the button. Your answers are still saved on this phone.</p><p style="margin-top:14px"><button class="btn btn-ink" data-final>Send my answers</button></p><div class="msg" id="msg"></div></section>'; }
+    else { reviewView(); fail('Could not reach the school server. Your answers are kept. Please try again.'); }
+  }
+}
+
+/* ---------- a published result ---------- */
+function resultView(d) {
+  stopTimers();
+  const p = d.parts, part = (n, x) => x.outOf ? `<div><b>${x.score}/${x.outOf}</b><span>${n}</span></div>` : '';
+  $('app').innerHTML = `<section class="panel"><span class="pill t">${esc(d.subject)}</span><h2>${esc(d.title)}</h2><p>${esc(d.student)} &middot; ${dayOnly(d.date + 'T00:00')}</p>
+    <div style="display:flex;align-items:center;gap:18px;margin-top:16px"><span class="g big ${esc(d.grade)}">${esc(d.grade)}</span>
+    <div><b style="font-family:var(--d);font-size:30px;color:var(--deep)">${d.absent ? 'Absent' : d.percent + '%'}</b><div style="color:var(--muted)">${esc(d.remark)} &middot; ${d.passed ? 'Passed' : 'Not passed'} (pass mark ${d.passMark}%)</div></div></div>
+    ${d.absent ? '<p style="margin-top:12px">You did not sit the written paper.</p>' : `<div class="parts">${part('Multiple choice', p.mcq)}${part('Written', p.written)}${part('Oral', p.oral)}</div>`}
+    ${d.comment ? `<div class="cmt"><b>Teacher&rsquo;s comment.</b> ${esc(d.comment)}</div>` : ''}${d.oralComment ? `<div class="cmt"><b>Oral assessment.</b> ${esc(d.oralComment)}</div>` : ''}
+    <p class="no-print" style="margin-top:18px"><button class="btn btn-line btn-sm" data-list>All exams</button> <button class="btn btn-ink btn-sm" data-print>Print or save as PDF</button></p></section>
+    ${d.review.map((x, i) => x.type === 'written'
+      ? `<section class="rev"><h3>${i + 1}. ${esc(x.question)} <span class="pill">${x.score}/${x.marks}</span></h3><div class="ans">${x.yours ? esc(x.yours) : '<i>No answer</i>'}</div>${x.modelAnswer ? `<div class="ex"><b>Model answer.</b> ${esc(x.modelAnswer)}</div>` : ''}</section>`
+      : `<section class="rev"><h3>${i + 1}. ${esc(x.question)} <span class="pill">${x.ok ? x.marks : 0}/${x.marks}</span></h3>${x.options.map((o) => `<div class="opt static ${o.k === x.correct ? 'good' : o.k === x.yours ? 'wrong' : ''}"><span class="k">${esc(o.k)}</span><span class="tx${arCls(o.t)}">${esc(o.t)}</span></div>`).join('')}${x.yours ? '' : '<div class="ex">You did not answer this one.</div>'}${x.explanation ? `<div class="ex">${esc(x.explanation)}</div>` : ''}</section>`).join('')}`;
+  window.scrollTo(0, 0);
+}
+
+/* ---------- clicks ---------- */
+document.addEventListener('click', async (e) => {
+  if (!ST.student) return;
+  const t = (s) => e.target.closest(s), r = ST.run;
+  if (t('[data-intro]')) { const x = ST.exams.find((y) => y.ExamID === t('[data-intro]').dataset.intro); if (x) introView(x); window.scrollTo(0, 0); }
+  else if (t('[data-begin]')) begin(t('[data-begin]').dataset.begin, t('[data-begin]'));
+  else if (t('[data-result]')) {
+    const b = t('[data-result]'); b.disabled = true;
+    try { const d = await call({ op: 'result', examId: b.dataset.result }); b.disabled = false; if (!d.ok) return fail(d.error); if (d.pending) return fail('Some marking is still to be finished. Please check again soon.'); resultView(d); } catch (x) { b.disabled = false; fail('Could not reach the school server.'); }
+  }
+  else if (t('[data-list]')) { document.body.classList.remove('pr-t'); loadList(); }
+  else if (t('[data-print]')) window.print();
+  else if (t('[data-print-t]')) { document.body.classList.add('pr-t'); window.print(); setTimeout(() => document.body.classList.remove('pr-t'), 500); }
+  else if (r && t('[data-k]')) { r.ans[r.qs[r.i].id] = t('[data-k]').dataset.k; remember(); run(); save(); }
+  else if (r && t('[data-next]')) { r.i++; run(); window.scrollTo(0, 0); save(); }
+  else if (r && t('[data-back]')) { r.i--; run(); window.scrollTo(0, 0); }
+  else if (r && t('[data-go]')) { r.i = +t('[data-go]').dataset.go; run(); window.scrollTo(0, 0); }
+  else if (r && t('[data-flag]')) { const id = r.qs[r.i].id; r.flag[id] = !r.flag[id]; remember(); run(); }
+  else if (r && t('[data-review]')) { save(); reviewView(); window.scrollTo(0, 0); }
+  else if (r && t('[data-resume]')) { run(); }
+  else if (t('[data-final]') && !ST.busy) submit(false);
+});
+document.addEventListener('input', (e) => {
+  const r = ST.run; if (!r || e.target.id !== 'wa') return;
+  r.ans[r.qs[r.i].id] = e.target.value; remember(); const c = $('cn'); if (c) c.textContent = e.target.value.length;
+});
+document.addEventListener('focusout', (e) => { if (ST.run && e.target.id === 'wa') save(); });
+document.addEventListener('visibilitychange', () => { if (document.hidden && ST.run) save(); });
+window.addEventListener('beforeunload', (e) => { if (ST.run && !ST.run.ending) { e.preventDefault(); e.returnValue = ''; } });
+
+/* ---------- sign in (shares the dashboard's session) ---------- */
+async function signIn(id, code, silent) {
+  const b = $('go'); $('err').textContent = ''; b.disabled = true; b.textContent = 'Signing in…'; ST.id = id; ST.code = code;
+  try {
+    const d = await call({ op: 'list' });
+    if (d.ok) { sessionStorage.setItem('hs', JSON.stringify({ id, code })); $('login').hidden = true; $('app').hidden = false; $('out').hidden = false; ST.student = d.student || { name: 'Student', level: '' }; await loadList(); }
+    else if (!silent) $('err').textContent = d.error || 'Could not sign in.'; else sessionStorage.removeItem('hs');
+  } catch (x) { if (!silent) $('err').textContent = 'Could not reach the school server. Please try again.'; }
+  b.disabled = false; b.textContent = 'Sign in';
+}
+$('lf').addEventListener('submit', (e) => { e.preventDefault(); const i = $('sid').value.trim(), c = $('scode').value.trim(); if (!i || !c) { $('err').textContent = 'Enter your Student ID and access code.'; return; } signIn(i, c); });
+$('out').addEventListener('click', () => { sessionStorage.removeItem('hs'); location.reload(); });
+try { const s = JSON.parse(sessionStorage.getItem('hs') || 'null'); if (s && s.id && s.code) signIn(s.id, s.code, true); } catch (x) {}
+</script>
+</body>
+</html>

@@ -33,6 +33,7 @@ first payment. `pay` handles later fees. Staff set a row to Confirmed and the st
 | `academy-dashboard`, `academy-tutor`, `academy-admin` | Academy | `Academy.gs` |
 | `skills-dashboard`, `skills-tutor`, `skills-admin` | Skills School | `Skills.gs` |
 | `tbc-dashboard`, `tbc-facilitator`, `tbc-admin` | Teenagers Building Circle | `TBC.gs` |
+| `exams` (students), `exam-teacher` (teachers) | Madrasah exams | `Exams.gs` |
 | `librarian` | Librarian | `Librarian.gs` |
 | `admin`, `owner` | Administrators and owner | `Admin.gs`, `Owner.gs` |
 | `my-card`, `verify` | Library and ID cards (everyone) | `Cards.gs` |
