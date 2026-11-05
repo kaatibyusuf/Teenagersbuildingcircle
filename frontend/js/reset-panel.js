@@ -7,7 +7,7 @@
  * The new code is shown once, here, and is never stored in the page after "Done". */
 (function () {
   const esc = (t) => String(t == null ? '' : t).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-  const S = { q: '', results: null, busy: false, ask: null, email: true, shown: null, recent: null, note: '', loaded: false };
+  const S = { q: '', results: null, busy: false, ask: null, email: true, force: true, shown: null, recent: null, note: '', loaded: false };
   let cfg = null;
 
   const CSS = '.rsp-hit{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:12px 14px;background:var(--wash,#f3f6f8);border-radius:12px;font-size:14px;flex-wrap:wrap}' +
@@ -30,6 +30,7 @@
     else right = '<button class="btn btn-line btn-sm" type="button" data-rs="ask" data-k="' + esc(r.kind) + '" data-id="' + esc(r.id) + '">Reset code</button>';
     const sub = esc(r.kindLabel) + ' · ' + esc(r.id) + (r.emailMasked ? ' · ' + esc(r.emailMasked) : '') + (r.active ? '' : ' · <b>not active</b>');
     const opt = asking && !r.self ? '<label class="rsp-chk" style="flex-basis:100%"><input type="checkbox" data-rs="email"' + (S.email ? ' checked' : '') + (r.emailMasked ? '' : ' disabled') + '> Also email it to ' + (r.emailMasked ? esc(r.emailMasked) : 'them (no email on file)') + '</label>' +
+      '<label class="rsp-chk" style="flex-basis:100%"><input type="checkbox" data-rs="force"' + (S.force ? ' checked' : '') + '> Ask them to choose their own code when they sign in</label>' +
       '<p class="rsp-warn" style="flex-basis:100%">The old code stops working at once.</p>' : '';
     return '<li class="rsp-hit' + (r.active ? '' : ' rsp-off') + '"><span><b>' + who + '</b><small>' + sub + '</small></span>' + right + opt + '</li>';
   }
@@ -38,7 +39,7 @@
     const x = S.shown;
     return '<div class="rsp-box"><h3 style="margin:0 0 4px">New code for ' + esc(x.name || x.id) + '</h3><p class="sub">' + esc(x.kindLabel) + ' · ' + esc(x.id) + '. Send it to them privately. It will not be shown again after you press Done.</p>' +
       '<div class="rsp-code" id="rsp-code">' + esc(x.code) + '</div>' +
-      '<p class="sub">' + (x.emailed === 'Sent' ? 'Emailed to them.' : x.emailed === 'No email' ? 'No valid email on file, so nothing was emailed.' : x.emailed === 'Off' ? 'Emails are switched off in the script, so nothing was emailed.' : x.emailed === 'Quota reached' ? 'Today’s email limit is used up, so nothing was emailed.' : x.emailed === 'Error' ? 'The email could not be sent.' : 'Not emailed.') + ' Their old sign-in lockout (if any) is cleared.</p>' +
+      '<p class="sub">' + (x.emailed === 'Sent' ? 'Emailed to them.' : x.emailed === 'No email' ? 'No valid email on file, so nothing was emailed.' : x.emailed === 'Off' ? 'Emails are switched off in the script, so nothing was emailed.' : x.emailed === 'Quota reached' ? 'Today’s email limit is used up, so nothing was emailed.' : x.emailed === 'Error' ? 'The email could not be sent.' : 'Not emailed.') + ' Their old sign-in lockout (if any) is cleared.' + (x.forced ? ' When they sign in they will be asked to choose their own code.' : '') + '</p>' +
       '<div class="rsp-act"><button class="btn btn-ink btn-sm" type="button" data-rs="copy">Copy code</button><button class="btn btn-line btn-sm" type="button" data-rs="copymsg">Copy message</button>' +
       (x.whatsapp ? '<a class="btn btn-line btn-sm" href="' + esc(x.whatsapp) + '" target="_blank" rel="noopener">Send on WhatsApp</a>' : '') +
       '<button class="btn btn-line btn-sm" type="button" data-rs="done">Done</button></div>' +
@@ -78,7 +79,7 @@
   async function go() {
     if (!S.ask || S.busy) return;
     S.busy = true; paint();
-    const d = await call('rs_reset', { kind: S.ask.kind, targetId: S.ask.id, email: S.email ? 1 : 0 });
+    const d = await call('rs_reset', { kind: S.ask.kind, targetId: S.ask.id, email: S.email ? 1 : 0, force: S.force ? 1 : 0 });
     S.busy = false;
     if (d && d.ok) { S.shown = d; S.ask = null; S.results = null; S.q = ''; call('rs_recent').then((r) => { if (r && r.ok) { S.recent = r.recent; } }); }
     else if (d) { cfg.toast(d.error || 'Could not reset.', true); S.ask = null; }
@@ -97,7 +98,7 @@
       else if (a === 'copymsg') copy(S.shown.message, 'Message copied.');
       else if (a === 'done') { S.shown = null; paint(); }
     });
-    c.root.addEventListener('change', (e) => { if (e.target.matches && e.target.matches('[data-rs="email"]')) S.email = e.target.checked; });
+    c.root.addEventListener('change', (e) => { if (!e.target.matches) return; if (e.target.matches('[data-rs="email"]')) S.email = e.target.checked; else if (e.target.matches('[data-rs="force"]')) S.force = e.target.checked; });
     c.root.addEventListener('input', (e) => { if (e.target.id === 'rsq') S.q = e.target.value; });
     c.root.addEventListener('submit', (e) => { const f = e.target.closest && e.target.closest('[data-rs-form]'); if (!f) return; e.preventDefault(); e.stopPropagation(); S.q = (f.elements.q.value || '').trim(); search(); }, true);
   }

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en" class="app page-library">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Madrasah Library | Himaayah Schools</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#094570">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600;700&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css?v=20261028">
+<script src="js/auth-guard.js"></script>
+<script src="js/force-change.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/cookie-notice.js" defer></script>
+<!-- Vercel Analytics: counts visits once enabled in the Vercel dashboard -->
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+<header class="top"><div>
+<a class="brand" href="./"><svg width="22" height="27" viewBox="0 0 377.21 459.6" fill="#094570" aria-hidden="true"><path d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>Himaayah Schools <em>Library</em></a>
+<nav><a class="btn btn-line" href="dashboard">My dashboard</a><button class="btn btn-ink" id="out" hidden>Log out</button></nav>
+</div></header>
+
+<main id="login" class="login"><form class="lbox" id="lf" novalidate>
+<div class="crest" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#094570" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5V5a2 2 0 0 1 2-2h13v16H6.5A2.5 2.5 0 0 0 4 21.5v-2z"/><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H19"/><path d="M9 7h6"/></svg></div>
+<span class="kick">Students</span><h1>Madrasah library</h1><p>Books, notes and links for Himaayah students. Sign in with your Student ID and access code.</p>
+<div class="demo" id="demoNote" hidden><b>Demo mode.</b> Use ID <b>DEMO</b> and code <b>demo</b> to see sample items.</div>
+<div class="f"><label for="sid">Student ID</label><input id="sid" autocomplete="username" autocapitalize="characters" required></div>
+<div class="f"><label for="scode">Access code</label><input id="scode" type="password" autocomplete="current-password" required></div>
+<div class="err" id="err" role="alert"></div><button class="btn btn-ink" id="go" type="submit">Sign in</button>
+<div class="lnote">Signed in on your dashboard already? You'll go straight in.</div>
+</form></main>
+
+<main id="app" hidden></main>
+
+<script>
+/* Paste your Apps Script web-app URL (the same one as dashboard). While empty, the page runs in DEMO mode. */
+const API_URL = 'https://script.google.com/macros/s/AKfycby0AsifBuB_Ad7g1SjDXCipaDU27-BrzYWf67muw5jeY_C0_0uz8AhQYYXdiNRQhvqX/exec';
+
+const $ = (id) => document.getElementById(id);
+const esc = (t) => String(t ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const ST = { student: null, items: [], q: '', subject: 'All', type: 'All', all: false, sort: 'new' };
+const safeUrl = (u) => /^https:\/\/[^\s]+$/i.test(String(u || '')) ? u : '#';
+
+/* ---- Himaayah free guides: always in the library, alongside what teachers add in the sheet ---- */
+const RES = (location.protocol === 'https:' ? location.origin : 'https://www.himaayahschools.com') + '/resources/';
+const GUIDE = (slug, Title, Subject, Description, Added) => ({ Title, Author: 'Himaayah Schools', Type: 'PDF', Subject, Level: 'All', Url: RES + slug + '.pdf', Description, Added, forMe: true, guide: true });
+const PR = {'steady-hifdh': 3000, 'mastering-the-mutashabihat': 3000, 'the-fiqh-of-zakah': 3000, 'the-fiqh-of-janazah': 3000, 'hajj-and-umrah': 3000, 'the-six-pillars-of-iman': 3000, 'the-forty-hadith': 3000, 'duas-from-the-quran': 3000, 'juz-amma-explained': 3000, 'the-character-of-the-prophet': 3000, 'stories-of-the-prophets': 3000, 'my-ramadan-planner': 3000, 'prayer-tracker-and-khatm-planner': 3000, 'my-first-arabic-letters': 5000, 'i-can-pray': 5000, 'little-muslims-beautiful-manners': 5000, 'my-ramadan-and-eid-book': 5000, 'taharah-and-salah': 3000, 'the-fiqh-of-fasting': 3000, 'tajwid-basics': 3000, 'morning-and-evening-adhkar': 3000, 'the-makkan-years': 3000, 'mothers-of-the-believers': 3000, 'the-ten-promised-paradise': 3000, 'the-battles-of-the-prophet': 3000, 'fiqh-of-hayd-nifas-istihadah': 3000, 'ulu-al-azm': 3000, 'the-four-rightly-guided-caliphs': 3000, 'the-four-imams': 3000, 'hifdh-planner': 3000, 'adab-before-ilm': 3000, 'understand-what-you-recite': 3000, 'five-ways-to-ace-utme': 3000, 'jamb-physics': 3000, 'jamb-chemistry': 3000, 'jamb-biology': 3000, 'jamb-use-of-english': 3000, 'jamb-mathematics': 3000, 'jamb-government': 3000, 'jamb-economics': 3000, 'jamb-literature-in-english': 3000, 'jamb-commerce': 3000, 'jamb-islamic-studies': 3000, 'post-utme-and-choosing-a-course': 3000, 'credit-in-every-paper': 3000, 'deen-and-discipline': 3000, 'own-your-phone': 3000, 'money-smart-muslim-teens': 3000, 'friends-and-peer-pressure': 3000, 'little-minds-big-questions': 5000, 'speak-with-confidence': 3000, 'digital-skills-for-beginners': 3000, 'design-with-canva': 3000, 'your-first-cv-and-interview': 3000, 'freelancing-first-steps': 3000};
+const PAID = (slug, Title, Subject, Description, Added) => ({ Title, Author: 'Himaayah Schools', Type: 'PDF', Subject, Level: 'All', Url: (location.protocol === 'https:' ? location.origin : 'https://www.himaayahschools.com') + '/store#p-' + slug, Description, Added, forMe: true, guide: true, price: '₦' + PR[slug].toLocaleString('en-NG') });
+const GUIDES = [
+  PAID('my-first-arabic-letters', 'My First Arabic Letters', 'Children’s learning', 'A large-print book for children aged 4 to 8: the 28 Arabic letters with sounds, example words, letter shapes, tracing and short vowels.', '2026-10-27'),
+  PAID('i-can-pray', 'I Can Pray!', 'Children’s learning', 'A large-print book for children aged 5 to 9: wuḍūʾ, the five prayers, how a rakʿah goes, short sūrahs, masjid manners and a prayer chart.', '2026-10-27'),
+  PAID('little-muslims-beautiful-manners', 'Little Muslims, Beautiful Manners', 'Children’s learning', 'A large-print book for children aged 5 to 9: twelve manners from the Qur’an and Sunnah, each with a story, a verse or hadith, questions and a weekly tracker.', '2026-10-27'),
+  PAID('my-ramadan-and-eid-book', 'My Ramadan and Eid Book', 'Children’s learning', 'A large-print activity book for children aged 5 to 10: the moon, fasting, suhoor and iftar, Qur’an and good-deed trackers, Laylat al-Qadr and Eid.', '2026-10-27'),
+  PAID('little-minds-big-questions', 'Little Minds, Big Questions', 'Children’s learning', 'A workbook for children aged 5 to 10: 66 activities in observation, thinking, reading, speaking, creativity, maths, everyday skills and the signs of Allah, with a parent handbook and a 12-week plan.', '2026-10-27'),
+  PAID('money-smart-muslim-teens', 'Money Smart Muslim Teens', 'Personal development', 'Money habits for Muslim teens: earning ḥalāl, spending, saving, charity, avoiding ribā and betting, and a monthly budget.', '2026-10-27'),
+  PAID('friends-and-peer-pressure', 'Friends and Peer Pressure', 'Personal development', 'Choosing good friends, being one, saying no to peer pressure, online pressure, and practice scenarios.', '2026-10-27'),
+  PAID('design-with-canva', 'Design with Canva', 'Graphic design', 'Graphic design with Canva: six principles, colour and fonts, a first flyer step by step, social media sizes and a portfolio.', '2026-10-27'),
+  PAID('your-first-cv-and-interview', 'Your First CV and Interview', 'Careers', 'A one-page CV template, writing with little experience, a cover letter, interview preparation and the STAR method.', '2026-10-27'),
+  PAID('freelancing-first-steps', 'Freelancing First Steps', 'Careers', 'Starting as a freelancer: choosing a skill, a portfolio, first clients, pricing, contracts, safe payment and scams to avoid.', '2026-10-27'),
+  PAID('jamb-use-of-english', 'JAMB Use of English', 'Exam preparation', 'UTME Use of English: comprehension, lexis and structure, oral English, worked examples, an 8-week plan and a practice test.', '2026-10-27'),
+  PAID('jamb-mathematics', 'JAMB Mathematics', 'Exam preparation', 'UTME Mathematics: the syllabus, a formula sheet, worked examples, traps, an 8-week plan and a practice test.', '2026-10-27'),
+  PAID('jamb-government', 'JAMB Government', 'Exam preparation', 'UTME Government: concepts, thinkers, constitutions, Nigerian history, dates, an 8-week plan and a practice test.', '2026-10-27'),
+  PAID('jamb-economics', 'JAMB Economics', 'Exam preparation', 'UTME Economics: the syllabus, formulas, worked examples, traps, an 8-week plan and a practice test.', '2026-10-27'),
+  PAID('jamb-literature-in-english', 'JAMB Literature in English', 'Exam preparation', 'UTME Literature in English: literary terms, drama, prose and poetry, sample questions, an 8-week plan and a practice test.', '2026-10-27'),
+  PAID('jamb-commerce', 'JAMB Commerce', 'Exam preparation', 'UTME Commerce: documents of trade, insurance, business units, calculations, an 8-week plan and a practice test.', '2026-10-27'),
+  PAID('jamb-islamic-studies', 'JAMB Islamic Studies', 'Exam preparation', 'UTME Islamic Studies: Qur’an, Ḥadīth, tawḥīd, fiqh, sīrah and Islām in West Africa, an 8-week plan and a practice test.', '2026-10-27'),
+  PAID('post-utme-and-choosing-a-course', 'Post-UTME and Choosing a Course', 'Exam preparation', 'The road to admission: choosing a course, subject combinations, O-Level rules, cut-offs, Post-UTME, JAMB CAPS and scams.', '2026-10-27'),
+  PAID('my-ramadan-planner', 'My Ramaḍān Planner', 'Adhkar', 'A printable Ramaḍān planner: goals, a khatm plan, a daily tracker, reflection pages, the last ten nights and ʿĪd.', '2026-10-27'),
+  PAID('prayer-tracker-and-khatm-planner', 'Prayer Tracker and Khatm Planner', 'Adhkar', 'Printable prayer trackers for adults and children, a qaḍāʾ log, khatm plans and a tracker for the thirty ajzāʾ.', '2026-10-27'),
+  PAID('the-forty-hadith', 'The Forty Ḥadīth of an-Nawawī', 'Hadith', 'All 42 ḥadīth of al-Arbaʿīn an-Nawawiyyah in Arabic, with translation, source, lessons and a memorisation tracker.', '2026-10-27'),
+  PAID('duas-from-the-quran', 'Duʿāʾs from the Qur’an', 'Adhkar', 'Thirty-six duʿāʾs from the Qur’an, by need, in Arabic with transliteration, meaning and who said them.', '2026-10-27'),
+  PAID('juz-amma-explained', 'Juz ʿAmma Explained', 'Tafsir', 'A simple explanation of all 37 sūrahs of Juz ʿAmma, with lessons, authentic reports and a memorisation tracker.', '2026-10-27'),
+  PAID('the-character-of-the-prophet', 'The Character of the Prophet ﷺ', 'Seerah', 'The shamāʾil of the Prophet ﷺ: his appearance, speech, home life, worship and mercy, from the authentic Sunnah.', '2026-10-27'),
+  PAID('stories-of-the-prophets', 'Stories of the Prophets', 'Seerah', 'The stories of twenty prophets from Ādam to Yaḥyā, from the Qur’an and authentic Sunnah, with a family tree and lessons.', '2026-10-27'),
+  PAID('the-fiqh-of-zakah', 'The Fiqh of Zakāh', 'Fiqh', 'The Mālikī rulings of zakāh on money, gold, trade, crops and livestock, the eight recipients, examples in naira and a worksheet.', '2026-10-27'),
+  PAID('the-fiqh-of-janazah', 'The Fiqh of Janāzah', 'Fiqh', 'The Mālikī rulings of death and burial: washing, shrouding, the funeral prayer, burial, condolence and a checklist for families.', '2026-10-27'),
+  PAID('hajj-and-umrah', 'Ḥajj and ʿUmrah', 'Fiqh', 'The Mālikī rites of ʿumrah and Ḥajj step by step and day by day, with a route map, expiations, duʿāʾs and a checklist.', '2026-10-27'),
+  PAID('the-six-pillars-of-iman', 'The Six Pillars of Īmān', 'Aqidah', 'The six pillars of faith from the ḥadīth of Jibrīl, with their evidence: Allah, the angels, the books, the prophets, the Last Day and the decree.', '2026-10-27'),
+  PAID('taharah-and-salah', 'Ṭahārah and Ṣalāh', 'Fiqh', 'Purification and prayer in the Mālikī school: wuḍūʾ, ghusl, tayammum, the prayer step by step and sujūd as-sahw.', '2026-10-27'),
+  PAID('the-fiqh-of-fasting', 'The Fiqh of Fasting', 'Fiqh', 'The Mālikī rulings of fasting: intention, what breaks the fast, qaḍāʾ, kaffārah, fidyah, zakāt al-fiṭr and a Ramaḍān plan.', '2026-10-27'),
+  PAID('tajwid-basics', 'Tajwīd Basics', 'Tajwid', 'The rules of recitation in Ḥafṣ and Warsh side by side: makhārij, ṣifāt, nūn and mīm sākinah, madd and waqf.', '2026-10-27'),
+  PAID('morning-and-evening-adhkar', 'Morning and Evening Adhkār', 'Adhkar', 'The authentic morning, evening and bedtime adhkār, in Arabic with transliteration, meaning and source, and a 30-day tracker.', '2026-10-27'),
+  PAID('the-makkan-years', 'The Makkan Years', 'Seerah', 'The life of the Prophet ﷺ in Makkah, from his birth to the Hijrah, with a timeline, a map of the Hijrah and a self-test.', '2026-10-27'),
+  PAID('mothers-of-the-believers', 'The Mothers of the Believers', 'Seerah', 'The lives and virtues of the eleven wives of the Prophet ﷺ, the wisdom of his marriages, a timeline and a self-test.', '2026-10-27'),
+  PAID('the-ten-promised-paradise', 'The Ten Promised Paradise', 'Seerah', 'The lives and virtues of the ten Companions promised Paradise by name, with a comparison table and a self-test.', '2026-10-27'),
+  PAID('jamb-physics', 'JAMB Physics', 'Exam preparation', 'UTME Physics: the syllabus, a formula sheet, worked examples, traps, an 8-week plan and a practice test.', '2026-10-27'),
+  PAID('jamb-chemistry', 'JAMB Chemistry', 'Exam preparation', 'UTME Chemistry: the syllabus, mole and electrolysis calculations, tests, organic series, worked examples and a practice test.', '2026-10-27'),
+  PAID('jamb-biology', 'JAMB Biology', 'Exam preparation', 'UTME Biology: the syllabus, key facts, genetics crosses, ecology, worked examples, an 8-week plan and a practice test.', '2026-10-27'),
+  PAID('own-your-phone', 'Own Your Phone', 'Personal development', 'Phones, screens and social media for Muslim teens: how apps hook you, ten habits, adab and safety online, and a section for parents.', '2026-10-27'),
+  PAID('digital-skills-for-beginners', 'Digital Skills for Beginners', 'Digital skills', 'Everyday computer skills: files, typing, professional email, documents, spreadsheet formulas, slides, searching and online safety.', '2026-10-27'),
+  PAID('the-battles-of-the-prophet', 'The Battles of the Prophet ﷺ', 'Seerah', 'The battles and expeditions of the Prophet ﷺ from Badr to Tabūk, with a map, battle plans, the heroes, the rules of war and a self-test.', '2026-10-27'),
+  PAID('fiqh-of-hayd-nifas-istihadah', 'The Fiqh of Ḥayḍ, Nifās and Istiḥāḍah', 'Fiqh', 'The Mālikī rulings on menstruation, bleeding after childbirth and irregular bleeding, with a decision chart, worked examples and a record page.', '2026-10-27'),
+  PAID('ulu-al-azm', 'Ūlu al-ʿAzm: The Five Resolute Messengers', 'Seerah', 'The stories of Nūḥ, Ibrāhīm, Mūsā, ʿĪsā and Muḥammad ﷺ from the Qur’an and authentic Sunnah, with their duʿāʾs and a self-test.', '2026-10-27'),
+  PAID('the-four-rightly-guided-caliphs', 'The Four Rightly Guided Caliphs', 'Seerah', 'The lives and caliphates of Abū Bakr, ʿUmar, ʿUthmān and ʿAlī: their virtues, decisions and trials, with a timeline and a self-test.', '2026-10-27'),
+  PAID('the-four-imams', 'The Four Imams', 'Seerah', 'The full lives of Abū Ḥanīfah, Mālik, ash-Shāfiʿī and Aḥmad: teachers, trials, methods and students, with a timeline and a self-test.', '2026-10-26'),
+  PAID('hifdh-planner', 'My Hifdh Planner', 'Hifdh', 'A printable planner: your goal and timeline, weekly pages for new lesson and revision, a juz tracker and a surah checklist.', '2026-10-26'),
+  PAID('adab-before-ilm', 'Adab Before ʿIlm', 'Character', 'Ten traits of the student of knowledge, each with a verse or hadith and a weekly action, with a self-assessment and a 30-day tracker.', '2026-10-26'),
+  PAID('mastering-the-mutashabihat', 'Mastering the Mutashābihāt', 'Hifdh', 'Recognise the verses that look alike, tell them apart and keep each one in its place. Real pairs, memory hooks, a self-test and a log.', '2026-10-26'),
+  PAID('steady-hifdh', 'Steady Hifdh', 'Hifdh', 'Ten steps to becoming consistent in memorising the Qur’an, with a daily routine, a sample week and a tracker.', '2026-10-25'),
+  PAID('understand-what-you-recite', 'Understand What You Recite', 'Arabic', 'A first guide to the Arabic of the Qur’an: roots, common words and al-Fātiḥah word by word, with a 12-week plan.', '2026-10-26'),
+  PAID('deen-and-discipline', 'Deen and Discipline', 'Personal development', 'Seven habits for Muslim teenagers, from prayer on time to a phone that stays in its place, with a four-week tracker.', '2026-10-26'),
+  PAID('five-ways-to-ace-utme', 'Five Ways to Ace UTME', 'Exam preparation', 'What to study, how to use past questions and how to beat the CBT clock, with a 12-week plan.', '2026-10-25'),
+  PAID('credit-in-every-paper', 'Credit in Every Paper', 'Exam preparation', 'A WAEC and NECO study guide: plan your subjects, use past questions and write answers examiners reward.', '2026-10-26'),
+  PAID('speak-with-confidence', 'Speak with Confidence', 'Public speaking', 'Plan a talk people remember, calm your nerves and rehearse well, with a talk planner and a feedback sheet.', '2026-10-26')
+];
+const withGuides = (items) => (items || []).concat(GUIDES.filter((g) => !(items || []).some((x) => String(x.Url || '').indexOf(g.Url.split('/resources/')[1]) >= 0)));
+
+/* ---- demo data (only while API_URL is empty) ---- */
+function demo() {
+  const d = (n) => { const x = new Date(); x.setDate(x.getDate() - n); return x.toISOString().slice(0, 10); };
+  const it = (Title, Author, Type, Subject, Level, Description, ago, forMe) => ({ Title, Author, Type, Subject, Level, Url: 'https://example.com/sample', Description, Added: d(ago), forMe });
+  return { ok: true, student: { name: 'Sample Student', level: 'Thālithah Ibtidā’iyyah' }, items: [
+    it('Sample: Forty Hadith revision notes', 'Himaayah teachers', 'PDF', 'Hadith', 'All', 'Your teachers\u2019 own notes. Items like this appear when staff add them to the sheet.', 3, true),
+    it('Sample: Tajweed rules at a glance', 'Himaayah teachers', 'PDF', 'Tajweed', 'All', 'A one-page summary to keep beside you when you recite.', 12, true),
+    it('Sample: Arabic reading practice', 'Himaayah teachers', 'PDF', 'Arabic', 'Thālithah Ibtidā’iyyah', 'Practice sheets for your level.', 40, true),
+    it('Sample: Link to a trusted tafsir website', '', 'Link', 'Fiqh', 'All', 'Links to other websites open in a new tab.', 80, true),
+    it('Sample: Beginner Arabic letters workbook', 'Himaayah teachers', 'PDF', 'Arabic', 'Rawdah', 'For students in a lower level. Hidden unless you choose "Show other levels too".', 90, false),
+    it('Sample: Iʿdādiyyah reading list', 'Himaayah teachers', 'Book', 'Aqeedah', 'Awwal Iʿdādiyyah', 'For students in a higher level.', 120, false) ] };
+}
+async function api(id, code) {
+  if (!API_URL) { await new Promise((r) => setTimeout(r, 350)); return id.toUpperCase() === 'DEMO' && code === 'demo' ? demo() : { ok: false, error: 'Wrong ID or access code.' }; }
+  const r = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'library', id, code }) });
+  return r.json();
+}
+
+/* ---- view ---- */
+const isNew = (a) => { const t = Date.parse(a); return !isNaN(t) && (Date.now() - t) / 864e5 <= 30; };
+const byNewest = (a, b) => String(b.Added).localeCompare(String(a.Added));
+const typeOk = (x) => ST.type === 'All' || (ST.type === 'Books' ? x.Type !== 'Link' : x.Type === 'Link');
+const scopeOk = (x) => ST.all || x.forMe;
+function visible() {
+  const q = ST.q.trim().toLowerCase();
+  return ST.items.filter((x) => scopeOk(x) && typeOk(x) && (ST.subject === 'All' || x.Subject === ST.subject)
+    && (!q || (x.Title + ' ' + x.Author + ' ' + x.Description + ' ' + x.Subject).toLowerCase().includes(q)))
+    .sort((a, b) => ST.sort === 'az' ? String(a.Title).localeCompare(String(b.Title)) : byNewest(a, b));
+}
+const GLOBE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Website"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/></svg>';
+const tile = (x) => x.Type === 'Link' ? `<div class="tile">${GLOBE}</div>` : `<div class="tile">${x.Type === 'Book' ? 'BOOK' : 'PDF'}</div>`;
+const label = (x) => x.price ? 'Buy ' + x.price : x.Type === 'Link' ? 'Visit site' : x.Type === 'Book' ? 'Read' : 'Open PDF';
+const gtag = (x) => x.price ? '<span class="gt">' + x.price + '</span>' : x.guide ? '<span class="gt">Free guide</span>' : '';
+const link = (x, cls) => `<a class="btn ${cls}" href="${esc(safeUrl(x.Url))}" target="_blank" rel="noopener noreferrer">${label(x)}</a>`;
+const lvl = (x) => x.Level === 'All' || !x.Level ? '<span class="lv">All levels</span>' : `<span class="lv mine">${esc(x.Level)}</span>`;
+
+function main() {
+  const l = visible();
+  const feat = (!ST.q.trim() && ST.subject === 'All' && ST.type === 'All') ? l.filter((x) => isNew(x.Added)).sort(byNewest).slice(0, 2) : [];
+  const fHtml = feat.length ? `<section><h2>New this month</h2><div class="fgrid">${feat.map((x) => `<article class="feat"><div class="top2">${tile(x)}<span class="newp">New</span></div>
+      <h3>${esc(x.Title)}</h3><div class="by">${esc([x.Author, x.Subject].filter(Boolean).join(' \u00B7 '))}</div><p class="d">${esc(x.Description)}</p>${link(x, 'btn-sky')}</article>`).join('')}</div></section>` : '';
+  const rows = l.length ? `<div class="list">${l.map((x, i) => `<article class="item ${x.forMe ? '' : 'other'}" style="--i:${Math.min(i, 12)}">${tile(x)}
+      <div class="txt"><h3>${esc(x.Title)}${gtag(x)}</h3><div class="by">${esc([x.Author, x.Subject].filter(Boolean).join(' \u00B7 '))}</div><p class="d">${esc(x.Description)}</p></div>
+      <div class="act">${isNew(x.Added) ? '<span class="nm">New</span>' : ''}${lvl(x)}${link(x, 'btn-ink')}</div></article>`).join('')}</div>`
+    : '<div class="empty">Nothing matches. Try another subject or format, or choose "Show other levels too" to see the whole library.</div>';
+  $('main').innerHTML = `${fHtml}<section><div class="head"><h2>All materials <small>${l.length} item${l.length === 1 ? '' : 's'}</small></h2>
+    <button class="sortbtn" data-sort="${ST.sort === 'new' ? 'az' : 'new'}">Sort: ${ST.sort === 'new' ? 'newest first' : 'A to Z'}</button></div><div aria-live="polite">${rows}</div></section>`;
+}
+function page() {
+  const pool = ST.items.filter((x) => scopeOk(x) && typeOk(x));
+  const counts = {}; pool.forEach((x) => { counts[x.Subject] = (counts[x.Subject] || 0) + 1; });
+  const subs = Object.keys(counts).sort();
+  const subBtn = (k, name, n) => `<button data-sub="${esc(k)}" aria-pressed="${ST.subject === k}"><span>${esc(name)}</span><span>${n}</span></button>`;
+  $('app').innerHTML = `<div class="wrap">
+    <p class="greet">Assalaamu alaykum, ${esc(String(ST.student.name).split(' ')[0])}</p><h1>Your Madrasah library</h1>
+    <div class="intro"><p>Books, notes and links chosen by your teachers.</p><span class="chip">Showing: ${ST.all ? 'all levels' : esc(ST.student.level || 'your level') + ' and all levels'}</span></div>
+    <div class="layout"><aside class="rail" aria-label="Filters">
+      <div><label for="q">Search</label><input id="q" type="search" placeholder="Title, author or subject" value="${esc(ST.q)}"></div>
+      <div><span class="lbl">Subject</span><div class="subjects">${subBtn('All', 'All subjects', pool.length)}${subs.map((s) => subBtn(s, s, counts[s])).join('')}</div></div>
+      <div><span class="lbl">Format</span><div class="formats">${[['All', 'Everything'], ['Books', 'PDFs and books'], ['Links', 'Websites']].map(([k, t]) => `<button data-type="${k}" aria-pressed="${ST.type === k}">${t}</button>`).join('')}</div></div>
+      <div class="levels"><button data-all aria-pressed="${ST.all}">${ST.all ? 'Showing all levels' : 'Show other levels too'}</button></div>
+    </aside><div class="main" id="main"></div></div>
+    <p class="foot2">Materials from your teachers are for Himaayah students only; please do not share them. Items marked “Free guide” are free to share; books with a price are bought once and are for your own family. Some links lead to other websites.</p></div>`;
+  main();
+}
+document.addEventListener('click', (e) => {
+  const t = e.target.closest('[data-sub],[data-type],[data-all],[data-sort]'); if (!t || !ST.student) return;
+  if (t.dataset.sort) { ST.sort = t.dataset.sort; main(); return; }
+  if (t.dataset.sub !== undefined) ST.subject = t.dataset.sub; else if (t.dataset.type) ST.type = t.dataset.type; else ST.all = !ST.all;
+  if (ST.subject !== 'All' && !ST.items.some((x) => x.Subject === ST.subject && scopeOk(x) && typeOk(x))) ST.subject = 'All';
+  page();
+});
+document.addEventListener('input', (e) => { if (e.target.id === 'q') { ST.q = e.target.value; main(); } });
+
+/* ---- sign in (shares the dashboard's session, so a student who just signed in there is already in) ---- */
+function enter(d, id, code) { sessionStorage.setItem('hs', JSON.stringify({ id, code })); Object.assign(ST, { student: d.student, items: withGuides(d.items) }); $('login').hidden = true; $('app').hidden = false; $('out').hidden = false; page(); window.scrollTo(0, 0); }
+async function signIn(id, code, silent) {
+  const b = $('go'); $('err').textContent = ''; b.disabled = true; b.textContent = 'Signing in…';
+  try { const d = await api(id, code); if (d.ok) enter(d, id, code); else if (!silent) $('err').textContent = d.error || 'Could not sign in.'; else sessionStorage.removeItem('hs'); }
+  catch (x) { if (!silent) $('err').textContent = 'Could not reach the school server. Please try again.'; }
+  b.disabled = false; b.textContent = 'Sign in';
+}
+$('demoNote').hidden = !!API_URL;
+$('lf').addEventListener('submit', (e) => { e.preventDefault(); const i = $('sid').value.trim(), c = $('scode').value.trim(); if (!i || !c) { $('err').textContent = 'Enter your Student ID and access code.'; return; } signIn(i, c); });
+$('out').addEventListener('click', () => { sessionStorage.removeItem('hs'); location.reload(); });
+try { const s = JSON.parse(sessionStorage.getItem('hs') || 'null'); if (s && s.id && s.code) signIn(s.id, s.code, true); } catch (x) {}
+</script>
+</body>
+</html>

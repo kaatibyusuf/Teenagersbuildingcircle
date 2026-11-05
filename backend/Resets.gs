@@ -19,10 +19,18 @@
  *   - writes a line in the CodeResets tab (who reset whom, and when; never the code),
  *   - optionally emails the new code to the person, and offers a WhatsApp link when a number is on file.
  * The person can then change the code themselves under Account.
+ *
+ * Choose-your-own-code on first sign-in
+ *   Unless the admin unticks "Ask them to choose their own code", the person is listed in the CodeMustChange tab (Kind, ID, Since). When they next
+ *   sign in to their portal, a window asks them to choose their own code before they carry on (js/force-change.js asks the script through
+ *   rs_mc_check and rs_mc_set, using the same sign-in checks and lockouts as the portal). Choosing a code removes them from the tab.
+ *   This is a prompt in the page, not a lock inside every portal: the new code you hand out still works if someone closes the window.
  */
 
 const RS_LOG = 'CodeResets';
 const RS_LOG_HEAD = ['When', 'ByRole', 'ById', 'ByName', 'Kind', 'TargetID', 'TargetName', 'Emailed'];
+const RS_MC = 'CodeMustChange';
+const RS_MC_HEAD = ['Kind', 'ID', 'Since'];
 const RS_MAX_PER_HOUR = 30;          // resets one admin can make per hour (limits harm if an admin login is ever stolen)
 const RS_MAX_RESULTS = 25;
 const RS_SITE = 'https://www.himaayahschools.com/';
@@ -56,8 +64,12 @@ function rs_fail_(m) { throw new Error('USER:' + m); }
 /* ===== ENTRY POINT (called from doPost in Code.gs) ===== */
 function resetsFromRequest(p) {
   try {
-    const who = rs_auth_(p);
     const op = String(p.action || '');
+    if (op === 'rs_mc_check' || op === 'rs_mc_set') {                          // the person themselves, not an admin
+      const lock = LockService.getScriptLock(); lock.waitLock(20000);
+      try { return op === 'rs_mc_check' ? rs_mcCheck_(p) : rs_mcSet_(p); } finally { lock.releaseLock(); }
+    }
+    const who = rs_auth_(p);
     if (op === 'rs_find') return rs_find_(who, p);
     if (op === 'rs_recent') return rs_recent_(who);
     if (op === 'rs_reset') {
@@ -150,11 +162,11 @@ function rs_signin_(name, row) {
     default: return typeof REF_PAGE !== 'undefined' ? REF_PAGE : RS_SITE + 'refer';
   }
 }
-function rs_message_(name, row, kind, id, code) {
+function rs_message_(name, row, kind, id, code, forced) {
   const first = (rs_cell_(row, kind.name).split(' ')[0]) || 'there', url = rs_signin_(name, row);
   return ['Assalaamu alaykum ' + first + ',', '', 'Here is your new access code for ' + SCHOOL_NAME + '.', '',
     'ID: ' + id, 'New access code: ' + code, 'Sign in at: ' + url, '',
-    'Type the code exactly as shown (small letters). Please change it under Account after you sign in, and keep it private.', '',
+    'Type the code exactly as shown (small letters). ' + (forced ? 'After you sign in you will be asked to choose your own code. ' : 'Please change it under Account after you sign in. ') + 'Keep it private.', '',
     'Jazakumullahu khayran,', SCHOOL_NAME].join('\n');
 }
 function rs_log_(who, name, id, targetName, emailed) {
@@ -185,7 +197,8 @@ function rs_reset_(who, p) {
   if (kind.alt && rs_cell_(row, kind.alt)) keys.push(rs_cell_(row, kind.alt));
   keys.forEach(function (k) { kind.lock(key_(k)).forEach(function (ck2) { cache.remove(ck2); }); });   // clear any lockout
 
-  const message = rs_message_(name, row, kind, id, code), email = rs_cell_(row, kind.email), phone = rs_cell_(row, kind.phone);
+  const forced = String(p.force) !== '0' && String(p.force) !== 'false';
+  const message = rs_message_(name, row, kind, id, code, forced), email = rs_cell_(row, kind.email), phone = rs_cell_(row, kind.phone);
   let emailed = 'No';
   if (p.email) {
     if (!SEND_EMAILS) emailed = 'Off';
@@ -197,8 +210,9 @@ function rs_reset_(who, p) {
       } catch (e) { console.error(e); emailed = 'Error'; }
     }
   }
+  if (forced) rs_mcAdd_(name, id); else rs_mcClear_(name, id);
   rs_log_(who, name, id, rs_cell_(row, kind.name), emailed);
-  return { ok: true, code: code, id: id, name: rs_cell_(row, kind.name), kindLabel: kind.label, emailed: emailed, message: message,
+  return { ok: true, forced: forced, code: code, id: id, name: rs_cell_(row, kind.name), kindLabel: kind.label, emailed: emailed, message: message,
     whatsapp: rs_digits_(phone) ? waLink_(phone, message) : '' };
 }
 
@@ -212,4 +226,67 @@ function rs_recent_(who) {
     const k = RS_KINDS[String(r.Kind)];
     return { when: iso_(r.When, true), by: String(r.ByName || r.ById || ''), kindLabel: k ? k.label : String(r.Kind), target: String(r.TargetName || '') + ' (' + String(r.TargetID || '') + ')', emailed: String(r.Emailed || '') };
   }) };
+}
+
+
+/* ===== CHOOSE YOUR OWN CODE (the person, after a reset) ===== */
+function rs_mcTable_() {
+  let sh = ss_().getSheetByName(RS_MC);
+  if (!sh) { sh = ss_().insertSheet(RS_MC); sh.getRange(1, 1, 1, RS_MC_HEAD.length).setValues([RS_MC_HEAD]).setFontWeight('bold'); sh.setFrozenRows(1); }
+  return table_(RS_MC);
+}
+function rs_mcHas_(kindName, id) {
+  if (!ss_().getSheetByName(RS_MC)) return false;
+  return table_(RS_MC).rows.some(function (r) { return String(r.Kind) === kindName && key_(r.ID) === key_(id); });
+}
+function rs_mcAdd_(kindName, id) {
+  if (rs_mcHas_(kindName, id)) return;
+  append_(rs_mcTable_(), { Kind: kindName, ID: id, Since: iso_(new Date(), true) }, ['Kind', 'ID', 'Since']);
+}
+function rs_mcClear_(kindName, id) {
+  if (!ss_().getSheetByName(RS_MC)) return;
+  const t = table_(RS_MC);
+  for (let i = t.rows.length - 1; i >= 0; i--) if (String(t.rows[i].Kind) === kindName && key_(t.rows[i].ID) === key_(id)) t.sh.deleteRow(t.rows[i]._row);
+}
+
+/* Sign the person in with the portal's own check (so lockouts apply), then find their row. */
+function rs_userRow_(p) {
+  let name = String(p.kind || '');
+  const id = String(p.id || ''), code = String(p.code || '');
+  if (!RS_KINDS[name]) rs_fail_('Not allowed.');
+  if (name === 'bootcamp' && !/^HB-/i.test(id.trim())) name = 'student';          // Madrasah students use the bootcamp with their own sign-in
+  let au;
+  if (name === 'student') au = auth_(id, code);
+  else if (name === 'teacher') au = tchAuth_(id, code);
+  else if (name === 'librarian') au = lb_auth_(id, code);
+  else if (name === 'admin') au = adm_auth_(id, code);
+  else if (name === 'academyStudent') au = acd_auth_(ACD.Students, 'StudentID', { id: id, code: code });
+  else if (name === 'academyTutor') au = acd_auth_(ACD.Tutors, 'TutorID', { id: id, code: code });
+  else if (name === 'academyAdmin') au = acd_auth_(ACD.Admins, 'AdminID', { id: id, code: code });
+  else if (name === 'skillsStudent') au = acd_auth_(SK.Students, 'StudentID', { id: id, code: code });
+  else if (name === 'skillsTutor') au = acd_auth_(SK.Tutors, 'TutorID', { id: id, code: code });
+  else if (name === 'skillsAdmin') au = acd_auth_(SK.Admins, 'AdminID', { id: id, code: code });
+  else if (name === 'owner') au = acd_auth_(OW_TAB, 'OwnerID', { id: id, code: code });
+  else if (name === 'bootcamp') au = bc_auth_(id, code);
+  else au = ref_auth_({ code: id, access: code });
+  if (au.error) rs_fail_(au.error);
+  const kind = RS_KINDS[name], t = rs_rows_(kind), row = t && rs_find_row_(kind, t, id);
+  if (!row) rs_fail_('Account not found.');
+  return { name: name, kind: kind, t: t, row: row, id: rs_cell_(row, kind.id) };
+}
+function rs_mcCheck_(p) {
+  const u = rs_userRow_(p);
+  return { ok: true, mustChange: rs_mcHas_(u.name, u.id) };
+}
+function rs_mcSet_(p) {
+  const u = rs_userRow_(p), next = String(p.newCode || '');
+  if (next.length < 8 || next.length > 40) rs_fail_('Your new code must be 8 to 40 characters.');
+  if (code_ok_(u.row.AccessCode, next)) rs_fail_('Choose a code different from the one you were given.');
+  if (key_(next) === key_(u.id)) rs_fail_('Your code cannot be the same as your ID.');
+  put_(u.t, u.row._row, 'AccessCode', next, true);
+  rs_mcClear_(u.name, u.id);
+  const cache = CacheService.getScriptCache();
+  const keys = [u.id]; if (u.kind.alt && rs_cell_(u.row, u.kind.alt)) keys.push(rs_cell_(u.row, u.kind.alt));
+  keys.forEach(function (k) { u.kind.lock(key_(k)).forEach(function (ck) { cache.remove(ck); }); });
+  return { ok: true };
 }
