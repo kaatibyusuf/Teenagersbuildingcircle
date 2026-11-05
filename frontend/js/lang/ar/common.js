@@ -505,5 +505,12 @@ HS_I18N.add({
 "Write a short comment first.": "اكتب تعليقًا قصيرًا أولًا.",
 "Ambassadors": "السفراء",
 "Second Semester · 2026/2027 · 1448/1449 AH": "الفصل الدراسي الثاني · ٢٠٢٦/٢٠٢٧ · ١٤٤٨/١٤٤٩ هـ",
-"Madrasah: Second Semester · 2026/2027 · 1448/1449 AH": "المدرسة الشرعية: الفصل الدراسي الثاني · ٢٠٢٦/٢٠٢٧ · ١٤٤٨/١٤٤٩ هـ"
+"Madrasah: Second Semester · 2026/2027 · 1448/1449 AH": "المدرسة الشرعية: الفصل الدراسي الثاني · ٢٠٢٦/٢٠٢٧ · ١٤٤٨/١٤٤٩ هـ",
+"Choose your own access code": "اختر رمز دخولك الخاص",
+"An administrator gave you a temporary code. Please choose a code that only you know. Use at least 8 characters, and do not share it.": "أعطاك المشرف رمزًا مؤقتًا. اختر رمزًا لا يعرفه غيرك، من ٨ أحرف على الأقل، ولا تشاركه مع أحد.",
+"New access code": "رمز الدخول الجديد",
+"Save my new code": "احفظ رمزي الجديد",
+"Saved. Please sign in again with your new code.": "تم الحفظ. سجّل الدخول من جديد برمزك الجديد.",
+"Choose a code different from the one you were given.": "اختر رمزًا يختلف عن الذي أُعطيته.",
+"Your code cannot be the same as your ID.": "لا يجوز أن يكون رمزك مطابقًا لرقم هويتك."
 });
