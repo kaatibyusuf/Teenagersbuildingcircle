@@ -8,7 +8,7 @@
  *
  *   Exams          ExamID, Title, Subject, Level, Start, Minutes, PassMark, OralMarks, Instructions, Shuffle, State, CreatedBy, Created, Kind, Term
  *   ExamQuestions  ExamID, QID, Type, Question, A, B, C, D, Correct, Marks, Explanation, ModelAnswer
- *   ExamSittings   ExamID, StudentID, Started, Deadline, Submitted, Answers, McqScore, WrittenScores, WrittenMarked, Comment, MarkedBy
+ *   ExamSittings   ExamID, StudentID, Started, Deadline, Submitted, Answers, McqScore, WrittenScores, WrittenMarked, Comment, MarkedBy, GrantUntil, GrantMinutes, GrantedBy
  *   ExamOral       ExamID, StudentID, Slot, Score, Comment, MarkedBy
  *   Gradebook      Term, Subject, StudentID, Component, Score, EnteredBy, Updated   (CA scores typed in by a teacher; see below)
  *   SubjectUnits   Subject, Units   (credit units: Hadeeth, Fiqh, Tawheed 3; Adhkaar 1; Sarf, Nahw and every other course 2. An admin can change them in the Gradebook)
@@ -25,6 +25,12 @@
  *   - Students see nothing of their marks until the teacher presses Publish results. Correct answers never leave the script
  *     before that.
  *
+ * Resits and late sittings
+ *   The exam's teacher (or an admin) can press Resit beside a student on the exam page while the exam is Live (not yet published).
+ *   A student who missed the exam, or whose attempt ended (network failure, wrong submit), is given a fresh window: they have a chosen
+ *   number of minutes, starting when they press Start, and a chosen number of hours in which they may begin. A student who had already
+ *   submitted keeps their saved answers and continues; their written marks are cleared so the teacher marks it again.
+ *
  * Term report (the Gradebook on exam-teacher.html)
  *   Every exam has a Kind: CA1, CA2 or Exam, and a Term (filled in for you as the current term, for example "2026/2027 Second Term"). A subject's total is out of 100:
  *   CA1 out of 20, CA2 out of 20 (so CA is out of 40) and the Exam out of 60. The gradebook turns each exam's percentage into its
@@ -39,7 +45,7 @@
 const EX_TABS = {
   Exams: ['ExamID', 'Title', 'Subject', 'Level', 'Start', 'Minutes', 'PassMark', 'OralMarks', 'Instructions', 'Shuffle', 'State', 'CreatedBy', 'Created', 'Kind', 'Term'],
   ExamQuestions: ['ExamID', 'QID', 'Type', 'Question', 'A', 'B', 'C', 'D', 'Correct', 'Marks', 'Explanation', 'ModelAnswer'],
-  ExamSittings: ['ExamID', 'StudentID', 'Started', 'Deadline', 'Submitted', 'Answers', 'McqScore', 'WrittenScores', 'WrittenMarked', 'Comment', 'MarkedBy'],
+  ExamSittings: ['ExamID', 'StudentID', 'Started', 'Deadline', 'Submitted', 'Answers', 'McqScore', 'WrittenScores', 'WrittenMarked', 'Comment', 'MarkedBy', 'GrantUntil', 'GrantMinutes', 'GrantedBy'],
   ExamOral: ['ExamID', 'StudentID', 'Slot', 'Score', 'Comment', 'MarkedBy'],
   Gradebook: ['Term', 'Subject', 'StudentID', 'Component', 'Score', 'EnteredBy', 'Updated'],
   SubjectUnits: ['Subject', 'Units']
@@ -239,6 +245,7 @@ function ex_studentList_(st) {
     if (ex_state_(e) === 'Published') status = 'published';
     else if (sit && String(sit.Submitted || '').trim()) status = 'submitted';
     else if (sit && sit.Started) status = now <= ex_epoch_(String(sit.Deadline)) + EX_GRACE_SECONDS * 1000 ? 'inprogress' : 'submitted';
+    else if (sit && !sit.Started && String(sit.GrantUntil || '').trim() && now <= ex_epoch_(String(sit.GrantUntil))) status = 'open';
     else if (!hasQs) status = now < start ? 'upcoming' : 'oral';
     else if (now < start) status = 'upcoming';
     else if (now <= Math.min(end, start + EX_LATE_MINUTES * 60000)) status = 'open';
@@ -248,6 +255,9 @@ function ex_studentList_(st) {
       OralSlot: or ? String(or.Slot || '') : '', Status: status,
       StartsInSec: Math.max(0, Math.round((start - now) / 1000)), RemainingSec: sit && sit.Started && status === 'inprogress' ? Math.max(0, Math.round((ex_epoch_(String(sit.Deadline)) - now) / 1000)) : 0,
       LateSec: Math.max(0, Math.round((Math.min(end, start + EX_LATE_MINUTES * 60000) - now) / 1000)) };
+    if (sit && !sit.Started && String(sit.GrantUntil || '').trim() && now <= ex_epoch_(String(sit.GrantUntil))) {      // allowed by the teacher
+      out.Granted = true; out.LateSec = Math.max(0, Math.round((ex_epoch_(String(sit.GrantUntil)) - now) / 1000)); out.Minutes = Math.max(5, ex_num_(sit.GrantMinutes) || ex_num_(e.Minutes));
+    }
     if (status === 'published') {
       const c = ex_compute_(e, qs, sit, or);
       out.Result = c.complete ? { percent: c.percent, grade: c.grade, remark: EX_REMARK[c.grade], passed: c.passed, score: c.score, outOf: c.outOf, absent: c.absent } : { pending: true };
@@ -279,7 +289,12 @@ function ex_studentStart_(st, p) {
   let sit = ex_sitting_(sittings, e.ExamID, sid);
   const now = ex_now_(), start = ex_start_(e), end = ex_end_(e);
   if (sit && String(sit.Submitted || '').trim()) ex_fail_('You have already submitted this exam.');
-  if (!sit) {
+  if (sit && !sit.Started && String(sit.GrantUntil || '').trim()) {            // the teacher has allowed this student a late sitting or a resit
+    if (now > ex_epoch_(String(sit.GrantUntil))) ex_fail_('Your teacher\u2019s permission to sit this exam has run out. Please speak to your teacher.');
+    const mins = Math.max(5, ex_num_(sit.GrantMinutes) || ex_num_(e.Minutes));
+    put_(sittings, sit._row, 'Started', ex_fmt_(now, true), true); put_(sittings, sit._row, 'Deadline', ex_fmt_(now + mins * 60000, true), true);
+    sit = ex_sitting_(ex_table_('ExamSittings'), e.ExamID, sid);
+  } else if (!sit) {
     if (now < start) ex_fail_('This exam has not started yet.');
     if (now > Math.min(end, start + EX_LATE_MINUTES * 60000)) ex_fail_('The time to begin this exam has passed. Please speak to your teacher.');
     append_(sittings, { ExamID: String(e.ExamID).trim(), StudentID: sid, Started: ex_fmt_(now, true), Deadline: ex_fmt_(end, true), Answers: '{}' }, ['ExamID', 'StudentID', 'Started', 'Deadline', 'Answers']);
@@ -369,6 +384,7 @@ function examtRequest(p) {
       if (op === 'oral') return ex_tOral_(me, p);
       if (op === 'gscore') return ex_tGscore_(me, p);
       if (op === 'units') return ex_tUnits_(me, p);
+      if (op === 'grant') return ex_tGrant_(me, p);
     } finally { lock.releaseLock(); }
     return { ok: false, error: 'Unknown action.' };
   } catch (err) {
@@ -547,7 +563,7 @@ function ex_tDetail_(me, p) {
   const t = ex_totals_(e, qs);
   const rows = ex_tStudents_(me, e).map(function (s) {
     const sit = ex_sitting_(ex_table_('ExamSittings'), e.ExamID, s.StudentID), or = ex_oralRow_(oral, e.ExamID, s.StudentID), c = ex_compute_(e, qs, sit, or);
-    const status = c.submitted ? (t.written > 0 && key_(sit.WrittenMarked) !== 'TRUE' ? 'To mark' : 'Marked') : sit && sit.Started ? 'Writing' : qs.length ? (ex_now_() > ex_end_(e) ? 'Absent' : 'Not yet') : 'Oral only';
+    const status = c.submitted ? (t.written > 0 && key_(sit.WrittenMarked) !== 'TRUE' ? 'To mark' : 'Marked') : sit && sit.Started ? 'Writing' : sit && String(sit.GrantUntil || '').trim() ? 'Resit allowed' : qs.length ? (ex_now_() > ex_end_(e) ? 'Absent' : 'Not yet') : 'Oral only';
     return { StudentID: String(s.StudentID).trim(), Name: String(s.Name || ''), Level: String(s.Level || ''), Status: status, Mcq: c.mcq, Written: c.written, Oral: c.oral,
       OralSlot: or ? String(or.Slot || '') : '', OralScored: c.oralDone, OralComment: or ? String(or.Comment || '') : '', Percent: c.percent, Grade: c.grade, Complete: c.complete, Submitted: c.submitted,
       Started: sit ? String(sit.Started || '') : '', Comment: sit ? String(sit.Comment || '') : '' };
@@ -784,4 +800,31 @@ function ex_tUnits_(me, p) {
   const t = ex_table_('SubjectUnits'), row = t.rows.filter(function (r) { return key_(r.Subject) === key_(sub); })[0];
   if (row) put_(t, row._row, 'Units', u); else append_(t, { Subject: sub, Units: u }, ['Subject']);
   return { ok: true };
+}
+
+/* The exam's teacher lets one student sit (or sit again) while the exam is still Live. */
+function ex_tGrant_(me, p) {
+  const e = ex_tExamFor_(me, p.examId);
+  if (!ex_tCanEdit_(me, e)) ex_fail_('Only the teacher who made this exam can allow a resit.');
+  if (ex_state_(e) !== 'Live') ex_fail_(ex_state_(e) === 'Published' ? 'Results are already published, so a resit can no longer be allowed.' : 'Make the exam live first.');
+  const qs = ex_questions_(e.ExamID);
+  if (!qs.length) ex_fail_('This exam has no written paper, so there is nothing to resit.');
+  const s = ex_tStudents_(me, e).filter(function (r) { return key_(r.StudentID) === key_(p.studentId); })[0];
+  if (!s) ex_fail_('That student is not yours.');
+  const minutes = Math.round(ex_num_(p.minutes)) || Math.round(ex_num_(e.Minutes)), hours = Math.round(ex_num_(p.hours)) || 48;
+  if (minutes < 5 || minutes > 300) ex_fail_('The time allowed must be between 5 and 300 minutes.');
+  if (hours < 1 || hours > 168) ex_fail_('The student can be given between 1 and 168 hours to begin.');
+  const sittings = ex_table_('ExamSittings'), sit = ex_sitting_(sittings, e.ExamID, s.StudentID), now = ex_now_(), by = String(me.TeacherID).trim();
+  const until = ex_fmt_(now + hours * 3600000, true);
+  if (sit && sit.Started) {
+    if (!String(sit.Submitted || '').trim() && now <= ex_epoch_(String(sit.Deadline)) + EX_GRACE_SECONDS * 1000) ex_fail_('This student is still writing the exam.');
+    put_(sittings, sit._row, 'Submitted', '', true);                                          // reopen: saved answers are kept
+    put_(sittings, sit._row, 'Deadline', ex_fmt_(now + minutes * 60000, true), true);
+    if (key_(sit.WrittenMarked) === 'TRUE') put_(sittings, sit._row, 'WrittenMarked', 'FALSE', true);   // written answers will be marked again
+    put_(sittings, sit._row, 'GrantedBy', by, true);
+    return { ok: true, mode: 'reopened', minutes: minutes };
+  }
+  if (sit) { put_(sittings, sit._row, 'GrantUntil', until, true); put_(sittings, sit._row, 'GrantMinutes', minutes); put_(sittings, sit._row, 'GrantedBy', by, true); }
+  else append_(sittings, { ExamID: String(e.ExamID).trim(), StudentID: String(s.StudentID).trim(), Answers: '{}', GrantUntil: until, GrantMinutes: minutes, GrantedBy: by }, ['ExamID', 'StudentID', 'Answers', 'GrantUntil', 'GrantedBy']);
+  return { ok: true, mode: 'granted', minutes: minutes, until: until };
 }

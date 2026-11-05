@@ -92,7 +92,7 @@ const esc = (t) => String(t ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':
 const app = $('app');
 const creds = () => { try { return JSON.parse(sessionStorage.getItem('ht') || 'null') || {}; } catch (e) { return {}; } };
 let D = null;                       // the exam list from the server
-const S = { view: 'list', ex: null, qs: [], locked: false, detail: null, mark: null, oral: {} };
+const S = { view: 'list', ex: null, qs: [], locked: false, detail: null, mark: null, oral: {}, grant: {} };
 
 async function api(op, extra) {
   const c = creds();
@@ -115,7 +115,7 @@ function when(iso) {
   return `${['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][d.getUTCDay()]} ${+m[3]} ${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][+m[2] - 1]}, ${h % 12 || 12}:${m[5]} ${h >= 12 ? 'pm' : 'am'}`;
 }
 const STP = { Draft: 'p-wash', Live: 'p-sky', Published: 'p-ink' };
-const STU = { 'To mark': 'p-red', Marked: 'p-ink', Writing: 'p-sky', Absent: 'p-red', 'Not yet': 'p-wash', 'Oral only': 'p-dash' };
+const STU = { 'To mark': 'p-red', Marked: 'p-ink', Writing: 'p-sky', Absent: 'p-red', 'Not yet': 'p-wash', 'Oral only': 'p-dash', 'Resit allowed': 'p-sky' };
 
 /* ---------- list ---------- */
 const KL = { CA1: 'CA 1', CA2: 'CA 2', Exam: 'Exam' };
@@ -180,6 +180,7 @@ async function saveExam(live, btn) {
 }
 
 /* ---------- one exam ---------- */
+const canResit = (e, s, t) => e.CanEdit && e.State === 'Live' && t.all - (t.oral || 0) > 0 && ['Absent', 'Marked', 'To mark', 'Resit allowed'].includes(s.Status);
 function vDetail() {
   const d = S.detail, e = d.exam, t = d.totals, st = d.students;
   const comp = st.filter((s) => s.Complete && s.Status !== 'Absent'), avg = comp.length ? Math.round(comp.reduce((n, s) => n + s.Percent, 0) / comp.length) : null;
@@ -196,7 +197,8 @@ function vDetail() {
     ${st.map((s) => `<tr><td><b>${esc(s.Name)}</b><div class="sub">${esc(s.StudentID)}</div></td><td><span class="pill ${STU[s.Status] || 'p-wash'}">${esc(s.Status)}</span></td>
       <td>${s.Submitted ? s.Mcq + '/' + t.mcq : '-'}</td><td>${t.written ? (s.Status === 'Marked' ? s.Written + '/' + t.written : '-') : '&ndash;'}</td>${t.oral ? `<td>${s.OralScored ? s.Oral + '/' + t.oral : '-'}${s.OralSlot ? `<div class="sub">${esc(s.OralSlot)}</div>` : ''}</td>` : ''}
       <td>${s.Complete ? s.Percent + '%' : '-'}</td><td>${s.Complete ? `<span class="g ${s.Grade}">${s.Grade}</span>` : ''}</td>
-      <td style="white-space:nowrap">${t.written && s.Submitted ? `<button class="btn btn-ink btn-sm" data-mark="${esc(s.StudentID)}">${s.Status === 'Marked' ? 'Re-mark' : 'Mark'}</button> ` : ''}${t.oral ? `<button class="btn btn-line btn-sm" data-oral="${esc(s.StudentID)}">Oral</button>` : ''}</td></tr>
+      <td style="white-space:nowrap">${t.written && s.Submitted ? `<button class="btn btn-ink btn-sm" data-mark="${esc(s.StudentID)}">${s.Status === 'Marked' ? 'Re-mark' : 'Mark'}</button> ` : ''}${t.oral ? `<button class="btn btn-line btn-sm" data-oral="${esc(s.StudentID)}">Oral</button> ` : ''}${canResit(e, s, t) ? `<button class="btn btn-line btn-sm" data-grant="${esc(s.StudentID)}">Resit</button>` : ''}</td></tr>
+      ${S.grant[s.StudentID] ? `<tr><td colspan="8"><div class="oo" data-gf="${esc(s.StudentID)}"><div><label>Time allowed (minutes)</label><input class="in" type="number" min="5" max="300" data-g="minutes" value="${e.Minutes}" style="max-width:120px"></div><div><label>Must begin within (hours)</label><input class="in" type="number" min="1" max="168" data-g="hours" value="48" style="max-width:120px"></div><div style="flex:1;min-width:220px" class="sub">${s.Submitted ? 'Their saved answers stay and they carry on. Written answers will need marking again.' : 'They get a fresh attempt, starting when they press Start.'} The clock runs from the moment they start.</div><button class="btn btn-ink btn-sm" data-grantsave="${esc(s.StudentID)}">Allow</button></div></td></tr>` : ''}
       ${S.oral[s.StudentID] ? `<tr><td colspan="8"><div class="oo" data-of="${esc(s.StudentID)}"><div><label>Slot (day and time)</label><input class="in" data-o="slot" value="${esc(s.OralSlot)}" placeholder="Sat 12 Dec, 10:00"></div><div><label>Score (out of ${t.oral})</label><input class="in" type="number" min="0" max="${t.oral}" step="0.5" data-o="score" value="${s.OralScored ? s.Oral : ''}" style="max-width:110px"></div><div style="flex:1;min-width:200px"><label>Comment (tajweed, fluency, memorisation)</label><input class="in" data-o="comment" value="${esc(s.OralComment)}"></div><button class="btn btn-ink btn-sm" data-oralsave="${esc(s.StudentID)}">Save</button></div></td></tr>` : ''}`).join('') || '<tr><td colspan="8"><div class="empty">No students in this level are assigned to you.</div></td></tr>'}
     </tbody></table></div></div>`;
 }
@@ -316,6 +318,12 @@ app.addEventListener('click', async (e) => {
     const scores = {}; app.querySelectorAll('[data-ms]').forEach((i) => { scores[i.dataset.ms] = i.value; });
     const d = await run('mark', { examId: S.detail.exam.ExamID, studentId: S.mark.student.StudentID, scores, comment: $('mc').value }, 'Marks saved.', t('[data-savemark]'));
     if (d) { await openDetail(S.detail.exam.ExamID); render(); }
+  }
+  else if (t('[data-grant]')) { const id = t('[data-grant]').dataset.grant; S.grant[id] = !S.grant[id]; render(); }
+  else if (t('[data-grantsave]')) {
+    const id = t('[data-grantsave]').dataset.grantsave, box = app.querySelector(`[data-gf="${id}"]`), v = (k) => box.querySelector(`[data-g="${k}"]`).value;
+    const d = await run('grant', { examId: S.detail.exam.ExamID, studentId: id, minutes: Number(v('minutes')), hours: Number(v('hours')) }, '', t('[data-grantsave]'));
+    if (d) { toast(d.mode === 'reopened' ? 'Reopened. The student can carry on for ' + d.minutes + ' minutes.' : 'Allowed. The student can start now.'); const keepO = Object.assign({}, S.oral); await openDetail(S.detail.exam.ExamID); S.oral = keepO; S.grant = {}; render(); }
   }
   else if (t('[data-oral]')) { const id = t('[data-oral]').dataset.oral; S.oral[id] = !S.oral[id]; render(); }
   else if (t('[data-oralsave]')) {

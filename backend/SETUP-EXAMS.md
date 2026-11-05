@@ -96,3 +96,14 @@ The GPA and CGPA now weigh each course by its **credit units**: GPA = (grade poi
 - An **admin** sets a course's units in the Gradebook: open the subject and change **Course units** (1 to 6). Other teachers see the units but cannot change them.
 - Changing a course's units changes the GPA and CGPA of every term that includes that course.
 - The student's report card shows each course's units and the total units.
+
+## Resits and late sittings
+
+On the exam page, beside a student (while the exam is **Live**, before results are published), the exam's teacher or an admin can press **Resit** and choose how many minutes the student gets and how many hours they have to begin.
+
+- **Student missed the exam, or their attempt ended** (network failure, submitted by mistake): they get a fresh window. The clock starts when they press Start.
+- **Student had already submitted:** the attempt is reopened. Their saved answers stay and they carry on. Written answers are cleared for marking, so the teacher marks them again.
+- A student still writing cannot be reopened. If the grant is not used within the hours given, it runs out.
+- Once results are **published**, a resit can no longer be allowed, so do this before pressing Publish.
+- Fees still apply: a student with overdue fees cannot start, even with a resit.
+- The student's exam card says "Your teacher has allowed you to sit this exam". The tab ExamSittings gets three new columns (GrantUntil, GrantMinutes, GrantedBy), added automatically.

@@ -112,6 +112,7 @@ function card(x, i) {
   const res = x.Result && !x.Result.pending ? `<span class="g ${esc(x.Result.grade)}">${esc(x.Result.grade)}</span>` : '';
   let note = '';
   if (x.Status === 'upcoming') note = `<div class="cd" data-s="${x.StartsInSec}" data-k="Starts in ">Starts in ${mmss(left(x.StartsInSec))}</div>`;
+  else if (x.Status === 'open' && x.Granted) note = `<div class="cd">Your teacher has allowed you to sit this exam. You will have ${x.Minutes} minutes from when you press Start.</div>`;
   else if (x.Status === 'open') note = `<div class="cd" data-s="${x.LateSec}" data-k="You can begin for another ">You can begin for another ${mmss(left(x.LateSec))}</div>`;
   else if (x.Status === 'missed') note = '<div class="cd">You did not sit this exam. Please speak to your teacher.</div>';
   else if (x.Status === 'published' && x.Result && x.Result.pending) note = '<div class="cd">Some marking is still to be finished.</div>';
