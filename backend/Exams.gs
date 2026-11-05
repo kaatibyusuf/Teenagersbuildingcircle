@@ -206,6 +206,7 @@ function examsRequest(p) {
       } finally { lock.releaseLock(); }
     }
     if (op === 'result') return ex_studentResult_(st, p);
+    if (op === 'report') return ex_studentReport_(st, p);
     return ex_studentList_(st);
   } catch (err) {
     if (/^USER:/.test(String(err && err.message))) return { ok: false, error: String(err.message).slice(5) };
@@ -613,6 +614,7 @@ function ex_tOral_(me, p) {
 
 /* ===== GRADEBOOK (term report: CA1 /20 + CA2 /20 + Exam /60 = /100) ===== */
 const EX_PARTS = ['CA1', 'CA2', 'Exam'];
+const EX_POINTS = { A: 5, B: 4, C: 3, D: 2, E: 1, F: 0 };   // grade points for the GPA / CGPA (out of 5.0); every subject counts equally
 function ex_r1_(n) { return Math.round(n * 10) / 10; }
 
 /* The students whose scores this teacher may see in a level: admins see the whole level, others only their own students. */
@@ -635,29 +637,35 @@ function ex_tBook_(me, p) {
   (tchAdmin_(me) ? table_('Students').rows : tchMine_(me).rows).forEach(function (r) { if (String(r.Level || '').trim()) levels[String(r.Level).trim()] = true; });
   const base = { ok: true, term: schoolTerm_(), terms: terms, levels: Object.keys(levels).sort(), weights: EX_WEIGHTS, bands: [['A', '90-100'], ['B', '79-89'], ['C', '60-78'], ['D', '50-59'], ['E', '49'], ['F', '0-48']] };
   if (!term || !level) return Object.assign(base, { students: [], subjects: [], cells: {} });
-  const studs = ex_gStudents_(me, level);
+  const g = ex_gbCompute_(term, ex_gStudents_(me, level), false);
+  return Object.assign(base, { term: schoolTerm_(), termKey: term, level: level, students: g.students, subjects: g.subjects, cells: g.cells });
+}
+
+/* The scores of some students for one term. publishedOnly (the student's own report) leaves out exams that are not published yet. */
+function ex_gbCompute_(term, studs, publishedOnly) {
   const exams = ex_table_('Exams').rows.filter(function (e) {
-    return e.ExamID && ex_kind_(e) && String(e.Term || '').trim() === term && ex_state_(e) !== 'Draft';
+    return e.ExamID && ex_kind_(e) && String(e.Term || '').trim() === term && (publishedOnly ? ex_state_(e) === 'Published' : ex_state_(e) !== 'Draft');
   });
-  // finish any sitting whose time has run out, so absent students and unsubmitted work are not guessed at
-  const lock = LockService.getScriptLock(); lock.waitLock(20000);
-  try { const st0 = ex_table_('ExamSittings'); exams.forEach(function (e) { ex_sweep_(st0, e, ex_questions_(e.ExamID)); }); } finally { lock.releaseLock(); }
+  if (!publishedOnly) {      // finish any sitting whose time has run out, so absent students and unsubmitted work are not guessed at
+    const lock = LockService.getScriptLock(); lock.waitLock(20000);
+    try { const st0 = ex_table_('ExamSittings'); exams.forEach(function (e) { ex_sweep_(st0, e, ex_questions_(e.ExamID)); }); } finally { lock.releaseLock(); }
+  }
   const sittings = ex_table_('ExamSittings'), oral = ex_table_('ExamOral'), manual = ex_table_('Gradebook'), now = ex_now_();
   const qsBy = {}; exams.forEach(function (e) { qsBy[key_(e.ExamID)] = ex_questions_(e.ExamID); });
 
   const subjects = {};
   const subjOf = function (e) { return String(e.Subject || '').trim() || 'General'; };
   exams.forEach(function (e) { if (ex_tStudentsIn_(studs, e).length) subjects[subjOf(e)] = true; });
-  manual.rows.forEach(function (r) { if (String(r.Term || '').trim() === term && studs.some(function (s) { return key_(s.StudentID) === key_(r.StudentID); })) subjects[String(r.Subject || '').trim() || 'General'] = true; });
+  manual.rows.forEach(function (r) { if (String(r.Term || '').trim() === term && r.Score !== '' && r.Score != null && studs.some(function (s) { return key_(s.StudentID) === key_(r.StudentID); })) subjects[String(r.Subject || '').trim() || 'General'] = true; });
   const subjectList = Object.keys(subjects).sort();
 
   const students = [], cells = {};
-  studs.sort(function (a, b) { return String(a.Name) < String(b.Name) ? -1 : 1; });
+  studs = studs.slice().sort(function (a, b) { return String(a.Name) < String(b.Name) ? -1 : 1; });
   studs.forEach(function (s) {
     const sid = String(s.StudentID).trim();
     students.push({ StudentID: sid, Name: String(s.Name || ''), Level: String(s.Level || '') });
     cells[sid] = {};
-    let sum = 0, nDone = 0;
+    let sum = 0, nDone = 0, pts = 0;
     subjectList.forEach(function (sub) {
       const cell = { CA1: null, CA2: null, Exam: null, src: {}, flag: {} };
       EX_PARTS.forEach(function (part) {
@@ -684,14 +692,15 @@ function ex_tBook_(me, p) {
       cell.total = have.length ? ex_r1_(have.reduce(function (a, k) { return a + cell[k]; }, 0)) : null;
       cell.complete = have.length === 3;
       cell.grade = cell.complete ? ex_grade_(Math.round(cell.total)) : '';
-      if (cell.complete) { sum += cell.total; nDone++; }
+      cell.points = cell.complete ? EX_POINTS[cell.grade] : null;
+      if (cell.complete) { sum += cell.total; nDone++; pts += cell.points; }
       cells[sid][sub] = cell;
     });
-    const o = { subjects: subjectList.length, done: nDone, average: nDone ? ex_r1_(sum / nDone) : null };
+    const o = { subjects: subjectList.length, done: nDone, average: nDone ? ex_r1_(sum / nDone) : null, points: pts, gpa: nDone ? Math.round(pts / nDone * 100) / 100 : null };
     o.grade = nDone === subjectList.length && nDone > 0 ? ex_grade_(Math.round(o.average)) : '';
     cells[sid]._all = o;
   });
-  return Object.assign(base, { term: term, level: level, students: students, subjects: subjectList, cells: cells });
+  return { subjects: subjectList, students: students, cells: cells };
 }
 function ex_tStudentsIn_(studs, e) { return studs.filter(function (r) { return matches_(e.Level, [key_(r.Level), key_(r.StudentID)]); }); }
 
@@ -714,4 +723,25 @@ function ex_tGscore_(me, p) {
   if (row) { put_(t, row._row, 'Score', score); put_(t, row._row, 'EnteredBy', by, true); put_(t, row._row, 'Updated', when, true); }
   else if (score !== '') append_(t, { Term: term, Subject: sub, StudentID: String(s.StudentID).trim(), Component: part, Score: score, EnteredBy: by, Updated: when }, ['Term', 'Subject', 'StudentID', 'Component', 'EnteredBy', 'Updated']);
   return { ok: true };
+}
+
+/* The student's own term report: CA 1 /20, CA 2 /20, Exam /60 per subject. Only published exam scores and teacher-typed scores are shown. */
+function ex_studentReport_(st, p) {
+  const cur = schoolTerm_(), term = ex_str_(p.term, 40) || cur.Key, sid = String(st.StudentID).trim();
+  const g = ex_gbCompute_(term, [st], true), cells = g.cells[sid] || {};
+  const terms = {}; terms[cur.Key] = true;
+  ex_table_('Exams').rows.forEach(function (e) { if (ex_kind_(e) && String(e.Term || '').trim() && ex_state_(e) === 'Published' && matches_(e.Level, [key_(st.Level), key_(sid)])) terms[String(e.Term).trim()] = true; });
+  ex_table_('Gradebook').rows.forEach(function (r) { if (key_(r.StudentID) === key_(sid) && String(r.Term || '').trim() && r.Score !== '' && r.Score != null) terms[String(r.Term).trim()] = true; });
+  const rows = g.subjects.map(function (sub) {
+    const c = cells[sub];
+    return { points: c.points, subject: sub, CA1: c.CA1, CA2: c.CA2, ca: c.ca, Exam: c.Exam, total: c.total, complete: c.complete, grade: c.grade, remark: c.grade ? EX_REMARK[c.grade] : '', absent: !!(c.flag.CA1 === 'absent' || c.flag.CA2 === 'absent' || c.flag.Exam === 'absent') };
+  }).filter(function (r) { return r.total != null; });
+  const all = cells._all || {};
+  let cp = 0, cn = 0;                                  // CGPA: every finished subject of every term, each counting equally
+  Object.keys(terms).forEach(function (tk) {
+    const gg = tk === term ? g : ex_gbCompute_(tk, [st], true), a = (gg.cells[sid] || {})._all;
+    if (a && a.done) { cp += a.points; cn += a.done; }
+  });
+  return { ok: true, gpa: all.gpa == null ? null : all.gpa, cgpa: cn ? Math.round(cp / cn * 100) / 100 : null, cgpaSubjects: cn, maxPoints: 5, student: { name: String(st.Name || ''), id: sid, level: String(st.Level || '') }, termKey: term, term: cur, terms: Object.keys(terms).sort().reverse(), weights: EX_WEIGHTS,
+    subjects: rows, average: all.average == null ? null : all.average, grade: all.grade || '', complete: rows.length > 0 && rows.every(function (r) { return r.complete; }) && all.grade !== '' };
 }

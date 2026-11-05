@@ -71,3 +71,19 @@ Every subject is marked out of 100: **CA 1 out of 20, CA 2 out of 20 (so CA is o
 ## The current term
 
 The term is set once, in `Code.gs` (`SCHOOL_TERM`: `Second Term`, `2026/2027`, `1448/1449 AH`). Exams and the Gradebook use "2026/2027 Second Term" automatically, so teachers no longer type it. When the next term begins, change those three values and redeploy.
+
+## Student term report card
+
+Students press **Term report card** on the exams page. It shows each subject with CA 1 /20, CA 2 /20, CA /40, Exam /60, Total /100 and the grade, then the average and overall grade, with the school name, the student's level and the term. They can print it or save it as a PDF, and switch to an earlier term if they have scores in one.
+
+- A part appears only when it is final: a score a teacher has typed in the Gradebook, or a portal exam whose results have been **published**. Draft and live (unpublished) exams are never counted, so nothing leaks early.
+- A subject's total and grade appear only when all three parts are in; the average counts completed subjects; the overall grade appears once every subject is complete.
+
+## GPA and CGPA (out of 5.0)
+
+Each finished subject earns grade points: **A = 5, B = 4, C = 3, D = 2, E = 1, F = 0** (`EX_POINTS` in `Exams.gs`).
+
+- **Term GPA** = the average points of that term's finished subjects.
+- **CGPA** = the average points of every finished subject across all the student's terms. Every subject counts equally (there are no credit units).
+- Both show on the student's Arabic report card, with each subject's points. The teacher's Gradebook "All subjects" view shows each student's term GPA, and the CSV includes it.
+- A subject counts only once CA 1, CA 2 and the Exam are all in. While some subjects are still waiting, the term GPA is marked provisional.

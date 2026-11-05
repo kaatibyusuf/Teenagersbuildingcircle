@@ -239,20 +239,20 @@ function vBook() {
     <span style="display:inline-flex;gap:6px"><input class="in" id="gnew" placeholder="Add a subject" style="width:150px;padding:7px 10px"><button class="btn btn-line btn-sm" type="button" data-addsub>Add</button></span></div>`;
   let body;
   if (GB.sub === '*') {
-    body = `<div class="panel"><h2>${esc(d.level)} &middot; ${esc(d.term)} <span class="sub">&middot; all subjects (totals out of 100)</span></h2><div class="scroll"><table class="tbl gb"><thead><tr><th>Name</th>${subs.map((x) => `<th>${esc(x)}</th>`).join('')}<th>Average</th><th>Grade</th></tr></thead><tbody>
-      ${d.students.map((s) => { const a = (d.cells[s.StudentID] || {})._all || {}; return `<tr><td><b>${esc(s.Name)}</b><div class="sub">${esc(s.StudentID)}</div></td>${subs.map((x) => { const c = cellOf(s.StudentID, x); return `<td>${c.total == null ? '-' : `<span class="tot">${c.total}</span>${c.complete ? ` <span class="g ${c.grade}">${c.grade}</span>` : '<small>incomplete</small>'}`}</td>`; }).join('')}<td class="tot">${a.average == null ? '-' : a.average}</td><td>${a.grade ? `<span class="g ${a.grade}">${a.grade}</span>` : ''}</td></tr>`; }).join('')}</tbody></table></div>
+    body = `<div class="panel"><h2>${esc(d.level)} &middot; ${esc(d.termKey)} <span class="sub">&middot; all subjects (totals out of 100)</span></h2><div class="scroll"><table class="tbl gb"><thead><tr><th>Name</th>${subs.map((x) => `<th>${esc(x)}</th>`).join('')}<th>Average</th><th>Grade</th><th>GPA /5</th></tr></thead><tbody>
+      ${d.students.map((s) => { const a = (d.cells[s.StudentID] || {})._all || {}; return `<tr><td><b>${esc(s.Name)}</b><div class="sub">${esc(s.StudentID)}</div></td>${subs.map((x) => { const c = cellOf(s.StudentID, x); return `<td>${c.total == null ? '-' : `<span class="tot">${c.total}</span>${c.complete ? ` <span class="g ${c.grade}">${c.grade}</span>` : '<small>incomplete</small>'}`}</td>`; }).join('')}<td class="tot">${a.average == null ? '-' : a.average}</td><td>${a.grade ? `<span class="g ${a.grade}">${a.grade}</span>` : ''}</td><td class="tot">${a.gpa == null ? '-' : a.gpa.toFixed(2)}</td></tr>`; }).join('')}</tbody></table></div>
       <p class="sub">The average counts only subjects that have all three scores. A grade shows once every subject is complete.</p></div>`;
   } else {
-    body = `<div class="panel"><h2>${esc(GB.sub)} <span class="sub">&middot; ${esc(d.level)} &middot; ${esc(d.term)}</span></h2><div class="scroll"><table class="tbl gb"><thead><tr><th>Name</th><th>CA 1 /${w.CA1}</th><th>CA 2 /${w.CA2}</th><th>CA /${w.CA1 + w.CA2}</th><th>Exam /${w.Exam}</th><th>Total /100</th><th>Grade</th></tr></thead><tbody>
+    body = `<div class="panel"><h2>${esc(GB.sub)} <span class="sub">&middot; ${esc(d.level)} &middot; ${esc(d.termKey)}</span></h2><div class="scroll"><table class="tbl gb"><thead><tr><th>Name</th><th>CA 1 /${w.CA1}</th><th>CA 2 /${w.CA2}</th><th>CA /${w.CA1 + w.CA2}</th><th>Exam /${w.Exam}</th><th>Total /100</th><th>Grade</th></tr></thead><tbody>
       ${d.students.map((s) => { const c = cellOf(s.StudentID, GB.sub); return `<tr><td><b>${esc(s.Name)}</b><div class="sub">${esc(s.StudentID)}</div></td>${partCell(s.StudentID, GB.sub, 'CA1', c)}${partCell(s.StudentID, GB.sub, 'CA2', c)}<td>${num(c.ca) === '' ? '-' : c.ca}</td>${partCell(s.StudentID, GB.sub, 'Exam', c)}<td class="tot">${c.total == null ? '-' : c.total}${c.total != null && !c.complete ? '<small>incomplete</small>' : ''}</td><td>${c.grade ? `<span class="g ${c.grade}">${c.grade}</span>` : ''}</td></tr>`; }).join('')}</tbody></table></div></div>`;
   }
   return head + tabs + body + '<div class="tools noprint" style="margin-top:14px"><button class="btn btn-line" data-csv>Download CSV</button><button class="btn btn-line" data-print>Print</button></div>';
 }
 function csvBook() {
   const d = GB.data, subs = subjectsNow(), w = D.weights, q = (v) => '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"';
-  const rows = [['StudentID', 'Name'].concat(...subs.map((x) => [x + ' CA1/' + w.CA1, x + ' CA2/' + w.CA2, x + ' Exam/' + w.Exam, x + ' Total/100', x + ' Grade']), ['Average', 'Grade'])];
-  d.students.forEach((s) => { const a = (d.cells[s.StudentID] || {})._all || {}; rows.push([s.StudentID, s.Name].concat(...subs.map((x) => { const c = cellOf(s.StudentID, x); return [c.CA1, c.CA2, c.Exam, c.total, c.grade]; }), [a.average, a.grade])); });
-  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob(['\ufeff' + rows.map((r) => r.map(q).join(',')).join('\n')], { type: 'text/csv' })); a.download = 'gradebook-' + d.level.replace(/\W+/g, '-') + '-' + d.term.replace(/\W+/g, '-') + '.csv'; a.click();
+  const rows = [['StudentID', 'Name'].concat(...subs.map((x) => [x + ' CA1/' + w.CA1, x + ' CA2/' + w.CA2, x + ' Exam/' + w.Exam, x + ' Total/100', x + ' Grade']), ['Average', 'Grade', 'GPA/5'])];
+  d.students.forEach((s) => { const a = (d.cells[s.StudentID] || {})._all || {}; rows.push([s.StudentID, s.Name].concat(...subs.map((x) => { const c = cellOf(s.StudentID, x); return [c.CA1, c.CA2, c.Exam, c.total, c.grade]; }), [a.average, a.grade, a.gpa])); });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob(['\ufeff' + rows.map((r) => r.map(q).join(',')).join('\n')], { type: 'text/csv' })); a.download = 'gradebook-' + d.level.replace(/\W+/g, '-') + '-' + d.termKey.replace(/\W+/g, '-') + '.csv'; a.click();
 }
 
 function render() {
@@ -274,7 +274,7 @@ app.addEventListener('input', (e) => {
 });
 app.addEventListener('change', async (e) => {
   const i = e.target.closest('[data-gs]'); if (!i) return;
-  const d = await run('gscore', { term: GB.data.term, subject: i.dataset.sub, studentId: i.dataset.gs, component: i.dataset.part, score: i.value.trim() }, '');
+  const d = await run('gscore', { term: GB.data.termKey, subject: i.dataset.sub, studentId: i.dataset.gs, component: i.dataset.part, score: i.value.trim() }, '');
   if (!d) { i.value = ''; }
   const ae = document.activeElement, keep = ae && ae.dataset && ae.dataset.gs ? { g: ae.dataset.gs, s: ae.dataset.sub, p: ae.dataset.part } : null, y = window.scrollY;
   const x = await run('book', { term: GB.term.trim(), level: GB.level }, ''); if (!x) return;
