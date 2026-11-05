@@ -25,7 +25,7 @@
  *     before that.
  *
  * Term report (the Gradebook on exam-teacher.html)
- *   Every exam has a Kind: CA1, CA2 or Exam, and a Term (for example "2026/27 Term 2"). A subject's total is out of 100:
+ *   Every exam has a Kind: CA1, CA2 or Exam, and a Term (filled in for you as the current term, for example "2026/2027 Second Term"). A subject's total is out of 100:
  *   CA1 out of 20, CA2 out of 20 (so CA is out of 40) and the Exam out of 60. The gradebook turns each exam's percentage into its
  *   share of those marks and adds them up. A teacher can also type a CA score (for a test taken on paper); a typed score
  *   replaces the one worked out from the portal. Grades use the same A-F bands as below.
@@ -250,7 +250,7 @@ function ex_studentList_(st) {
   exams.sort(function (x, y) { return x.Start < y.Start ? 1 : -1; });
   const done = exams.filter(function (x) { return x.Result && !x.Result.pending && !x.Result.absent; });
   const avg = done.length ? Math.round(done.reduce(function (s, x) { return s + x.Result.percent; }, 0) / done.length) : null;
-  return { ok: true, student: { name: st.Name, level: st.Level }, exams: exams, average: avg, averageGrade: avg == null ? '' : ex_grade_(avg),
+  return { ok: true, term: schoolTerm_(), student: { name: st.Name, level: st.Level }, exams: exams, average: avg, averageGrade: avg == null ? '' : ex_grade_(avg),
     blocked: EX_BLOCK_OVERDUE && payStatus_(st) === 'Overdue', examsFrom: EX_EXAMS_FROM, examsFromText: ex_nice_(EX_EXAMS_FROM) };
 }
 
@@ -407,7 +407,7 @@ function ex_tList_(me) {
       CanEdit: ex_tCanEdit_(me, e), Ended: !isNaN(start) && now > ex_end_(e) + EX_GRACE_SECONDS * 1000, Started: !isNaN(start) && now >= start, CreatedBy: String(e.CreatedBy || '') });
   });
   out.sort(function (x, y) { return x.Start < y.Start ? 1 : -1; });
-  return { ok: true, teacher: { name: me.Name, admin: tchAdmin_(me) }, exams: out, levels: Object.keys(levels).sort(), now: ex_fmt_(now, false), terms: ex_gTerms_(), weights: EX_WEIGHTS, examsFrom: EX_EXAMS_FROM, examsFromText: ex_nice_(EX_EXAMS_FROM), bands: [['A', '90-100'], ['B', '79-89'], ['C', '60-78'], ['D', '50-59'], ['E', '49'], ['F', '0-48']] };
+  return { ok: true, teacher: { name: me.Name, admin: tchAdmin_(me) }, exams: out, levels: Object.keys(levels).sort(), now: ex_fmt_(now, false), terms: ex_gTerms_(), term: schoolTerm_(), weights: EX_WEIGHTS, examsFrom: EX_EXAMS_FROM, examsFromText: ex_nice_(EX_EXAMS_FROM), bands: [['A', '90-100'], ['B', '79-89'], ['C', '60-78'], ['D', '50-59'], ['E', '49'], ['F', '0-48']] };
 }
 
 function ex_tExam_(me, p) {            // the full exam, for the editor (teachers only; includes the answer key)
@@ -435,8 +435,7 @@ function ex_tSave_(me, p) {
   const oralMarks = Math.max(0, Math.min(100, Math.round(ex_num_(d.OralMarks))));
   const kindRaw = String(d.Kind || '').trim().toUpperCase(), kind = kindRaw === 'CA1' ? 'CA1' : kindRaw === 'CA2' ? 'CA2' : kindRaw === 'EXAM' ? 'Exam' : '';
   if (kindRaw && !kind) ex_fail_('Choose CA 1, CA 2 or Exam.');
-  const term = ex_str_(d.Term, 40);
-  if (kind && !term) ex_fail_('Enter the term (for example 2026/27 Term 2) so the scores reach the right report.');
+  const term = ex_str_(d.Term, 40) || (kind ? schoolTerm_().Key : '');
   if (kind === 'Exam' && (!e || locked === false) && start.slice(0, 10) < EX_EXAMS_FROM) ex_fail_('The exams begin on ' + ex_nice_(EX_EXAMS_FROM) + '. Choose that day or later.');
   if (!title) ex_fail_('Give the exam a title.');
   if (!level) ex_fail_('Choose the level (or levels) that sit this exam.');
@@ -634,7 +633,7 @@ function ex_tBook_(me, p) {
   const terms = ex_gTerms_();
   const levels = {};
   (tchAdmin_(me) ? table_('Students').rows : tchMine_(me).rows).forEach(function (r) { if (String(r.Level || '').trim()) levels[String(r.Level).trim()] = true; });
-  const base = { ok: true, terms: terms, levels: Object.keys(levels).sort(), weights: EX_WEIGHTS, bands: [['A', '90-100'], ['B', '79-89'], ['C', '60-78'], ['D', '50-59'], ['E', '49'], ['F', '0-48']] };
+  const base = { ok: true, term: schoolTerm_(), terms: terms, levels: Object.keys(levels).sort(), weights: EX_WEIGHTS, bands: [['A', '90-100'], ['B', '79-89'], ['C', '60-78'], ['D', '50-59'], ['E', '49'], ['F', '0-48']] };
   if (!term || !level) return Object.assign(base, { students: [], subjects: [], cells: {} });
   const studs = ex_gStudents_(me, level);
   const exams = ex_table_('Exams').rows.filter(function (e) {

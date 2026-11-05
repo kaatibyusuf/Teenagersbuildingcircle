@@ -220,7 +220,7 @@ const VIEWS = { today: vToday, recitations: vRecitations, students: vStudents, a
 function render() {
   const t = D.teacher, n = toMark();
   $('app').innerHTML = `<section class="greet"><div><small>Assalaamu alaykum</small><h1>${esc(t.Name)}</h1>
-    <div class="chips"><span>${esc(t.Role)}</span><span>${D.students.length} student${D.students.length === 1 ? '' : 's'}</span><span>${n + recWaiting().length} to mark</span></div></div></section>
+    <div class="chips"><span>${esc(t.Role)}</span>${D.term ? `<span>${esc(D.term.Label)}</span>` : ''}<span>${D.students.length} student${D.students.length === 1 ? '' : 's'}</span><span>${n + recWaiting().length} to mark</span></div></div></section>
   <nav class="tabs" role="tablist" aria-label="Sections">${TABS.map(([k, l]) => `<button role="tab" type="button" data-act="tab" data-t="${k}" aria-selected="${S.tab === k}">${l}${k === 'assignments' && n ? ' (' + n + ')' : ''}${k === 'recitations' && recWaiting().length ? ' (' + recWaiting().length + ')' : ''}</button>`).join('')}</nav>
   <div id="view">${VIEWS[S.tab]()}</div>
   <p class="foot">${API_URL ? '' : 'Demo mode: sample data, nothing is saved. '}You only see the students assigned to you.</p>`;

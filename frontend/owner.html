@@ -249,7 +249,7 @@ function render() {
   document.querySelectorAll('details[data-k]').forEach((x) => { S.open[x.dataset.k] = x.open; });
   const k = D.kpi;
   $('app').innerHTML = `<section class="greet"><div><small>Assalaamu alaykum</small><h1>${esc(D.me.Name || 'Owner')}</h1>
-    <div class="chips"><span>${fdate(D.today)}</span><span>${plural(k.active, 'active student')}</span><span>${k.overdue} overdue</span><span>${plural(k.enrolMonth, 'enrolment')} this month</span></div></div>
+    <div class="chips"><span>${fdate(D.today)}</span>${D.term ? `<span>Madrasah: ${esc(D.term.Label)}</span>` : ''}<span>${plural(k.active, 'active student')}</span><span>${k.overdue} overdue</span><span>${plural(k.enrolMonth, 'enrolment')} this month</span></div></div>
     <button class="btn btn-line btn-sm" type="button" data-act="refresh">Refresh</button></section>
   <nav class="tabs" role="tablist" aria-label="Sections">${TABS.map(([t, l]) => `<button role="tab" type="button" data-act="tab" data-t="${t}" aria-selected="${S.tab === t}">${l}</button>`).join('')}</nav>
   <div id="view">${VIEWS[S.tab]()}</div>

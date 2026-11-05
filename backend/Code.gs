@@ -16,6 +16,13 @@
 const SHEET_ID = '1noglfG4gtK9ZzDw94Bm6-p8yNrkKbHetNsXE3LAY7z0';                 // Leave empty if this script was opened from Extensions > Apps Script inside the sheet.
 const SCHOOL_NAME = 'Himaayah Schools';
 const DASHBOARD_URL = 'https://www.himaayahschools.com/dashboard.html';
+/* The current Madrasah term. Change these three lines when a new term begins; every Madrasah portal and exam page follows. */
+const SCHOOL_TERM = { Name: 'Second Term', Session: '2026/2027', Hijri: '1448/1449 AH' };
+function schoolTerm_() {
+  return { Name: SCHOOL_TERM.Name, Session: SCHOOL_TERM.Session, Hijri: SCHOOL_TERM.Hijri,
+    Key: SCHOOL_TERM.Session + ' ' + SCHOOL_TERM.Name,                                              // what exams and the gradebook store, e.g. "2026/2027 Second Term"
+    Label: SCHOOL_TERM.Name + ' \u00b7 ' + SCHOOL_TERM.Session + ' \u00b7 ' + SCHOOL_TERM.Hijri };    // what people see
+}
 const LOCKOUT_TRIES = 5;             // wrong codes allowed
 const LOCKOUT_SECONDS = 900;         // 15 minutes
 const DUE_SOON_DAYS = 7;             // payment shows "Due" this many days before NextDue
@@ -181,7 +188,7 @@ function payload_(st) {
   const id = key_(st.StudentID), lvl = key_(st.Level);
   const mine = function (name) { return table_(name).rows.filter(function (r) { return key_(r.StudentID) === id; }); };
   return {
-    ok: true,
+    ok: true, term: schoolTerm_(),
     student: {
       StudentID: String(st.StudentID).trim(), Name: st.Name, Level: st.Level, Plan: st.Plan, Teacher: st.Teacher,
       PaymentStatus: payStatus_(st), NextDue: iso_(st.NextDue), MonthlyFee: Number(st.MonthlyFee) || 0,

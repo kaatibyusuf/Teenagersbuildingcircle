@@ -143,7 +143,7 @@ const VIEWS = { payments: vPayments, assign: vAssign, reset: () => ResetPanel.vi
 function render() {
   const a = D.admin, od = count((s) => s.PaymentStatus === 'Overdue'), nt = count((s) => !s.TeacherID);
   $('app').innerHTML = `<section class="greet"><div><small>Assalaamu alaykum</small><h1>${esc(a.Name)}</h1>
-    <div class="chips"><span>Admin</span><span>${od} overdue</span><span>${nt} without a teacher</span></div></div></section>
+    <div class="chips"><span>Admin</span>${D.term ? `<span>${esc(D.term.Label)}</span>` : ''}<span>${od} overdue</span><span>${nt} without a teacher</span></div></div></section>
   <nav class="tabs" role="tablist" aria-label="Sections">${TABS.map(([k, l]) => `<button role="tab" type="button" data-act="tab" data-t="${k}" aria-selected="${S.tab === k}">${l}</button>`).join('')}</nav>
   <div id="view">${VIEWS[S.tab]()}</div>
   <p class="foot">${API_URL ? '' : 'Demo mode: sample data, nothing is saved. '}Only confirm a payment after you have seen the receipt.</p>`;

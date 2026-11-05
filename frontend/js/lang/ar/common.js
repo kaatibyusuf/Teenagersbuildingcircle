@@ -503,5 +503,7 @@ HS_I18N.add({
 "Posting…": "جارٍ النشر…",
 "Thank you. Your comment has been received and will appear once it has been reviewed.": "شكرًا لك. وصل تعليقك وسيظهر بعد مراجعته.",
 "Write a short comment first.": "اكتب تعليقًا قصيرًا أولًا.",
-"Ambassadors": "السفراء"
+"Ambassadors": "السفراء",
+"Second Term · 2026/2027 · 1448/1449 AH": "الفصل الدراسي الثاني · ٢٠٢٦/٢٠٢٧ · ١٤٤٨/١٤٤٩ هـ",
+"Madrasah: Second Term · 2026/2027 · 1448/1449 AH": "المدرسة الشرعية: الفصل الدراسي الثاني · ٢٠٢٦/٢٠٢٧ · ١٤٤٨/١٤٤٩ هـ"
 });

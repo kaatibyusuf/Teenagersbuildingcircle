@@ -79,7 +79,7 @@ function adm_state_(admin, tbc) {
       return { Date: iso_(p.Date), StudentID: p.StudentID, Name: names[key_(p.StudentID)] || '', Amount: Number(p.Amount) || 0, Months: Number(p.Months) || 1, Reference: p.Reference };
     });
   return {
-    ok: true, today: today_(), admin: { AdminID: String(admin.AdminID).trim(), Name: admin.Name || admin.AdminID },
+    ok: true, today: today_(), term: schoolTerm_(), admin: { AdminID: String(admin.AdminID).trim(), Name: admin.Name || admin.AdminID },
     students: students, teachers: teachers.map(function (t) { return { TeacherID: t.TeacherID || t.Name, Name: t.Name }; }), levels: levels, payments: payments
   };
 }

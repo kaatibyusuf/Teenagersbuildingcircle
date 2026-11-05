@@ -122,7 +122,7 @@ const KL = { CA1: 'CA 1', CA2: 'CA 2', Exam: 'Exam' };
 const switcher = () => `<div class="sw noprint" role="group" aria-label="Section" style="margin:0 0 14px"><button type="button" data-view="list" aria-pressed="${S.view !== 'book'}">Exams</button><button type="button" data-view="book" aria-pressed="${S.view === 'book'}">Gradebook</button></div>`;
 function vList() {
   const ex = D.exams;
-  return `${switcher()}<div class="hd"><div><h1>Exams</h1><p class="sub">Hello, ${esc(D.teacher.name)}. Everyone in a level sits at the same time. Grades: ${D.bands.map((b) => b[0] + ' ' + b[1]).join(', ')}.</p></div>
+  return `${switcher()}<div class="hd"><div><h1>Exams</h1><p class="sub">Hello, ${esc(D.teacher.name)}.${D.term ? ' ' + esc(D.term.Label) + '.' : ''} Everyone in a level sits at the same time. Grades: ${D.bands.map((b) => b[0] + ' ' + b[1]).join(', ')}.</p></div>
     <button class="btn btn-ink" data-new>+ New exam</button></div>
     ${ex.length ? `<div class="cards">${ex.map((e) => `<article class="xc"><div><span class="pill ${STP[e.State]}">${e.State === 'Live' ? (e.Ended ? 'Ended' : e.Started ? 'Running' : 'Scheduled') : e.State}</span> <span class="pill p-wash">${esc(e.Level)}</span></div>
       <h3>${esc(e.Title)}</h3><div class="meta">${e.Kind ? `<b>${KL[e.Kind]}</b> &middot; ` : ''}${esc(e.Subject)} &middot; ${when(e.Start)} &middot; ${e.Minutes} min &middot; ${e.Marks} marks</div>
@@ -142,7 +142,7 @@ function vEdit() {
       <div class="full"><label class="fl">Title</label><input class="in" data-e="Title" value="${esc(e.Title)}" placeholder="e.g. Fiqh term test"></div>
       <div><label class="fl">Subject</label><input class="in" data-e="Subject" value="${esc(e.Subject)}" placeholder="Fiqh, Tajweed, Aqeedah…"></div>
       <div><label class="fl">Counts as</label><select class="in" data-e="Kind"><option value="">Not in the term report</option>${['CA1', 'CA2', 'Exam'].map((k) => `<option value="${k}"${e.Kind === k ? ' selected' : ''}>${KL[k]} (out of ${D.weights[k]})</option>`).join('')}</select>${e.Kind === 'Exam' ? `<div class="sub" style="margin-top:4px">Exams begin on ${esc(D.examsFromText)}.</div>` : ''}</div>
-      <div><label class="fl">Term</label><input class="in" data-e="Term" list="tm" value="${esc(e.Term)}" placeholder="e.g. 2026/27 Term 2"><datalist id="tm">${D.terms.map((t) => `<option value="${esc(t)}">`).join('')}</datalist></div>
+      <div><label class="fl">Term</label><input class="in" data-e="Term" list="tm" value="${esc(e.Term)}" placeholder="e.g. 2026/2027 Second Term"><datalist id="tm">${D.terms.map((t) => `<option value="${esc(t)}">`).join('')}</datalist></div>
       <div><label class="fl">Level (or levels, separated by commas)</label><input class="in" data-e="Level" list="lv" value="${esc(e.Level)}"${dis}><datalist id="lv">${D.levels.map((l) => `<option value="${esc(l)}">`).join('')}</datalist></div>
       <div><label class="fl">Start (same time for everyone)</label><input class="in" type="datetime-local" data-e="Start" value="${esc(e.Start)}"${dis}></div>
       <div><label class="fl">Length (minutes)</label><input class="in" type="number" min="5" max="300" data-e="Minutes" value="${esc(e.Minutes)}"${dis}></div>
@@ -229,7 +229,7 @@ function partCell(sid, sub, part, c) {
 function vBook() {
   const d = GB.data, w = D.weights;
   const head = `${switcher()}<div class="hd"><div><h1>Gradebook</h1><p class="sub">Each subject is out of ${w.CA1 + w.CA2 + w.Exam}: CA 1 out of ${w.CA1}, CA 2 out of ${w.CA2} (CA ${w.CA1 + w.CA2} in all) and the exam out of ${w.Exam}. Scores from portal exams are added automatically; type a score for a test taken on paper. Grades: ${(d ? d.bands : D.bands).map((b) => b[0] + ' ' + b[1]).join(', ')}.</p></div></div>
-    <div class="panel noprint"><div class="f2"><div><label class="fl" for="gt">Term</label><input class="in" id="gt" list="gtl" value="${esc(GB.term)}" placeholder="e.g. 2026/27 Term 2"><datalist id="gtl">${D.terms.map((t) => `<option value="${esc(t)}">`).join('')}</datalist></div>
+    <div class="panel noprint"><div class="f2"><div><label class="fl" for="gt">Term</label><input class="in" id="gt" list="gtl" value="${esc(GB.term)}" placeholder="e.g. 2026/2027 Second Term"><datalist id="gtl">${D.terms.map((t) => `<option value="${esc(t)}">`).join('')}</datalist></div>
       <div><label class="fl" for="gl">Level</label><select class="in" id="gl"><option value="">Choose a level</option>${D.levels.map((l) => `<option${GB.level === l ? ' selected' : ''}>${esc(l)}</option>`).join('')}</select></div></div>
       <div class="tools" style="margin-top:14px"><button class="btn btn-ink" data-loadbook>Show scores</button></div></div>`;
   if (!d) return head + '<div class="empty" style="margin-top:16px">Choose a term and level to see the scores.</div>';
@@ -283,13 +283,13 @@ app.addEventListener('change', async (e) => {
 });
 app.addEventListener('click', async (e) => {
   const t = (s) => e.target.closest(s);
-  if (t('[data-view]')) { const v = t('[data-view]').dataset.view; if (v === 'book') { S.view = 'book'; render(); } else { await refresh(); S.view = 'list'; render(); } }
+  if (t('[data-view]')) { const v = t('[data-view]').dataset.view; if (v === 'book') { S.view = 'book'; if (!GB.term) GB.term = (D.term && D.term.Key) || D.terms[0] || ''; if (!GB.level && D.levels.length === 1) GB.level = D.levels[0]; render(); } else { await refresh(); S.view = 'list'; render(); } }
   else if (t('[data-loadbook]')) { GB.term = $('gt').value; GB.level = $('gl').value; loadBook(t('[data-loadbook]')); }
   else if (t('[data-sub]') && !t('[data-gs]')) { GB.sub = t('[data-sub]').dataset.sub; render(); }
   else if (t('[data-addsub]')) { const v = $('gnew').value.trim(); if (v) { if (subjectsNow().indexOf(v) < 0) GB.extra.push(v); GB.sub = v; render(); } }
   else if (t('[data-csv]')) csvBook();
   else if (t('[data-print]')) window.print();
-  else if (t('[data-new]')) { S.ex = { ExamID: '', Title: '', Subject: '', Level: D.levels[0] || '', Start: '', Minutes: 45, PassMark: 50, OralMarks: 0, Instructions: '', Shuffle: true, State: 'Draft', Kind: '', Term: D.terms[0] || '' }; S.qs = [blankQ('mcq')]; S.locked = false; S.view = 'edit'; render(); }
+  else if (t('[data-new]')) { S.ex = { ExamID: '', Title: '', Subject: '', Level: D.levels[0] || '', Start: '', Minutes: 45, PassMark: 50, OralMarks: 0, Instructions: '', Shuffle: true, State: 'Draft', Kind: '', Term: (D.term && D.term.Key) || D.terms[0] || '' }; S.qs = [blankQ('mcq')]; S.locked = false; S.view = 'edit'; render(); }
   else if (t('[data-back]')) { await refresh(); S.view = 'list'; render(); }
   else if (t('[data-open]')) { if (await openDetail(t('[data-open]').dataset.open)) render(); }
   else if (t('[data-edit]')) { if (await openEdit(t('[data-edit]').dataset.edit)) render(); }
@@ -327,7 +327,7 @@ async function signIn(id, code, silent) {
   sessionStorage.setItem('ht', JSON.stringify({ id, code }));
   try {
     const d = await api('list');
-    if (d.ok && d.exams) { D = d; $('login').hidden = true; app.hidden = false; $('out').hidden = false; S.view = location.hash === '#gradebook' ? 'book' : 'list'; render(); }
+    if (d.ok && d.exams) { D = d; $('login').hidden = true; app.hidden = false; $('out').hidden = false; S.view = location.hash === '#gradebook' ? 'book' : 'list'; if (S.view === 'book') { GB.term = (D.term && D.term.Key) || D.terms[0] || ''; if (D.levels.length === 1) GB.level = D.levels[0]; } render(); }
     else { sessionStorage.removeItem('ht'); if (!silent) err.textContent = d.ok ? 'The exam portal is not switched on yet. Run Himaayah > Set up the exam portal, then publish a new version of the web app.' : (d.error || 'Could not sign in.'); }
   } catch (e) { sessionStorage.removeItem('ht'); if (!silent) err.textContent = 'Could not reach the school server. Please try again.'; }
   btn.disabled = false; btn.textContent = 'Sign in';

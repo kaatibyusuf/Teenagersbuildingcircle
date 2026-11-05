@@ -127,7 +127,7 @@ function listView() {
   const out = ex.filter((x) => x.Status === 'published');
   const avg = ST.average == null ? '' : `<span class="st out" style="margin-inline-start:8px">Average ${ST.average}% &middot; ${esc(ST.averageGrade)}</span>`;
   $('app').innerHTML = `<div class="not-t"><section class="hero"><small>Assalaamu alaykum</small><h1>${first}, your exams.</h1>
-    <p>Exams start at the same time for everyone. Your teacher releases results once marking is done.${avg}</p></section>
+    <p>${ST.term ? esc(ST.term.Label) + '. ' : ''}Exams start at the same time for everyone. Your teacher releases results once marking is done.${avg}</p></section>
     ${ST.blocked ? '<div class="panel"><b>Your fees are overdue.</b> You cannot start an exam until your fees are up to date. Please pay, then ask the office to confirm your payment.</div>' : ''}
     ${ex.some((x) => x.Kind === 'Exam' && ['upcoming', 'open'].includes(x.Status)) ? `<div class="panel">The final exams begin on <b>${esc(ST.examsFromText || '20 January 2027')}</b>.</div>` : ''}
     ${live.length ? `<h2 class="sect">Coming up</h2><div class="grid">${live.map(card).join('')}</div>` : ''}
@@ -136,7 +136,7 @@ function listView() {
     ${ex.length ? '' : '<div class="empty">No exams for your level yet. Please check again soon.</div>'}
     ${out.length ? '<p style="margin-top:18px"><button class="btn btn-line btn-sm no-print" data-print-t>Print report card</button></p>' : ''}
     <div class="msg" id="msg" role="alert"></div></div>
-    <section class="ro panel"><h2>Himaayah Schools &mdash; Report card</h2><p>${esc(ST.student.name)} &middot; ${esc(ST.student.level || '')}</p>
+    <section class="ro panel"><h2>Himaayah Schools &mdash; Report card</h2><p>${esc(ST.student.name)} &middot; ${esc(ST.student.level || '')}${ST.term ? ' &middot; ' + esc(ST.term.Label) : ''}</p>
     <table class="tr"><thead><tr><th>Subject</th><th>Exam</th><th>Date</th><th>Score</th><th>Grade</th></tr></thead><tbody>${out.filter((x) => x.Result && !x.Result.pending).map((x) => `<tr><td>${esc(x.Subject)}</td><td>${esc(x.Title)}</td><td>${dayOnly(x.Start)}</td><td>${x.Result.absent ? 'Absent' : x.Result.percent + '%'}</td><td><b>${esc(x.Result.grade)}</b> ${esc(x.Result.remark || '')}</td></tr>`).join('')}</tbody></table>
     <p style="margin-top:12px"><b>Average: ${ST.average == null ? '-' : ST.average + '% (' + ST.averageGrade + ')'}</b></p>
     <p style="margin-top:10px;font-size:12.5px;color:#5b6b78">Grades: A 90-100, B 79-89, C 60-78, D 50-59, E 49, F 0-48.</p></section>`;
@@ -155,7 +155,7 @@ async function loadList() {
   const d = await call({ op: 'list' });
   if (!d.ok) return fail(d.error);
   if (!d.exams) { $('app').innerHTML = '<div class="empty">The exam portal is not switched on yet. Please check again soon.</div>'; return; }
-  Object.assign(ST, { student: d.student, exams: d.exams, average: d.average, averageGrade: d.averageGrade, blocked: d.blocked, examsFromText: d.examsFromText, run: null, listAt: performance.now() });
+  Object.assign(ST, { student: d.student, exams: d.exams, average: d.average, averageGrade: d.averageGrade, blocked: d.blocked, examsFromText: d.examsFromText, term: d.term, run: null, listAt: performance.now() });
   listView(); window.scrollTo(0, 0);
 }
 

@@ -67,3 +67,7 @@ Every subject is marked out of 100: **CA 1 out of 20, CA 2 out of 20 (so CA is o
 
 - `EX_EXAMS_FROM` (top of `Exams.gs`) is `2027-01-20`. An exam whose kind is **Exam** cannot be saved with an earlier start, and a student cannot start one earlier even if the sheet is edited by hand. CA 1 and CA 2 are not affected. Change the date in one place if the plan moves.
 - `EX_BLOCK_OVERDUE` is now `true`: a student whose fees are **Overdue** (their NextDue date has passed) cannot start any exam. They still see the exam, with a message to pay first. Once the office confirms a payment and the due date moves forward, they can start straight away. Set it to `false` to switch this off.
+
+## The current term
+
+The term is set once, in `Code.gs` (`SCHOOL_TERM`: `Second Term`, `2026/2027`, `1448/1449 AH`). Exams and the Gradebook use "2026/2027 Second Term" automatically, so teachers no longer type it. When the next term begins, change those three values and redeploy.

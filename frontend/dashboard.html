@@ -505,7 +505,7 @@ function render(d) {
   const groups = ['Memorised','Revising','In progress','Not started'];
   $('app').innerHTML = `
   <section class="greet"><div><small>Assalaamu alaykum</small><h1>${esc(first)}, here is your progress.</h1>
-    <div class="chips"><span>${esc(s.Level)}</span><span>${esc(s.Plan)}</span>${s.Teacher ? `<span>Teacher: ${esc(s.Teacher)}</span>` : ''}</div></div>
+    <div class="chips"><span>${esc(s.Level)}</span><span>${esc(s.Plan)}</span>${d.term ? `<span>${esc(d.term.Label)}</span>` : ''}${s.Teacher ? `<span>Teacher: ${esc(s.Teacher)}</span>` : ''}</div></div>
     <a class="btn btn-sky" href="${waHelp}" target="_blank" rel="noopener">Message the Madrasah line</a></section>
   ${remind.length ? `<section class="remind" aria-label="Reminders">${remind.map((r) => `<a href="${r.a}" class="${r.u ? 'urgent' : ''}"${r.k ? ` data-nudge="${r.k}"` : ''}>${r.t}<span>${r.tag}</span></a>`).join('')}</section>` : ''}
   <div class="grid">
