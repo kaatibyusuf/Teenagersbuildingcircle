@@ -3,8 +3,7 @@
   var KEY = 'hs-theme', root = document.documentElement;
   function read() { try { return localStorage.getItem(KEY); } catch (e) { return null; } }
   function write(v) { try { localStorage.setItem(KEY, v); } catch (e) {} }
-  function systemDark() { return window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches; }
-  function current() { var s = read(); return s ? s : (systemDark() ? 'dark' : 'light'); }
+  function current() { var s = read(); return s === 'dark' ? 'dark' : 'light'; }
   function apply(t) {
     if (t === 'dark') root.setAttribute('data-theme', 'dark'); else root.removeAttribute('data-theme');
     var b = document.querySelector('.theme-btn');
@@ -43,5 +42,4 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { setTimeout(init, 0); });
   else setTimeout(init, 0);
   new MutationObserver(function () { apply(current()); }).observe(root, { attributes: true, attributeFilter: ['lang'] });
-  if (window.matchMedia) { try { matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function () { if (!read()) apply(current()); }); } catch (e) {} }
 })();
