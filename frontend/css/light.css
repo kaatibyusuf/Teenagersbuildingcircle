@@ -104,4 +104,4 @@ html.site:not(.page-index) .cta-box :is(.btn-line, .btn-ghost) { color: var(--hb
 .site .h-eye { display: none !important; }
 
 /* article pages keep their coloured category hero: restore light text on it */
-.site.page-articles .h-hero p, .site.page-articles .h-hero .h-lead { color: rgba(255,255,255,.78); }
+.site.page-articles .h-hero .art-sub { color: rgba(255,255,255,.78); }
