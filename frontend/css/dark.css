@@ -1,0 +1,23 @@
+/* Dark mode. Applied when <html data-theme="dark">. The whole page is colour-inverted and
+   hue-corrected (so blues stay blue), then pictures and embeds are inverted back so they look normal. */
+html[data-theme="dark"] { background: #fff; filter: invert(1) hue-rotate(180deg); color-scheme: dark; }
+html[data-theme="dark"] img, html[data-theme="dark"] picture, html[data-theme="dark"] video,
+html[data-theme="dark"] iframe, html[data-theme="dark"] canvas, html[data-theme="dark"] .qr,
+html[data-theme="dark"] [data-keep-colors] { filter: invert(1) hue-rotate(180deg); }
+/* soften: pure inverted white is #000, use a gentle charcoal instead */
+html[data-theme="dark"] body { background-color: #f3f5f8; }
+html[data-theme="dark"] ::selection { background: #7fb6e0; }
+
+/* the toggle button */
+.theme-btn { display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; margin: 0 6px; border-radius: 50%; border: 0; cursor: pointer; background: #E3F2FD; color: #062F4D; flex: none; transition: transform .2s; }
+.theme-btn:hover { transform: scale(1.06); }
+.theme-btn:focus-visible { outline: 2px solid #094570; outline-offset: 2px; }
+.theme-btn svg { width: 18px; height: 18px; }
+.theme-btn .t-sun { display: none; }
+html[data-theme="dark"] .theme-btn .t-sun { display: block; }
+html[data-theme="dark"] .theme-btn .t-moon { display: none; }
+.theme-btn.theme-float { position: fixed; z-index: 9999; right: 14px; bottom: 14px; margin: 0; width: 44px; height: 44px; background: #fff; box-shadow: 0 0 0 1px #D5E0E8, 0 10px 24px -10px rgba(6,47,77,.45); }
+html[dir="rtl"] .theme-btn.theme-float { right: auto; left: 14px; }
+@media print { html[data-theme="dark"] { filter: none; } .theme-btn { display: none; } }
+/* blocks that are deliberately coloured keep their original look */
+html[data-theme="dark"] .ja-cover { filter: invert(1) hue-rotate(180deg); }
