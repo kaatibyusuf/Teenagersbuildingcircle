@@ -218,8 +218,7 @@
 
           <p class="wa-label">I've paid. Send my receipt on WhatsApp:</p>
           <div class="wa-grid">
-            <a class="btn btn-wa" id="waLink1" target="_blank" rel="noopener">Send on WhatsApp <small>· +234 806 604 3320</small></a>
-            <a class="btn btn-wa" id="waLink2" target="_blank" rel="noopener">Send on WhatsApp <small>· +234 702 584 2849</small></a>
+            <a class="btn btn-wa" id="waLink1" target="_blank" rel="noopener">Send on WhatsApp <small id="waNum" dir="ltr"></small></a>
           </div>
           <button type="button" class="btn btn-secondary" id="copyMsgBtn">Copy the message instead</button>
           <p class="form-status error" id="enrolStatus"></p>
@@ -652,7 +651,10 @@
   // (see submitEnrolment). Staff then check the receipt and set the row
   // to Confirmed, which creates the student's account automatically.
   // =================================================================
-  const WA_NUMBERS = ['2348066043320', '2347025842849'];
+  // Receipts go to the WhatsApp line of the programme being paid for. The Circle and Skills School have no line of their own, so they use the school's general line.
+  const WA_BY = { madrasah: '2347025842849', academy: '2348066043320', circle: '2347047226487', skills: '2347047226487' };
+  const waNum = () => WA_BY[state.programmeId] || '2347047226487';
+  const waShow = (n) => '+' + n.replace(/^234(\d{3})(\d{3})(\d{4})$/, '234 $1 $2 $3');
 
   // One-time registration fee, added to the first payment of every enrolment.
   // Returning students on an invite link don't pay it. Keep in step with api/checkout.mjs and Enrol.gs.
@@ -749,18 +751,14 @@
       const pu = document.getElementById('paidUntil'); pu.min = d(-7); pu.max = d(70);
     }
     document.getElementById('msgPreview').textContent = buildMessage();
-    WA_NUMBERS.forEach((num, i) => {
-      const a = document.getElementById('waLink' + (i + 1));
-      a.href = waLink(num);
-    });
+    document.getElementById('waLink1').href = waLink(waNum());
+    document.getElementById('waNum').textContent = '\u00b7 ' + waShow(waNum());
   }
 
   // After the WhatsApp tab opens, save the enrolment and move this page to a reminder screen
-  [1, 2].forEach((i) => {
-    document.getElementById('waLink' + i).addEventListener('click', () => {
-      submitEnrolment();
-      setTimeout(showWhatsAppDone, 500);
-    });
+  document.getElementById('waLink1').addEventListener('click', () => {
+    submitEnrolment();
+    setTimeout(showWhatsAppDone, 500);
   });
 
   // Current student who paid before the website: save the details with the date the next fee is due
@@ -788,9 +786,9 @@
     document.getElementById('doneSub').textContent =
       'WhatsApp should have opened with your message ready. Attach your payment receipt and press send, and we\u2019ll confirm ' +
       (state.student.studentName ? state.student.studentName + '\u2019s' : 'your') + ' place, usually within a few hours. Your reference is ' + state.ref + '.';
-    document.getElementById('doneActions').innerHTML = WA_NUMBERS.map((num) =>
-      `<a class="btn btn-wa" href="${waLink(num)}" target="_blank" rel="noopener">Open WhatsApp again <small>\u00b7 +${num.replace(/^234(\d{3})(\d{3})(\d{4})$/, '234 $1 $2 $3')}</small></a>`
-    ).join('') + '<a class="btn btn-secondary" href="./">Back to Himaayah Schools</a>';
+    document.getElementById('doneActions').innerHTML =
+      `<a class="btn btn-wa" href="${waLink(waNum())}" target="_blank" rel="noopener">Open WhatsApp again <small dir="ltr">\u00b7 ${waShow(waNum())}</small></a>` +
+      '<a class="btn btn-secondary" href="./">Back to Himaayah Schools</a>';
     showStep('Done');
   }
 

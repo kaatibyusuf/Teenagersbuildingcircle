@@ -101,3 +101,44 @@ html[dir="rtl"].site.page-index .hx-step-3 { transform: rotate(-4deg); }
   .site.page-index .h-hero-in { padding-top: 116px; }
 }
 @media (prefers-reduced-motion: reduce) { .site.page-index .hx-step { transition: none; } }
+
+/* ---------- results + Madrasah admission: light, like the enrolment steps ---------- */
+.site.page-index #results { background: #fff; color: var(--hb-deep); }
+.site.page-index #results .h-eye { color: #6B8396; }
+.site.page-index #results .h-soft { color: #8EA3B3; }
+.site.page-index #results .h-head-split > p { color: #6B8396; }
+.site.page-index #results .h-board { background: #F6F9FB; box-shadow: 0 0 0 1px var(--hb-line); }
+.site.page-index #results .h-board-bar { color: #4B6577; border-bottom-color: var(--hb-line); }
+.site.page-index #results .h-board-bar svg { fill: var(--hb); }
+.site.page-index #results .h-board-bar em { background: var(--hb-tint); color: var(--hb); }
+.site.page-index #results .h-score, .site.page-index #results .h-tile, .site.page-index #results .h-story { background: #fff; box-shadow: 0 0 0 1px var(--hb-line); }
+.site.page-index #results .h-score-k { color: #4B6577; }
+.site.page-index #results .h-score p, .site.page-index #results .h-tile small, .site.page-index #results .h-story p { color: #6B8396; }
+.site.page-index #results .h-score p b { color: var(--hb-deep); }
+.site.page-index #results .h-ring { --c: var(--hb); --t: #E3ECF3; }
+.site.page-index #results .h-ring::before { background: #fff; }
+.site.page-index #results .h-ring-s::before { background: #fff; }
+.site.page-index #results .h-ring b { color: var(--hb-deep); }
+.site.page-index #results .h-ring small { color: #6B8396; }
+.site.page-index #results .h-tile b, .site.page-index #results .h-story h3 { color: var(--hb-deep); }
+.site.page-index #results .h-more-light { color: var(--hb); }
+.site.page-index #results .h-more-light:hover { color: var(--hb-deep); }
+
+.site.page-index #reopen { background: radial-gradient(50% 70% at 0% 50%, rgba(133,204,255,.28), transparent 70%), radial-gradient(40% 60% at 100% 100%, rgba(228,196,162,.28), transparent 70%), linear-gradient(135deg, #E6F1FA, #F4F8FB 60%, #EAF3FA); color: var(--hb-deep); }
+.site.page-index #reopen .h-eye { color: #6B8396; }
+.site.page-index #reopen .h-dot-sand { background: var(--hb); }
+.site.page-index #reopen h2 span { color: var(--hb); }
+.site.page-index #reopen .h-reopen-copy > p:not(.h-eye) { color: #4B6577; }
+.site.page-index #reopen .h-reopen-copy > p b { color: var(--hb-deep); }
+.site.page-index #reopen .h-reopen-copy > p.h-note { color: #8A5A2B; }
+.site.page-index #reopen .h-btn-light { background: var(--hb); color: #fff; box-shadow: 0 12px 26px -14px rgba(9,69,112,.7); }
+.site.page-index #reopen .h-btn-light:hover { background: var(--hb-deep); }
+.site.page-index #reopen .h-btn-glass { background: #fff; color: var(--hb-deep); box-shadow: 0 0 0 1px var(--hb-line); backdrop-filter: none; }
+.site.page-index #reopen .h-btn-glass:hover { background: #fff; box-shadow: 0 0 0 1px #A9C7DC; }
+.site.page-index #reopen .h-cd { background: #fff; box-shadow: 0 0 0 1px var(--hb-line), 0 30px 50px -34px rgba(6,47,77,.4); backdrop-filter: none; }
+.site.page-index #reopen .h-cd-date { border-bottom-color: var(--hb-line); }
+.site.page-index #reopen .h-cd-date small { color: #6B8396; }
+.site.page-index #reopen .h-cd-date b { color: var(--hb-deep); }
+.site.page-index #reopen .h-cd-grid div { background: #F1F4F7; }
+.site.page-index #reopen .h-cd-grid b { color: var(--hb-deep); }
+.site.page-index #reopen .h-cd-grid span { color: #6B8396; }
