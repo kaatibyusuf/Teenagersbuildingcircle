@@ -28,6 +28,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Geist:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/home.css">
 <script src="js/i18n.js"></script>
 <script src="js/cookie-notice.js" defer></script>
 <script src="js/chat.js" defer></script>
@@ -142,30 +143,54 @@
 
   <div class="h-hero-in">
     <a class="h-badge" href="madrasah#plans"><em>New</em>Private Madrasah classes are open<svg width="13" height="13" aria-hidden="true"><use href="#go"/></svg></a>
-    <h1><span>Deen, knowledge and skill,</span> <span class="h-soft">taught in one place.</span></h1>
+    <h1><span>Deen, knowledge and skill,</span> <span>taught in <mark class="hx-mark">one place</mark></span></h1>
     <p class="h-lead">Qur'an and Islamic studies, exam preparation, practical skills and a development circle for teenagers. Structured teaching, close mentorship, and results our students can point to.</p>
 
-    <form class="h-pick" action="enroll" method="get">
-      <svg class="h-pick-ic" width="15" height="15" aria-hidden="true"><use href="#spark"/></svg>
-      <label class="h-sr" for="pickProg">I am looking for…</label>
-      <select id="pickProg" name="programme">
-        <option value="" selected>I am looking for…</option>
-        <option value="madrasah">Qur'an and Islamic studies</option>
-        <option value="academy">Help with an exam</option>
-        <option value="circle">A programme for a teenager</option>
-        <option value="skills">A practical skill</option>
-      </select>
-      <button type="submit" class="h-btn h-btn-light">Enroll now<span class="h-go"><svg width="14" height="14" aria-hidden="true"><use href="#go"/></svg></span></button>
-    </form>
-
-    <div class="h-chips">
-      <span class="h-chips-k"><i class="h-dot"></i>4 programmes</span>
-      <a href="madrasah">Madrasah</a>
-      <a href="academy">Academy</a>
-      <a href="teenagers-building-circle">Teenagers Building Circle</a>
-      <a href="skills-school">Skills School</a>
+    <div class="h-cta-row">
+      <a href="enroll" class="h-btn h-btn-dark"><svg width="15" height="15" aria-hidden="true"><use href="#spark"/></svg>Enroll now</a>
+      <a href="#paths" class="h-btn h-btn-white"><span class="h-av" aria-hidden="true"><svg width="12" height="15"><use href="#lg"/></svg></span>Find your programme</a>
     </div>
-    <div class="h-hero-links"><a class="h-scroll" href="#paths">Find your programme <svg width="14" height="14" aria-hidden="true"><use href="#down"/></svg></a><a class="h-scroll" href="resources/himaayah-prospectus-2026-2027.pdf" download="Himaayah-Schools-Prospectus-2026-2027.pdf"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>Download prospectus</a></div>
+    <div class="h-hero-links"><a class="h-scroll" href="resources/himaayah-prospectus-2026-2027.pdf" download="Himaayah-Schools-Prospectus-2026-2027.pdf"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>Download prospectus</a></div>
+  </div>
+
+  <!-- Three steps -->
+  <div class="hx-steps" aria-label="How it works">
+    <article class="hx-step hx-step-1">
+      <div class="hx-step-ui" aria-hidden="true">
+        <div class="h-ui-tabs"><span class="on">Madrasah</span><span>Academy</span><span>Circle</span></div>
+        <div class="h-ui-btn">Enroll now</div>
+      </div>
+      <p class="hx-step-k">Step 1:</p>
+      <p class="hx-step-t">Choose your <b>programme</b>: Madrasah, Academy, Circle or Skills School.</p>
+    </article>
+    <article class="hx-step hx-step-2">
+      <div class="hx-step-ui" aria-hidden="true">
+        <div class="h-ui-msg"><i></i><span>Payment received. Welcome!</span></div>
+        <div class="h-ui-msg h-ui-msg-b"><i></i><span>Your login is in your email.</span></div>
+      </div>
+      <p class="hx-step-k">Step 2:</p>
+      <p class="hx-step-t">Enrol and pay online, and get your <b>login</b> by email.</p>
+    </article>
+    <article class="hx-step hx-step-3">
+      <div class="hx-step-ui" aria-hidden="true">
+        <div class="h-ui-bars"><i style="--h:34%"></i><i style="--h:48%"></i><i style="--h:42%"></i><i style="--h:70%"></i><i style="--h:58%"></i><i style="--h:86%"></i></div>
+      </div>
+      <p class="hx-step-k">Step 3:</p>
+      <p class="hx-step-t">Learn live, sit exams and <b>watch your progress.</b></p>
+    </article>
+  </div>
+
+  <!-- One voice -->
+  <figure class="h-hero-q">
+    <span class="h-hero-av" aria-hidden="true">H</span>
+    <figcaption class="h-hero-qk">Quick and easy to join</figcaption>
+    <blockquote>Everything was structured to make sure everyone puts in their all &mdash; from daily tasks to the reading club, to brainstorming sessions, to daily CBT quizzes. It sets the path.</blockquote>
+    <small>Hussainah &middot; 319 in UTME, 2026</small>
+  </figure>
+
+  <div class="h-exams" aria-label="Exams we prepare students for">
+    <p>Exams we prepare students for</p>
+    <ul><li>UTME</li><li>WAEC</li><li>NECO</li><li>IJMB</li><li>JUPEB</li><li>Cambridge</li></ul>
   </div>
 
   <!-- The school window: one programme at a time -->
@@ -534,7 +559,7 @@
   solid(); window.addEventListener('scroll', solid, { passive: true });
 
   // Programme picker: an empty choice opens the enroll page as it is
-  document.querySelector('.h-pick').addEventListener('submit', (e) => {
+  document.querySelector('.h-pick')?.addEventListener('submit', (e) => {
     const s = document.getElementById('pickProg');
     if (!s.value) { e.preventDefault(); location.href = 'enroll'; }
   });
