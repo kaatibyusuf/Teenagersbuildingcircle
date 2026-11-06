@@ -32,6 +32,7 @@ export const PAID = {
   "the-four-rightly-guided-caliphs": () => readFile(new URL('./_paid/b8c90dc86d54624b566d.pdf', import.meta.url)),
   "the-four-imams": () => readFile(new URL('./_paid/f0f1ea7928d2fbcc4861.pdf', import.meta.url)),
   "hifdh-planner": () => readFile(new URL('./_paid/ae7395994438888b9d60.pdf', import.meta.url)),
+  "himaayah-diary-2027": () => readFile(new URL('./_paid/5208c930ee9f39257bc8.pdf', import.meta.url)),
   "adab-before-ilm": () => readFile(new URL('./_paid/a25d6707393700f1ed45.pdf', import.meta.url)),
   "understand-what-you-recite": () => readFile(new URL('./_paid/ef07089f78d1d38b2974.pdf', import.meta.url)),
   "five-ways-to-ace-utme": () => readFile(new URL('./_paid/d0d5f4771d03e3a8ba79.pdf', import.meta.url)),

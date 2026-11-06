@@ -275,5 +275,7 @@ HS_I18N.add({
 "Guides": "أدلة",
 "Guides from our teachers.": "أدلة من معلّمينا.",
 "Printable guides on the Qur’an, fiqh, the sīrah and adab. Buy them in the Himaayah Store, download them and print them for your family.": "أدلة قابلة للطباعة في القرآن والفقه والسيرة والأدب. اشترِها من متجر حماية ونزّلها واطبعها لأسرتك.",
-"See all Madrasah guides in the store": "تصفّح جميع أدلة المدرسة في المتجر"
+"See all Madrasah guides in the store": "تصفّح جميع أدلة المدرسة في المتجر",
+"The Himaayah Diary 2027": "مفكرة حماية ٢٠٢٧",
+"Cover of The Himaayah Diary 2027": "غلاف مفكرة حماية ٢٠٢٧"
 });

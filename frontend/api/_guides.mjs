@@ -34,6 +34,7 @@ export const GUIDES = {
   "the-four-rightly-guided-caliphs": { id: "afcee", title: "The Four Rightly Guided Caliphs", file: "b8c90dc86d54624b566d.pdf", price: 3000 },
   "the-four-imams": { id: "c6897", title: "The Four Imams", file: "f0f1ea7928d2fbcc4861.pdf", price: 3000 },
   "hifdh-planner": { id: "c22ba", title: "My Hifdh Planner", file: "ae7395994438888b9d60.pdf", price: 3000 },
+  "himaayah-diary-2027": { id: "b77d6", title: "The Himaayah Diary 2027", file: "5208c930ee9f39257bc8.pdf", price: 2000 },
   "adab-before-ilm": { id: "7d8b6", title: "Adab Before ʿIlm", file: "a25d6707393700f1ed45.pdf", price: 3000 },
   "understand-what-you-recite": { id: "735de", title: "Understand What You Recite", file: "ef07089f78d1d38b2974.pdf", price: 3000 },
   "five-ways-to-ace-utme": { id: "669a9", title: "Five Ways to Ace UTME", file: "d0d5f4771d03e3a8ba79.pdf", price: 3000 },
