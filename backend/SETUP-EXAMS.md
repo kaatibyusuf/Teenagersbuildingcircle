@@ -107,3 +107,13 @@ On the exam page, beside a student (while the exam is **Live**, before results a
 - Once results are **published**, a resit can no longer be allowed, so do this before pressing Publish.
 - Fees still apply: a student with overdue fees cannot start, even with a resit.
 - The student's exam card says "Your teacher has allowed you to sit this exam". The tab ExamSittings gets three new columns (GrantUntil, GrantMinutes, GrantedBy), added automatically.
+
+## Advice on the cumulative GPA
+
+The Arabic report card ends with a short note to the student, based on the CGPA:
+
+- **3.5 or higher:** in good standing.
+- **Below 3.5:** advised to repeat.
+- **Below 3.0:** advised to withdraw.
+
+The note also states the rule in words. It shows only when the student has a CGPA, and says "provisional" while some scores are still missing. The two limits are `CGPA_MIN` and `CGPA_WITHDRAW` at the top of `standingAr` in `exams.html`.
