@@ -213,6 +213,15 @@ html[dir="rtl"] .ja-nb span,html[dir="rtl"] .ja-nxa{transform:scaleX(-1)}
 .ja-more .jr-grid{margin-top:22px}
 .ja-term{gap:20px}.ja-term .jr-ar{line-height:1.5;padding-top:12px}
 @media(max-width:760px){.ja-term{gap:6px}.ja-term .jr-ar{padding-top:0;line-height:1.35}}
+
+body.jr-art .art-qa{margin:0 0 14px;padding:18px 20px 20px;border-radius:16px;background:#fff;box-shadow:0 0 0 1px #D5E0E8}
+body.jr-art .art-qa h3{margin:0 0 10px;display:flex;gap:12px;align-items:flex-start;font:600 18px/1.4 "Bricolage Grotesque",Inter,sans-serif;letter-spacing:-.01em;color:#062F4D}
+body.jr-art .art-qa h3::before{content:"Q";flex:none;width:26px;height:26px;border-radius:50%;background:#094570;color:#fff;font:700 12px/26px Inter,sans-serif;text-align:center;letter-spacing:0}
+body.jr-art .art-qa p{position:relative;margin:0;padding-inline-start:38px;font-size:17px;line-height:1.7;color:#35506A}
+body.jr-art .art-qa p::before{content:"A";position:absolute;inset-inline-start:0;top:2px;width:26px;height:26px;border-radius:50%;background:#E3F2FD;color:#094570;font:700 12px/26px Inter,sans-serif;text-align:center}
+html[dir="rtl"] body.jr-art .art-qa h3::before{content:"\0633";font-family:inherit}
+html[dir="rtl"] body.jr-art .art-qa p::before{content:"\062C";font-family:inherit}
+html.site body.jr-art .art-body .art-qa p{margin:0}
 </style>
 </head>
 <body class="jr jr-art">
@@ -311,7 +320,9 @@ html[dir="rtl"] .ja-nb span,html[dir="rtl"] .ja-nxa{transform:scaleX(-1)}
 <h2>Staying motivated through repetition</h2>
 <p>Practising past questions can become dull. Set small targets, such as beating last week&#x27;s score or finishing a paper with ten minutes to spare, and mark them on a chart. Seeing progress turns repetition into a game against your own previous result.</p>
 <h2>Frequently asked questions</h2>
-<p>How many past papers should I do? As many as you can review carefully; quality of review matters more than quantity. Where can I find them? Ask your teacher or school for trusted collections, and check that they match the current syllabus. What if the questions seem too hard? Start with topic questions and build up; difficulty usually falls as understanding grows.</p>
+<div class="art-qa"><h3>How many past papers should I do?</h3><p>As many as you can review carefully; quality of review matters more than quantity.</p></div>
+<div class="art-qa"><h3>Where can I find them?</h3><p>Ask your teacher or school for trusted collections, and check that they match the current syllabus.</p></div>
+<div class="art-qa"><h3>What if the questions seem too hard?</h3><p>Start with topic questions and build up; difficulty usually falls as understanding grows.</p></div>
 <h2>Key points</h2>
 <ul>
 <li>Use past questions early for topics and later for full timed papers.</li>

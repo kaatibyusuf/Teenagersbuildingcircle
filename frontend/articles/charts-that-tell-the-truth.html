@@ -213,6 +213,15 @@ html[dir="rtl"] .ja-nb span,html[dir="rtl"] .ja-nxa{transform:scaleX(-1)}
 .ja-more .jr-grid{margin-top:22px}
 .ja-term{gap:20px}.ja-term .jr-ar{line-height:1.5;padding-top:12px}
 @media(max-width:760px){.ja-term{gap:6px}.ja-term .jr-ar{padding-top:0;line-height:1.35}}
+
+body.jr-art .art-qa{margin:0 0 14px;padding:18px 20px 20px;border-radius:16px;background:#fff;box-shadow:0 0 0 1px #D5E0E8}
+body.jr-art .art-qa h3{margin:0 0 10px;display:flex;gap:12px;align-items:flex-start;font:600 18px/1.4 "Bricolage Grotesque",Inter,sans-serif;letter-spacing:-.01em;color:#062F4D}
+body.jr-art .art-qa h3::before{content:"Q";flex:none;width:26px;height:26px;border-radius:50%;background:#094570;color:#fff;font:700 12px/26px Inter,sans-serif;text-align:center;letter-spacing:0}
+body.jr-art .art-qa p{position:relative;margin:0;padding-inline-start:38px;font-size:17px;line-height:1.7;color:#35506A}
+body.jr-art .art-qa p::before{content:"A";position:absolute;inset-inline-start:0;top:2px;width:26px;height:26px;border-radius:50%;background:#E3F2FD;color:#094570;font:700 12px/26px Inter,sans-serif;text-align:center}
+html[dir="rtl"] body.jr-art .art-qa h3::before{content:"\0633";font-family:inherit}
+html[dir="rtl"] body.jr-art .art-qa p::before{content:"\062C";font-family:inherit}
+html.site body.jr-art .art-body .art-qa p{margin:0}
 </style>
 </head>
 <body class="jr jr-art">
@@ -321,7 +330,9 @@ html[dir="rtl"] .ja-nb span,html[dir="rtl"] .ja-nxa{transform:scaleX(-1)}
 <h2>Reading other people&#x27;s charts critically</h2>
 <p>When you meet a chart in the news or on social media, check the axes, the scale, the time period and the source before you accept its message. Ask what is left out. A moment of checking protects you from being misled, and it is also a habit that makes you more careful when you make charts yourself.</p>
 <h2>Frequently asked questions</h2>
-<p>Must every bar chart start at zero? Yes, because the length of the bar represents the value; line charts can use a different baseline if it is labelled clearly. Are pie charts bad? They work for a few parts of a whole, but become hard to read with many slices. Is it dishonest to highlight one point? Not if the highlight is accurate and the rest of the data remains visible.</p>
+<div class="art-qa"><h3>Must every bar chart start at zero?</h3><p>Yes, because the length of the bar represents the value; line charts can use a different baseline if it is labelled clearly.</p></div>
+<div class="art-qa"><h3>Are pie charts bad?</h3><p>They work for a few parts of a whole, but become hard to read with many slices.</p></div>
+<div class="art-qa"><h3>Is it dishonest to highlight one point?</h3><p>Not if the highlight is accurate and the rest of the data remains visible.</p></div>
 <h2>Key points</h2>
 <ul>
 <li>Choose the chart type that fits the question.</li>

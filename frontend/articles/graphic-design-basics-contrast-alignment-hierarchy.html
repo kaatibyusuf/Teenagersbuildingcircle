@@ -214,6 +214,15 @@ html[dir="rtl"] .ja-nb span,html[dir="rtl"] .ja-nxa{transform:scaleX(-1)}
 .ja-more .jr-grid{margin-top:22px}
 .ja-term{gap:20px}.ja-term .jr-ar{line-height:1.5;padding-top:12px}
 @media(max-width:760px){.ja-term{gap:6px}.ja-term .jr-ar{padding-top:0;line-height:1.35}}
+
+body.jr-art .art-qa{margin:0 0 14px;padding:18px 20px 20px;border-radius:16px;background:#fff;box-shadow:0 0 0 1px #D5E0E8}
+body.jr-art .art-qa h3{margin:0 0 10px;display:flex;gap:12px;align-items:flex-start;font:600 18px/1.4 "Bricolage Grotesque",Inter,sans-serif;letter-spacing:-.01em;color:#062F4D}
+body.jr-art .art-qa h3::before{content:"Q";flex:none;width:26px;height:26px;border-radius:50%;background:#094570;color:#fff;font:700 12px/26px Inter,sans-serif;text-align:center;letter-spacing:0}
+body.jr-art .art-qa p{position:relative;margin:0;padding-inline-start:38px;font-size:17px;line-height:1.7;color:#35506A}
+body.jr-art .art-qa p::before{content:"A";position:absolute;inset-inline-start:0;top:2px;width:26px;height:26px;border-radius:50%;background:#E3F2FD;color:#094570;font:700 12px/26px Inter,sans-serif;text-align:center}
+html[dir="rtl"] body.jr-art .art-qa h3::before{content:"\0633";font-family:inherit}
+html[dir="rtl"] body.jr-art .art-qa p::before{content:"\062C";font-family:inherit}
+html.site body.jr-art .art-body .art-qa p{margin:0}
 </style>
 </head>
 <body class="jr jr-art">
@@ -313,7 +322,9 @@ html[dir="rtl"] .ja-nb span,html[dir="rtl"] .ja-nxa{transform:scaleX(-1)}
 <h2>Getting feedback</h2>
 <p>Show your work to someone for five seconds and ask what they remember. If they recall the main message, the hierarchy is working. If not, adjust. Feedback of this simple kind is a quick, honest guide to whether a design does its job.</p>
 <h2>Frequently asked questions</h2>
-<p>Do I need expensive software? No. Free and low-cost tools are enough to learn the principles, which matter far more than the software. How do I improve my eye for design? Study designs you admire, note what makes them work, and imitate them as practice. How much white space is enough? More than you think; space gives a design room to breathe and directs the eye.</p>
+<div class="art-qa"><h3>Do I need expensive software?</h3><p>No. Free and low-cost tools are enough to learn the principles, which matter far more than the software.</p></div>
+<div class="art-qa"><h3>How do I improve my eye for design?</h3><p>Study designs you admire, note what makes them work, and imitate them as practice.</p></div>
+<div class="art-qa"><h3>How much white space is enough?</h3><p>More than you think; space gives a design room to breathe and directs the eye.</p></div>
 <h2>Key points</h2>
 <ul>
 <li>Make the most important element clearly the largest or strongest.</li>
