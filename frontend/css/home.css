@@ -142,3 +142,6 @@ html[dir="rtl"].site.page-index .hx-step-3 { transform: rotate(-4deg); }
 .site.page-index #reopen .h-cd-grid div { background: #F1F4F7; }
 .site.page-index #reopen .h-cd-grid b { color: var(--hb-deep); }
 .site.page-index #reopen .h-cd-grid span { color: #6B8396; }
+
+/* eyebrow labels (the small dotted label above headings) removed */
+.site .h-eye { display: none !important; }

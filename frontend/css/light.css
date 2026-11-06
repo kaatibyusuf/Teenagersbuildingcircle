@@ -99,3 +99,6 @@ html.site:not(.page-index) .cta-box :is(.btn-line, .btn-ghost) { color: var(--hb
 /* keep the footer brand readable on the dark footer */
 .site .h-foot .h-brand { color: #fff; }
 .site .h-foot .h-brand svg { color: #85CCFF; }
+
+/* eyebrow labels (the small dotted label above headings) removed */
+.site .h-eye { display: none !important; }
