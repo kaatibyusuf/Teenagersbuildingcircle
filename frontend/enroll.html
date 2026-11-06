@@ -150,6 +150,12 @@
           <p class="ref-ok" id="refOk" aria-live="polite"></p>
         </div>
 
+        <div class="field" data-field="regpass" data-optional>
+          <label>Test code <span class="opt">(optional, if you already paid the registration fee)</span></label>
+          <input type="text" name="regpass" id="passInput" maxlength="20" autocapitalize="characters" autocomplete="off" dir="ltr" translate="no" placeholder="e.g. HPT-AB12-CD34">
+          <p class="ref-ok" id="passOk" aria-live="polite"></p>
+        </div>
+
         <div class="hp" aria-hidden="true">
           <label>Leave this empty <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
         </div>
@@ -437,6 +443,27 @@
   refInput.addEventListener('input', () => { clearTimeout(refTimer); refTimer = setTimeout(checkRef, 500); });
   if (refInput.value) checkRef();
 
+  // Test code from the placement page: the registration fee was already paid, so it is not charged again.
+  // The server checks the code again before enrolling and before taking card payment (Enrol.gs, api/checkout.mjs).
+  const passInput = document.getElementById('passInput'), passOkEl = document.getElementById('passOk');
+  let passTimer = null, passAsked = '', passValid = false;
+  function checkPass() {
+    const code = passInput.value.toUpperCase().replace(/[^A-Z0-9-]/g, '');
+    if (code !== passInput.value) passInput.value = code;
+    if (code === passAsked) return;
+    passAsked = code; passValid = false; passOkEl.textContent = ''; passOkEl.classList.remove('bad');
+    if (code.length < 8 || !API_URL) return;
+    fetch(API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'pt_pass_check', code }) })
+      .then((r) => r.json()).then((j) => {
+        if (passInput.value !== code) return;
+        passValid = !!(j && j.ok && j.valid);
+        if (passValid) passOkEl.textContent = 'Code accepted. Your registration fee is already paid.';
+        else { passOkEl.textContent = 'We could not accept that code. Check it, or leave it empty and pay the registration fee here.'; passOkEl.classList.add('bad'); }
+      }).catch(() => {});
+  }
+  passInput.addEventListener('input', () => { clearTimeout(passTimer); passTimer = setTimeout(checkPass, 500); });
+  { const pp = (urlParams.get('pass') || '').toUpperCase().replace(/[^A-Z0-9-]/g, '').slice(0, 20); if (pp) { passInput.value = pp; checkPass(); } }
+
   function validateStep(stepEl) {
     let ok = true;
     stepEl.querySelectorAll('[data-field]').forEach((field) => {
@@ -630,7 +657,7 @@
   // One-time registration fee, added to the first payment of every enrolment.
   // Returning students on an invite link don't pay it. Keep in step with api/checkout.mjs and Enrol.gs.
   const REG_FEE = 3000;
-  function regFee() { return invitedPlan && state.plan === invitedPlan ? 0 : REG_FEE; }
+  function regFee() { return (invitedPlan && state.plan === invitedPlan) || passValid ? 0 : REG_FEE; }
   function firstTotal(plan) { return plan.amount + regFee(); }
   function amountText(plan) {
     const per = plan.period === '/mo' ? ' per month' : plan.period === '/2mo' ? ' every 2 months' : ' (one-time)';
@@ -691,6 +718,7 @@
       payMethod: method === 'card' ? 'Card' : method === 'paid' ? 'Already paid' : 'Bank transfer',
       paidUntil: method === 'paid' ? (document.getElementById('paidUntil').value || '') : '',
       invite: invitedPlan && state.plan === invitedPlan ? INVITE : '',
+      regpass: passValid ? passAsked : '',
     };
     const status = document.getElementById('enrolStatus');
     return fetch(API_URL, {
@@ -798,7 +826,7 @@
     try {
       const r = await fetch('/api/checkout', {
         method: 'POST', headers: { 'Content-Type': 'application/json' }, signal: ctl.signal,
-        body: JSON.stringify({ ref: state.ref, plan: state.plan.name, email: s.studentEmail || s.kinEmail, name: s.kinName, phone: s.kinPhone, studentName: s.studentName, invite: invitedPlan && state.plan === invitedPlan ? INVITE : '' }),
+        body: JSON.stringify({ ref: state.ref, plan: state.plan.name, email: s.studentEmail || s.kinEmail, name: s.kinName, phone: s.kinPhone, studentName: s.studentName, invite: invitedPlan && state.plan === invitedPlan ? INVITE : '', regpass: passValid ? passAsked : '' }),
       });
       const j = await r.json().catch(() => null);
       if (j && j.ok && j.url) { window.location.href = j.url; return; }

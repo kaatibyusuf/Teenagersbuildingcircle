@@ -35,6 +35,7 @@ const notYetOpen = (plan) => !!plan.opens && new Date(Date.now() + 36e5).toISOSt
 
 // One-time registration fee added to every enrolment's first payment (waived for invited returning students).
 const REG_FEE = 3000;
+const DEFAULT_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby0AsifBuB_Ad7g1SjDXCipaDU27-BrzYWf67muw5jeY_C0_0uz8AhQYYXdiNRQhvqX/exec';
 
 const json = (body, status = 200) =>
   new Response(JSON.stringify(body), { status, headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' } });
@@ -59,7 +60,19 @@ export async function POST(request) {
   if (plan.closed && !(plan.invite && String(b.invite || '').toUpperCase() === plan.invite)) return json({ ok: false, error: 'This plan is closed for now.' }, 400);
   if (notYetOpen(plan)) return json({ ok: false, error: 'This programme has not opened yet. It opens on ' + plan.opens + '.' }, 400);
   const invited = !!(plan.invite && String(b.invite || '').toUpperCase() === plan.invite);
-  const total = plan.amount + (invited ? 0 : REG_FEE);
+  // A paid test code means the registration fee was already paid (placement tests). Checked with Apps Script, never trusted from the browser.
+  let passPaid = false;
+  const regpass = String(b.regpass || '').toUpperCase().replace(/[^A-Z0-9-]/g, '').slice(0, 20);
+  if (regpass && !invited) {
+    try {
+      const r = await fetch(process.env.APPS_SCRIPT_URL || DEFAULT_APPS_SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'pt_pass_check', code: regpass, ref: String(b.ref || '') }) });
+      const j = await r.json().catch(() => null);
+      if (!j) return json({ ok: false, error: 'We could not check your test code. Please try again.' }, 502);
+      passPaid = !!j.valid;
+    } catch { return json({ ok: false, error: 'We could not check your test code. Please try again.' }, 502); }
+    if (!passPaid) return json({ ok: false, error: 'That test code is not valid or was already used. Remove it to pay the registration fee here.' }, 400);
+  }
+  const total = plan.amount + (invited || passPaid ? 0 : REG_FEE);
   const ref = String(b.ref || '');
   if (!/^ENR-[A-Z0-9]{6}$/.test(ref)) return json({ ok: false, error: 'Bad reference.' }, 400);
   const email = String(b.email || '').trim();

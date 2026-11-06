@@ -119,7 +119,7 @@ HS_I18N.add({
 "Your duties": "واجباتك",
 "Represent Himaayah honestly, using only what the school publishes.": "مثّل حماية بأمانة، ولا تعتمد إلا على ما تنشره المدرسة.",
 "Introduce the programmes to families, students and communities, online and in person.": "عرّف الأسر والطلاب والمجتمعات بالبرامج، عبر الإنترنت وشخصيًا.",
-"Share your own link or code, and point people to the free placement test and free guides.": "شارك رابطك أو رمزك، ودلّ الناس على اختبار تحديد المستوى المجاني والأدلة المجانية.",
+"Share your own link or code, and point people to the placement test and free guides.": "شارك رابطك أو رمزك، ودلّ الناس على اختبار تحديد المستوى والأدلة المجانية.",
 "Send enquiries to the right WhatsApp line: Academy, Madrasah or General.": "وجّه الاستفسارات إلى خط واتساب المناسب: الأكاديمية أو المدرسة الدينية أو الخط العام.",
 "Join a monthly check-in and pass on what families tell you.": "شارك في لقاء المتابعة الشهري وانقل ما تقوله الأسر.",
 "Help at events such as open days, campus talks and Ramadan drives.": "ساعد في الفعاليات مثل الأيام المفتوحة والمحاضرات الجامعية وحملات رمضان.",

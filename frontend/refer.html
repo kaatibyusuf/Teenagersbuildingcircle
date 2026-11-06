@@ -294,9 +294,9 @@
     const n = a.next, plural = (k, w) => k + ' ' + w + (k === 1 ? '' : 's');
     const prog = n ? (n.moreEnrolments || n.moreMonths ? 'To reach ' + n.level + ': ' + [n.moreEnrolments ? plural(n.moreEnrolments, 'more confirmed enrolment') : '', n.moreMonths ? plural(n.moreMonths, 'more month') + ' in good standing' : ''].filter(Boolean).join(' and ') + '.' : 'You qualify for ' + n.level + '. We will confirm it shortly.') : 'You are at the highest level. Thank you for leading.';
     const msgs = [
-      ['General', 'Assalaamu alaykum. I am a Himaayah Schools Ambassador. They teach the Qur\'an, exam preparation (UTME, WAEC, NECO), practical skills and a programme for teenagers, all live online. You can take a free placement test and read the details here, then enrol with my link: ' + r.Link],
+      ['General', 'Assalaamu alaykum. I am a Himaayah Schools Ambassador. They teach the Qur\'an, exam preparation (UTME, WAEC, NECO), practical skills and a programme for teenagers, all live online. You can take a placement test and read the details here, then enrol with my link: ' + r.Link],
       ['Qur\'an and Islamic studies', 'Assalaamu alaykum. If you or your child want to learn the Qur\'an and Islamic knowledge properly, with a teacher who tracks progress, have a look at the Himaayah Madrasah. Details and enrolment: ' + r.Link],
-      ['Exam preparation', 'Assalaamu alaykum. Preparing for UTME, WAEC or NECO? Himaayah Academy runs live tutorials, weekly mocks and a reading club. Take the free placement test first, then enrol here: ' + r.Link]];
+      ['Exam preparation', 'Assalaamu alaykum. Preparing for UTME, WAEC or NECO? Himaayah Academy runs live tutorials, weekly mocks and a reading club. Take the placement test first, then enrol here: ' + r.Link]];
     return `<div class="pf-card" style="max-width:1040px;margin:0 auto 22px;border-top:5px solid #85CCFF">
       <p class="rf-sub" style="margin:0">Himaayah Ambassador</p>
       <h2 class="rf-h" style="margin-top:4px">${esc(a.level)}</h2>

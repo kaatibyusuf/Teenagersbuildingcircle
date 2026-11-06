@@ -201,5 +201,11 @@ HS_I18N.add({
 "Thank you. We have your details.": "شكرًا لك. وصلتنا بياناتك.",
 "re:^The school will check the payment you made before the website and then email (.+?) login\\. Your next fee is due on (\\S+), and you can pay it at himaayahschools\\.com/pay\\. Your reference is (\\S+)\\.$": "ستتحقّق المدرسة من الدفعة التي سبقت الموقع، ثم ترسل بيانات الدخول بالبريد الإلكتروني. تُستحق رسومك القادمة في $2، ويمكنك دفعها عبر himaayahschools.com/pay. رقمك المرجعي هو $3.",
 "re:^(.*)Please try again, or message the Madrasah on WhatsApp: \\+234 702 584 2849\\.$": "$1حاول مرة أخرى، أو راسل المدرسة القرآنية على واتساب: ‎+234 702 584 2849‎.",
-"Back to Himaayah Schools": "العودة إلى مدرسة حماية"
+"Back to Himaayah Schools": "العودة إلى مدرسة حماية",
+"(optional, if you already paid the registration fee)": "(اختياري، إن كنت قد دفعت رسوم التسجيل)",
+"Test code": "رمز الاختبار",
+"We could not accept that code. Check it, or leave it empty and pay the registration fee here.": "تعذّر قبول هذا الرمز. تحقّق منه، أو اتركه فارغًا وادفع رسوم التسجيل هنا.",
+"Code accepted. Your registration fee is already paid.": "قُبل الرمز. رسوم تسجيلك مدفوعة مسبقًا.",
+"That test code is not valid or was already used. Remove it to pay the registration fee here.": "رمز الاختبار غير صالح أو سبق استخدامه. أزِله لتدفع رسوم التسجيل هنا.",
+"We could not check your test code. Please try again.": "تعذّر التحقق من رمز الاختبار. حاول مرة أخرى."
 });

@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Placement tests — Himaayah Schools</title>
-<meta name="description" content="Take a free Himaayah Schools placement test online: Madrasah level tests in Arabic, and a timed UTME mock for Science and Arts. Marked instantly.">
+<meta name="description" content="Take a Himaayah Schools placement test online after paying the registration fee: Madrasah level tests in Arabic, and a timed UTME mock for Science and Arts. Marked instantly.">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20377.21%20459.6%22%3E%3Cpath%20fill=%22%23094570%22%20d=%22M0.14%20280.14c4.28%2C65.12%2098.42%2C133.97%20163.39%2C172.42%2015.86%2C9.39%2034.24%2C9.39%2050.11%2C-0.01%2052.97%2C-31.37%20159.02%2C-102.63%20163.43%2C-172.41l-376.92%200zm302.67%20-162.41l74.4%20105.8%200%20-126.48c0%2C-20.52%20-11.85%2C-38.03%20-30.9%2C-45.66l-125.46%20-50.22%2081.96%20116.56zm-228.42%200l82.79%20-117.73%20-126.49%2051.28c-18.95%2C7.68%20-30.7%2C25.13%20-30.7%2C45.57l0%20126.67%2074.4%20-105.8zm114.21%20-8.75c35.22%2C0%2063.77%2C28.55%2063.77%2C63.77%200%2C35.22%20-28.55%2C63.77%20-63.77%2C63.77%20-35.22%2C0%20-63.77%2C-28.55%20-63.77%2C-63.77%200%2C-35.22%2028.55%2C-63.77%2063.77%2C-63.77z%22/%3E%3C/svg%3E">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Placement tests — Himaayah Schools">
-<meta property="og:description" content="Take a free Himaayah Schools placement test online: Madrasah level tests in Arabic, and a timed UTME mock for Science and Arts. Marked instantly.">
+<meta property="og:description" content="Take a Himaayah Schools placement test online after paying the registration fee: Madrasah level tests in Arabic, and a timed UTME mock for Science and Arts. Marked instantly.">
 <link rel="canonical" href="https://www.himaayahschools.com/placement">
 <meta property="og:url" content="https://www.himaayahschools.com/placement">
 <meta property="og:site_name" content="Himaayah Schools">
@@ -20,7 +20,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@himaayahschools">
 <meta name="twitter:title" content="Placement tests — Himaayah Schools">
-<meta name="twitter:description" content="Take a free Himaayah Schools placement test online: Madrasah level tests in Arabic, and a timed UTME mock for Science and Arts. Marked instantly.">
+<meta name="twitter:description" content="Take a Himaayah Schools placement test online after paying the registration fee: Madrasah level tests in Arabic, and a timed UTME mock for Science and Arts. Marked instantly.">
 <meta name="twitter:image" content="https://www.himaayahschools.com/og-image.jpg">
 <script>document.documentElement.classList.add('js');</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -33,6 +33,16 @@
 <!-- Vercel Analytics: counts visits once enabled in the Vercel dashboard -->
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
 <script defer src="/_vercel/insights/script.js"></script>
+<style>
+.site.page-placement .pt-pay{background:#fff;border:1.5px solid var(--line,#C9DCEA);border-radius:22px;padding:22px 22px 20px;margin-bottom:26px}
+.site.page-placement .pt-pay h2{margin:0 0 6px;font-size:1.25rem}
+.site.page-placement .pt-pay p{margin:0 0 14px;color:var(--muted,#5B6E7F);line-height:1.55;font-size:15px}
+.site.page-placement .pt-pay .pt-pay-row{display:grid;gap:12px;grid-template-columns:1fr 1fr 1fr;margin-bottom:14px}
+.site.page-placement .pt-pay .pt-pay-fee{display:inline-block;background:#E3F2FD;color:#094570;border-radius:99px;padding:3px 12px;font-weight:700;font-size:14px;margin-bottom:10px}
+.site.page-placement .pt-note-ok{background:#E8F6EC;color:#14532D;border-radius:16px;padding:14px 18px;margin-bottom:22px;line-height:1.55}
+.site.page-placement .pt-note-bad{background:#FFF4E0;color:#6B4A12;border-radius:16px;padding:14px 18px;margin-bottom:22px}
+@media (max-width:720px){.site.page-placement .pt-pay .pt-pay-row{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
 <script src="js/ticker.js"></script>
@@ -71,7 +81,7 @@
 <header class="hero">
   <div class="wrap hero-copy">
     <h1>Find your level. Know where you stand.</h1>
-    <p>Free online tests, marked the moment you finish. Madrasah students sit a test in Arabic for the level they are applying to. UTME candidates sit a timed mock in English and three subjects from their department. Each Madrasah level keeps its own pass mark, from 75% to 90%; the UTME cut-off is 70%.</p>
+    <p>Online tests, marked the moment you finish. Pay the one-time ₦3,000 registration fee to get your test code and registration form, then sit the test. Madrasah students sit a test in Arabic for the level they are applying to. UTME candidates sit a timed mock in English and three subjects from their department. Each Madrasah level keeps its own pass mark, from 75% to 90%; the UTME cut-off is 70%.</p>
   </div>
 </header>
 
@@ -83,6 +93,22 @@
       <button class="btn btn-ink" type="button" id="ptResumeGo">Resume test</button>
     </div>
 
+    <div id="ptPaid" class="pt-note-ok" role="status" hidden><b>Payment received. Jazakallahu khayran.</b> Your test code and registration form are on their way to your email. It can take a few minutes. Enter the code below to start your test.</div>
+    <div id="ptCancelled" class="pt-note-bad" role="status" hidden>The payment was cancelled, so nothing was charged. You can try again below.</div>
+    <section class="pt-pay" id="ptPay" aria-labelledby="ptPayH">
+      <span class="pt-pay-fee">₦3,000 · one-time</span>
+      <h2 id="ptPayH">First, get your test code</h2>
+      <p>The placement tests are for registered candidates. Pay the registration fee by card and we email you your registration form and a test code straight away. The same ₦3,000 is your registration fee when you enrol, so you do not pay it twice. Already have a code? Skip to the test below.</p>
+      <form id="ptPayForm" novalidate>
+        <div class="pt-pay-row">
+          <div class="wl-f"><label for="ppName">Candidate’s full name</label><input id="ppName" name="pname" maxlength="100" autocomplete="name" required></div>
+          <div class="wl-f"><label for="ppEmail">Email <small>(your code is sent here)</small></label><input id="ppEmail" name="pemail" type="email" maxlength="120" dir="ltr" autocomplete="email" required></div>
+          <div class="wl-f"><label for="ppPhone">Phone number</label><input id="ppPhone" name="pphone" type="tel" maxlength="30" dir="ltr" autocomplete="tel" required></div>
+        </div>
+        <button class="btn btn-ink" type="submit" id="ppGo">Pay ₦3,000 by card</button>
+        <p class="pf-err" id="ppErr" role="alert" style="margin-top:10px"></p>
+      </form>
+    </section>
     <form id="ptSetup" class="pt-setup" novalidate>
       <p class="pt-step"><span>1</span>Choose a test</p>
       <div class="pt-cards" role="radiogroup" aria-label="Test">
@@ -120,6 +146,10 @@
           <div class="wl-f"><label for="ptEmail">Email <small>(we send the result here)</small></label><input id="ptEmail" name="email" type="email" maxlength="120" dir="ltr" autocomplete="email" required></div>
           <div class="wl-f"><label for="ptWa">WhatsApp number</label><input id="ptWa" name="whatsapp" type="tel" maxlength="30" dir="ltr" autocomplete="tel" required></div>
         </div>
+        <div class="wl-2">
+          <div class="wl-f"><label for="ptCode">Test code <small>(from the email we sent after your payment)</small></label><input id="ptCode" name="code" maxlength="20" dir="ltr" autocapitalize="characters" autocomplete="off" translate="no" placeholder="HPT-XXXX-XXXX" required></div>
+          <div class="wl-f"></div>
+        </div>
         <div class="wl-hp" aria-hidden="true"><input name="website" type="text" tabindex="-1" autocomplete="off"></div>
         <div class="pt-rules">
           <b>Before you start</b>
@@ -127,7 +157,7 @@
             <li>The timer starts as soon as you press Start and keeps running if you leave the page. When it ends, your answers are sent automatically.</li>
             <li>Take the test on your own, without books, notes, phones or help. It is only useful if it is honest.</li>
             <li>You can move between questions and change answers until you submit. A question left blank scores zero.</li>
-            <li>You can take the same test once every 24 hours.</li>
+            <li>Use the same email address you paid with: your code works only with that email. You can take the same test once every 24 hours.</li>
           </ul>
           <label class="pt-agree"><input type="checkbox" id="ptAgree"> I will take this test on my own, without help.</label>
         </div>
@@ -202,7 +232,28 @@
     choose(qp.get('test'));
   }
   const me = store.get(DET);
-  if (me) ['name', 'email', 'whatsapp', 'age'].forEach((k) => { const f = $('ptSetup').elements[k]; if (f && me[k]) f.value = me[k]; });
+  if (me) ['name', 'email', 'whatsapp', 'age', 'code'].forEach((k) => { const f = $('ptSetup').elements[k]; if (f && me[k]) f.value = me[k]; });
+
+  /* ---------- registration fee: pay by card, get a test code by email ---------- */
+  if (qp.get('paid') === '1') { $('ptPaid').hidden = false; $('ptPay').hidden = true; }
+  if (qp.get('cancelled') === '1') $('ptCancelled').hidden = false;
+  if (me) { const pf = $('ptPayForm').elements; if (me.name) pf.pname.value = me.name; if (me.email) pf.pemail.value = me.email; if (me.whatsapp) pf.pphone.value = me.whatsapp; }
+  $('ptPayForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const f = $('ptPayForm').elements, err = $('ppErr'), btn = $('ppGo'); err.textContent = '';
+    const d = { name: f.pname.value.trim(), email: f.pemail.value.trim(), phone: f.pphone.value.trim() };
+    if (d.name.length < 3) return (err.textContent = 'Enter the candidate’s full name.');
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(d.email)) return (err.textContent = 'Enter a valid email address.');
+    if (d.phone.replace(/\D/g, '').length < 10) return (err.textContent = 'Enter a phone number we can reach.');
+    store.set(DET, Object.assign({}, store.get(DET) || {}, { name: d.name, email: d.email, whatsapp: d.phone }));
+    btn.disabled = true; btn.textContent = 'Opening the secure payment page…';
+    const ctl = new AbortController(), timer = setTimeout(() => ctl.abort(), 25000);
+    fetch('/api/placement-checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(d), signal: ctl.signal })
+      .then((r) => r.json().catch(() => null))
+      .then((j) => { if (j && j.ok && j.url) { window.location.href = j.url; return; } throw new Error((j && j.error) || 'The payment page could not be opened. Please try again.'); })
+      .catch((x) => { err.textContent = x.name === 'AbortError' ? 'This is taking too long. Check your connection and try again.' : (x.message || 'The payment page could not be opened.'); btn.disabled = false; btn.textContent = 'Pay ₦3,000 by card'; })
+      .finally(() => clearTimeout(timer));
+  });
 
   /* ---------- step 2: start ---------- */
   $('ptSetup').addEventListener('submit', (e) => {
@@ -211,10 +262,11 @@
     if (!sel.programme) return (err.textContent = 'Choose a test.');
     if (sel.programme === 'madrasah' && !sel.level) return (err.textContent = 'Choose the level you are applying for.');
     if (sel.programme === 'utme' && sel.subjects.length !== 3) return (err.textContent = 'Choose three subjects from your department.');
-    const d = { name: f.name.value.trim(), email: f.email.value.trim(), whatsapp: f.whatsapp.value.trim(), age: f.age.value.trim() };
+    const d = { name: f.name.value.trim(), email: f.email.value.trim(), whatsapp: f.whatsapp.value.trim(), age: f.age.value.trim(), code: f.code.value.trim().toUpperCase() };
     if (d.name.length < 3) return (err.textContent = 'Enter the candidate’s full name.');
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(d.email)) return (err.textContent = 'Enter a valid email address.');
     if (d.whatsapp.replace(/\D/g, '').length < 10) return (err.textContent = 'Enter a WhatsApp number we can reach.');
+    if (d.code.length < 8) return (err.textContent = 'Enter your test code. Pay the registration fee above to get one.');
     if (!$('ptAgree').checked) return (err.textContent = 'Please confirm you will take the test on your own.');
     store.set(DET, d);
     const btn = $('ptGo'); btn.disabled = true; btn.textContent = 'Preparing your test…';

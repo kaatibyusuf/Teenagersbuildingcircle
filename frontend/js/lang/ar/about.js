@@ -49,7 +49,7 @@ HS_I18N.add({
 "Himāyah": "حماية",
 "(حماية) is the Arabic word for protection, and our crest is a shield. It is the standard we hold ourselves to: protecting a student's faith, their focus, and their future, while we help them grow into someone who can lead.": "كلمة عربية تعني الصون والوقاية، وشعارنا درع. وهو المعيار الذي نُلزم به أنفسنا: أن نحمي إيمان الطالب وتركيزه ومستقبله، ونحن نساعده على أن يكبر ليصبح قادرًا على القيادة.",
 "Come and see the standard for yourself.": "تعالَ وشاهد المعيار بنفسك.",
-"Sit a free CBT mock test, ask us anything on WhatsApp, or go straight to enrollment.": "أدِّ اختبارًا تجريبيًا مجانيًا بنظام CBT، أو اسألنا أي شيء على واتساب، أو انتقل مباشرة إلى التسجيل.",
+"Sit a CBT mock test, ask us anything on WhatsApp, or go straight to enrollment.": "أدِّ اختبارًا تجريبيًا بنظام CBT، أو اسألنا أي شيء على واتساب، أو انتقل مباشرة إلى التسجيل.",
 "About Us — Himaayah Schools": "من نحن — مدرسة حماية",
 "The Himaayah anthem.": "نشيد حماية.",
 "Two minutes of what we stand for. Press play and listen.": "دقيقتان عمّا نؤمن به. اضغط تشغيل واستمع.",
