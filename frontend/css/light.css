@@ -1,0 +1,101 @@
+/* Site-wide light theme (matches the new homepage): white floating nav, light heroes, blue instead of black.
+   Linked on every page except index.html (which has home.css). */
+.site { --h-paper: #F1F4F7; --h-paper-2: #E5EBF0; --hb: #094570; --hb-deep: #062F4D; --hb-tint: #E3F2FD; --hb-line: #D5E0E8; }
+.site body { background: var(--h-paper); }
+.site .h-hero { color: var(--hb-deep); background: radial-gradient(60% 40% at 50% 0, #fff 0, rgba(255,255,255,0) 70%), linear-gradient(180deg, #F7F9FB 0%, var(--h-paper) 100%); }
+.site .h-aura { display: none; }
+.site .h-hero h1 .h-soft, .site .h-hero h1 span.h-soft { color: var(--hb); }
+.site .h-hero p, .site .h-hero .h-lead { color: #5B7283; }
+.site .h-hero .h-eye { color: #6B8396; }
+.site .h-btn-light { background: var(--hb); color: #fff; box-shadow: 0 12px 26px -12px rgba(9,69,112,.7); }
+.site .h-btn-light:hover { background: var(--hb-deep); }
+.site .h-btn-light .h-go { background: rgba(255,255,255,.18); color: #fff; }
+.site .h-btn-glass { background: #fff; color: var(--hb-deep); box-shadow: 0 0 0 1px var(--hb-line); backdrop-filter: none; }
+.site .h-btn-glass:hover { background: #fff; box-shadow: 0 0 0 1px #A9C7DC; }
+/* ---------- navigation: white pill, blue button ---------- */
+.site .h-pill { background: rgba(255,255,255,.92); box-shadow: 0 0 0 1px var(--hb-line), 0 14px 34px -18px rgba(6,47,77,.35); backdrop-filter: blur(14px); }
+.site .h-nav.h-solid .h-pill { background: rgba(255,255,255,.97); }
+.site .h-brand { color: var(--hb-deep); }
+.site .h-brand svg { color: var(--hb); }
+.site .h-links > a:not(.h-btn), .site .h-links .dd-btn { color: #4B6577; }
+.site .h-links > a:not(.h-btn):hover, .site .h-links .dd-btn:hover { color: var(--hb-deep); }
+.site .h-links .dd-menu::before { background: #fff; box-shadow: 0 0 0 1px var(--hb-line), 0 24px 48px -20px rgba(6,47,77,.35); }
+.site .h-links .dd-menu a { color: #35506A !important; }
+.site .h-links .dd-menu a:hover, .site .h-links .dd-menu a[aria-current] { background: var(--hb-tint); color: var(--hb-deep) !important; }
+.site .h-nav-cta.h-btn-light { background: var(--hb); color: #fff; box-shadow: none; }
+.site .h-nav-cta.h-btn-light:hover { background: var(--hb-deep); }
+.site .h-tog { background: var(--hb-tint); }
+.site .h-tog span { background: var(--hb-deep); }
+.site .h-pill > .lang .lang-btn { background: var(--hb-tint); border-color: transparent; color: var(--hb-deep); }
+.site .h-pill > .lang .lang-btn svg { color: var(--hb); }
+.site .h-pill > .lang .lang-btn:hover, .site .h-pill > .lang.open .lang-btn { background: #CFE7FA; }
+@media (max-width: 900px) {
+  .site .h-links.open { background: #fff; box-shadow: 0 0 0 1px var(--hb-line), 0 24px 48px -20px rgba(6,47,77,.35); }
+}
+
+/* ---------- dark bands -> light ---------- */
+.site .h-tide, .site .h-cta { background: radial-gradient(50% 70% at 0% 50%, rgba(133,204,255,.28), transparent 70%), radial-gradient(40% 60% at 100% 100%, rgba(228,196,162,.28), transparent 70%), linear-gradient(135deg, #E6F1FA, #F4F8FB 60%, #EAF3FA); color: var(--hb-deep); }
+.site .h-cta-aura { display: none; }
+.site .h-cta p { color: #4B6577; }
+.site .h-cta h2 span.h-soft, .site .h-tide h2 span, .site .h-tide .h-soft { color: var(--hb) !important; }
+.site .h-tide p, .site .h-tide li { color: #4B6577 !important; }
+.site .h-tide h2, .site .h-tide h3 { color: var(--hb-deep); }
+.site .h-tide .h-eye, .site .h-cta .h-eye { color: #6B8396; }
+.site .h-tide .h-dot-sand { background: var(--hb); }
+.site .h-tide a:not(.btn):not(.h-btn) { color: var(--hb); }
+.site .h-night { background: #fff; color: var(--hb-deep); }
+.site .h-night h2 .h-soft, .site .h-night h2 span.h-soft { color: var(--hb); }
+.site .h-night .h-eye { color: #6B8396; }
+.site .h-night .h-head-split > p { color: #6B8396; }
+.site .h-night .h-soft { color: #8EA3B3; }
+.site .h-night h2 .h-soft { color: var(--hb); }
+.site .h-night .h-board { background: #F6F9FB; box-shadow: 0 0 0 1px var(--hb-line); }
+.site .h-night .h-board-bar { color: #4B6577; border-bottom-color: var(--hb-line); }
+.site .h-night .h-board-bar svg { fill: var(--hb); }
+.site .h-night .h-board-bar em { background: var(--hb-tint); color: var(--hb); }
+.site .h-night :is(.h-score,.h-tile,.h-story,.h-lvl) { background: #fff; box-shadow: 0 0 0 1px var(--hb-line); }
+.site .h-night .h-score-k { color: #4B6577; }
+.site .h-night :is(.h-score p,.h-tile small,.h-story p) { color: #6B8396; }
+.site .h-night .h-score p b { color: var(--hb-deep); }
+.site .h-night .h-ring { --c: var(--hb); --t: #E3ECF3; }
+.site .h-night .h-ring::before, .site .h-night .h-ring-s::before { background: #fff; }
+.site .h-night .h-ring b, .site .h-night .h-tile b, .site .h-night .h-story h3 { color: var(--hb-deep); }
+.site .h-night .h-ring small { color: #6B8396; }
+.site .h-night .h-more-light { color: var(--hb); }
+.site .h-badge { background: #fff; box-shadow: 0 0 0 1px var(--hb-line), 0 6px 18px -12px rgba(6,47,77,.3); color: #35506A; }
+.site .h-badge:hover { background: #fff; box-shadow: 0 0 0 1px #A9C7DC, 0 8px 22px -12px rgba(6,47,77,.4); }
+.site .h-badge em { background: var(--hb-tint); color: var(--hb); }
+
+/* about.html bands */
+.site .ab-quote blockquote { color: var(--hb-deep) !important; }
+.site .ab-quote figcaption, .site .ab-note { color: #6B8396 !important; }
+.site .ab-num { background: #fff !important; box-shadow: 0 0 0 1px var(--hb-line) !important; }
+.site .ab-num b { color: var(--hb) !important; }
+.site .ab-num span { color: #6B8396 !important; }
+.site .ab-seal { background: var(--hb-tint); box-shadow: inset 0 0 0 1px var(--hb-line); color: var(--hb); }
+.site .ab-seal svg, .site .ab-seal svg path { fill: var(--hb) !important; }
+.site .ab-name h2 { color: var(--hb-deep) !important; }
+.site .ab-name p { color: #4B6577 !important; }
+.site .ab-seal b { color: var(--hb) !important; }
+
+/* ---------- classic header.hero pages (madrasah, faq, store...) and .cta-box ---------- */
+html.site:not(.page-index, .page-enroll) header.hero { color: var(--hb-deep); background: radial-gradient(60% 40% at 50% 0, #fff 0, rgba(255,255,255,0) 70%), linear-gradient(180deg, #F7F9FB 0%, var(--h-paper) 100%); }
+html.site:not(.page-index, .page-enroll) header.hero::before, html.site:not(.page-index, .page-enroll) header.hero::after { border-color: var(--hb-line) !important; }
+html.site:not(.page-index, .page-enroll) header.hero :is(h1, h2) { color: var(--hb-deep); }
+html.site:not(.page-index, .page-enroll) header.hero :is(h1 em, h1 .acc, h1 span:not(.w):not(.ch):not(.ball)) { color: var(--hb); }
+html.site:not(.page-index, .page-enroll) header.hero :is(p, .lead, li) { color: #5B7283; }
+html.site:not(.page-index, .page-enroll) header.hero .kicker { color: #6B8396; }
+html.site:not(.page-index, .page-enroll) header.hero .kicker::before { background: var(--hb); }
+html.site:not(.page-index, .page-enroll) header.hero :is(.btn-ink, .btn-sky) { background: var(--hb); color: #fff; border-color: var(--hb); box-shadow: 0 12px 26px -12px rgba(9,69,112,.7); }
+html.site:not(.page-index, .page-enroll) header.hero .btn-ink:hover { background: var(--hb-deep); }
+html.site:not(.page-index, .page-enroll) header.hero :is(.btn-line, .btn-ghost) { color: var(--hb-deep); background: #fff; box-shadow: 0 0 0 1px var(--hb-line); backdrop-filter: none; }
+html.site:not(.page-index, .page-enroll) header.hero :is(.btn-line, .btn-ghost):hover { background: #fff; box-shadow: 0 0 0 1px #A9C7DC; }
+html.site:not(.page-index) .cta-box { color: var(--hb-deep); background: radial-gradient(50% 70% at 0% 50%, rgba(133,204,255,.28), transparent 70%), radial-gradient(40% 60% at 100% 100%, rgba(228,196,162,.28), transparent 70%), linear-gradient(135deg, #E6F1FA, #F4F8FB 60%, #EAF3FA); box-shadow: 0 0 0 1px var(--hb-line); }
+html.site:not(.page-index) .cta-box :is(h2, h3) { color: var(--hb-deep); }
+html.site:not(.page-index) .cta-box p { color: #4B6577; }
+html.site:not(.page-index) .cta-box :is(.btn-ink, .btn-sky) { background: var(--hb); color: #fff; border-color: var(--hb); }
+html.site:not(.page-index) .cta-box :is(.btn-line, .btn-ghost) { color: var(--hb-deep); background: #fff; box-shadow: 0 0 0 1px var(--hb-line); }
+
+/* keep the footer brand readable on the dark footer */
+.site .h-foot .h-brand { color: #fff; }
+.site .h-foot .h-brand svg { color: #85CCFF; }
