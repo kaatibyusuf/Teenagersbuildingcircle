@@ -13,11 +13,15 @@
  * in the portal). The portal only RECORDS payments: send the transfer from your bank app, then Mark paid. Each
  * payment is saved to the "Salaries" tab with the roster as it was that day.
  *
+ * PAYSLIPS: when you Mark paid, the person is emailed a payslip (their students, the rate, the amount, your transfer
+ * reference) if their Email column is filled in. The Staff pay tab also has a "Send payslip again" button.
+ *
  * SETUP: add this file, then Deploy → Manage deployments → New version. The tab and columns are created on first use.
  */
 
 const SAL_RATE = 5000;
 const SAL_ADMIN = 30000; // monthly salary of an admin
+const SAL_EMAIL = true;  // email a payslip to the staff member when a payment is marked paid
 const SAL_TAB = 'Salaries';
 const SAL_HEAD = ['Month', 'StaffKey', 'Name', 'Programme', 'Students', 'Rate', 'Amount', 'Status', 'PaidDate', 'Reference', 'PaidBy', 'Roster'];
 const SAL_STAFF_COLS = ['BankName', 'AccountNumber', 'AccountName', 'Rate'];
@@ -97,7 +101,9 @@ function sal_payload_(p) {
   staff.sort(function (a, b) { return (a.Status === 'Paid') - (b.Status === 'Paid') || b.Amount - a.Amount || (a.Name < b.Name ? -1 : 1); });
   // everyone listed in the staff tabs without students, so the owner can still add bank details
   const idle = sal_staff_().filter(function (s) { return !s.Students.length && !s.Fixed && !paid[s.Key]; }).map(function (s) { return { Key: s.Key, Name: s.Name, Role: s.Role, Programme: s.Programme }; });
-  return { month: month, months: months, rate: SAL_RATE, adminRate: SAL_ADMIN, total: total, paidTotal: paidTotal, dueTotal: total - paidTotal, staffCount: staff.length, studentLinks: studentLinks,
+  const paidBy = {}; P.rows.forEach(function (r) { if (String(r.Status) === 'Paid') paidBy[String(r.Month)] = (paidBy[String(r.Month)] || 0) + (Number(r.Amount) || 0); });
+  const history = []; for (let i = 5; i >= 0; i--) { const m = addMonths_(now + '-01', -i).slice(0, 7); history.push({ Month: m, Paid: paidBy[m] || 0 }); }
+  return { month: month, months: months, history: history, rate: SAL_RATE, adminRate: SAL_ADMIN, total: total, paidTotal: paidTotal, dueTotal: total - paidTotal, staffCount: staff.length, studentLinks: studentLinks,
     paidCount: staff.filter(function (o) { return o.Status === 'Paid'; }).length, staff: staff, idle: idle, live: month === now };
 }
 
@@ -113,7 +119,8 @@ function sal_pay_(who, p) {
   const roster = s.Students.map(function (x) { return [x.ID, x.Name, x.Class].join('|').replace(/\n/g, ' '); }).join('\n');
   append_(T, { Month: month, StaffKey: key, Name: s.Name, Programme: s.Programme, Students: s.Students.length, Rate: s.Rate, Amount: amount, Status: 'Paid', PaidDate: today_(), Reference: ref, PaidBy: who, Roster: roster },
     ['Month', 'StaffKey', 'Reference', 'PaidDate', 'Roster']);
-  return { ok: true, message: naira_(amount) + ' to ' + s.Name + ' for ' + month + ' marked as paid.' };
+  const why = sal_slip_(s, month, amount, s.Students.length, s.Rate, !!s.Fixed, s.Students, ref, today_());
+  return { ok: true, message: naira_(amount) + ' to ' + s.Name + ' for ' + month + ' marked as paid. ' + (why || 'Payslip emailed to ' + s.Email + '.') };
 }
 function sal_undo_(p) {
   const month = sal_month_(p.month), key = String(p.key || ''), T = sal_tab_();
@@ -135,4 +142,46 @@ function sal_bank_(p) {
   put_(T, row._row, 'BankName', clean(p.bank, 60), true); put_(T, row._row, 'AccountNumber', acct, true); put_(T, row._row, 'AccountName', clean(p.accountName, 80), true);
   put_(T, row._row, 'Rate', rate === '' || rate === SAL_RATE ? '' : rate);
   return { ok: true, message: 'Details saved for ' + s.Name + '.' };
+}
+
+function sal_esc_(t) { return String(t == null ? '' : t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+function sal_monthName_(m) {
+  const N = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'], q = String(m).split('-');
+  return (N[Number(q[1]) - 1] || m) + ' ' + q[0];
+}
+/* the payslip email; returns '' when sent, or the reason it was not */
+function sal_slip_(s, month, amount, count, rate, fixed, roster, ref, paidDate) {
+  if (!SAL_EMAIL) return 'Payslip emails are switched off.';
+  if (!validEmail_(s.Email)) return 'No valid Email for ' + s.Name + ', so no payslip was sent.';
+  if (MailApp.getRemainingDailyQuota() < 1) return 'Email limit reached, so no payslip was sent.';
+  const first = String(s.Name || '').replace(/^(ustadh|ustadhah|ustaz|ustazah|mr|mrs|ms|malam|sheikh)\.?\s+/i, '').split(/\s+/)[0] || s.Name;
+  const what = fixed ? 'Monthly salary' : count + ' student' + (count === 1 ? '' : 's') + ' × ' + naira_(rate);
+  const acct = String(s.AccountNumber || ''), bank = acct ? (s.Bank ? s.Bank + ' ' : '') + '(account ending ' + acct.slice(-4) + ')' : '';
+  const lines = roster.map(function (x) { return '  • ' + x.Name + (x.Class ? ' (' + x.Class + ')' : ''); }).join('\n');
+  const text = 'Assalaamu alaykum ' + first + ',\n\nYour payment for ' + sal_monthName_(month) + ' has been sent.\n\n' +
+    'Amount: ' + naira_(amount) + '\nBasis: ' + what + '\nPaid on: ' + paidDate + (ref ? '\nTransfer reference: ' + ref : '') + (bank ? '\nTo: ' + bank : '') +
+    (roster.length ? '\n\nStudents this month:\n' + lines : '') + '\n\nJazakAllahu khayran for your work with our students.\n\n' + SCHOOL_NAME;
+  const rowsHtml = roster.map(function (x) { return '<tr><td style="padding:6px 0;border-bottom:1px solid #E5EBF0">' + sal_esc_(x.Name) + '</td><td style="padding:6px 0;border-bottom:1px solid #E5EBF0;color:#4B6577;text-align:right">' + sal_esc_(x.Class || '') + '</td></tr>'; }).join('');
+  const html = '<div style="font-family:Arial,Helvetica,sans-serif;max-width:560px;margin:auto;color:#062F4D">' +
+    '<div style="background:#094570;color:#fff;padding:18px 22px;border-radius:14px 14px 0 0"><b style="font-size:17px">' + sal_esc_(SCHOOL_NAME) + '</b><div style="opacity:.8;font-size:13px">Payslip · ' + sal_esc_(sal_monthName_(month)) + '</div></div>' +
+    '<div style="border:1px solid #D5E0E8;border-top:0;border-radius:0 0 14px 14px;padding:22px">' +
+    '<p style="margin:0 0 14px">Assalaamu alaykum ' + sal_esc_(first) + ',<br>your payment for ' + sal_esc_(sal_monthName_(month)) + ' has been sent.</p>' +
+    '<p style="font-size:30px;font-weight:700;margin:6px 0 2px">' + sal_esc_(naira_(amount)) + '</p>' +
+    '<p style="margin:0 0 14px;color:#4B6577;font-size:14px">' + sal_esc_(what) + '</p>' +
+    '<p style="margin:0 0 14px;font-size:14px">Paid on ' + sal_esc_(paidDate) + (ref ? '<br>Reference: <b>' + sal_esc_(ref) + '</b>' : '') + (bank ? '<br>To: ' + sal_esc_(bank) : '') + '</p>' +
+    (roster.length ? '<p style="margin:16px 0 6px;font-weight:700">Students this month</p><table style="width:100%;border-collapse:collapse;font-size:14px">' + rowsHtml + '</table>' : '') +
+    '<p style="margin:18px 0 0;font-size:13px;color:#4B6577">JazakAllahu khayran for your work with our students.</p></div></div>';
+  try {
+    MailApp.sendEmail({ to: String(s.Email).trim(), name: SCHOOL_NAME, subject: SCHOOL_NAME + ': payslip for ' + sal_monthName_(month) + ' (' + naira_(amount) + ')', body: text, htmlBody: html });
+    return '';
+  } catch (e) { return 'Payslip email failed: ' + e.message; }
+}
+function sal_resend_(p) {
+  const month = sal_month_(p.month), key = String(p.key || ''), T = sal_tab_();
+  const r = T.rows.filter(function (x) { return String(x.Month) === month && String(x.StaffKey) === key && String(x.Status) === 'Paid'; })[0];
+  const s = sal_staff_().filter(function (x) { return x.Key === key; })[0];
+  if (!r || !s) return { ok: false, error: 'No paid record found.' };
+  const roster = String(r.Roster || '').split('\n').filter(Boolean).map(function (l) { const q = l.split('|'); return { ID: q[0], Name: q[1], Class: q[2] }; });
+  const why = sal_slip_(s, month, Number(r.Amount) || 0, Number(r.Students) || 0, Number(r.Rate) || s.Rate, !!s.Fixed, roster, String(r.Reference || ''), iso_(r.PaidDate));
+  return why ? { ok: false, error: why } : { ok: true, message: 'Payslip sent to ' + s.Email + '.' };
 }

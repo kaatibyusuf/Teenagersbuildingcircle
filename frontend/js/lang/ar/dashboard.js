@@ -203,5 +203,8 @@ HS_I18N.add({
 "Memorise it from your muṣḥaf, a few āyāt at a time": "احفظه من مصحفك، بضع آيات في كل مرة",
 "Use only one muṣḥaf for the whole hifdh. Āyah by āyah, then join them together.": "اعتمد مصحفًا واحدًا طوال الحفظ. آيةً آيةً، ثم اربطها معًا.",
 "Join today’s portion to the pages before it": "صِل مقطع اليوم بالصفحات التي قبله",
-"Recite them together by heart. Yesterday’s lesson already holds the page before.": "اقرأها معًا غيبًا. درس الأمس يثبّت لك الصفحة التي قبلها."
+"Recite them together by heart. Yesterday’s lesson already holds the page before.": "اقرأها معًا غيبًا. درس الأمس يثبّت لك الصفحة التي قبلها.",
+"Word of the day": "كلمة اليوم",
+"Practise with flashcards": "تدرّب بالبطاقات",
+"or look up any word in the Student Dictionary.": "أو ابحث عن أي كلمة في قاموس الطالب."
 });

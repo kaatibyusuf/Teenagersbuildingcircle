@@ -273,6 +273,7 @@ function doPost(e) {
     if (p.action === 'enrol') return json_(enrolFromRequest(p));                         // new enrolments (Enrol.gs)
     if (/^ref_/.test(String(p.action || ''))) return json_(referralFromRequest(p));         // refer and earn (Referrals.gs)
     if (p.action === 'subscribe' || p.action === 'unsubscribe') return json_(newsletterFromRequest(p)); // newsletter (Newsletter.gs)
+    if (p.action === 'calendar') return json_(calendarFromRequest(p));                   // school calendar page (Calendar.gs)
     if (p.action === 'waitlist') return json_(waitlistFromRequest(p));                   // waitlist for closed plans (Waitlist.gs)
     if (p.action === 'feeLookup' || p.action === 'feeQuote') return json_(feesFromRequest(p)); // Pay fees page (Fees.gs)
     if (/^amb_/.test(String(p.action || ''))) return json_(ambassadorsFromRequest(p));    // Himaayah Ambassadors (Ambassadors.gs)

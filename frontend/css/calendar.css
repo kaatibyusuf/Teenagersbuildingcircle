@@ -1,0 +1,27 @@
+/* School calendar (calendar.html) */
+html.site.page-calendar .h-hero { min-height: 0 !important; height: auto !important; padding-bottom: 40px; }
+html.site.page-calendar .h-hero h1 span { display: block; }
+.site.page-calendar [hidden] { display: none !important; }
+.cl-tools { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; align-items: center; margin-bottom: 14px; }
+.cl-chips { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.cl-chips button, .cl-btn { border: 0; border-radius: 999px; padding: 9px 16px; font: 600 14px/1 inherit; font-family: inherit; background: #fff; color: #4B6577; cursor: pointer; box-shadow: 0 0 0 1px #D5E0E8; }
+.cl-chips button[aria-pressed="true"] { background: #E3F2FD; color: #062F4D; box-shadow: 0 0 0 1.5px #094570; }
+.cl-btn.dark { background: #094570; color: #fff; box-shadow: none; }
+.cl-sel { height: 40px; border: 0; border-radius: 999px; padding: 0 14px; font: inherit; font-size: 14px; background: #fff; color: #062F4D; box-shadow: 0 0 0 1px #D5E0E8; }
+.cl-empty-note { max-width: 640px; margin: 0 auto 22px; padding: 16px 20px; border-radius: 16px; background: #E3F2FD; color: #062F4D; text-align: center; font-size: 15px; }
+.cl-month { margin: 28px 0 10px; font-size: 20px; color: #062F4D; }
+.cl-list { display: grid; gap: 10px; }
+.cl-item { display: flex; gap: 16px; align-items: stretch; background: #fff; border-radius: 18px; padding: 14px 16px; box-shadow: 0 0 0 1px #D5E0E8; }
+.cl-date { flex: none; width: 62px; text-align: center; border-radius: 12px; background: #F1F4F7; padding: 8px 4px; align-self: flex-start; }
+.cl-date b { display: block; font-size: 24px; line-height: 1.1; color: #062F4D; } .cl-date span { font-size: 12px; color: #4B6577; text-transform: uppercase; letter-spacing: .04em; }
+.cl-body { flex: 1; min-width: 0; } .cl-body h3 { margin: 0 0 4px; font-size: 17px; color: #062F4D; } .cl-body p { margin: 4px 0 0; font-size: 14px; color: #4B6577; }
+.cl-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.cl-tag { font-size: 11.5px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; border-radius: 999px; padding: 4px 10px; background: #E3F2FD; color: #094570; }
+.cl-tag.Term { background: #094570; color: #fff; } .cl-tag.Exam { background: #FBE3E1; color: #9B2C20; } .cl-tag.Holiday { background: #F1F4F7; color: #4B6577; } .cl-tag.Islamic { background: #DDF3E4; color: #1F6B42; } .cl-tag.Deadline { background: #FFF0CC; color: #8A5A00; }
+.cl-add { flex: none; align-self: center; border: 0; border-radius: 999px; padding: 9px 14px; font: 600 13px/1 inherit; font-family: inherit; background: #F1F4F7; color: #094570; cursor: pointer; }
+.cl-add:hover { background: #E3F2FD; }
+.cl-more { text-align: center; margin: 24px 0 4px; }
+.cl-note { text-align: center; color: #4B6577; font-size: 14px; max-width: 640px; margin: 28px auto 0; }
+.cl-note a { color: #094570; font-weight: 600; text-decoration: underline; }
+@media (max-width: 560px) { .cl-item { flex-wrap: wrap; } .cl-add { margin-left: 78px; } }
+html[dir="rtl"] .cl-add { margin-left: 0; }

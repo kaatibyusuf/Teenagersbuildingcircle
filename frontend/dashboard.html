@@ -18,6 +18,9 @@
 <script src="js/i18n.js"></script>
 <script src="js/cookie-notice.js" defer></script>
 <script src="js/surahs.js"></script>
+<script src="js/dictionary-data.js" defer></script>
+<script src="js/wotd.js" defer></script>
+<link rel="stylesheet" href="css/dictionary.css">
 <script src="js/chat.js" defer></script>
 <!-- Vercel Analytics: counts visits once enabled in the Vercel dashboard -->
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
@@ -532,6 +535,7 @@ function render(d) {
       </div></article>
 
     ${rtCard(d)}
+    ${window.hsWotd ? hsWotd() : ''}
     <article class="c w12" id="assign" style="--i:3"><h2>Assignments${todo ? ` <span class="pill st-todo" style="font-size:12px;vertical-align:middle">${todo} to do</span>` : ''}</h2>
       <div class="asgs">${asg.map(assignmentHtml).join('') || '<p class="empty">No assignments yet. Your teacher will post them here.</p>'}</div></article>
     ${recCard(d)}

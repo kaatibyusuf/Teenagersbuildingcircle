@@ -1,0 +1,9 @@
+/* Owner portal: income vs staff pay chart */
+.pc-bars { display: flex; gap: 10px; align-items: flex-end; margin: 14px 0 8px; }
+.pc-m { flex: 1; display: flex; flex-direction: column; align-items: center; min-width: 0; }
+.pc-pair { height: 150px; display: flex; align-items: flex-end; justify-content: center; gap: 4px; width: 100%; }
+.pc-pair i { display: block; width: 42%; max-width: 30px; border-radius: 6px 6px 2px 2px; position: relative; overflow: hidden; }
+.pc-in { background: #3E97D9; } .pc-out { background: #062F4D; }
+.pc-out b { position: absolute; left: 0; right: 0; top: 0; background: repeating-linear-gradient(45deg, #8FB4CE 0 4px, #5E8BAA 4px 8px); }
+.pc-m span { font-size: 11.5px; color: #4B6577; margin-top: 6px; } .pc-m small { font-size: 10.5px; color: #4B6577; text-align: center; line-height: 1.35; margin-top: 2px; }
+@media (max-width: 520px) { .pc-m small { display: none; } }

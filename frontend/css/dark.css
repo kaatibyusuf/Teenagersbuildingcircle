@@ -34,3 +34,5 @@ html[data-theme="dark"] .ja-cover { filter: invert(1) hue-rotate(180deg); }
 }
 @media (max-width: 380px) { .h-pill .h-brand { font-size: 14px; gap: 6px; } .h-pill > .lang .lang-btn .lang-cur { display: none; } }
 @media (max-width: 345px) { .h-pill .h-brand { font-size: 12.5px; gap: 5px; } .h-pill .h-brand svg { width: 16px; height: 20px; } .h-pill .theme-btn { width: 30px; height: 30px; } }
+/* mid-width screens: keep the nav links on one line now that the theme button sits in the bar */
+@media (min-width: 901px) and (max-width: 1240px) { .h-pill .h-links a, .h-pill .h-links button { white-space: nowrap; font-size: 13.5px; } .h-pill .h-links { gap: 12px; } .h-pill .h-cta-btn, .h-pill .btn { padding-left: 16px; padding-right: 16px; } }

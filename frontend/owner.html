@@ -10,6 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600;700&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/owner-pay.css">
 <link rel="stylesheet" href="css/dark.css">
 <script src="js/theme.js"></script>
 <script src="js/auth-guard.js"></script>
@@ -147,6 +148,17 @@ function vReferrals() {
 }
 
 const mlabel = (m) => new Date(m + '-01T00:00').toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
+
+function payChart(P) {
+  const inc = {}; (D.months || []).forEach((m) => { inc[m.Month] = m.Total; });
+  const rows = P.history.map((h) => ({ m: h.Month, inc: inc[h.Month] || 0, out: h.Paid, due: h.Month === P.months[0] ? Math.max(0, P.liveDue || 0) : 0 }));
+  const max = Math.max(1, ...rows.map((r) => Math.max(r.inc, r.out + r.due)));
+  const hgt = (v) => v ? Math.max(3, Math.round(100 * v / max)) : 0;
+  const net = rows[rows.length - 1];
+  return `<article class="c w12"><h2>Income and payout</h2><p class="sub">Fees collected each month (blue) against staff pay (dark). The lighter part of this month’s dark bar is still to pay.</p>
+    <div class="pc-bars" role="img" aria-label="Fees collected and staff pay by month">${rows.map((r) => `<div class="pc-m"><div class="pc-pair"><i class="pc-in" style="height:${hgt(r.inc)}%" title="Fees ${naira(r.inc)}"></i><i class="pc-out" style="height:${hgt(r.out + r.due)}%" title="Pay ${naira(r.out + r.due)}"><b style="height:${r.out + r.due ? Math.round(100 * r.due / (r.out + r.due)) : 0}%"></b></i></div><span>${mname(r.m)}</span><small>${naira(r.inc)}<br>${naira(r.out + r.due)}</small></div>`).join('')}</div>
+    <p class="sub">This month so far: ${naira(net.inc)} collected, ${naira(net.out)} paid out${net.due ? ' and ' + naira(net.due) + ' still to pay' : ''}. Left after staff pay: <b>${naira(net.inc - net.out - net.due)}</b>.</p></article>`;
+}
 function vPay() {
   const P = D.salaries;
   if (!P) return `<article class="c w12">${empty('Staff pay could not load. Add Salaries.gs to Apps Script and deploy a new version.')}</article>`;
@@ -159,7 +171,7 @@ function vPay() {
         ${bankLine}
         <div class="acx-scroll"><table><thead><tr><th>Student</th><th>Class</th></tr></thead><tbody>${s.Students.map((x) => `<tr><td>${esc(x.Name)}<br><span class="sub" translate="no">${esc(x.ID)}</span></td><td>${esc(x.Class || '–')}</td></tr>`).join('') || '<tr><td colspan="2">No students.</td></tr>'}</tbody></table></div>
         ${paid ? `<p class="sub">Paid ${fdate(s.PaidDate)}${s.Reference ? ' · reference <span translate="no">' + esc(s.Reference) + '</span>' : ''}${s.Changed ? ' · students have changed since this was paid' : ''}</p>
-          <button class="btn btn-line btn-sm" type="button" data-act="salundo" data-key="${esc(s.Key)}">Undo this payment</button>`
+          <div class="acx-acts"><button class="btn btn-line btn-sm" type="button" data-act="salslip" data-key="${esc(s.Key)}">Send payslip again</button><button class="btn btn-line btn-sm" type="button" data-act="salundo" data-key="${esc(s.Key)}">Undo this payment</button></div>`
         : `<form class="frm ow-pay-r" data-form="salpay" data-key="${esc(s.Key)}" data-amount="${s.Amount}" data-name="${esc(s.Name)}"><div><label class="fl">Transfer reference</label><input class="in" name="reference" maxlength="80" placeholder="From your bank app"></div><button class="btn btn-ink" type="submit">Mark ${naira(s.Amount)} paid</button></form>`}
         <form class="frm" data-form="salbank" data-key="${esc(s.Key)}"><div class="row3"><div><label class="fl">Bank</label><input class="in" name="bank" maxlength="60" value="${esc(s.Bank)}"></div>
           <div><label class="fl">Account number</label><input class="in" name="accountNumber" inputmode="numeric" maxlength="10" value="${esc(s.AccountNumber)}"></div>
@@ -168,11 +180,13 @@ function vPay() {
           <button class="btn btn-line btn-sm" type="submit">Save details</button></form>
       </div></details>`;
   };
+  P.liveDue = P.live ? P.dueTotal : 0;
   return `<div class="grid">
     <article class="c w12"><div class="acx-acts" style="justify-content:space-between;align-items:end"><div><label class="fl" for="salm">Month</label><select class="in" id="salm" data-change="salmonth">${P.months.map((m) => `<option value="${m}"${m === P.month ? ' selected' : ''}>${mlabel(m)}</option>`).join('')}</select></div>
       <button class="btn btn-line btn-sm" type="button" data-act="salcsv">Download list (CSV)</button></div>
       <div class="tiles" style="margin-top:14px">${tile(naira(P.total), 'total payout for ' + mlabel(P.month))}${tile(naira(P.dueTotal), 'still to pay', P.dueTotal > 0)}${tile(naira(P.paidTotal), 'paid so far')}${tile(P.staffCount, 'staff to pay')}${tile(P.studentLinks, 'students taught')}</div>
       <p class="sub">${naira(P.rate)} for every active student assigned to a teacher or tutor. Admins are paid a fixed ${naira(P.adminRate)} a month instead. A student with two teachers counts for both. ${P.live ? 'This month follows the live student lists.' : 'Unpaid amounts for past months use today’s student lists.'}</p></article>
+    ${payChart(P)}
     <article class="c w12"><h2>Who to pay</h2><p class="sub">Open a name for their students, classes and bank details. Send the transfer from your bank app first, then enter the reference and mark it paid.</p>
       ${P.staff.length ? P.staff.map(card).join('') : empty('No staff have students assigned yet.')}</article>
     ${P.idle.length ? `<article class="c w12"><h2>On the staff list with no students</h2><p class="sub">${P.idle.map((i) => esc(i.Name) + ' (' + esc(i.Programme) + ')').join(' · ')}</p></article>` : ''}
@@ -301,6 +315,7 @@ app.addEventListener('click', async (e) => {
   if (a === 'tab') { S.tab = b.dataset.t; render(); window.scrollTo(0, 0); }
   else if (a === 'jump') { S.tab = b.dataset.t; render(); const el = document.querySelector(b.dataset.to); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
   else if (a === 'refresh') act('ow_login', {}, b);
+  else if (a === 'salslip') act('ow_salslip', { key: b.dataset.key }, b);
   else if (a === 'salundo') { if (confirm('Cancel this payment record? Do this only if it was marked paid by mistake.')) act('ow_salundo', { key: b.dataset.key }, b); }
   else if (a === 'salcsv') {
     const P = D.salaries, q = (x) => '"' + String(x == null ? '' : x).replace(/"/g, '""') + '"';

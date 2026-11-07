@@ -43,6 +43,7 @@ function ownerFromRequest(p) {
     if (a === 'ow_payout') r = ow_payout_(p);
     else if (a === 'ow_salpay') r = sal_pay_(who, p);
     else if (a === 'ow_salundo') r = sal_undo_(p);
+    else if (a === 'ow_salslip') r = sal_resend_(p);
     else if (a === 'ow_salbank') r = sal_bank_(p);
     else if (a === 'ow_allocate') r = typeof sp_allocate_ === 'function' ? sp_allocate_(who, p) : { ok: false, error: 'Sponsorships are not set up yet.' };
     else if (a === 'ow_request') r = typeof sp_saveRequest_ === 'function' ? sp_saveRequest_(p) : { ok: false, error: 'Sponsorships are not set up yet.' };
