@@ -1,0 +1,39 @@
+/* Student Dictionary (dictionary.html) */
+html.site.page-dictionary .h-hero { min-height: 0 !important; height: auto !important; padding-bottom: 40px; }
+html.site.page-dictionary .h-hero h1 span { display: block; }
+.dc-search { position: relative; max-width: 560px; margin: 28px auto 0; }
+.dc-search svg { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--hb, #094570); pointer-events: none; }
+.dc-search input { width: 100%; height: 56px; border: 0; border-radius: 999px; padding: 0 22px 0 50px; font: inherit; font-size: 17px; color: #062F4D; background: #fff; box-shadow: 0 0 0 1px #D5E0E8, 0 16px 40px -18px rgba(6,47,77,.35); outline: none; }
+.dc-search input:focus { box-shadow: 0 0 0 2px #094570, 0 16px 40px -18px rgba(6,47,77,.35); }
+html[dir="rtl"] .dc-search svg { left: auto; right: 18px; }
+html[dir="rtl"] .dc-search input { padding: 0 50px 0 22px; }
+.dc-sec { padding-top: 34px; }
+.dc-letters { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; direction: rtl; margin: 0 auto 18px; max-width: 900px; }
+.dc-letters button { min-width: 44px; height: 44px; padding: 0 8px; border: 0; border-radius: 12px; background: #fff; color: #062F4D; cursor: pointer; font: 700 22px/1 'Amiri', serif; box-shadow: 0 0 0 1px #D5E0E8; transition: background .15s, color .15s; }
+.dc-letters button:hover:not(:disabled) { background: #E3F2FD; }
+.dc-letters button[aria-pressed="true"] { background: #094570; color: #fff; box-shadow: none; }
+.dc-letters button:disabled { opacity: .35; cursor: default; }
+.dc-chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 0 0 14px; }
+.dc-chips button { border: 0; border-radius: 999px; padding: 8px 16px; font: 600 14px/1 inherit; font-family: inherit; background: #fff; color: #4B6577; cursor: pointer; box-shadow: 0 0 0 1px #D5E0E8; }
+.dc-chips button[aria-pressed="true"] { background: #E3F2FD; color: #062F4D; box-shadow: 0 0 0 1.5px #094570; }
+.dc-count { text-align: center; color: #4B6577; font-size: 14px; margin: 0 0 22px; min-height: 1.4em; }
+.dc-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr)); gap: 16px; }
+.dc-card { background: #fff; border-radius: 20px; padding: 22px 22px 20px; box-shadow: 0 0 0 1px #D5E0E8; display: flex; flex-direction: column; gap: 10px; }
+.dc-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+.dc-w { font-family: 'Amiri', serif; font-size: 40px; line-height: 1.25; color: #062F4D; margin: 0; direction: rtl; }
+.dc-tags { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; flex: none; padding-top: 6px; }
+.dc-tag { font-size: 11.5px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: #094570; background: #E3F2FD; border-radius: 999px; padding: 4px 10px; }
+.dc-tag.top { color: #4B6577; background: #F1F4F7; }
+.dc-meta { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 14px; color: #4B6577; }
+.dc-meta b { color: #062F4D; font-weight: 600; }
+.dc-meta .ar { font-family: 'Amiri', serif; font-size: 19px; color: #062F4D; }
+.dc-en { font-size: 18px; font-weight: 600; color: #062F4D; margin: 0; }
+.dc-ar { font-family: 'Amiri', serif; font-size: 19px; color: #4B6577; margin: 0; direction: rtl; text-align: right; }
+.dc-ex { margin-top: 4px; padding: 12px 14px; border-radius: 14px; background: #F1F4F7; }
+.dc-ex .a { font-family: 'Amiri', serif; font-size: 22px; line-height: 1.6; color: #062F4D; direction: rtl; text-align: right; margin: 0; }
+.dc-ex .e { font-size: 14px; color: #4B6577; margin: 4px 0 0; }
+.dc-more { text-align: center; margin-top: 26px; }
+.dc-empty { grid-column: 1 / -1; text-align: center; padding: 40px 10px; color: #4B6577; }
+.dc-note { text-align: center; color: #4B6577; font-size: 14px; max-width: 620px; margin: 34px auto 0; }
+.dc-note a { color: #094570; font-weight: 600; text-decoration: underline; }
+@media (max-width: 520px) { .dc-w { font-size: 34px; } .dc-letters button { min-width: 40px; height: 40px; font-size: 20px; } }
