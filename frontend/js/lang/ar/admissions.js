@@ -108,5 +108,6 @@ HS_I18N.add({
 "Five clear steps": "خمس خطوات واضحة",
 "Admission,": "القبول،",
 "step by step.": "خطوةً بخطوة.",
-"The path": "الطريق"
+"The path": "الطريق",
+"A refund is available before classes start and during the first two weeks of classes. After two weeks from the start of classes, no refund is given unless the error is ours. The price of class materials already given is deducted, and charges by payment service providers are deducted from any refund.": "يتوفر الاسترداد قبل بدء الحصص وخلال الأسبوعين الأولين منها. وبعد أسبوعين من بدء الحصص لا يُرد أي مبلغ إلا إذا كان الخطأ منا. ويُخصم ثمن المواد الدراسية التي سُلّمت، وتُخصم رسوم مزوّدي خدمة الدفع من أي مبلغ يُسترد."
 });
