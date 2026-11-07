@@ -8,16 +8,72 @@
     flip: ['Tap the card to see the meaning', 'اضغط على البطاقة لترى المعنى'], know: ['I know it', 'أعرفها'], again: ['Again', 'أعد'], left: ['left', 'متبقية'],
     done: ['Well done! You went through the whole deck.', 'أحسنت! أنهيت كل البطاقات.'], restart: ['Start again', 'ابدأ من جديد'], q: ['What does this word mean?', 'ما معنى هذه الكلمة؟'],
     score: ['Your score', 'نتيجتك'], of: ['of', 'من'], review: ['Words to review', 'كلمات للمراجعة'], next: ['Next', 'التالي'], correct: ['Correct!', 'صحيح!'], wrong: ['Not quite. The answer is', 'ليس تمامًا. الجواب هو'], finish: ['See my score', 'اعرض نتيجتي'], tiny: ['Not enough words in this topic for a quiz. Choose All topics.', 'عدد الكلمات في هذا الموضوع قليل للاختبار. اختر كل المواضيع.'],
-    n: ['Noun', 'اسم'], v: ['Verb', 'فعل'], adj: ['Adjective', 'صفة'], p: ['Small word', 'حرف / أداة'], showing: ['Showing', 'عرض']
+    n: ['Noun', 'اسم'], v: ['Verb', 'فعل'], adj: ['Adjective', 'صفة'], p: ['Small word', 'حرف / أداة'], showing: ['Showing', 'عرض'], listen: ['Listen', 'استمع'], syn: ['Synonyms', 'المرادفات'], say: ['Say it', 'انطقها']
   };
   var TOPIC = { 'Deen': 'الدين', 'School': 'المدرسة', 'Family': 'الأسرة', 'Daily life': 'الحياة اليومية', 'Nature': 'الطبيعة', 'Body': 'الجسم', 'Numbers': 'الأعداد', 'Verbs': 'الأفعال', 'Adjectives': 'الصفات', 'Small words': 'كلمات صغيرة', 'Animals': 'الحيوانات', 'Colours': 'الألوان', 'Clothes': 'الملابس', 'Jobs': 'المهن', 'Places': 'الأماكن', 'Time': 'الوقت', 'Health': 'الصحة', 'Feelings': 'المشاعر', 'Food': 'الطعام', 'Home': 'البيت', 'Society': 'المجتمع', 'Science': 'العلوم', 'Math': 'الرياضيات', 'Sports': 'الرياضة', 'Technology': 'التقنية' };
   function t(k) { return T[k][ar() ? 1 : 0]; }
+
+  // Reading help: a rule-based Latin spelling made from the vowel marks (not hand-checked), and the device's own Arabic voice.
+  var TR = { 'ب': 'b', 'ت': 't', 'ث': 'th', 'ج': 'j', 'ح': 'ḥ', 'خ': 'kh', 'د': 'd', 'ذ': 'dh', 'ر': 'r', 'ز': 'z', 'س': 's', 'ش': 'sh', 'ص': 'ṣ', 'ض': 'ḍ', 'ط': 'ṭ', 'ظ': 'ẓ', 'ع': 'ʿ', 'غ': 'gh', 'ف': 'f', 'ق': 'q', 'ك': 'k', 'ل': 'l', 'م': 'm', 'ن': 'n', 'ه': 'h', 'ء': 'ʾ', 'ئ': 'ʾ', 'ؤ': 'ʾ', 'أ': 'ʾ', 'إ': 'ʾ', 'پ': 'p', 'چ': 'ch', 'ڤ': 'v', 'گ': 'g', '؟': '?', '،': ',' };
+  var VOW = { 'َ': 'a', 'ُ': 'u', 'ِ': 'i' }, TAN = { 'ً': 1, 'ٌ': 1, 'ٍ': 1 };
+  function translit(w) {
+    return String(w).replace(/ـ/g, '').split(/\s+/).map(function (word) {
+      if (word.replace(/[ً-ْٰ]/g, '') === 'الله') return 'Allāh';
+      var items = [], m;
+      for (var i = 0; i < word.length; i++) {
+        var c = word.charAt(i);
+        if (c >= 'ً' && c <= 'ْ' || c === 'ٰ' || c === 'ٓ') { if (items.length) items[items.length - 1].m.push(c); }
+        else items.push({ c: c, m: [] });
+      }
+      var out = '';
+      items.forEach(function (it, k) {
+        var c = it.c, mk = it.m.join(''), shadda = mk.indexOf('ّ') >= 0, v = '', tan = '', last = k === items.length - 1;
+        ['َ', 'ُ', 'ِ'].forEach(function (x) { if (mk.indexOf(x) >= 0) v = VOW[x]; });
+        if (mk.indexOf('ً') >= 0 || mk.indexOf('ٌ') >= 0 || mk.indexOf('ٍ') >= 0) tan = 'x';
+        var nextBare = k + 1 < items.length && items[k + 1].c === 'ل' && !/[َُِ]/.test(items[k + 1].m.join(''));
+        if (c === 'آ') { out += k === 0 ? 'ā' : 'ʾā'; return; }   // alif with madda
+        if (c === 'ا' || c === 'ٱ') {                                           // alif
+          if (mk.indexOf('ٓ') >= 0) { out += 'ā'; return; }   // alif madda
+          if (v) { out += v; return; }                                  // initial alif with its own vowel (no hamza shown)
+          if (k === 0) { out += nextBare && items.length > 2 ? 'a' : ''; return; }   // article al-
+          if (/a$/.test(out)) out = out.slice(0, -1) + 'ā'; else out += 'ā';
+          return;
+        }
+        if (c === 'ى') { out = /a$/.test(out) ? out.slice(0, -1) + 'ā' : out + 'ā'; return; }   // alif maqsura
+        if (c === 'ة') { out += v || !last ? 't' + v : (tan ? '' : 'h'); return; }   // ta marbuta
+        if ((c === 'أ' || c === 'إ') && k === 0) { out += v; return; }   // initial hamza on alif
+        if (c === 'و' || c === 'ي') {                          // waw / yaa: long vowel or consonant
+          var lng = c === 'و' ? 'u' : 'i', cons = c === 'و' ? 'w' : 'y';
+          if (!v && !shadda && !tan) { if (out.slice(-1) === lng) { out = out.slice(0, -1) + (c === 'و' ? 'ū' : 'ī'); } else out += cons; return; }
+          out += (shadda ? cons + cons : cons) + v; return;
+        }
+        var r = TR[c];
+        if (r === undefined) { out += c; return; }
+        out += (shadda ? r + r : r) + v;
+      });
+      return out;
+    }).join(' ');
+  }
+  function say(text) {
+    try {
+      var ss = window.speechSynthesis; if (!ss) return;
+      ss.cancel();
+      var u = new SpeechSynthesisUtterance(text); u.lang = 'ar-SA'; u.rate = 0.8;
+      var vs = ss.getVoices ? ss.getVoices() : [];
+      for (var i = 0; i < vs.length; i++) if (/^ar/i.test(vs[i].lang)) { u.voice = vs[i]; break; }
+      ss.speak(u);
+    } catch (e) {}
+  }
+  var CAN_SAY = !!(window.speechSynthesis && window.SpeechSynthesisUtterance);
+  var SPK = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg>';
+  function sayBtn(text, label) { return CAN_SAY ? '<button type="button" class="dc-say" data-say="' + esc(text) + '" aria-label="' + esc(label) + '" title="' + esc(label) + '">' + SPK + '</button>' : ''; }
+
   var HARAKAT = /[ؐ-ًؚ-ٰٟۖ-ۭـ]/g;
   function norm(s) {
     return String(s || '').replace(HARAKAT, '').replace(/[أإآٱ]/g, 'ا').replace(/ى/g, 'ي').replace(/ة/g, 'ه').replace(/ؤ/g, 'و').replace(/ئ/g, 'ي').trim().toLowerCase();
   }
   var LET = 'ا ب ت ث ج ح خ د ذ ر ز س ش ص ض ط ظ ع غ ف ق ك ل م ن ه و ي'.split(' ');
-  D.forEach(function (e) { e._n = norm(e.w); e._l = e._n.charAt(0); e._s = (e._n + ' ' + norm(e.a) + ' ' + e.e.toLowerCase() + ' ' + norm(e.r.replace(/ /g, '')) + ' ' + e.c.toLowerCase()); });
+  D.forEach(function (e) { e._n = norm(e.w); e._l = e._n.charAt(0); e._s = (e._n + ' ' + norm(e.a) + ' ' + e.e.toLowerCase() + ' ' + norm(e.r.replace(/ /g, '')) + ' ' + e.c.toLowerCase() + ' ' + norm(e.s || '')); });
   D.sort(function (a, b) { var i = LET.indexOf(a._l), j = LET.indexOf(b._l); return i - j || (a._n < b._n ? -1 : a._n > b._n ? 1 : 0); });
   var $ = function (id) { return document.getElementById(id); };
   var S = { q: '', letter: '', topic: '', shown: PAGE }, root = $('dcList'); if (!root) return;
@@ -38,10 +94,11 @@
     var meta = '';
     if (e.r) meta += '<span>' + t('root') + ': <b class="ar" dir="rtl">' + esc(e.r) + '</b></span>';
     if (e.f) meta += '<span>' + t(e.t === 'v' ? 'forms' : 'plural') + ': <b class="ar" dir="rtl">' + esc(e.f) + '</b></span>';
-    return '<article class="dc-card"><div class="dc-top"><h3 class="dc-w" lang="ar" dir="rtl">' + esc(e.w) + '</h3><div class="dc-tags"><span class="dc-tag">' + t(e.t) + '</span><span class="dc-tag top">' + esc(ar() ? (TOPIC[e.c] || e.c) : e.c) + '</span></div></div>' +
+    return '<article class="dc-card"><div class="dc-top"><div class="dc-wrap"><h3 class="dc-w" lang="ar" dir="rtl">' + esc(e.w) + '</h3><p class="dc-tr" dir="ltr">' + esc(translit(e.w)) + '</p></div>' + sayBtn(e.w, t('listen')) + '<div class="dc-tags"><span class="dc-tag">' + t(e.t) + '</span><span class="dc-tag top">' + esc(ar() ? (TOPIC[e.c] || e.c) : e.c) + '</span></div></div>' +
       (meta ? '<div class="dc-meta">' + meta + '</div>' : '') +
       '<p class="dc-en">' + esc(e.e) + '</p>' + (e.a ? '<p class="dc-ar" lang="ar">' + esc(e.a) + '</p>' : '') +
-      '<div class="dc-ex"><p class="a" lang="ar" dir="rtl">' + esc(e.x) + '</p><p class="e">' + esc(e.xe) + '</p></div></article>';
+      (e.s ? '<p class="dc-syn"><span>' + t('syn') + ':</span> <b class="ar" lang="ar" dir="rtl">' + esc(e.s) + '</b></p>' : '') +
+      '<div class="dc-ex"><div class="dc-exa"><p class="a" lang="ar" dir="rtl">' + esc(e.x) + '</p>' + sayBtn(e.x, t('say')) + '</div><p class="e">' + esc(e.xe) + '</p></div></article>';
   }
   function render() {
     var list = filtered(), part = list.slice(0, S.shown);
@@ -118,6 +175,8 @@
   $('dcChips').addEventListener('click', function (ev) { var b = ev.target.closest('button'); if (!b) return; S.topic = b.dataset.c; S.shown = PAGE; render(); if (MODE === 'cards') cardsStart(); else if (MODE === 'quiz') quizStart(); });
   $('dcMore').addEventListener('click', function () { S.shown += PAGE; render(); });
   $('dcQ').addEventListener('input', function () { S.q = this.value; S.letter = ''; S.shown = PAGE; render(); });
+  document.addEventListener('click', function (ev) { var b = ev.target.closest && ev.target.closest('[data-say]'); if (b) say(b.getAttribute('data-say')); });
+  window.HS_translit = translit;
   new MutationObserver(function () { build(); }).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
   build();
   if (location.hash === '#cards') setMode('cards'); else if (location.hash === '#quiz') setMode('quiz');
