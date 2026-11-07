@@ -132,7 +132,7 @@ HS_I18N.add({
 "Join your first class": "احضر حصتك الأولى",
 "Himaayah Store": "متجر حماية",
 "Guides and books from our teachers.": "أدلة وكتب من معلّمينا.",
-"Children’s books are ₦5,000. Every other guide is ₦3,000. Add them to your cart, pay securely, and we email your receipt and download links.": "كتب الأطفال بسعر ٥٬٠٠٠ ₦ وكل دليل آخر بسعر ٣٬٠٠٠ ₦. أضفها إلى سلتك وادفع بأمان، ونرسل إليك الإيصال وروابط التنزيل بالبريد.",
+"Children’s books are ₦5,000, the Himaayah Diary is ₦2,000, and every other guide is ₦3,000. Add them to your cart, pay securely, and we email your receipt and download links.": "كتب الأطفال بسعر ٥٬٠٠٠ ₦، ودفتر حماية بسعر ٢٬٠٠٠ ₦، وكل دليل آخر بسعر ٣٬٠٠٠ ₦. أضفها إلى سلتك وادفع بأمان، ونرسل إليك الإيصال وروابط التنزيل بالبريد.",
 "Visit the Himaayah Store": "زُر متجر حماية",
 "What is in the store": "ما الموجود في المتجر",
 "How it works": "كيف يعمل",

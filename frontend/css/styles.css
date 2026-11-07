@@ -4908,3 +4908,5 @@ html[dir="rtl"] :is(.page-hadith-bootcamp, .page-bootcamp) :is(.bc-t, .bc-tt) i,
   .page-dashboard .rt-head { grid-template-columns: minmax(0, 1fr) auto; gap: 12px; }
   .page-dashboard .rt-streak { min-width: 76px; padding: 8px 10px; }
 }
+
+.site.page-hadith-bootcamp .bc-opens { display: inline-block; background: #FFF4E0; color: #7A4A00; border-radius: 14px; padding: 10px 16px; margin: 18px 0 0; font-weight: 600; }

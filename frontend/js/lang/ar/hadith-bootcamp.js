@@ -1,7 +1,7 @@
 /* Arabic for the hadith-bootcamp page. English on the left, Arabic on the right: edit the Arabic to change what visitors see.
    Keys starting with re: are patterns for text with numbers or names in it ($1, $2 are the parts kept). */
 HS_I18N.add({
-"Ḥadīth Bootcamp: the Forty Ḥadīth of an-Nawawī — Himaayah Schools": "معسكر الحديث: الأربعون النووية — مدرسة حماية",
+"Ḥadīth Bootcamp: the Forty Ḥadīth of an-Nawawī — Himaayah Schools": "معسكر الحديث: الأربعون النووية — مدارس حماية",
 "Study all 42 ḥadīth of al-Arbaʿīn an-Nawawiyyah at your own pace: audio lessons, the Arabic text with translation, key lessons, quizzes and a certificate. ₦15,000, free for Himaayah Madrasah students.": "ادرس الأحاديث الاثنين والأربعين من الأربعين النووية بالسرعة التي تناسبك: دروس صوتية، والنص العربي مع الترجمة، والفوائد، واختبارات قصيرة، وشهادة. ١٥٬٠٠٠ نيرة، ومجانًا لطلاب المدرسة الشرعية في حماية.",
 "Ḥadīth Bootcamp": "معسكر الحديث",
 "The Forty Ḥadīth of Imām an-Nawawī, at your own pace.": "الأربعون النووية، بالسرعة التي تناسبك.",
@@ -27,6 +27,9 @@ HS_I18N.add({
 "All 42 ḥadīth": "الأحاديث الاثنان والأربعون",
 "The full Arbaʿīn of Imām an-Nawawī, in his order, from intentions to the vastness of Allah’s forgiveness.": "الأربعون النووية كاملة بترتيب الإمام النووي، من النيات إلى سعة مغفرة الله.",
 "How it works": "كيف يعمل",
+"Joining opens on 1 December 2026. Himaayah Madrasah students can log in now.": "يبدأ التسجيل في ١ ديسمبر ٢٠٢٦. يمكن لطلاب المدرسة الشرعية في حماية الدخول الآن.",
+"Opens 1 December": "يبدأ في ١ ديسمبر",
+"Joining opens on 1 December 2026.": "يبدأ التسجيل في ١ ديسمبر ٢٠٢٦.",
 "Join": "اشترك",
 "Pay ₦15,000 once by card or bank transfer. Your Bootcamp ID and access code arrive by email within minutes.": "ادفع ١٥٬٠٠٠ نيرة مرة واحدة بالبطاقة أو التحويل البنكي، وتصلك بيانات الدخول بالبريد خلال دقائق.",
 "Study": "ادرس",

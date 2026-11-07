@@ -19,7 +19,11 @@ function phone(p) {
   return undefined;
 }
 
+// Joining opens on 1 December 2026, 00:00 in Nigeria (UTC+1).
+const OPENS_AT = Date.UTC(2026, 10, 30, 23, 0, 0);
+
 export async function POST(request) {
+  if (Date.now() < OPENS_AT) return json({ ok: false, error: 'Joining opens on 1 December 2026.' }, 403);
   const key = process.env.BACHS_SECRET_KEY, secret = process.env.APPS_SCRIPT_SECRET;
   if (!key || !secret) return json({ ok: false, error: 'Online payment is not set up yet.' }, 503);
 
