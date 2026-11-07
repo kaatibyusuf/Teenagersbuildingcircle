@@ -10,7 +10,7 @@
     score: ['Your score', 'نتيجتك'], of: ['of', 'من'], review: ['Words to review', 'كلمات للمراجعة'], next: ['Next', 'التالي'], correct: ['Correct!', 'صحيح!'], wrong: ['Not quite. The answer is', 'ليس تمامًا. الجواب هو'], finish: ['See my score', 'اعرض نتيجتي'], tiny: ['Not enough words in this topic for a quiz. Choose All topics.', 'عدد الكلمات في هذا الموضوع قليل للاختبار. اختر كل المواضيع.'],
     n: ['Noun', 'اسم'], v: ['Verb', 'فعل'], adj: ['Adjective', 'صفة'], p: ['Small word', 'حرف / أداة'], showing: ['Showing', 'عرض']
   };
-  var TOPIC = { 'Deen': 'الدين', 'School': 'المدرسة', 'Family': 'الأسرة', 'Daily life': 'الحياة اليومية', 'Nature': 'الطبيعة', 'Body': 'الجسم', 'Numbers': 'الأعداد', 'Verbs': 'الأفعال', 'Adjectives': 'الصفات', 'Small words': 'كلمات صغيرة', 'Animals': 'الحيوانات', 'Colours': 'الألوان', 'Clothes': 'الملابس', 'Jobs': 'المهن', 'Places': 'الأماكن', 'Time': 'الوقت', 'Health': 'الصحة', 'Feelings': 'المشاعر' };
+  var TOPIC = { 'Deen': 'الدين', 'School': 'المدرسة', 'Family': 'الأسرة', 'Daily life': 'الحياة اليومية', 'Nature': 'الطبيعة', 'Body': 'الجسم', 'Numbers': 'الأعداد', 'Verbs': 'الأفعال', 'Adjectives': 'الصفات', 'Small words': 'كلمات صغيرة', 'Animals': 'الحيوانات', 'Colours': 'الألوان', 'Clothes': 'الملابس', 'Jobs': 'المهن', 'Places': 'الأماكن', 'Time': 'الوقت', 'Health': 'الصحة', 'Feelings': 'المشاعر', 'Food': 'الطعام', 'Home': 'البيت' };
   function t(k) { return T[k][ar() ? 1 : 0]; }
   var HARAKAT = /[ؐ-ًؚ-ٰٟۖ-ۭـ]/g;
   function norm(s) {
