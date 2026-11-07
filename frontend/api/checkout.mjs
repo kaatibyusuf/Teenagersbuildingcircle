@@ -15,7 +15,7 @@ const PLANS = {
   'Teenagers Building Circle — Full Programme': { amount: 40000, recurring: true, live: 'prod_cbd46cdefa0e4d75a31c', sandbox: 'prod_4be17e80bcc74b9f8e3a' },
   'Madrasah — Hifdh Only (Group)':              { amount: 12000, recurring: true, live: 'prod_1518dd1ab1ba4cfea0e8', sandbox: 'prod_f6d40928f10a42c8a5fe', closed: true },
   'Madrasah — Full Madrasah (Group)':           { amount: 20000, recurring: true, live: 'prod_88d2bf8aefd145569c32', sandbox: 'prod_2adf6149f52b4e85a427', closed: true },
-  'Madrasah — Full Madrasah (Group, hifdh completed elsewhere)': { amount: 15000, recurring: true, live: '', sandbox: '', closed: true },   // create a Bachs product at ₦15,000 and paste its IDs here before opening
+  'Madrasah — Full Madrasah (Group, hifdh completed elsewhere)': { amount: 15000, recurring: true, live: 'prod_ec8807ceca5e4cb2a811', sandbox: '', closed: true },   // product created; remove closed:true (here, enroll.html, Enrol.gs) to open for payment
   'Madrasah — Hifdh Only (Personal)':           { amount: 20000, recurring: true, live: 'prod_1debd07326f34dd2bc53', sandbox: 'prod_d2a0efd2bed64f96aa61' },
   'Madrasah — Full Madrasah (Personal)':        { amount: 35000, recurring: true, live: 'prod_fe2428f2c1f647118abc', sandbox: 'prod_84b3e07142ee45b1801d' },
   'Madrasah — One-Year Hifdh':                  { amount: 19000, recurring: true, live: 'prod_330d0eede3bf4a4bb39a', sandbox: 'prod_f9d8a4e440074dca896b', closed: true, invite: 'HIFDH-1Y7K' },   // current students sign up with enroll?plan=one-year&invite=HIFDH-1Y7K
