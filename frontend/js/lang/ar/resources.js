@@ -7,7 +7,7 @@ HS_I18N.add({
 "56 printable guides and books for children, students and families, now all in the Himaayah Store. Choose what you need, pay once, and download.": "56 دليلًا وكتابًا قابلًا للطباعة للأطفال والطلاب والأسر، وكلها الآن في متجر حماية. اختر ما تحتاج وادفع مرة واحدة ونزّل.",
 "Open the Himaayah Store": "افتح متجر حماية",
 "Free prospectus (PDF)": "الدليل التعريفي المجاني (PDF)",
-"Student Dictionary": "قاموس الطالب",
+"Student Dictionary (PDF)": "قاموس الطالب (PDF)",
 "Each children’s book and workbook": "كل كتاب أو كراسة للأطفال",
 "Each Madrasah guide": "كل دليل من المدرسة الشرعية",
 "Each Academy, Skills School and Teenagers Building Circle guide": "كل دليل من الأكاديمية ومدرسة المهارات وحلقة بناء المراهقين",

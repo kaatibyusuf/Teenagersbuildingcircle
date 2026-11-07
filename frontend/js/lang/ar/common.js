@@ -512,5 +512,8 @@ HS_I18N.add({
 "Save my new code": "احفظ رمزي الجديد",
 "Saved. Please sign in again with your new code.": "تم الحفظ. سجّل الدخول من جديد برمزك الجديد.",
 "Choose a code different from the one you were given.": "اختر رمزًا يختلف عن الذي أُعطيته.",
-"Your code cannot be the same as your ID.": "لا يجوز أن يكون رمزك مطابقًا لرقم هويتك."
+"Your code cannot be the same as your ID.": "لا يجوز أن يكون رمزك مطابقًا لرقم هويتك.",
+"Student Dictionary": "قاموس الطالب",
+"Calendar": "التقويم",
+"Search the Dictionary": "ابحث في القاموس"
 });
