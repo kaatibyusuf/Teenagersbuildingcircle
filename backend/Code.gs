@@ -92,7 +92,26 @@ function iso_(v, withTime) {
   if (isNaN(d)) return String(v);
   return Utilities.formatDate(d, tz_(), withTime ? "yyyy-MM-dd'T'HH:mm" : 'yyyy-MM-dd');
 }
-function today_() { return iso_(new Date()); }
+/* The day starts at midnight for the person asking. Student pages send their browser's time zone (js/tz.js); anyone else
+   gets the school's (spreadsheet) time zone. REQ_TZ_ is set per request in doPost. */
+var REQ_TZ_ = '';
+function validTz_(v) {
+  v = String(v || '').trim();
+  if (!/^[A-Za-z][A-Za-z0-9_+\-]*(\/[A-Za-z0-9_+\-]+){0,2}$/.test(v) || v.length > 64) return '';
+  try { Utilities.formatDate(new Date(), v, 'yyyy'); return v; } catch (e) { return ''; }
+}
+function today_() { return Utilities.formatDate(new Date(), REQ_TZ_ || tz_(), 'yyyy-MM-dd'); }
+function todayIn_(tz) { return Utilities.formatDate(new Date(), validTz_(tz) || tz_(), 'yyyy-MM-dd'); }
+/* remember a student's time zone (Students tab, "Timezone" column) so reminder emails use their own day */
+function tzRemember_(st, tz) {
+  try {
+    tz = validTz_(tz); if (!tz || !st || !st._row || String(st.Timezone || '') === tz) return;
+    const sh = ss_().getSheetByName('Students'), n = sh.getLastColumn(), head = sh.getRange(1, 1, 1, n).getValues()[0].map(function (h) { return String(h).trim(); });
+    let c = head.indexOf('Timezone') + 1;
+    if (!c) { c = n + 1; sh.getRange(1, c).setValue('Timezone').setFontWeight('bold'); }
+    sh.getRange(st._row, c).setValue(tz);
+  } catch (e) {}
+}
 function dn_(isoDay) { const p = String(isoDay).slice(0, 10).split('-').map(Number); return Date.UTC(p[0], p[1] - 1, p[2]) / 86400000; }
 function addMonths_(isoDay, m) {
   const p = String(isoDay).slice(0, 10).split('-').map(Number);
@@ -250,6 +269,7 @@ function doPost(e) {
   let out;
   try {
     const p = JSON.parse((e && e.postData && e.postData.contents) || '{}');
+    REQ_TZ_ = /^(ow_|admin_|teacher_|rs_|lb_|examt$)/.test(String(p.action || '')) ? '' : validTz_(p.tz);   // staff pages always use the school's day
     if (p.action === 'enrol') return json_(enrolFromRequest(p));                         // new enrolments (Enrol.gs)
     if (/^ref_/.test(String(p.action || ''))) return json_(referralFromRequest(p));         // refer and earn (Referrals.gs)
     if (p.action === 'subscribe' || p.action === 'unsubscribe') return json_(newsletterFromRequest(p)); // newsletter (Newsletter.gs)
@@ -280,7 +300,7 @@ function doPost(e) {
     if (p.action === 'quiz') return json_(quizRequest(p));                               // student quizzes (Quiz.gs)
     const a = auth_(p.id, p.code);
     if (a.error) out = { ok: false, error: a.error };
-    else if (p.action === 'submit') { const r = submit_(a.st, p); out = r.ok ? payload_(a.st) : r; }
+    else if (tzRemember_(a.st, p.tz), p.action === 'submit') { const r = submit_(a.st, p); out = r.ok ? payload_(a.st) : r; }
     else if (p.action === 'password') { const r = changeCode_(a.st, p); out = r.ok ? payload_(a.st) : r; }
     else if (/^rec_/.test(String(p.action || '')) && typeof recStudentRequest === 'function') out = recStudentRequest(a.st, p);   // recitation recordings (Recordings.gs)
     else if (/^rt_/.test(String(p.action || '')) && typeof rtStudentRequest === 'function') out = rtStudentRequest(a.st, p);       // daily hifdh routine (Routine.gs)
@@ -490,6 +510,7 @@ function onOpen() {
       .addItem('Set up the timetable', 'timetableSetup')
       .addItem('Set up trial classes', 'trialSetup')
       .addItem('Set up placement tests', 'placementSetup')
+      .addItem('Send test codes (placement tests)', 'placementSendCodes')
       .addItem('Set up the Hadith Bootcamp', 'bootcampSetup')
       .addItem('Bootcamp: send missing logins', 'bootcampSendLogins')
       .addItem('Ask families for a testimonial', 'askForTestimonials')

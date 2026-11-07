@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="css/dark.css">
 <script src="js/theme.js"></script>
 <script src="js/auth-guard.js"></script>
+<script src="js/tz.js"></script>
 <script src="js/force-change.js"></script>
 <script src="js/i18n.js"></script>
 <script src="js/cookie-notice.js" defer></script>
@@ -427,6 +428,7 @@ function rtBodyHtml(d) {
       <div class="rt-streak"><b>${m.streak || 0}</b><span>day streak</span>${m.best ? `<small>Best: ${m.best}</small>` : ''}</div>
     </div>
     <p class="sub rt-lesson">${lesson}</p>
+    ${window.HS_TZ ? `<p class="sub" style="font-size:12.5px;margin-top:-4px">Your day resets at midnight in your own time zone (<span translate="no">${esc(window.HS_TZ.replace(/_/g, ' '))}</span>).</p>` : ''}
     ${strip ? `<div class="rt-strip" aria-label="The last 14 days">${strip}</div>` : ''}
     <ol class="rt-list">${steps.map((st, i) => rtStepHtml(st, i, d)).join('')}</ol>
     <p class="rt-msg" role="status">${esc(RT.msg)}</p>`;
