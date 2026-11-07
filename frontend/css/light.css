@@ -105,3 +105,8 @@ html.site:not(.page-index) .cta-box :is(.btn-line, .btn-ghost) { color: var(--hb
 
 /* article pages keep their coloured category hero: restore light text on it */
 .site.page-articles .h-hero .art-sub { color: rgba(255,255,255,.78); }
+
+/* "Jump to" chips under the hero: were white on a light hero and unreadable */
+.site .h-hero .h-chips-k { color: #6B8396; }
+.site .h-hero .h-chips a { color: var(--hb); background: #fff; box-shadow: inset 0 0 0 1px var(--hb-line); }
+.site .h-hero .h-chips a:hover { background: var(--hb-tint); color: var(--hb-deep); }
