@@ -153,7 +153,7 @@ function vPay() {
   const card = (s) => {
     const paid = s.Status === 'Paid', k = 'pay-' + s.Key + P.month;
     const bankLine = s.AccountNumber ? `<div class="ow-bank"><span>${esc(s.Bank)}</span><code translate="no">${esc(s.AccountNumber)}</code><span translate="no">${esc(s.AccountName)}</span><button class="btn btn-line btn-sm" type="button" data-act="copy" data-v="${esc(s.AccountNumber)}">Copy number</button></div>` : '<p class="sub">No bank details yet. Add them below.</p>';
-    return `<details class="box" data-k="${esc(k)}"${S.open[k] ? ' open' : ''}><summary><div><b>${esc(s.Name)}</b><small>${esc(s.Role)} · ${esc(s.Programme)} · ${plural(s.Count, 'student')} × ${naira(s.Rate)}</small></div>
+    return `<details class="box" data-k="${esc(k)}"${S.open[k] ? ' open' : ''}><summary><div><b>${esc(s.Name)}</b><small>${esc(s.Role)} · ${esc(s.Programme)} · ${s.Fixed ? 'monthly salary ' + naira(s.Rate) + (s.Count ? ' · teaches ' + plural(s.Count, 'student') : '') : plural(s.Count, 'student') + ' × ' + naira(s.Rate)}</small></div>
       <div class="sum-r"><span class="pill ${paid ? 'p-ink' : 'p-red'}">${paid ? 'Paid' : 'To pay'}</span><b>${naira(s.Amount)}</b></div></summary>
       <div class="body">
         ${bankLine}
@@ -164,15 +164,15 @@ function vPay() {
         <form class="frm" data-form="salbank" data-key="${esc(s.Key)}"><div class="row3"><div><label class="fl">Bank</label><input class="in" name="bank" maxlength="60" value="${esc(s.Bank)}"></div>
           <div><label class="fl">Account number</label><input class="in" name="accountNumber" inputmode="numeric" maxlength="10" value="${esc(s.AccountNumber)}"></div>
           <div><label class="fl">Account name</label><input class="in" name="accountName" maxlength="80" value="${esc(s.AccountName)}"></div></div>
-          <div class="row3"><div><label class="fl">Rate per student (₦)</label><input class="in" name="rate" type="number" min="0" value="${s.RateSet === P.rate ? '' : s.RateSet}" placeholder="${P.rate}"></div></div>
+          <div class="row3"><div><label class="fl">${s.Fixed ? 'Monthly salary (₦)' : 'Rate per student (₦)'}</label><input class="in" name="rate" type="number" min="0" value="${s.RateSet === (s.Fixed ? P.adminRate : P.rate) ? '' : s.RateSet}" placeholder="${s.Fixed ? P.adminRate : P.rate}"></div></div>
           <button class="btn btn-line btn-sm" type="submit">Save details</button></form>
       </div></details>`;
   };
   return `<div class="grid">
     <article class="c w12"><div class="acx-acts" style="justify-content:space-between;align-items:end"><div><label class="fl" for="salm">Month</label><select class="in" id="salm" data-change="salmonth">${P.months.map((m) => `<option value="${m}"${m === P.month ? ' selected' : ''}>${mlabel(m)}</option>`).join('')}</select></div>
       <button class="btn btn-line btn-sm" type="button" data-act="salcsv">Download list (CSV)</button></div>
-      <div class="tiles" style="margin-top:14px">${tile(naira(P.total), 'total payout for ' + mlabel(P.month))}${tile(naira(P.dueTotal), 'still to pay', P.dueTotal > 0)}${tile(naira(P.paidTotal), 'paid so far')}${tile(P.staffCount, 'staff with students')}${tile(P.studentLinks, 'students taught')}</div>
-      <p class="sub">${naira(P.rate)} for every active student assigned to a teacher, tutor or admin. A student with two teachers counts for both. ${P.live ? 'This month follows the live student lists.' : 'Unpaid amounts for past months use today’s student lists.'}</p></article>
+      <div class="tiles" style="margin-top:14px">${tile(naira(P.total), 'total payout for ' + mlabel(P.month))}${tile(naira(P.dueTotal), 'still to pay', P.dueTotal > 0)}${tile(naira(P.paidTotal), 'paid so far')}${tile(P.staffCount, 'staff to pay')}${tile(P.studentLinks, 'students taught')}</div>
+      <p class="sub">${naira(P.rate)} for every active student assigned to a teacher or tutor. Admins are paid a fixed ${naira(P.adminRate)} a month instead. A student with two teachers counts for both. ${P.live ? 'This month follows the live student lists.' : 'Unpaid amounts for past months use today’s student lists.'}</p></article>
     <article class="c w12"><h2>Who to pay</h2><p class="sub">Open a name for their students, classes and bank details. Send the transfer from your bank app first, then enter the reference and mark it paid.</p>
       ${P.staff.length ? P.staff.map(card).join('') : empty('No staff have students assigned yet.')}</article>
     ${P.idle.length ? `<article class="c w12"><h2>On the staff list with no students</h2><p class="sub">${P.idle.map((i) => esc(i.Name) + ' (' + esc(i.Programme) + ')').join(' · ')}</p></article>` : ''}

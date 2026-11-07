@@ -1,12 +1,14 @@
 /**
  * Staff pay (Salaries.gs), shown in the owner portal under "Pay".
  *
- * Every teacher, tutor, facilitator and admin who has students is paid SAL_RATE (5,000) for each active student
- * assigned to them. It reads:
+ * Every teacher, tutor and facilitator who has students is paid SAL_RATE (5,000) for each active student assigned
+ * to them. Anyone whose Role is Admin is paid a fixed SAL_ADMIN (30,000) a month instead, whatever their number of
+ * students (their students are still listed). It reads:
  *   Teachers + Students (Teacher column)   Madrasah and Teenagers Building Circle, including admins listed in Teachers
  *   AcademyTutors + AcademyStudents (TutorID)
  *   SkillsTutors + SkillsStudents (TutorID)
- * A student with two teachers counts for both. To pay one person a different rate, put a number in their "Rate" column.
+ *   AcademyAdmins and SkillsAdmins (fixed monthly salary, no students needed)
+ * A student with two teachers counts for both. To pay one person a different rate (or an admin a different salary), put a number in their "Rate" column.
  * Bank details live in BankName / AccountNumber / AccountName columns on those staff tabs (the owner can edit them
  * in the portal). The portal only RECORDS payments: send the transfer from your bank app, then Mark paid. Each
  * payment is saved to the "Salaries" tab with the roster as it was that day.
@@ -15,13 +17,16 @@
  */
 
 const SAL_RATE = 5000;
+const SAL_ADMIN = 30000; // monthly salary of an admin
 const SAL_TAB = 'Salaries';
 const SAL_HEAD = ['Month', 'StaffKey', 'Name', 'Programme', 'Students', 'Rate', 'Amount', 'Status', 'PaidDate', 'Reference', 'PaidBy', 'Roster'];
 const SAL_STAFF_COLS = ['BankName', 'AccountNumber', 'AccountName', 'Rate'];
 const SAL_SOURCES = [
   { tab: 'Teachers', idf: 'TeacherID', code: 'M', students: 'Students', link: 'Teacher', multi: true },
   { tab: 'AcademyTutors', idf: 'TutorID', code: 'A', students: 'AcademyStudents', link: 'TutorID', multi: false },
-  { tab: 'SkillsTutors', idf: 'TutorID', code: 'S', students: 'SkillsStudents', link: 'TutorID', multi: false }
+  { tab: 'SkillsTutors', idf: 'TutorID', code: 'S', students: 'SkillsStudents', link: 'TutorID', multi: false },
+  { tab: 'AcademyAdmins', idf: 'AdminID', code: 'AA', students: null, fixed: true },
+  { tab: 'SkillsAdmins', idf: 'AdminID', code: 'SA', students: null, fixed: true }
 ];
 
 function sal_ensure_(name, cols) {
@@ -44,7 +49,7 @@ function sal_staff_() {
   const out = [];
   SAL_SOURCES.forEach(function (src) {
     let T; try { T = table_(src.tab); } catch (e) { return; }
-    let S = { rows: [] }; try { S = table_(src.students); } catch (e) {}
+    let S = { rows: [] }; try { if (src.students) S = table_(src.students); } catch (e) {}
     const active = S.rows.filter(function (s) { return s.StudentID && key_(s.Active) !== 'FALSE'; });
     T.rows.forEach(function (t) {
       const id = String(t[src.idf] || '').trim(); if (!id || key_(t.Active) === 'FALSE') return;
@@ -60,9 +65,9 @@ function sal_staff_() {
         return { ID: String(s.StudentID).trim(), Name: String(s.Name || ''), Class: cls, Programme: prog };
       });
       const progs = {}; mine.forEach(function (s) { progs[s.Programme] = 1; });
-      const prog = src.code === 'M' ? (Object.keys(progs).join(' + ') || 'Madrasah') : (src.code === 'A' ? 'Academy' : 'Skills School');
-      const rate = Number(t.Rate) > 0 ? Number(t.Rate) : SAL_RATE;
-      out.push({ Key: src.code + ':' + id, ID: id, Name: name, Role: String(t.Role || (src.code === 'M' ? 'Teacher' : 'Tutor')), Programme: prog, Rate: rate, Students: mine,
+      const prog = src.code === 'M' ? (Object.keys(progs).join(' + ') || 'Madrasah') : (/^S/.test(src.code) ? 'Skills School' : 'Academy');
+      const admin = !!src.fixed || /admin/i.test(String(t.Role || '')), rate = Number(t.Rate) > 0 ? Number(t.Rate) : (admin ? SAL_ADMIN : SAL_RATE);
+      out.push({ Key: src.code + ':' + id, ID: id, Name: name, Role: String(t.Role || (src.fixed ? 'Admin' : src.code === 'M' ? 'Teacher' : 'Tutor')), Programme: prog, Rate: rate, Fixed: admin, Students: mine,
         Email: String(t.Email || ''), WhatsApp: String(t.WhatsApp || ''), Bank: String(t.BankName || ''), AccountNumber: String(t.AccountNumber || ''), AccountName: String(t.AccountName || ''), _src: src });
     });
   });
@@ -78,9 +83,9 @@ function sal_payload_(p) {
   P.rows.forEach(function (r) { if (String(r.Month) === month && String(r.Status) === 'Paid') paid[String(r.StaffKey)] = r; });
   let total = 0, paidTotal = 0, studentLinks = 0;
   const staff = sal_staff_().map(function (s) {
-    const pr = paid[s.Key], live = s.Students.length * s.Rate;
+    const pr = paid[s.Key], live = s.Fixed ? s.Rate : s.Students.length * s.Rate;
     const o = { Key: s.Key, ID: s.ID, Name: s.Name, Role: s.Role, Programme: s.Programme, Email: s.Email, WhatsApp: s.WhatsApp, Bank: s.Bank, AccountNumber: s.AccountNumber, AccountName: s.AccountName,
-      Rate: pr ? Number(pr.Rate) || s.Rate : s.Rate, Students: s.Students, Count: s.Students.length, Amount: live, Status: 'Due', PaidDate: '', Reference: '', RateSet: s.Rate };
+      Fixed: s.Fixed, Rate: pr ? Number(pr.Rate) || s.Rate : s.Rate, Students: s.Students, Count: s.Students.length, Amount: live, Status: 'Due', PaidDate: '', Reference: '', RateSet: s.Rate };
     if (pr) {
       o.Status = 'Paid'; o.Amount = Number(pr.Amount) || 0; o.Count = Number(pr.Students) || 0; o.PaidDate = iso_(pr.PaidDate); o.Reference = String(pr.Reference || '');
       o.Students = String(pr.Roster || '').split('\n').filter(Boolean).map(function (line) { const q = line.split('|'); return { ID: q[0] || '', Name: q[1] || '', Class: q[2] || '' }; });
@@ -88,11 +93,11 @@ function sal_payload_(p) {
     }
     total += o.Amount; if (pr) paidTotal += o.Amount; studentLinks += o.Count;
     return o;
-  }).filter(function (o) { return o.Count > 0 || o.Status === 'Paid'; });
+  }).filter(function (o) { return o.Count > 0 || o.Fixed || o.Status === 'Paid'; });
   staff.sort(function (a, b) { return (a.Status === 'Paid') - (b.Status === 'Paid') || b.Amount - a.Amount || (a.Name < b.Name ? -1 : 1); });
   // everyone listed in the staff tabs without students, so the owner can still add bank details
-  const idle = sal_staff_().filter(function (s) { return !s.Students.length && !paid[s.Key]; }).map(function (s) { return { Key: s.Key, Name: s.Name, Role: s.Role, Programme: s.Programme }; });
-  return { month: month, months: months, rate: SAL_RATE, total: total, paidTotal: paidTotal, dueTotal: total - paidTotal, staffCount: staff.length, studentLinks: studentLinks,
+  const idle = sal_staff_().filter(function (s) { return !s.Students.length && !s.Fixed && !paid[s.Key]; }).map(function (s) { return { Key: s.Key, Name: s.Name, Role: s.Role, Programme: s.Programme }; });
+  return { month: month, months: months, rate: SAL_RATE, adminRate: SAL_ADMIN, total: total, paidTotal: paidTotal, dueTotal: total - paidTotal, staffCount: staff.length, studentLinks: studentLinks,
     paidCount: staff.filter(function (o) { return o.Status === 'Paid'; }).length, staff: staff, idle: idle, live: month === now };
 }
 
@@ -102,7 +107,7 @@ function sal_pay_(who, p) {
   if (!s) return { ok: false, error: 'Staff member not found.' };
   const T = sal_tab_();
   if (T.rows.some(function (r) { return String(r.Month) === month && String(r.StaffKey) === key && String(r.Status) === 'Paid'; })) return { ok: true, message: 'Already marked as paid.' };
-  const amount = s.Students.length * s.Rate;
+  const amount = s.Fixed ? s.Rate : s.Students.length * s.Rate;
   if (!(amount > 0)) return { ok: false, error: 'No students assigned, so nothing to pay.' };
   const ref = String(p.reference || '').replace(/[\u0000-\u001f]/g, ' ').trim().slice(0, 80);
   const roster = s.Students.map(function (x) { return [x.ID, x.Name, x.Class].join('|').replace(/\n/g, ' '); }).join('\n');

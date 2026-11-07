@@ -21,3 +21,16 @@ html[dir="rtl"] .theme-btn.theme-float { right: auto; left: 14px; }
 @media print { html[data-theme="dark"] { filter: none; } .theme-btn { display: none; } }
 /* blocks that are deliberately coloured keep their original look */
 html[data-theme="dark"] .ja-cover { filter: invert(1) hue-rotate(180deg); }
+
+/* keep the menu button visible on phones: the pill is narrow, so the extras shrink */
+@media (max-width: 600px) {
+  .h-pill .theme-btn { width: 34px; height: 34px; margin: 0 2px 0 auto; }
+  .h-pill .theme-btn svg { width: 16px; height: 16px; }
+  .h-pill > .lang { margin-left: 0; }
+  .h-pill > .lang .lang-btn { padding: 0 10px; min-width: 0; }
+  .h-pill > .lang .lang-btn svg + span, .h-pill > .lang .lang-btn .lang-cur { font-size: 12px; }
+  .h-pill .h-brand { font-size: 15px; min-width: 0; white-space: nowrap; }
+  .h-pill .h-tog { flex: none; }
+}
+@media (max-width: 380px) { .h-pill .h-brand { font-size: 14px; gap: 6px; } .h-pill > .lang .lang-btn .lang-cur { display: none; } }
+@media (max-width: 345px) { .h-pill .h-brand { font-size: 12.5px; gap: 5px; } .h-pill .h-brand svg { width: 16px; height: 20px; } .h-pill .theme-btn { width: 30px; height: 30px; } }
