@@ -1,13 +1,14 @@
 /* Arabic for the waitlist page. English on the left, Arabic on the right: edit the Arabic to change what visitors see.
    Keys starting with re: are patterns for text with numbers or names in it ($1, $2 are the parts kept). */
 HS_I18N.add({
-"Join the waitlist — Himaayah Schools": "قائمة الانتظار — مدرسة حماية",
+"Join the waitlist — Himaayah Schools": "قائمة الانتظار — مدارس حماية",
 "Madrasah group and one-year Hifdh classes are full for now. Join the waitlist and we will email you as soon as a place opens.": "فصول المدرسة الشرعية الجماعية ومسار حفظ السنة الواحدة ممتلئة حاليًا. انضم إلى قائمة الانتظار وسنراسلك فور توفّر مقعد.",
 "Waitlist": "قائمة الانتظار",
 "These classes are full. Save a place in line.": "هذه الفصول ممتلئة. احجز مكانك في الدور.",
 "Madrasah group classes and the one-year Hifdh track are not taking new students right now. Join the waitlist and we will email you the moment a place opens, in the order families joined.": "لا تقبل الفصول الجماعية في المدرسة الشرعية ولا مسار حفظ السنة الواحدة طلابًا جددًا الآن. انضم إلى قائمة الانتظار وسنراسلك بالبريد فور توفّر مقعد، بحسب ترتيب انضمام الأسر.",
 "Plan": "الخطة",
 "Hifdh Only (Group) · ₦12,000 a month": "الحفظ فقط (جماعي) · 12,000 نيرة شهريًا",
+"Full Madrasah (Group), hifdh completed elsewhere · ₦15,000 a month": "المدرسة الشرعية الكاملة (جماعي)، لمن أتمّ حفظه في مكان آخر · 15,000 نيرة شهريًا",
 "Full Madrasah (Group) · ₦20,000 a month": "المدرسة الشرعية الكاملة (جماعي) · 20,000 نيرة شهريًا",
 "One-Year Hifdh · ₦19,000 a month for 12 months": "حفظ السنة الواحدة · 19,000 نيرة شهريًا لمدة 12 شهرًا",
 "Hifdh Only (Group)": "الحفظ فقط (جماعي)",

@@ -17,7 +17,7 @@ const EN_SCHOOL_WA = '2347047226487';   // the school's WhatsApp number, used fo
 const EN_STAFF_EMAILS = [];        // extra staff emails to alert when a new student pays (the script owner is always alerted)
 const EN_ADULT_AGE = 18;
 const EN_MAX_PER_HOUR = 8;       // new submissions allowed per email address per hour (retries of the same Ref don't count)
-const EN_CLOSED_PLANS = ['Madrasah \u2014 Hifdh Only (Group)', 'Madrasah \u2014 Full Madrasah (Group)', 'Madrasah \u2014 One-Year Hifdh'];   // keep in step with enroll.html
+const EN_CLOSED_PLANS = ['Madrasah \u2014 Hifdh Only (Group)', 'Madrasah \u2014 Full Madrasah (Group)', 'Madrasah \u2014 Full Madrasah (Group, hifdh completed elsewhere)', 'Madrasah \u2014 One-Year Hifdh'];   // keep in step with enroll.html
 const EN_INVITES = { 'Madrasah \u2014 One-Year Hifdh': 'HIFDH-1Y7K' };   // invite code that opens a closed plan for current students (keep in step with api/checkout.mjs)
 
 const EN_OPENS = {};   // plan name -> 'YYYY-MM-DD' it opens (West Africa time). Before then it cannot be enrolled in. Keep in step with enroll.html and api/checkout.mjs. Example: { 'Skills School \u2014 Graphic Design': '2026-12-01' }
@@ -30,7 +30,7 @@ const EN_HEADERS = ['Ref', 'Submitted', 'Status', 'StudentName', 'DOB', 'Age', '
 
 const EN_PLANS = {
   'Teenagers Building Circle \u2014 Full Programme': [40000, '/mo'],
-  'Madrasah \u2014 Hifdh Only (Group)': [12000, '/mo'], 'Madrasah \u2014 Full Madrasah (Group)': [20000, '/mo'],
+  'Madrasah \u2014 Hifdh Only (Group)': [12000, '/mo'], 'Madrasah \u2014 Full Madrasah (Group)': [20000, '/mo'], 'Madrasah \u2014 Full Madrasah (Group, hifdh completed elsewhere)': [15000, '/mo'],
   'Madrasah \u2014 Hifdh Only (Personal)': [20000, '/mo'], 'Madrasah \u2014 Full Madrasah (Personal)': [35000, '/mo'],
   'Madrasah \u2014 One-Year Hifdh': [19000, '/mo'],
   'Madrasah \u2014 Muraajah (Group)': [14000, '/mo'], 'Madrasah \u2014 Muraajah (Personal)': [20000, '/mo'],
@@ -82,12 +82,14 @@ function enrolFromRequest(req) {
       if (referral && en_headers(sh).indexOf('Referral') < 0) sh.getRange(1, sh.getLastColumn() + 1).setValue('Referral').setFontWeight('bold');
       if (en_headers(sh).indexOf('RegFee') < 0) sh.getRange(1, sh.getLastColumn() + 1).setValue('RegFee').setFontWeight('bold');
       if (prepaid && en_headers(sh).indexOf('PaidUntil') < 0) sh.getRange(1, sh.getLastColumn() + 1).setValue('PaidUntil').setFontWeight('bold');
+      const regpass = en_str(req.regpass, 30).toUpperCase();                  // test code: the registration fee was already paid (PlacementTests.gs)
+      const passPaid = !invited && regpass && typeof pt_passRedeem_ === 'function' && pt_passRedeem_(regpass, d.ref, true);
       const age = en_age(d.dob), adult = age !== null && age >= EN_ADULT_AGE;
       const loginTo = adult && d.studentEmail ? d.studentEmail : d.kinEmail;
       en_append(sh, {
         Ref: d.ref, Submitted: en_stamp(new Date()), Status: card ? 'Awaiting card payment' : prepaid ? 'Already paid (check)' : 'Receipt sent', PayMethod: card ? 'Card' : prepaid ? 'Paid before website' : 'Bank transfer', PaidUntil: paidUntil, StudentName: d.name, DOB: d.dob, Age: age === null ? '' : age, GradeLevel: d.grade,
-        RegFee: invited ? 0 : EN_REG_FEE, Programme: d.programme, Plan: d.plan, Amount: plan[0], Period: plan[1], KinName: d.kinName, KinRelationship: d.kinRel, KinPhone: d.kinPhone,
-        KinEmail: d.kinEmail, StudentEmail: d.studentEmail, LoginTo: adult ? 'Student (18+)' : 'Parent or guardian', LoginEmail: loginTo, Referral: referral, Notes: invited ? 'Returning student (invite link)' + (prepaid ? '. Says the fee was paid before the website; next due ' + paidUntil + '. Check the old payment, then set Status to Confirmed.' : '') : '',
+        RegFee: (invited || passPaid) ? 0 : EN_REG_FEE, Programme: d.programme, Plan: d.plan, Amount: plan[0], Period: plan[1], KinName: d.kinName, KinRelationship: d.kinRel, KinPhone: d.kinPhone,
+        KinEmail: d.kinEmail, StudentEmail: d.studentEmail, LoginTo: adult ? 'Student (18+)' : 'Parent or guardian', LoginEmail: loginTo, Referral: referral, Notes: invited ? 'Returning student (invite link)' + (prepaid ? '. Says the fee was paid before the website; next due ' + paidUntil + '. Check the old payment, then set Status to Confirmed.' : '') : (passPaid ? 'Registration fee already paid with test code ' + regpass : ''),
       });
     } finally { lock.releaseLock(); }
     if (card && typeof card_rematch_ === 'function') { try { card_rematch_(d.ref); } catch (e) { console.error(e); } }   // payment arrived first (CardPayments.gs)

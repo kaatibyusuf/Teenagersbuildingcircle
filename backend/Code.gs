@@ -438,6 +438,7 @@ function dailyJob() {
   if (typeof sk_dailyJob_ === 'function') { try { sk_dailyJob_(); } catch (e) { console.error(e); } }     // Skills.gs
   if (typeof nl_dailyJob_ === 'function') { try { nl_dailyJob_(); } catch (e) { console.error(e); } }     // Newsletter.gs
   if (typeof rp_dailyJob_ === 'function') { try { rp_dailyJob_(); } catch (e) { console.error(e); } }     // monthly progress reports (Reports.gs)
+  if (typeof rc_dailyJob_ === 'function') { try { rc_dailyJob_(); } catch (e) { console.error(e); } }     // term report cards still queued (ReportCards.gs)
   if (typeof tr_dailyJob_ === 'function') { try { tr_dailyJob_(); } catch (e) { console.error(e); } }     // trial class reminders and follow-ups (Trials.gs)
   trimReminders_();
 }
@@ -506,6 +507,8 @@ function onOpen() {
       .addItem('Email the waitlist (reopened plans)', 'emailWaitlist')
       .addItem('Progress reports: send me a sample', 'reportSample')
       .addItem("Progress reports: send this month's now", 'reportsSendNow')
+      .addItem('Term report cards: send me a sample', 'reportCardSample')
+      .addItem('Term report cards: send to parents', 'reportCardsSend')
       .addItem('Set up the owner dashboard', 'ownerSetup')
       .addItem('Set up sponsorship tabs', 'sponsorSetup')
       .addItem('Set up the timetable', 'timetableSetup')
