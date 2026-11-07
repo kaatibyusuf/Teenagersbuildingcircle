@@ -175,7 +175,8 @@
         <p class="step-sub">Pick the programme, then the plan inside it.</p>
         <div class="prog-pills" id="progPills"></div>
         <div class="plan-options" id="planOptions"></div>
-        <p class="err-msg plan-err" data-field="plan">Select a plan to continue.</p>
+        <p class="err-msg plan-err" data-field="plan" id="planErr">Select a plan to continue.</p>
+        <div class="plan-extra" id="planExtra" hidden></div>
         <div class="step-actions">
           <button type="button" class="btn btn-primary" data-next>Save & Continue</button>
           <button type="button" class="btn btn-secondary" data-back>Back</button>
@@ -400,7 +401,7 @@
   function savedRef() {
     try { const v = JSON.parse(localStorage.getItem(REF_KEY) || 'null'); return v && v.code ? v.code : ''; } catch (e) { return ''; }
   }
-  const state = { step: 1, student: {}, programmeId: initialProgrammeId, plan: initialPlan, ref: null, sent: false };
+  const state = { step: 1, student: {}, programmeId: initialProgrammeId, plan: initialPlan, ref: null, sent: false, extra: {} };
 
   const steps = document.querySelectorAll('.step');
   const stepper = document.getElementById('stepper');
@@ -516,8 +517,14 @@
 
   document.getElementById('step2').querySelector('[data-next]').addEventListener('click', () => {
     const errMsg = document.querySelector('[data-field="plan"]');
-    if (!state.plan) { errMsg.style.display = 'block'; return; }
+    if (!state.plan) { errMsg.textContent = 'Select a plan to continue.'; errMsg.style.display = 'block'; return; }
+    const age = ageFrom((state.student || {}).dob);
+    if (state.programmeId === 'circle' && age !== null && (age < 13 || age > 19)) {
+      errMsg.textContent = 'Teenagers Building Circle is for ages 13 to 19. If you think an exception applies, message us on WhatsApp: +234 704 722 6487.';
+      errMsg.style.display = 'block'; return;
+    }
     errMsg.style.display = 'none';
+    if (!extraValid()) return;
     renderPaySummary();
     showStep(3);
   });
@@ -542,6 +549,7 @@
         state.plan = null;
         renderProgPills();
         renderPlanOptions();
+        renderExtra();
       });
       progPills.appendChild(btn);
     });
@@ -585,6 +593,7 @@
         state.plan = plan;
         planOptions.querySelectorAll('.plan-opt').forEach((el) => el.classList.remove('selected'));
         wrap.classList.add('selected');
+        renderExtra();
       });
       wrap.querySelector('[data-toggle]').addEventListener('click', (e) => {
         e.stopPropagation();
@@ -598,6 +607,109 @@
 
   renderProgPills();
   renderPlanOptions();
+  renderExtra();
+
+
+  // =================================================================
+  // Questions that depend on the programme and plan. Required ones must be
+  // answered before step 3. The answers go to the sheet (ProgrammeDetails
+  // column) and into the WhatsApp message.
+  // =================================================================
+  const Q_DEVICE = ['Phone', 'Tablet', 'Laptop or computer'];
+  const EXTRA_SPEC = {
+    madrasah: [
+      { note: 'Muraajah is for students who have completed the Qur’an.', p: /Muraajah/ },
+      { k: 'quran', l: 'Qur’an memorised so far', o: ['None yet', 'Still learning to read the Qur’an', 'Reads fluently, not yet memorising', 'Memorised 1 to 5 juz', 'Memorised 6 to 10 juz', 'Memorised 11 to 20 juz', 'Memorised 21 to 29 juz', 'Memorised the whole Qur’an'], r: 1 },
+      { k: 'tajweed', l: 'Knowledge of tajweed', o: ['None', 'Basic rules', 'Good, can apply the rules'], r: 1 },
+      { k: 'arabic', l: 'Reading Arabic', o: ['Cannot read Arabic yet', 'Reads slowly, with mistakes', 'Reads fluently'], r: 1 },
+      { k: 'prevTeacher', l: 'Previous madrasah or teacher', ph: 'Optional' },
+      { note: 'We will arrange a short oral recitation assessment, and we will ask for a letter from the previous teacher or madrasah.', p: /hifdh completed elsewhere/ },
+      { k: 'doneWhere', l: 'Where did the student complete hifdh?', ph: 'Madrasah or teacher’s name, and town', r: 1, p: /hifdh completed elsewhere/ },
+      { k: 'doneTeacher', l: 'Previous teacher: name and phone number', ph: 'Who can write the letter', r: 1, p: /hifdh completed elsewhere/ },
+      { k: 'doneYear', l: 'Year hifdh was completed', ph: 'Optional', p: /hifdh completed elsewhere/ },
+      { k: 'classTime', l: 'Preferred class time (private classes)', o: ['Early morning', 'Morning', 'Afternoon', 'Evening', 'Night', 'Flexible'], p: /Personal/ },
+    ],
+    academy: [
+      { k: 'examYear', l: 'Exam year', o: ['2027', '2028', '2029', 'Later'], r: 1 },
+      { k: 'examBody', l: 'Exam body', o: ['WAEC', 'NECO', 'Both'], r: 1, p: /O-Levels/ },
+      { k: 'examBoard', l: 'Exam board', o: ['Cambridge', 'Edexcel', 'Other or not sure'], r: 1, p: /A-Levels/ },
+      { k: 'subjects', l: 'Subjects to study', ph: 'e.g. English, Mathematics, Physics, Chemistry', r: 1 },
+      { k: 'course', l: 'Course and institution aimed at', ph: 'e.g. Medicine, University of Ilorin', p: /UTME|Post-UTME/ },
+      { k: 'attempt', l: 'Has the student written this exam before?', o: ['No, first time', 'Yes, once', 'Yes, more than once'], r: 1 },
+      { k: 'lastScore', l: 'Last score or result', ph: 'Optional' },
+      { k: 'school', l: 'Current school', ph: 'Optional' },
+    ],
+    circle: [
+      { note: 'The programme is for ages 13 to 19 and starts on 1 December 2026.' },
+      { k: 'permission', l: 'Permission to join the live online sessions (Google Meet)', o: ['Yes, permission is given by a parent or guardian, or the student is 18 or over'], r: 1 },
+      { k: 'sessions', l: 'Can the student attend the four live sessions each week?', o: ['Yes', 'Most of them', 'Not sure yet'], r: 1 },
+      { k: 'goals', l: 'What does the student hope to gain?', ph: 'Optional' },
+    ],
+    skills: [
+      { k: 'level', l: 'Experience with this skill', o: ['None, a complete beginner', 'Some experience', 'Experienced, wants to sharpen it'], r: 1 },
+      { k: 'computer', l: 'Will the student have a laptop or computer for classes?', o: ['Yes', 'No, phone only'], r: 1, p: /Graphic Design|Data Analysis/ },
+      { k: 'toolsDesign', l: 'Design tools used before', ph: 'e.g. Canva, Photoshop. Optional', p: /Graphic Design/ },
+      { k: 'toolsData', l: 'Tools used before', ph: 'e.g. Excel, Google Sheets. Optional', p: /Data Analysis/ },
+      { k: 'goal', l: 'What does the student want to achieve with it?', ph: 'Optional' },
+    ],
+  };
+  const EXTRA_COMMON = [
+    { k: 'device', l: 'Device the student will learn on', o: Q_DEVICE, r: 1 },
+    { k: 'internet', l: 'Internet connection', o: ['Good and steady', 'Fair, it sometimes drops', 'Weak or data is expensive'] },
+    { k: 'heard', l: 'How did you hear about us?', o: ['Instagram', 'Facebook', 'WhatsApp', 'TikTok', 'YouTube', 'A friend or family member', 'Google search', 'A school or mosque', 'Other'] },
+    { k: 'notes', l: 'Anything we should know to teach the student well', ph: 'Optional' },
+  ];
+  function extraFields() {
+    if (!state.plan) return [];
+    const name = state.plan.name;
+    return (EXTRA_SPEC[state.programmeId] || []).concat(EXTRA_COMMON).filter((f) => !f.p || f.p.test(name));
+  }
+  function renderExtra() {
+    const box = document.getElementById('planExtra');
+    const fields = extraFields();
+    box.innerHTML = '';
+    box.hidden = !fields.length;
+    if (!fields.length) return;
+    const h = document.createElement('p'); h.className = 'group-label'; h.textContent = 'About the student and the programme'; box.appendChild(h);
+    fields.forEach((f) => {
+      if (f.note) { const n = document.createElement('p'); n.className = 'plan-closed-note'; n.textContent = f.note; box.appendChild(n); return; }
+      const wrap = document.createElement('div'); wrap.className = 'field'; wrap.dataset.extra = f.k;
+      const lab = document.createElement('label'); lab.textContent = f.l + ' ';
+      const mark = document.createElement('span'); mark.className = f.r ? 'req' : 'opt'; mark.textContent = f.r ? '*' : '(optional)'; lab.appendChild(mark);
+      wrap.appendChild(lab);
+      let input;
+      if (f.o) {
+        input = document.createElement('select');
+        const first = document.createElement('option'); first.value = ''; first.textContent = 'Select one'; input.appendChild(first);
+        f.o.forEach((o) => { const op = document.createElement('option'); op.textContent = o; input.appendChild(op); });
+      } else {
+        input = document.createElement('input'); input.type = 'text'; input.maxLength = 200; if (f.ph) input.placeholder = f.ph;
+      }
+      input.name = 'x_' + f.k;
+      input.value = state.extra[f.k] || '';
+      input.addEventListener('input', () => { state.extra[f.k] = input.value; wrap.classList.remove('error'); });
+      input.addEventListener('change', () => { state.extra[f.k] = input.value; wrap.classList.remove('error'); });
+      wrap.appendChild(input);
+      const er = document.createElement('p'); er.className = 'err-msg'; er.textContent = f.o ? 'Select one.' : 'This is required.'; wrap.appendChild(er);
+      box.appendChild(wrap);
+    });
+  }
+  function extraValid() {
+    let first = null;
+    extraFields().forEach((f) => {
+      if (!f.k) return;
+      const el = document.querySelector('#planExtra [data-extra="' + f.k + '"]');
+      if (!el) return;
+      const bad = !!f.r && !String(state.extra[f.k] || '').trim();
+      el.classList.toggle('error', bad);
+      if (bad && !first) first = el;
+    });
+    if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return !first;
+  }
+  function extraLines() {
+    return extraFields().filter((f) => f.k && String(state.extra[f.k] || '').trim()).map((f) => [f.l, String(state.extra[f.k]).trim()]);
+  }
 
   // Short reference that ties the WhatsApp receipt to the row in the sheet
   function newRef() {
@@ -696,6 +808,8 @@
     ];
     if (s.studentEmail) lines.push('Student email: ' + s.studentEmail);
     if (s.referral) lines.push('Referral code: ' + s.referral);
+    const ex = extraLines();
+    if (ex.length) { lines.push('', 'ABOUT THE PROGRAMME'); ex.forEach((p) => lines.push(p[0] + ': ' + p[1])); }
     lines.push(
       '',
       'NEXT OF KIN',
@@ -728,6 +842,7 @@
       paidUntil: method === 'paid' ? (document.getElementById('paidUntil').value || '') : '',
       invite: invitedPlan && state.plan === invitedPlan ? INVITE : '',
       regpass: passValid ? passAsked : '',
+      extra: extraLines(),
     };
     const status = document.getElementById('enrolStatus');
     return fetch(API_URL, {

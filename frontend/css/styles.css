@@ -4910,3 +4910,7 @@ html[dir="rtl"] :is(.page-hadith-bootcamp, .page-bootcamp) :is(.bc-t, .bc-tt) i,
 }
 
 .site.page-hadith-bootcamp .bc-opens { display: inline-block; background: #FFF4E0; color: #7A4A00; border-radius: 14px; padding: 10px 16px; margin: 18px 0 0; font-weight: 600; }
+
+/* programme-specific questions on the enrol form */
+.page-enroll .plan-extra { margin-top: 28px; }
+.page-enroll .plan-extra .group-label { margin-bottom: 14px; }

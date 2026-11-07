@@ -26,7 +26,7 @@ const EN_REG_FEE = 3000;   // one-time registration fee on the first payment (wa
 
 const EN_HEADERS = ['Ref', 'Submitted', 'Status', 'StudentName', 'DOB', 'Age', 'GradeLevel', 'Programme', 'Plan', 'Amount', 'Period',
   'KinName', 'KinRelationship', 'KinPhone', 'KinEmail', 'StudentEmail', 'LoginTo', 'LoginEmail', 'StudentID', 'AccountCreated', 'WhatsAppLink', 'Notes',
-  'PayMethod', 'CardPayment', 'Referral', 'PaidUntil', 'RegFee'];
+  'PayMethod', 'CardPayment', 'Referral', 'PaidUntil', 'RegFee', 'ProgrammeDetails'];
 
 const EN_PLANS = {
   'Teenagers Building Circle \u2014 Full Programme': [40000, '/mo'],
@@ -82,6 +82,8 @@ function enrolFromRequest(req) {
       if (referral && en_headers(sh).indexOf('Referral') < 0) sh.getRange(1, sh.getLastColumn() + 1).setValue('Referral').setFontWeight('bold');
       if (en_headers(sh).indexOf('RegFee') < 0) sh.getRange(1, sh.getLastColumn() + 1).setValue('RegFee').setFontWeight('bold');
       if (prepaid && en_headers(sh).indexOf('PaidUntil') < 0) sh.getRange(1, sh.getLastColumn() + 1).setValue('PaidUntil').setFontWeight('bold');
+      const details = Array.isArray(req.extra) ? req.extra.slice(0, 16).filter(p => Array.isArray(p)).map(p => en_str(p[0], 70) + ': ' + en_str(p[1], 220)).join(' | ') : '';   // programme-specific answers from the enrol form
+      if (details && en_headers(sh).indexOf('ProgrammeDetails') < 0) sh.getRange(1, sh.getLastColumn() + 1).setValue('ProgrammeDetails').setFontWeight('bold');
       const regpass = en_str(req.regpass, 30).toUpperCase();                  // test code: the registration fee was already paid (PlacementTests.gs)
       const passPaid = !invited && regpass && typeof pt_passRedeem_ === 'function' && pt_passRedeem_(regpass, d.ref, true);
       const age = en_age(d.dob), adult = age !== null && age >= EN_ADULT_AGE;
@@ -89,7 +91,7 @@ function enrolFromRequest(req) {
       en_append(sh, {
         Ref: d.ref, Submitted: en_stamp(new Date()), Status: card ? 'Awaiting card payment' : prepaid ? 'Already paid (check)' : 'Receipt sent', PayMethod: card ? 'Card' : prepaid ? 'Paid before website' : 'Bank transfer', PaidUntil: paidUntil, StudentName: d.name, DOB: d.dob, Age: age === null ? '' : age, GradeLevel: d.grade,
         RegFee: (invited || passPaid) ? 0 : EN_REG_FEE, Programme: d.programme, Plan: d.plan, Amount: plan[0], Period: plan[1], KinName: d.kinName, KinRelationship: d.kinRel, KinPhone: d.kinPhone,
-        KinEmail: d.kinEmail, StudentEmail: d.studentEmail, LoginTo: adult ? 'Student (18+)' : 'Parent or guardian', LoginEmail: loginTo, Referral: referral, Notes: invited ? 'Returning student (invite link)' + (prepaid ? '. Says the fee was paid before the website; next due ' + paidUntil + '. Check the old payment, then set Status to Confirmed.' : '') : (passPaid ? 'Registration fee already paid with test code ' + regpass : ''),
+        KinEmail: d.kinEmail, StudentEmail: d.studentEmail, LoginTo: adult ? 'Student (18+)' : 'Parent or guardian', LoginEmail: loginTo, Referral: referral, ProgrammeDetails: details, Notes: invited ? 'Returning student (invite link)' + (prepaid ? '. Says the fee was paid before the website; next due ' + paidUntil + '. Check the old payment, then set Status to Confirmed.' : '') : (passPaid ? 'Registration fee already paid with test code ' + regpass : ''),
       });
     } finally { lock.releaseLock(); }
     if (card && typeof card_rematch_ === 'function') { try { card_rematch_(d.ref); } catch (e) { console.error(e); } }   // payment arrived first (CardPayments.gs)
