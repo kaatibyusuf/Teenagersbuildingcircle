@@ -6,7 +6,8 @@
  * things that need a decision. From it you can also:
  *   - mark a referral payout as Paid (the referrer is emailed),
  *   - review sponsorship requests and list them on sponsor.html,
- *   - pay a student's fees from the Sponsorship Fund.
+ *   - pay a student's fees from the Sponsorship Fund,
+ *   - see and record monthly staff pay (Salaries.gs: 5,000 per student, class lists and bank details).
  *
  * SETUP
  *   1. Add this file, then run Himaayah → Set up the owner dashboard. It creates an "Owners" tab with
@@ -40,6 +41,9 @@ function ownerFromRequest(p) {
     const a = String(p.action || ''), who = String(au.row.Name || au.row.OwnerID);
     let r = { ok: true };
     if (a === 'ow_payout') r = ow_payout_(p);
+    else if (a === 'ow_salpay') r = sal_pay_(who, p);
+    else if (a === 'ow_salundo') r = sal_undo_(p);
+    else if (a === 'ow_salbank') r = sal_bank_(p);
     else if (a === 'ow_allocate') r = typeof sp_allocate_ === 'function' ? sp_allocate_(who, p) : { ok: false, error: 'Sponsorships are not set up yet.' };
     else if (a === 'ow_request') r = typeof sp_saveRequest_ === 'function' ? sp_saveRequest_(p) : { ok: false, error: 'Sponsorships are not set up yet.' };
     else if (a === 'ow_testimonial') r = typeof tm_save_ === 'function' ? tm_save_(p) : { ok: false, error: 'Testimonials are not set up yet.' };
@@ -47,7 +51,9 @@ function ownerFromRequest(p) {
     else if (a === 'ow_password') r = acd_setCode_(au.t, au.row, p.newCode);
     else if (a !== 'ow_login') r = { ok: false, error: 'Unknown action.' };
     if (!r.ok) return r;
-    return Object.assign(ow_payload_(au.row), { message: r.message || '' });
+    const out = Object.assign(ow_payload_(au.row), { message: r.message || '' });
+    try { out.salaries = sal_payload_(p); } catch (e) { console.error(e); out.salaries = null; }
+    return out;
   } catch (err) {
     console.error(err);
     return { ok: false, error: /Missing tab "Owners"/.test(String(err.message)) ? 'The owner dashboard is not set up yet. Run Himaayah → Set up the owner dashboard.' : 'Something went wrong. Please try again.' };

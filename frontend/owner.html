@@ -52,15 +52,15 @@ const fdate = (iso, t) => { if (!iso) return '–'; const d = new Date(iso); ret
 const mname = (m) => new Date(m + '-01T00:00').toLocaleDateString('en-GB', { month: 'short' });
 const plural = (n, w) => n + ' ' + (n === 1 ? w : /[^aeiou]y$/.test(w) ? w.slice(0, -1) + 'ies' : /(s|sh|ch|x)$/.test(w) ? w + 'es' : w + 's');
 const change = (a, b) => b ? (a >= b ? '+' : '') + Math.round(100 * (a - b) / b) + '% on last month' : a ? 'none last month' : '';
-const TABS = [['overview', 'Overview'], ['fees', 'Fees'], ['placement', 'Placement tests'], ['referrals', 'Referrals'], ['sponsors', 'Sponsors'], ['stories', 'Stories'], ['growth', 'Growth'], ['reset', 'Reset code'], ['account', 'Account']];
+const TABS = [['overview', 'Overview'], ['fees', 'Fees'], ['placement', 'Placement tests'], ['referrals', 'Referrals'], ['pay', 'Staff pay'], ['sponsors', 'Sponsors'], ['stories', 'Stories'], ['growth', 'Growth'], ['reset', 'Reset code'], ['account', 'Account']];
 let D = null;
-const S = { tab: 'overview', open: {} };
+const S = { tab: 'overview', open: {}, month: '' };
 
 /* ---------- talking to the school server ---------- */
 const creds = () => { try { return JSON.parse(sessionStorage.getItem(KEY) || 'null') || {}; } catch (e) { return {}; } };
 async function api(action, extra) {
   const c = creds();
-  const r = await fetch(API_URL, { method: 'POST', body: JSON.stringify(Object.assign({ action, id: c.id, code: c.code }, extra || {})) });
+  const r = await fetch(API_URL, { method: 'POST', body: JSON.stringify(Object.assign({ action, id: c.id, code: c.code, month: S.month || undefined }, extra || {})) });
   return r.json();
 }
 let toastT;
@@ -143,6 +143,39 @@ function vReferrals() {
       ${R.due.length ? R.due.map((e) => `<div class="box ow-pay"><div class="ow-pay-l"><b>${naira(e.Amount)} to ${esc(e.Referrer)}</b><small>For ${esc(e.Student)} · ${esc(e.Plan.split(' — ').pop())} · since ${fdate(e.Created)}</small>
           <div class="ow-bank"><span>${esc(e.Bank)}</span><code translate="no">${esc(e.AccountNumber)}</code><span translate="no">${esc(e.AccountName)}</span><button class="btn btn-line btn-sm" type="button" data-act="copy" data-v="${esc(e.AccountNumber)}">Copy number</button></div></div>
         <form class="frm ow-pay-r" data-form="payout" data-id="${esc(e.EarningID)}"><div><label class="fl">Transfer reference</label><input class="in" name="reference" maxlength="80" placeholder="From your bank app"></div><button class="btn btn-ink" type="submit">Mark paid</button></form></div>`).join('') : empty('No payouts waiting.')}</article>
+  </div>`;
+}
+
+const mlabel = (m) => new Date(m + '-01T00:00').toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
+function vPay() {
+  const P = D.salaries;
+  if (!P) return `<article class="c w12">${empty('Staff pay could not load. Add Salaries.gs to Apps Script and deploy a new version.')}</article>`;
+  const card = (s) => {
+    const paid = s.Status === 'Paid', k = 'pay-' + s.Key + P.month;
+    const bankLine = s.AccountNumber ? `<div class="ow-bank"><span>${esc(s.Bank)}</span><code translate="no">${esc(s.AccountNumber)}</code><span translate="no">${esc(s.AccountName)}</span><button class="btn btn-line btn-sm" type="button" data-act="copy" data-v="${esc(s.AccountNumber)}">Copy number</button></div>` : '<p class="sub">No bank details yet. Add them below.</p>';
+    return `<details class="box" data-k="${esc(k)}"${S.open[k] ? ' open' : ''}><summary><div><b>${esc(s.Name)}</b><small>${esc(s.Role)} · ${esc(s.Programme)} · ${plural(s.Count, 'student')} × ${naira(s.Rate)}</small></div>
+      <div class="sum-r"><span class="pill ${paid ? 'p-ink' : 'p-red'}">${paid ? 'Paid' : 'To pay'}</span><b>${naira(s.Amount)}</b></div></summary>
+      <div class="body">
+        ${bankLine}
+        <div class="acx-scroll"><table><thead><tr><th>Student</th><th>Class</th></tr></thead><tbody>${s.Students.map((x) => `<tr><td>${esc(x.Name)}<br><span class="sub" translate="no">${esc(x.ID)}</span></td><td>${esc(x.Class || '–')}</td></tr>`).join('') || '<tr><td colspan="2">No students.</td></tr>'}</tbody></table></div>
+        ${paid ? `<p class="sub">Paid ${fdate(s.PaidDate)}${s.Reference ? ' · reference <span translate="no">' + esc(s.Reference) + '</span>' : ''}${s.Changed ? ' · students have changed since this was paid' : ''}</p>
+          <button class="btn btn-line btn-sm" type="button" data-act="salundo" data-key="${esc(s.Key)}">Undo this payment</button>`
+        : `<form class="frm ow-pay-r" data-form="salpay" data-key="${esc(s.Key)}" data-amount="${s.Amount}" data-name="${esc(s.Name)}"><div><label class="fl">Transfer reference</label><input class="in" name="reference" maxlength="80" placeholder="From your bank app"></div><button class="btn btn-ink" type="submit">Mark ${naira(s.Amount)} paid</button></form>`}
+        <form class="frm" data-form="salbank" data-key="${esc(s.Key)}"><div class="row3"><div><label class="fl">Bank</label><input class="in" name="bank" maxlength="60" value="${esc(s.Bank)}"></div>
+          <div><label class="fl">Account number</label><input class="in" name="accountNumber" inputmode="numeric" maxlength="10" value="${esc(s.AccountNumber)}"></div>
+          <div><label class="fl">Account name</label><input class="in" name="accountName" maxlength="80" value="${esc(s.AccountName)}"></div></div>
+          <div class="row3"><div><label class="fl">Rate per student (₦)</label><input class="in" name="rate" type="number" min="0" value="${s.RateSet === P.rate ? '' : s.RateSet}" placeholder="${P.rate}"></div></div>
+          <button class="btn btn-line btn-sm" type="submit">Save details</button></form>
+      </div></details>`;
+  };
+  return `<div class="grid">
+    <article class="c w12"><div class="acx-acts" style="justify-content:space-between;align-items:end"><div><label class="fl" for="salm">Month</label><select class="in" id="salm" data-change="salmonth">${P.months.map((m) => `<option value="${m}"${m === P.month ? ' selected' : ''}>${mlabel(m)}</option>`).join('')}</select></div>
+      <button class="btn btn-line btn-sm" type="button" data-act="salcsv">Download list (CSV)</button></div>
+      <div class="tiles" style="margin-top:14px">${tile(naira(P.total), 'total payout for ' + mlabel(P.month))}${tile(naira(P.dueTotal), 'still to pay', P.dueTotal > 0)}${tile(naira(P.paidTotal), 'paid so far')}${tile(P.staffCount, 'staff with students')}${tile(P.studentLinks, 'students taught')}</div>
+      <p class="sub">${naira(P.rate)} for every active student assigned to a teacher, tutor or admin. A student with two teachers counts for both. ${P.live ? 'This month follows the live student lists.' : 'Unpaid amounts for past months use today’s student lists.'}</p></article>
+    <article class="c w12"><h2>Who to pay</h2><p class="sub">Open a name for their students, classes and bank details. Send the transfer from your bank app first, then enter the reference and mark it paid.</p>
+      ${P.staff.length ? P.staff.map(card).join('') : empty('No staff have students assigned yet.')}</article>
+    ${P.idle.length ? `<article class="c w12"><h2>On the staff list with no students</h2><p class="sub">${P.idle.map((i) => esc(i.Name) + ' (' + esc(i.Programme) + ')').join(' · ')}</p></article>` : ''}
   </div>`;
 }
 const ST = ['New', 'Listed', 'Funded', 'Closed', 'Declined'];
@@ -247,7 +280,7 @@ function vStories() {
   return `<div class="grid"><article class="c w12"><h2>Stories from families</h2><p class="sub">New stories are not on the website until you approve them. Approved ones appear on Success stories, featured ones first. To ask every family for a story, run Himaayah → Ask families for a testimonial in the sheet.</p>
     ${L.length ? L.map(card).join('') : empty('No stories yet.')}</article></div>`;
 }
-const VIEWS = { overview: vOverview, fees: vFees, placement: vPlacementTab, stories: vStories, referrals: vReferrals, sponsors: vSponsors, growth: vGrowth, reset: () => ResetPanel.view(), account: vAccount };
+const VIEWS = { overview: vOverview, fees: vFees, placement: vPlacementTab, stories: vStories, referrals: vReferrals, pay: vPay, sponsors: vSponsors, growth: vGrowth, reset: () => ResetPanel.view(), account: vAccount };
 function render() {
   document.querySelectorAll('details[data-k]').forEach((x) => { S.open[x.dataset.k] = x.open; });
   const k = D.kpi;
@@ -268,12 +301,24 @@ app.addEventListener('click', async (e) => {
   if (a === 'tab') { S.tab = b.dataset.t; render(); window.scrollTo(0, 0); }
   else if (a === 'jump') { S.tab = b.dataset.t; render(); const el = document.querySelector(b.dataset.to); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
   else if (a === 'refresh') act('ow_login', {}, b);
+  else if (a === 'salundo') { if (confirm('Cancel this payment record? Do this only if it was marked paid by mistake.')) act('ow_salundo', { key: b.dataset.key }, b); }
+  else if (a === 'salcsv') {
+    const P = D.salaries, q = (x) => '"' + String(x == null ? '' : x).replace(/"/g, '""') + '"';
+    const rows = [['Name', 'Role', 'Programme', 'Students', 'Rate', 'Amount', 'Bank', 'Account number', 'Account name', 'Status']].concat(P.staff.map((s) => [s.Name, s.Role, s.Programme, s.Count, s.Rate, s.Amount, s.Bank, s.AccountNumber, s.AccountName, s.Status]));
+    const a2 = document.createElement('a'); a2.href = URL.createObjectURL(new Blob(['\ufeff' + rows.map((r) => r.map(q).join(',')).join('\n')], { type: 'text/csv' })); a2.download = 'staff-pay-' + P.month + '.csv'; a2.click();
+  }
   else if (a === 'copy') { try { await navigator.clipboard.writeText(b.dataset.v); toast('Account number copied.'); } catch (x) { toast(b.dataset.v); } }
 });
+app.addEventListener('change', (e) => { const el = e.target.closest('[data-change=salmonth]'); if (el) { S.month = el.value; act('ow_login', {}); } });
 app.addEventListener('submit', (e) => {
   e.preventDefault();
   const f = e.target, k = f.dataset.form, btn = f.querySelector('button[type=submit]'), v = (n) => (f.elements[n] ? f.elements[n].value : '');
-  if (k === 'payout') {
+  if (k === 'salpay') {
+    if (!confirm('Mark ' + naira(f.dataset.amount) + ' as paid to ' + f.dataset.name + '? Only do this after the transfer has gone through.')) return;
+    act('ow_salpay', { key: f.dataset.key, reference: v('reference').trim() }, btn);
+  } else if (k === 'salbank') {
+    act('ow_salbank', { key: f.dataset.key, bank: v('bank').trim(), accountNumber: v('accountNumber').trim(), accountName: v('accountName').trim(), rate: v('rate').trim() }, btn);
+  } else if (k === 'payout') {
     if (!confirm('Mark this payout as paid and email the referrer? Only do this after the transfer has gone through.')) return;
     act('ow_payout', { earningId: f.dataset.id, reference: v('reference').trim() }, btn);
   } else if (k === 'allocate') {
