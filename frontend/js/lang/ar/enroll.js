@@ -310,7 +310,7 @@ HS_I18N.add({
 "Anything we should know to teach the student well": "أي شيء ينبغي أن نعرفه لنُحسن تعليم الطالب",
 "Teenagers Building Circle is for ages 13 to 19. If you think an exception applies, message us on WhatsApp: +234 704 722 6487.": "حلقة بناء الناشئة للأعمار من 13 إلى 19 عامًا. وإذا رأيت أن حالتك تستحق استثناءً فراسلنا عبر واتساب: +234 704 722 6487.",
 "How many months do you want to pay for?": "كم شهرًا تريد أن تدفع؟",
-"Paying for more months at once means fewer payments to remember. The fee is the same for every month.": "الدفع لعدة أشهر دفعة واحدة يعني دفعات أقل لتتذكرها. الرسوم نفسها في كل شهر.",
+"Paying for more months at once means fewer payments to remember. The fee is the same for every month, and months that have not started can be refunded.": "الدفع لعدة أشهر دفعة واحدة يعني دفعات أقل لتتذكرها. الرسوم نفسها في كل شهر، ويمكن استرداد الأشهر التي لم تبدأ.",
 "Months paid for": "الأشهر المدفوعة",
 "1 month": "شهر واحد",
 "2 months": "شهران",

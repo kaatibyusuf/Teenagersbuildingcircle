@@ -96,7 +96,7 @@ HS_I18N.add({
 "Download prospectus": "نزّل الدليل التعريفي",
 "Prospectus 2026–2027": "الدليل التعريفي ⁦2026–2027⁩",
 "Read it all in one place.": "اقرأ كل شيء في مكان واحد.",
-"Our programmes, Madrasah levels, Academy results, every fee, the admission steps and our policies, in a 30-page PDF you can print or share with family.": "برامجنا، ومستويات المدرسة الشرعية، ونتائج الأكاديمية، وجميع الرسوم، وخطوات القبول، وسياساتنا، في ملف PDF من 30 صفحة يمكنك طباعته أو مشاركته مع أسرتك.",
+"Our programmes, Madrasah levels, Academy results, every fee, the admission steps and our policies, in a 35-page PDF you can print or share with family.": "برامجنا، ومستويات المدرسة الشرعية، ونتائج الأكاديمية، وجميع الرسوم، وخطوات القبول، وسياساتنا، في ملف PDF من 35 صفحة يمكنك طباعته أو مشاركته مع أسرتك.",
 "Cover of the Himaayah Schools Prospectus": "غلاف الدليل التعريفي لمدرسة حماية",
 "It takes about two minutes online. Pay by card and your place is confirmed straight away; bank transfers are usually confirmed within a few hours.": "يستغرق التسجيل نحو دقيقتين عبر الإنترنت. ادفع بالبطاقة ويُؤكَّد مقعدك فورًا، أما التحويلات البنكية فتُؤكَّد عادةً خلال ساعات قليلة.",
 "Pay by card or bank transfer": "ادفع بالبطاقة أو بالتحويل البنكي",

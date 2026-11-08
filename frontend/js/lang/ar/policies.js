@@ -158,5 +158,7 @@ HS_I18N.add({
 "We may remove a student from a class or programme for repeated serious misconduct. Where that happens after the two-week refund window, no refund applies.": "قد نُخرج طالبًا من حصة أو برنامج بسبب سوء سلوك جسيم متكرّر. وإذا حدث ذلك بعد مهلة الاسترداد البالغة أسبوعين، فلا يُطبَّق أي استرداد.",
 "We use a privacy-friendly visit counter to see which pages are read. It does not use cookies and does not follow you across other websites.": "نستخدم عدّادًا للزيارات يحترم الخصوصية لمعرفة الصفحات التي تُقرأ. وهو لا يستخدم ملفات تعريف الارتباط ولا يتتبعك عبر المواقع الأخرى.",
 "Tutors do not contact students of the opposite gender at any point.": "لا يتواصل المعلمون مع الطلاب من الجنس الآخر في أي وقت.",
-"Beyond teaching, tutors do not contact students of the opposite gender at any point.": "فيما عدا التدريس، لا يتواصل المعلمون مع الطلاب من الجنس الآخر في أي وقت."
+"Beyond teaching, tutors do not contact students of the opposite gender at any point.": "فيما عدا التدريس، لا يتواصل المعلمون مع الطلاب من الجنس الآخر في أي وقت.",
+"Paying several months ahead": "الدفع المسبق لعدة أشهر",
+"If you pay for several months at once, the months that have not yet started can be refunded, less the payment provider's charges. A month that has already started is not refundable, so please tell us before the next month begins if you want to stop.": "إذا دفعت عن عدة أشهر دفعة واحدة، فيمكن استرداد الأشهر التي لم تبدأ بعد، بعد خصم رسوم مزوّد الدفع. أما الشهر الذي بدأ فلا يُسترد، فيُرجى إخبارنا قبل بدء الشهر التالي إن أردت التوقف."
 });
