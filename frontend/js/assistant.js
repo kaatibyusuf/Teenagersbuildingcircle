@@ -5,12 +5,12 @@
   if (!menu) return;
   var AR = document.documentElement.getAttribute('lang') === 'ar';
   var T = AR ? {
-    entry: 'اسأل مساعدنا', entrySub: 'إجابات فورية عن البرامج والرسوم', title: 'مساعد حِمَايَة', sub: 'يجيب من معلومات المدرسة. للأمور الخاصة بحسابك راسل فريقنا.',
-    hi: 'السلام عليكم ورحمة الله. كيف أستطيع مساعدتك؟', ph: 'اكتب سؤالك…', send: 'إرسال', close: 'إغلاق', wa: 'راسلنا على واتساب', err: 'تعذّر الاتصال. حاول مرة أخرى أو راسلنا على واتساب.',
+    entry: 'اسأل مساعدنا', entrySub: 'إجابات فورية عن البرامج والرسوم', title: 'حارس · مساعد حِمَايَة', sub: 'يجيب من معلومات المدرسة. للأمور الخاصة بحسابك راسل فريقنا.',
+    hi: 'السلام عليكم ورحمة الله. أنا حارس، المساعد الآلي لمدرسة حِمَايَة. كيف أستطيع مساعدتك؟', ph: 'اكتب سؤالك…', send: 'إرسال', close: 'إغلاق', wa: 'راسلنا على واتساب', err: 'تعذّر الاتصال. حاول مرة أخرى أو راسلنا على واتساب.',
     chips: ['ما هي الرسوم؟', 'كيف أسجّل؟', 'اختبار تحديد المستوى']
   } : {
-    entry: 'Ask our assistant', entrySub: 'Quick answers on programmes and fees', title: 'Himaayah assistant', sub: 'Answers come from school information. For anything about your account, message our team.',
-    hi: 'Assalaamu alaykum. How can I help you today?', ph: 'Type your question…', send: 'Send', close: 'Close', wa: 'Message us on WhatsApp', err: 'Could not connect. Please try again or message us on WhatsApp.',
+    entry: 'Ask our assistant', entrySub: 'Quick answers on programmes and fees', title: 'Haris · Himaayah assistant', sub: 'Answers come from school information. For anything about your account, message our team.',
+    hi: 'Assalaamu alaykum. I am Haris, the Himaayah Schools assistant. How can I help you today?', ph: 'Type your question…', send: 'Send', close: 'Close', wa: 'Message us on WhatsApp', err: 'Could not connect. Please try again or message us on WhatsApp.',
     chips: ['What are the fees?', 'How do I enrol?', 'Placement test']
   };
   var css = '.hsa-btn{display:flex;flex-direction:column;align-items:flex-start;padding:11px 14px;border:0;border-radius:10px;background:#E3F2FD;color:#062F4D;font:600 14px/1.3 inherit;font-family:inherit;text-align:start;cursor:pointer}' +
