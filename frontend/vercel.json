@@ -9,6 +9,12 @@
   "functions": {
     "api/guide-download.mjs": {
       "includeFiles": "api/_paid/**"
+    },
+    "api/whatsapp.mjs": {
+      "includeFiles": "api/_wa/**"
+    },
+    "api/chat.mjs": {
+      "includeFiles": "api/_wa/**"
     }
   },
   "redirects": [

@@ -285,6 +285,7 @@ function doPost(e) {
     if (/^sp_/.test(String(p.action || ''))) return json_(sponsorFromRequest(p));          // sponsor a student (Sponsors.gs)
     if (/^bc_/.test(String(p.action || ''))) return json_(bootcampFromRequest(p));         // Hadith Bootcamp (Bootcamp.gs)
     if (/^ow_/.test(String(p.action || ''))) return json_(ownerFromRequest(p));            // owner dashboard (Owner.gs)
+    if (p.action === 'waChat') return json_(waChatFromRequest(p));                      // WhatsApp assistant (WhatsApp.gs)
     if (p.action === 'cardPayment') return json_(cardPaymentFromRequest(p));             // Bachs card payments from the website (CardPayments.gs)
     if (/^acd/.test(String(p.action || ''))) return json_(academyFromRequest(p));        // Academy portals (Academy.gs)
     if (/^sk(_|t_|a_)/.test(String(p.action || ''))) return json_(skillsFromRequest(p)); // Skills School portals (Skills.gs)
