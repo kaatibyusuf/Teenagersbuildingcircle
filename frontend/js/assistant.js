@@ -6,11 +6,11 @@
   var AR = document.documentElement.getAttribute('lang') === 'ar';
   var T = AR ? {
     entry: 'اسأل مساعدنا', entrySub: 'إجابات فورية عن البرامج والرسوم', title: 'حارس · مساعد حِمَايَة', sub: 'يجيب من معلومات المدرسة. للأمور الخاصة بحسابك راسل فريقنا.',
-    hi: 'السلام عليكم ورحمة الله. أنا حارس، المساعد الآلي لمدرسة حِمَايَة. كيف أستطيع مساعدتك؟', ph: 'اكتب سؤالك…', send: 'إرسال', close: 'إغلاق', wa: 'راسلنا على واتساب', err: 'تعذّر الاتصال. حاول مرة أخرى أو راسلنا على واتساب.',
+    hi: 'السلام عليكم ورحمة الله. أنا حارس، المساعد الآلي لمدرسة حِمَايَة.', rest: 'ما زلت في استراحة الآن، وسأعود قريباً إن شاء الله. في هذه الأثناء يسعد فريقنا بمساعدتك على واتساب.', restPh: 'حارس في استراحة…', ph: 'اكتب سؤالك…', send: 'إرسال', close: 'إغلاق', wa: 'راسلنا على واتساب', err: 'تعذّر الاتصال. حاول مرة أخرى أو راسلنا على واتساب.',
     chips: ['ما هي الرسوم؟', 'كيف أسجّل؟', 'اختبار تحديد المستوى']
   } : {
-    entry: 'Ask our assistant', entrySub: 'Quick answers on programmes and fees', title: 'Haris · Himaayah assistant', sub: 'Answers come from school information. For anything about your account, message our team.',
-    hi: 'Assalaamu alaykum. I am Haris, the Himaayah Schools assistant. How can I help you today?', ph: 'Type your question…', send: 'Send', close: 'Close', wa: 'Message us on WhatsApp', err: 'Could not connect. Please try again or message us on WhatsApp.',
+    entry: 'Ask our assistant', entrySub: 'Quick answers on programmes and fees', title: 'Haaris · Himaayah assistant', sub: 'Answers come from school information. For anything about your account, message our team.',
+    hi: 'Assalaamualaykum 👋 I am Haaris, the Himaayah Schools assistant.', rest: 'I am still on istiraaha (rest) for now. I will be back soon, in shā\' Allāh. Until then, our team will gladly help you on WhatsApp.', restPh: 'Haaris is resting…', ph: 'Type your question…', send: 'Send', close: 'Close', wa: 'Message us on WhatsApp', err: 'Could not connect. Please try again or message us on WhatsApp.',
     chips: ['What are the fees?', 'How do I enrol?', 'Placement test']
   };
   var css = '.hsa-btn{display:flex;flex-direction:column;align-items:flex-start;padding:11px 14px;border:0;border-radius:10px;background:#E3F2FD;color:#062F4D;font:600 14px/1.3 inherit;font-family:inherit;text-align:start;cursor:pointer}' +
@@ -56,9 +56,12 @@
   }
   function render() {
     log.textContent = ''; add('assistant', T.hi);
+    if (RESTING) { add('assistant', T.rest, { name: 'General line', url: 'https://wa.me/2347047226487' }); return; }
     if (!msgs.length) { var c = el('div', 'hsa-chips'); T.chips.forEach(function (q) { var b = el('button', 'hsa-chip', q); b.type = 'button'; b.onclick = function () { ask(q); }; c.appendChild(b); }); log.appendChild(c); }
     msgs.forEach(function (m) { add(m.role, m.text, m.go); });
   }
+  var RESTING = true;                                              // set to false the day Haaris goes live
+  if (RESTING) { input.disabled = true; send.disabled = true; input.placeholder = T.restPh; }
   var busy = false;
   function ask(text) {
     text = String(text || '').trim(); if (!text || busy) return;
