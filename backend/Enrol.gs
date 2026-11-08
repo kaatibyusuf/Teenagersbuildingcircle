@@ -10,6 +10,7 @@
  */
 
 const EN_DASHBOARD_URL = 'https://www.himaayahschools.com/dashboard.html';
+const EN_GUIDE_URL = 'https://www.himaayahschools.com/resources/himaayah-student-guide.pdf';
 const EN_SCHOOL = 'Himaayah Schools';
 const EN_TAB = 'Enrolments';
 const EN_ID_PREFIX = 'HM-';
@@ -171,7 +172,12 @@ function en_createAccount(sh, row) {
     const msg = en_message(get('StudentName'), id, code, planShort, toStudent, programme, dash);
     let note = '';
     try {
-      MailApp.sendEmail({ to: get('LoginEmail'), subject: 'Your ' + EN_SCHOOL + ' student login', htmlBody: msg.html, body: msg.text, name: EN_SCHOOL });
+      const mail = { to: get('LoginEmail'), subject: 'Your ' + EN_SCHOOL + ' student login', htmlBody: msg.html, body: msg.text, name: EN_SCHOOL };
+      try {                                                                       // attach the Student Guide; the email still goes out without it
+        const g = UrlFetchApp.fetch(EN_GUIDE_URL, { muteHttpExceptions: true });
+        if (g.getResponseCode() === 200) mail.attachments = [g.getBlob().setName('Himaayah Schools Student Guide.pdf')];
+      } catch (gErr) {}
+      MailApp.sendEmail(mail);
     } catch (mailErr) { note = 'Email failed: ' + mailErr.message + ' (send the WhatsApp link instead)'; }
     en_alertStaff_(get('StudentName'), id, programme, planShort, phone, get('LoginEmail'), method, get('Ref'), get('KinName'));
     if (get('Referral') && typeof ref_award_ === 'function') { const rn = ref_award_(get('Referral'), info, get('Ref'), programme); if (rn) note = note ? note + ' · ' + rn : rn; }   // Referrals.gs
@@ -217,7 +223,7 @@ function en_message(name, id, code, plan, toStudent, programme, dash) {
       : programme === 'Academy' ? 'Your tutor will be in touch to agree class times. Your dashboard shows your mock results, reading club, classes and payments.'
       : programme === 'Skills School' ? 'Your tutor will be in touch with your start date and class times. Your dashboard shows your course progress, projects, classes and payments.'
       : 'Your teacher will share the class timetable and join link soon.',
-    '', 'Please keep the access code private.', '',
+    '', 'Your Student Guide is attached. It shows you how to sign in, pay fees and use the website. You can also open it here: ' + EN_GUIDE_URL, '', 'Please keep the access code private.', '',
     'Tap this link to message the school on WhatsApp (your details are already filled in): ' + waLink, '',
     'Know someone who would benefit? Share your own referral link and earn 10% of their fee: https://www.himaayahschools.com/refer.html', '', 'Jazakumullahu khayran,', EN_SCHOOL,
   ];
