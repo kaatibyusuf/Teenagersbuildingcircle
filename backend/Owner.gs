@@ -49,6 +49,9 @@ function ownerFromRequest(p) {
     else if (a === 'ow_request') r = typeof sp_saveRequest_ === 'function' ? sp_saveRequest_(p) : { ok: false, error: 'Sponsorships are not set up yet.' };
     else if (a === 'ow_testimonial') r = typeof tm_save_ === 'function' ? tm_save_(p) : { ok: false, error: 'Testimonials are not set up yet.' };
     else if (a === 'ow_trial') r = typeof tr_save_ === 'function' ? tr_save_(p) : { ok: false, error: 'Trial classes are not set up yet.' };
+    else if (a === 'ow_enrolconfirm') r = ow_enrolConfirm_(who, p);
+    else if (a === 'ow_enrolreject') r = ow_enrolReject_(who, p);
+    else if (a === 'ow_enquiry') r = ow_enquiry_(p);
     else if (a === 'ow_password') r = acd_setCode_(au.t, au.row, p.newCode);
     else if (a !== 'ow_login') r = { ok: false, error: 'Unknown action.' };
     if (!r.ok) return r;
@@ -175,7 +178,7 @@ function ow_payload_(me) {
       dueSoon: dueSoon, paidUp: paidUp, referralDue: ref.dueTotal, waitlist: wl.total, subscribers: nl.active
     },
     months: months.map(function (m) { return { Month: m, Total: money[m].total, Card: money[m].card, ByProg: money[m].byProg }; }),
-    active: active, enrol: enr, overdue: overdue, referrals: ref, waitlist: wl, newsletter: nl, mail: mail, attention: attention,
+    enquiries: ow_enquiries_(), active: active, enrol: enr, overdue: overdue, referrals: ref, waitlist: wl, newsletter: nl, mail: mail, attention: attention,
     reports: typeof rp_status_ === 'function' ? rp_status_() : null,
     sponsors: typeof sp_summary_ === 'function' ? sp_summary_() : null,
     testimonials: typeof tm_summary_ === 'function' ? tm_summary_() : null,
@@ -194,4 +197,54 @@ function ow_payout_(p) {
   let note = '';
   try { if (typeof emailReferralPayouts === 'function') { emailReferralPayouts(); note = ' The referrer has been emailed.'; } } catch (err) { console.error(err); }
   return { ok: true, message: naira_(e.Amount) + ' to ' + (e.Referrer || e.Code) + ' marked as paid.' + note };
+}
+
+
+/* ===== Pending transfers: Confirm / Reject from the owner dashboard ===== */
+function ow_enrolRow_(ref) {
+  const t = table_(typeof EN_TAB === 'string' ? EN_TAB : 'Enrolments');
+  const r = t.rows.filter(function (x) { return String(x.Ref).trim() === String(ref || '').trim(); })[0];
+  return { t: t, r: r };
+}
+function ow_enrolConfirm_(who, p) {
+  const f = ow_enrolRow_(p.ref);
+  if (!f.r) return { ok: false, error: 'Enrolment not found.' };
+  const st = String(f.r.Status || '').trim();
+  if (String(f.r.StudentID || '').trim() || st === 'Account created') return { ok: true, message: 'This enrolment already has an account (' + f.r.StudentID + ').' };
+  if (['Receipt sent', 'Card paid', 'Already paid (check)', 'Awaiting card payment', 'Confirmed'].indexOf(st) < 0) return { ok: false, error: 'This enrolment is "' + st + '" and cannot be confirmed here.' };
+  put_(f.t, f.r._row, 'Status', 'Confirmed');
+  put_(f.t, f.r._row, 'Notes', 'Confirmed by ' + who + ' on ' + today_() + ' from the owner dashboard', true);
+  en_createAccount(en_sheet(), f.r._row);                       // creates the student, the payment record and the login email (Enrol.gs)
+  const after = ow_enrolRow_(p.ref).r || {};
+  if (String(after.StudentID || '').trim()) return { ok: true, message: String(after.StudentName || 'Student') + ' confirmed. Student ID ' + after.StudentID + ', login emailed.' + (/Email failed/.test(String(after.Notes)) ? ' The email failed, so send the WhatsApp link from the sheet.' : '') };
+  return { ok: false, error: 'Could not create the account. ' + String(after.Notes || 'Check the Notes column of the Enrolments tab.') };
+}
+function ow_enrolReject_(who, p) {
+  const f = ow_enrolRow_(p.ref);
+  if (!f.r) return { ok: false, error: 'Enrolment not found.' };
+  if (String(f.r.StudentID || '').trim()) return { ok: false, error: 'This enrolment already has an account, so it cannot be rejected here.' };
+  put_(f.t, f.r._row, 'Status', 'Rejected');
+  put_(f.t, f.r._row, 'Notes', 'Rejected by ' + who + ' on ' + today_() + (p.reason ? ': ' + String(p.reason).replace(/[\u0000-\u001f]/g, ' ').slice(0, 120) : ''), true);
+  return { ok: true, message: 'Enrolment ' + p.ref + ' marked as rejected.' };
+}
+
+/* ===== Enquiries inbox (WhatsApp bot and website chat, WhatsApp.gs) ===== */
+const OW_ENQ_STATUS = ['New', 'Contacted', 'Enrolled', 'Closed'];
+function ow_enquiries_() {
+  const t = ow_try_(typeof WA_LEAD_TAB === 'string' ? WA_LEAD_TAB : 'WhatsApp enquiries');
+  const list = t.rows.filter(function (r) { return r.Name || r.Phone; }).map(function (r) {
+    const contact = String(r.Phone || ''), digits = contact.replace(/\D/g, ''), st = String(r.Status || 'New') || 'New';
+    return { Row: r._row, Time: String(r.Time || ''), Name: String(r.Name || ''), Programme: String(r.Programme || ''), Detail: String(r.Detail || ''), Contact: contact, Status: st,
+      WhatsApp: digits.length >= 10 && contact.indexOf('@') < 0 ? waLink_(digits, 'Assalaamu alaykum ' + String(r.Name || '').split(' ')[0] + ', this is Himaayah Schools. Thank you for your enquiry about ' + String(r.Programme || 'our programmes') + '.') : '' };
+  });
+  return { open: list.filter(function (x) { return x.Status === 'New'; }).length, items: list.reverse().slice(0, 60) };
+}
+function ow_enquiry_(p) {
+  const status = String(p.status || '');
+  if (OW_ENQ_STATUS.indexOf(status) < 0) return { ok: false, error: 'Unknown status.' };
+  const t = table_(typeof WA_LEAD_TAB === 'string' ? WA_LEAD_TAB : 'WhatsApp enquiries');
+  const r = t.rows.filter(function (x) { return String(x._row) === String(p.row) && String(x.Time) === String(p.time); })[0];
+  if (!r) return { ok: false, error: 'Enquiry not found. Refresh the page.' };
+  put_(t, r._row, 'Status', status);
+  return { ok: true, message: (r.Name || 'Enquiry') + ' marked as ' + status + '.' };
 }

@@ -10,6 +10,8 @@ export const LINES = {
 };
 const here = path.dirname(fileURLToPath(import.meta.url));
 let KB = '';
+let NOTES = '';
+try { NOTES = fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)), 'notes.md'), 'utf8').split('\n').filter((l) => l.trim() && !l.trim().startsWith('#')).join('\n'); } catch (e) { /* notes are optional */ }
 try { KB = fs.readFileSync(path.join(here, 'knowledge.md'), 'utf8'); } catch (e) { console.error('knowledge.md missing', e.message); }
 
 const SYSTEM_TEXT = (who) => `You are the ${who} of Himaayah Schools (Ado-Ekiti, Nigeria; all classes online). You talk to parents, students and people thinking of enrolling.
@@ -30,7 +32,7 @@ Which line to hand over to
 - Skills School, Teenagers Building Circle, fees, payments and anything else: General line.
 
 School information
-${KB}`;
+${KB}${NOTES ? '\n\nLATEST UPDATES (these override anything above if they disagree)\n' + NOTES : ''}`;
 
 
 

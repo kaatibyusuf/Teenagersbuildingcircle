@@ -1,7 +1,7 @@
-# Himaayah Schools knowledge base (generated from the 2026-2027 prospectus and the Student Guide)
+# Himaayah Schools knowledge base (generated from the prospectus and the Student Guide)
 
 ## PROSPECTUS
-HIMAAYAH SCHOOLS AT A GLANCE
+HIMAAYAH SCHOOLS AT A GLANCE
 School details
  Item  Details
  Name  Himaayah Schools
@@ -27,7 +27,7 @@ School details
   himaayahschools.com, always shows the latest information, and our policies page is the final
   word where the two differ.
  2  Prospectus 2026–2027 · Himaayah Schools · himaayahschools.com
-  ‫ي‬ ‫ِح‬ ‫َّر‬ ‫ال‬  ‫َٰم‬ ‫ْح‬ ‫َّر‬ ‫ال‬ ‫ِه‬‫ِبْس الَّل‬
+  ‫ي‬ ‫ِح‬ ‫َّر‬ ‫ال‬  ‫َٰم‬ ‫ْح‬ ‫َّر‬ ‫ال‬ ‫ِه‬‫ِبْس الَّل‬
   ‫ِم‬  ‫ِن‬  ‫ِم‬
 TO INTENDING PARENTS AND STUDENTS
 A welcome from our Founder
@@ -62,7 +62,7 @@ Founder, Himaayah Schools
   “Seeking knowledge is an obligation upon every Muslim.”
   Narrated by Ibn Mājah (224).
   3  Prospectus 2026–2027 · Himaayah Schools · himaayahschools.com
-Contents
+Contents
   Who we are
  01
   Our story, name, crest, colours, vision, mission and approach
@@ -106,7 +106,7 @@ Founder, Himaayah Schools
  14
   Who to call about what
 4  Prospectus 2026–2027 · Himaayah Schools · himaayahschools.com
- 01  Who we are
+ 01  Who we are
 Himaayah Schools is a school for students who want a real relationship with the
 Qur’an, strong academics, and the discipline to carry both through life.
  Our story
@@ -127,7 +127,7 @@ are ready for.
   We want every student who comes through Himaayah to leave better prepared for this life and
   the next.
  5  Prospectus 2026–2027 · Himaayah Schools · himaayahschools.com
- Our crest, explained
+ Our crest, explained
   A shield, a student and a rising path
   Our crest is a shield, because Himāyah means protection. Every part of it
   says something about how we look after the student in our care.
@@ -160,7 +160,7 @@ Programme accents. Each programme also has its own accent so families can tell t
 green for the Madrasah, blue for the Academy, gold for the Skills School and purple for the Teenagers Building
 Circle.
   6  Prospectus 2026–2027 · Himaayah Schools · himaayahschools.com
-Our type and how we use the crest
+Our type and how we use the crest
 Two typefaces  Using the crest
 Headings are set in Bricolage Grotesque, which is  Use the crest in Deep Navy on light backgrounds
 confident and warm. Body text is set in Inter,  and in white on dark ones. Please keep clear
@@ -187,7 +187,7 @@ personal development are touched every week,  is tracked class by class, surah b
 not one this term and one the next.  and exams, so a student always knows where
   they stand.
 7  Prospectus 2026–2027 · Himaayah Schools · himaayahschools.com
- 02  Our leadership
+ 02  Our leadership
 The founder and the administrators who plan every class, look after every student, and answer for
 the standard.
   Kaatib Yusuf
@@ -218,7 +218,7 @@ the standard.
   of Arabic and Islamic Studies, and continues his Qur’anic studies with Takrar, a Saudi
   Arabia-based institute.
  8  Prospectus 2026–2027 · Himaayah Schools · himaayahschools.com
-  Abdulsomad Olaide Amobi
+  Abdulsomad Olaide Amobi
   Director of the Teenagers Building Circle
   A Chemical Engineering graduate of the University of Ilorin with a passion for research,
   AO  technology, mentoring and community service. Students he has tutored are now doing
@@ -234,7 +234,7 @@ One founder, five areas of work, and a dedicated teaching team in each. Every fa
 person who answers for the standard in their child’s programme.
 Each area answers on the line shown on its card.
   9  Prospectus 2026–2027 · Himaayah Schools · himaayahschools.com
- 03  The student journey
+ 03  The student journey
 The details differ by programme, but the shape is the same for every student who joins us.
  Five stages, from first contact to moving up
   Start where they actually are. Every student begins with an assessment or a
@@ -255,7 +255,7 @@ The details differ by programme, but the shape is the same for every student who
   to Paradise.”
   Narrated by Muslim (2699).
  10  Prospectus 2026–2027 · Himaayah Schools · himaayahschools.com
-PROGRAMME 01 · QUR’AN AND ISLAMIC STUDIES
+PROGRAMME 01 · QUR’AN AND ISLAMIC STUDIES
 Madrasah
 Qur’an memorisation and tajweed, with Islamic studies alongside. Students choose a small group or
 one-on-one classes, five classes every week, live on Google Meet and Telegram.
@@ -279,7 +279,7 @@ Every student starts at the right level. Entry levels need only a short placemen
 levels have a minimum admission score and set knowledge, checked by a timed online placement
 test in Arabic at himaayahschools.com/placement.html.
  12  Prospectus 2026–2027 · Himaayah Schools · himaayahschools.com
-Level  Minimum  What the student must already know
+Level  Minimum  What the student must already know
   score
 Rawdah  Open entry  Nothing. For those who cannot yet read and write at all.
 Tamheedi  Open entry  For those just starting madrasah: some Arabic letters, or ready to
@@ -314,7 +314,7 @@ Muraajah (Group)  For students who have completed the Qur’an: structured  ₦1
   revision to make hifdh firm, five classes a week
 Muraajah (Personal)  The same revision track, one-on-one  ₦20,000 / month
 13  Prospectus 2026–2027 · Himaayah Schools · himaayahschools.com
-  Admission status for 2026–2027
+  Admission status for 2026–2027
   Private (one-on-one) classes are open for Hifdh Only and Full Madrasah, and Muraajah is open
   in both formats. Group and One-Year Hifdh classes are closed for new students until 10
   February 2027. Families can join the waitlist on our website and we will contact them as soon
@@ -343,12 +343,12 @@ on the dashboard.
   assigned to a teacher, and the teacher agrees  ID and access code we email after payment: hifdh
   class times with one-to-one families.  progress, results, payments and assignments.
  14  Prospectus 2026–2027 · Himaayah Schools · himaayahschools.com
-What books are used?  How do I know my level?
+What books are used?  How do I know my level?
 Teachers choose the books, notes and links for  Take the free Madrasah placement test at
 each level, and students find them in the  himaayahschools.com/placement.html, in Arabic,
 Madrasah library on our website.  marked the moment you finish.
 15  Prospectus 2026–2027 · Himaayah Schools · himaayahschools.com
-PROGRAMME 02 · EXAM PREPARATION
+PROGRAMME 02 · EXAM PREPARATION
 Academy
 Structured tutorials and timed practice for UTME, Post-UTME, WAEC, NECO and A-Levels (IJMB,
 JUPEB and Cambridge), aligned to each exam’s real format and taught by previous top scorers.
@@ -376,7 +376,7 @@ JUPEB and Cambridge), aligned to each exam’s real format and taught by previou
   the student’s own performance and fix weak  scorers, including institution-specific coaching for
   topics.  Post-UTME.
  17  Prospectus 2026–2027 · Himaayah Schools · himaayahschools.com
-  CBT simulator  Reading club
+  CBT simulator  Reading club
   Practice on a computer-based test that matches  Students set reading targets and stick with them,
   the real JAMB format and clock.  so steady reading becomes part of their routine.
   Joining is compulsory.
@@ -399,7 +399,7 @@ UTME, WAEC, NECO, IJMB and JUPEB are kept on our Exam Calendars page.
 Results come from real Himaayah Academy students. Individual outcomes depend on effort, attendance and starting
 point, so no score or admission can be guaranteed.
  18  Prospectus 2026–2027 · Himaayah Schools · himaayahschools.com
-PROGRAMME 03 · PRACTICAL COURSES
+PROGRAMME 03 · PRACTICAL COURSES
 Skills School
 Practical courses that end with the student able to actually do the thing, not just describe it. Every
 course runs for four to eight weeks and finishes with real work the student can show.
@@ -427,7 +427,7 @@ There is no fixed timetable. After enrolment, the teacher contacts the student a
 days and hour together, around school and family. Not sure which course fits? Tell us what you want
 to be able to do, and we will point you to the right one.
  20  Prospectus 2026–2027 · Himaayah Schools · himaayahschools.com
-PROGRAMME 04 · AGES 13 TO 19
+PROGRAMME 04 · AGES 13 TO 19
 Teenagers Building Circle
 A weekly circle that builds a teenager on four sides at once. Every week touches all four pillars, not a
 semester of one and a semester of another.
@@ -453,7 +453,7 @@ Each student gets a monthly session guide, and parents receive a full progress r
  13–19  4  ₦40,000
  years old  live sessions a week  a month, full programme
  22  Prospectus 2026–2027 · Himaayah Schools · himaayahschools.com
- 04  Teaching, assessment and reports
+ 04  Teaching, assessment and reports
 We would rather a family know exactly where a student stands than be told everything is fine. This is
 how we teach, test and report across the school.
   Madrasah  Academy  Skills School  Circle
@@ -483,7 +483,7 @@ how we teach, test and report across the school.
   students sit timed mocks every day and every  this student, not a class average.
   week.
  23  Prospectus 2026–2027 · Himaayah Schools · himaayahschools.com
- 05  Student life and community
+ 05  Student life and community
 Learning online does not mean learning alone. Himaayah students belong to classes, cohorts and a
 wider family of parents, teachers and former students.
   The reading club  Brainstorming sessions and daily tasks
@@ -507,7 +507,7 @@ reach the right person quickly:
  ● A direct line for each school on WhatsApp, so questions reach the right teacher or administrator.
  ● Testimonials and feedback: we ask families for their honest view and read every response.
  24  Prospectus 2026–2027 · Himaayah Schools · himaayahschools.com
- The Himaayah anthem
+ The Himaayah anthem
 Our anthem is two minutes of what we stand for. It can be heard on the About page of our website.
   ‫َأَيا َطاِلَب الِعْلِم َيا َذا الَمَعاِلي · َأَيا َطاِلَب الَح ِّق ُطوَل الَّلَياِلي‬
   O seeker of knowledge, you of high aims; O seeker of truth through the long nights,
@@ -530,7 +530,7 @@ Our anthem is two minutes of what we stand for. It can be heard on the About pag
   ‫َوَصِّل َعَلى ْح َمَد الُمْصَطَفى · َمَدى َيْكُمُل الَبْدُر َبْعَد الِهاَل ِل‬
   And send blessings upon Ahmad, the Chosen One, for as long as the full moon follows the crescent.
  25  Prospectus 2026–2027 · Himaayah Schools · himaayahschools.com
- 06  Fees at a glance
+ 06  Fees at a glance
 All prices are in Nigerian naira (₦). Most Madrasah and Academy plans bill monthly; the exact billing
 is shown on each plan before you pay.
  Programme  Plan  Billing  Fee  Admission
@@ -554,7 +554,7 @@ is shown on each plan before you pay.
  Teenagers  Full programme · ages 13–19  Monthly  ₦40,000  Open
  Building Circle
  26  Prospectus 2026–2027 · Himaayah Schools · himaayahschools.com
- Paying fees
+ Paying fees
  By card: choose Card at the last step of enrolment, or pay a fee any time at
  himaayahschools.com/pay.html, on a secure Bachs payment page.
  Paying ahead: on monthly plans you can pay for 1, 2, 3, 6 or 12 months at once, at the same
@@ -566,7 +566,7 @@ is shown on each plan before you pay.
  We usually confirm payments within a few hours. A place is only confirmed once we have
  received the payment.
 27  Prospectus 2026–2027 · Himaayah Schools · himaayahschools.com
- 07  Admissions
+ 07  Admissions
 Every programme follows the same clear path, and enrolment takes about two minutes.
  Five steps from interest to first class
   Choose your programme. Madrasah, Academy, Skills School or the Teenagers
@@ -595,11 +595,11 @@ Every programme follows the same clear path, and enrolment takes about two minut
 Student details (full name, date of birth, grade level), the programme and plan, any referral code,
 and next-of-kin details. A parent or guardian completes these for students under 18.
  28  Prospectus 2026–2027 · Himaayah Schools · himaayahschools.com
-Each programme also asks a few short questions about readiness, such as the device the student will
+Each programme also asks a few short questions about readiness, such as the device the student will
 learn on. For the Teenagers Building Circle, a parent or guardian also confirms permission to join the
 live Google Meet sessions and that the student can attend all four sessions each week.
  29  Prospectus 2026–2027 · Himaayah Schools · himaayahschools.com
- 08  School policies
+ 08  School policies
 Clear rules, written plainly. The full, current version is on himaayahschools.com/policies.html and is
 the one that applies if the two ever differ.
  Enrolment and payment
@@ -631,7 +631,7 @@ place, it may go to the next family.
  If we cancel  If we cancel a class or cohort and cannot offer a suitable alternative,
   you receive a refund for the affected period.
  30  Prospectus 2026–2027 · Himaayah Schools · himaayahschools.com
- ● Paying months ahead. If you pay for several months at once, the months that have not yet
+ ● Paying months ahead. If you pay for several months at once, the months that have not yet
   started can be refunded, less provider charges. A month that has already started is not
   refundable.
  ● Class materials. If class materials have already been given, their price is deducted from the
@@ -667,7 +667,7 @@ a period that has already started.
   confidence, and where a child may be at risk we act at once to protect them and, where
   needed, involve the proper authorities.
  31  Prospectus 2026–2027 · Himaayah Schools · himaayahschools.com
- Complaints
+ Complaints
 If you are unhappy with a class, a teacher, a payment or anything else, tell us by email or on the
 general WhatsApp line. We acknowledge your complaint within 2 working days and reply in full
 within 10 working days. If it needs longer, we tell you why. You may then ask the school’s leadership
@@ -702,7 +702,7 @@ your or your child’s data, or object to how we use it. Write to himaayahschool
 reply within 30 days. If a data breach is likely to put anyone at risk, we tell those affected, and the
 Nigeria Data Protection Commission where required, without delay.
  32  Prospectus 2026–2027 · Himaayah Schools · himaayahschools.com
- 09  Support for families
+ 09  Support for families
 Beyond the classroom, a few things that make it easier to start, to stay and to bring others along.
   Ask us anything first  Free placement tests
   Message the right line on WhatsApp before you  Madrasah level tests in Arabic and a timed UTME
@@ -733,7 +733,7 @@ promise results, quote fees that are not on the website, or collect money for th
   “And say: My Lord, increase me in knowledge.”
   Ṭā Hā 20:114
  33  Prospectus 2026–2027 · Himaayah Schools · himaayahschools.com
- 10  Contact directory
+ 10  Contact directory
 We have a line for each part of the school, so your question reaches the right person the first time.
 Every line takes calls and WhatsApp messages.
  Line  Number  Ask about
@@ -760,7 +760,7 @@ Every line takes calls and WhatsApp messages.
  34  Prospectus 2026–2027 · Himaayah Schools · himaayahschools.com
 
 ## STUDENT GUIDE
-  ‫ي‬ ‫ِح‬ ‫َّر‬ ‫ال‬  ‫َٰم‬ ‫ْح‬ ‫َّر‬ ‫ال‬ ‫ِه‬‫ِبْس الَّل‬
+  ‫ي‬ ‫ِح‬ ‫َّر‬ ‫ال‬  ‫َٰم‬ ‫ْح‬ ‫َّر‬ ‫ال‬ ‫ِه‬‫ِبْس الَّل‬
   ‫ِم‬  ‫ِن‬  ‫ِم‬
 TO OUR STUDENTS
 A welcome from our Founder
@@ -786,7 +786,7 @@ Founder, Himaayah Schools
   “Seeking knowledge is an obligation upon every Muslim.”
   Narrated by Ibn Mājah (224).
   2  Student Guide · Himaayah Schools · himaayahschools.com
-Contents
+Contents
   Your ID and access code
  01
   Where they come from, signing in and choosing your own code
@@ -811,7 +811,7 @@ your Student ID  your access code  every class  phone lines to help
  Your Student ID and access code arrive in your login email. Everything in this guide starts with
  them.
 3  Student Guide · Himaayah Schools · himaayahschools.com
-When your registration and first payment are confirmed, the school sends you a login email with
+When your registration and first payment are confirmed, the school sends you a login email with
 your Student ID and access code. Check your spam folder if you cannot see it.
  Sign in
 1  Open himaayahschools.com and go to your programme’s dashboard. Madrasah, Academy,
@@ -824,7 +824,7 @@ your Student ID and access code. Check your spam folder if you cannot see it.
   Never share your code. Anyone with your ID and code can see your work and payments. If your
   ID is not accepted, check that you are on the dashboard for your own programme.
   4  Student Guide · Himaayah Schools · himaayahschools.com
-Every dashboard shows your announcements, your payment history and the place to change your
+Every dashboard shows your announcements, your payment history and the place to change your
 access code. The rest depends on your programme.
  Madrasah  Academy
  Weekly timetable · Today’s routine  Your performance · Attendance · Leaderboard
@@ -840,7 +840,7 @@ access code. The rest depends on your programme.
   Open your dashboard before every class day. Announcements are where the school posts
   changes to times and deadlines.
  5  Student Guide · Himaayah Schools · himaayahschools.com
-Most plans are paid by the month. The registration fee is ₦3,000, paid once. Skills School courses
+Most plans are paid by the month. The registration fee is ₦3,000, paid once. Skills School courses
 are paid per course.
   Several months at once  Refunds
   You can pay for 2, 3, 6 or 12 months at enrolment  Months that have not started can be refunded,
@@ -853,7 +853,7 @@ are paid per course.
   minute. Card receipts are emailed to you, and Payment history on your dashboard keeps the
   record.
  6  Student Guide · Himaayah Schools · himaayahschools.com
-Timetable  Calendar
+Timetable  Calendar
 Weekly class times in Nigeria time, with an option  Term dates, exam dates, public holidays and
 to add your class to your calendar.  Islamic occasions, with one-tap add to your
   phone.
@@ -874,7 +874,7 @@ During an exam
 Use a charged phone or laptop and a steady connection. Exams are timed and a clock shows at
 the top of the page.
 7  Student Guide · Himaayah Schools · himaayahschools.com
- Five habits that help
+ Five habits that help
   1  Join on time. Open your dashboard first and check today’s class.
   Do the work the same day. Assignments and daily tasks are easier when the lesson is
   2  fresh.
@@ -884,7 +884,7 @@ the top of the page.
   5  Pay before the due date. It keeps your place and your access without a break.
 The school’s conduct and privacy rules are on the policies page of the website. Read them once.
  8  Student Guide · Himaayah Schools · himaayahschools.com
-  Madrasah line  Academy line
+  Madrasah line  Academy line
   +234 702 584 2849  +234 806 604 3320
   Madrasah classes, Student Affairs and lost  Academy classes, exam tracks and lost Academy
   Madrasah codes  codes

@@ -506,6 +506,7 @@ function onOpen() {
       .addItem('Set up the Librarians tab', 'librarianSetup')
       .addItem('Set up the exam portal', 'examSetup')
       .addItem('Email the waitlist (reopened plans)', 'emailWaitlist')
+      .addItem('Email the waitlist automatically every day', 'setupWaitlistAuto')
       .addItem('Progress reports: send me a sample', 'reportSample')
       .addItem("Progress reports: send this month's now", 'reportsSendNow')
       .addItem('Term report cards: send me a sample', 'reportCardSample')

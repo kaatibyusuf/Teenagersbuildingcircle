@@ -135,3 +135,13 @@ function wl_say_(msg) {
   console.log(msg);
   try { ss_().toast(msg, 'Waitlist', 10); } catch (e) {}
 }
+
+
+/* Automatic: emails the waitlist once a day for any plan that is no longer in EN_CLOSED_PLANS.
+   Install it once from the sheet menu: Himaayah → "Email the waitlist automatically every day". */
+function waitlistAuto() { try { emailWaitlist(); } catch (e) { console.error(e); } }
+function setupWaitlistAuto() {
+  const has = ScriptApp.getProjectTriggers().some(function (t) { return t.getHandlerFunction() === 'waitlistAuto'; });
+  if (!has) ScriptApp.newTrigger('waitlistAuto').timeBased().everyDays(1).atHour(9).create();
+  wl_say_(has ? 'The daily waitlist email is already switched on.' : 'Done. Every morning, families waiting for a plan that has reopened are emailed automatically.');
+}
