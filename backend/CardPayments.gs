@@ -96,11 +96,11 @@ function card_apply_(sh, row, rec) {
   set('PayMethod', 'Card');
   const status = get('Status'), plan = EN_PLANS[get('Plan')];
   const paid = /^(SUCCEEDED|ACCEPTED|OVERPAID)$/.test(rec.status);
-  const matches = paid && rec.currency === 'NGN' && plan && Number(rec.amount) >= Number(plan[0]) + (Number(get('RegFee')) || 0);
+  const matches = paid && rec.currency === 'NGN' && plan && Number(rec.amount) >= Number(plan[0]) * (plan[1] === '/mo' ? (Number(get('Periods')) || 1) : 1) + (Number(get('RegFee')) || 0);
   if (status === 'Account created' || get('StudentID')) return 'Already had an account';
   if (matches && CARD_AUTO_CONFIRM) { set('Status', 'Confirmed'); return 'Confirmed'; }
   set('Status', 'Card paid');
-  if (!matches) set('Notes', 'Card payment of ' + amt + ' does not match the plan price (' + (plan ? naira_(plan[0]) : 'unknown plan') + '). Check it in Bachs, then confirm.');
+  if (!matches) set('Notes', 'Card payment of ' + amt + ' does not match the plan price (' + (plan ? naira_(plan[0] * (plan[1] === '/mo' ? (Number(get('Periods')) || 1) : 1)) : 'unknown plan') + '). Check it in Bachs, then confirm.');
   return matches ? 'Waiting for staff to confirm' : 'Amount did not match the plan';
 }
 

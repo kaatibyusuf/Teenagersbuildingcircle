@@ -1208,7 +1208,7 @@ function acd_createAccount_(info) {
   const nextDue = addMonths_(today, months);
   append_(S, {
     StudentID: id, Name: info.name, AccessCode: code, Track: track, Group: '', TutorID: '', PaymentStatus: 'Paid', NextDue: nextDue,
-    MonthlyFee: info.months === 1 ? info.amount : '', ExamDate: '', TargetPercent: '', NextClass: '', ClassLink: '',
+    MonthlyFee: info.unit || (info.months === 1 ? info.amount : ''), ExamDate: '', TargetPercent: '', NextClass: '', ClassLink: '',
     Email: info.email, WhatsApp: info.phone, Active: 'TRUE', Enrolled: today, Ref: info.ref
   }, ['StudentID', 'Name', 'AccessCode', 'Track', 'NextDue', 'Email', 'WhatsApp', 'Enrolled', 'Ref']);
   append_(acd_t_(ACD.Payments), {

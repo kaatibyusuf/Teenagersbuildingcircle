@@ -73,7 +73,11 @@ export async function POST(request) {
     } catch { return json({ ok: false, error: 'We could not check your test code. Please try again.' }, 502); }
     if (!passPaid) return json({ ok: false, error: 'That test code is not valid or was already used. Remove it to pay the registration fee here.' }, 400);
   }
-  const total = plan.amount + (invited || passPaid ? 0 : REG_FEE);
+  // Monthly plans can be paid 1, 2, 3, 6 or 12 months ahead (not the one-time plans, nor Data Analysis, which bills every 2 months).
+  // Keep in step with enroll.html and Enrol.gs.
+  const monthly = plan.recurring && b.plan !== 'Skills School — Data Analysis';
+  const periods = monthly && [1, 2, 3, 6, 12].includes(Number(b.periods)) ? Number(b.periods) : 1;
+  const total = plan.amount * periods + (invited || passPaid ? 0 : REG_FEE);
   const ref = String(b.ref || '');
   if (!/^ENR-[A-Z0-9]{6}$/.test(ref)) return json({ ok: false, error: 'Bad reference.' }, 400);
   const email = String(b.email || '').trim();
@@ -99,7 +103,7 @@ export async function POST(request) {
     cancel_url: site + '/enroll?card=cancelled',
     // Bachs needs a new reference per attempt; the enrolment reference stays in metadata
     reference: ref + '-' + Date.now().toString(36),
-    metadata: { ref, plan: b.plan, student },
+    metadata: { ref, plan: b.plan, student, periods: String(periods) },
     expires_in_minutes: 60,
   };
 

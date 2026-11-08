@@ -4914,3 +4914,9 @@ html[dir="rtl"] :is(.page-hadith-bootcamp, .page-bootcamp) :is(.bc-t, .bc-tt) i,
 /* programme-specific questions on the enrol form */
 .page-enroll .plan-extra { margin-top: 28px; }
 .page-enroll .plan-extra .group-label { margin-bottom: 14px; }
+
+/* Enrolment: choose how many months to pay for */
+.pay-periods { margin-bottom: 18px; }
+.pay-periods label { display: block; font-weight: 600; color: var(--deep); margin-bottom: 8px; }
+.pay-periods select { width: 100%; max-width: 320px; padding: 12px 14px; border: 1px solid #CFE0EE; border-radius: var(--r); font: inherit; background: #fff; color: var(--ink); }
+.pay-periods-note { margin: 8px 0 0; font-size: 13.5px; color: var(--muted); }

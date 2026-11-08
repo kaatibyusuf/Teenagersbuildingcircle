@@ -188,6 +188,11 @@
         <h2>Pay &amp; confirm</h2>
         <p class="step-sub">Pay by card in a minute, or by bank transfer and send us your receipt on WhatsApp.</p>
 
+        <div class="pay-periods" id="payPeriods" hidden>
+          <label for="periodsSel">How many months do you want to pay for?</label>
+          <select id="periodsSel"></select>
+          <p class="pay-periods-note">Paying for more months at once means fewer payments to remember. The fee is the same for every month.</p>
+        </div>
         <div class="pay-summary" id="paySummary"></div>
 
         <div class="pay-tabs" role="tablist" aria-label="Payment method">
@@ -401,7 +406,7 @@
   function savedRef() {
     try { const v = JSON.parse(localStorage.getItem(REF_KEY) || 'null'); return v && v.code ? v.code : ''; } catch (e) { return ''; }
   }
-  const state = { step: 1, student: {}, programmeId: initialProgrammeId, plan: initialPlan, ref: null, sent: false, extra: {} };
+  const state = { periods: 1, step: 1, student: {}, programmeId: initialProgrammeId, plan: initialPlan, ref: null, sent: false, extra: {} };
 
   const steps = document.querySelectorAll('.step');
   const stepper = document.getElementById('stepper');
@@ -590,7 +595,7 @@
       `;
       wrap.querySelector('.plan-opt-head').addEventListener('click', () => {
         if (plan.closed) return;
-        state.plan = plan;
+        state.plan = plan; state.periods = 1;
         planOptions.querySelectorAll('.plan-opt').forEach((el) => el.classList.remove('selected'));
         wrap.classList.add('selected');
         renderExtra();
@@ -727,13 +732,29 @@
       <div class="row"><span>Student</span><b>${escapeHtml(s.studentName || '')}</b></div>
       <div class="row"><span>Plan</span><b>${state.plan.name}</b></div>
       <div class="row"><span>Programme fee</span><b>${amountText(state.plan)}</b></div>
+      ${periods() > 1 ? `<div class="row"><span>Months paid for</span><b>${periods()} \u00d7 \u20a6${state.plan.amount.toLocaleString()} = \u20a6${(state.plan.amount * periods()).toLocaleString()}</b></div>` : ''}
       ${regFee() ? `<div class="row"><span>Registration fee (one-time)</span><b>\u20a6${REG_FEE.toLocaleString()}</b></div>` : ''}
       <div class="row"><span>Total to pay now</span><b>\u20a6${firstTotal(state.plan).toLocaleString()}</b></div>
       <div class="row"><span>Your reference</span><b>${state.ref}</b></div>
     `;
+    renderPeriods();
     preparePayment();
     cardLabel();
   }
+
+  // Monthly plans can be paid several months ahead (1, 2, 3, 6 or 12). Other plans are one payment.
+  // Keep the allowed numbers in step with api/checkout.mjs and Enrol.gs.
+  const PERIOD_CHOICES = [1, 2, 3, 6, 12];
+  const PERIOD_LABEL = { 1: '1 month', 2: '2 months', 3: '3 months', 6: '6 months', 12: '12 months' };
+  function periods() { return state.plan && state.plan.period === '/mo' && PERIOD_CHOICES.indexOf(state.periods) >= 0 ? state.periods : 1; }
+  function renderPeriods() {
+    const box = document.getElementById('payPeriods'), sel = document.getElementById('periodsSel');
+    box.hidden = !(state.plan && state.plan.period === '/mo');
+    if (box.hidden) { state.periods = 1; return; }
+    sel.innerHTML = PERIOD_CHOICES.map((n) => `<option value="${n}">${PERIOD_LABEL[n]}</option>`).join('');
+    sel.value = String(periods());
+  }
+  document.getElementById('periodsSel').addEventListener('change', (e) => { state.periods = Number(e.target.value) || 1; renderPaySummary(); });
 
   function escapeHtml(t) {
     return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -779,13 +800,14 @@
   // Returning students on an invite link don't pay it. Keep in step with api/checkout.mjs and Enrol.gs.
   const REG_FEE = 3000;
   function regFee() { return (invitedPlan && state.plan === invitedPlan) || passValid ? 0 : REG_FEE; }
-  function firstTotal(plan) { return plan.amount + regFee(); }
+  function firstTotal(plan) { return plan.amount * periods() + regFee(); }
   function amountText(plan) {
     const per = plan.period === '/mo' ? ' per month' : plan.period === '/2mo' ? ' every 2 months' : ' (one-time)';
     return '\u20a6' + plan.amount.toLocaleString() + per;
   }
   function firstPayText(plan) {
-    return regFee() ? '\u20a6' + firstTotal(plan).toLocaleString() + ' (\u20a6' + plan.amount.toLocaleString() + ' fee + \u20a6' + REG_FEE.toLocaleString() + ' registration, once)' : amountText(plan);
+    const fee = plan.amount * periods(), feeText = periods() > 1 ? '\u20a6' + fee.toLocaleString() + ' (' + periods() + ' months)' : '\u20a6' + fee.toLocaleString() + ' fee';
+    return regFee() ? '\u20a6' + firstTotal(plan).toLocaleString() + ' (' + feeText + ' + \u20a6' + REG_FEE.toLocaleString() + ' registration, once)' : (periods() > 1 ? feeText : amountText(plan));
   }
 
   function buildMessage() {
@@ -799,6 +821,7 @@
       'Programme: ' + programme,
       'Plan: ' + state.plan.name,
       'Amount paid: ' + firstPayText(state.plan),
+      ...(periods() > 1 ? ['Months paid for: ' + periods()] : []),
       'Paid to: Himaayah Ltd, Wema Bank, 0127584920',
       '',
       'STUDENT',
@@ -834,7 +857,7 @@
     const s = state.student;
     const body = {
       action: 'enrol', ref: state.ref, studentName: s.studentName, dob: s.dob, gradeLevel: s.gradeLevel,
-      programme: PROGRAMMES.find((p) => p.id === state.programmeId).name, plan: state.plan.name,
+      programme: PROGRAMMES.find((p) => p.id === state.programmeId).name, plan: state.plan.name, periods: periods(),
       kinName: s.kinName, kinRelationship: s.kinRelationship, kinPhone: s.kinPhone, kinEmail: s.kinEmail,
       studentEmail: s.studentEmail || '', website: s.website || '',
       referral: s.referral || '',
@@ -946,7 +969,7 @@
     try {
       const r = await fetch('/api/checkout', {
         method: 'POST', headers: { 'Content-Type': 'application/json' }, signal: ctl.signal,
-        body: JSON.stringify({ ref: state.ref, plan: state.plan.name, email: s.studentEmail || s.kinEmail, name: s.kinName, phone: s.kinPhone, studentName: s.studentName, invite: invitedPlan && state.plan === invitedPlan ? INVITE : '', regpass: passValid ? passAsked : '' }),
+        body: JSON.stringify({ ref: state.ref, plan: state.plan.name, periods: periods(), email: s.studentEmail || s.kinEmail, name: s.kinName, phone: s.kinPhone, studentName: s.studentName, invite: invitedPlan && state.plan === invitedPlan ? INVITE : '', regpass: passValid ? passAsked : '' }),
       });
       const j = await r.json().catch(() => null);
       if (j && j.ok && j.url) { window.location.href = j.url; return; }

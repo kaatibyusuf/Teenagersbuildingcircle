@@ -308,5 +308,12 @@ HS_I18N.add({
 "Google search": "بحث في جوجل",
 "A school or mosque": "مدرسة أو مسجد",
 "Anything we should know to teach the student well": "أي شيء ينبغي أن نعرفه لنُحسن تعليم الطالب",
-"Teenagers Building Circle is for ages 13 to 19. If you think an exception applies, message us on WhatsApp: +234 704 722 6487.": "حلقة بناء الناشئة للأعمار من 13 إلى 19 عامًا. وإذا رأيت أن حالتك تستحق استثناءً فراسلنا عبر واتساب: +234 704 722 6487."
+"Teenagers Building Circle is for ages 13 to 19. If you think an exception applies, message us on WhatsApp: +234 704 722 6487.": "حلقة بناء الناشئة للأعمار من 13 إلى 19 عامًا. وإذا رأيت أن حالتك تستحق استثناءً فراسلنا عبر واتساب: +234 704 722 6487.",
+"How many months do you want to pay for?": "كم شهرًا تريد أن تدفع؟",
+"Paying for more months at once means fewer payments to remember. The fee is the same for every month.": "الدفع لعدة أشهر دفعة واحدة يعني دفعات أقل لتتذكرها. الرسوم نفسها في كل شهر.",
+"Months paid for": "الأشهر المدفوعة",
+"1 month": "شهر واحد",
+"2 months": "شهران",
+"3 months": "3 أشهر",
+"6 months": "6 أشهر"
 });

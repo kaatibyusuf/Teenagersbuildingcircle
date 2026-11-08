@@ -24,7 +24,7 @@ const EN_OPENS = {};   // plan name -> 'YYYY-MM-DD' it opens (West Africa time).
 
 const EN_REG_FEE = 3000;   // one-time registration fee on the first payment (waived for invited returning students); keep in step with enroll.html and api/checkout.mjs
 
-const EN_HEADERS = ['Ref', 'Submitted', 'Status', 'StudentName', 'DOB', 'Age', 'GradeLevel', 'Programme', 'Plan', 'Amount', 'Period',
+const EN_HEADERS = ['Ref', 'Submitted', 'Status', 'StudentName', 'DOB', 'Age', 'GradeLevel', 'Programme', 'Plan', 'Amount', 'Period', 'Periods',
   'KinName', 'KinRelationship', 'KinPhone', 'KinEmail', 'StudentEmail', 'LoginTo', 'LoginEmail', 'StudentID', 'AccountCreated', 'WhatsAppLink', 'Notes',
   'PayMethod', 'CardPayment', 'Referral', 'PaidUntil', 'RegFee', 'ProgrammeDetails'];
 
@@ -60,6 +60,7 @@ function enrolFromRequest(req) {
 
     if (EN_OPENS[d.plan] && Utilities.formatDate(new Date(), 'Africa/Lagos', 'yyyy-MM-dd') < EN_OPENS[d.plan]) return { ok: false, error: 'This programme has not opened yet. It opens on ' + EN_OPENS[d.plan] + '.' };
 
+    const periods = plan[1] === '/mo' && req.payMethod !== 'Already paid' && [1, 2, 3, 6, 12].indexOf(Number(req.periods)) >= 0 ? Number(req.periods) : 1;   // months paid ahead (monthly plans only); keep in step with enroll.html and api/checkout.mjs
     const card = req.payMethod === 'Card';
     const prepaid = req.payMethod === 'Already paid';                                   // current student who paid before the website (invite link only)
     let paidUntil = '';
@@ -83,6 +84,7 @@ function enrolFromRequest(req) {
       if (en_headers(sh).indexOf('RegFee') < 0) sh.getRange(1, sh.getLastColumn() + 1).setValue('RegFee').setFontWeight('bold');
       if (prepaid && en_headers(sh).indexOf('PaidUntil') < 0) sh.getRange(1, sh.getLastColumn() + 1).setValue('PaidUntil').setFontWeight('bold');
       const details = Array.isArray(req.extra) ? req.extra.slice(0, 16).filter(p => Array.isArray(p)).map(p => en_str(p[0], 70) + ': ' + en_str(p[1], 220)).join(' | ') : '';   // programme-specific answers from the enrol form
+      if (en_headers(sh).indexOf('Periods') < 0) sh.getRange(1, sh.getLastColumn() + 1).setValue('Periods').setFontWeight('bold');
       if (details && en_headers(sh).indexOf('ProgrammeDetails') < 0) sh.getRange(1, sh.getLastColumn() + 1).setValue('ProgrammeDetails').setFontWeight('bold');
       const regpass = en_str(req.regpass, 30).toUpperCase();                  // test code: the registration fee was already paid (PlacementTests.gs)
       const passPaid = !invited && regpass && typeof pt_passRedeem_ === 'function' && pt_passRedeem_(regpass, d.ref, true);
@@ -90,7 +92,7 @@ function enrolFromRequest(req) {
       const loginTo = adult && d.studentEmail ? d.studentEmail : d.kinEmail;
       en_append(sh, {
         Ref: d.ref, Submitted: en_stamp(new Date()), Status: card ? 'Awaiting card payment' : prepaid ? 'Already paid (check)' : 'Receipt sent', PayMethod: card ? 'Card' : prepaid ? 'Paid before website' : 'Bank transfer', PaidUntil: paidUntil, StudentName: d.name, DOB: d.dob, Age: age === null ? '' : age, GradeLevel: d.grade,
-        RegFee: (invited || passPaid) ? 0 : EN_REG_FEE, Programme: d.programme, Plan: d.plan, Amount: plan[0], Period: plan[1], KinName: d.kinName, KinRelationship: d.kinRel, KinPhone: d.kinPhone,
+        RegFee: (invited || passPaid) ? 0 : EN_REG_FEE, Programme: d.programme, Plan: d.plan, Amount: plan[0], Period: plan[1], Periods: periods, KinName: d.kinName, KinRelationship: d.kinRel, KinPhone: d.kinPhone,
         KinEmail: d.kinEmail, StudentEmail: d.studentEmail, LoginTo: adult ? 'Student (18+)' : 'Parent or guardian', LoginEmail: loginTo, Referral: referral, ProgrammeDetails: details, Notes: invited ? 'Returning student (invite link)' + (prepaid ? '. Says the fee was paid before the website; next due ' + paidUntil + '. Check the old payment, then set Status to Confirmed.' : '') : (passPaid ? 'Registration fee already paid with test code ' + regpass : ''),
       });
     } finally { lock.releaseLock(); }
@@ -134,15 +136,17 @@ function en_createAccount(sh, row) {
     const plan = EN_PLANS[get('Plan')];
     if (!plan) { set('Notes', 'Unknown plan: cannot create account'); return; }
 
-    const amount = plan[0], per = plan[1];
-    const months = per === '/mo' ? 1 : per === '/2mo' ? 2 : 0;
+    const unit = plan[0], per = plan[1];
+    const periods = per === '/mo' ? (Number(get('Periods')) || 1) : 1;                  // months paid ahead on the first payment
+    const amount = unit * periods;                                                      // what was actually paid for the programme (registration fee not included)
+    const months = (per === '/mo' ? 1 : per === '/2mo' ? 2 : 0) * periods;
     const today = new Date(), prepaid = get('PayMethod') === 'Paid before website';
     const paidUntil = /^\d{4}-\d{2}-\d{2}$/.test(get('PaidUntil')) ? get('PaidUntil') : '';   // staff can correct this date before confirming
     const nextDue = prepaid && paidUntil ? paidUntil : months ? en_date(en_addMonths(today, months)) : '';
     const programme = get('Programme'), planShort = get('Plan').split('\u2014').pop().trim();
     const phone = get('KinPhone').replace(/\D/g, '').replace(/^0/, '234');
     const method = get('CardPayment') ? 'Card' : prepaid ? 'Paid before website' : 'Bank transfer';
-    const info = { name: get('StudentName'), plan: get('Plan'), amount: amount, months: months, email: get('LoginEmail'), phone: phone, ref: get('Ref'), method: method };
+    const info = { name: get('StudentName'), plan: get('Plan'), amount: amount, unit: unit, months: months, email: get('LoginEmail'), phone: phone, ref: get('Ref'), method: method };
     let id, code, dash = EN_DASHBOARD_URL;
 
     if (programme === 'Academy' && typeof acd_createAccount_ === 'function') {          // Academy.gs
@@ -157,7 +161,7 @@ function en_createAccount(sh, row) {
       en_append(students, {
         StudentID: id, Name: get('StudentName'), AccessCode: code, Level: level, Plan: planShort, Teacher: '', PaymentStatus: 'Paid', NextDue: nextDue,
         AttendancePresent: 0, AttendanceTotal: 0, NextClass: '', ClassLink: '', Juz: 0, CurrentSurah: '', CurrentAyah: '', Active: 'TRUE',
-        Email: get('LoginEmail'), WhatsApp: phone, MonthlyFee: per === '/mo' ? amount : '',
+        Email: get('LoginEmail'), WhatsApp: phone, MonthlyFee: per === '/mo' ? unit : '',
       });
       const pay = en_book().getSheetByName('Payments');                         // payment history (skipped if the tab is missing)
       if (pay) en_append(pay, { PaymentID: 'P-' + Utilities.getUuid().slice(0, 6).toUpperCase(), StudentID: id, Date: en_date(today), Amount: amount, Months: months || 1, Reference: get('Ref'), Method: method, Status: 'Confirmed', Applied: (prepaid ? 'Paid before website, recorded ' : 'New enrolment ') + en_stamp(today) });
