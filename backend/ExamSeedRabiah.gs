@@ -2,11 +2,11 @@
  * ExamSeedRabiah.gs - the Rabi'ah Ibtida'iyyah final exams (Hadeeth and Tawheed), 60 questions each.
  *
  * Run once from the Apps Script editor: choose  examSeedRabiah  and press Run.
- * It creates two exams in DRAFT (nothing is visible to students yet):
+ * It creates two exams already LIVE, so each opens by itself at its start time (West Africa time, Lagos). Before that students only see a countdown:
  *   - Hadeeth  : 1 December 2026, 09:00   - Tawheed : 2 December 2026, 09:00   (60 questions, 60 marks, 75 minutes each)
  * Each exam counts as the "Exam" part (out of 60) of the semester report. Scores are shown to the student the moment they submit
  * and are added to the report card straight away (Instant = TRUE). 15 questions in each exam take 0.25 off for a wrong answer.
- * Then open exam-teacher, check the date and time, and press "Make live". Running it twice does nothing the second time.
+ * Nothing else to press. To change a date or time, edit it in exam-teacher before 1 December. Running it twice does nothing the second time.
  * Content: the questions follow the Himaayah Madrasah Edition books and still need a teacher's review before they go live.
  */
 const EXR_LEVEL = 'R\u0101bi\u02BFah Ibtid\u0101\u2019iyyah';
@@ -17,6 +17,7 @@ const EXR_DATA = {
 };
 function examSeedRabiah() {
   const msgs = [];
+  if (Utilities.formatDate(new Date(Date.UTC(2026, 11, 1, 11)), tz_(), 'Z') !== '+0100') msgs.push('WARNING: the spreadsheet time zone is ' + tz_() + ', not West Africa (Lagos, UTC+1). Open the spreadsheet, File > Settings, set the time zone to (GMT+01:00) Lagos, then run this again after deleting the two exams just created, otherwise they will open at the wrong hour.');
   Object.keys(EXR_DATA).forEach(function (subject) {
     const d = EXR_DATA[subject], t = ex_table_('Exams');
     if (t.rows.some(function (r) { return String(r.Subject).trim() === subject && String(r.Title).trim() === d.title; })) { msgs.push(subject + ': already there'); return; }
@@ -24,14 +25,14 @@ function examSeedRabiah() {
     t.rows.forEach(function (r) { const m = /^EX-(\d+)$/.exec(String(r.ExamID).trim().toUpperCase()); if (m) n = Math.max(n, Number(m[1])); });
     const examId = 'EX-' + ('000' + (n + 1)).slice(-3);
     append_(t, { ExamID: examId, Title: d.title, Subject: subject, Level: EXR_LEVEL, Start: d.start, Minutes: 75, PassMark: 50, OralMarks: 0,
-      Instructions: EXR_INSTR, Shuffle: 'TRUE', State: 'Draft', CreatedBy: 'SYSTEM', Created: ex_fmt_(ex_now_(), false), Kind: 'Exam', Term: schoolTerm_().Key, Instant: 'TRUE' },
+      Instructions: EXR_INSTR, Shuffle: 'TRUE', State: 'Live', CreatedBy: 'SYSTEM', Created: ex_fmt_(ex_now_(), false), Kind: 'Exam', Term: schoolTerm_().Key, Instant: 'TRUE' },
       ['ExamID', 'Title', 'Subject', 'Level', 'Start', 'Instructions', 'CreatedBy', 'Created', 'Kind', 'Term']);
     const qt = ex_table_('ExamQuestions');
     d.qs.forEach(function (q, i) {
       append_(qt, { ExamID: examId, QID: String(i + 1), Type: 'MCQ', Question: q.q, A: q.A, B: q.B, C: q.C, D: q.D, Correct: q.c, Marks: 1, Explanation: q.exp, ModelAnswer: '', Penalty: q.pen },
         ['ExamID', 'QID', 'Question', 'A', 'B', 'C', 'D', 'Correct', 'Explanation', 'ModelAnswer']);
     });
-    msgs.push(subject + ': ' + examId + ' created with ' + d.qs.length + ' questions (Draft)');
+    msgs.push(subject + ': ' + examId + ' created with ' + d.qs.length + ' questions (Live: opens by itself at ' + d.start.replace('T', ' ') + ' West Africa time)');
   });
   try { ss_().toast(msgs.join(' | '), SCHOOL_NAME, 20); } catch (e) {}
   console.log(msgs.join('\n'));
