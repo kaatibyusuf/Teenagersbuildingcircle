@@ -43,8 +43,8 @@
  */
 
 const EX_TABS = {
-  Exams: ['ExamID', 'Title', 'Subject', 'Level', 'Start', 'Minutes', 'PassMark', 'OralMarks', 'Instructions', 'Shuffle', 'State', 'CreatedBy', 'Created', 'Kind', 'Term'],
-  ExamQuestions: ['ExamID', 'QID', 'Type', 'Question', 'A', 'B', 'C', 'D', 'Correct', 'Marks', 'Explanation', 'ModelAnswer'],
+  Exams: ['ExamID', 'Title', 'Subject', 'Level', 'Start', 'Minutes', 'PassMark', 'OralMarks', 'Instructions', 'Shuffle', 'State', 'CreatedBy', 'Created', 'Kind', 'Term', 'Instant'],
+  ExamQuestions: ['ExamID', 'QID', 'Type', 'Question', 'A', 'B', 'C', 'D', 'Correct', 'Marks', 'Explanation', 'ModelAnswer', 'Penalty'],
   ExamSittings: ['ExamID', 'StudentID', 'Started', 'Deadline', 'Submitted', 'Answers', 'McqScore', 'WrittenScores', 'WrittenMarked', 'Comment', 'MarkedBy', 'GrantUntil', 'GrantMinutes', 'GrantedBy'],
   ExamOral: ['ExamID', 'StudentID', 'Slot', 'Score', 'Comment', 'MarkedBy'],
   Gradebook: ['Term', 'Subject', 'StudentID', 'Component', 'Score', 'EnteredBy', 'Updated'],
@@ -54,7 +54,7 @@ const EX_LATE_MINUTES = 15;          // a student may still begin this long afte
 const EX_GRACE_SECONDS = 45;         // answers are still accepted this long after the deadline (slow networks)
 const EX_DEFAULT_PASS = 50;          // percent, used when an exam has no PassMark
 const EX_BLOCK_OVERDUE = true;       // true = a student whose fees are overdue cannot start an exam
-const EX_EXAMS_FROM = '2027-01-20';  // the final exams (Kind "Exam") cannot be set for, or started on, any earlier day
+const EX_EXAMS_FROM = '2026-12-01';  // the final exams (Kind "Exam") cannot be set for, or started on, any earlier day
 const EX_WEIGHTS = { CA1: 20, CA2: 20, Exam: 60 };   // marks each part carries; the subject total is out of 100
 const EX_MAX_QUESTIONS = 100;
 const EX_MAX_WRITTEN_CHARS = 3000;
@@ -115,6 +115,8 @@ const EX_REMARK = { A: 'Excellent', B: 'Very good', C: 'Good', D: 'Fair', E: 'We
 function ex_kind_(e) { const k = String(e.Kind || '').trim().toUpperCase(); return k === 'CA1' ? 'CA1' : k === 'CA2' ? 'CA2' : k === 'EXAM' ? 'Exam' : ''; }
 function ex_beforeExams_(e) { return ex_kind_(e) === 'Exam' && iso_(e.Start).slice(0, 10) < EX_EXAMS_FROM; }
 function ex_isWritten_(q) { return String(q.Type || '').trim().toLowerCase() === 'written'; }
+function ex_penalty_(q) { const n = Number(q.Penalty); return n > 0 && n <= 1 ? n : 0; }   // fraction of the question's marks taken off for a wrong answer (0 = none)
+function ex_instant_(e) { return String(e.Instant).trim().toUpperCase() === 'TRUE'; }       // TRUE = the student sees the score the moment they submit
 function ex_marks_(q) { const n = Math.round(Number(q.Marks)); return n > 0 ? n : 1; }
 function ex_options_(q) {
   return ['A', 'B', 'C', 'D'].filter(function (k) { return String(q[k] == null ? '' : q[k]).trim() !== ''; })
@@ -165,9 +167,11 @@ function ex_mcqScore_(qs, answers) {
   qs.forEach(function (q) {
     if (ex_isWritten_(q)) return;
     const y = key_(answers[ex_qid_(q)]).slice(0, 1);
-    if (y !== '' && y === key_(q.Correct)) n += ex_marks_(q);
+    if (y === '') return;                                         // skipped: no marks, no penalty
+    if (y === key_(q.Correct)) n += ex_marks_(q);
+    else n -= ex_penalty_(q) * ex_marks_(q);                      // wrong answer on a negative-marked question
   });
-  return n;
+  return Math.max(0, Math.round(n * 100) / 100);                  // never below zero
 }
 /* Close a sitting whose deadline has passed without a submit. Call with the lock held. */
 function ex_finalize_(sittings, row, qs) {
@@ -182,6 +186,15 @@ function ex_sweep_(sittings, exam, qs) {          // finalize every overdue unfi
     if (key_(r.ExamID) !== id || !r.Started || String(r.Submitted || '').trim()) return;
     if (now > ex_epoch_(String(r.Deadline)) + EX_GRACE_SECONDS * 1000) ex_finalize_(sittings, r, qs);
   });
+}
+
+/* For an instant-result exam: make sure this student's sitting is closed (time ran out without a submit) before the score is read. */
+function ex_ensureFinal_(e, qs, sit) {
+  if (!sit || !sit.Started || String(sit.Submitted || '').trim()) return sit;
+  if (ex_now_() <= ex_epoch_(String(sit.Deadline)) + EX_GRACE_SECONDS * 1000) return sit;
+  const lock = LockService.getScriptLock(); lock.waitLock(20000);
+  try { const t = ex_table_('ExamSittings'); const r = ex_sitting_(t, e.ExamID, sit.StudentID); if (r && !String(r.Submitted || '').trim()) ex_finalize_(t, r, qs); } finally { lock.releaseLock(); }
+  return ex_sitting_(ex_table_('ExamSittings'), e.ExamID, sit.StudentID);
 }
 
 /* The marks for one student in one exam. complete = nothing is still waiting for a teacher. */
@@ -239,10 +252,12 @@ function ex_studentList_(st) {
   const sittings = ex_table_('ExamSittings'), oral = ex_table_('ExamOral'), allQs = ex_table_('ExamQuestions');
   const exams = ex_visibleExams_(st).map(function (e) {
     const qs = allQs.rows.filter(function (q) { return key_(q.ExamID) === key_(e.ExamID) && String(q.Question || '').trim() && (ex_isWritten_(q) || ex_options_(q).length >= 2); });
-    const sit = ex_sitting_(sittings, e.ExamID, sid), or = ex_oralRow_(oral, e.ExamID, sid);
+    let sit = ex_sitting_(sittings, e.ExamID, sid); const or = ex_oralRow_(oral, e.ExamID, sid);
     const start = ex_start_(e), end = ex_end_(e), t = ex_totals_(e, qs), hasQs = qs.length > 0;
     let status;
-    if (ex_state_(e) === 'Published') status = 'published';
+    const instantOut = ex_instant_(e) && !!sit && !!sit.Started && (!!String(sit.Submitted || '').trim() || now > ex_epoch_(String(sit.Deadline)) + EX_GRACE_SECONDS * 1000);
+    if (instantOut) sit = ex_ensureFinal_(e, qs, sit);
+    if (ex_state_(e) === 'Published' || instantOut) status = 'published';
     else if (sit && String(sit.Submitted || '').trim()) status = 'submitted';
     else if (sit && sit.Started) status = now <= ex_epoch_(String(sit.Deadline)) + EX_GRACE_SECONDS * 1000 ? 'inprogress' : 'submitted';
     else if (sit && !sit.Started && String(sit.GrantUntil || '').trim() && now <= ex_epoch_(String(sit.GrantUntil))) status = 'open';
@@ -258,6 +273,7 @@ function ex_studentList_(st) {
     if (sit && !sit.Started && String(sit.GrantUntil || '').trim() && now <= ex_epoch_(String(sit.GrantUntil))) {      // allowed by the teacher
       out.Granted = true; out.LateSec = Math.max(0, Math.round((ex_epoch_(String(sit.GrantUntil)) - now) / 1000)); out.Minutes = Math.max(5, ex_num_(sit.GrantMinutes) || ex_num_(e.Minutes));
     }
+    out.Instant = ex_instant_(e);
     if (status === 'published') {
       const c = ex_compute_(e, qs, sit, or);
       out.Result = c.complete ? { percent: c.percent, grade: c.grade, remark: EX_REMARK[c.grade], passed: c.passed, score: c.score, outOf: c.outOf, absent: c.absent } : { pending: true };
@@ -307,9 +323,9 @@ function ex_studentStart_(st, p) {
   const rnd = ex_rng_(key_(sid) + '|' + key_(e.ExamID)), order = String(e.Shuffle).toUpperCase() === 'FALSE' ? qs : ex_shuffle_(qs, rnd);
   const questions = order.map(function (q) {
     const written = ex_isWritten_(q), opts = written ? [] : (String(e.Shuffle).toUpperCase() === 'FALSE' ? ex_options_(q) : ex_shuffle_(ex_options_(q), rnd));
-    return { id: ex_qid_(q), type: written ? 'written' : 'mcq', question: String(q.Question).trim(), marks: ex_marks_(q), options: opts };
+    return { id: ex_qid_(q), type: written ? 'written' : 'mcq', question: String(q.Question).trim(), marks: ex_marks_(q), penalty: written ? 0 : ex_penalty_(q), options: opts };
   });
-  return { ok: true, exam: { ExamID: String(e.ExamID).trim(), Title: String(e.Title), Instructions: String(e.Instructions || ''), Minutes: ex_num_(e.Minutes), Marks: ex_totals_(e, qs).all },
+  return { ok: true, exam: { ExamID: String(e.ExamID).trim(), Title: String(e.Title), Instructions: String(e.Instructions || ''), Minutes: ex_num_(e.Minutes), Marks: ex_totals_(e, qs).all, Instant: ex_instant_(e) },
     questions: questions, answers: ex_json_(sit.Answers, {}), remainingSec: Math.max(0, Math.round((deadline - now) / 1000)), maxChars: EX_MAX_WRITTEN_CHARS };
 }
 
@@ -328,7 +344,7 @@ function ex_studentSave_(st, p, finish) {
   const e = ex_studentExam_(st, p.examId), qs = ex_questions_(e.ExamID), sittings = ex_table_('ExamSittings');
   const sit = ex_sitting_(sittings, e.ExamID, st.StudentID);
   if (!sit || !sit.Started) ex_fail_('Start the exam first.');
-  if (String(sit.Submitted || '').trim()) return { ok: true, submitted: true, remainingSec: 0 };
+  if (String(sit.Submitted || '').trim()) return { ok: true, submitted: true, remainingSec: 0, instant: ex_instant_(e) };
   const now = ex_now_(), deadline = ex_epoch_(String(sit.Deadline)), late = now > deadline + EX_GRACE_SECONDS * 1000;
   if (!late) {
     const ans = ex_cleanAnswers_(qs, p.answers);
@@ -338,30 +354,37 @@ function ex_studentSave_(st, p, finish) {
   if (finish || late) {
     put_(sittings, sit._row, 'McqScore', ex_mcqScore_(qs, ex_json_(sit.Answers, {})));
     put_(sittings, sit._row, 'Submitted', late ? String(sit.Deadline) : ex_fmt_(now, true), true);
-    return { ok: true, submitted: true, late: late, remainingSec: 0 };
+    return { ok: true, submitted: true, late: late, remainingSec: 0, instant: ex_instant_(e) };
   }
   return { ok: true, submitted: false, remainingSec: Math.max(0, Math.round((deadline - now) / 1000)) };
 }
 
 function ex_studentResult_(st, p) {
   const e = ex_studentExam_(st, p.examId);
-  if (ex_state_(e) !== 'Published') return { ok: false, error: 'Results are not out yet.' };
   const qs = ex_questions_(e.ExamID), sid = String(st.StudentID).trim();
-  const sit = ex_sitting_(ex_table_('ExamSittings'), e.ExamID, sid), or = ex_oralRow_(ex_table_('ExamOral'), e.ExamID, sid);
+  let sit = ex_sitting_(ex_table_('ExamSittings'), e.ExamID, sid);
+  const published = ex_state_(e) === 'Published';
+  if (!published) {
+    if (!ex_instant_(e) || !sit || !sit.Started) return { ok: false, error: 'Results are not out yet.' };
+    sit = ex_ensureFinal_(e, qs, sit);
+    if (!String(sit.Submitted || '').trim()) return { ok: false, error: 'Submit the exam first.' };
+  }
+  const or = ex_oralRow_(ex_table_('ExamOral'), e.ExamID, sid);
+  const showKey = published || ex_now_() > ex_end_(e) + EX_GRACE_SECONDS * 1000;      // an instant result shows the answers only after the exam has ended for everyone
   const c = ex_compute_(e, qs, sit, or);
   if (!c.complete) return { ok: true, pending: true, title: String(e.Title) };
   const answers = ex_json_(sit && sit.Answers, {}), wScores = ex_json_(sit && sit.WrittenScores, {});
-  const review = c.absent ? [] : qs.map(function (q) {
+  const review = (c.absent || !showKey) ? [] : qs.map(function (q) {
     const id = ex_qid_(q), written = ex_isWritten_(q), yours = answers[id] == null ? '' : String(answers[id]);
     const r = { id: id, type: written ? 'written' : 'mcq', question: String(q.Question).trim(), marks: ex_marks_(q), yours: yours, explanation: String(q.Explanation || '') };
     if (written) { r.score = Math.min(ex_marks_(q), Math.max(0, ex_num_(wScores[id]))); r.modelAnswer = String(q.ModelAnswer || ''); }
-    else { r.options = ex_options_(q); r.correct = key_(q.Correct); r.ok = key_(yours).slice(0, 1) === key_(q.Correct); }
+    else { r.options = ex_options_(q); r.correct = key_(q.Correct); r.ok = key_(yours).slice(0, 1) === key_(q.Correct); r.got = r.ok ? ex_marks_(q) : (yours === '' ? 0 : -ex_penalty_(q) * ex_marks_(q)); r.penalty = ex_penalty_(q); }
     return r;
   });
   return { ok: true, title: String(e.Title), subject: String(e.Subject || ''), date: iso_(e.Start), student: String(st.Name), level: String(st.Level),
     percent: c.percent, grade: c.grade, remark: EX_REMARK[c.grade], passed: c.passed, passMark: ex_pass_(e), score: c.score, outOf: c.outOf, absent: c.absent,
     parts: { mcq: { score: c.mcq, outOf: c.totals.mcq }, written: { score: c.written, outOf: c.totals.written }, oral: { score: c.oral, outOf: c.totals.oral } },
-    comment: String(sit && sit.Comment || ''), oralComment: String(or && or.Comment || ''), oralSlot: String(or && or.Slot || ''), review: review };
+    instant: !published, answersLater: !showKey, comment: String(sit && sit.Comment || ''), oralComment: String(or && or.Comment || ''), oralSlot: String(or && or.Slot || ''), review: review };
 }
 
 /* ===== TEACHER REQUESTS (action "examt") ===== */
@@ -441,9 +464,9 @@ function ex_tExam_(me, p) {            // the full exam, for the editor (teacher
   const locked = ex_table_('ExamSittings').rows.some(function (r) { return key_(r.ExamID) === key_(e.ExamID); }) ||
     ex_table_('ExamOral').rows.some(function (r) { return key_(r.ExamID) === key_(e.ExamID) && String(r.Score == null ? '' : r.Score) !== ''; });
   return { ok: true, locked: locked, exam: { ExamID: String(e.ExamID).trim(), Title: String(e.Title), Subject: String(e.Subject || ''), Level: String(e.Level || ''), Start: iso_(e.Start, true),
-    Minutes: ex_num_(e.Minutes), PassMark: ex_pass_(e), OralMarks: Math.round(ex_num_(e.OralMarks)), Instructions: String(e.Instructions || ''), Shuffle: String(e.Shuffle).toUpperCase() !== 'FALSE', State: ex_state_(e), Kind: ex_kind_(e), Term: String(e.Term || '') },
+    Minutes: ex_num_(e.Minutes), PassMark: ex_pass_(e), OralMarks: Math.round(ex_num_(e.OralMarks)), Instructions: String(e.Instructions || ''), Shuffle: String(e.Shuffle).toUpperCase() !== 'FALSE', State: ex_state_(e), Kind: ex_kind_(e), Term: String(e.Term || ''), Instant: ex_instant_(e) },
     questions: qs.map(function (q) { return { type: ex_isWritten_(q) ? 'written' : 'mcq', question: String(q.Question), A: String(q.A || ''), B: String(q.B || ''), C: String(q.C || ''), D: String(q.D || ''),
-      correct: key_(q.Correct), marks: ex_marks_(q), explanation: String(q.Explanation || ''), modelAnswer: String(q.ModelAnswer || '') }; }) };
+      correct: key_(q.Correct), marks: ex_marks_(q), explanation: String(q.Explanation || ''), modelAnswer: String(q.ModelAnswer || ''), penalty: ex_penalty_(q) }; }) };
 }
 
 function ex_tSave_(me, p) {
@@ -476,11 +499,12 @@ function ex_tSave_(me, p) {
       if (!text) ex_fail_('Question ' + n + ' is empty.');
       const marks = Math.round(ex_num_(q.marks)) || 1;
       if (marks < 1 || marks > 100) ex_fail_('Question ' + n + ': marks must be between 1 and 100.');
-      const o = { type: type, question: text, marks: marks, explanation: ex_str_(q.explanation, 600), modelAnswer: ex_str_(q.modelAnswer, 1500), A: '', B: '', C: '', D: '', correct: '' };
+      const o = { type: type, question: text, marks: marks, explanation: ex_str_(q.explanation, 600), modelAnswer: ex_str_(q.modelAnswer, 1500), A: '', B: '', C: '', D: '', correct: '', penalty: 0 };
       if (type === 'MCQ') {
         ['A', 'B', 'C', 'D'].forEach(function (k) { o[k] = ex_str_(q[k], 300); });
         const filled = ['A', 'B', 'C', 'D'].filter(function (k) { return o[k] !== ''; });
         if (filled.length < 2) ex_fail_('Question ' + n + ' needs at least two options.');
+        o.penalty = Math.max(0, Math.min(1, Math.round(ex_num_(q.penalty) * 100) / 100));
         o.correct = key_(q.correct).slice(0, 1);
         if (filled.indexOf(o.correct) < 0) ex_fail_('Question ' + n + ': choose which option is correct.');
       }
@@ -496,7 +520,7 @@ function ex_tSave_(me, p) {
   if (e) {
     examId = String(e.ExamID).trim();
     put_(t, e._row, 'Title', title, true); put_(t, e._row, 'Subject', subject, true); put_(t, e._row, 'PassMark', pass);
-    put_(t, e._row, 'Instructions', ex_str_(d.Instructions, 1500), true); put_(t, e._row, 'Kind', kind, true); put_(t, e._row, 'Term', term, true);
+    put_(t, e._row, 'Instructions', ex_str_(d.Instructions, 1500), true); put_(t, e._row, 'Kind', kind, true); put_(t, e._row, 'Term', term, true); put_(t, e._row, 'Instant', d.Instant ? 'TRUE' : 'FALSE', true);
     if (!locked) {
       put_(t, e._row, 'Level', level, true); put_(t, e._row, 'Start', start, true); put_(t, e._row, 'Minutes', minutes);
       put_(t, e._row, 'OralMarks', oralMarks); put_(t, e._row, 'Shuffle', d.Shuffle === false ? 'FALSE' : 'TRUE');
@@ -506,7 +530,7 @@ function ex_tSave_(me, p) {
     t.rows.forEach(function (r) { const m = /^EX-(\d+)$/.exec(String(r.ExamID).trim().toUpperCase()); if (m) n = Math.max(n, Number(m[1])); });
     examId = 'EX-' + ('000' + (n + 1)).slice(-3);
     append_(t, { ExamID: examId, Title: title, Subject: subject, Level: level, Start: start, Minutes: minutes, PassMark: pass, OralMarks: oralMarks,
-      Instructions: ex_str_(d.Instructions, 1500), Shuffle: d.Shuffle === false ? 'FALSE' : 'TRUE', State: 'Draft', CreatedBy: String(me.TeacherID).trim(), Created: ex_fmt_(ex_now_(), false), Kind: kind, Term: term },
+      Instructions: ex_str_(d.Instructions, 1500), Shuffle: d.Shuffle === false ? 'FALSE' : 'TRUE', State: 'Draft', CreatedBy: String(me.TeacherID).trim(), Created: ex_fmt_(ex_now_(), false), Kind: kind, Term: term, Instant: d.Instant ? 'TRUE' : 'FALSE' },
       ['ExamID', 'Title', 'Subject', 'Level', 'Start', 'Instructions', 'CreatedBy', 'Created', 'Kind', 'Term']);
   }
   if (!locked) {
@@ -515,7 +539,7 @@ function ex_tSave_(me, p) {
     const qt2 = ex_table_('ExamQuestions');
     questions.forEach(function (q, i) {
       append_(qt2, { ExamID: examId, QID: String(i + 1), Type: q.type, Question: q.question, A: q.A, B: q.B, C: q.C, D: q.D, Correct: q.correct, Marks: q.marks,
-        Explanation: q.explanation, ModelAnswer: q.modelAnswer }, ['ExamID', 'QID', 'Question', 'A', 'B', 'C', 'D', 'Correct', 'Explanation', 'ModelAnswer']);
+        Explanation: q.explanation, ModelAnswer: q.modelAnswer, Penalty: q.penalty || 0 }, ['ExamID', 'QID', 'Question', 'A', 'B', 'C', 'D', 'Correct', 'Explanation', 'ModelAnswer']);
     });
   }
   return { ok: true, examId: examId };
@@ -686,7 +710,7 @@ function ex_tBook_(me, p) {
 /* The scores of some students for one term. publishedOnly (the student's own report) leaves out exams that are not published yet. */
 function ex_gbCompute_(term, studs, publishedOnly) {
   const exams = ex_table_('Exams').rows.filter(function (e) {
-    return e.ExamID && ex_kind_(e) && String(e.Term || '').trim() === term && (publishedOnly ? ex_state_(e) === 'Published' : ex_state_(e) !== 'Draft');
+    return e.ExamID && ex_kind_(e) && String(e.Term || '').trim() === term && (publishedOnly ? (ex_state_(e) === 'Published' || (ex_state_(e) === 'Live' && ex_instant_(e))) : ex_state_(e) !== 'Draft');
   });
   if (!publishedOnly) {      // finish any sitting whose time has run out, so absent students and unsubmitted work are not guessed at
     const lock = LockService.getScriptLock(); lock.waitLock(20000);
@@ -719,7 +743,13 @@ function ex_gbCompute_(term, studs, publishedOnly) {
         if (!mine.length) return;
         const pcts = []; let waiting = false, absent = false;
         mine.forEach(function (e) {
-          const qs = qsBy[key_(e.ExamID)], c = ex_compute_(e, qs, ex_sitting_(sittings, e.ExamID, sid), ex_oralRow_(oral, e.ExamID, sid));
+          const qs = qsBy[key_(e.ExamID)];
+          let sitX = ex_sitting_(sittings, e.ExamID, sid);
+          if (publishedOnly && ex_state_(e) !== 'Published') {                 // an instant-result exam counts for a student once they have sat it
+            if (sitX && sitX.Started) sitX = ex_ensureFinal_(e, qs, sitX);
+            if (!sitX || !String(sitX.Submitted || '').trim()) { waiting = true; return; }
+          }
+          const c = ex_compute_(e, qs, sitX, ex_oralRow_(oral, e.ExamID, sid));
           const over = !isNaN(ex_start_(e)) && now > ex_end_(e) + EX_GRACE_SECONDS * 1000;
           if (c.absent && !over) { waiting = true; return; }
           if (!c.complete) { waiting = true; return; }

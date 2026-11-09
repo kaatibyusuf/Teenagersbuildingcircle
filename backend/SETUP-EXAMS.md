@@ -117,3 +117,10 @@ The Arabic report card ends with a short note to the student, based on the CGPA:
 - **Below 3.0:** advised to withdraw.
 
 The note also states the rule in words. It shows only when the student has a CGPA, and says "provisional" while some scores are still missing. The two limits are `CGPA_MIN` and `CGPA_WITHDRAW` at the top of `standingAr` in `exams.html`.
+
+## Negative marking, instant results and the Rabi'ah final exams (December 2026)
+
+- **Negative marking.** Each multiple-choice question has a *Penalty* (column in ExamQuestions, or the box "Wrong answer takes off" in the exam editor). `0.25` takes a quarter of the question's mark off a wrong answer. A skipped question loses nothing. The total of the multiple-choice part is never below 0.
+- **Instant results.** Tick "Show each student their score the moment they submit" in the exam editor (column *Instant* in Exams). The student sees the score straight after submitting, and it goes into their semester report card without waiting for you to press Publish. The correct answers are shown only after the exam has ended for everyone, so the key cannot leak to students still sitting it. A student who never sat still shows as waiting until the teacher presses Publish.
+- **Exam start date.** `EX_EXAMS_FROM` is now `2026-12-01`.
+- **Rabi'ah Ibtida'iyyah finals.** In the Apps Script editor choose `examSeedRabiah` and press Run (once). It creates two Draft exams: Hadeeth (1 Dec 2026, 09:00) and Tawheed (2 Dec 2026, 09:00), 60 questions and 75 minutes each, out of 60, level Rabi'ah Ibtida'iyyah, counted as the Exam part of the semester report. 15 questions in each paper take 0.25 off for a wrong answer. Check the date and time on exam-teacher, have a teacher review the questions, then press **Make live**. A student whose fees are overdue still cannot start (EX_BLOCK_OVERDUE).

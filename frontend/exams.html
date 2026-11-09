@@ -174,7 +174,7 @@ function introView(x) {
     <ul><li>The timer starts when you press <b>Begin</b>, but the exam always ends at the same time for everyone.</li>
     <li>Your answers save as you go. If you lose your connection, keep writing; it will save when it returns.</li>
     <li>You can only sit this exam once. When time is up your answers are sent automatically.</li>
-    <li>You will see your marks after your teacher releases the results.</li></ul>
+    <li>${x.Instant ? 'Your score appears the moment you submit, and it is added to your report card.' : 'You will see your marks after your teacher releases the results.'}</li></ul>
     <button class="btn btn-ink" data-begin="${esc(x.ExamID)}">Begin exam</button> <button class="btn btn-line" data-list>Back</button>
     <div class="msg" id="msg" role="alert"></div></section>`;
 }
@@ -190,7 +190,7 @@ function run() {
     : `<div role="radiogroup" aria-labelledby="qt">${q.options.map((o, k) => `<button class="opt" role="radio" aria-checked="${r.ans[q.id] === o.k}" data-k="${esc(o.k)}"><span class="k">${LBL[k]}</span><span class="tx${arCls(o.t)}">${esc(o.t)}</span></button>`).join('')}</div>`;
   const last = r.i === n - 1;
   $('app').innerHTML = `<div class="tbar"><b>${esc(r.exam.Title)}</b><span class="clock${r.rem <= 300 ? ' low' : ''}" id="clock" role="timer">${mmss(r.rem)}</span></div>
-    <section class="q"><div class="pmeta"><b>Question ${r.i + 1} of ${n}</b><span>${q.marks} mark${q.marks === 1 ? '' : 's'}${q.type === 'written' ? ' &middot; written' : ''}</span></div>
+    <section class="q"><div class="pmeta"><b>Question ${r.i + 1} of ${n}</b><span>${q.marks} mark${q.marks === 1 ? '' : 's'}${q.type === 'written' ? ' &middot; written' : ''}${q.penalty ? ` &middot; <b style="color:#B4341E">&minus;${+(q.penalty * q.marks).toFixed(2)} if wrong</b>` : ''}</span></div>
     <div class="prog" role="progressbar" aria-valuemin="0" aria-valuemax="${n}" aria-valuenow="${doneCount}"><i style="width:${doneCount / n * 100}%"></i></div>
     <h2 id="qt" class="${arCls(q.question)}">${esc(q.question)}</h2>${body}
     <div style="margin-top:10px"><button class="flagbtn${r.flag[q.id] ? ' on' : ''}" data-flag>${r.flag[q.id] ? '&#9873; Flagged for review' : '&#9872; Flag for review'}</button></div>
@@ -253,6 +253,9 @@ async function submit(auto) {
   if (d && d.ok) {
     try { sessionStorage.removeItem(bk(r.exam.ExamID)); } catch (e) {}
     stopRun(); ST.run = null;
+    if (d.instant) {
+      try { const rr = await call({ op: 'result', examId: r.exam.ExamID }); if (rr && rr.ok && !rr.pending) { resultView(rr); return; } } catch (e) {}
+    }
     $('app').innerHTML = `<section class="panel" style="text-align:center"><div class="g big" style="background:#DDF3E4;color:#1B6B3A">&#10003;</div><h2 style="margin-top:14px">${auto ? 'Time is up. Your answers were sent.' : 'Your answers are in. Mashaa Allah!'}</h2>
       <p>Your teacher will mark your paper. You will see your result here once it is released.</p><p style="margin-top:16px"><button class="btn btn-ink" data-list>Back to my exams</button></p></section>`;
     window.scrollTo(0, 0);
@@ -266,16 +269,17 @@ async function submit(auto) {
 /* ---------- a published result ---------- */
 function resultView(d) {
   stopTimers();
-  const p = d.parts, part = (n, x) => x.outOf ? `<div><b>${x.score}/${x.outOf}</b><span>${n}</span></div>` : '';
+  const p = d.parts, part = (n, x) => x.outOf ? `<div><b>${+Number(x.score).toFixed(2)}/${x.outOf}</b><span>${n}</span></div>` : '';
   $('app').innerHTML = `<section class="panel"><span class="pill t">${esc(d.subject)}</span><h2>${esc(d.title)}</h2><p>${esc(d.student)} &middot; ${dayOnly(d.date + 'T00:00')}</p>
     <div style="display:flex;align-items:center;gap:18px;margin-top:16px"><span class="g big ${esc(d.grade)}">${esc(d.grade)}</span>
     <div><b style="font-family:var(--d);font-size:30px;color:var(--deep)">${d.absent ? 'Absent' : d.percent + '%'}</b><div style="color:var(--muted)">${esc(d.remark)} &middot; ${d.passed ? 'Passed' : 'Not passed'} (pass mark ${d.passMark}%)</div></div></div>
+    ${d.instant ? `<div class="cmt"><b>Your score is saved to your report card.</b> ${d.answersLater ? 'The correct answers will show here once the exam has closed for everyone.' : ''}</div>` : ''}
     ${d.absent ? '<p style="margin-top:12px">You did not sit the written paper.</p>' : `<div class="parts">${part('Multiple choice', p.mcq)}${part('Written', p.written)}${part('Oral', p.oral)}</div>`}
     ${d.comment ? `<div class="cmt"><b>Teacher&rsquo;s comment.</b> ${esc(d.comment)}</div>` : ''}${d.oralComment ? `<div class="cmt"><b>Oral assessment.</b> ${esc(d.oralComment)}</div>` : ''}
     <p class="no-print" style="margin-top:18px"><button class="btn btn-line btn-sm" data-list>All exams</button> <button class="btn btn-ink btn-sm" data-print>Print or save as PDF</button></p></section>
     ${d.review.map((x, i) => x.type === 'written'
       ? `<section class="rev"><h3>${i + 1}. ${esc(x.question)} <span class="pill">${x.score}/${x.marks}</span></h3><div class="ans">${x.yours ? esc(x.yours) : '<i>No answer</i>'}</div>${x.modelAnswer ? `<div class="ex"><b>Model answer.</b> ${esc(x.modelAnswer)}</div>` : ''}</section>`
-      : `<section class="rev"><h3>${i + 1}. ${esc(x.question)} <span class="pill">${x.ok ? x.marks : 0}/${x.marks}</span></h3>${x.options.map((o) => `<div class="opt static ${o.k === x.correct ? 'good' : o.k === x.yours ? 'wrong' : ''}"><span class="k">${esc(o.k)}</span><span class="tx${arCls(o.t)}">${esc(o.t)}</span></div>`).join('')}${x.yours ? '' : '<div class="ex">You did not answer this one.</div>'}${x.explanation ? `<div class="ex">${esc(x.explanation)}</div>` : ''}</section>`).join('')}`;
+      : `<section class="rev"><h3>${i + 1}. ${esc(x.question)} <span class="pill">${x.got != null ? +x.got.toFixed(2) : (x.ok ? x.marks : 0)}/${x.marks}</span></h3>${x.options.map((o) => `<div class="opt static ${o.k === x.correct ? 'good' : o.k === x.yours ? 'wrong' : ''}"><span class="k">${esc(o.k)}</span><span class="tx${arCls(o.t)}">${esc(o.t)}</span></div>`).join('')}${x.yours ? '' : '<div class="ex">You did not answer this one.</div>'}${x.explanation ? `<div class="ex">${esc(x.explanation)}</div>` : ''}</section>`).join('')}`;
   window.scrollTo(0, 0);
 }
 
