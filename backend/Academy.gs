@@ -41,7 +41,7 @@ const ACD = {
   Students: 'AcademyStudents', Tutors: 'AcademyTutors', Admins: 'AcademyAdmins', Mocks: 'AcademyMocks', Reading: 'AcademyReading',
   Payments: 'AcademyPayments', Announcements: 'AcademyAnnouncements', Attendance: 'AcademyAttendance', Tasks: 'AcademyTasks',
   TaskSubs: 'AcademyTaskSubmissions', Tests: 'AcademyTests', Questions: 'AcademyQuestions', Attempts: 'AcademyAttempts', Groups: 'AcademyGroups',
-  Families: 'AcademyFamilies', Posts: 'AcademyFamilyPosts', Sessions: 'AcademySessions'
+  Families: 'AcademyFamilies', Posts: 'AcademyFamilyPosts', Sessions: 'AcademySessions', MockBank: 'AcademyMockBank'
 };
 const ACD_SHEETS = {
   AcademyStudents: ['StudentID', 'Matric', 'Name', 'AccessCode', 'Track', 'Group', 'Family', 'TutorID', 'PaymentStatus', 'NextDue', 'MonthlyFee', 'ExamDate', 'TargetPercent', 'NextClass', 'ClassLink', 'Email', 'WhatsApp', 'Active', 'Enrolled', 'Ref'],
@@ -54,8 +54,9 @@ const ACD_SHEETS = {
   AcademyAttendance: ['Date', 'Session', 'StudentID', 'Status', 'TutorID', 'Recorded'],
   AcademyTasks: ['TaskID', 'Created', 'Title', 'Instructions', 'Subject', 'Audience', 'Due', 'MaxScore', 'TutorID', 'Active'],
   AcademyTaskSubmissions: ['SubmissionID', 'TaskID', 'StudentID', 'Submitted', 'Answer', 'Link', 'Score', 'Feedback', 'Marked', 'MarkedBy'],
-  AcademyTests: ['TestID', 'Title', 'Subject', 'Kind', 'Audience', 'Opens', 'Closes', 'Minutes', 'Questions', 'TutorID', 'Active', 'Created'],
-  AcademyQuestions: ['TestID', 'No', 'Question', 'A', 'B', 'C', 'D', 'E', 'Answer', 'Explanation'],
+  AcademyTests: ['TestID', 'Title', 'Subject', 'Kind', 'Audience', 'Opens', 'Closes', 'Minutes', 'Questions', 'TutorID', 'Active', 'Created', 'Series', 'Combo'],
+  AcademyQuestions: ['TestID', 'No', 'Question', 'A', 'B', 'C', 'D', 'E', 'Answer', 'Explanation', 'Subj'],
+  AcademyMockBank: ['BankID', 'Subject', 'Passage', 'Question', 'Right', 'Wrong1', 'Wrong2', 'Wrong3', 'Explanation', 'Uses', 'LastUsed', 'Active'],
   AcademyAttempts: ['AttemptID', 'TestID', 'StudentID', 'Started', 'Submitted', 'Score', 'OutOf', 'Percent', 'Answers'],
   AcademyGroups: ['Group', 'MeetLink', 'TelegramLink', 'Timetable', 'Active'],
   AcademyFamilies: ['FamilyID', 'Name', 'MentorID', 'Motto', 'Active', 'Created'],
@@ -346,10 +347,12 @@ function acd_studentPayload_(st, viewer) {
     const mine = attempts.filter(function (r) { return String(r.TestID) === String(x.TestID); });
     const done = mine.filter(function (r) { return r.Submitted; }), open = mine.filter(function (r) { return !r.Submitted; })[0];
     const opens = iso_(x.Opens, true), closes = iso_(x.Closes, true), sunday = String(x.Kind) === 'Sunday mock';
+    const sibIds = x.Series ? C.get(ACD.Tests).rows.filter(function (r) { return String(r.Series) === String(x.Series) && String(r.TestID) !== String(x.TestID); }).map(function (r) { return String(r.TestID); }) : [];
+    const locked = !!sibIds.length && attempts.some(function (r) { return sibIds.indexOf(String(r.TestID)) >= 0; });
     const state = opens && now < opens ? 'Upcoming' : closes && now > closes ? 'Closed' : (sunday && done.length ? 'Done' : 'Open');
     const best = done.reduce(function (b, r) { return Math.max(b, Number(r.Percent) || 0); }, -1);
     return { TestID: String(x.TestID), Title: String(x.Title), Subject: String(x.Subject || ''), Kind: String(x.Kind), Opens: opens, Closes: closes, Minutes: Number(x.Minutes) || 0,
-             Questions: Number(x.Questions) || 0, State: state, InProgress: !!open, Attempts: done.length, Best: best >= 0 ? best : null,
+             Questions: Number(x.Questions) || 0, State: state, InProgress: !!open, Attempts: done.length, Best: best >= 0 ? best : null, Series: String(x.Series || ''), Combo: String(x.Combo || ''), Locked: locked && !done.length,
              Last: done.length ? done.sort(function (a, b) { return String(a.Submitted) < String(b.Submitted) ? 1 : -1; }).map(function (r) {
                return { AttemptID: String(r.AttemptID), Percent: Number(r.Percent) || 0, Score: Number(r.Score) || 0, OutOf: Number(r.OutOf) || 0, Submitted: iso_(r.Submitted, true),
                         Review: !sunday || (closes && now > closes) };
@@ -406,7 +409,7 @@ function acd_studentPayload_(st, viewer) {
     reading: acd_reading_(C.get(ACD.Reading), id, acd_monday_(today)),
     metrics: acd_metrics_(C, st, ACD_LEADERBOARD_DAYS),
     attendance: att.slice(0, 20),
-    tasks: tasks, tests: tests, leaderboard: board,
+    tasks: tasks, tests: tests, leaderboard: board, mockBoard: acm_board_(C, st),
     announcements: acd_t_(ACD.Announcements).rows.filter(function (r) { return r.Title && matches_(r.Audience, keys); })
       .map(function (r) { return { Date: iso_(r.Date), Title: r.Title, Body: r.Body }; })
       .sort(function (a, b) { return a.Date < b.Date ? 1 : -1; }).slice(0, 20),
@@ -476,6 +479,10 @@ function acd_cbtStart_(st, p) {
     const AT = acd_t_(ACD.Attempts);
     const mine = AT.rows.filter(function (r) { return String(r.TestID) === String(x.TestID) && key_(r.StudentID) === id; });
     if (sunday && mine.some(function (r) { return r.Submitted; })) return { ok: false, error: 'You have already sat this Sunday mock. Your result is in the CBT tab.' };
+    if (sunday && String(x.Series || '')) {   // one subject combination per week: sitting one locks the others
+      const sibs = {}; acd_t_(ACD.Tests).rows.forEach(function (r) { if (String(r.Series) === String(x.Series) && String(r.TestID) !== String(x.TestID)) sibs[String(r.TestID)] = 1; });
+      if (AT.rows.some(function (r) { return sibs[String(r.TestID)] && key_(r.StudentID) === id; })) return { ok: false, error: 'You already chose a different subject combination for this week\'s mock. You can only sit one.' };
+    }
     const open = mine.filter(function (r) { return !r.Submitted; })[0];
     if (open && (!minutes || (Date.now() - acd_ms_(open.Started)) < (minutes + 2) * 60000)) att = { AttemptID: String(open.AttemptID), Started: String(open.Started) };
     else {
@@ -486,13 +493,20 @@ function acd_cbtStart_(st, p) {
   } finally { lock.releaseLock(); }
   const left = minutes ? Math.max(0, Math.round((acd_ms_(att.Started) + minutes * 60000 - Date.now()) / 1000)) : null;
   return { ok: true, attempt: { AttemptID: att.AttemptID, TestID: String(x.TestID), Title: String(x.Title), Subject: String(x.Subject || ''), Kind: String(x.Kind),
-    Minutes: minutes, SecondsLeft: left, Questions: qs.map(function (q) { return { No: Number(q.No), Question: String(q.Question), Options: acd_opts_(q) }; }) } };
+    Minutes: minutes, SecondsLeft: left, Questions: qs.map(function (q) { return { No: Number(q.No), Question: String(q.Question), Options: acd_opts_(q), Subj: String(q.Subj || '') }; }) } };
+}
+function acd_breakdown_(qs, answers) {   // UTME scoring: each subject is out of 100, so four subjects make 400
+  const order = [], per = {};
+  qs.forEach(function (q) { const s = String(q.Subj || 'General'); if (!per[s]) { per[s] = { c: 0, n: 0 }; order.push(s); } per[s].n++; if (answers[String(Number(q.No))] && answers[String(Number(q.No))] === String(q.Answer || '').trim().toUpperCase()) per[s].c++; });
+  const items = order.map(function (s) { return { Subject: s, Correct: per[s].c, Of: per[s].n, Score: Math.round(1000 * per[s].c / per[s].n) / 10 }; });
+  const total = Math.round(10 * items.reduce(function (a, i) { return a + i.Score; }, 0)) / 10;
+  return { items: items, total: total, outOf: 100 * items.length };
 }
 function acd_ms_(v) { const d = v instanceof Date ? v : new Date(String(v)); return isNaN(d) ? 0 : d.getTime(); }
 function acd_review_(qs, answers) {
   return qs.map(function (q) {
     return { No: Number(q.No), Question: String(q.Question), Options: acd_opts_(q), Answer: String(q.Answer || '').trim().toUpperCase(),
-             Yours: String((answers || {})[String(q.No)] || ''), Explanation: String(q.Explanation || '') };
+             Yours: String((answers || {})[String(q.No)] || ''), Explanation: String(q.Explanation || ''), Subj: String(q.Subj || '') };
   });
 }
 function acd_cbtSubmit_(st, p) {
@@ -511,16 +525,18 @@ function acd_cbtSubmit_(st, p) {
     qs = acd_questions_(x.TestID);
     let score = 0;
     qs.forEach(function (q) { if (answers[String(Number(q.No))] && answers[String(Number(q.No))] === String(q.Answer || '').trim().toUpperCase()) score++; });
-    const outOf = qs.length, pct = outOf ? Math.round(1000 * score / outOf) / 10 : 0, now = acd_now_();
+    let outOf = qs.length, breakdown = null;
+    if (String(x.Series || '')) { breakdown = acd_breakdown_(qs, answers); score = breakdown.total; outOf = breakdown.outOf; }
+    const pct = outOf ? Math.round(1000 * score / outOf) / 10 : 0, now = acd_now_();
     put_(AT, a._row, 'Submitted', now, true); put_(AT, a._row, 'Score', score); put_(AT, a._row, 'OutOf', outOf); put_(AT, a._row, 'Percent', pct);
     put_(AT, a._row, 'Answers', JSON.stringify(answers), true);
     const sunday = String(x.Kind) === 'Sunday mock', closes = iso_(x.Closes, true);
     if (sunday) {   // a Sunday mock also goes on the student's mock record
-      append_(acd_t_(ACD.Mocks), { StudentID: String(st.StudentID).trim(), Date: today_(), Type: 'Sunday mock', Subject: String(x.Subject || x.Title).slice(0, 40), Score: score, OutOf: outOf, TutorID: 'CBT', Recorded: new Date() },
+      append_(acd_t_(ACD.Mocks), { StudentID: String(st.StudentID).trim(), Date: today_(), Type: 'Sunday mock', Subject: String(x.Series ? 'UTME mock · ' + (x.Combo || x.Subject) : (x.Subject || x.Title)).slice(0, 60), Score: score, OutOf: outOf, TutorID: 'CBT', Recorded: new Date() },
               ['StudentID', 'Date', 'Type', 'Subject', 'TutorID']);
     }
     const reviewNow = !sunday || (closes && now > closes);
-    result = { Title: String(x.Title), Kind: String(x.Kind), Score: score, OutOf: outOf, Percent: pct, Review: reviewNow ? acd_review_(qs, answers) : null };
+    result = { Title: String(x.Title), Kind: String(x.Kind), Score: score, OutOf: outOf, Percent: pct, Scaled: !!breakdown, Breakdown: breakdown ? breakdown.items : null, Review: reviewNow ? acd_review_(qs, answers) : null };
   } finally { lock.releaseLock(); }
   CacheService.getScriptCache().remove('acd_board');
   return { ok: true, result: result };
@@ -533,7 +549,8 @@ function acd_cbtReview_(st, p) {
   const closes = iso_(x.Closes, true);
   if (String(x.Kind) === 'Sunday mock' && !(closes && acd_now_() > closes)) return { ok: false, error: 'Answers for this Sunday mock are shown after it closes' + (closes ? ' (' + nice_(closes) + ' at ' + closes.slice(11) + ')' : '') + '.' };
   let answers = {}; try { answers = JSON.parse(String(a.Answers || '{}')); } catch (e) {}
-  return { ok: true, result: { Title: String(x.Title), Kind: String(x.Kind), Score: Number(a.Score) || 0, OutOf: Number(a.OutOf) || 0, Percent: Number(a.Percent) || 0, Review: acd_review_(acd_questions_(x.TestID), answers) } };
+  const rq = acd_questions_(x.TestID), bd = String(x.Series || '') ? acd_breakdown_(rq, answers) : null;
+  return { ok: true, result: { Title: String(x.Title), Kind: String(x.Kind), Score: Number(a.Score) || 0, OutOf: Number(a.OutOf) || 0, Percent: Number(a.Percent) || 0, Scaled: !!bd, Breakdown: bd ? bd.items : null, Review: acd_review_(rq, answers) } };
 }
 
 /* ===== MENTOR (tutor) ===== */

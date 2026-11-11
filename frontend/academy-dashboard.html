@@ -96,7 +96,7 @@ function reminders(d, status, due) {
   const todo = (d.tasks || []).filter((t) => t.Status === 'To do');
   if (todo.length) out.push({ t: todo.length === 1 ? 'You have 1 daily task to submit.' : 'You have ' + todo.length + ' daily tasks to submit.', tab: 'tasks', u: todo.some((t) => t.Due && dd(t.Due) <= 0) ? 1 : 0, tag: 'Tasks' });
   const sun = (d.tests || []).find((x) => x.Kind === 'Sunday mock' && x.State === 'Open' && !x.Attempts);
-  if (sun) out.push({ t: 'The Sunday mock “' + sun.Title + '” is open now.', tab: 'cbt', u: 1, tag: 'CBT' });
+  if (sun) out.push({ t: sun.Series ? 'This week\'s UTME Sunday mock is open now. Choose your subject combination in the CBT tab.' : 'The Sunday mock “' + sun.Title + '” is open now.', tab: 'cbt', u: 1, tag: 'CBT' });
   if (s.IsUtme && !d.reading.Target) out.push({ t: 'Set your reading target for this week. The reading club is compulsory for UTME.', a: 'reading', u: 1, tag: 'Reading club' });
   if (s.ExamDate) { const n = dd(s.ExamDate); if (n >= 0 && n <= 30) out.push({ t: 'Your exam is ' + inDays(n) + '.', a: 'exam', tag: 'Exam' }); }
   const unread = famUnread(d); if (unread) out.push({ t: unread === 1 ? '1 new post in your mentorship family.' : unread + ' new posts in your mentorship family.', tab: 'family', tag: 'Family' });
@@ -195,11 +195,11 @@ function vCbt(d) {
   const row = (x) => `<div class="acx-test"><div><b>${esc(x.Title)}</b><small>${esc(x.Kind)}${x.Subject ? ' · ' + esc(x.Subject) : ''} · ${plural(x.Questions, 'question')}${x.Minutes ? ' · ' + x.Minutes + ' min' : ' · no time limit'}</small>
       <small>${x.State === 'Upcoming' ? 'Opens ' + fdate(x.Opens, true) : x.Closes ? 'Closes ' + fdate(x.Closes, true) : ''}${x.Best != null ? ' · best ' + x.Best + '%' : ''}</small></div>
     <div class="acx-test-r"><span class="pill ${XCLS[x.State]}">${esc(x.State === 'Done' ? 'Submitted' : x.State)}</span>
-      ${!VIEW && x.State === 'Open' ? `<button class="btn btn-ink btn-sm" type="button" data-act="start" data-id="${esc(x.TestID)}">${x.InProgress ? 'Continue' : x.Attempts ? 'Try again' : 'Start'}</button>` : ''}
+      ${!VIEW && x.State === 'Open' && !x.Locked ? `<button class="btn btn-ink btn-sm" type="button" data-act="start" data-id="${esc(x.TestID)}">${x.InProgress ? 'Continue' : x.Attempts ? 'Try again' : 'Start'}</button>` : ''}${x.Locked ? '<span class="sub">You chose another combination this week</span>' : ''}
       ${x.Last ? (x.Last.Review ? `<button class="btn btn-line btn-sm" type="button" data-act="review" data-id="${esc(x.Last.AttemptID)}">Review ${x.Last.Percent}%</button>` : `<span class="sub">${x.Last.Score}/${x.Last.OutOf} · answers after it closes</span>`) : ''}</div></div>`;
   const sun = xs.filter((x) => x.Kind === 'Sunday mock'), prac = xs.filter((x) => x.Kind !== 'Sunday mock');
   return `<article class="c w12"><h2>CBT</h2><p class="sub" style="margin:-6px 0 16px">Timed, computer-based tests marked instantly. Sunday mocks can be taken once while they are open, and count towards your mock record. Practice tests can be taken as often as you like.</p>
-    <p class="k">Sunday mocks</p>${sun.map(row).join('') || '<p class="empty">No Sunday mock scheduled yet.</p>'}
+    <p class="k">Sunday mocks</p>${sun.some((x) => x.Series && x.State === 'Open' && !x.Locked && !x.Attempts) ? '<p class="sub" style="background:var(--wash,#EEF5FA);padding:12px 14px;border-radius:14px"><b>This week\'s UTME mock comes in four subject combinations.</b> Pick the one for the course you want to study. Every paper is 180 questions out of 400, and you can sit only one combination, so choose before you start.</p>' : ''}${sun.map(row).join('') || '<p class="empty">No Sunday mock scheduled yet.</p>'}
     <p class="k" style="margin-top:22px">Practice tests</p>${prac.map(row).join('') || '<p class="empty">No practice tests yet.</p>'}</article>`;
 }
 /* the test itself */
@@ -215,7 +215,7 @@ function startRun(att) {
 function renderRun() {
   const a = RUN.att, q = a.Questions[RUN.i], n = a.Questions.length, done = Object.keys(RUN.answers).length;
   $('app').innerHTML = `<section class="acx-run"><div class="acx-run-top"><div><small>${esc(a.Kind)}${a.Subject ? ' · ' + esc(a.Subject) : ''}</small><h1>${esc(a.Title)}</h1></div>${RUN.ends ? `<div class="acx-time" aria-live="off"><span>Time left</span><b id="acxTime">${(() => { const l = Math.max(0, Math.round((RUN.ends - Date.now()) / 1000)); return Math.floor(l / 60) + ':' + String(l % 60).padStart(2, '0'); })()}</b></div>` : ''}</div>
-    <div class="acx-q"><p class="k">Question ${RUN.i + 1} of ${n}</p><p class="acx-qt">${esc(q.Question)}</p>
+    <div class="acx-q"><p class="k">Question ${RUN.i + 1} of ${n}${q.Subj ? ' · ' + esc(q.Subj) : ''}</p><p class="acx-qt">${esc(q.Question)}</p>
       <div class="acx-opts" role="radiogroup" aria-label="Options">${Object.keys(q.Options).map((k) => `<label class="acx-opt${RUN.answers[q.No] === k ? ' on' : ''}"><input type="radio" name="opt" value="${k}"${RUN.answers[q.No] === k ? ' checked' : ''}><span class="acx-key">${k}</span><span>${esc(q.Options[k])}</span></label>`).join('')}</div>
       <div class="acx-nav"><button class="btn btn-line" type="button" data-act="prev"${RUN.i ? '' : ' disabled'}>Previous</button>${RUN.i < n - 1 ? '<button class="btn btn-ink" type="button" data-act="next">Next</button>' : '<button class="btn btn-ink" type="button" data-act="finish">Submit test</button>'}</div></div>
     <div class="acx-grid" aria-label="Jump to a question">${a.Questions.map((x, i) => `<button type="button" data-act="jump" data-i="${i}" class="${RUN.answers[x.No] ? 'on' : ''}${i === RUN.i ? ' cur' : ''}" aria-label="Question ${i + 1}${RUN.answers[x.No] ? ', answered' : ''}">${i + 1}</button>`).join('')}</div>
@@ -239,12 +239,24 @@ function confirmBox(text) { return window.confirm(text); }
 function showResult(r) {
   if (!r) { render(); return; }
   $('app').innerHTML = `<section class="acx-run"><div class="acx-run-top"><div><small>${esc(r.Kind)}</small><h1>${esc(r.Title)}</h1></div></div>
-    <div class="acx-score"><b>${r.Percent}%</b><span>${r.Score} of ${r.OutOf} correct</span></div>
-    ${r.Review ? `<h2 class="acx-h2">Review</h2>${r.Review.map((q) => `<div class="acx-rev ${q.Yours === q.Answer ? 'good' : 'bad'}"><p class="k">Question ${q.No} · ${q.Yours === q.Answer ? 'Correct' : q.Yours ? 'Wrong' : 'Not answered'}</p><p class="acx-qt">${esc(q.Question)}</p>
+    <div class="acx-score">${r.Scaled ? `<b>${r.Score}</b><span>out of ${r.OutOf} (UTME scale)</span>` : `<b>${r.Percent}%</b><span>${r.Score} of ${r.OutOf} correct</span>`}</div>
+    ${r.Breakdown ? `<ul class="acx-weights" style="max-width:420px;margin:0 auto 18px">${r.Breakdown.map((b) => `<li><span>${esc(b.Subject)}</span><b>${b.Score} / 100</b></li>`).join('')}</ul>` : ''}
+    ${r.Review ? `<h2 class="acx-h2">Review</h2>${r.Review.map((q) => `<div class="acx-rev ${q.Yours === q.Answer ? 'good' : 'bad'}"><p class="k">Question ${q.No}${q.Subj ? ' · ' + esc(q.Subj) : ''} · ${q.Yours === q.Answer ? 'Correct' : q.Yours ? 'Wrong' : 'Not answered'}</p><p class="acx-qt">${esc(q.Question)}</p>
       <ul>${Object.keys(q.Options).map((k) => `<li class="${k === q.Answer ? 'ans' : ''}${k === q.Yours && k !== q.Answer ? ' mine' : ''}"><span class="acx-key">${k}</span>${esc(q.Options[k])}${k === q.Answer ? ' <em>Correct answer</em>' : k === q.Yours ? ' <em>Your answer</em>' : ''}</li>`).join('')}</ul>
       ${q.Explanation ? `<p class="sub">${esc(q.Explanation)}</p>` : ''}</div>`).join('')}` : '<p class="sub" style="text-align:center">This is a Sunday mock: the answers are shown after it closes. Your score has been added to your mock record.</p>'}
     <div class="acx-nav" style="justify-content:center"><button class="btn btn-ink" type="button" data-act="back">Back to the dashboard</button></div></section>`;
   window.scrollTo(0, 0);
+}
+
+/* ---------- Sunday mock leaderboard ---------- */
+function vMockBoard(d) {
+  const mb = d.mockBoard; if (!mb) return '';
+  if (mb.Open) return `<article class="c w12"><h2>Sunday mock leaderboard</h2><p class="empty">The first UTME Sunday mock has not closed yet. The ranking appears here as soon as it does.</p></article>`;
+  const hist = (mb.History || []).map((h) => `<li><span>${fdate(h.Date)}</span><b>${h.Score} / 400 · ${h.Rank} of ${h.Of}</b></li>`).join('');
+  return `<article class="c w8"><h2>UTME Sunday mock</h2><p class="sub" style="margin:-6px 0 14px">Top students in the mock of ${fdate(mb.Date)}, out of 400. ${mb.Total} sat it.</p>
+    <ol class="acx-board">${mb.Top.map((x) => `<li class="${x.Me ? 'me' : ''}"><span class="acx-rank r${x.Rank}">${x.Rank}</span><div><b translate="no" dir="auto">${esc(x.Name)}${x.Me ? ' (you)' : ''}</b><small>${esc(x.Combo || '')}</small></div><span class="acx-pts">${x.Score}</span></li>`).join('')}</ol></article>
+  <article class="c w4"><h2>Your mock place</h2>${mb.Me ? `<div class="big">${mb.Me.Rank}<span class="sub" style="font-size:16px"> of ${mb.Total}</span></div><p class="sub">${mb.Me.Score} / 400 · ${esc(mb.Me.Combo || '')}</p>` : '<div class="big">Did not sit</div><p class="sub">Sit this Sunday\'s mock to appear on the board.</p>'}
+    ${hist ? `<p class="k" style="margin-top:18px">Your recent mocks</p><ul class="acx-weights">${hist}</ul>` : ''}</article>`;
 }
 
 /* ---------- leaderboard ---------- */
@@ -254,7 +266,8 @@ function vBoard(d) {
     ${lb.top.length ? `<ol class="acx-board">${lb.top.map((x) => `<li class="${x.Me ? 'me' : ''}"><span class="acx-rank r${x.Rank}">${x.Rank}</span><div><b translate="no" dir="auto">${esc(x.Name)}${x.Me ? ' (you)' : ''}</b><small>${esc(x.Track)}${x.Group ? ' · ' + esc(x.Group) : ''}</small></div><span class="acx-pts">${x.Score}</span></li>`).join('')}</ol>` : '<p class="empty">The leaderboard fills up as mocks, tasks and attendance are recorded.</p>'}</article>
   <article class="c w4"><h2>Your place</h2>${lb.me ? `<div class="big">${lb.me.Rank}<span class="sub" style="font-size:16px"> of ${lb.total}</span></div><p class="sub">Overall score ${lb.me.Score}</p>` : '<div class="big">Not ranked yet</div><p class="sub">Sit a mock, submit a task or attend a class to join.</p>'}
     <p class="k" style="margin-top:18px">How the score works</p><ul class="acx-weights"><li><span>Mocks</span><b>35%</b></li><li><span>Daily tasks</span><b>25%</b></li><li><span>Attendance</span><b>20%</b></li><li><span>CBT practice</span><b>10%</b></li><li><span>Reading club</span><b>10%</b></li></ul>
-    <p class="sub">Parts with no records yet are left out, and the rest count for more. Your scores: mocks ${pct(m.mocks)}, tasks ${pct(m.tasks)}, attendance ${pct(m.attendance)}, CBT ${pct(m.cbt)}, reading ${pct(m.reading)}.</p></article></div>`;
+    <p class="sub">Parts with no records yet are left out, and the rest count for more. Your scores: mocks ${pct(m.mocks)}, tasks ${pct(m.tasks)}, attendance ${pct(m.attendance)}, CBT ${pct(m.cbt)}, reading ${pct(m.reading)}.</p></article>
+  ${vMockBoard(d)}</div>`;
 }
 
 
