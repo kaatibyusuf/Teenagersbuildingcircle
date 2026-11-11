@@ -178,7 +178,7 @@ function scholarshipFromRequest(p) {
 /* Menu: email everyone marked Verified with the exam details, and mark them Invited */
 function scholarshipEmailInvited() {
   const ui = SpreadsheetApp.getUi();
-  const a = ui.prompt('Scholarship exam', 'Type the exam time and place exactly as students should read it. The date is ' + SCH_EXAM_DATE + ' (for example: Wednesday 30 December 2026, 10:00 am, Himaayah Schools online portal).', ui.ButtonSet.OK_CANCEL);
+  const a = ui.prompt('Scholarship exam', 'Type the exam time and place exactly as students should read it. The date is ' + SCH_EXAM_DATE + ' (for example: Wednesday 30 December 2026, 9:00 am West Africa time, online at himaayahschools.com/scholarship-exam).', ui.ButtonSet.OK_CANCEL);
   if (a.getSelectedButton() !== ui.Button.OK || !String(a.getResponseText()).trim()) { sch_say_('Cancelled. Nothing was sent.'); return; }
   const when = String(a.getResponseText()).trim();
   const sh = sch_sheet_(), last = sh.getLastRow();
@@ -191,7 +191,7 @@ function scholarshipEmailInvited() {
     try {
       MailApp.sendEmail({ to: String(r[col('Email')]), name: SCHOOL_NAME, subject: SCHOOL_NAME + ' Scholarship: you are invited to the exam',
         body: 'Assalaamu alaykum ' + String(r[col('Name')]).split(' ')[0] + ',\n\nYour O\'level result has been verified and you are invited to the scholarship exam.\n\nExam: ' + when +
-              '\n\nIt is scored out of 400. You need above ' + SCH_PASS_ABOVE + ' to qualify. The ' + SCH_PLACES + ' highest scorers who meet every requirement receive a free 2027 UTME form. You can sit the exam once.\n\nYour reference: ' + r[col('Ref')] + '\n\nJazakumullahu khayran,\n' + SCHOOL_NAME });
+              '\n\nIt is scored out of 400. You need above ' + SCH_PASS_ABOVE + ' to qualify. The ' + SCH_PLACES + ' highest scorers who meet every requirement receive a free 2027 UTME form. You can sit the exam once.\n\nHow to sit it: open https://www.himaayahschools.com/scholarship-exam at the time above and sign in with your reference and this email address. The exam is on a computer or phone with a steady internet connection. It has 180 questions, the timer is ' + SCX_MINUTES + ' minutes, and you choose your track (the subjects for the course you want) just before you start.\n\nYour reference: ' + r[col('Ref')] + '\n\nJazakumullahu khayran,\n' + SCHOOL_NAME });
       sh.getRange(i + 2, col('Status') + 1).setValue('Invited');
       sh.getRange(i + 2, col('Notified') + 1).setNumberFormat('@').setValue(iso_(new Date(), true));
       sent++;
