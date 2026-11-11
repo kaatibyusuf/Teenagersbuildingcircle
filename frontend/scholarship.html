@@ -138,7 +138,7 @@
       <a href="#apply" class="h-btn h-btn-dark"><svg width="15" height="15" aria-hidden="true"><use href="#spark"/></svg>Apply now</a>
       <a href="#requirements" class="h-btn h-btn-white"><span class="h-av" aria-hidden="true"><svg width="12" height="15"><use href="#lg"/></svg></span>Read the requirements</a>
     </div>
-    <div class="h-hero-links"><span class="h-scroll">Open to anyone writing the 2027 UTME</span></div>
+    <div class="h-hero-links"><span class="h-scroll" id="schLeft">Open to anyone writing the 2027 UTME</span></div>
   </div>
 
   <div class="sch-glance" aria-label="Scholarship at a glance">
@@ -159,7 +159,7 @@
         <p>Set by Himaayah Schools. The conditions on the right make the selection clear and fair.</p>
         <ol class="sch-core">
           <li><b>A's and B's only</b><small>in your O'level. No C or lower in any subject.</small></li>
-          <li><b>Upload your result</b><small>when you register. The application is not complete without it.</small></li>
+          <li><b>Upload your result</b><small>when you register. With two sittings, upload both. The application is not complete without it.</small></li>
           <li><b>Score above 290</b><small>in the scholarship exam, written on 30 December 2026, InshAllah.</small></li>
         </ol>
         <div class="sch-dates">
@@ -168,28 +168,57 @@
         </div>
       </div>
       <div class="h-win-main">
-        <section class="h-panel sch-panel">
-          <div class="h-panel-top">
-            <div>
-              <h3>Also required</h3>
-              <p>Added by Himaayah Schools. Please read them before you apply.</p>
-            </div>
+        <section class="sch-rqs" id="schRqs" data-total="11">
+          <div class="sch-rqs-top">
+            <div><h3>Also required</h3><p>Added by Himaayah Schools. Scroll to read each one.</p></div>
             <span class="h-tag h-tag-on">Applications open</span>
           </div>
-          <ol class="sch-list">
-            <li><b>What counts as A's and B's.</b> Every subject on the result you upload must be A1, B2 or B3 (WAEC or NECO), with at least five subjects including English Language and Mathematics. A C4, C5, C6, D7, E8 or F9 in any subject means you are not eligible.</li>
-            <li><b>Result already released.</b> You must already hold your WAEC or NECO result. We cannot accept applications from students still waiting for results.</li>
-            <li><b>Sitting the 2027 UTME.</b> You must be writing the 2027 UTME and must not have paid for the 2027 UTME form already.</li>
-            <li><b>Your result must be genuine.</b> We check results with the examination body. A false or altered result removes you from the scholarship for good.</li>
-            <li><b>About the exam.</b> It is scored out of 400, like the UTME. "Above 290" means 291 or more. You sit it once, at the time and in the way we announce. If you miss it, you are out of the selection.</li>
-            <li><b>How the 20 are chosen.</b> The 20 highest scorers who meet every requirement. If scores tie, the student with more A1s is placed first, then the one who applied earlier. If fewer than 20 students qualify, fewer than 20 are awarded.</li>
-            <li><b>What is paid.</b> Himaayah Schools pays the UTME registration form fee. We do not cover CBT-centre charges, transport, textbooks or post-UTME fees. We pay the fee ourselves and do not hand cash to students.</li>
-            <li><b>After you win.</b> You must register for the 2027 UTME when we tell you to, and send us your registration slip. If you do not, your place passes to the next student in line.</li>
-            <li><b>Who can apply.</b> Anyone writing the 2027 UTME, from any school. One application per person. Applications close on 15 December 2026. If you are under 18, a parent or guardian must be named on the form and agree to it.</li>
-            <li><b>Your information.</b> We use your details and result only for this scholarship. The committee's decision is final.</li>
-          </ol>
+          <div class="sch-rqs-bar" aria-hidden="true"><i id="schRqFill"></i><b id="schRqCount">00 / 11</b></div>
+          <div class="sch-rq-list">
+          <article class="sch-rq"><span class="sch-rq-n">01</span><div><h4>What counts as A's and B's</h4><p>Every subject on the result you upload must be A1, B2 or B3 (WAEC or NECO), with at least five subjects including English Language and Mathematics. A C4, C5, C6, D7, E8 or F9 in any subject means you are not eligible.</p></div></article>
+          <article class="sch-rq"><span class="sch-rq-n">02</span><div><h4>One or two sittings</h4><p>Two sittings are allowed, as long as every grade still meets the requirement. If you used two sittings, upload both results. They must be from the same body: WAEC with WAEC, or NECO with NECO. WAEC with NECO is not accepted.</p></div></article>
+          <article class="sch-rq"><span class="sch-rq-n">03</span><div><h4>Result already released</h4><p>You must already hold your WAEC or NECO result (both results, if you used two sittings). We cannot accept applications from students still waiting for results.</p></div></article>
+          <article class="sch-rq"><span class="sch-rq-n">04</span><div><h4>Sitting the 2027 UTME</h4><p>You must be writing the 2027 UTME and must not have paid for the 2027 UTME form already.</p></div></article>
+          <article class="sch-rq"><span class="sch-rq-n">05</span><div><h4>Your result must be genuine</h4><p>We check results with the examination body. A false or altered result removes you from the scholarship for good.</p></div></article>
+          <article class="sch-rq"><span class="sch-rq-n">06</span><div><h4>About the exam</h4><p>It is scored out of 400, like the UTME. "Above 290" means 291 or more. You sit it once, at the time and in the way we announce. If you miss it, you are out of the selection.</p></div></article>
+          <article class="sch-rq"><span class="sch-rq-n">07</span><div><h4>How the 20 are chosen</h4><p>The 20 highest scorers who meet every requirement. If scores tie, the student with more A1s is placed first, then the one who applied earlier. If fewer than 20 students qualify, fewer than 20 are awarded.</p></div></article>
+          <article class="sch-rq"><span class="sch-rq-n">08</span><div><h4>What is paid</h4><p>Himaayah Schools pays the UTME registration form fee. We do not cover CBT-centre charges, transport, textbooks or post-UTME fees. We pay the fee ourselves and do not hand cash to students.</p></div></article>
+          <article class="sch-rq"><span class="sch-rq-n">09</span><div><h4>After you win</h4><p>You must register for the 2027 UTME when we tell you to, and send us your registration slip. If you do not, your place passes to the next student in line.</p></div></article>
+          <article class="sch-rq"><span class="sch-rq-n">10</span><div><h4>Who can apply</h4><p>Anyone writing the 2027 UTME, from any school. One application per person. Applications close on 15 December 2026. If you are under 18, a parent or guardian must be named on the form and agree to it.</p></div></article>
+          <article class="sch-rq"><span class="sch-rq-n">11</span><div><h4>Your information</h4><p>We use your details and result only for this scholarship. The committee's decision is final.</p></div></article>
+          </div>
         </section>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Rules in pictures ============ -->
+<section class="h-sec sch-rules" id="rules">
+  <div class="h-wrap">
+    <div class="h-head h-head-c">
+      <p class="h-eye"><i class="h-dot"></i>The rules, in pictures</p>
+      <h2><span>What counts, and what does not.</span></h2>
+      <p>Two things decide whether your O'level result is accepted: the grades, and the sittings.</p>
+    </div>
+    <div class="sch-rgrid">
+      <article class="sch-rc">
+        <h3>Grades that count</h3>
+        <p>Every subject must be one of these.</p>
+        <div class="sch-gr sch-gr-ok"><span>A1</span><span>B2</span><span>B3</span></div>
+        <p class="sch-sub">A grade from this row anywhere on your result means you are not eligible.</p>
+        <div class="sch-gr sch-gr-no"><span>C4</span><span>C5</span><span>C6</span><span>D7</span><span>E8</span><span>F9</span></div>
+      </article>
+      <article class="sch-rc">
+        <h3>One sitting or two</h3>
+        <p>Two sittings are allowed if every grade still counts. Upload both results.</p>
+        <ul class="sch-sl">
+          <li class="ok"><span class="sch-chip">WAEC</span><i>+</i><span class="sch-chip">WAEC</span><em>Accepted</em></li>
+          <li class="ok"><span class="sch-chip">NECO</span><i>+</i><span class="sch-chip">NECO</span><em>Accepted</em></li>
+          <li class="no"><span class="sch-chip">WAEC</span><i>+</i><span class="sch-chip">NECO</span><em>Not accepted</em></li>
+          <li class="ok"><span class="sch-chip">WAEC or NECO</span><i>·</i><span class="sch-chip sch-chip-1">One sitting</span><em>Accepted</em></li>
+        </ul>
+      </article>
     </div>
   </div>
 </section>
@@ -206,7 +235,7 @@
       <li class="h-step">
         <span class="h-step-n">01</span>
         <h3>Apply and upload your result</h3>
-        <p>Fill in the form and upload your WAEC or NECO result. We check it with the examination body. If every grade is A1, B2 or B3, you are invited to the exam.</p>
+        <p>Fill in the form and upload your WAEC or NECO result, or both results if you used two sittings. We check each with the examination body. If every grade is A1, B2 or B3, you are invited to the exam.</p>
         <div class="h-card h-card-mint" aria-hidden="true">
           <div class="h-mini">
             <div class="h-mini-h"><b>Your application</b><small>Step 1 of 3</small></div>
@@ -250,9 +279,17 @@
       <h2><span>Apply for the scholarship.</span></h2>
       <p>It is free and takes about five minutes. Have your WAEC or NECO result ready as a photo or PDF.</p>
     </div>
+    <div class="sch-check" id="schCheck">
+      <div class="sch-check-h"><b>Are you eligible?</b><span>Tick what is true for you.</span></div>
+      <label><input type="checkbox" data-ck> <span>My WAEC or NECO result is already released.</span></label>
+      <label><input type="checkbox" data-ck> <span>Every grade on it is A1, B2 or B3. There is no C or lower.</span></label>
+      <label><input type="checkbox" data-ck> <span>If I used two sittings, both are WAEC or both are NECO.</span></label>
+      <label><input type="checkbox" data-ck> <span>I am writing the 2027 UTME and have not paid for the form.</span></label>
+      <div class="sch-verdict" id="schVerdict" role="status">Tick all four to see if you can apply.</div>
+    </div>
     <div class="pf-card sch-form-card">
 <form class="wl-form" id="schForm" novalidate>
-          <h2>Apply for the scholarship</h2>
+          <div class="sch-h sch-h1"><span>1</span>About you</div>
           <div class="wl-f"><label for="schName">Full name <small>(as on your O'level result)</small></label><input id="schName" name="name" type="text" autocomplete="name" maxlength="100" required></div>
           <div class="wl-2">
             <div class="wl-f"><label for="schDob">Date of birth</label><input id="schDob" name="dob" type="date" required></div>
@@ -263,29 +300,54 @@
             <div class="wl-f"><label for="schPhone">WhatsApp number</label><input id="schPhone" name="whatsapp" type="tel" autocomplete="tel" maxlength="30" placeholder="0803 000 0000" dir="ltr" required></div>
           </div>
           <div class="wl-f"><label for="schSchool">School attended (last or current)</label><input id="schSchool" name="school" type="text" maxlength="120" required></div>
+
+          <div class="sch-h"><span>2</span>Your O'level result</div>
           <div class="wl-2">
-            <div class="wl-f"><label for="schBody">O'level examination</label>
+            <div class="wl-f"><label for="schBody">Examination body</label>
               <select id="schBody" name="body" required><option value="">Choose</option><option>WAEC</option><option>NECO</option></select></div>
-            <div class="wl-f"><label for="schYear">Year written</label><input id="schYear" name="year" type="number" inputmode="numeric" min="2015" max="2026" dir="ltr" required></div>
+            <div class="wl-f"><label for="schSit">Number of sittings</label>
+              <select id="schSit" name="sittings"><option value="1">One sitting</option><option value="2">Two sittings</option></select></div>
           </div>
-          <div class="wl-2">
-            <div class="wl-f"><label for="schExamNo">Examination number</label><input id="schExamNo" name="examNo" type="text" maxlength="30" dir="ltr" required></div>
-            <div class="wl-f"><label for="schSubjects">Number of subjects</label><input id="schSubjects" name="subjects" type="number" inputmode="numeric" min="5" max="12" dir="ltr" required></div>
+          <p class="pf-help sch-note">You may combine <b>two sittings</b> if every grade meets the requirement. Upload both results. Both must be from the <b>same body</b>: WAEC with WAEC, or NECO with NECO.</p>
+          <div class="sch-sit">
+            <div class="sch-sit-t" id="schSit1T">First sitting</div>
+            <div class="wl-2">
+              <div class="wl-f"><label for="schYear">Year written</label><input id="schYear" name="year" type="number" inputmode="numeric" min="2015" max="2026" dir="ltr" required></div>
+              <div class="wl-f"><label for="schExamNo">Examination number</label><input id="schExamNo" name="examNo" type="text" maxlength="30" dir="ltr" required></div>
+            </div>
+            <div class="wl-f">
+              <label for="schFile">Upload the result <small>(photo or PDF, up to 3 MB)</small></label>
+              <input id="schFile" name="file" type="file" accept="image/jpeg,image/png,application/pdf,.jpg,.jpeg,.png,.pdf" required>
+            </div>
           </div>
+          <div class="sch-sit" id="schSit2" hidden>
+            <div class="sch-sit-t">Second sitting</div>
+            <div class="wl-2">
+              <div class="wl-f"><label for="schYear2">Year written</label><input id="schYear2" name="year2" type="number" inputmode="numeric" min="2015" max="2026" dir="ltr"></div>
+              <div class="wl-f"><label for="schExamNo2">Examination number</label><input id="schExamNo2" name="examNo2" type="text" maxlength="30" dir="ltr"></div>
+            </div>
+            <div class="wl-f">
+              <label for="schFile2">Upload the second result <small>(photo or PDF, up to 3 MB)</small></label>
+              <input id="schFile2" name="file2" type="file" accept="image/jpeg,image/png,application/pdf,.jpg,.jpeg,.png,.pdf">
+            </div>
+          </div>
+          <div class="wl-f"><label for="schSubjects">Total number of subjects <small>(across your result or results)</small></label><input id="schSubjects" name="subjects" type="number" inputmode="numeric" min="5" max="16" dir="ltr" required>
+            <p class="pf-help">At least five, including English Language and Mathematics. Each result must show your name, examination number and every grade clearly.</p></div>
+
+          <div class="sch-h"><span>3</span>Your plans</div>
           <div class="wl-2">
             <div class="wl-f"><label for="schCourse">Course you want to study</label><input id="schCourse" name="course" type="text" maxlength="100" required></div>
             <div class="wl-f"><label for="schUni">First-choice university</label><input id="schUni" name="university" type="text" maxlength="100" required></div>
           </div>
+
+          <div class="sch-h"><span>4</span>Parent or guardian</div>
           <div class="wl-2">
-            <div class="wl-f"><label for="schGuardian">Parent or guardian's name</label><input id="schGuardian" name="guardian" type="text" maxlength="100" required></div>
-            <div class="wl-f"><label for="schGPhone">Parent or guardian's phone</label><input id="schGPhone" name="guardianPhone" type="tel" maxlength="30" dir="ltr" required></div>
+            <div class="wl-f"><label for="schGuardian">Name</label><input id="schGuardian" name="guardian" type="text" maxlength="100" required></div>
+            <div class="wl-f"><label for="schGPhone">Phone number</label><input id="schGPhone" name="guardianPhone" type="tel" maxlength="30" dir="ltr" required></div>
           </div>
-          <div class="wl-f">
-            <label for="schFile">Upload your O'level result <small>(photo or PDF, up to 3 MB)</small></label>
-            <input id="schFile" name="file" type="file" accept="image/jpeg,image/png,application/pdf,.jpg,.jpeg,.png,.pdf" required>
-            <p class="pf-help" id="schFileNote">The result must show your name, examination number and every grade clearly.</p>
-          </div>
-          <label class="sch-chk"><input type="checkbox" id="schC1"> <span>My result has already been released. Every grade on it is A1, B2 or B3, and I have no C or lower.</span></label>
+
+          <div class="sch-h"><span>5</span>Declaration</div>
+          <label class="sch-chk"><input type="checkbox" id="schC1"> <span>My result (or both results) has already been released. Every grade on it is A1, B2 or B3, with no C or lower, and with two sittings both are from the same body.</span></label>
           <label class="sch-chk"><input type="checkbox" id="schC2"> <span>I am writing the 2027 UTME and I have not yet paid for the form.</span></label>
           <label class="sch-chk"><input type="checkbox" id="schC3"> <span>I have read the requirements above. I understand that a false result removes me from the scholarship.</span></label>
           <div class="wl-hp" aria-hidden="true"><label for="schWeb">Website</label><input id="schWeb" name="website" type="text" tabindex="-1" autocomplete="off"></div>
@@ -339,7 +401,67 @@
 .page-scholarship .wl-form label.sch-chk{display:flex;flex-direction:row;gap:12px;align-items:flex-start;margin:0 0 12px;font:400 15px/1.5 inherit;font-weight:400;cursor:pointer}
 .page-scholarship .wl-form label.sch-chk input{width:20px;height:20px;min-height:0;padding:0;margin:2px 0 0;flex:none}
 .page-scholarship .wl-form label.sch-chk span{flex:1}
-.page-scholarship #schFile{width:100%}
+.page-scholarship .sch-rules{background:linear-gradient(180deg,#fff 0,#EEF5FA 100%);padding-top:96px}
+.page-scholarship .sch-rgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;margin-top:44px}
+.page-scholarship .sch-rc{background:#fff;border-radius:26px;padding:30px;box-shadow:0 0 0 1px rgba(19,33,43,.07),0 24px 50px -34px rgba(6,47,77,.45)}
+.page-scholarship .sch-rc h3{font:500 24px/1.2 var(--h-f);letter-spacing:-.03em;margin:0 0 6px}
+.page-scholarship .sch-rc p{margin:0 0 18px;color:#5b6b78;font-size:15px;line-height:1.55}
+.page-scholarship .sch-rc .sch-sub{margin:22px 0 12px;font-size:14px}
+.page-scholarship .sch-gr{display:flex;flex-wrap:wrap;gap:10px}
+.page-scholarship .sch-gr span{min-width:66px;text-align:center;padding:14px 0;border-radius:16px;font:600 20px var(--h-f)}
+.page-scholarship .sch-gr-ok span{background:linear-gradient(160deg,#DDF5E6,#BDE9CC);color:#0E6B3A;box-shadow:inset 0 0 0 1px rgba(14,107,58,.18)}
+.page-scholarship .sch-gr-no span{background:#F4F1EF;color:#A5A09B;text-decoration:line-through;text-decoration-thickness:2px;font-size:17px;min-width:56px;padding:11px 0}
+.page-scholarship .sch-sl{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.page-scholarship .sch-sl li{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:16px;background:#F6F9FB;box-shadow:inset 0 0 0 1px rgba(19,33,43,.06)}
+.page-scholarship .sch-sl li i{font-style:normal;color:#5b6b78;font-weight:600}
+.page-scholarship .sch-sl li em{margin-inline-start:auto;font-style:normal;font-size:13px;font-weight:600;padding:5px 11px;border-radius:99px;white-space:nowrap}
+.page-scholarship .sch-sl li.ok em{background:#DDF5E6;color:#0E6B3A}
+.page-scholarship .sch-sl li.no{background:#FBF3F2}
+.page-scholarship .sch-sl li.no em{background:#FBDCD8;color:#A3261B}
+.page-scholarship .sch-chip{padding:7px 12px;border-radius:10px;background:#fff;font:600 14px var(--h-f);color:#0B3A5E;box-shadow:0 0 0 1px rgba(11,58,94,.14)}
+.page-scholarship .sch-chip-1{color:#5b6b78;font-weight:500}
+.page-scholarship .sch-check{max-width:760px;margin:40px auto 22px;background:linear-gradient(160deg,#0B3A5E,#0A2A44);color:#fff;border-radius:26px;padding:26px 28px;box-shadow:0 30px 60px -36px rgba(6,47,77,.7)}
+.page-scholarship .sch-check-h{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin-bottom:12px}
+.page-scholarship .sch-check-h b{font:500 22px var(--h-f);letter-spacing:-.02em}
+.page-scholarship .sch-check-h span{color:rgba(255,255,255,.6);font-size:14px}
+.page-scholarship .sch-check label{display:flex;gap:12px;align-items:flex-start;padding:10px 0;font-size:15px;line-height:1.5;cursor:pointer;border-top:1px solid rgba(255,255,255,.1)}
+.page-scholarship .sch-check input{width:20px;height:20px;margin:2px 0 0;flex:none;accent-color:#7FD1A6}
+.page-scholarship .sch-verdict{margin-top:14px;padding:13px 16px;border-radius:14px;background:rgba(255,255,255,.09);font-size:15px;line-height:1.5}
+.page-scholarship .sch-check label,.page-scholarship .sch-check label span{color:#fff!important;font-weight:400}
+.page-scholarship .sch-h1{margin-top:0;padding-top:0;border-top:0}
+.page-scholarship .sch-verdict.ok{background:#1E8E57;font-weight:600}
+.page-scholarship .sch-h{display:flex;align-items:center;gap:10px;font:600 15px var(--h-f);letter-spacing:.02em;margin:26px 0 14px;padding-top:22px;border-top:1px solid rgba(19,33,43,.08)}
+.page-scholarship .sch-h:first-child{margin-top:0;padding-top:0;border-top:0}
+.page-scholarship .sch-h span{width:26px;height:26px;border-radius:50%;background:#0B3A5E;color:#fff;font:600 13px/26px var(--h-f);text-align:center}
+.page-scholarship .sch-note{background:#EEF5FA;border-radius:14px;padding:12px 14px;margin:0 0 14px;color:#35506A;font-size:14px;line-height:1.5}
+.page-scholarship .sch-sit{background:#F6F9FB;border-radius:18px;padding:16px 16px 4px;margin:0 0 16px;box-shadow:inset 0 0 0 1px rgba(19,33,43,.06)}
+.page-scholarship .sch-sit[hidden]{display:none}
+.page-scholarship .sch-sit-t{font:600 13px var(--h-f);letter-spacing:.08em;text-transform:uppercase;color:#0B3A5E;margin-bottom:12px}
+.page-scholarship .sch-closed{background:#FBF3F2;color:#A3261B;border-radius:14px;padding:14px 16px;margin:0 0 18px;font-weight:600}
+@media(max-width:760px){.page-scholarship .sch-rgrid{grid-template-columns:1fr}.page-scholarship .sch-rc{padding:22px}.page-scholarship .sch-check{padding:20px}}
+
+@media(min-width:901px){.page-scholarship .sch-win-sec .h-win{overflow:visible}.page-scholarship .sch-win-sec .h-win-side{position:sticky;top:20px;align-self:start}}
+.page-scholarship .sch-rqs{padding:6px 4px}
+.page-scholarship .sch-rqs-top{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;flex-wrap:wrap}
+.page-scholarship .sch-rqs-top h3{font:500 28px/1.1 var(--h-f);letter-spacing:-.03em;margin:0 0 6px}
+.page-scholarship .sch-rqs-top p{margin:0;color:rgba(255,255,255,.72);font-size:15px}
+.page-scholarship .sch-rqs-bar{position:sticky;top:12px;z-index:3;margin:18px 0 6px;height:34px;border-radius:99px;background:rgba(238,245,250,.92);backdrop-filter:blur(8px);box-shadow:inset 0 0 0 1px rgba(11,58,94,.12);overflow:hidden}
+.page-scholarship .sch-rqs-bar i{position:absolute;inset:0 auto 0 0;width:0;background:linear-gradient(90deg,#0B3A5E,#2E7FA8);transition:width .35s ease}
+.page-scholarship .sch-rqs-bar b{position:relative;display:block;text-align:right;padding:0 16px;font:600 13px/34px var(--h-f);letter-spacing:.06em;color:#0B3A5E;mix-blend-mode:normal}
+.page-scholarship .sch-rq-list{position:relative;margin-top:10px;padding-inline-start:44px}
+.page-scholarship .sch-rq-list::before{content:"";position:absolute;left:19px;top:10px;bottom:10px;width:2px;background:rgba(255,255,255,.2)}
+.page-scholarship .sch-rq{position:relative;display:grid;gap:4px;margin:0 0 14px;padding:20px 22px;border-radius:20px;background:#fff;box-shadow:0 0 0 1px rgba(19,33,43,.07),0 18px 40px -30px rgba(6,47,77,.5)}
+.page-scholarship .sch-rq>div{display:block}
+.page-scholarship .sch-rq-n{position:absolute;left:-44px;top:18px;width:40px;height:40px;border-radius:50%;background:#fff;color:#0B3A5E;font:600 13px/40px var(--h-f);text-align:center;box-shadow:0 0 0 2px #cfe0ec;transition:background .4s,color .4s,box-shadow .4s,transform .4s}
+.page-scholarship .sch-rq h4{font:500 19px/1.3 var(--h-f);letter-spacing:-.02em;margin:0 0 6px;color:#13212B}
+.page-scholarship .sch-rq p{margin:0;color:#4a5a67;font-size:15px;line-height:1.65}
+.js .page-scholarship .sch-rq{opacity:0;transform:translateY(34px) scale(.97);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.7,.2,1)}
+.js .page-scholarship .sch-rq.in{opacity:1;transform:none}
+.page-scholarship .sch-rq.in .sch-rq-n{background:#0B3A5E;color:#fff;box-shadow:0 0 0 4px #cfe0ec;transform:scale(1.05)}
+.page-scholarship .sch-rq.in::after{content:"";position:absolute;left:0;top:18px;bottom:18px;width:4px;border-radius:0 4px 4px 0;background:#2E7FA8}
+@media(prefers-reduced-motion:reduce){.js .page-scholarship .sch-rq{opacity:1;transform:none;transition:none}}
+@media(max-width:760px){.page-scholarship .sch-rq-list{padding-inline-start:36px}.page-scholarship .sch-rq-n{left:-36px;width:32px;height:32px;font-size:12px;line-height:32px}.page-scholarship .sch-rq-list::before{left:15px}.page-scholarship .sch-rq{padding:16px}}
+.page-scholarship #schFile,.page-scholarship #schFile2{width:100%}
 @media(max-width:900px){.page-scholarship .sch-glance{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:520px){.page-scholarship .sch-glance{grid-template-columns:1fr;padding:0 16px}}
 </style>
@@ -354,20 +476,65 @@
   const err = (m, f) => { $('schErr').textContent = m; if (f && form.elements[f]) form.elements[f].focus(); };
   const toB64 = (file) => new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(String(r.result).split(',')[1] || ''); r.onerror = rej; r.readAsDataURL(file); });
 
+
+  // scroll reveal for "Also required"
+  document.documentElement.classList.add('js');
+  const rq = Array.from(document.querySelectorAll('.sch-rq')), fill = $('schRqFill'), cnt = $('schRqCount');
+  const pad = (n) => String(n).padStart(2, '0'), tot = rq.length;
+  const prog = () => { const n = rq.filter((c) => c.classList.contains('in')).length; fill.style.width = (n / tot * 100) + '%'; cnt.textContent = pad(n) + ' / ' + pad(tot); };
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((es) => { es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); prog(); }, { threshold: 0.35, rootMargin: '0px 0px -8% 0px' });
+    rq.forEach((c) => io.observe(c));
+  } else { rq.forEach((c) => c.classList.add('in')); }
+  prog();
+
+  const sit = $('schSit'), sit2 = $('schSit2');
+  const sync = () => { const two = sit.value === '2'; sit2.hidden = !two; $('schSit1T').textContent = two ? 'First sitting' : 'Your sitting'; };
+  sit.addEventListener('change', sync); sync();
+
+  const cks = Array.from(document.querySelectorAll('#schCheck [data-ck]')), verdict = $('schVerdict');
+  const upd = () => { const n = cks.filter((c) => c.checked).length;
+    if (n === cks.length) { verdict.className = 'sch-verdict ok'; verdict.textContent = 'You can apply. Fill in the form below.'; }
+    else { verdict.className = 'sch-verdict'; verdict.textContent = n ? (cks.length - n) + ' more to tick. If one is not true for you, you are not eligible for this round.' : 'Tick all four to see if you can apply.'; } };
+  cks.forEach((c) => c.addEventListener('change', upd));
+
+  const CLOSE = new Date('2026-12-15T23:59:59+01:00').getTime(), left = $('schLeft'), now = Date.now();
+  if (now > CLOSE) {
+    if (left) left.textContent = 'Applications are closed';
+    const msg = document.createElement('p'); msg.className = 'sch-closed'; msg.textContent = 'Applications closed on 15 December 2026.';
+    form.insertBefore(msg, form.firstChild); Array.from(form.elements).forEach((el) => { el.disabled = true; });
+  } else if (left) {
+    const d = Math.ceil((CLOSE - now) / 86400000);
+    left.textContent = d + (d === 1 ? ' day' : ' days') + ' left to apply · exam on 30 December 2026, InshAllah';
+  }
+
   form.addEventListener('submit', async (e) => {
     e.preventDefault(); $('schErr').textContent = '';
+    const two = $('schSit').value === '2';
     for (const [n, m] of [['name', 'Enter your full name.'], ['dob', 'Enter your date of birth.'], ['state', 'Enter your state of residence.'], ['school', 'Enter the school you attended.'],
-      ['body', "Choose WAEC or NECO."], ['year', 'Enter the year you wrote the exam.'], ['examNo', 'Enter your examination number.'], ['subjects', 'Enter how many subjects you wrote (at least 5).'],
+      ['body', "Choose WAEC or NECO."], ['year', 'Enter the year you wrote the exam.'], ['examNo', 'Enter your examination number.'], ['subjects', 'Enter the total number of subjects on your result(s) (at least 5).'],
       ['course', 'Enter the course you want to study.'], ['university', 'Enter your first-choice university.'], ['guardian', "Enter your parent or guardian's name."], ['guardianPhone', "Enter your parent or guardian's phone number."]])
       if (!v(n)) return err(m, n);
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v('email'))) return err('Enter a valid email address.', 'email');
     if (v('whatsapp').replace(/\D/g, '').length < 10) return err('Enter a WhatsApp number we can reach.', 'whatsapp');
     if (Number(v('subjects')) < 5) return err("The scholarship needs at least five O'level subjects.", 'subjects');
+    if (two) {
+      if (!v('year2')) return err('Enter the year of your second sitting.', 'year2');
+      if (!v('examNo2')) return err('Enter the examination number of your second sitting.', 'examNo2');
+      if (v('examNo2').toUpperCase() === v('examNo').toUpperCase()) return err('The two sittings must have different examination numbers.', 'examNo2');
+    }
     const file = form.elements.file.files[0];
     if (!file) return err("Upload your O'level result.", 'file');
     if (!/\.(jpe?g|png|pdf)$/i.test(file.name)) return err('Upload the result as a photo (JPG or PNG) or a PDF.', 'file');
     if (file.size > MAX_BYTES) return err('That file is larger than 3 MB. Please upload a smaller photo or PDF.', 'file');
-    if (!$('schC1').checked) return err('You must confirm that your result is released and every grade is A1, B2 or B3.');
+    let file2 = null;
+    if (two) {
+      file2 = form.elements.file2.files[0];
+      if (!file2) return err('Upload the result of your second sitting.', 'file2');
+      if (!/\.(jpe?g|png|pdf)$/i.test(file2.name)) return err('Upload the second result as a photo (JPG or PNG) or a PDF.', 'file2');
+      if (file2.size > MAX_BYTES) return err('The second file is larger than 3 MB. Please upload a smaller photo or PDF.', 'file2');
+    }
+    if (!$('schC1').checked) return err('You must confirm that your result is released and every grade is A1, B2 or B3, and (for two sittings) both are from the same body.');
     if (!$('schC2').checked) return err('Please confirm that you are writing the 2027 UTME and have not paid for the form.');
     if (!$('schC3').checked) return err('Please confirm that you have read the requirements.');
     const btn = $('schBtn'); btn.disabled = true; btn.textContent = 'Sending…';
@@ -376,6 +543,8 @@
       const body = { action: 'scholarship' };
       ['name', 'dob', 'state', 'email', 'whatsapp', 'school', 'body', 'year', 'examNo', 'subjects', 'course', 'university', 'guardian', 'guardianPhone', 'website'].forEach((n) => { body[n] = v(n); });
       body.fileName = file.name; body.fileMime = file.type || ''; body.fileData = await toB64(file);
+      body.sittings = two ? 2 : 1;
+      if (two) { body.year2 = v('year2'); body.examNo2 = v('examNo2'); body.file2Name = file2.name; body.file2Mime = file2.type || ''; body.file2Data = await toB64(file2); }
       const r = await fetch(API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(body), signal: ctl.signal });
       const j = await r.json();
       if (!j.ok) { err(j.error || 'Something went wrong. Please try again.'); return; }
