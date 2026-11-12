@@ -52,9 +52,9 @@ const fdate = (iso, t) => { const d = new Date(iso); return isNaN(d) ? esc(iso |
 const pct = (x) => x == null ? '–' : x + '%';
 const num = (x) => x == null ? '–' : x;
 const plural = (n, w) => n + ' ' + (n === 1 ? w : /[^aeiou]y$/.test(w) ? w.slice(0, -1) + 'ies' : /(s|sh|ch|x)$/.test(w) ? w + 'es' : w + 's');
-const TABS = [['reports', 'Reports'], ['students', 'Students'], ['mentors', 'Mentors'], ['families', 'Families'], ['assign', 'Assign'], ['groups', 'Class groups'], ['payments', 'Payments'], ['reset', 'Reset code'], ['account', 'Account']];
+const TABS = [['reports', 'Reports'], ['analytics', 'Mock analytics'], ['students', 'Students'], ['mentors', 'Mentors'], ['families', 'Families'], ['assign', 'Assign'], ['groups', 'Class groups'], ['payments', 'Payments'], ['reset', 'Reset code'], ['account', 'Account']];
 let D = null;
-const S = { tab: 'reports', q: '', filter: 'all', sel: {}, open: {}, created: null, addOpen: false };
+const S = { an: null, anLoading: false, anOnly: true, tab: 'reports', q: '', filter: 'all', sel: {}, open: {}, created: null, addOpen: false };
 
 /* ---------- talking to the school server ---------- */
 const creds = () => { try { return JSON.parse(sessionStorage.getItem(KEY) || 'null') || {}; } catch (e) { return {}; } };
@@ -269,7 +269,50 @@ function vAccount() {
   <button class="btn btn-ink" type="submit">Change my code</button></form></article>`;
 }
 
-const VIEWS = { families: vFamilies, reports: vReports, students: vStudents, mentors: vMentors, assign: vAssign, groups: vGroups, payments: vPayments, reset: () => ResetPanel.view(), account: vAccount };
+/* ---------- mock analytics: how each Sunday mock went, question by question ---------- */
+async function loadAnalytics(series) {
+  S.anLoading = true; render();
+  try {
+    const d = await api('acda_analytics', { series: series || '' });
+    if (d.ok && d.analytics) S.an = d.analytics; else toast(d.error || 'Could not load the analytics.', true);
+  } catch (e) { toast('Could not reach the school server. Please try again.', true); }
+  S.anLoading = false; render();
+}
+function anCsv() {
+  const A = S.an; if (!A || !A.questions) return;
+  const q = (x) => '"' + String(x == null ? '' : x).replace(/"/g, '""') + '"';
+  const rows = [['Subject', 'Question', 'Students', 'Correct %', 'Left blank %', 'Flag', 'Keyed answer', 'Most chosen wrong option']];
+  A.questions.forEach((r) => {
+    const key = r.options.find((o) => o.key), wrong = r.options.filter((o) => !o.key).sort((a, b) => b.n - a.n)[0];
+    rows.push([r.subject, r.question, r.n, r.pct, r.blankPct, r.flag, key ? key.text : '', wrong && wrong.n ? wrong.text + ' (' + wrong.pct + '%)' : '']);
+  });
+  const blob = new Blob(['﻿' + rows.map((r) => r.map(q).join(',')).join('\n')], { type: 'text/csv' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'mock-analytics-' + A.date + '.csv'; document.body.appendChild(a); a.click(); a.remove();
+}
+function vAnalytics() {
+  const A = S.an;
+  if (S.anLoading && !A) return '<div class="grid"><article class="c w12"><h2>Mock analytics</h2><p class="sub">Loading…</p></article></div>';
+  if (!A) return '<div class="grid"><article class="c w12"><h2>Mock analytics</h2><p class="empty">Could not load. Open another tab and come back to try again.</p></article></div>';
+  if (A.empty) return `<div class="grid"><article class="c w12"><h2>Mock analytics</h2><p class="empty">${esc(A.empty)}</p></article></div>`;
+  const pick = `<select class="in" id="anSeries" style="max-width:300px" aria-label="Which Sunday">${A.seriesList.map((s) => `<option value="${esc(s.series)}"${s.series === A.series ? ' selected' : ''}>${esc(fdate(s.date))} · ${plural(s.sat, 'sitting')}</option>`).join('')}</select>`;
+  const shown = (S.anOnly ? A.questions.filter((q) => q.flag) : A.questions);
+  const FCLS = { 'Check the key': 'p-red', 'Very hard': 'p-sky', 'Too easy': 'p-wash' };
+  const qrow = (q) => `<details class="box stu"><summary><div><b>${esc(q.question)}</b><small>${esc(q.subject)}${q.passage ? ' · comprehension' : ''} · ${plural(q.n, 'student')} · ${pct(q.pct)} correct${q.blankPct ? ' · ' + q.blankPct + '% left blank' : ''}</small></div><div class="sum-r">${q.flag ? `<span class="pill ${FCLS[q.flag] || 'p-sky'}">${esc(q.flag)}</span>` : ''}</div></summary>
+    <div class="body">${q.why ? `<p class="sub"><b>${esc(q.flag)}:</b> ${esc(q.why)}</p>` : ''}<table><tbody>${q.options.map((o) => `<tr><td>${o.key ? '✓ ' : ''}${esc(o.text)}</td><td style="text-align:right;white-space:nowrap">${o.n} · ${o.pct}%</td></tr>`).join('')}</tbody></table>
+    <p class="sub">The ✓ marks the keyed answer. To fix a question, edit it in the AcademyMockBank sheet (or set Active to FALSE). Tests already built keep their old text, so also fix that row in AcademyQuestions.</p></div></details>`;
+  return `<div class="grid"><article class="c w12"><h2>Mock analytics</h2>
+    <p class="sub">How a Sunday mock went, question by question. Flags need at least ${A.minStudents} students. English counts all four combinations together.</p>
+    <div class="acx-acts" style="margin-bottom:12px">${pick}</div>
+    ${A.closed ? '' : '<p class="sub"><b>This mock is still open or has not started.</b> Numbers will change as more students finish.</p>'}
+    <div class="tiles"><div class="tile"><b>${A.sat}</b><span>students sat</span></div><div class="tile"><b>${A.questions.length}</b><span>questions answered</span></div><div class="tile${A.flagged ? ' warn' : ''}"><b>${A.flagged}</b><span>flagged</span></div></div></article>
+    ${A.sat ? `<article class="c w6"><h2>By subject combination</h2><div class="acx-scroll"><table><thead><tr><th>Combination</th><th>Sat</th><th>Average / 400</th></tr></thead><tbody>${A.combos.map((c) => `<tr><td>${esc(c.combo)}</td><td>${c.sat}</td><td>${num(c.avg)}</td></tr>`).join('')}</tbody></table></div></article>
+    <article class="c w6"><h2>By subject</h2><div class="acx-scroll"><table><thead><tr><th>Subject</th><th>Answers</th><th>Correct</th></tr></thead><tbody>${A.subjects.slice().sort((a, b) => (a.pct == null) - (b.pct == null) || a.pct - b.pct).map((s) => `<tr><td>${esc(s.subject)}</td><td>${s.answers}</td><td>${pct(s.pct)}</td></tr>`).join('')}</tbody></table></div><p class="sub">Weakest subject first.</p></article>
+    <article class="c w12"><h2>${S.anOnly ? 'Questions to look at' : 'All questions'}</h2>
+      <div class="acx-acts"><button class="btn btn-line btn-sm" type="button" data-act="anToggle">${S.anOnly ? 'Show all questions' : 'Show flagged only'}</button><button class="btn btn-ink btn-sm" type="button" data-act="anCsv">Download all (CSV)</button></div>
+      ${shown.length ? shown.map(qrow).join('') : `<p class="empty" style="margin-top:12px">${S.anOnly ? 'Nothing is flagged for this mock.' : 'No answers yet.'}</p>`}</article>` : '<article class="c w12"><p class="empty">Nobody has submitted this mock yet.</p></article>'}</div>`;
+}
+
+const VIEWS = { analytics: vAnalytics, families: vFamilies, reports: vReports, students: vStudents, mentors: vMentors, assign: vAssign, groups: vGroups, payments: vPayments, reset: () => ResetPanel.view(), account: vAccount };
 function render() {
   document.querySelectorAll('details[data-k]').forEach((x) => { S.open[x.dataset.k] = x.open; });
   S.addOpen = !!S.open.add;
@@ -302,7 +345,9 @@ const updCount = () => { const el = $('selCount'); if (el) el.textContent = Obje
 app.addEventListener('click', async (e) => {
   const b = e.target.closest('[data-act]'); if (!b) return;
   const a = b.dataset.act, id = b.dataset.id;
-  if (a === 'tab') { S.tab = b.dataset.t; S.created = null; render(); window.scrollTo(0, 0); }
+  if (a === 'tab') { S.tab = b.dataset.t; S.created = null; render(); window.scrollTo(0, 0); if (S.tab === 'analytics' && !S.an && !S.anLoading) loadAnalytics(''); }
+  else if (a === 'anToggle') { S.anOnly = !S.anOnly; render(); }
+  else if (a === 'anCsv') anCsv();
   else if (a === 'selAll') { const boxes = [...document.querySelectorAll('.asg')].filter((x) => !x.closest('label').hidden), all = boxes.every((x) => x.checked); boxes.forEach((x) => { x.checked = !all; S.sel[x.value] = !all; }); updCount(); }
   else if (a === 'view') openView(id);
   else if (a === 'csv') csv();
@@ -323,6 +368,7 @@ app.addEventListener('click', async (e) => {
 app.addEventListener('change', (e) => {
   const t = e.target;
   if (t.id === 'flt') { S.filter = t.value; render(); }
+  else if (t.id === 'anSeries') loadAnalytics(t.value);
   else if (t.classList.contains('asg')) { S.sel[t.value] = t.checked; updCount(); }
 });
 app.addEventListener('input', (e) => { if (e.target.id === 'q') { S.q = e.target.value; applyFilter(); } });

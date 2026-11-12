@@ -113,6 +113,7 @@ function academyFromRequest(p) {
       const au = acd_auth_(ACD.Admins, 'AdminID', p);
       if (au.error) return { ok: false, error: au.error };
       if (a === 'acda_student') return acd_viewStudent_(null, p.studentId, true);
+      if (a === 'acda_analytics') return acm_analytics_(p.series);   // read-only: how the Sunday mock went, question by question (AcademyAnalytics.gs)
       let r = { ok: true };
       if (a === 'acda_payment') r = acd_confirmPayment_(au.row, p);
       else if (a === 'acda_assign') r = acd_assign_(p);
