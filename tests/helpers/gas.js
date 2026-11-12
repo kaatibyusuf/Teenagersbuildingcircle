@@ -63,14 +63,16 @@ function createEnv(opts) {
     toast: function () {}, setSpreadsheetTimeZone: function () {}, getId: function () { return 'FAKE'; }
   };
   const chain = function () { const t = { timeBased: function () { return t; }, onWeekDay: function () { return t; }, atHour: function () { return t; }, everyDays: function () { return t; }, create: function () { env.triggers.push(1); return t; } }; return t; };
+  const cacheStore = (function () { const c = {}; return { get: function (k) { return c[k] || null; }, put: function (k, v) { c[k] = v; }, remove: function (k) { delete c[k]; } }; })();   // one cache for the whole fake script, like the real one
   const sandbox = {
     console: { log: function () {}, error: function () {}, warn: function () {} },
     Logger: { log: function () {} },
     Date: Date, Math: Math, JSON: JSON, Object: Object, Array: Array, String: String, Number: Number, RegExp: RegExp, Error: Error, isNaN: isNaN, parseInt: parseInt, parseFloat: parseFloat, Intl: Intl,
     SpreadsheetApp: { getActiveSpreadsheet: function () { return book; }, openById: function () { return book; }, getUi: function () { return { createMenu: function () { const m = { addItem: function () { return m; }, addSeparator: function () { return m; }, addSubMenu: function () { return m; }, addToUi: function () {} }; return m; }, alert: function () {} }; } },
-    Utilities: { formatDate: fmt.bind(null), getUuid: function () { return require('crypto').randomUUID(); }, sleep: function () {}, base64Encode: function (s) { return Buffer.from(s).toString('base64'); } },
+    Utilities: { formatDate: fmt.bind(null), getUuid: function () { return require('crypto').randomUUID(); }, sleep: function () {}, base64Encode: function (s) { return Buffer.from(s).toString('base64'); },
+      computeHmacSha256Signature: function (value, key) { return Array.from(require('crypto').createHmac('sha256', String(key)).update(String(value)).digest()).map(function (b) { return b > 127 ? b - 256 : b; }); } },
     LockService: { getScriptLock: function () { return { waitLock: function () {}, releaseLock: function () {} }; } },
-    CacheService: { getScriptCache: function () { const c = {}; return { get: function (k) { return c[k] || null; }, put: function (k, v) { c[k] = v; }, remove: function (k) { delete c[k]; } }; } },
+    CacheService: { getScriptCache: function () { return cacheStore; } },
     PropertiesService: { getScriptProperties: function () { return { getProperty: function (k) { return env.props[k] == null ? null : env.props[k]; }, setProperty: function (k, v) { env.props[k] = v; } }; } },
     MailApp: { sendEmail: function (m) { env.mail.push(m); }, getRemainingDailyQuota: function () { return 100; } },
     ScriptApp: { getProjectTriggers: function () { return []; }, newTrigger: function () { return chain(); }, deleteTrigger: function () {}, WeekDay: { MONDAY: 1, THURSDAY: 4 } },

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" class="app student page-skills-dashboard page-academy-dashboard">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parent view | Himaayah Schools</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#094570">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600;700&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/dark.css">
+<script src="js/theme.js"></script>
+<script src="js/cookie-notice.js" defer></script>
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+<header class="top"><div>
+<a class="brand" href="./"><svg width="22" height="27" viewBox="0 0 377.21 459.6" fill="#094570" aria-hidden="true"><path d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>Himaayah Schools</a>
+<nav><a class="btn btn-line" href="./">Home</a><button class="btn btn-ink" id="out" hidden>Log out</button></nav>
+</div></header>
+
+<main id="login" class="login"><form class="lbox" id="lf" novalidate>
+<h1>Parent view</h1><p>See your child’s fees, attendance, progress and teacher feedback. Sign in with your child’s Student ID and the <b>parent code</b> the school gave you. This is not your child’s own access code.</p>
+<div class="f"><label for="sid">Child’s Student ID</label><input id="sid" autocomplete="off" autocapitalize="characters" placeholder="e.g. HM-0001, AC-0001 or SK-0001" required></div>
+<div class="f"><label for="scode">Parent code</label><input id="scode" type="password" autocomplete="new-password" data-lpignore="true" required></div>
+<div class="err" id="err" role="alert"></div>
+<button class="btn btn-ink" id="go" type="submit">Sign in</button>
+<p class="hint">No parent code yet, or lost it? <a href="https://wa.me/2347047226487?text=Assalaamu%20alaykum.%20I%20am%20a%20parent%20and%20I%20need%20a%20parent%20code%20for%20my%20child." target="_blank" rel="noopener">Message the school</a> and we will send you a new one.</p>
+</form></main>
+
+<main id="app" class="wrap" hidden></main>
+
+<script>
+/* ===== SETTINGS ===== Same Apps Script web app as the other portals. */
+const API_URL = 'https://script.google.com/macros/s/AKfycby0AsifBuB_Ad7g1SjDXCipaDU27-BrzYWf67muw5jeY_C0_0uz8AhQYYXdiNRQhvqX/exec';
+const HELP_WA = '2347047226487';
+
+/* The ID and code are kept only in this page's memory: refreshing or closing the tab signs the parent out. */
+let ME = null;
+
+const $ = (id) => document.getElementById(id);
+const esc = (t) => String(t ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fdate = (iso) => { const d = new Date(iso); return isNaN(d) ? esc(iso) : d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }); };
+const naira = (n) => '₦' + Number(n || 0).toLocaleString('en-NG');
+const pctTxt = (n) => n == null ? '' : (Math.round(n * 10) / 10) + '%';
+
+async function api(action, extra) {
+  const r = await fetch(API_URL, { method: 'POST', body: JSON.stringify(Object.assign({ action: action, id: ME.id, code: ME.code }, extra || {})) });
+  return r.json();
+}
+
+function feesHtml(d) {
+  const f = d.fees, st = String(f.status || '').toLowerCase();
+  const cls = st === 'paid' || st === 'exempt' ? 'p-paid' : st === 'overdue' ? 'p-over' : 'p-due';
+  const pays = f.payments || [];
+  return `<article class="c w6" id="fees"><h2>Fees</h2><span class="pill ${cls}">${esc(f.status || 'Due')}</span>
+    ${st === 'exempt' ? '<div class="big" style="margin-top:12px">Nothing to pay</div>' : f.nextDue ? `<div class="big" style="margin-top:12px">${fdate(f.nextDue)}</div><p class="sub">Next payment due${f.amount ? ' · ' + naira(f.amount) : ''}</p>` : '<p class="sub" style="margin-top:12px">No due date set yet.</p>'}
+    ${st === 'exempt' ? '' : `<p><a class="btn btn-ink" style="margin-top:8px" href="pay?id=${encodeURIComponent(d.child.id)}">Pay by card</a></p>`}
+    <h3 style="margin:20px 0 8px;font-size:15px">Recent payments</h3>
+    ${pays.length ? `<table><thead><tr><th>Date</th><th>Reference</th><th>Amount</th></tr></thead><tbody>${pays.map((p) => `<tr><td>${fdate(p.Date)}</td><td>${esc(p.Reference || '')}</td><td><b>${naira(p.Amount)}</b></td></tr>`).join('')}</tbody></table>` : '<p class="empty">No payments recorded yet.</p>'}</article>`;
+}
+function attendanceHtml(d) {
+  const a = d.attendance;
+  return `<article class="c w6" id="attendance"><h2>Attendance</h2>${a.total ? `<div class="row"><b style="color:var(--deep)">${a.present} of ${a.total} classes</b><span>${pctTxt(a.percent)}</span></div><div class="bar"><i data-w="${Math.round(a.percent || 0)}"></i></div>` : '<p class="empty">Attendance will appear here after the first class.</p>'}</article>`;
+}
+function progressHtml(d) {
+  const p = d.progress;
+  if (p.kind === 'madrasah') return `<article class="c w6" id="progress"><h2>Progress</h2>
+    ${p.juz || p.surah ? `<div class="big">${p.juz ? 'Juz ' + p.juz : ''}${p.juz && p.surah ? ' · ' : ''}${esc(p.surah)}${p.ayah ? ' ' + esc(p.ayah) : ''}</div><p class="sub">Current hifdh</p>` : '<p class="empty">Hifdh progress will appear here.</p>'}
+    ${p.hifdh.length ? `<ul class="list" style="margin-top:12px">${p.hifdh.map((h) => `<li><span>${esc(h.Surah)}</span><span class="pill p-due">${esc(h.Status)}</span></li>`).join('')}</ul>` : ''}
+    <h3 style="margin:20px 0 8px;font-size:15px">Results</h3>${p.results.length ? `<table><thead><tr><th>Date</th><th>Subject</th><th>Score</th></tr></thead><tbody>${p.results.map((r) => `<tr><td>${fdate(r.Date)}</td><td>${esc(r.Subject)}${r.Type ? ' <span class="sub">(' + esc(r.Type) + ')</span>' : ''}</td><td><b>${esc(r.Score)}</b> / ${esc(r.OutOf)}</td></tr>`).join('')}</tbody></table>` : '<p class="empty">No results yet.</p>'}</article>`;
+  if (p.kind === 'tbc') return `<article class="c w6" id="progress"><h2>Growth pillars</h2><ul class="list">${p.pillars.map((x) => `<li style="display:block"><div class="row"><b>${esc(x.Pillar)}</b><span>${x.Rating ? x.Rating + ' / 5' : 'Not rated yet'}</span></div>${x.Rating ? `<div class="bar"><i data-w="${Math.round(x.Rating * 20)}"></i></div>` : ''}${x.Note ? `<div class="sub">${esc(x.Note)}</div>` : ''}</li>`).join('')}</ul></article>`;
+  if (p.kind === 'academy') {
+    const sm = (p.sundayMocks || []).concat([]);
+    return `<article class="c w6" id="progress"><h2>Progress</h2>
+      ${p.overall != null ? `<div class="big">${pctTxt(p.overall)}</div><p class="sub">Overall score${p.track ? ' · ' + esc(p.track) : ''}${p.target ? ' · target ' + esc(p.target) + '%' : ''}</p>` : '<p class="empty">An overall score appears after the first mock and tasks.</p>'}
+      ${p.examDate ? `<p class="sub">Exam date: <b>${fdate(p.examDate)}</b></p>` : ''}
+      <h3 style="margin:20px 0 8px;font-size:15px">Sunday mocks</h3>${sm.length ? `<table><thead><tr><th>Date</th><th>Score</th></tr></thead><tbody>${sm.map((m) => `<tr><td>${fdate(m.Date)}</td><td><b>${esc(m.Score)}</b> / ${esc(m.OutOf)}</td></tr>`).join('')}</tbody></table>` : '<p class="empty">No mock sat yet.</p>'}</article>`;
+  }
+  return `<article class="c w6" id="progress"><h2>Course</h2><div class="big">${esc(p.course || 'Skills School')}</div>${p.week ? `<p class="sub">Week ${p.week}${p.weeks ? ' of ' + p.weeks : ''}${p.status ? ' · ' + esc(p.status) : ''}</p>` : '<p class="sub">Starting soon.</p>'}${p.weeks && p.week ? `<div class="bar"><i data-w="${Math.round(100 * Math.min(p.week, p.weeks) / p.weeks)}"></i></div>` : ''}${/^https?:\/\//i.test(p.certificate || '') ? `<p><a class="btn btn-ink" style="margin-top:12px" href="${esc(p.certificate)}" target="_blank" rel="noopener">View certificate</a></p>` : ''}</article>`;
+}
+function workHtml(d) {
+  const w = d.work, c = w.counts;
+  return `<article class="c w12" id="work"><h2>Assignments and teacher feedback</h2>
+    <p class="sub">${c.marked} marked · ${c.submitted} handed in, waiting to be marked · ${c.todo} to do${c.overdue ? ' · <b>' + c.overdue + ' overdue</b>' : ''}</p>
+    ${w.marked.length ? `<ul class="list">${w.marked.map((x) => `<li style="display:block"><div class="row"><b>${esc(x.Title)}</b><span>${x.Score === '' || x.Score == null ? '' : '<b>' + esc(x.Score) + '</b>' + (x.OutOf ? ' / ' + esc(x.OutOf) : '')}</span></div>${x.Due ? `<div class="sub">Due ${fdate(x.Due)}</div>` : ''}${x.Feedback ? `<div class="sub">“${esc(x.Feedback)}”</div>` : ''}</li>`).join('')}</ul>` : '<p class="empty">Marked work and the teacher’s feedback will appear here.</p>'}</article>`;
+}
+function render(d) {
+  const c = d.child, first = String(c.name).split(' ')[0];
+  const waHelp = 'https://wa.me/' + HELP_WA + '?text=' + encodeURIComponent('Assalaamu alaykum. I am a parent of ' + c.name + ' (' + c.id + ').');
+  $('app').innerHTML = `
+  <section class="greet"><div><small>Assalaamu alaykum</small><h1>${esc(first)}’s progress</h1>
+    <div class="chips"><span>${esc(d.programmeLabel)}</span>${c.detail ? `<span>${esc(c.detail)}</span>` : ''}${c.teacher ? `<span>Teacher: ${esc(c.teacher)}</span>` : ''}</div></div>
+    <div class="gbtn"><a class="btn btn-ghost" href="${waHelp}" target="_blank" rel="noopener">Contact the school</a></div></section>
+  <div class="grid">${feesHtml(d)}${attendanceHtml(d)}${progressHtml(d)}
+    <article class="c w6" id="news"><h2>Announcements</h2><ul class="list">${(d.announcements || []).map((a) => `<li style="display:block"><b>${esc(a.Title)}</b> <span style="float:inline-end">${fdate(a.Date)}</span><div class="sub">${esc(a.Body)}</div></li>`).join('') || '<li class="empty">No announcements.</li>'}</ul></article>
+    ${workHtml(d)}
+    <article class="c w12" id="account"><h2>Your parent code</h2>
+      <details><summary class="sub" style="cursor:pointer">Change my parent code</summary>
+      <form id="cf" autocomplete="off" novalidate style="margin-top:12px;max-width:380px"><div class="f"><label for="nc">New code (8 to 40 characters, no spaces)</label><input id="nc" type="password" autocomplete="new-password" data-lpignore="true"></div>
+      <div class="err" id="cerr" role="alert"></div><button class="btn btn-ink" type="submit">Change code</button></form></details></article>
+  </div>
+  <p class="foot">This page is read-only and shows only your child. Records are updated by the teachers. Jazakumullahu khayran for your support.</p>`;
+  requestAnimationFrame(() => setTimeout(() => { document.querySelectorAll('.bar i').forEach((b) => { b.style.width = b.dataset.w + '%'; }); }, 80));
+  $('cf').addEventListener('submit', async (e) => {
+    e.preventDefault(); const nc = $('nc').value.trim(), er = $('cerr'); er.textContent = '';
+    if (nc.length < 8 || nc.length > 40 || /\s/.test(nc)) { er.textContent = 'Use 8 to 40 characters with no spaces.'; return; }
+    try { const r = await api('par_change', { newCode: nc }); if (r.ok) { ME.code = nc; $('nc').value = ''; er.style.color = 'var(--good,#12703a)'; er.textContent = 'Your code has been changed.'; } else er.textContent = r.error || 'Could not change the code.'; }
+    catch (x) { er.textContent = 'Could not reach the school server. Please try again.'; }
+  });
+}
+
+async function signIn(id, code) {
+  const err = $('err'), go = $('go'); err.textContent = ''; go.disabled = true;
+  try {
+    ME = { id: id, code: code };
+    const d = await api('par_view');
+    if (d.ok) { $('login').hidden = true; $('app').hidden = false; $('out').hidden = false; render(d); window.scrollTo(0, 0); }
+    else { ME = null; err.textContent = d.error || 'Could not sign in.'; }
+  } catch (e) { ME = null; err.textContent = 'Could not reach the school server. Please try again.'; }
+  go.disabled = false;
+}
+$('lf').addEventListener('submit', (e) => { e.preventDefault(); const id = $('sid').value.trim(), code = $('scode').value.trim(); if (!id || !code) { $('err').textContent = 'Enter your child’s Student ID and your parent code.'; return; } signIn(id, code); });
+$('out').addEventListener('click', () => { ME = null; $('app').hidden = true; $('app').innerHTML = ''; $('out').hidden = true; $('login').hidden = false; $('scode').value = ''; });
+</script>
+</body>
+</html>

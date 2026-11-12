@@ -289,6 +289,7 @@ function doPost(e) {
     if (/^ow_/.test(String(p.action || ''))) return json_(ownerFromRequest(p));            // owner dashboard (Owner.gs)
     if (p.action === 'waChat') return json_(waChatFromRequest(p));                      // WhatsApp assistant (WhatsApp.gs)
     if (p.action === 'cardPayment') return json_(cardPaymentFromRequest(p));             // Bachs card payments from the website (CardPayments.gs)
+    if (/^par_/.test(String(p.action || ''))) return json_(parentsFromRequest(p));         // parent view (Parents.gs)
     if (/^acd/.test(String(p.action || ''))) return json_(academyFromRequest(p));        // Academy portals (Academy.gs)
     if (/^sk(_|t_|a_)/.test(String(p.action || ''))) return json_(skillsFromRequest(p)); // Skills School portals (Skills.gs)
     if (/^teacher_/.test(String(p.action || ''))) return json_(teacherFromRequest(p));   // teacher dashboard (Teacher.gs)

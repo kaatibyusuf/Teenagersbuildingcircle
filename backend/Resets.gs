@@ -49,13 +49,14 @@ const RS_KINDS = {
   skillsAdmin:    { label: 'Skills School admin', tab: 'SkillsAdmins', id: 'AdminID', name: 'Name', email: 'Email', phone: '', lock: function (i) { return ['lock:SkillsAdmins:' + i, 'fail:SkillsAdmins:' + i]; } },
   owner:          { label: 'Owner', tab: 'Owners', id: 'OwnerID', name: 'Name', email: 'Email', phone: '', lock: function (i) { return ['lock:Owners:' + i, 'fail:Owners:' + i]; } },
   bootcamp:       { label: 'Hadith Bootcamp student', tab: 'Bootcamp students', id: 'BootcampID', name: 'Name', email: 'Email', phone: 'WhatsApp', lock: function (i) { return ['bclock:' + i, 'bcfail:' + i]; } },
+  parent:         { label: 'Parent / guardian', tab: 'Parents', id: 'ParentID', name: 'Name', email: 'Email', phone: 'WhatsApp', lock: function (i) { return ['lock:Parents:' + i, 'fail:Parents:' + i]; } },
   referrer:       { label: 'Referral partner', tab: 'Referrers', id: 'Code', name: 'Name', email: 'Email', phone: 'WhatsApp', lock: function (i) { return ['lock:ref:' + i, 'fail:ref:' + i]; } }
 };
 const RS_SCOPE = {
   owner:   Object.keys(RS_KINDS),
-  admin:   ['student', 'teacher', 'librarian', 'bootcamp', 'referrer'],
-  academy: ['academyStudent', 'academyTutor'],
-  skills:  ['skillsStudent', 'skillsTutor']
+  admin:   ['student', 'teacher', 'librarian', 'bootcamp', 'referrer', 'parent'],
+  academy: ['academyStudent', 'academyTutor', 'parent'],
+  skills:  ['skillsStudent', 'skillsTutor', 'parent']
 };
 
 const RS_SELF = { owner: 'owner', admin: 'admin', academy: 'academyAdmin', skills: 'skillsAdmin' };   // the kind an admin of each role is
@@ -119,7 +120,7 @@ function rs_find_(who, p) {
   if (q.length < 2) return { ok: true, results: [], tooShort: true };
   const qd = rs_digits_(q), out = [];
   who.kinds.forEach(function (name) {
-    if (out.length >= RS_MAX_RESULTS) return;
+    if (out.length >= RS_MAX_RESULTS || name === 'parent') return;   // parents are listed below, from the children (Parents.gs)
     const kind = RS_KINDS[name], t = rs_rows_(kind);
     if (!t) return;
     t.rows.forEach(function (r) {
@@ -133,6 +134,7 @@ function rs_find_(who, p) {
         self: who.id === id && RS_SELF[who.role] === name });
     });
   });
+  if (who.kinds.indexOf('parent') >= 0 && out.length < RS_MAX_RESULTS) par_hits_(who, q, qd, out);
   return { ok: true, results: out, more: out.length >= RS_MAX_RESULTS };
 }
 
@@ -158,12 +160,16 @@ function rs_signin_(name, row) {
     case 'skillsTutor': return RS_SITE + 'skills-tutor';
     case 'skillsAdmin': return RS_SITE + 'skills-admin';
     case 'owner': return RS_SITE + 'owner';
+    case 'parent': return RS_SITE + 'parent';
     case 'bootcamp': return typeof BC_PORTAL !== 'undefined' ? BC_PORTAL : RS_SITE + 'bootcamp';
     default: return typeof REF_PAGE !== 'undefined' ? REF_PAGE : RS_SITE + 'refer';
   }
 }
 function rs_message_(name, row, kind, id, code, forced) {
   const first = (rs_cell_(row, kind.name).split(' ')[0]) || 'there', url = rs_signin_(name, row);
+  if (name === 'parent') return ['Assalaamu alaykum,', '', 'Here is your parent code for ' + SCHOOL_NAME + '. It lets you see your child\'s fees, attendance, progress and teacher feedback.', '',
+    'Your child\'s Student ID: ' + id, 'Parent code: ' + code, 'Sign in at: ' + url, '', 'Type the code exactly as shown (small letters). It is different from your child\'s own access code. Please keep it private.', '',
+    'Jazakumullahu khayran,', SCHOOL_NAME].join('\n');
   return ['Assalaamu alaykum ' + first + ',', '', 'Here is your new access code for ' + SCHOOL_NAME + '.', '',
     'ID: ' + id, 'New access code: ' + code, 'Sign in at: ' + url, '',
     'Type the code exactly as shown (small letters). ' + (forced ? 'After you sign in you will be asked to choose your own code. ' : 'Please change it under Account after you sign in. ') + 'Keep it private.', '',
@@ -180,6 +186,7 @@ function rs_log_(who, name, id, targetName, emailed) {
 function rs_reset_(who, p) {
   const name = String(p.kind || '');
   if (who.kinds.indexOf(name) < 0) rs_fail_('You are not allowed to reset that kind of account.');
+  if (name === 'parent') par_ensure_(who, p.targetId);              // creates the Parents row the first time (Parents.gs)
   const kind = RS_KINDS[name], t = rs_rows_(kind);
   if (!t) rs_fail_('That list does not exist in the sheet yet.');
   const row = rs_find_row_(kind, t, p.targetId);
@@ -197,7 +204,7 @@ function rs_reset_(who, p) {
   if (kind.alt && rs_cell_(row, kind.alt)) keys.push(rs_cell_(row, kind.alt));
   keys.forEach(function (k) { kind.lock(key_(k)).forEach(function (ck2) { cache.remove(ck2); }); });   // clear any lockout
 
-  const forced = String(p.force) !== '0' && String(p.force) !== 'false';
+  const forced = name !== 'parent' && String(p.force) !== '0' && String(p.force) !== 'false';
   const message = rs_message_(name, row, kind, id, code, forced), email = rs_cell_(row, kind.email), phone = rs_cell_(row, kind.phone);
   let emailed = 'No';
   if (p.email) {

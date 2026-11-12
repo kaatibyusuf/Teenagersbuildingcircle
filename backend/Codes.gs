@@ -14,7 +14,7 @@
  */
 
 const CODE_TABS = ['Students', 'AcademyStudents', 'AcademyTutors', 'AcademyAdmins', 'SkillsStudents', 'SkillsTutors', 'SkillsAdmins',
-  'Teachers', 'Admins', 'Owners', 'Librarians', 'Bootcamp students', 'Referrers'];
+  'Teachers', 'Admins', 'Owners', 'Librarians', 'Bootcamp students', 'Referrers', 'Parents'];
 
 function code_pepper_() {
   const props = PropertiesService.getScriptProperties();
