@@ -59,3 +59,16 @@ first payment. `pay` handles later fees. Staff set a row to Confirmed and the st
   stays in English. The source is `i18n/ar/*.txt` (English line, then `= Arabic` line) and is built into
   `frontend/js/lang/ar/` by `python3 i18n/build_ar.py`. Keep that `i18n` folder in your repo if you want to add pages in Arabic.
 - **Staff portals are not indexed** by search engines and are served uncached (see `frontend/vercel.json`).
+
+## Tests and checks
+
+You need Node 20 or newer. From the repository root:
+
+```powershell
+npm run lint   # syntax check of every .gs file and every inline script in the pages
+npm test       # scoring, question bank and weekly-mock tests (tests/)
+```
+
+GitHub runs both on every push and pull request (.github/workflows/ci.yml).
+Work on a branch, open a pull request, wait for a green tick, then merge. See docs/WORKFLOW.md.
+More documentation is in docs/: ARCHITECTURE, REQUIREMENTS, DECISIONS, WORKFLOW and RUNBOOK.
