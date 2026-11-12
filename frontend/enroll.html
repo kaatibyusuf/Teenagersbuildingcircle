@@ -417,6 +417,11 @@
     if (n === 'Done') {
       steps.forEach((s) => s.classList.remove('active'));
       document.getElementById('stepDone').classList.add('active');
+      try {
+        let t = document.getElementById('doneTrack');
+        if (!t) { t = document.createElement('p'); t.id = 'doneTrack'; t.className = 'step-sub'; document.getElementById('doneSub').insertAdjacentElement('afterend', t); }
+        if (state.ref) t.innerHTML = 'Your enrolment reference is <b>' + state.ref + '</b>. Keep it: you can <a href="admission-status?ref=' + encodeURIComponent(state.ref) + '">check your enrolment status here</a> at any time.';
+      } catch (x) {}
       window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }

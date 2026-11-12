@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" class="app student page-skills-dashboard page-academy-dashboard">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Check your enrolment | Himaayah Schools</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#094570">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600;700&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/dark.css">
+<script src="js/theme.js"></script>
+<script src="js/cookie-notice.js" defer></script>
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
+<style>
+.trk{list-style:none;margin:18px 0 0;padding:0;display:grid;gap:0}
+.trk li{position:relative;display:grid;grid-template-columns:34px 1fr;gap:14px;padding:0 0 22px}
+.trk li:last-child{padding-bottom:0}
+.trk li::before{content:"";position:absolute;left:16px;top:34px;bottom:0;width:2px;background:var(--line,#d9e0e5)}
+.trk li:last-child::before{display:none}
+.trk .dot{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:14px;background:#fff;box-shadow:inset 0 0 0 2px var(--line,#c5cfd6);color:var(--muted,#5e6b73)}
+.trk .done .dot{background:var(--ink,#062f4d);color:#fff;box-shadow:none}
+.trk .now .dot{box-shadow:inset 0 0 0 3px var(--ink,#062f4d);color:var(--ink,#062f4d)}
+.trk b{display:block;font-size:16px}
+.trk .wait b{color:var(--muted,#5e6b73)}
+.trk small{display:block;color:var(--muted,#5e6b73);font-size:14px;line-height:1.5;margin-top:2px}
+</style>
+</head>
+<body>
+<header class="top"><div>
+<a class="brand" href="./"><svg width="22" height="27" viewBox="0 0 377.21 459.6" fill="#094570" aria-hidden="true"><path d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></svg>Himaayah Schools</a>
+<nav><a class="btn btn-line" href="admissions">Admissions</a><a class="btn btn-line" href="./">Home</a></nav>
+</div></header>
+
+<main class="login"><form class="lbox" id="lf" novalidate>
+<h1>Check your enrolment</h1><p>See where your enrolment stands. You do not need to sign in. Enter your enrolment reference and the email address or phone number you gave when you enrolled.</p>
+<div class="f"><label for="ref">Enrolment reference</label><input id="ref" autocomplete="off" autocapitalize="characters" placeholder="e.g. ENR-K7M2Q9" required></div>
+<div class="f"><label for="contact">Email address or phone number</label><input id="contact" autocomplete="off" placeholder="The one you used to enrol" required></div>
+<div class="err" id="err" role="alert"></div>
+<button class="btn btn-ink" id="go" type="submit">Check status</button>
+<p class="hint">Your reference is shown when you finish enrolling and in the receipt message. Cannot find it? <a id="help" href="#" target="_blank" rel="noopener">Message the school</a>.</p>
+</form>
+
+<section class="lbox" id="res" hidden style="margin-top:18px"></section></main>
+
+<script>
+const API_URL = 'https://script.google.com/macros/s/AKfycby0AsifBuB_Ad7g1SjDXCipaDU27-BrzYWf67muw5jeY_C0_0uz8AhQYYXdiNRQhvqX/exec';
+const HELP_WA = '2347047226487';
+const $ = (id) => document.getElementById(id);
+const esc = (t) => String(t ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fdate = (iso) => { const d = new Date(String(iso).slice(0, 10) + 'T00:00:00'); return isNaN(d) ? '' : d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }); };
+$('help').href = 'https://wa.me/' + HELP_WA + '?text=' + encodeURIComponent('Assalaamu alaykum. I need help finding my enrolment reference.');
+
+function show(d) {
+  const wa = 'https://wa.me/' + (d.schoolWa || HELP_WA) + '?text=' + encodeURIComponent('Assalaamu alaykum. My enrolment reference is ' + d.ref + (d.name ? ' (' + d.name + ')' : '') + '.');
+  const head = d.state === 'attention'
+    ? '<p class="err" style="display:block;margin:10px 0 0">There is something we need to talk to you about. Please message the school and quote your reference.</p>'
+    : d.state === 'done' ? '<p class="sub" style="margin:8px 0 0"><b>Your place is confirmed.</b> Check your email for the login details.</p>' : '<p class="sub" style="margin:8px 0 0">Your enrolment is in progress. This page updates as the school works on it.</p>';
+  const steps = d.state === 'attention' ? '' : '<ol class="trk">' + d.steps.map((s, i) => {
+    const cls = s.done ? 'done' : (i === 0 || d.steps[i - 1].done) ? 'now' : 'wait';
+    return `<li class="${cls}"><span class="dot">${s.done ? '✓' : i + 1}</span><div><b>${esc(s.label)}</b><small>${esc(s.note)}</small></div></li>`;
+  }).join('') + '</ol>';
+  $('res').innerHTML = `<h2 style="margin:0">${esc(d.name || 'Your enrolment')}${d.plan ? ' · ' + esc(d.plan) : ''}</h2>
+    <p class="sub" style="margin:4px 0 0">${esc(d.programme)} · Reference ${esc(d.ref)}${d.submitted ? ' · sent ' + fdate(d.submitted) : ''}</p>${head}${steps}
+    <p style="margin-top:18px"><a class="btn btn-line" href="${wa}" target="_blank" rel="noopener">Message the school about this</a></p>`;
+  $('res').hidden = false; $('res').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+async function check(ref, contact) {
+  const err = $('err'), go = $('go'); err.textContent = ''; $('res').hidden = true; go.disabled = true; go.textContent = 'Checking…';
+  try {
+    const r = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'adm_status', ref: ref, contact: contact }) });
+    const d = await r.json();
+    if (d.ok) show(d); else err.textContent = d.error || 'Could not check that.';
+  } catch (e) { err.textContent = 'Could not reach the school server. Please try again.'; }
+  go.disabled = false; go.textContent = 'Check status';
+}
+$('lf').addEventListener('submit', (e) => { e.preventDefault(); const ref = $('ref').value.trim(), contact = $('contact').value.trim(); if (!ref || !contact) { $('err').textContent = 'Enter your reference and the email address or phone number you enrolled with.'; return; } check(ref, contact); });
+try { const q = new URLSearchParams(location.search).get('ref'); if (q && /^ENR-[A-Za-z0-9]{4,12}$/.test(q)) { $('ref').value = q.toUpperCase(); $('contact').focus(); } } catch (e) {}
+</script>
+</body>
+</html>
