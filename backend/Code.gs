@@ -50,8 +50,12 @@ const SHEETS = {
 };
 
 /* ===== SMALL HELPERS ===== */
-function ss_() { return SHEET_ID ? SpreadsheetApp.openById(SHEET_ID) : SpreadsheetApp.getActiveSpreadsheet(); }
-function tz_() { return ss_().getSpreadsheetTimeZone(); }
+/* The spreadsheet and its time zone are looked up once per request. Opening the spreadsheet is slow (about 100 to 300 ms), and helpers like today_() and
+   acd_now_() used to do it every time they ran, so one Academy sign-in opened it 185 times. Apps Script starts every request with fresh globals,
+   so these never go stale between requests. */
+var SS_MEMO_ = null, TZ_MEMO_ = null;
+function ss_() { if (!SS_MEMO_) SS_MEMO_ = SHEET_ID ? SpreadsheetApp.openById(SHEET_ID) : SpreadsheetApp.getActiveSpreadsheet(); return SS_MEMO_; }
+function tz_() { if (!TZ_MEMO_) TZ_MEMO_ = ss_().getSpreadsheetTimeZone(); return TZ_MEMO_; }
 function key_(v) { return String(v == null ? '' : v).trim().toUpperCase(); }
 
 function table_(name) {
