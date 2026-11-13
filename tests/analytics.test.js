@@ -99,6 +99,19 @@ test('a question almost nobody gets right (with answers spread out) is "Very har
   assert.equal(hard.length, 1); assert.equal(hard[0].pct, 10);
 });
 
+test('two different questions that share the same wording are not merged', () => {
+  const env = setup(), sci = testIdFor(env, 'Sciences and Medicine');
+  // give English question 2 the same stem as English question 1, but keep its own options (as happens with generic stems in a real bank)
+  const Q = env.sheets['AcademyQuestions'], head = Q.data[0];
+  const rows = Q.data.filter(function (r, i) { return i > 0 && r[head.indexOf('TestID')] === sci && r[head.indexOf('Subj')] === 'English'; });
+  rows[1][head.indexOf('Question')] = rows[0][head.indexOf('Question')];
+  for (let i = 0; i < 6; i++) sit(env, sci, 'AC-' + (100 + i), function (q) { return q.Answer; });
+  const a = env.call('acm_analytics_', 'MOCK-' + SUNDAY).analytics;
+  const english = a.questions.filter(function (q) { return q.subject === 'English'; });
+  assert.equal(english.length, 60);
+  english.forEach(function (q) { assert.equal(q.n, 6); });
+});
+
 test('with fewer students than the minimum, nothing is flagged', () => {
   const env = setup(), sci = testIdFor(env, 'Sciences and Medicine');
   for (let i = 0; i < 3; i++) sit(env, sci, 'AC-' + (100 + i), function (q) { return wrongLetter(q); });

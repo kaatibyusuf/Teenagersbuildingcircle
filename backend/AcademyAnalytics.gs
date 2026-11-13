@@ -52,7 +52,9 @@ function acm_analytics_(series) {
     const cb = String(t.Combo || t.Title || 'Mock'); combos[cb] = combos[cb] || { sat: 0, sum: 0 };
     combos[cb].sat++; combos[cb].sum += Number(a.Score) || 0;
     qs.forEach(function (q) {
-      const k = String(q.Subj || '') + '|' + String(q.Question);
+      // a question is its wording AND its options: some English stems are generic ("Choose the word nearest in meaning") and repeat with different options
+      const opts = ['A', 'B', 'C', 'D'].map(function (L) { return String(q[L] || ''); }).filter(Boolean).sort().join('\u241f');
+      const k = String(q.Subj || '') + '|' + String(q.Question) + '|' + opts + '|' + String(q[String(q.Answer || '').trim().toUpperCase()] || '');
       if (!Qs[k]) {
         const right = String(q[String(q.Answer || '').trim().toUpperCase()] || '');
         Qs[k] = { subject: String(q.Subj || ''), full: String(q.Question), right: right, n: 0, correct: 0, blank: 0, opt: {}, texts: ['A', 'B', 'C', 'D'].map(function (L) { return String(q[L] || ''); }).filter(Boolean) };
