@@ -124,7 +124,8 @@ function tbc_payload_(st) {
     },
     guides: tbcGuidesFor_(st), guideMonth: tbcGuideMonth_(),
     pillars: tbcPillarSummary_(mine('Pillars')),
-    sessions: tbcSessions_(st),
+    sessions: tbcSessions_(st).map(function (x) { return classLocked_(st) ? Object.assign({}, x, { Link: '' }) : x; }),   // overdue: no class links
+    classLocked: classLocked_(st),
     attendance: mine('Attendance').map(function (r) { return { Date: iso_(r.Date), Status: r.Status }; }).sort(function (a, b) { return a.Date < b.Date ? 1 : -1; }).slice(0, 12),
     assignments: assignmentsFor_(st),
     announcements: tbcRows_('Announcements').filter(function (r) { return r.Title && tbcAud_(r.Audience, ['TBC', id, key_(cohort)]); }).map(function (r) {

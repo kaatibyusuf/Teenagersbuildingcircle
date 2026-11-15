@@ -84,7 +84,7 @@ function fee_mask_(name) {
 }
 function fee_public_(f) {
   return { ok: true, studentId: f.id, name: fee_mask_(f.name), programme: f.programme, plan: f.plan, amount: f.amount, months: f.months,
-           nextDue: f.nextDue, status: f.status, payable: f.payable, reason: f.reason, maxPeriods: f.months ? FEE_MAX_PERIODS : 1, today: today_() };
+           nextDue: f.nextDue, payFrom: payBase_(f.nextDue, today_()), status: f.status, payable: f.payable, reason: f.reason, maxPeriods: f.months ? FEE_MAX_PERIODS : 1, today: today_() };
 }
 
 /* Called by cardPaymentFromRequest (CardPayments.gs) for kind "fee", after the secret check. */
@@ -120,7 +120,7 @@ function feeCardPayment_(p) {
       } else {
         const payTab = f.tab === 'AcademyStudents' ? 'AcademyPayments' : 'SkillsPayments';
         if (months > 0) {
-          const cur = iso_(f.row.NextDue), base = (cur && cur >= today) ? cur : today;
+          const base = payBase_(f.row.NextDue, today);
           nd = addMonths_(base, months);
           put_(f.t, f.row._row, 'NextDue', nd, true); f.row.NextDue = nd;
         }

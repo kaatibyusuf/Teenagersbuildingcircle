@@ -27,7 +27,8 @@ function schoolTerm_() {
 }
 const LOCKOUT_TRIES = 5;             // wrong codes allowed
 const LOCKOUT_SECONDS = 900;         // 15 minutes
-const DUE_SOON_DAYS = 7;             // payment shows "Due" this many days before NextDue
+const DUE_SOON_DAYS = 7;
+const LATE_RESTART_DAYS = 60;       // a payment extends from the OLD due date, even if late, unless the student has lapsed for more than this many days             // payment shows "Due" this many days before NextDue
 const REMINDER_HOUR = 6;             // the daily job runs around this hour (spreadsheet time zone)
 const SEND_EMAILS = true;            // set false to build the WhatsApp list only
 const PAYMENT_REMINDER_DAYS = [7, 3, 0];   // days before the due date
@@ -124,6 +125,14 @@ function addMonths_(isoDay, m) {
   d.setUTCDate(Math.min(p[2], last));
   return d.toISOString().slice(0, 10);
 }
+/* Which date a payment counts from. Paid early or late, it extends from the student's old due date, so lateness never
+   gives free time. Only a student who has lapsed for more than LATE_RESTART_DAYS starts again from the payment date. */
+function payBase_(curDue, payDate) {
+  const cur = iso_(curDue), date = iso_(payDate);
+  if (!cur) return date;
+  if (cur >= date) return cur;
+  return (dn_(date) - dn_(cur)) > LATE_RESTART_DAYS ? date : cur;
+}
 function nice_(isoDay) {
   const p = String(isoDay).slice(0, 10).split('-').map(Number);
   const wd = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][new Date(Date.UTC(p[0], p[1] - 1, p[2])).getUTCDay()];
@@ -153,6 +162,9 @@ function payStatus_(st) {
   const d = dn_(nd) - dn_(today_());
   return d < 0 ? 'Overdue' : d <= DUE_SOON_DAYS ? 'Due' : 'Paid';
 }
+
+/* A student whose fee is overdue (the day after the due date) gets no class links and no class groups until the payment is applied. */
+function classLocked_(st) { return payStatus_(st) === 'Overdue'; }
 
 /* ===== LOGIN ===== */
 function auth_(id, code) {
@@ -218,7 +230,7 @@ function payload_(st) {
       StudentID: String(st.StudentID).trim(), Name: st.Name, Level: st.Level, Plan: st.Plan, Teacher: st.Teacher,
       PaymentStatus: payStatus_(st), NextDue: iso_(st.NextDue), MonthlyFee: Number(st.MonthlyFee) || 0,
       AttendancePresent: Number(st.AttendancePresent) || 0, AttendanceTotal: Number(st.AttendanceTotal) || 0,
-      NextClass: iso_(st.NextClass, true), ClassLink: st.ClassLink,
+      NextClass: iso_(st.NextClass, true), ClassLink: classLocked_(st) ? '' : st.ClassLink, ClassLocked: classLocked_(st),
       Juz: Number(st.Juz) || 0, CurrentSurah: st.CurrentSurah, CurrentAyah: st.CurrentAyah
     },
     hifdh: mine('Hifdh').filter(function (r) { return r.Surah; }).map(function (r) { return { Surah: r.Surah, Status: r.Status }; }),
@@ -273,7 +285,7 @@ function doPost(e) {
   let out;
   try {
     const p = JSON.parse((e && e.postData && e.postData.contents) || '{}');
-    REQ_TZ_ = /^(ow_|admin_|teacher_|rs_|lb_|examt$)/.test(String(p.action || '')) ? '' : validTz_(p.tz);   // staff pages always use the school's day
+    REQ_TZ_ = /^(ow_|admin_|teacher_|rs_|lb_|grp_t_|examt$)/.test(String(p.action || '')) ? '' : validTz_(p.tz);   // staff pages always use the school's day
     if (p.action === 'enrol') return json_(enrolFromRequest(p));                         // new enrolments (Enrol.gs)
     if (/^ref_/.test(String(p.action || ''))) return json_(referralFromRequest(p));         // refer and earn (Referrals.gs)
     if (p.action === 'subscribe' || p.action === 'unsubscribe') return json_(newsletterFromRequest(p)); // newsletter (Newsletter.gs)
@@ -295,6 +307,7 @@ function doPost(e) {
     if (p.action === 'cardPayment') return json_(cardPaymentFromRequest(p));             // Bachs card payments from the website (CardPayments.gs)
     if (/^adm_/.test(String(p.action || ''))) return json_(admissionsFromRequest(p));       // admissions tracker (Admissions.gs)
     if (/^par_/.test(String(p.action || ''))) return json_(parentsFromRequest(p));         // parent view (Parents.gs)
+    if (/^grp_/.test(String(p.action || ''))) return json_(groupsFromRequest(p));          // class groups (Groups.gs)
     if (/^acd/.test(String(p.action || ''))) return json_(academyFromRequest(p));        // Academy portals (Academy.gs)
     if (/^sk(_|t_|a_)/.test(String(p.action || ''))) return json_(skillsFromRequest(p)); // Skills School portals (Skills.gs)
     if (/^teacher_/.test(String(p.action || ''))) return json_(teacherFromRequest(p));   // teacher dashboard (Teacher.gs)
@@ -337,7 +350,7 @@ function applyPayments_() {
       const s = stt.rows.filter(function (r) { return key_(r.StudentID) === id; })[0];
       if (!s) { put_(pt, p._row, 'Applied', 'No such student'); return; }
       const date = iso_(p.Date) || today_(), months = Math.max(1, Math.round(Number(p.Months) || 1));
-      const cur = iso_(s.NextDue), base = (cur && cur >= date) ? cur : date;   // paid early: extend from the old date. Paid late: start from today.
+      const base = payBase_(s.NextDue, date);   // early or late: extend from the old due date (see payBase_)
       const nd = addMonths_(base, months);
       s.NextDue = nd; s.PaymentStatus = payStatus_(s);
       put_(stt, s._row, 'NextDue', nd); put_(stt, s._row, 'PaymentStatus', s.PaymentStatus);
@@ -412,7 +425,7 @@ function runReminders_() {
     }
     const nc = iso_(s.NextClass, true);
     if (nc && CLASS_REMINDER_DAYS.indexOf(dn_(nc) - now) >= 0) {
-      add('Class', nc, hello + 'Your next class is ' + when_(dn_(nc) - now) + ', ' + nice_(nc) + ' at ' + nc.slice(11) + '.' + (/^https?:\/\//i.test(String(s.ClassLink || '')) ? ' Join here: ' + s.ClassLink : ''));
+      add('Class', nc, hello + 'Your next class is ' + when_(dn_(nc) - now) + ', ' + nice_(nc) + ' at ' + nc.slice(11) + '.' + (!classLocked_(s) && /^https?:\/\//i.test(String(s.ClassLink || '')) ? ' Join here: ' + s.ClassLink : ''));
     }
     assignmentsFor_(s, A, S).forEach(function (a) {
       if ((a.Status !== 'To do' && a.Status !== 'Overdue') || !a.Due) return;

@@ -136,7 +136,7 @@ function sk_studentPayload_(st) {
       StudentID: String(st.StudentID).trim(), Name: st.Name, Course: String(st.Course || ''), Cohort: String(st.Cohort || ''), Tutor: tutors[key_(st.TutorID)] || '',
       StartDate: iso_(st.StartDate), Weeks: sk_weeks_(st.Course), Week: sk_week_(st), Status: sk_status_(st),
       PaymentStatus: payStatus_(st), NextDue: iso_(st.NextDue), Fee: Number(st.Fee) || 0, Period: String(st.Period || ''),
-      NextClass: iso_(st.NextClass, true), ClassLink: String(st.ClassLink || ''), Certificate: String(st.Certificate || '')
+      NextClass: iso_(st.NextClass, true), ClassLink: classLocked_(st) ? '' : String(st.ClassLink || ''), ClassLocked: classLocked_(st), Certificate: String(st.Certificate || '')
     },
     projects: sk_studentProjects_(st, table_(SK.Projects), table_(SK.Submissions)),
     attendance: sk_att_(table_(SK.Attendance), id),
@@ -323,7 +323,7 @@ function sk_confirmPayment_(ad, p) {
     s = S.rows.filter(function (r) { return key_(r.StudentID) === id; })[0];
     if (!s) return { ok: false, error: 'Student not found.' };
     if (months > 0) {   // courses billed every few months move the next due date; one-time courses just become Paid
-      const cur = iso_(s.NextDue), base = (cur && cur >= date) ? cur : date;
+      const base = payBase_(s.NextDue, date);
       nd = addMonths_(base, months);
       put_(S, s._row, 'NextDue', nd, true);
       s.NextDue = nd;

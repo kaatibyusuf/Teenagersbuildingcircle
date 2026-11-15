@@ -928,7 +928,7 @@ function acd_confirmPayment_(ad, p) {
     const S = acd_t_(ACD.Students);
     s = S.rows.filter(function (r) { return key_(r.StudentID) === id; })[0];
     if (!s) return { ok: false, error: 'Student not found.' };
-    const cur = iso_(s.NextDue), base = (cur && cur >= date) ? cur : date;
+    const base = payBase_(s.NextDue, date);
     nd = addMonths_(base, months);
     s.NextDue = nd; s.PaymentStatus = 'Paid'; s.PaymentStatus = payStatus_(s);
     put_(S, s._row, 'NextDue', nd, true); put_(S, s._row, 'PaymentStatus', s.PaymentStatus);
