@@ -67,7 +67,7 @@
     '.grp-f textarea{min-height:70px}.grp-pick{max-height:220px;overflow:auto;border:1px solid #c6d6e4;border-radius:10px;padding:6px 10px}.grp-pick label{display:flex;gap:8px;align-items:center;font-weight:400;margin:6px 0}' +
     '.grp-tag{font-size:12px;border-radius:999px;padding:2px 8px;background:#fde8e8;color:#9b1c1c;font-weight:600}.grp-err{color:#9b1c1c;font-weight:600;margin:8px 0}.grp-ok{color:#1b6b3a;font-weight:600}';
 
-  var S = { cfg: null, ov: null, body: null, data: null, busy: false, msg: '', err: '', open: {}, editing: null, creating: false };
+  var S = { cfg: null, ov: null, body: null, data: null, busy: false, msg: '', err: '', open: {}, editing: null, creating: false, notify: null };
 
   function call(action, extra) {
     var c = creds(S.cfg), url = apiUrl();
@@ -83,10 +83,10 @@
     call(S.cfg.staff ? 'grp_t_list' : 'grp_s_list').then(function (d) { S.busy = false; if (d.ok) S.data = d; else S.err = d.error || 'Could not load.'; render(); });
   }
   function act(action, extra, okMsg) {
-    S.busy = true; S.err = ''; S.msg = ''; render();
+    S.busy = true; S.err = ''; S.msg = ''; S.notify = null; render();
     return call(action, extra).then(function (d) {
       S.busy = false;
-      if (d.ok) { S.data = d; S.msg = okMsg || ''; S.creating = false; S.editing = null; } else S.err = d.error || 'That did not work.';
+      if (d.ok) { S.data = d; S.msg = okMsg || ''; S.creating = false; S.editing = null; S.notify = d.notify || null; } else S.err = d.error || 'That did not work.';
       render(); return d.ok;
     });
   }
@@ -150,12 +150,15 @@
     var when = el('input', { type: 'datetime-local' });
     var pin = el('input', { type: 'checkbox' });
     pin.checked = true;
+    var mail = el('input', { type: 'checkbox' });
+    mail.checked = true;
     return el('div', { 'class': 'grp-f' }, [
       el('label', { text: 'What are you posting?' }), kind, el('label', { text: 'Title' }), title, el('label', { text: 'Message' }), body,
       el('label', { text: 'Link (required for a class)' }), link, el('label', { text: 'Class time (optional)' }), when,
       el('label', {}, [pin, ' Pin this class at the top (replaces the old pin)']),
+      el('label', {}, [mail, ' Email students who are up to date (the email does not contain the link)']),
       el('button', { 'class': 'grp-btn', text: 'Post to group', onclick: function () {
-        act('grp_t_post', { groupId: g.GroupID, kind: kind.value, title: title.value, body: body.value, link: link.value, when: when.value, pinned: pin.checked && kind.value === 'class' }, 'Posted.');
+        act('grp_t_post', { groupId: g.GroupID, kind: kind.value, title: title.value, body: body.value, link: link.value, when: when.value, pinned: pin.checked && kind.value === 'class', email: mail.checked }, 'Posted.');
       } })
     ]);
   }
@@ -189,8 +192,24 @@
     }
     return el('div', { 'class': 'grp-card' }, kids);
   }
+  function notifyBox(n) {
+    var kids = [el('strong', { text: 'Students told about this post' })];
+    var line = [];
+    line.push(n.emailed + ' emailed');
+    if (n.noEmail) line.push(n.noEmail + ' with no email address');
+    if (n.lockedSkipped) line.push(n.lockedSkipped + ' not told because their fee is overdue');
+    kids.push(el('div', { text: line.join(' · ') }));
+    if (n.quotaStopped) kids.push(el('div', { 'class': 'grp-err', text: 'The daily email limit was reached, so some students were not emailed. Use the WhatsApp buttons below.' }));
+    var wa = (n.whatsapp || []).filter(function (x) { return /^https:\/\/wa\.me\//.test(String(x.link || '')); });
+    if (wa.length) {
+      kids.push(el('div', { 'class': 'grp-muted', text: 'Tap a name to send them a WhatsApp message (it does not contain the class link):' }));
+      wa.forEach(function (x) { kids.push(el('a', { 'class': 'grp-btn alt', href: x.link, target: '_blank', rel: 'noopener noreferrer', text: x.name || 'Student' })); });
+    }
+    return el('div', { 'class': 'grp-card' }, kids);
+  }
   function staffView(d) {
     var out = [el('p', { 'class': 'grp-muted', text: 'Post the class link here instead of WhatsApp. Students whose fee is overdue cannot see the posts or links until they pay.' })];
+    if (S.notify) out.push(notifyBox(S.notify));
     if (S.creating) out.push(newGroupForm(d));
     else out.push(el('button', { 'class': 'grp-btn', text: 'New group', onclick: function () { S.creating = true; render(); } }));
     if (!d.groups.length && !S.creating) out.push(el('p', { 'class': 'grp-muted', text: 'You have no groups yet.' }));
@@ -207,6 +226,7 @@
     if (S.busy && !S.data) body.appendChild(el('p', { 'class': 'grp-muted', text: 'Loading...' }));
     if (S.data) (S.cfg.staff ? staffView(S.data) : studentView(S.data)).forEach(function (n) { body.appendChild(n); });
     if (S.busy && S.data) body.appendChild(el('p', { 'class': 'grp-muted', text: 'Working...' }));
+    if ((S.notify || S.msg || S.err) && body.parentNode) body.parentNode.scrollTop = 0;   // show the result of what was just done
   }
   function close() { if (S.ov && S.ov.parentNode) S.ov.parentNode.removeChild(S.ov); S.ov = null; S.data = null; S.msg = ''; S.err = ''; document.removeEventListener('keydown', onKey); }
   function onKey(e) { if (e.key === 'Escape') close(); }

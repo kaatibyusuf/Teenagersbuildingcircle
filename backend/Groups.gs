@@ -18,6 +18,12 @@
  * ACTIONS (all sent as { action, programme, id, code, ... }; programme is madrasah, tbc, academy or skills)
  *   grp_s_list                                          student: their groups and posts (locked if Overdue)
  *   grp_t_list | grp_t_create | grp_t_members | grp_t_rename | grp_t_delete | grp_t_post | grp_t_unpost     staff
+ *
+ * NUDGES WHEN A TEACHER POSTS (grp_t_post with email: true)
+ *  - An email goes to each member who is NOT overdue and has an email address. It says that there is a new class or announcement in the group and tells them to open their dashboard
+ *    and press "Class groups". It never contains the class link, the message or any other post text, so the link stays behind the fee lock. Overdue students get nothing.
+ *  - Emails stop before the daily limit gets too low (GRP_EMAIL_RESERVE), so receipts and logins still go out.
+ *  - WhatsApp cannot be sent by the script, so the reply also holds a ready-to-tap WhatsApp link for each member (same text, no class link). The teacher taps them one by one.
  */
 const GRP_TABS = {
   ClassGroups: ['GroupID', 'Programme', 'Name', 'OwnerID', 'OwnerName', 'Active', 'Created'],
@@ -29,6 +35,8 @@ const GRP_MAX_GROUPS_PER_OWNER = 30;
 const GRP_MAX_MEMBERS = 300;
 const GRP_FEED = 40;            // posts a student sees per group
 const GRP_STAFF_FEED = 30;      // posts a teacher sees per group
+const GRP_EMAIL_RESERVE = 25;   // emails kept back each day for receipts, logins and reminders; group emails stop before the daily limit reaches this
+const GRP_PORTAL = { madrasah: 'dashboard.html', tbc: 'tbc-dashboard.html', academy: 'academy-dashboard.html', skills: 'skills-dashboard.html' };
 
 function grp_fail_(m) { throw new Error('USER:' + m); }
 function grp_tab_(name) {
@@ -202,8 +210,37 @@ function grp_post_(w, p) {
   const pinned = kind === 'class' && (p.pinned === true || String(p.pinned) === 'true');
   const t = grp_tab_('GroupPosts');
   if (pinned) t.rows.forEach(function (r) { if (key_(r.GroupID) === key_(g.GroupID) && key_(r.Pinned) === 'TRUE') put_(t, r._row, 'Pinned', 'FALSE'); });
-  append_(t, { PostID: grp_id_('P-'), GroupID: String(g.GroupID), Kind: kind, Title: title, Body: body, Link: link, When: when, Pinned: pinned ? 'TRUE' : 'FALSE',
-    AuthorID: w.id, AuthorName: w.name, Created: acd_now_() }, ['PostID', 'GroupID', 'Kind', 'Title', 'Body', 'Link', 'When', 'AuthorID', 'AuthorName']);
+  const post = { PostID: grp_id_('P-'), GroupID: String(g.GroupID), Kind: kind, Title: title, Body: body, Link: link, When: when, Pinned: pinned ? 'TRUE' : 'FALSE',
+    AuthorID: w.id, AuthorName: w.name, Created: acd_now_() };
+  append_(t, post, ['PostID', 'GroupID', 'Kind', 'Title', 'Body', 'Link', 'When', 'AuthorID', 'AuthorName']);
+  return { group: g, post: post };
+}
+
+/* Tells the unlocked members of a group that there is something new. Never includes the link or the text of the post. */
+function grp_notify_(w, g, post, wantEmail) {
+  const members = grp_membersOf_()[key_(g.GroupID)] || [], all = grp_students_(w.prog);
+  const out = { emailed: 0, noEmail: 0, lockedSkipped: 0, quotaStopped: false, whatsapp: [] };
+  const portal = DASHBOARD_URL.replace('dashboard.html', GRP_PORTAL[w.prog] || 'dashboard.html');
+  const what = (post.Kind === 'class' ? 'a new class' : 'a new announcement') + ' in ' + String(g.Name);
+  members.forEach(function (k) {
+    const s = all[k];
+    if (!s || key_(s.Active) === 'FALSE') return;
+    if (payStatus_(s) === 'Overdue') { out.lockedSkipped++; return; }
+    const first = String(s.Name || '').trim().split(/\s+/)[0] || 'Student';
+    const text = 'Assalaamu alaykum ' + first + '. There is ' + what + '. Open your dashboard and press "Class groups" to see it: ' + portal;
+    const wa = waLink_(s.WhatsApp, text);
+    if (wa) out.whatsapp.push({ name: String(s.Name || ''), link: wa });
+    if (!wantEmail) return;
+    if (!validEmail_(s.Email)) { out.noEmail++; return; }
+    if (!SEND_EMAILS || out.quotaStopped) return;
+    try {
+      if (MailApp.getRemainingDailyQuota() <= GRP_EMAIL_RESERVE) { out.quotaStopped = true; return; }
+      MailApp.sendEmail({ to: String(s.Email).trim(), name: SCHOOL_NAME, subject: (SCHOOL_NAME + ': ' + what).replace(/\s+/g, ' ').slice(0, 150),
+        body: text + '\n\n' + SCHOOL_NAME });
+      out.emailed++;
+    } catch (err) { console.error(err); out.noEmail++; }
+  });
+  return out;
 }
 
 /* ---------- router (called from doPost in Code.gs) ---------- */
@@ -214,12 +251,13 @@ function groupsFromRequest(p) {
     if (!w.staff) grp_fail_('Unknown action.');
     if (act === 'grp_t_list') return grp_staffList_(w);
     const lock = LockService.getScriptLock(); lock.waitLock(15000);
+    let posted = null;
     try {
       if (act === 'grp_t_create') grp_create_(w, p);
       else if (act === 'grp_t_members') { const g = grp_group_(w, p.groupId); grp_setMembers_(g.GroupID, grp_pickStudents_(w, p.studentIds || [])); }
       else if (act === 'grp_t_rename') { const g = grp_group_(w, p.groupId), n = grp_txt_(p.name, 60); if (n.length < 2) grp_fail_('Give the group a name.'); put_(grp_tab_('ClassGroups'), g._row, 'Name', n, true); }
       else if (act === 'grp_t_delete') { const g = grp_group_(w, p.groupId); put_(grp_tab_('ClassGroups'), g._row, 'Active', 'FALSE'); }
-      else if (act === 'grp_t_post') grp_post_(w, p);
+      else if (act === 'grp_t_post') posted = grp_post_(w, p);
       else if (act === 'grp_t_unpost') {
         const t = grp_tab_('GroupPosts'), r = t.rows.filter(function (x) { return key_(x.PostID) === key_(p.postId); })[0];
         if (!r) grp_fail_('That post was not found.');
@@ -227,7 +265,9 @@ function groupsFromRequest(p) {
         ss_().getSheetByName('GroupPosts').deleteRows(r._row, 1);
       } else grp_fail_('Unknown action.');
     } finally { lock.releaseLock(); }
-    return grp_staffList_(w);
+    const out = grp_staffList_(w);
+    if (posted) out.notify = grp_notify_(w, posted.group, grp_postOut_(posted.post, false), p.email === true || String(p.email) === 'true');   // after the lock is released: sending mail is slow
+    return out;
   } catch (err) {
     if (/^USER:/.test(String(err && err.message))) return { ok: false, error: String(err.message).slice(5) };
     console.error(err);

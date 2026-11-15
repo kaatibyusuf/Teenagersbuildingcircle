@@ -15,6 +15,7 @@
 
 ## Good to know
 - Anyone who already saw a class link can still use it. Post a fresh Meet link each day, or turn on "ask to join" in Google Meet, if you need a hard stop.
-- Students must open the portal to see posts; nothing is sent to them when you post.
+- Telling students: when you post, tick "Email students who are up to date". They get an email saying there is a new class or announcement and to open their dashboard. The email never contains the class link or your message. Students with overdue fees get nothing.
+  Group emails stop when only 25 are left of the day's email limit (`GRP_EMAIL_RESERVE` in `Groups.gs`), so receipts and logins still go out. WhatsApp cannot be sent by the system, so after posting you also get a button per student: tap it and WhatsApp opens with the message ready (no class link in it).
 - A teacher can only add their own students. Admin-level staff (Teachers tab Role Admin, lead mentors, Skills tutors with Role Admin) see every group in their programme.
 - The Parent page does not show class groups or links.

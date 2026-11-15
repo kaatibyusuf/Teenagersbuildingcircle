@@ -219,3 +219,62 @@ test('Academy and Skills groups use their own tutors and students', () => {
   assert.equal(late.locked, true);
   assert.equal(JSON.stringify(late).indexOf('meet.example'), -1);
 });
+
+function withContacts(env) {
+  const sh = env.sheets.Students, head = sh.data[0];
+  const set = function (row, col, v) { sh.data[row][head.indexOf(col)] = v; };
+  set(1, 'Email', 'paid@x.com'); set(1, 'WhatsApp', '08011112222');
+  set(2, 'Email', 'late@x.com'); set(2, 'WhatsApp', '08033334444');
+  set(4, 'Email', ''); set(4, 'WhatsApp', '08055556666');   // exempt student: no email
+}
+
+test('posting with email on emails unlocked members only, and never includes the link or the message', () => {
+  const env = setup(); withContacts(env);
+  const gid = makeGroup(env);
+  const r = postClass(env, gid, { email: true });
+  assert.equal(r.ok, true, JSON.stringify(r));
+  assert.equal(r.notify.emailed, 1);
+  assert.equal(r.notify.noEmail, 1);
+  assert.equal(r.notify.lockedSkipped, 1);
+  assert.equal(env.mail.length, 1);
+  assert.equal(env.mail[0].to, 'paid@x.com');
+  const text = JSON.stringify(env.mail[0]);
+  assert.equal(text.indexOf('meet.google.com'), -1);
+  assert.equal(text.indexOf('Bring your mushaf'), -1);
+  assert.match(env.mail[0].body, /Class groups/);
+  assert.match(env.mail[0].body, /dashboard\.html/);
+});
+
+test('posting without email sends nothing, but WhatsApp links are still offered for unlocked members', () => {
+  const env = setup(); withContacts(env);
+  const r = postClass(env, makeGroup(env));
+  assert.equal(env.mail.length, 0);
+  assert.equal(r.notify.emailed, 0);
+  assert.deepEqual(r.notify.whatsapp.map(function (x) { return x.name; }).sort(), ['Exempt Child', 'Paid Child']);
+  r.notify.whatsapp.forEach(function (x) {
+    assert.match(x.link, /^https:\/\/wa\.me\/234\d+\?text=/);
+    assert.equal(decodeURIComponent(x.link).indexOf('meet.google.com'), -1);
+  });
+});
+
+test('overdue students get no email and no WhatsApp link', () => {
+  const env = setup(); withContacts(env);
+  const r = postClass(env, makeGroup(env), { email: true });
+  assert.equal(JSON.stringify(r.notify).indexOf('Late Child'), -1);
+  assert.equal(JSON.stringify(env.mail).indexOf('late@x.com'), -1);
+});
+
+test('emails stop before the daily limit is used up', () => {
+  const env = setup(); withContacts(env);
+  env.run('MailApp.getRemainingDailyQuota = function () { return 10; }');
+  const r = postClass(env, makeGroup(env), { email: true });
+  assert.equal(env.mail.length, 0);
+  assert.equal(r.notify.quotaStopped, true);
+  assert.equal(r.notify.whatsapp.length, 2);   // the post itself and the WhatsApp links still work
+});
+
+test('other staff actions carry no notify block', () => {
+  const env = setup();
+  const r = call(env, Object.assign({ action: 'grp_t_list' }, T1));
+  assert.equal(r.notify, undefined);
+});
