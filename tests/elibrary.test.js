@@ -77,7 +77,32 @@ test('cards respond to hover, keyboard focus and tap', () => {
   assert.ok(/\.el-card:hover[^{]*:focus-within[^{]*:active/.test(css));
 });
 
-test('the E-Library can use real photos, and still works before they are added', () => {
-  assert.ok(page.includes('images/elibrary-hero.jpg') && page.includes('images/elibrary-intro.jpg'));
+test('the E-Library shows the intro photo, with the drawing as a fallback', () => {
+  assert.ok(page.includes('images/elibrary-intro.jpg'));
+  assert.ok(fs.existsSync(path.join(FE, 'images', 'elibrary-intro.jpg')), 'the intro photo is missing');
   assert.ok(/class="el-art"/.test(page), 'the drawing fallback is missing');
+});
+
+test('the homepage patch refreshes an older E-Library section in place and touches nothing else', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'el2-'));
+  fs.mkdirSync(path.join(dir, 'frontend')); fs.mkdirSync(path.join(dir, 'scripts'));
+  fs.copyFileSync(path.join(ROOT, 'scripts', 'add-elibrary-to-home.js'), path.join(dir, 'scripts', 'add-elibrary-to-home.js'));
+  const f = path.join(dir, 'frontend', 'index.html');
+  const before = '<p>top</p>\n', after = '<p>bottom</p>\n';
+  fs.writeFileSync(f, before + '<!--elibrary:start-->\n<section class="el-home">OLD</section>\n<!--elibrary:end-->\n' + after);
+  const run = () => execFileSync('node', [path.join(dir, 'scripts', 'add-elibrary-to-home.js')], { encoding: 'utf8' });
+  run();
+  const out = fs.readFileSync(f, 'utf8');
+  assert.ok(out.startsWith(before) && out.endsWith(after) && !out.includes('OLD') && out.includes('el-h-top'));
+  run(); assert.equal(fs.readFileSync(f, 'utf8'), out);
+});
+
+test('the homepage cards show the real number of sources and link to topics that exist', () => {
+  const src = fs.readFileSync(path.join(ROOT, 'scripts', 'add-elibrary-to-home.js'), 'utf8');
+  const n = (c) => D.SOURCES.filter((s) => s.cat === c).length;
+  const word = (k) => k + (k === 1 ? ' source' : ' sources');
+  assert.ok(src.includes('<b>' + D.SOURCES.length + '</b>checked sources'), 'total is out of date');
+  [['quran', 'Qurʼān'], ['tafsir', 'Tafsīr'], ['hadith', 'Ḥadīth'], ['journals', 'Research']].forEach(([c, name]) =>
+    assert.ok(src.includes('library#cat-' + c + '"><strong>' + name + '</strong><small>' + word(n(c)) + '</small>'), c + ' count is out of date'));
+  [...src.matchAll(/library#cat-(\w+)"/g)].forEach((m) => assert.ok(D.CATS.some((c) => c.id === m[1]), m[1] + ' is not a topic'));
 });

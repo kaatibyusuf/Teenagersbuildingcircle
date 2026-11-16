@@ -1,32 +1,51 @@
 #!/usr/bin/env node
 'use strict';
 /* Adds the E-Library to the homepage: a nav link, a section before the Hadith strip, a footer link and the stylesheet.
+   If the section is already there, it is refreshed in place and nothing else is touched.
    Run from the project root:  node scripts/add-elibrary-to-home.js
    It edits frontend/index.html in place, only adds lines, and is safe to run twice (it does nothing the second time). */
 const fs = require('fs');
 const path = require('path');
 const file = path.join(__dirname, '..', 'frontend', 'index.html');
 let html = fs.readFileSync(file, 'utf8');
-if (html.includes('<!--elibrary:start-->')) { console.log('The homepage already has the E-Library. Nothing changed.'); process.exit(0); }
-
 const SECTION = `<!--elibrary:start-->
 <section class="el-home" id="elibrary" aria-label="E-Library">
   <div class="h-wrap">
-    <div>
-      <p class="h-eye" style="color:rgba(255,255,255,.6)"><i class="h-dot"></i>Free for everyone, no login</p>
-      <h2>The Himaayah E\u2011Library</h2>
-      <p>Checked links to the Qurʼān, tafsīr, ḥadīth, fiqh, sīrah and research, from Sunni sources only. Open to students, parents and visitors.</p>
-      <a href="library" class="h-btn h-btn-light">Open the E-Library<span class="h-go"><svg width="14" height="14" aria-hidden="true"><use href="#go"/></svg></span></a>
+    <div class="el-h-top">
+      <div>
+        <p class="el-h-eye"><i></i>Free for everyone · No login</p>
+        <h2>The Himaayah<br>E\u2011Library</h2>
+        <p class="el-h-lead">Checked links to the Qurʼān, tafsīr, ḥadīth, fiqh, sīrah and research, from Sunni sources only. Open to students, parents and visitors.</p>
+        <div class="el-h-btns"><a class="el-h-b el-h-b1" href="library">Open the E\u2011Library \u2192</a><a class="el-h-b el-h-b2" href="library#collection">See the sources</a></div>
+      </div>
+      <div class="el-h-ph">
+        <img src="images/elibrary-intro.jpg" alt="Shelves of books in a library" width="1200" height="900" loading="lazy">
+        <div class="el-h-chip el-h-c2"><b>8</b>checked sources</div>
+        <div class="el-h-chip el-h-c1"><b>100% free</b>no account needed</div>
+      </div>
     </div>
-    <div class="el-home-tiles">
-      <a href="library#cat-quran">Qurʼān</a><a href="library#cat-tafsir">Tafsīr</a><a href="library#cat-hadith">Ḥadīth</a>
-      <a href="library#cat-fiqh">Fiqh</a><a href="library#ours">Sīrah</a><a href="library#cat-journals">Research</a>
+    <div class="el-h-tiles">
+      <a class="el-h-t" href="library#cat-quran"><strong>Qurʼān</strong><small>3 sources</small><em>Go \u2192</em></a>
+      <a class="el-h-t" href="library#cat-tafsir"><strong>Tafsīr</strong><small>1 source</small><em>Go \u2192</em></a>
+      <a class="el-h-t" href="library#cat-hadith"><strong>Ḥadīth</strong><small>1 source</small><em>Go \u2192</em></a>
+      <a class="el-h-t" href="library#cat-fiqh"><strong>Fiqh</strong><small>Mālikī texts</small><em>Go \u2192</em></a>
+      <a class="el-h-t" href="library#ours"><strong>Sīrah</strong><small>Our guides</small><em>Go \u2192</em></a>
+      <a class="el-h-t" href="library#cat-journals"><strong>Research</strong><small>2 sources</small><em>Go \u2192</em></a>
     </div>
   </div>
 </section>
 <!--elibrary:end-->
-
 `;
+
+const HAS = /<!--elibrary:start-->[\s\S]*?<!--elibrary:end-->\n?/;
+if (HAS.test(html)) {
+  const next = html.replace(HAS, () => SECTION);
+  if (next === html) { console.log('The homepage E-Library section is already up to date. Nothing changed.'); process.exit(0); }
+  fs.writeFileSync(file, next);
+  console.log('Updated the E-Library section on the homepage. Nothing else on the page was touched.');
+  process.exit(0);
+}
+
 const steps = [
   ['stylesheet', '<link rel="stylesheet" href="css/home.css">', '<link rel="stylesheet" href="css/home.css">\n<link rel="stylesheet" href="css/elibrary.css">'],
   ['menu link', '<a href="articles">Articles</a>\n        <a href="faq">FAQ</a>', '<a href="articles">Articles</a>\n        <a href="library">E-Library</a>\n        <a href="faq">FAQ</a>'],
