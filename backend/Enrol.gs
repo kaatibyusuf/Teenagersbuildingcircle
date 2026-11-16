@@ -53,6 +53,7 @@ function enrolFromRequest(req) {
     const mail = /^\S+@\S+\.\S+$/;
     if (!/^ENR-[A-Z0-9]{4,12}$/.test(d.ref)) return { ok: false, error: 'Bad reference.' };
     if (!d.name || !d.kinName || !d.kinPhone || !mail.test(d.kinEmail)) return { ok: false, error: 'Missing details.' };
+    const ph = phone_normalise_(d.kinPhone); if (!ph.ok) return { ok: false, error: ph.why };               // any country is fine; it just has to be a real number
     if (d.studentEmail && !mail.test(d.studentEmail)) return { ok: false, error: 'Bad student email.' };
     const plan = EN_PLANS[d.plan];
     if (!plan) return { ok: false, error: 'Unknown plan.' };
@@ -145,7 +146,8 @@ function en_createAccount(sh, row) {
     const paidUntil = /^\d{4}-\d{2}-\d{2}$/.test(get('PaidUntil')) ? get('PaidUntil') : '';   // staff can correct this date before confirming
     const nextDue = prepaid && paidUntil ? paidUntil : months ? en_date(en_addMonths(today, months)) : '';
     const programme = get('Programme'), planShort = get('Plan').split('\u2014').pop().trim();
-    const phone = get('KinPhone').replace(/\D/g, '').replace(/^0/, '234');
+    const typedPhone = get('KinPhone'), parsedPhone = phone_normalise_(typedPhone);
+    const phone = parsedPhone.ok ? parsedPhone.digits : typedPhone.replace(/\D/g, '').replace(/^0(?=\d{10}$)/, '234');   // older rows: the old Nigerian rule, never for a number that is not 11 digits
     const method = get('CardPayment') ? 'Card' : prepaid ? 'Paid before website' : 'Bank transfer';
     const info = { name: get('StudentName'), plan: get('Plan'), amount: amount, unit: unit, months: months, email: get('LoginEmail'), phone: phone, ref: get('Ref'), method: method };
     let id, code, dash = EN_DASHBOARD_URL;

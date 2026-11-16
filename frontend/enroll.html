@@ -137,8 +137,9 @@
             <p class="err-msg">Select a relationship.</p>
           </div>
           <div class="field" data-field="kinPhone">
-            <label>Phone number <span class="req">*</span></label>
-            <input type="tel" name="kinPhone" placeholder="+234..." autocomplete="tel">
+            <label>Phone or WhatsApp number <span class="req">*</span></label>
+            <input type="tel" name="kinPhone" placeholder="+234 704 722 6487" autocomplete="tel" inputmode="tel" aria-describedby="kinPhoneHint">
+            <p class="field-hint" id="kinPhoneHint" style="margin:6px 0 0;font-size:13px;color:#4B6577">Any country is welcome. Outside Nigeria? Start with + and your country code, for example +44 7700 900123.</p>
             <p class="err-msg">Enter a phone number.</p>
           </div>
         </div>
@@ -280,6 +281,7 @@
   </div>
 </div>
 
+<script src="js/phone.js"></script>
 <script>
   // Paste the SAME Apps Script web app URL that dashboard uses.
   // While this is empty the form still works (WhatsApp only) but nothing is saved to the sheet.
@@ -490,6 +492,11 @@
       if (field.hidden) { field.classList.remove('error'); return; }
       const val = input.value.trim();
       let valid = input.type === 'email' ? /^\S+@\S+\.\S+$/.test(val) : val.length > 0;
+      if (input.name === 'kinPhone') {                                   // a real number from any country
+        const ph = window.hsPhone(val);
+        valid = ph.ok;
+        const msg = field.querySelector('.err-msg'); if (msg) msg.textContent = ph.ok ? '' : ph.why;
+      }
       if (field.hasAttribute('data-optional') && val === '') valid = true;
       field.classList.toggle('error', !valid);
       if (!valid) ok = false;

@@ -391,7 +391,9 @@ function sendEmail_(s, subject, body) {
 function waLink_(num, msg) {
   let n = String(num || '').replace(/\D/g, '');
   if (!n) return '';
-  if (n.charAt(0) === '0' && n.length === 11) n = '234' + n.slice(1);
+  const ph = typeof phone_normalise_ === 'function' ? phone_normalise_(num) : { ok: false };   // Phone.gs: numbers from any country
+  if (ph.ok) n = ph.digits;
+  else if (n.charAt(0) === '0' && n.length === 11) n = '234' + n.slice(1);
   return 'https://wa.me/' + n + '?text=' + encodeURIComponent(msg);
 }
 /* Pay fees page link (Fees.gs). Works even before Fees.gs is added. */
