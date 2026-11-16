@@ -76,3 +76,8 @@ test('cards respond to hover, keyboard focus and tap', () => {
   const css = fs.readFileSync(path.join(FE, 'css', 'elibrary.css'), 'utf8');
   assert.ok(/\.el-card:hover[^{]*:focus-within[^{]*:active/.test(css));
 });
+
+test('the E-Library can use real photos, and still works before they are added', () => {
+  assert.ok(page.includes('images/elibrary-hero.jpg') && page.includes('images/elibrary-intro.jpg'));
+  assert.ok(/class="el-art"/.test(page), 'the drawing fallback is missing');
+});

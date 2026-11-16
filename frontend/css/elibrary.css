@@ -76,3 +76,9 @@
 @media (prefers-reduced-motion: reduce) { .el-card, .el-chips a { transition: none; } .el-card:hover, .el-card:active, .el-chips a:hover { transform: none; } }
 .el-hero .el-hero-in p { margin: 0 auto 28px; text-align: center; }
 .page-elibrary .h-pill, .page-elibrary .h-nav.h-solid .h-pill { background: var(--el-ink); box-shadow: 0 0 0 1px rgba(255,255,255,.12); backdrop-filter: none; }
+.el-hero-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.el-hero-card.has-photo .el-hero-bg { display: none; }
+.el-hero-card.has-photo .el-hero-veil { opacity: .62; }
+.el-fig { margin: 0; }
+.el-photo { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 28px; }
+.el-fig.has-photo .el-art { display: none; }
