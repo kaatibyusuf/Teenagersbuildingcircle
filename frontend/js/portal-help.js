@@ -187,8 +187,8 @@
       find: ['Set an exam for a class, run it, and mark the answers that need a teacher.'],
       lost: LOST_STAFF
     },
-    'library': {
-      title: 'Madrasah library',
+    'student-library': {
+      title: 'My student shelf',
       who: 'For Madrasah students. Use your usual Student ID and access code.',
       find: ['Books, notes and links the school has put together for your level.', 'If you are already signed in on your dashboard in this browser tab, you go straight in.'],
       lost: LOST_STUDENT

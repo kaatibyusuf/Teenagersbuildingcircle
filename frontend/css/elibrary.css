@@ -1,0 +1,59 @@
+/* E-Library page and the homepage section. Scoped to .page-elibrary and .el-home so nothing else changes. */
+.page-elibrary, .el-home { --el-ink:#062F4D; --el-blue:#094570; --el-tint:#E3F2FD; --el-line:#D5E0E8; --el-paper:#F1F4F7; --el-muted:#4B6577; }
+.page-elibrary body { background: var(--el-paper); color: var(--el-ink); font-family: Inter, system-ui, sans-serif; }
+.el-wrap { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+.el-hero { background: radial-gradient(70% 90% at 80% 0, #0E5A91 0, rgba(14,90,145,0) 60%), var(--el-ink); color: #fff; padding: 150px 0 80px; }
+.el-hero h1 { font: 600 clamp(40px, 7vw, 72px)/1 "Bricolage Grotesque", Inter, sans-serif; letter-spacing: -.03em; margin: 0 0 18px; }
+.el-hero p { max-width: 620px; font-size: 18px; line-height: 1.6; color: rgba(255,255,255,.8); margin: 0 0 28px; }
+.el-kick { display: inline-block; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: #9CC9E8; margin: 0 0 14px; }
+.el-chips { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 26px; }
+.el-chips a { display: inline-flex; align-items: center; gap: 8px; padding: 11px 18px; border-radius: 999px; background: rgba(255,255,255,.1); box-shadow: inset 0 0 0 1px rgba(255,255,255,.22); color: #fff; text-decoration: none; font-weight: 600; font-size: 14px; transition: background .2s; }
+.el-chips a:hover, .el-chips a:focus-visible { background: rgba(255,255,255,.22); }
+.el-chips b { font-weight: 600; opacity: .7; }
+.el-search { display: flex; max-width: 520px; background: #fff; border-radius: 999px; padding: 5px; }
+.el-search input { flex: 1; border: 0; background: transparent; padding: 12px 18px; font: 500 15px Inter, sans-serif; color: var(--el-ink); min-width: 0; outline: none; }
+.el-sec { padding: 72px 0; }
+.el-sec h2 { font: 600 clamp(28px, 4vw, 42px)/1.1 "Bricolage Grotesque", Inter, sans-serif; letter-spacing: -.02em; margin: 0 0 12px; color: var(--el-ink); }
+.el-lead { color: var(--el-muted); max-width: 640px; line-height: 1.65; margin: 0 0 32px; font-size: 16.5px; }
+.el-feats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.el-card { background: #fff; border-radius: 22px; padding: 26px; box-shadow: 0 0 0 1px var(--el-line), 0 24px 40px -30px rgba(6,47,77,.35); }
+.el-card h3 { margin: 0 0 8px; font-size: 18px; color: var(--el-ink); }
+.el-card p { margin: 0; color: var(--el-muted); line-height: 1.6; font-size: 15px; }
+.el-ico { width: 40px; height: 40px; border-radius: 12px; background: var(--el-tint); color: var(--el-blue); display: grid; place-items: center; margin-bottom: 16px; font-weight: 700; }
+.el-cats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.el-cat { display: flex; flex-direction: column; text-decoration: none; color: inherit; }
+.el-cat h3 { font-size: 22px; }
+.el-cat .el-n { font-size: 13px; color: var(--el-muted); margin: 14px 0 0; }
+.el-go { margin-top: auto; padding-top: 18px; font-weight: 600; font-size: 14px; color: var(--el-blue); }
+.el-cat:hover { transform: translateY(-3px); } .el-cat { transition: transform .2s; }
+.el-group { margin: 44px 0 0; scroll-margin-top: 90px; }
+.el-group h3 { font: 600 26px "Bricolage Grotesque", Inter, sans-serif; margin: 0 0 6px; color: var(--el-ink); }
+.el-group > p { margin: 0 0 16px; color: var(--el-muted); }
+.el-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+.el-src { display: flex; flex-direction: column; gap: 10px; }
+.el-src h4 { margin: 0; font-size: 19px; color: var(--el-ink); }
+.el-meta { font-size: 13px; color: var(--el-muted); line-height: 1.5; }
+.el-meta b { color: var(--el-ink); font-weight: 600; }
+.el-btn { align-self: flex-start; margin-top: auto; display: inline-flex; gap: 8px; align-items: center; padding: 11px 20px; border-radius: 999px; background: var(--el-ink); color: #fff; text-decoration: none; font-weight: 600; font-size: 14px; }
+.el-btn:hover { background: var(--el-blue); }
+.el-btn-line { background: transparent; color: var(--el-ink); box-shadow: inset 0 0 0 1.5px var(--el-ink); }
+.el-btn-line:hover { background: var(--el-ink); color: #fff; }
+.el-empty { padding: 24px; text-align: center; color: var(--el-muted); }
+.el-note { background: var(--el-tint); border-radius: 22px; padding: 28px; display: grid; gap: 10px; }
+.el-note ul { margin: 0; padding-left: 20px; line-height: 1.7; color: var(--el-ink); }
+.el-bar { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; }
+/* homepage section */
+.el-home { padding: 110px 0; background: var(--el-ink); color: #fff; }
+.el-home .h-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+.el-home h2 { font: 600 clamp(32px, 4.4vw, 50px)/1.06 Geist, Inter, sans-serif; letter-spacing: -.02em; margin: 0 0 16px; color: #fff; }
+.el-home p { color: rgba(255,255,255,.75); line-height: 1.65; font-size: 16.5px; margin: 0 0 26px; max-width: 480px; }
+.el-home-tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.el-home-tiles a { display: block; padding: 20px 14px; border-radius: 18px; background: rgba(255,255,255,.08); box-shadow: inset 0 0 0 1px rgba(255,255,255,.16); color: #fff; text-decoration: none; font-weight: 600; text-align: center; transition: background .2s; }
+.el-home-tiles a:hover { background: rgba(255,255,255,.2); }
+@media (max-width: 860px) {
+  .el-feats, .el-cats, .el-list { grid-template-columns: 1fr; }
+  .el-home .h-wrap { grid-template-columns: 1fr; gap: 32px; }
+  .el-hero { padding-top: 120px; }
+  .el-sec { padding: 52px 0; }
+}
+@media (prefers-reduced-motion: reduce) { .el-cat { transition: none; } .el-cat:hover { transform: none; } }

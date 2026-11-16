@@ -1,5 +1,5 @@
 /**
- * Madrasah library (library.html)
+ * Student shelf (student-library.html)
  *
  * The page signs a student in with their Student ID and access code, then shows the items in the "Library" tab.
  * Setup: none. The "Library" tab is created the first time a student opens the page (or run setupLibrary once).
