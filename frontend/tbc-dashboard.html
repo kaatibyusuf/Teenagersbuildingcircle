@@ -17,6 +17,39 @@
 <script src="js/force-change.js"></script>
 <script src="js/portal-help.js" defer></script>
 <script src="js/groups.js" defer></script>
+<link rel="stylesheet" href="css/portal-shell.css">
+<script>
+/* Layout settings for js/portal-shell.js (left menu, summary cards, banner). */
+window.PORTAL_SHELL = {
+  programme: 'Teenagers Building Circle',
+  data: function () { return LAST; },
+  nav: [
+    { label: 'Dashboard', icon: 'home', top: true },
+    { label: 'Your four pillars', icon: 'star', hash: 'pillars' },
+    { label: 'Assignments', icon: 'pen', hash: 'assign' },
+    { label: 'Session guides', icon: 'book', hash: 'guides' },
+    { label: 'Class groups', icon: 'users', groups: true },
+    { label: 'Payment', icon: 'card', hash: 'pay' }
+  ],
+  stats: function (d) {
+    var s = d.student, tot = Number(s.AttendanceTotal) || 0, pre = Number(s.AttendancePresent) || 0;
+    var rated = (d.pillars || []).filter(function (p) { return p.Rating; }), avg = rated.length ? rated.reduce(function (a, p) { return a + Number(p.Rating); }, 0) / rated.length : null;
+    return [
+      { label: 'Attendance', value: tot ? Math.round(100 * pre / tot) + '%' : 'No data yet', lab: 'Attendance rate', alt: tot ? { value: tot, label: 'Sessions held' } : null, foot: tot ? pre + ' present' : 'Your facilitator marks attendance after each session.' },
+      { label: 'Pillar average', value: avg === null ? '\u2013' : (Math.round(avg * 10) / 10).toFixed(1), valueClass: avg === null ? '' : 'good', lab: 'Facilitator ratings', alt: { value: 5, label: 'Top rating' }, foot: rated.length + ' of 4 pillars rated' }
+    ];
+  },
+  hello: function (d) {
+    var ns = null; try { ns = nextSession(d); } catch (e) {}
+    if (ns) {
+      var when = new Date(ns.Start).toLocaleString('en-GB', { weekday: 'long', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+      return { text: 'Next live session: ' + ns.Title + ', ' + when + '.', cta: /^https?:\/\//i.test(String(ns.Link || '')) ? { label: 'Join session', href: ns.Link } : { label: 'See your week', hash: 'next' } };
+    }
+    return { text: 'Your week, your four pillars and your guides are all below.', cta: { label: 'See your pillars', hash: 'pillars' } };
+  }
+};
+</script>
+<script src="js/portal-shell.js" defer></script>
 <script src="js/i18n.js"></script>
 <script src="js/cookie-notice.js" defer></script>
 <script src="js/chat.js" defer></script>

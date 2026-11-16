@@ -17,6 +17,36 @@
 <script src="js/force-change.js"></script>
 <script src="js/portal-help.js" defer></script>
 <script src="js/groups.js" defer></script>
+<link rel="stylesheet" href="css/portal-shell.css">
+<script>
+/* Layout settings for js/portal-shell.js (left menu, summary cards, banner). */
+window.PORTAL_SHELL = {
+  programme: 'Academy',
+  data: function () { return D; },
+  showTop: function () { return !document.querySelector('.acx-solo'); },
+  nav: [
+    { label: 'Overview', icon: 'home', tab: 'overview' },
+    { label: 'Classes', icon: 'cal', tab: 'classes' },
+    { label: 'Daily tasks', icon: 'clip', tab: 'tasks' },
+    { label: 'CBT', icon: 'pen', tab: 'cbt' },
+    { label: 'Family', icon: 'users', tab: 'family' },
+    { label: 'Leaderboard', icon: 'star', tab: 'board' },
+    { label: 'Class groups', icon: 'layers', groups: true }
+  ],
+  stats: function (d) {
+    var s = d.student, m = d.metrics || {}, lb = d.leaderboard || {}, left = null;
+    if (s.ExamDate) { left = Math.round((new Date(String(s.ExamDate).slice(0, 10) + 'T00:00:00') - new Date(new Date().toDateString())) / 864e5); }
+    return [
+      { label: 'Overall score', value: m.overall == null ? '\u2013' : m.overall, lab: 'Last ' + (lb.days || 30) + ' days', alt: { value: lb.me ? lb.me.Rank : '\u2013', label: lb.total ? 'Rank of ' + lb.total : 'Rank' }, valueClass: m.overall == null ? '' : 'good', foot: lb.me ? '' : 'Not ranked yet' },
+      { label: 'Exam countdown', value: left === null ? 'Not set' : left < 0 ? 'Done' : left, lab: left === null ? 'Your mentor will add your exam date' : left < 0 ? 'Exam date has passed' : 'days to go', foot: left === null ? '' : new Date(String(s.ExamDate).slice(0, 10) + 'T00:00:00').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) }
+    ];
+  },
+  hello: function () {
+    return { text: 'Do your daily tasks, practise on the CBT tab and sit the Sunday mock. Every question you get wrong is a chance to learn.', cta: { label: 'See your mock exams', hash: 'mocks' } };
+  }
+};
+</script>
+<script src="js/portal-shell.js" defer></script>
 <script src="js/i18n.js"></script>
 <script src="js/cookie-notice.js" defer></script>
 <script src="js/chat.js" defer></script>

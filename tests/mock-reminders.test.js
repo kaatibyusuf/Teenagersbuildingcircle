@@ -4,7 +4,10 @@ const assert = require('node:assert/strict');
 const fs = require('fs');
 const { createEnv, BACKEND } = require('./helpers/gas');
 
-const SUNDAY = '2026-11-15', SATURDAY = '2026-11-14';
+/* The mock counts as closed once its Sunday has passed, so the tests use the next Sunday that is still to come. */
+function isoDay(offset) { const d = new Date(); d.setUTCDate(d.getUTCDate() + offset); return d.toISOString().slice(0, 10); }
+const AHEAD = (7 - new Date().getUTCDay()) % 7 || 7;
+const SUNDAY = isoDay(AHEAD + 1), SATURDAY = isoDay(AHEAD), FRIDAY = isoDay(AHEAD - 1);
 function setup(students) {
   const env = createEnv();
   fs.readdirSync(BACKEND).filter(function (f) { return /^AcademyMockBankPack\d+\.gs$/.test(f); }).forEach(function (f) { env.call('academyMockSeedPack' + parseInt(f.match(/\d+/)[0], 10)); });
@@ -36,7 +39,7 @@ test('Saturday: every active UTME student is reminded, other tracks and inactive
 
 test('Saturday reminders are not sent on any other day', () => {
   const env = setup([S('A1', 'Aisha Bello')]);
-  assert.equal(env.call('acm_remind_', 'eve', '2026-11-13', '2026-11-13T17:00').rows, 0);
+  assert.equal(env.call('acm_remind_', 'eve', FRIDAY, FRIDAY + 'T17:00').rows, 0);
   assert.equal(env.call('acm_remind_', 'eve', SUNDAY, SUNDAY + 'T17:00').rows, 0);
   assert.equal(env.mail.length, 0);
 });

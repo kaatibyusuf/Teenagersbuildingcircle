@@ -17,6 +17,36 @@
 <script src="js/force-change.js"></script>
 <script src="js/portal-help.js" defer></script>
 <script src="js/groups.js" defer></script>
+<link rel="stylesheet" href="css/portal-shell.css">
+<script>
+/* Layout settings for js/portal-shell.js (left menu, summary cards, banner). */
+window.PORTAL_SHELL = {
+  programme: 'Skills School',
+  data: function () { return window.__lastData; },
+  nav: [
+    { label: 'Dashboard', icon: 'home', top: true },
+    { label: 'Your course', icon: 'book', hash: 'course' },
+    { label: 'Live classes', icon: 'cal', hash: 'classes' },
+    { label: 'Projects', icon: 'pen', hash: 'projects' },
+    { label: 'Class groups', icon: 'users', groups: true },
+    { label: 'Payment', icon: 'card', hash: 'pay' }
+  ],
+  stats: function (d) {
+    var s = d.student, ps = d.projects || [], marked = ps.filter(function (p) { return p.Status === 'Marked'; }).length, att = d.attendance || { Present: 0, Total: 0 };
+    var weeks = Number(s.Weeks) || 0, wk = Math.min(Number(s.Week) || 0, weeks), done = s.Status === 'Completed' || s.Status === 'Finished';
+    return [
+      { label: 'Course progress', value: done ? '100%' : weeks ? Math.round(100 * wk / weeks) + '%' : '\u2013', valueClass: done ? 'good' : '', lab: s.Course || 'Your course', alt: weeks ? { value: weeks, label: 'Weeks' } : null, foot: done ? 'Course complete' : wk ? 'Week ' + wk + ' of ' + weeks : '' },
+      { label: 'Projects marked', value: marked, valueClass: marked ? 'good' : '', lab: 'Marked by your tutor', alt: { value: ps.length, label: 'Projects set' }, foot: att.Total ? 'Attendance ' + Math.round(100 * att.Present / att.Total) + '%' : '' }
+    ];
+  },
+  hello: function (d) {
+    var s = d.student;
+    if (s.NextClass && /^https?:\/\//i.test(String(s.ClassLink || ''))) return { text: 'Your next live class is on ' + new Date(s.NextClass).toLocaleString('en-GB', { weekday: 'long', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) + '. Bring your questions and your latest project.', cta: { label: 'Join class', href: s.ClassLink } };
+    return { text: 'Keep going with your projects. Your tutor marks each one and leaves feedback here.', cta: { label: 'Open projects', hash: 'projects' } };
+  }
+};
+</script>
+<script src="js/portal-shell.js" defer></script>
 <script src="js/i18n.js"></script>
 <script src="js/cookie-notice.js" defer></script>
 <script src="js/chat.js" defer></script>
@@ -123,6 +153,7 @@ function projectsHtml(d) {
 }
 
 function render(d) {
+  window.__lastData = d;
   const s = d.student, first = String(s.Name).split(' ')[0], status = String(s.PaymentStatus || '').toLowerCase();
   const pcls = status === 'paid' || status === 'exempt' ? 'p-paid' : status === 'overdue' ? 'p-over' : 'p-due';
   const pays = d.payments || [], remind = reminders(d), att = d.attendance || { Present: 0, Total: 0, Recent: [] };

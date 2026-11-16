@@ -17,6 +17,39 @@
 <script src="js/force-change.js"></script>
 <script src="js/portal-help.js" defer></script>
 <script src="js/groups.js" defer></script>
+<link rel="stylesheet" href="css/portal-shell.css">
+<script>
+/* Layout settings for js/portal-shell.js (left menu, summary cards, banner). */
+window.PORTAL_SHELL = {
+  programme: 'Madrasah',
+  data: function () { return window.__lastData; },
+  nav: [
+    { label: 'Dashboard', icon: 'home', top: true },
+    { label: 'Timetable', icon: 'cal', hash: 'timetable' },
+    { label: 'Today\u2019s routine', icon: 'clip', hash: 'routine' },
+    { label: 'Recite to your teacher', icon: 'mic', hash: 'recite' },
+    { label: 'Assignments', icon: 'pen', hash: 'assign' },
+    { label: 'Study tools', icon: 'book', hash: 'tools' },
+    { label: 'Exams', icon: 'chart', href: 'exams' },
+    { label: 'Class groups', icon: 'users', groups: true },
+    { label: 'Payment', icon: 'card', hash: 'pay' },
+    { label: 'Access code', icon: 'key', hash: 'account' }
+  ],
+  stats: function (d) {
+    var s = d.student, tot = Number(s.AttendanceTotal) || 0, pre = Number(s.AttendancePresent) || 0, juz = Math.min(30, Number(s.Juz) || 0);
+    return [
+      { label: 'Attendance', value: tot ? Math.round(100 * pre / tot) + '%' : 'No data yet', lab: 'Attendance rate', alt: tot ? { value: tot, label: 'Classes held' } : null, foot: tot ? pre + ' present' : 'Your teacher marks attendance after each class.' },
+      { label: 'Hifdh progress', value: juz, valueClass: 'good', lab: 'Juz memorised', alt: { value: 30, label: 'Whole Qur\u2019\u0101n' }, foot: s.CurrentSurah ? 'Now: ' + s.CurrentSurah + (s.CurrentAyah ? ', \u0101yah ' + s.CurrentAyah : '') : '' }
+    ];
+  },
+  hello: function (d) {
+    var s = d.student, when = s.NextClass ? new Date(s.NextClass).toLocaleString('en-GB', { weekday: 'long', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) : '';
+    if (s.NextClass && /^https?:\/\//i.test(String(s.ClassLink || ''))) return { text: 'Your next class is on ' + when + '. Check your timetable often to stay on track with classes and revision.', cta: { label: 'Join class', href: s.ClassLink } };
+    return { text: 'Check your timetable often to stay on track with classes and revision.', cta: { label: 'Open timetable', hash: 'timetable' } };
+  }
+};
+</script>
+<script src="js/portal-shell.js" defer></script>
 <script src="js/i18n.js"></script>
 <script src="js/cookie-notice.js" defer></script>
 <script src="js/surahs.js"></script>
