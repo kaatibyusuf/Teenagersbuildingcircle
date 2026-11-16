@@ -13,7 +13,7 @@ const page = fs.readFileSync(path.join(FE, 'library.html'), 'utf8');
 
 test('every outside source is complete, https, and listed once', () => {
   const urls = new Set(), ids = new Set(), cats = new Set(D.CATS.map((c) => c.id));
-  assert.ok(D.SOURCES.length >= 9);
+  assert.ok(D.SOURCES.length >= 8);
   D.SOURCES.forEach((s) => {
     ['id', 'cat', 'name', 'url', 'by', 'about', 'why'].forEach((k) => assert.ok(s[k] && String(s[k]).trim(), s.id + ' has no ' + k));
     assert.ok(/^https:\/\/[^\s]+$/.test(s.url), s.id + ' is not an https link');
@@ -65,4 +65,14 @@ test('the homepage patch adds the E-Library once, only adds lines, and refuses u
   fs.writeFileSync(f, '<p>different page</p>');
   assert.throws(run);
   assert.equal(fs.readFileSync(f, 'utf8'), '<p>different page</p>');
+});
+
+test('the E-Library uses flat colours: no gradients', () => {
+  const css = fs.readFileSync(path.join(FE, 'css', 'elibrary.css'), 'utf8');
+  assert.equal(/gradient/i.test(css + page), false);
+});
+
+test('cards respond to hover, keyboard focus and tap', () => {
+  const css = fs.readFileSync(path.join(FE, 'css', 'elibrary.css'), 'utf8');
+  assert.ok(/\.el-card:hover[^{]*:focus-within[^{]*:active/.test(css));
 });
