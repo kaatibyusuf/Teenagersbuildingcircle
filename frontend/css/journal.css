@@ -1,0 +1,159 @@
+/* Literary journal. English by default; the site's EN/Arabic switch flips it right to left. Flat colours only. Scoped to .page-journal. */
+.page-journal { --jn-paper:#FAF7F1; --jn-ink:#14202B; --jn-muted:#55626E; --jn-rule:#D9D3C7; --jn-blue:#094570; --jn-tint:#EFE9DC; }
+.page-journal body { background: var(--jn-paper); color: var(--jn-ink); }
+.jn { font-family: Inter, system-ui, sans-serif; font-size: 16px; color: var(--jn-ink); }
+html[lang="ar"] .jn, html[lang="ar"] .jn-reader { font-family: Amiri, "Noto Naskh Arabic", serif; font-size: 18px; }
+.jn-wrap { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+.jn h1, .jn h2, .jn h3, .jn-reader h2 { font-family: Newsreader, Georgia, serif; font-weight: 500; letter-spacing: -.01em; }
+html[lang="ar"] .jn h1, html[lang="ar"] .jn h2, html[lang="ar"] .jn h3, html[lang="ar"] .jn-reader h2 { font-family: Amiri, "Noto Naskh Arabic", serif; font-weight: 700; letter-spacing: 0; }
+/* the works themselves are Arabic whatever language the page is in */
+.jn-ar { font-family: Amiri, "Noto Naskh Arabic", serif !important; font-weight: 700; letter-spacing: 0 !important; line-height: 1.5; }
+.jn-sum, .jn-text, .jn-bio { font-family: Amiri, "Noto Naskh Arabic", serif; }
+.jn-kicker { font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--jn-blue); font-weight: 600; margin: 0 0 16px; }
+html[lang="ar"] .jn-kicker { font-size: 17px; letter-spacing: 0; text-transform: none; font-weight: 700; }
+.jn-lead { font-size: 18px; line-height: 1.7; color: var(--jn-muted); margin: 0 0 28px; max-width: 600px; }
+.jn-btn { display: inline-flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 12px 26px; border-radius: 4px; border: 1.5px solid var(--jn-ink); background: var(--jn-ink); color: #fff; font: 600 15px Inter, system-ui, sans-serif; text-decoration: none; cursor: pointer; transition: background .2s, color .2s, transform .2s; }
+.jn-btn:hover, .jn-btn:focus-visible { background: var(--jn-blue); border-color: var(--jn-blue); transform: translateY(-2px); }
+.jn-btn-line { background: transparent; color: var(--jn-ink); }
+.jn-btn-line:hover, .jn-btn-line:focus-visible { background: var(--jn-ink); border-color: var(--jn-ink); color: #fff; }
+
+/* masthead */
+.jn-mast { padding: 128px 0 72px; border-bottom: 1px solid var(--jn-rule); }
+.jn-mast-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 64px; align-items: center; }
+.jn-mast h1 { font-size: clamp(44px, 6vw, 76px); line-height: 1.08; margin: 0 0 22px; }
+html[lang="ar"] .jn-mast h1 { font-size: clamp(48px, 7vw, 88px); line-height: 1.2; }
+.jn-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.jn-photo { margin: 0; justify-self: center; width: 100%; max-width: 420px; aspect-ratio: 4 / 5; box-shadow: 14px 14px 0 var(--jn-tint); }
+html[lang="ar"] .jn-photo { box-shadow: -14px 14px 0 var(--jn-tint); }
+.jn-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 72% 50%; display: block; }
+
+/* sections */
+.jn-sec { padding: 72px 0; }
+.jn-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; border-bottom: 1px solid var(--jn-ink); padding-bottom: 14px; margin-bottom: 32px; }
+.jn-head h2 { font-size: clamp(32px, 4vw, 46px); line-height: 1.2; margin: 0; }
+.jn-head a { color: var(--jn-ink); font-weight: 600; font-size: 14px; text-decoration: underline; text-underline-offset: 5px; text-align: end; }
+.jn-count { color: var(--jn-muted); font: 500 14px Inter, sans-serif; }
+
+/* featured cards: flat coloured covers with the opening lines */
+.jn-feat { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+.jn-card { display: flex; flex-direction: column; gap: 12px; }
+.jn-art { aspect-ratio: 1 / 1; display: flex; flex-direction: column; justify-content: space-between; padding: 24px; color: #fff; transition: transform .2s; text-align: start; }
+.jn-art { position: relative; isolation: isolate; background-size: cover; background-position: center; }
+.jn-art::before { content: ""; position: absolute; inset: 0; background: rgba(9, 22, 33, .62); z-index: -1; }
+.jn-art small, .jn-art b { text-shadow: 0 1px 2px rgba(0,0,0,.35); }
+.jn-g-poem { background-image: url(../images/journal-g-poem.jpg); }
+.jn-g-story { background-image: url(../images/journal-g-story.jpg); }
+.jn-g-essay { background-image: url(../images/journal-g-essay.jpg); }
+.jn-g-reflection { background-image: url(../images/journal-g-reflection.jpg); }
+.jn-g-translation { background-image: url(../images/journal-g-translation.jpg); }
+.jn-g-research { background-image: url(../images/journal-g-research.jpg); }
+.jn-card:hover .jn-art, .jn-card:focus-within .jn-art, .jn-card:active .jn-art { transform: translateY(-6px); }
+.jn-art small { font: 600 12px Inter, sans-serif; letter-spacing: .1em; text-transform: uppercase; opacity: .85; }
+.jn-art b { font: 700 32px/1.4 Amiri, "Noto Naskh Arabic", serif; }
+.jn-c0 { background-color: #0B3A5C; } .jn-c1 { background-color: #2F5D50; } .jn-c2 { background-color: #7A3B2E; } .jn-c3 { background-color: #4A3B6B; } .jn-c4 { background-color: #6B5320; } .jn-c5 { background-color: #1F4E5F; }
+.jn-label { font-size: 13px; letter-spacing: .08em; text-transform: uppercase; font-weight: 600; color: var(--jn-blue); margin: 0; }
+html[lang="ar"] .jn-label { font-size: 16px; letter-spacing: 0; text-transform: none; font-weight: 700; }
+.jn-card h3 { margin: 0; font-size: 26px; line-height: 1.35; }
+.jn-by { margin: 0; font-size: 15px; color: var(--jn-muted); }
+.jn-by b { color: var(--jn-ink); font-weight: 700; }
+.jn-sum { margin: 0; color: var(--jn-muted); line-height: 1.9; font-size: 19px; white-space: pre-line; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+.jn-link { align-self: flex-start; background: none; border: 0; padding: 0; cursor: pointer; color: var(--jn-ink); font: 600 15px Inter, system-ui, sans-serif; text-decoration: underline; text-underline-offset: 5px; }
+.jn-link:hover, .jn-link:focus-visible { color: var(--jn-blue); }
+
+/* list */
+.jn-filters { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 16px; margin: 0 0 8px; }
+.jn-f { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.jn-f > span { font-size: 13px; font-weight: 600; letter-spacing: .02em; color: var(--jn-ink); display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
+.jn-f > span em { font: 500 12.5px Inter, sans-serif; font-style: normal; color: var(--jn-muted); direction: ltr; }
+.jn-f input, .jn-f select, .jn-f textarea { font: 500 15px Inter, system-ui, sans-serif; color: var(--jn-ink); background: #fff; border: 1px solid var(--jn-rule); border-radius: 4px; padding: 11px 14px; min-width: 0; width: 100%; box-sizing: border-box; }
+.jn-f textarea { resize: vertical; line-height: 2; font-family: Amiri, "Noto Naskh Arabic", Inter, serif; font-size: 20px; }
+.jn-f input:focus, .jn-f select:focus, .jn-f textarea:focus { outline: 2px solid var(--jn-blue); outline-offset: 0; border-color: var(--jn-blue); }
+.jn-f [aria-invalid="true"] { border-color: #B3261E; outline: 1px solid #B3261E; }
+.jn-list { border-top: 1px solid var(--jn-rule); margin-top: 24px; }
+.jn-item { display: grid; grid-template-columns: 1fr auto; gap: 8px 32px; padding: 28px 0; border-bottom: 1px solid var(--jn-rule); }
+.jn-tags { display: flex; flex-wrap: wrap; gap: 8px; grid-column: 1 / -1; }
+.jn-tag { font-size: 12px; font-weight: 600; padding: 4px 10px; border: 1px solid var(--jn-ink); border-radius: 999px; }
+.jn-tag.jn-feat-tag { background: var(--jn-ink); color: #fff; }
+.jn-item h3 { grid-column: 1; margin: 0; font-size: 28px; line-height: 1.3; }
+.jn-item .jn-by, .jn-item .jn-sum { grid-column: 1; }
+.jn-item .jn-sum { max-width: 720px; }
+.jn-item .jn-read { grid-column: 2; grid-row: 2 / span 3; align-self: start; }
+.jn-empty { padding: 36px 0; color: var(--jn-muted); text-align: center; }
+
+/* review standards */
+.jn-banner { margin: 0 0 40px; }
+.jn-banner img { width: 100%; height: clamp(160px, 24vw, 300px); object-fit: cover; display: block; }
+.jn-std { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+.jn-std h3 { margin: 0 0 8px; font-size: 24px; line-height: 1.3; }
+.jn-std p { margin: 0; color: var(--jn-muted); line-height: 1.7; }
+
+/* submit */
+.jn-submit { background: var(--jn-tint); }
+.jn-submit-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 64px; align-items: start; }
+.jn-submit h2 { font-size: clamp(32px, 4vw, 48px); line-height: 1.3; margin: 0 0 16px; }
+.jn-side { margin: 0 0 28px; }
+.jn-side img { width: 100%; height: auto; display: block; aspect-ratio: 3 / 2; object-fit: cover; }
+.jn-steps { margin: 8px 0 0; padding: 0; list-style: none; counter-reset: s; display: grid; gap: 18px; }
+.jn-steps li { counter-increment: s; position: relative; padding-inline-start: 52px; line-height: 1.7; color: var(--jn-muted); }
+.jn-steps li::before { content: counter(s); position: absolute; inset-inline-start: 0; top: 2px; width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid var(--jn-ink); display: grid; place-items: center; font: 700 19px Amiri, serif; color: var(--jn-ink); }
+.jn-steps b { color: var(--jn-ink); }
+.jn-form { position: relative; display: grid; gap: 18px; background: #fff; padding: 32px; border: 1px solid var(--jn-rule); }
+.jn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.jn-check { display: flex; gap: 12px; align-items: flex-start; font-size: 14.5px; line-height: 1.6; }
+.jn-check input { margin-top: 3px; width: 18px; height: 18px; flex: none; }
+.jn-check .jn-hp { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); opacity: 0; pointer-events: none; }
+.jn-msg { margin: 0; min-height: 24px; font-weight: 600; font-size: 15px; line-height: 1.6; color: var(--jn-muted); white-space: pre-line; }
+.jn-msg.bad { color: #B3261E; } .jn-msg.good { color: #1B6B3A; }
+.jn-send { justify-self: start; }
+.jn-send[disabled] { opacity: .6; cursor: progress; }
+
+/* newsletter */
+.jn-news { position: relative; overflow: hidden; padding: 72px 0; }
+.jn-news-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.jn-news-veil { position: absolute; inset: 0; background: #14202B; opacity: .82; }
+.jn-news-in { position: relative; z-index: 1; text-align: center; }
+.jn-news h2 { font-size: clamp(30px, 3.8vw, 44px); margin: 0 0 10px; color: #fff; }
+.jn-news p { color: #fff; margin: 0 0 24px; font-size: 17px; }
+.jn-news .jn-btn { background: #fff; color: var(--jn-ink); border-color: #fff; }
+.jn-news .jn-btn:hover, .jn-news .jn-btn:focus-visible { background: var(--jn-tint); border-color: var(--jn-tint); }
+
+/* reader */
+.jn-reader { position: fixed; inset: 0; margin: auto; height: fit-content; overflow: auto; border: 0; padding: 0; max-width: min(760px, calc(100vw - 24px)); width: 100%; max-height: calc(100vh - 32px); background: var(--jn-paper); color: var(--jn-ink); box-shadow: 0 0 0 1px var(--jn-ink); }
+.jn-reader::backdrop { background: rgba(20, 32, 43, .78); }
+.jn-reader-in { padding: 28px 32px 36px; }
+.jn-close { display: flex; align-items: center; background: none; border: 1px solid var(--jn-ink); border-radius: 4px; padding: 8px 16px; cursor: pointer; font: 600 14px Inter, sans-serif; color: var(--jn-ink); margin-bottom: 18px; }
+.jn-close:hover, .jn-close:focus-visible { background: var(--jn-ink); color: #fff; }
+.jn-reader h2 { font-size: clamp(30px, 5vw, 44px); line-height: 1.3; margin: 4px 0 8px; }
+.jn-text { white-space: pre-wrap; font-size: 23px; line-height: 2.1; margin: 22px 0; padding: 22px 0; border-top: 1px solid var(--jn-rule); border-bottom: 1px solid var(--jn-rule); overflow-wrap: anywhere; }
+.jn-bio { color: var(--jn-muted); margin: 0 0 18px; }
+
+@media (max-width: 860px) {
+  .jn-mast { padding: 104px 0 48px; }
+  .jn-mast-grid, .jn-submit-grid { grid-template-columns: 1fr; gap: 40px; }
+  .jn-photo { max-width: 320px; justify-self: start; }
+  .jn-feat, .jn-std { grid-template-columns: 1fr; gap: 36px; }
+  .jn-filters { grid-template-columns: 1fr 1fr; }
+  .jn-filters .jn-f-wide { grid-column: 1 / -1; }
+  .jn-item { grid-template-columns: 1fr; }
+  .jn-item .jn-read { grid-column: 1; grid-row: auto; margin-top: 6px; justify-self: start; }
+  .jn-row { grid-template-columns: 1fr; }
+  .jn-form { padding: 22px 18px; }
+  .jn-sec { padding: 52px 0; }
+  .jn-reader-in { padding: 20px 18px 28px; }
+  .jn-text { font-size: 21px; }
+}
+
+/* the hidden attribute must always win over display rules */
+.jn [hidden], .jn-reader [hidden] { display: none !important; }
+
+/* Arabic mode (the site's switch): Arabic reads best in its own typeface */
+html[lang="ar"] .jn-btn, html[lang="ar"] .jn-link, html[lang="ar"] .jn-close { font-family: Amiri, "Noto Naskh Arabic", serif; font-size: 18px; font-weight: 700; }
+html[lang="ar"] .jn-art small { display: none; }
+html[lang="ar"] .jn-lead { font-size: 21px; line-height: 1.9; }
+html[lang="ar"] .jn-f > span { font-size: 17px; }
+html[lang="ar"] .jn-f input, html[lang="ar"] .jn-f select { font-family: Amiri, "Noto Naskh Arabic", serif; }
+
+/* make sure the site's own heading font rules never win over the journal serif */
+.page-journal .jn h1, .page-journal .jn h2, .page-journal .jn h3, .page-journal .jn-reader h2 { font-family: Newsreader, Georgia, "Times New Roman", serif; font-weight: 500; }
+html[lang="ar"].page-journal .jn h1, html[lang="ar"].page-journal .jn h2, html[lang="ar"].page-journal .jn h3, html[lang="ar"].page-journal .jn-reader h2 { font-family: Amiri, "Noto Naskh Arabic", serif; font-weight: 700; }
+.page-journal .jn h3.jn-ar, .page-journal .jn-reader h2.jn-ar { font-family: Amiri, "Noto Naskh Arabic", serif; font-weight: 700; }

@@ -297,6 +297,7 @@ function doPost(e) {
     if (/^amb_/.test(String(p.action || ''))) return json_(ambassadorsFromRequest(p));    // Himaayah Ambassadors (Ambassadors.gs)
     if (/^cm_/.test(String(p.action || ''))) return json_(commentsFromRequest(p));         // article comments (Comments.gs)
     if (/^tm_/.test(String(p.action || ''))) return json_(testimonialsFromRequest(p));     // testimonials (Testimonials.gs)
+    if (/^jrn_/.test(String(p.action || ''))) return json_(journalFromRequest(p));          // Arabic literary journal (Journal.gs)
     if (/^tt_/.test(String(p.action || ''))) return json_(timetableFromRequest(p));        // class timetable (Timetable.gs)
     if (/^tr_/.test(String(p.action || ''))) return json_(trialsFromRequest(p));           // free trial classes (Trials.gs)
     if (/^pt_/.test(String(p.action || ''))) return json_(placementFromRequest(p));        // placement tests (PlacementTests.gs)
