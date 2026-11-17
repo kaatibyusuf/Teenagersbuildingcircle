@@ -25,7 +25,18 @@ function zip(entries) {
 }
 const docx = (n) => zip([['[Content_Types].xml', '<Types/>'], ['word/document.xml', '<w:document>' + 'x'.repeat(n || 3000) + '</w:document>']]).toString('base64');
 const fakeZipNoDoc = () => zip([['readme.txt', 'x'.repeat(3000)]]).toString('base64');
-const good = (o) => Object.assign({ action: 'jrn_submit', title: 'ليلٌ وفجر', author: 'عائشة يوسف', email: 'a@example.com', programme: 'Madrasah', genre: 'Poem', text: POEM, own: true, bio: BIO }, o || {});
+const esc = (t) => String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;');
+/* a Word file the way a writer fills in the template: the work, then the heading "About the writer", then the bio */
+function writerDoc(work, bio, heading) {
+  const para = (t) => (t === '' ? '<w:p/>' : '<w:p><w:r><w:t xml:space="preserve">' + esc(t) + '</w:t></w:r></w:p>');
+  const body = String(work).split('\n').map(para).join('') + (heading === null ? '' : '<w:p><w:pPr><w:pStyle w:val="Heading2"/></w:pPr><w:r><w:t>' + (heading || 'About the writer') + '</w:t></w:r></w:p>') + String(bio).split('\n').map(para).join('');
+  return zip([['[Content_Types].xml', '<Types/>'], ['docProps/app.xml', '<Properties>' + ' '.repeat(1500) + '</Properties>'], ['word/document.xml', '<w:document><w:body>' + body + '</w:body></w:document>']]).toString('base64');
+}
+const good = (o) => {
+  const x = Object.assign({ text: POEM, bio: BIO }, o || {}), t = x.text, b = x.bio;
+  delete x.text; delete x.bio;
+  return Object.assign({ action: 'jrn_submit', title: 'ليلٌ وفجر', author: 'عائشة يوسف', email: 'a@example.com', programme: 'Madrasah', genre: 'Poem', own: true, ext: 'docx', file: writerDoc(t, b, x.heading) }, x, { heading: undefined });
+};
 
 function envWithDrive() {
   const env = createEnv(), files = [];
@@ -34,7 +45,7 @@ function envWithDrive() {
   env.ctx.Utilities.unzip = (blob) => {
     const b = Buffer.from(blob.bytes.map((x) => x & 255)), out = [];
     let i = 0;
-    while (i + 30 <= b.length && b.readUInt32LE(i) === 0x04034b50) { const size = b.readUInt32LE(i + 18), nl = b.readUInt16LE(i + 26), name = b.slice(i + 30, i + 30 + nl).toString(); out.push({ getName: () => name }); i += 30 + nl + size; }
+    while (i + 30 <= b.length && b.readUInt32LE(i) === 0x04034b50) { const size = b.readUInt32LE(i + 18), nl = b.readUInt16LE(i + 26), name = b.slice(i + 30, i + 30 + nl).toString(); const data = b.slice(i + 30 + nl, i + 30 + nl + size).toString('utf8'); out.push({ getName: () => name, getDataAsString: () => data }); i += 30 + nl + size; }
     if (!out.length) throw new Error('not a zip');
     return out;
   };
@@ -74,7 +85,7 @@ test('nothing is public until approved; then the list shows an excerpt and the r
 
 test('an attached Word document is private until approval, then shared and linked', () => {
   const env = envWithDrive();
-  const id = send(env, good({ file: docx(), ext: 'docx' })).id;
+  const id = send(env, good()).id;
   assert.equal(env.files_.length, 1); assert.equal(env.files_[0].sharing, null);
   assert.equal(send(env, { action: 'jrn_get', id }).ok, false);
   approve(env, 0);
@@ -86,7 +97,7 @@ test('an attached Word document is private until approval, then shared and linke
 test('bad input is refused with a clear reason', () => {
   const env = envWithDrive();
   const cases = [[{ title: 'ab' }, /title/], [{ email: 'nope' }, /email/i], [{ programme: 'X' }, /programme/i], [{ genre: '' }, /type of work/], [{ text: 'قصير' }, /at least 40/],
-    [{ text: 'This is an English poem that is certainly long enough to pass the length check.' }, /Arabic/], [{ own: false }, /own work/], [{ text: 'ب'.repeat(20001) }, /20,000/], [{ author: '' }, /name/]];
+    [{ text: 'This is an English poem that is certainly long enough to pass the length check.' }, /Arabic/], [{ own: false }, /own work/], [{ author: '' }, /name/], [{ file: '' }, /Word document/], [{ heading: null }, /About the writer/]];
   cases.forEach(([o, re]) => { const r = send(env, good(o)); assert.equal(r.ok, false, JSON.stringify(o).slice(0, 60)); assert.match(r.error, re); });
   assert.equal(env.sheets['Journal'], undefined);
 });
@@ -143,7 +154,7 @@ test('the page and the server use the same lists and limits', () => {
   const env = createEnv();
   assert.deepEqual(page.GENRES, env.run('JR_GENRES')); assert.deepEqual(page.PROGRAMMES, env.run('JR_PROGRAMMES'));
   assert.equal(page.BIO_MIN, env.run('JR_BIO_MIN')); assert.equal(page.BIO_MAX, env.run('JR_BIO_MAX'));
-  assert.equal(page.MAX_BYTES, env.run('JR_MAX_BYTES')); assert.equal(page.MAX_TEXT, env.run('JR_MAX_TEXT')); assert.equal(page.MIN_TEXT, env.run('JR_MIN_TEXT'));
+  assert.equal(page.MAX_BYTES, env.run('JR_MAX_BYTES')); assert.equal(page.MIN_TEXT, env.run('JR_MIN_TEXT'));
 });
 
 test('search ignores vowel marks and alef forms', () => {
@@ -188,7 +199,7 @@ test('every genre has a cover photo and a matching style rule', () => {
 test('the submission page has the guidelines, the form, and Arabic for all of it', () => {
   const html = fs.readFileSync(path.join(FE, 'journal-submit.html'), 'utf8');
   assert.match(html, /<html lang="en" class="site page-journal-submit page-journal">/);
-  ['jnForm', 'fTitle', 'fAuthor', 'fEmail', 'fGenre', 'fProg', 'fSid', 'fText', 'fBio', 'fBioCount', 'fFile', 'fOwn', 'fWeb', 'jnSend', 'jnMsg', 'fCount'].forEach((id) => assert.ok(html.includes('id="' + id + '"'), id));
+  ['jnForm', 'fTitle', 'fAuthor', 'fEmail', 'fGenre', 'fProg', 'fSid', 'fFile', 'fOwn', 'fWeb', 'jnSend', 'jnMsg'].forEach((id) => assert.ok(html.includes('id="' + id + '"'), id));
   ['glance', 'prizes', 'types', 'length', 'timelines', 'guidelines', 'seek', 'before', 'form'].forEach((id) => assert.ok(html.includes('id="' + id + '"'), id));
   assert.ok(html.includes('js/journal.js') && html.includes('js/i18n.js') && !/gradient/.test(html));
   const dict = {};
@@ -243,4 +254,23 @@ test('the guidelines reveal on scroll, safely, and the submission page is styled
   assert.ok(/html\.rv \.jn-rv \{[^}]*opacity: 0/.test(css) && !/\.jn-rv \{[^}]*opacity: 0/.test(css.replace(/html\.rv \.jn-rv[^{]*\{[^}]*\}/g, '')));
   assert.ok(!/gradient/.test(css));
   assert.ok(!/border-(top|bottom)\s*:\s*1px/.test(css));
+});
+
+test('nothing is pasted: the form has no text boxes, only the Word upload and a template link', () => {
+  const html = fs.readFileSync(path.join(FE, 'journal-submit.html'), 'utf8');
+  assert.ok(!/<textarea/.test(html)); assert.ok(/id="fFile"[^>]*required/.test(html));
+  assert.ok(html.includes('downloads/himaayah-journal-template.docx')); assert.ok(fs.existsSync(path.join(FE, 'downloads', 'himaayah-journal-template.docx')));
+  assert.match(send(envWithDrive(), { action: 'jrn_submit', title: 'abc', author: 'abc', email: 'a@example.com', programme: 'Madrasah', genre: 'Poem', own: true, text: POEM, bio: BIO }).error, /Word document/);
+});
+
+test('very long work is cut for the sheet but the whole file stays in Drive; headings in Arabic work too', () => {
+  const env = envWithDrive();
+  assert.equal(send(env, good({ text: 'ب'.repeat(60000) })).ok, true);
+  assert.equal(rows(env)[0].Text.length, 45000); assert.equal(env.files_.length, 1);
+  assert.equal(send(env, good({ email: 'c@example.com', heading: 'عن الكاتب' })).ok, true);
+});
+
+test('the journal page sends writers to the submission page', () => {
+  const html = fs.readFileSync(path.join(FE, 'journal.html'), 'utf8');
+  assert.ok(!/href="#submit"/.test(html)); assert.ok(/class="jn-btn jn-btn-line" href="journal-submit">Submit your work/.test(html));
 });

@@ -2,7 +2,8 @@
  * Himaayah Literary Journal · المجلة الأدبية (journal.html)
  *
  * Anyone can send in Arabic poems, short stories, essays, reflections, translations or research. The writer
- * pastes the full text (and may attach a Word .docx file for longer work), and writes a short bio about their character.
+ * uploads ONE Word .docx file: the work first, then the heading "About the writer" and a short bio about their character. Nothing is pasted.
+ * The server reads the text out of the file so the work can be read on the page.
  * Nothing appears on the site until staff open the "Journal" tab of the sheet and set Status to Approved. Use Accepted for
  * work chosen for the issue but not yet released (it stays hidden), and Rejected to decline. Approved work is read on the page itself,
  * right to left. If a Word file was attached, approving the piece also shares that one file as "anyone with the link
@@ -18,7 +19,7 @@ const JR_HEAD = ['ID', 'Submitted', 'Title', 'Author', 'Programme', 'StudentID',
 const JR_TEXTS = ['ID', 'Submitted', 'Title', 'Author', 'StudentID', 'Email', 'Text', 'Bio', 'FileID', 'FileName'];
 const JR_PROGRAMMES = ['Madrasah', 'Academy', 'Skills School', 'Teenagers Building Circle', 'Alumni', 'Guest'];
 const JR_GENRES = ['Poem', 'Short story', 'Essay', 'Reflection', 'Translation', 'Research paper'];
-const JR_MAX_TEXT = 20000;
+const JR_CELL_MAX = 45000;   // a sheet cell holds at most 50,000 characters; the full document stays in Drive
 const JR_MIN_TEXT = 40;
 const JR_MAX_BYTES = 7 * 1024 * 1024;
 const JR_BIO_MIN = 30;
@@ -119,62 +120,96 @@ function jr_get_(p) {
                              Text: String(r.Text), Bio: String(r.Bio || ''), FileUrl: url } };
 }
 
+/* ===== READING THE WORD FILE =====
+   The writer uploads one .docx: the work first, then a heading "About the writer" and a bio. Nothing is pasted. */
+const JR_BIO_HEADINGS = ['about the writer', 'about the author', 'about me', 'عن الكاتب', 'عن الكاتبة', 'نبذة عن الكاتب', 'نبذة عن الكاتبة', 'نبذة عني'];
+function jr_xmlText_(s) {
+  return String(s).replace(/&#x([0-9a-fA-F]+);/g, function (m, h) { return String.fromCharCode(parseInt(h, 16)); }).replace(/&#(\d+);/g, function (m, n) { return String.fromCharCode(Number(n)); })
+    .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&amp;/g, '&');
+}
+/* one string per paragraph of word/document.xml; empty paragraphs are kept (they are the stanza breaks) */
+function jr_docParas_(xml) {
+  const out = [], re = /<w:p(?:\s[^>]*)?\/>|<w:p(?:\s[^>]*)?>[\s\S]*?<\/w:p>/g;
+  let m;
+  while ((m = re.exec(xml))) {
+    const p = m[0].replace(/<w:tab\s*\/>/g, '<w:t>\t</w:t>').replace(/<w:br\b[^>]*\/>/g, '<w:t>\n</w:t>');
+    let t = '', r = /<w:t(?:\s[^>]*)?>([\s\S]*?)<\/w:t>/g, x;
+    while ((x = r.exec(p))) t += x[1];
+    out.push(jr_xmlText_(t).replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f]/g, '').trim());
+  }
+  return out;
+}
+function jr_isBioHeading_(line) {
+  const t = String(line || '').replace(/[:：.\-–—·|\/*_#]+/g, ' ').replace(/\s+/g, ' ').trim().toLowerCase();
+  if (!t || t.length > 40) return false;
+  return JR_BIO_HEADINGS.some(function (h) { return t.indexOf(h) >= 0; });
+}
+function jr_split_(paras) {
+  let at = -1;
+  for (let i = paras.length - 1; i >= 0; i--) { if (jr_isBioHeading_(paras[i])) { at = i; break; } }
+  if (at < 0) return { found: false, work: [], bio: [] };
+  return { found: true, work: paras.slice(0, at), bio: paras.slice(at + 1).filter(Boolean) };
+}
+
 /* ===== SUBMIT ===== */
 function jr_submit_(p) {
   if (String(p.website || '').trim()) return { ok: true };   // honeypot
   const d = {
-    title: jr_line_(p.title, 120), author: jr_line_(p.author, 80), email: jr_line_(p.email, 120).toLowerCase(), bio: jr_bio_(p.bio), studentId: key_(p.studentId).slice(0, 20),
+    title: jr_line_(p.title, 120), author: jr_line_(p.author, 80), email: jr_line_(p.email, 120).toLowerCase(), studentId: key_(p.studentId).slice(0, 20),
     programme: JR_PROGRAMMES.indexOf(String(p.programme)) >= 0 ? String(p.programme) : '', genre: JR_GENRES.indexOf(String(p.genre)) >= 0 ? String(p.genre) : '',
-    text: jr_body_(p.text), source: jr_line_(p.source, 30)
+    source: jr_line_(p.source, 30)
   };
   if (d.title.length < 3) return jr_err_('Enter the title of your work.');
   if (d.author.length < 2) return jr_err_('Enter your name as it should appear.');
   if (!validEmail_(d.email)) return jr_err_('Enter a valid email address. We use it to contact you and never show it.');
   if (!d.programme) return jr_err_('Choose your programme, or Guest.');
   if (!d.genre) return jr_err_('Choose the type of work.');
-  const bw = jr_words_(d.bio);
-  if (bw < JR_BIO_MIN) return jr_err_('Write a short bio about yourself (at least 30 words).');
-  if (bw > JR_BIO_MAX) return jr_err_('Your bio is over 200 words. Please shorten it.');
-  if (d.text.length < JR_MIN_TEXT) return jr_err_('Paste your full text (at least 40 characters).');
-  if (d.text.length > JR_MAX_TEXT) return jr_err_('The text is over the 20,000 character limit. Attach a Word document for longer work.');
-  if (jr_arabicShare_(d.text) < (d.genre === 'Translation' ? 0.2 : 0.5)) return jr_err_('The work must be written in Arabic.');
   if (!p.own) return jr_err_('Please confirm this is your own work and that we may publish it.');
 
-  let bytes = null, ext = '';
   const data = String(p.file || '');
-  if (data) {
-    ext = jr_line_(p.ext, 6).toLowerCase().replace(/[^a-z0-9]/g, '');
-    if (ext !== 'docx') return jr_err_('The attachment must be a Word document (.docx).');
-    if (!/^[A-Za-z0-9+/=]+$/.test(data.slice(0, 200))) return jr_err_('The file did not arrive. Please try again.');
-    try { bytes = Utilities.base64Decode(data); } catch (e) { return jr_err_('The file did not arrive. Please try again.'); }
-    if (bytes.length < 1000) return jr_err_('That file looks empty.');
-    if (bytes.length > JR_MAX_BYTES) return jr_err_('That file is too large. The limit is 7 MB.');
-    if ((bytes[0] & 255) !== 0x50 || (bytes[1] & 255) !== 0x4B || (bytes[2] & 255) !== 3 || (bytes[3] & 255) !== 4) return jr_err_('That is not a real Word document.');
-    let isDoc = false;
-    try { isDoc = Utilities.unzip(Utilities.newBlob(bytes, 'application/zip', 'check.zip')).some(function (b) { return b.getName() === 'word/document.xml'; }); } catch (e) { isDoc = false; }
-    if (!isDoc) return jr_err_('That is not a real Word document.');
-  }
+  if (!data) return jr_err_('Attach your work as a Word document (.docx).');
+  const ext = jr_line_(p.ext, 6).toLowerCase().replace(/[^a-z0-9]/g, '');
+  if (ext !== 'docx') return jr_err_('The attachment must be a Word document (.docx).');
+  if (!/^[A-Za-z0-9+/=]+$/.test(data.slice(0, 200))) return jr_err_('The file did not arrive. Please try again.');
+  let bytes = null;
+  try { bytes = Utilities.base64Decode(data); } catch (e) { return jr_err_('The file did not arrive. Please try again.'); }
+  if (bytes.length < 1000) return jr_err_('That file looks empty.');
+  if (bytes.length > JR_MAX_BYTES) return jr_err_('That file is too large. The limit is 7 MB.');
+  if ((bytes[0] & 255) !== 0x50 || (bytes[1] & 255) !== 0x4B || (bytes[2] & 255) !== 3 || (bytes[3] & 255) !== 4) return jr_err_('That is not a real Word document.');
+  let xml = '';
+  try {
+    const hit = Utilities.unzip(Utilities.newBlob(bytes, 'application/zip', 'check.zip')).filter(function (b) { return b.getName() === 'word/document.xml'; })[0];
+    if (hit) xml = hit.getDataAsString('UTF-8');
+  } catch (e) { xml = ''; }
+  if (!xml) return jr_err_('That is not a real Word document.');
+
+  const parts = jr_split_(jr_docParas_(xml));
+  if (!parts.found) return jr_err_('Add the heading "About the writer" before your bio, as in the template.');
+  const work = jr_body_(parts.work.join('\n')), bio = jr_bio_(parts.bio.join(' '));
+  if (work.length < JR_MIN_TEXT) return jr_err_('We could not find your work above the "About the writer" heading (at least 40 characters).');
+  if (jr_arabicShare_(work) < (d.genre === 'Translation' ? 0.2 : 0.5)) return jr_err_('The work must be written in Arabic.');
+  const bw = jr_words_(bio);
+  if (bw < JR_BIO_MIN) return jr_err_('Your bio under "About the writer" needs at least 30 words.');
+  if (bw > JR_BIO_MAX) return jr_err_('Your bio is over 200 words. Please shorten it.');
+  d.text = work.slice(0, JR_CELL_MAX); d.bio = bio;
 
   const cache = CacheService.getScriptCache(), k = 'jrn_' + d.email, n = Number(cache.get(k) || 0);
   if (n >= 3) return jr_err_('You have sent several already today. Please try again tomorrow.');
   cache.put(k, String(n + 1), 86400);
 
   const id = 'JR-' + Utilities.getUuid().replace(/-/g, '').slice(0, 6).toUpperCase();
-  let fileId = '', fileName = '';
-  if (bytes) {
-    fileName = id + ' - ' + (d.author.replace(/[^\w؀-ۿ\- ]+/g, ' ').trim().slice(0, 30) || 'Author') + '.docx';
-    const f = jr_folder_().createFile(Utilities.newBlob(bytes, JR_DOCX_MIME, fileName));
-    f.setDescription(d.title + ' / ' + d.author);
-    fileId = f.getId();
-  }
+  const fileName = id + ' - ' + (d.author.replace(/[^\w؀-ۿ\- ]+/g, ' ').trim().slice(0, 30) || 'Author') + '.docx';
+  const f = jr_folder_().createFile(Utilities.newBlob(bytes, JR_DOCX_MIME, fileName));
+  f.setDescription(d.title + ' / ' + d.author);
+  const fileId = f.getId();
   const lock = LockService.getScriptLock(); lock.waitLock(20000);
   try {
     append_(jr_t_(), { ID: id, Submitted: iso_(new Date(), true), Title: d.title, Author: d.author, Programme: d.programme, StudentID: d.studentId, Email: d.email, Genre: d.genre, Text: d.text, Bio: d.bio,
-      Year: Number(iso_(new Date()).slice(0, 4)), FileID: fileId, FileName: fileName, SizeKB: bytes ? Math.round(bytes.length / 1024) : '', Status: 'New', Featured: '', Shared: '', Source: d.source || 'website' }, JR_TEXTS);
+      Year: Number(iso_(new Date()).slice(0, 4)), FileID: fileId, FileName: fileName, SizeKB: Math.round(bytes.length / 1024), Status: 'New', Featured: '', Shared: '', Source: d.source || 'website' }, JR_TEXTS);
   } finally { lock.releaseLock(); }
   try {
     if (MailApp.getRemainingDailyQuota() > 0) MailApp.sendEmail({ to: Session.getEffectiveUser().getEmail(), name: SCHOOL_NAME, subject: SCHOOL_NAME + ': new journal submission, ' + d.title,
-      body: d.author + ' (' + d.programme + ') sent: ' + d.genre + '\n\n' + d.title + '\n\n' + jr_excerpt_(d.text) + '\n\n' + (fileId ? 'Word document: https://drive.google.com/file/d/' + fileId + '/view (private until you approve it)\n' : '') +
+      body: d.author + ' (' + d.programme + ') sent: ' + d.genre + '\n\n' + d.title + '\n\n' + jr_excerpt_(d.text) + '\n\nWord document: https://drive.google.com/file/d/' + fileId + '/view (private until you approve it)\n' +
             'Contact: ' + d.email + '\n\nOpen the "Journal" tab of the sheet (ID ' + id + '). Read it first for language, accuracy and the school\'s Sunni standards. Set Status to Accepted to keep it for the issue without showing it yet, Rejected to decline it, or Approved to publish it on the site now.' });
   } catch (e) { console.error(e); }
   return { ok: true, id: id };

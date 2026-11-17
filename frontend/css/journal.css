@@ -168,3 +168,10 @@ html[lang="ar"].page-journal .jn h1, html[lang="ar"].page-journal .jn h2, html[l
 .jn-tag.jn-feat-tag { border-color: var(--jn-ink); }
 .jn-item .jn-tag:not(.jn-feat-tag) { border-color: transparent; background: #fff; }
 @media (max-width: 860px) { .jn-item { padding: 20px; } }
+
+/* tighter hero, clearer steps, upload block */
+.jn-mast { padding-bottom: 28px; }
+.jn-mast + .jn-sec { padding-top: 28px; }
+.jn-steps + p { margin-top: 36px; }
+.jn-tpl { display: grid; gap: 10px; }
+.jn-tpl a { color: var(--jn-blue); font-weight: 700; }

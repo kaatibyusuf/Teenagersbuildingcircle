@@ -16,7 +16,7 @@ const SECTION = `<!--journal:start-->
         <p class="jh-eye">Open to every writer</p>
         <h2>The Himaayah Literary Journal</h2>
         <p class="jh-lead">Arabic poems, short stories, essays, reflections, translations and research from our students, alumni and guests. Read the latest, or send in your own work.</p>
-        <div class="jh-btns"><a class="jh-b jh-b1" href="journal">Read the journal →</a><a class="jh-b jh-b2" href="journal#submit">Submit your work</a></div>
+        <div class="jh-btns"><a class="jh-b jh-b1" href="journal">Read the journal →</a><a class="jh-b jh-b2" href="journal-submit">Submit your work</a></div>
       </div>
       <div class="jh-ph"><img src="images/journal-masthead.jpg" alt="A fountain pen resting on an open notebook" width="1200" height="900" loading="lazy"></div>
     </div>

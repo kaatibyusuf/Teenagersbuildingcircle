@@ -13,11 +13,8 @@
     email: 'Enter a valid email address.',
     genre: 'Choose the type of work.',
     prog: 'Choose your programme, or Guest.',
-    short: 'Paste your full text (at least 40 characters).',
-    arabic: 'The work must be written in Arabic.',
+    nofile: 'Attach your work as a Word document (.docx).',
     pdf: 'The attachment must be a Word document (.docx).',
-    biolow: 'Write a short bio about yourself (at least 30 words).',
-    biohigh: 'Your bio is over 200 words. Please shorten it.',
     big: 'That file is too large. The limit is 7 MB.',
     own: 'Please confirm this is your own work and that we may publish it.',
     sending: 'Sending…',
@@ -143,16 +140,14 @@
   function mark(id, bad) { var f = $(id); if (f) { if (bad) f.setAttribute('aria-invalid', 'true'); else f.removeAttribute('aria-invalid'); } }
   function check() {
     var v = { title: $('fTitle').value.trim(), author: $('fAuthor').value.trim(), email: $('fEmail').value.trim(), genre: $('fGenre').value, programme: $('fProg').value,
-              text: $('fText').value.trim(), bio: $('fBio').value.trim(), file: $('fFile').files[0] || null, own: $('fOwn').checked };
+              file: $('fFile').files[0] || null, own: $('fOwn').checked };
     var rules = [
       ['fTitle', v.title.length >= 3, MSG.title], ['fAuthor', v.author.length >= 2, MSG.author],
       ['fEmail', /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v.email), MSG.email], ['fGenre', !!v.genre, MSG.genre], ['fProg', !!v.programme, MSG.prog],
-      ['fBio', wordCount(v.bio) >= BIO_MIN, MSG.biolow], ['fBio', wordCount(v.bio) <= BIO_MAX, MSG.biohigh],
-      ['fText', v.text.length >= MIN_TEXT, MSG.short],
-      ['fText', arabicShare(v.text) >= (v.genre === 'Translation' ? 0.2 : 0.5), MSG.arabic],
+      ['fFile', !!v.file, MSG.nofile],
       ['fFile', !v.file || /\.docx$/i.test(v.file.name), MSG.pdf], ['fFile', !v.file || v.file.size <= MAX_BYTES, MSG.big], ['fOwn', v.own, MSG.own]
     ];
-    ['fTitle', 'fAuthor', 'fEmail', 'fGenre', 'fProg', 'fBio', 'fText', 'fFile'].forEach(function (id) { mark(id, false); });
+    ['fTitle', 'fAuthor', 'fEmail', 'fGenre', 'fProg', 'fFile'].forEach(function (id) { mark(id, false); });
     for (var i = 0; i < rules.length; i++) { if (!rules[i][1]) { mark(rules[i][0], true); $(rules[i][0]).focus(); return { error: rules[i][2] }; } }
     return { v: v };
   }
@@ -161,12 +156,11 @@
     var c = check();
     if (c.error) { say(c.error, 'bad'); return; }
     var v = c.v, btn = $('jnSend');
-    btn.disabled = true; say(v.file ? MSG.uploading : MSG.sending);
-    var base = { action: 'jrn_submit', title: v.title, author: v.author, email: v.email, genre: v.genre, programme: v.programme, studentId: $('fSid').value.trim(), text: $('fText').value,
-                 bio: v.bio, own: true, website: $('fWeb').value, source: 'website' };
-    var go = v.file ? toBase64(v.file).then(function (b64) { base.file = b64; base.ext = 'docx'; return base; }) : Promise.resolve(base);
+    btn.disabled = true; say(MSG.uploading);
+    var base = { action: 'jrn_submit', title: v.title, author: v.author, email: v.email, genre: v.genre, programme: v.programme, studentId: $('fSid').value.trim(), own: true, website: $('fWeb').value, source: 'website' };
+    var go = toBase64(v.file).then(function (b64) { base.file = b64; base.ext = 'docx'; return base; });
     go.then(post).then(function (j) {
-      if (j && j.ok) { $('jnForm').reset(); $('fCount').textContent = '0 / ' + MAX_TEXT; $('fBioCount').textContent = '0 / ' + BIO_MAX; say(MSG.done, 'good'); }
+      if (j && j.ok) { $('jnForm').reset(); say(MSG.done, 'good'); }
       else if (j && j.error) sayRaw(j.error);
       else say(MSG.fail, 'bad');
     }).catch(function () { say(MSG.net, 'bad'); }).then(function () { btn.disabled = false; });
@@ -191,8 +185,6 @@
     if ($('fGenre')) fill($('fGenre'), GENRES);
     if ($('fProg')) fill($('fProg'), PROGRAMMES);
     ['jnQ', 'jnGenre', 'jnProg'].forEach(function (id) { on(id, 'input', render); on(id, 'change', render); });
-    on('fBio', 'input', function () { $('fBioCount').textContent = wordCount($('fBio').value) + ' / ' + BIO_MAX; });
-    on('fText', 'input', function () { $('fCount').textContent = $('fText').value.length + ' / ' + MAX_TEXT; });
     on('jnForm', 'submit', submit);
     on('jnClose', 'click', closeReader);
     on('jnReader', 'click', function (e) { if (e.target === $('jnReader')) closeReader(); });
