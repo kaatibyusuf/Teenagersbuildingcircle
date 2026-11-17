@@ -9,11 +9,16 @@ const json = (body, status = 200) =>
   new Response(JSON.stringify(body), { status, headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' } });
 const clean = (v, n) => String(v ?? '').replace(/[\u0000-\u001f]/g, ' ').trim().slice(0, n);
 
+/* Any phone number is accepted, Nigerian or from abroad. Nigerian forms (0801..., 234801...) become +234...;
+   anything written with + or 00 keeps its own country code; other digit strings of a sensible length are kept as typed. */
 function phone(p) {
-  const d = String(p || '').replace(/\D/g, '');
+  const raw = String(p || '').trim(), d = raw.replace(/\D/g, '');
+  if (d.length < 7 || d.length > 15) return undefined;
   if (/^0\d{10}$/.test(d)) return '+234' + d.slice(1);
   if (/^234\d{10}$/.test(d)) return '+' + d;
-  return undefined;
+  if (raw.startsWith('+')) return '+' + d;
+  if (d.startsWith('00')) return '+' + d.slice(2);
+  return '+' + d;
 }
 
 export async function POST(request) {
@@ -27,7 +32,7 @@ export async function POST(request) {
   const name = clean(b.name, 100);
   if (name.length < 3) return json({ ok: false, error: 'Enter the candidate’s full name.' }, 400);
   const ph = phone(b.phone);
-  if (!ph) return json({ ok: false, error: 'Enter a Nigerian phone number, for example 08012345678.' }, 400);
+  if (!ph) return json({ ok: false, error: 'Enter a phone number we can reach, with the country code if it is not Nigerian, for example +233243480385.' }, 400);
 
   const live = key.startsWith('sk_live_');
   const api = live ? 'https://api.bachs.io' : 'https://sandbox-api.bachs.io';
