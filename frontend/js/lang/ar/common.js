@@ -517,3 +517,6 @@ HS_I18N.add({
 "Calendar": "التقويم",
 "Search the Dictionary": "ابحث في القاموس"
 });
+
+/*journal-link*/
+HS_I18N.add({"Journal": "المجلة", "Literary Journal": "المجلة الأدبية"});

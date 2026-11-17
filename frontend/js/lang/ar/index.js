@@ -163,3 +163,12 @@ HS_I18N.add({
 "JUPEB": "JUPEB",
 "Cambridge": "كامبريدج"
 });
+
+/*journal-home*/
+HS_I18N.add({
+"Open to every writer": "مفتوحة لكل كاتب",
+"The Himaayah Literary Journal": "مجلة حماية الأدبية",
+"Arabic poems, short stories, essays, reflections, translations and research from our students, alumni and guests. Read the latest, or send in your own work.": "قصائد وقصص قصيرة ومقالات وخواطر وترجمات وبحوث بالعربية من طلابنا وخريجينا وضيوفنا. اقرأ أحدث الأعمال أو أرسل عملك.",
+"Read the journal →": "اقرأ المجلة ←",
+"Submit your work": "أرسل عملك"
+});
