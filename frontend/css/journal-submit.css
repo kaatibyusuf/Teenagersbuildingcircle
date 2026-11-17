@@ -36,7 +36,7 @@
 .jn-cl-types { display: grid; grid-template-columns: repeat(2, 1fr); gap: 34px 56px; text-align: start; max-width: 860px; margin: 0 auto; }
 .jn-cl-types h3 { margin: 0 0 4px; font-size: 28px; font-weight: 400; font-style: italic; }
 .jn-cl-types p { margin: 0; color: var(--jn-muted); font-size: 17px; line-height: 1.65; }
-.jn-cl-types .jn-len { margin-top: 6px; font: 600 12px Newsreader, Georgia, serif; letter-spacing: .16em; text-transform: uppercase; color: var(--jn-blue); }
+.jn-cl-types .jn-len { margin-top: 8px; line-height: 1.5; font: 600 12px Newsreader, Georgia, serif; letter-spacing: .16em; text-transform: uppercase; color: var(--jn-blue); }
 .jn-cl-note { margin: 34px auto 0; max-width: 640px; font-style: italic; color: var(--jn-muted); font-size: 17px; }
 
 /* guidelines reveal one by one as the page is scrolled */
@@ -86,3 +86,5 @@ html[lang="ar"].page-journal-submit .jn-cl-types h3 { font-weight: 700; }
   .jn-rule::before { font-size: 34px; }
   .jn-cl-form .jn-form { padding: 22px 18px; }
 }
+
+.jn-cl-types .jn-rv:nth-child(even) { transition-delay: .12s; }

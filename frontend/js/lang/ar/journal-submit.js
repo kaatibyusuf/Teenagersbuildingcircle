@@ -133,7 +133,7 @@ HS_I18N.add({
 "Up to about 2,000 words.": "حتى نحو ٢٠٠٠ كلمة.",
 "500 to 1,500 words.": "من ٥٠٠ إلى ١٥٠٠ كلمة.",
 "100 to 500 words.": "من ١٠٠ إلى ٥٠٠ كلمة.",
-"Up to about 1,500 words, with the source credited.": "حتى نحو ١٥٠٠ كلمة، مع نسبة المصدر.",
+"Up to about 1,500 words.": "حتى نحو ١٥٠٠ كلمة.",
 "If a piece seems to need more space, it often needs more editing first.": "إذا بدا أن العمل يحتاج إلى مساحة أكبر، فكثيرًا ما يحتاج إلى مزيد من التنقيح أولًا.",
 "Send only work you wrote or translated yourself. Plagiarism is never accepted, and anything quoted must be credited to its source.": "أرسل فقط ما كتبته أو ترجمته بنفسك. لا نقبل الانتحال أبدًا، وكل ما تقتبسه تجب نسبته إلى مصدره.",
 "No insults, no mockery of religion, no partisan attacks, and nothing that targets a person or a group.": "لا إساءة ولا استهزاء بالدين ولا هجوم حزبي ولا ما يستهدف شخصًا أو جماعة.",
