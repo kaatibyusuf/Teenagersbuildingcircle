@@ -22,7 +22,7 @@ const JR_GENRES = ['Poem', 'Short story', 'Essay', 'Reflection', 'Translation', 
 const JR_CELL_MAX = 45000;   // a sheet cell holds at most 50,000 characters; the full document stays in Drive
 const JR_MIN_TEXT = 40;
 const JR_MAX_BYTES = 7 * 1024 * 1024;
-const JR_BIO_MIN = 30;
+const JR_BIO_MIN = 200;   // the bio is exactly 200 words
 const JR_BIO_MAX = 200;
 const JR_DOCX_MIME = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
 const JR_FOLDER_NAME = 'Himaayah Journal submissions';
@@ -156,13 +156,12 @@ function jr_submit_(p) {
   if (String(p.website || '').trim()) return { ok: true };   // honeypot
   const d = {
     title: jr_line_(p.title, 120), author: jr_line_(p.author, 80), email: jr_line_(p.email, 120).toLowerCase(), studentId: key_(p.studentId).slice(0, 20),
-    programme: JR_PROGRAMMES.indexOf(String(p.programme)) >= 0 ? String(p.programme) : '', genre: JR_GENRES.indexOf(String(p.genre)) >= 0 ? String(p.genre) : '',
+    programme: JR_PROGRAMMES.indexOf(String(p.programme)) >= 0 ? String(p.programme) : 'Guest', genre: JR_GENRES.indexOf(String(p.genre)) >= 0 ? String(p.genre) : '',
     source: jr_line_(p.source, 30)
   };
   if (d.title.length < 3) return jr_err_('Enter the title of your work.');
   if (d.author.length < 2) return jr_err_('Enter your name as it should appear.');
   if (!validEmail_(d.email)) return jr_err_('Enter a valid email address. We use it to contact you and never show it.');
-  if (!d.programme) return jr_err_('Choose your programme, or Guest.');
   if (!d.genre) return jr_err_('Choose the type of work.');
   if (!p.own) return jr_err_('Please confirm this is your own work and that we may publish it.');
 
@@ -189,8 +188,7 @@ function jr_submit_(p) {
   if (work.length < JR_MIN_TEXT) return jr_err_('We could not find your work above the "About the writer" heading (at least 40 characters).');
   if (jr_arabicShare_(work) < (d.genre === 'Translation' ? 0.2 : 0.5)) return jr_err_('The work must be written in Arabic.');
   const bw = jr_words_(bio);
-  if (bw < JR_BIO_MIN) return jr_err_('Your bio under "About the writer" needs at least 30 words.');
-  if (bw > JR_BIO_MAX) return jr_err_('Your bio is over 200 words. Please shorten it.');
+  if (bw !== JR_BIO_MIN) return jr_err_('Your bio must be exactly 200 words.');
   d.text = work.slice(0, JR_CELL_MAX); d.bio = bio;
 
   const cache = CacheService.getScriptCache(), k = 'jrn_' + d.email, n = Number(cache.get(k) || 0);

@@ -3,7 +3,7 @@
 (function () {
   'use strict';
   var API_URL = 'https://script.google.com/macros/s/AKfycby0AsifBuB_Ad7g1SjDXCipaDU27-BrzYWf67muw5jeY_C0_0uz8AhQYYXdiNRQhvqX/exec';
-  var MAX_BYTES = 7 * 1024 * 1024, MAX_TEXT = 20000, MIN_TEXT = 40, BIO_MIN = 30, BIO_MAX = 200;
+  var MAX_BYTES = 7 * 1024 * 1024, MAX_TEXT = 20000, MIN_TEXT = 40, BIO_MIN = 200, BIO_MAX = 200;
   /* [English name used by the server, Arabic name shown large on the cover] */
   var GENRES = [['Poem', 'قصيدة'], ['Short story', 'قصة قصيرة'], ['Essay', 'مقال'], ['Reflection', 'خاطرة'], ['Translation', 'ترجمة'], ['Research paper', 'بحث']];
   var PROGRAMMES = ['Madrasah', 'Academy', 'Skills School', 'Teenagers Building Circle', 'Alumni', 'Guest'];
@@ -12,7 +12,6 @@
     author: 'Enter your name as it should appear.',
     email: 'Enter a valid email address.',
     genre: 'Choose the type of work.',
-    prog: 'Choose your programme, or Guest.',
     nofile: 'Attach your work as a Word document (.docx).',
     pdf: 'The attachment must be a Word document (.docx).',
     big: 'That file is too large. The limit is 7 MB.',
@@ -139,15 +138,15 @@
   function sayRaw(text) { var p = $('jnMsg'); p.textContent = text; p.className = 'jn-msg bad'; }
   function mark(id, bad) { var f = $(id); if (f) { if (bad) f.setAttribute('aria-invalid', 'true'); else f.removeAttribute('aria-invalid'); } }
   function check() {
-    var v = { title: $('fTitle').value.trim(), author: $('fAuthor').value.trim(), email: $('fEmail').value.trim(), genre: $('fGenre').value, programme: $('fProg').value,
+    var v = { title: $('fTitle').value.trim(), author: $('fAuthor').value.trim(), email: $('fEmail').value.trim(), genre: $('fGenre').value,
               file: $('fFile').files[0] || null, own: $('fOwn').checked };
     var rules = [
       ['fTitle', v.title.length >= 3, MSG.title], ['fAuthor', v.author.length >= 2, MSG.author],
-      ['fEmail', /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v.email), MSG.email], ['fGenre', !!v.genre, MSG.genre], ['fProg', !!v.programme, MSG.prog],
+      ['fEmail', /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v.email), MSG.email], ['fGenre', !!v.genre, MSG.genre],
       ['fFile', !!v.file, MSG.nofile],
       ['fFile', !v.file || /\.docx$/i.test(v.file.name), MSG.pdf], ['fFile', !v.file || v.file.size <= MAX_BYTES, MSG.big], ['fOwn', v.own, MSG.own]
     ];
-    ['fTitle', 'fAuthor', 'fEmail', 'fGenre', 'fProg', 'fFile'].forEach(function (id) { mark(id, false); });
+    ['fTitle', 'fAuthor', 'fEmail', 'fGenre', 'fFile'].forEach(function (id) { mark(id, false); });
     for (var i = 0; i < rules.length; i++) { if (!rules[i][1]) { mark(rules[i][0], true); $(rules[i][0]).focus(); return { error: rules[i][2] }; } }
     return { v: v };
   }
@@ -157,7 +156,7 @@
     if (c.error) { say(c.error, 'bad'); return; }
     var v = c.v, btn = $('jnSend');
     btn.disabled = true; say(MSG.uploading);
-    var base = { action: 'jrn_submit', title: v.title, author: v.author, email: v.email, genre: v.genre, programme: v.programme, studentId: $('fSid').value.trim(), own: true, website: $('fWeb').value, source: 'website' };
+    var base = { action: 'jrn_submit', title: v.title, author: v.author, email: v.email, genre: v.genre, own: true, website: $('fWeb').value, source: 'website' };
     var go = toBase64(v.file).then(function (b64) { base.file = b64; base.ext = 'docx'; return base; });
     go.then(post).then(function (j) {
       if (j && j.ok) { $('jnForm').reset(); say(MSG.done, 'good'); }
@@ -183,7 +182,6 @@
     if ($('jnGenre')) fill($('jnGenre'), GENRES);
     if ($('jnProg')) fill($('jnProg'), PROGRAMMES);
     if ($('fGenre')) fill($('fGenre'), GENRES);
-    if ($('fProg')) fill($('fProg'), PROGRAMMES);
     ['jnQ', 'jnGenre', 'jnProg'].forEach(function (id) { on(id, 'input', render); on(id, 'change', render); });
     on('jnForm', 'submit', submit);
     on('jnClose', 'click', closeReader);

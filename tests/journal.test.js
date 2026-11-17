@@ -8,7 +8,7 @@ const page = require('../frontend/js/journal.js');
 
 const FE = path.join(__dirname, '..', 'frontend');
 const POEM = 'يا ليلُ طُلْ أو لا تَطُلْ\nلا بُدَّ للفجرِ أن يُطِلّْ\n\nوالصبحُ يأتي على مهلٍ\nكما تأتي الأمنياتُ';
-const BIO = 'I am a quiet person who likes to listen before I speak. I enjoy long walks, tea with my grandmother, and fixing small things around the house. I get nervous in crowds but I love one good conversation. I am learning to be more patient every day.';
+const BIO = Array.from({ length: 200 }, (_, i) => (i % 17 === 16 ? 'tea.' : 'quiet')).join(' ');
 function crc32(buf) { let c, crc = -1; for (let i = 0; i < buf.length; i++) { c = (crc ^ buf[i]) & 255; for (let k = 0; k < 8; k++) c = c & 1 ? (c >>> 1) ^ 0xEDB88320 : c >>> 1; crc = (crc >>> 8) ^ c; } return (crc ^ -1) >>> 0; }
 /* a minimal real zip with the entries given (stored, not compressed): enough to look like a Word file */
 function zip(entries) {
@@ -96,7 +96,7 @@ test('an attached Word document is private until approval, then shared and linke
 
 test('bad input is refused with a clear reason', () => {
   const env = envWithDrive();
-  const cases = [[{ title: 'ab' }, /title/], [{ email: 'nope' }, /email/i], [{ programme: 'X' }, /programme/i], [{ genre: '' }, /type of work/], [{ text: 'قصير' }, /at least 40/],
+  const cases = [[{ title: 'ab' }, /title/], [{ email: 'nope' }, /email/i], [{ genre: '' }, /type of work/], [{ text: 'قصير' }, /at least 40/],
     [{ text: 'This is an English poem that is certainly long enough to pass the length check.' }, /Arabic/], [{ own: false }, /own work/], [{ author: '' }, /name/], [{ file: '' }, /Word document/], [{ heading: null }, /About the writer/]];
   cases.forEach(([o, re]) => { const r = send(env, good(o)); assert.equal(r.ok, false, JSON.stringify(o).slice(0, 60)); assert.match(r.error, re); });
   assert.equal(env.sheets['Journal'], undefined);
@@ -119,13 +119,14 @@ test('attachment checks: only real Word documents, not empty, not too large', ()
   assert.equal(env.files_.length, 0);
 });
 
-test('the bio is required, 30 to 200 words, and kept as one paragraph', () => {
+test('the bio must be exactly 200 words, and is kept as one paragraph', () => {
   const env = envWithDrive();
   assert.match(send(env, good({ bio: '' })).error, /bio/);
-  assert.match(send(env, good({ bio: 'I am kind and quiet.' })).error, /at least 30 words/);
-  assert.match(send(env, good({ bio: 'word '.repeat(201) })).error, /over 200 words/);
+  assert.match(send(env, good({ bio: 'I am kind and quiet.' })).error, /exactly 200 words/);
+  assert.match(send(env, good({ bio: 'word '.repeat(199) })).error, /exactly 200 words/);
+  assert.match(send(env, good({ bio: 'word '.repeat(201) })).error, /exactly 200 words/);
   assert.equal(send(env, good({ bio: 'word '.repeat(200) })).ok, true);
-  assert.equal(send(env, good({ email: 'b@example.com', bio: BIO.replace('. ', '.\n\n') })).ok, true);
+  assert.equal(send(env, good({ email: 'b@example.com', bio: BIO.replace('tea. ', 'tea.\n\n') })).ok, true);
   assert.ok(!/\n/.test(rows(env)[1].Bio));
   assert.equal(page.wordCount(BIO), BIO.split(' ').length);
 });
@@ -199,7 +200,7 @@ test('every genre has a cover photo and a matching style rule', () => {
 test('the submission page has the guidelines, the form, and Arabic for all of it', () => {
   const html = fs.readFileSync(path.join(FE, 'journal-submit.html'), 'utf8');
   assert.match(html, /<html lang="en" class="site page-journal-submit page-journal">/);
-  ['jnForm', 'fTitle', 'fAuthor', 'fEmail', 'fGenre', 'fProg', 'fSid', 'fFile', 'fOwn', 'fWeb', 'jnSend', 'jnMsg'].forEach((id) => assert.ok(html.includes('id="' + id + '"'), id));
+  ['jnForm', 'fTitle', 'fAuthor', 'fEmail', 'fGenre', 'fFile', 'fOwn', 'fWeb', 'jnSend', 'jnMsg'].forEach((id) => assert.ok(html.includes('id="' + id + '"'), id));
   ['glance', 'prizes', 'types', 'length', 'timelines', 'guidelines', 'seek', 'before', 'form'].forEach((id) => assert.ok(html.includes('id="' + id + '"'), id));
   assert.ok(html.includes('js/journal.js') && html.includes('js/i18n.js') && !/gradient/.test(html));
   const dict = {};
@@ -273,4 +274,11 @@ test('very long work is cut for the sheet but the whole file stays in Drive; hea
 test('the journal page sends writers to the submission page', () => {
   const html = fs.readFileSync(path.join(FE, 'journal.html'), 'utf8');
   assert.ok(!/href="#submit"/.test(html)); assert.ok(/class="jn-btn jn-btn-line" href="journal-submit">Submit your work/.test(html));
+});
+
+test('the public form asks no programme or student ID; submissions are filed as Guest', () => {
+  const html = fs.readFileSync(path.join(FE, 'journal-submit.html'), 'utf8');
+  assert.ok(!/fProg|fSid|Student ID|Programme \*/.test(html));
+  const env = envWithDrive(), p = good(); delete p.programme;
+  assert.equal(send(env, p).ok, true); assert.equal(rows(env)[0].Programme, 'Guest');
 });
