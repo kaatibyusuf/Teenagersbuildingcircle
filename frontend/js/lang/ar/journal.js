@@ -88,9 +88,13 @@ HS_I18N.add({
 "Uploading. This can take a moment…": "جارٍ رفع الملف. قد يستغرق ذلك لحظات…",
 "Thank you. Your work has reached our staff for review. We will email you once we have read it.": "شكرًا لك. وصل عملك إلى فريقنا للمراجعة، وسنراسلك بعد قراءته.",
 "We could not send it. Check your internet connection and try again.": "تعذّر الإرسال. تحقق من الاتصال بالإنترنت وحاول مرة أخرى.",
-"Nothing has been published yet. Be the first: send in your work below.": "لم يُنشر أي عمل بعد. كن أول من يشارك: أرسل عملك في النموذج أدناه.",
+"Nothing has been published yet. Be the first: send in your work.": "لم يُنشر أي عمل بعد. كن أول من يشارك: أرسل عملك.",
 "Nothing matches. Try fewer words or clear the filters.": "لا توجد نتائج. جرّب كلمات أقل أو امسح التصفية.",
 "Loading the work…": "جارٍ تحميل الأعمال…",
 "We could not load the work just now. Please refresh in a moment.": "تعذّر تحميل الأعمال الآن. أعد تحميل الصفحة بعد قليل.",
-"We could not open that piece. Please try again.": "تعذّر فتح العمل. حاول مرة أخرى."
+"We could not open that piece. Please try again.": "تعذّر فتح العمل. حاول مرة أخرى.",
+"Send us your writing.": "شاركنا كتابتك.",
+"The Himaayah Literary Journal is open to everyone: students, alumni, parents and guests. We welcome Arabic poems, short stories, essays, reflections, translations and research. Our team reads every piece before it is published, and your email is never shown.": "المجلة الأدبية لمدرسة حماية مفتوحة للجميع: طلابًا وخريجين وأولياء أمور وضيوفًا. نرحّب بالقصائد والقصص القصيرة والمقالات والخواطر والترجمات والبحوث بالعربية. يقرأ فريقنا كل عمل قبل نشره، ولا يظهر بريدك الإلكتروني أبدًا.",
+"Read the guidelines and submit": "اقرأ الإرشادات وأرسل عملك",
+"Journal": "المجلة"
 });

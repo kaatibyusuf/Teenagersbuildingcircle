@@ -23,7 +23,7 @@
     done: 'Thank you. Your work has reached our staff for review. We will email you once we have read it.',
     net: 'We could not send it. Check your internet connection and try again.',
     fail: 'Something went wrong. Please try again.',
-    none: 'Nothing has been published yet. Be the first: send in your work below.',
+    none: 'Nothing has been published yet. Be the first: send in your work.',
     nomatch: 'Nothing matches. Try fewer words or clear the filters.',
     loading: 'Loading the work…',
     loadfail: 'We could not load the work just now. Please refresh in a moment.',
@@ -168,14 +168,18 @@
     }).catch(function () { say(MSG.net, 'bad'); }).then(function () { btn.disabled = false; });
   }
 
+  function on(id, ev, fn) { var n = $(id); if (n) n.addEventListener(ev, fn); }
   function init() {
-    fill($('jnGenre'), GENRES); fill($('jnProg'), PROGRAMMES); fill($('fGenre'), GENRES); fill($('fProg'), PROGRAMMES);
-    ['jnQ', 'jnGenre', 'jnProg'].forEach(function (id) { $(id).addEventListener('input', render); $(id).addEventListener('change', render); });
-    $('fText').addEventListener('input', function () { $('fCount').textContent = $('fText').value.length + ' / ' + MAX_TEXT; });
-    $('jnForm').addEventListener('submit', submit);
-    $('jnClose').addEventListener('click', closeReader);
-    $('jnReader').addEventListener('click', function (e) { if (e.target === $('jnReader')) closeReader(); });
-    load();
+    if ($('jnGenre')) fill($('jnGenre'), GENRES);
+    if ($('jnProg')) fill($('jnProg'), PROGRAMMES);
+    if ($('fGenre')) fill($('fGenre'), GENRES);
+    if ($('fProg')) fill($('fProg'), PROGRAMMES);
+    ['jnQ', 'jnGenre', 'jnProg'].forEach(function (id) { on(id, 'input', render); on(id, 'change', render); });
+    on('fText', 'input', function () { $('fCount').textContent = $('fText').value.length + ' / ' + MAX_TEXT; });
+    on('jnForm', 'submit', submit);
+    on('jnClose', 'click', closeReader);
+    on('jnReader', 'click', function (e) { if (e.target === $('jnReader')) closeReader(); });
+    if ($('jnList')) load();
   }
   if (typeof document !== 'undefined') { if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init(); }
   if (typeof module !== 'undefined' && module.exports) module.exports = { GENRES: GENRES.map(function (g) { return g[0]; }), PROGRAMMES: PROGRAMMES, MAX_BYTES: MAX_BYTES, MAX_TEXT: MAX_TEXT, MIN_TEXT: MIN_TEXT, norm: norm, arabicShare: arabicShare };

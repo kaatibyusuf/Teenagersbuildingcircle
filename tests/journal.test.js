@@ -120,6 +120,7 @@ test('the journal page is English first, uses the site language switch, and is s
   const html = fs.readFileSync(path.join(FE, 'journal.html'), 'utf8'), js = fs.readFileSync(path.join(FE, 'js', 'journal.js'), 'utf8'), css = fs.readFileSync(path.join(FE, 'css', 'journal.css'), 'utf8');
   assert.match(html, /<html lang="en" class="site page-journal">/); assert.ok(!/<main[^>]*dir="rtl"/.test(html));
   assert.ok(html.includes('js/i18n.js') && html.includes('js/journal.js') && html.includes('css/journal.css') && html.includes('Amiri') && html.includes('Newsreader'));
+  assert.ok(html.includes('href="journal-submit"') && !html.includes('id="jnForm"'));
   assert.match(html, /<dialog class="jn-reader"/); assert.match(html, /id="jnRText" dir="rtl" lang="ar"/);
   assert.ok(!/innerHTML|insertAdjacentHTML|document\.write/.test(js));
   assert.ok(!/gradient/.test(css) && !/gradient|data-theme/.test(html));
@@ -146,4 +147,27 @@ test('every genre has a cover photo and a matching style rule', () => {
     assert.ok(fs.existsSync(path.join(__dirname, '../frontend/images/journal-g-' + k + '.jpg')), k);
     assert.ok(css.indexOf('.jn-g-' + k + ' ') >= 0, k);
   });
+});
+
+test('the submission page has the guidelines, the form, and Arabic for all of it', () => {
+  const html = fs.readFileSync(path.join(FE, 'journal-submit.html'), 'utf8');
+  assert.match(html, /<html lang="en" class="site page-journal-submit page-journal">/);
+  ['jnForm', 'fTitle', 'fAuthor', 'fEmail', 'fGenre', 'fProg', 'fSid', 'fText', 'fBio', 'fFile', 'fOwn', 'fWeb', 'jnSend', 'jnMsg', 'fCount'].forEach((id) => assert.ok(html.includes('id="' + id + '"'), id));
+  ['glance', 'types', 'how', 'guidelines', 'before', 'form'].forEach((id) => assert.ok(html.includes('id="' + id + '"'), id));
+  assert.ok(html.includes('js/journal.js') && html.includes('js/i18n.js') && !/gradient/.test(html));
+  const dict = {};
+  vmRun(fs.readFileSync(path.join(FE, 'js', 'lang', 'ar', 'journal-submit.js'), 'utf8'), dict);
+  const missing = [];
+  const strip = (t) => t.replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim();
+  const body = html.slice(html.indexOf('<main'), html.indexOf('</main>'));
+  [...body.matchAll(/>([^<>]*[A-Za-z][^<>]*)</g)].map((m) => strip(m[1])).filter((t) => t && !/^\d|^Choose$/.test(t)).forEach((t) => { if (!dict[t]) missing.push(t); });
+  [...body.matchAll(/(?:placeholder|alt)="([^"]+)"/g)].forEach((m) => { if (!dict[strip(m[1])]) missing.push(m[1]); });
+  assert.deepEqual(missing.filter((t) => t !== 'Choose' && t !== '0 / 20000' && t !== 'Leave this empty'), []);
+  const jsrc = fs.readFileSync(path.join(FE, 'js', 'journal.js'), 'utf8');
+  assert.ok(/on\('jnForm', 'submit', submit\)/.test(jsrc) && /if \(\$\('jnList'\)\) load\(\)/.test(jsrc));
+});
+
+test('the spam-trap field is hidden whatever it sits inside', () => {
+  const css = fs.readFileSync(path.join(FE, 'css', 'journal.css'), 'utf8');
+  assert.match(css, /^\.jn-hp \{[^}]*clip-path/m);
 });
