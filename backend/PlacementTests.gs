@@ -297,7 +297,11 @@ function placementCardPayment_(p) {
     amount: Number(p.amount) || 0, currency: String(p.currency || '').toUpperCase(), status: String(p.status || '').toUpperCase(),
     eventId: String(p.eventId || ''), checkoutId: String(p.checkoutId || ''), chargeId: String(p.chargeId || ''), ref: pt_txt_(p.ref || '', 40)
   };
-  const paid = /^(SUCCEEDED|ACCEPTED|OVERPAID)$/.test(rec.status) && rec.currency === 'NGN' && rec.amount >= PT_FEE;
+  /* The session we create is always priced at PT_FEE in naira. A candidate paying with a foreign card can be charged in their own
+     currency (cedis, dollars...), so the event then carries that currency and a different number. The signature on the webhook has
+     already been checked and only our own checkout can create a session, so a completed payment in another currency is a full payment. */
+  const statusOk = /^(SUCCEEDED|ACCEPTED|OVERPAID)$/.test(rec.status), foreign = !!rec.currency && rec.currency !== 'NGN';
+  const paid = statusOk && ((rec.currency === 'NGN' && rec.amount >= PT_FEE) || (foreign && rec.amount > 0));
   let result = '', created = null;
   const lock = LockService.getScriptLock(); lock.waitLock(20000);
   try {
@@ -314,7 +318,7 @@ function placementCardPayment_(p) {
       append_(T, { Code: code, Name: rec.name, Email: rec.email, WhatsApp: rec.phone, Issued: iso_(new Date(), true), Source: 'Card', Amount: rec.amount,
         Reference: rec.checkoutId || rec.ref, EventID: rec.eventId, Active: true }, ['Code', 'Name', 'Email', 'WhatsApp', 'Issued', 'Reference', 'EventID']);
       created = { code: code, name: rec.name, email: rec.email };
-      result = 'Test code ' + code + ' issued';
+      result = 'Test code ' + code + ' issued' + (foreign ? ' (paid in ' + rec.currency + ' ' + rec.amount + ', converted by Bachs: confirm the naira amount in Bachs)' : '');
     }
     const r = log.getLastRow() + 1;
     log.getRange(r, 1, 1, CARD_LOG_HEAD.length).setNumberFormat('@').setValues([[
@@ -324,9 +328,9 @@ function placementCardPayment_(p) {
   } finally { lock.releaseLock(); }
   if (created) pt_sendCode_(created);
   try {
-    MailApp.sendEmail({ to: Session.getEffectiveUser().getEmail(), name: SCHOOL_NAME, subject: SCHOOL_NAME + ': registration fee ' + naira_(rec.amount),
+    MailApp.sendEmail({ to: Session.getEffectiveUser().getEmail(), name: SCHOOL_NAME, subject: SCHOOL_NAME + ': registration fee ' + (foreign ? rec.currency + ' ' + rec.amount : naira_(rec.amount)),
       body: 'A registration fee for the placement tests came in through the website.\n\nFrom: ' + (rec.name || '-') + ' (' + (rec.email || 'no email') + ', ' + (rec.phone || 'no phone') + ')\nAmount: ' +
-            naira_(rec.amount) + ' ' + rec.status + '\nResult: ' + result + '\n\nSee the "' + PT_CODE_TAB + '" tab.' });
+            (foreign ? rec.currency + ' ' + rec.amount : naira_(rec.amount)) + ' ' + rec.status + '\nResult: ' + result + '\n\nSee the "' + PT_CODE_TAB + '" tab.' });
   } catch (e) { console.error(e); }
   return { ok: true, result: result };
 }
@@ -362,4 +366,25 @@ function placementSendCodes() {
   let sent = 0; todo.forEach(function (a) { if (pt_sendCode_(a)) sent++; });
   const msg = n + ' code' + (n === 1 ? '' : 's') + ' created, ' + sent + ' emailed.';
   try { SpreadsheetApp.getUi().alert(msg); } catch (e) { console.log(msg); }
+}
+
+
+/* ===== ISSUE A CODE BY HAND =====
+   For a payment that came in but could not be matched (for example one made before foreign-currency payments were accepted).
+   In the Apps Script editor, call it from a line such as:
+     placementIssueCode('Hadiza Mohammed Sani', 'hadizamahamansani@gmail.com', '+233243480385')
+   Choose it from the function list after adding that line, press Run, then delete the line. It creates the code, emails it to the
+   candidate with the registration form link, and returns it. */
+function placementIssueCode(name, email, phone) {
+  email = pt_txt_(email, 120).toLowerCase();
+  if (!validEmail_(email)) throw new Error('Enter a valid email address.');
+  const lock = LockService.getScriptLock(); lock.waitLock(20000);
+  let code = '';
+  try {
+    const T = pt_ct_(); code = pt_newCode_(T);
+    append_(T, { Code: code, Name: pt_txt_(name, 100), Email: email, WhatsApp: pt_txt_(phone || '', 30), Issued: iso_(new Date(), true), Source: 'Card (issued by hand)', Amount: PT_FEE,
+      Reference: 'manual', EventID: '', Active: true }, ['Code', 'Name', 'Email', 'WhatsApp', 'Issued', 'Reference', 'EventID']);
+  } finally { lock.releaseLock(); }
+  pt_sendCode_({ code: code, name: pt_txt_(name, 100), email: email });
+  return code;
 }
