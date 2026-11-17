@@ -20,8 +20,8 @@ const REC_TAB = 'Recordings';
 const REC_HEADERS = ['RecID', 'StudentID', 'Submitted', 'Type', 'Surah', 'FromAyah', 'ToAyah', 'Portion', 'Note', 'FileID', 'Mime', 'SizeKB', 'Seconds',
   'Memorisation', 'Tajwid', 'Fluency', 'Result', 'Feedback', 'MarkedBy', 'Marked'];
 const REC_FOLDER_NAME = 'Himaayah Recitations';        // created in the school Google Drive by setupRecordings
-const REC_MAX_BYTES = 15 * 1024 * 1024;               // largest file a student can send (15 MB is about an hour of browser recording)
-const REC_MAX_SECONDS = 20 * 60;                       // longest recording the dashboard allows (20 minutes)
+const REC_MAX_BYTES = 30 * 1024 * 1024;               // largest file a student can send (browser recording is about 22 MB for an hour)
+const REC_MAX_SECONDS = 60 * 60;                       // longest recording the dashboard allows (60 minutes)
 const REC_MAX_PER_DAY = 6;                             // submissions per student per day
 const REC_MAX_WAITING = 5;                             // unmarked recordings a student can have at once
 const REC_TYPES = ['New lesson', 'Revision', 'Test'];
