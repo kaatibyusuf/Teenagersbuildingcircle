@@ -62,6 +62,7 @@ window.PORTAL_SHELL = {
 <!-- Vercel Analytics: counts visits once enabled in the Vercel dashboard -->
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
 <script defer src="/_vercel/insights/script.js"></script>
+<style>.rec-live.paused .rec-dot { animation: none; background: #9A7B3F; box-shadow: 0 0 0 3px rgba(154,123,63,.25); }</style>
 </head>
 <body>
 <header class="top"><div>
@@ -256,7 +257,7 @@ function ttCard(d) {
 }
 /* ===== Recite to your teacher (all Madrasah students) =====
    The recorder keeps its state here, outside render(), so a re-render never loses a recording. */
-const REC = { form: { type: 'New lesson', surah: '', from: '', to: '', note: '' }, blob: null, url: '', secs: 0, mime: '', ext: '', fileName: '', mr: null, stream: null, t0: 0, tick: null, sending: false, playing: {} };
+const REC = { form: { type: 'New lesson', surah: '', from: '', to: '', note: '' }, blob: null, url: '', secs: 0, mime: '', ext: '', fileName: '', mr: null, stream: null, t0: 0, acc: 0, paused: false, wl: null, tick: null, sending: false, playing: {} };
 const REC_TYPES = ['New lesson', 'Revision', 'Test'];
 const mmss = (n) => Math.floor(n / 60) + ':' + String(Math.floor(n % 60)).padStart(2, '0');
 const recOK = () => !!(window.MediaRecorder && navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
@@ -299,14 +300,15 @@ function recCard(d) {
 }
 function recBoxHtml() {
   const R = (window.__lastData || {}).recordings || {}, maxMin = Math.round((R.maxSeconds || 1200) / 60);
-  if (REC.mr) return `<div class="rec-live"><span class="rec-dot" aria-hidden="true"></span><b id="recTime">${mmss((Date.now() - REC.t0) / 1000)}</b><span class="sub">Recording… up to ${maxMin} minutes</span>
+  if (REC.mr) return `<div class="rec-live${REC.paused ? ' paused' : ''}"><span class="rec-dot" aria-hidden="true"></span><b id="recTime">${mmss(recElapsed())}</b><span class="sub">${REC.paused ? 'Paused. Press Resume when you are ready to carry on.' : 'Recording… up to ' + maxMin + ' minutes'}</span>
+    ${typeof REC.mr.pause === 'function' ? `<button type="button" class="btn btn-line" data-rec="${REC.paused ? 'resume' : 'pause'}">${REC.paused ? 'Resume' : 'Pause'}</button>` : ''}
     <button type="button" class="btn btn-ink" data-rec="stop">Stop</button></div>`;
   if (REC.blob) return `<div class="rec-ready"><audio controls src="${REC.url}"></audio>
     <div class="sub">${REC.fileName ? esc(REC.fileName) + ' · ' : ''}${REC.secs ? mmss(REC.secs) + ' · ' : ''}${(REC.blob.size / 1048576).toFixed(1)} MB</div>
     <button type="button" class="btn btn-line btn-sm" data-rec="discard">Remove and record again</button></div>`;
   return `<div class="rec-start">${recOK() ? `<button type="button" class="btn btn-ink rec-btn" data-rec="start"><span class="rec-dot" aria-hidden="true"></span> Start recording</button>` : '<p class="sub">This browser cannot record. Upload a voice note instead.</p>'}
     <label class="btn btn-line rec-up">Upload a voice note<input type="file" id="recFile" accept="audio/*,.opus,.ogg,.m4a,.mp3,.aac,.wav,.amr,.webm" hidden></label>
-    <p class="sub rec-tip">Find a quiet place and hold the phone about a hand’s length away. Up to ${maxMin} minutes.</p></div>`;
+    <p class="sub rec-tip">Find a quiet place and hold the phone about a hand’s length away. Up to ${maxMin} minutes. You can pause and carry on.</p></div>`;
 }
 function recMount() { const b = $('recBox'); if (b) b.innerHTML = recBoxHtml(); const s = $('recSend'); if (s) s.disabled = !REC.blob || REC.sending || !!REC.mr; }
 function recSay(t, good) { const m = $('recMsg'); if (m) { m.textContent = t; m.className = 'msg' + (t ? (good ? ' good' : ' bad') : ''); } }
@@ -329,13 +331,35 @@ async function recStart() {
   mr.ondataavailable = (e) => { if (e.data && e.data.size) chunks.push(e.data); };
   mr.onstop = () => {
     stream.getTracks().forEach((t) => t.stop()); clearInterval(REC.tick);
-    const secs = Math.round((Date.now() - REC.t0) / 1000); REC.mr = null; REC.stream = null;
+    if (!REC.paused) REC.acc += Date.now() - REC.t0; const secs = Math.round(REC.acc / 1000); REC.paused = false; recWake(false); REC.mr = null; REC.stream = null;
     recSetBlob(new Blob(chunks, { type: (mr.mimeType || mime || 'audio/webm').split(';')[0] }), secs, '');
   };
-  REC.mr = mr; REC.stream = stream; REC.t0 = Date.now(); mr.start(1000);
-  REC.tick = setInterval(() => { const s = (Date.now() - REC.t0) / 1000, el = $('recTime'); if (el) el.textContent = mmss(s); if (s >= maxS && REC.mr) REC.mr.stop(); }, 500);
+  REC.mr = mr; REC.stream = stream; REC.t0 = Date.now(); REC.acc = 0; REC.paused = false; mr.start(1000); recWake(true);
+  REC.tick = setInterval(() => { const s = recElapsed(), el = $('recTime'); if (el) el.textContent = mmss(s); if (s >= maxS && REC.mr) REC.mr.stop(); }, 500);
   recMount();
 }
+const recElapsed = () => (REC.acc + (REC.paused || !REC.mr ? 0 : Date.now() - REC.t0)) / 1000;
+/* keep the screen on while recording so a long recitation is not cut off when the phone dims */
+function recWake(on) {
+  try {
+    if (!on) { if (REC.wl) REC.wl.release(); REC.wl = null; return; }
+    if (navigator.wakeLock && !REC.wl) navigator.wakeLock.request('screen').then((l) => { REC.wl = l; }).catch(() => {});
+  } catch (e) {}
+}
+function recPause() {
+  if (!REC.mr || REC.paused || REC.mr.state !== 'recording') return;
+  REC.mr.pause(); REC.acc += Date.now() - REC.t0; REC.paused = true; recWake(false); recMount();
+}
+function recResume() {
+  if (!REC.mr || !REC.paused) return;
+  REC.mr.resume(); REC.t0 = Date.now(); REC.paused = false; recWake(true); recMount();
+}
+window.addEventListener('beforeunload', (e) => { if (REC.mr) { e.preventDefault(); e.returnValue = ''; } });
+if (window.HS_I18N && HS_I18N.add) HS_I18N.add({
+  'Pause': 'إيقاف مؤقت', 'Resume': 'متابعة',
+  'Paused. Press Resume when you are ready to carry on.': 'التسجيل متوقف مؤقتًا. اضغط «متابعة» عندما تكون مستعدًا.',
+  'You can pause and carry on.': 'يمكنك الإيقاف المؤقت ثم المتابعة.'
+});
 function recFile(input) {
   const f = input.files && input.files[0]; if (!f) return;
   const maxMB = ((window.__lastData || {}).recordings || {}).maxMB || 15;
@@ -637,6 +661,8 @@ $('app').addEventListener('click', (e) => {
   const k = b.dataset.rec;
   if (k === 'start') recStart();
   else if (k === 'stop') { if (REC.mr) REC.mr.stop(); }
+  else if (k === 'pause') recPause();
+  else if (k === 'resume') recResume();
   else if (k === 'discard') { recSetBlob(null); recSay(''); }
   else if (k === 'play') recPlay(b.dataset.id, b);
   else if (k === 'withdraw') recWithdraw(b.dataset.id, b);
