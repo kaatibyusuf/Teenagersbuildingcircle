@@ -260,8 +260,14 @@ function submit_(st, p) {
   const a = assignmentsFor_(st).filter(function (x) { return x.AssignmentID === aid; })[0];
   if (!a) return { ok: false, error: 'Assignment not found.' };
   if (a.Status === 'Marked') return { ok: false, error: 'This assignment has already been marked.' };
-  const note = String(p.note || '').trim().slice(0, 2000), link = String(p.link || '').trim().slice(0, 500);
-  if (!note && !link) return { ok: false, error: 'Add a note or a link to your work.' };
+  const note = String(p.note || '').trim().slice(0, 2000);
+  let link = String(p.link || '').trim().slice(0, 500);
+  if (p.file) {   // a photo, Word document or PDF (AssignmentFiles.gs); its Drive link goes in the Link column
+    const up = af_save_(st, aid, p);
+    if (!up.ok) return up;
+    link = up.link;
+  }
+  if (!note && !link) return { ok: false, error: 'Add a note, a file or a link to your work.' };
   if (link && !/^https?:\/\//i.test(link)) return { ok: false, error: 'The link must start with http:// or https://' };
   const lock = LockService.getScriptLock();
   lock.waitLock(10000);

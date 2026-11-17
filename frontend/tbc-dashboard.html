@@ -51,6 +51,7 @@ window.PORTAL_SHELL = {
 </script>
 <script src="js/portal-shell.js" defer></script>
 <script src="js/i18n.js"></script>
+<script src="js/assign-upload.js"></script>
 <script src="js/cookie-notice.js" defer></script>
 <script src="js/chat.js" defer></script>
 <script src="js/assistant.js" defer></script>
@@ -137,7 +138,7 @@ function demoSubmit(p) {
   const d = demo(), a = d.assignments.find((x) => x.AssignmentID === p.assignmentId);
   if (!a) return { ok: false, error: 'Assignment not found.' };
   if (a.Status === 'Marked') return { ok: false, error: 'This assignment has already been marked.' };
-  a.Status = 'Submitted'; a.Submission = { Submitted: new Date().toISOString(), Note: p.note || '', Link: p.link || '', Score: '', Feedback: '', Late: false };
+  a.Status = 'Submitted'; a.Submission = { Submitted: new Date().toISOString(), Note: p.note || '', Link: p.link || (p.file ? 'https://example.com/your-file' : ''), Score: '', Feedback: '', Late: false };
   demoData = d; return demo();
 }
 async function api(id, code, action, extra) {
@@ -182,12 +183,14 @@ function assignmentHtml(a) {
       ${a.Instructions ? `<p>${esc(a.Instructions)}</p>` : ''}
       ${safeUrl(a.Link) ? `<p><a class="lnk" href="${esc(a.Link)}" target="_blank" rel="noopener">Open the resource</a></p>` : ''}
       ${marked ? `<div class="mark"><div class="k">Marked by your facilitator</div><b>${esc(sb.Score)}${a.MaxScore ? '/' + esc(a.MaxScore) : ''}</b>${sb.Feedback ? `<p>${esc(sb.Feedback)}</p>` : ''}</div>` : ''}
-      ${sb ? `<div class="mine"><div class="k">Your submission${sb.Late ? ' (late)' : ''}, ${fdate(sb.Submitted, true)}</div>${sb.Note ? `<p>${esc(sb.Note)}</p>` : ''}${safeUrl(sb.Link) ? `<p><a class="lnk" href="${esc(sb.Link)}" target="_blank" rel="noopener">Your link</a></p>` : ''}</div>` : ''}
+      ${sb ? `<div class="mine"><div class="k">Your submission${sb.Late ? ' (late)' : ''}, ${fdate(sb.Submitted, true)}</div>${sb.Note ? `<p>${esc(sb.Note)}</p>` : ''}${safeUrl(sb.Link) ? `<p><a class="lnk" href="${esc(sb.Link)}" target="_blank" rel="noopener">Your file or link</a></p>` : ''}</div>` : ''}
       ${marked ? '' : `<form class="subm" data-id="${esc(a.AssignmentID)}" novalidate>
         <label for="n-${esc(a.AssignmentID)}">${sb ? 'Change your note' : 'Your answer or a short note'}</label>
         <textarea id="n-${esc(a.AssignmentID)}" name="note" rows="3" maxlength="2000" placeholder="Write your answer or a short note">${esc(sb ? sb.Note : '')}</textarea>
         <label for="l-${esc(a.AssignmentID)}">Link to your work (optional)</label>
         <input id="l-${esc(a.AssignmentID)}" name="link" type="url" placeholder="https://..." value="${esc(sb ? sb.Link : '')}">
+        <label for="f-${esc(a.AssignmentID)}">File (optional): a photo, Word document or PDF, up to 7 MB</label>
+        <input id="f-${esc(a.AssignmentID)}" name="file" type="file" accept=".jpg,.jpeg,.png,.webp,.heic,.heif,.pdf,.docx,image/*,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
         <div class="msg" role="status"></div>
         <button class="btn btn-ink" type="submit">${sb ? 'Update submission' : 'Submit'}</button></form>`}
     </div></details>`;
@@ -334,11 +337,14 @@ $('app').addEventListener('submit', async (e) => {
   const bad = (t) => { msg.textContent = t; msg.className = 'msg bad'; };
   if (!saved) return bad('Please log in again.');
   const note = f.elements.note.value.trim(), link = f.elements.link.value.trim();
-  if (!note && !link) return bad('Add a note or a link to your work.');
+  const pick = f.elements.file && f.elements.file.files[0] || null;
+  if (!note && !link && !pick) return bad('Add a note, a file or a link to your work.');
   if (link && !safeUrl(link)) return bad('The link must start with http:// or https://');
   const label = btn.textContent; btn.disabled = true; btn.textContent = 'Sending…'; msg.textContent = ''; msg.className = 'msg';
   try {
-    const d = await api(saved.id, saved.code, 'tbc_submit', { assignmentId: id, note, link });
+    let up = {};
+    if (pick) { msg.textContent = 'Reading your file…'; try { up = await HS_UPLOAD.read(pick); } catch (er) { btn.disabled = false; btn.textContent = label; return bad(er.message); } msg.textContent = ''; }
+    const d = await api(saved.id, saved.code, 'tbc_submit', Object.assign({ assignmentId: id, note, link }, up));
     if (d.ok) {
       render(d);
       const nf = [...document.querySelectorAll('form.subm')].find((x) => x.dataset.id === id);
