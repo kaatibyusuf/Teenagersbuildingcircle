@@ -233,3 +233,14 @@ test('every visible English phrase on the journal page has an Arabic translation
   const miss = [...body.matchAll(/>([^<>]*[A-Za-z][^<>]*)</g)].map((m) => m[1].replace(/\s+/g, ' ').trim()).filter((t) => t && !dict[t] && t !== 'Search');   // 'Search' comes from the site-wide common.js
   assert.deepEqual(miss, []);
 });
+
+test('the guidelines reveal on scroll, safely, and the submission page is styled separately', () => {
+  const html = fs.readFileSync(path.join(FE, 'journal-submit.html'), 'utf8'), css = fs.readFileSync(path.join(FE, 'css', 'journal-submit.css'), 'utf8'), js = fs.readFileSync(path.join(FE, 'js', 'journal.js'), 'utf8');
+  assert.ok(html.includes('css/journal-submit.css'));
+  assert.ok((html.match(/class="jn-rule jn-rv"/g) || []).length === 12 && (html.match(/<li class="jn-rv">/g) || []).length === 6);
+  assert.ok(!/<details/.test(html));
+  assert.ok(/IntersectionObserver/.test(js) && /prefers-reduced-motion/.test(js) && /prefers-reduced-motion/.test(css));
+  assert.ok(/html\.rv \.jn-rv \{[^}]*opacity: 0/.test(css) && !/\.jn-rv \{[^}]*opacity: 0/.test(css.replace(/html\.rv \.jn-rv[^{]*\{[^}]*\}/g, '')));
+  assert.ok(!/gradient/.test(css));
+  assert.ok(!/border-(top|bottom)\s*:\s*1px/.test(css));
+});

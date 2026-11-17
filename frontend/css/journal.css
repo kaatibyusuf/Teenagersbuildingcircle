@@ -158,93 +158,13 @@ html[lang="ar"] .jn-f input, html[lang="ar"] .jn-f select { font-family: Amiri, 
 html[lang="ar"].page-journal .jn h1, html[lang="ar"].page-journal .jn h2, html[lang="ar"].page-journal .jn h3, html[lang="ar"].page-journal .jn-reader h2 { font-family: Amiri, "Noto Naskh Arabic", serif; font-weight: 700; }
 .page-journal .jn h3.jn-ar, .page-journal .jn-reader h2.jn-ar { font-family: Amiri, "Noto Naskh Arabic", serif; font-weight: 700; }
 
-/* submission page */
-.jn-mast-sub { padding-bottom: 56px; }
-.jn-mast-sub h1 { margin-bottom: 14px; }
-.jn-status { display: inline-flex; align-items: center; gap: 10px; margin: 0 0 22px; padding: 6px 14px; border: 1px solid var(--jn-ink); border-radius: 999px; font: 600 13px Inter, sans-serif; letter-spacing: .04em; }
-.jn-status i { width: 9px; height: 9px; border-radius: 50%; background: #1B6B3A; display: inline-block; }
-html[lang="ar"] .jn-status { font-family: Amiri, "Noto Naskh Arabic", serif; font-size: 17px; letter-spacing: 0; }
-.jn-alt { background: var(--jn-tint); }
-.jn-narrow { max-width: 820px; }
-.jn-facts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0 48px; margin: 0; }
-.jn-facts > div { padding: 18px 0; border-bottom: 1px solid var(--jn-rule); }
-.jn-facts dt { font: 600 13px Inter, sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--jn-blue); margin: 0 0 6px; }
-.jn-facts dd { margin: 0; line-height: 1.7; }
-html[lang="ar"] .jn-facts dt { font-family: Amiri, "Noto Naskh Arabic", serif; font-size: 17px; letter-spacing: 0; text-transform: none; font-weight: 700; }
-.jn-types { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px 32px; }
-.jn-types h3 { margin: 0 0 8px; font-size: 24px; line-height: 1.3; }
-.jn-types p { margin: 0; color: var(--jn-muted); line-height: 1.7; }
-.jn-steps-row { grid-template-columns: repeat(4, 1fr); gap: 28px; margin-top: 0; }
-.jn-ticks { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
-.jn-ticks li { position: relative; padding-inline-start: 36px; line-height: 1.7; }
-.jn-ticks li::before { content: ""; position: absolute; inset-inline-start: 0; top: 4px; width: 18px; height: 18px; border: 1.5px solid var(--jn-ink); border-radius: 3px; }
-.jn-req { margin: 0 0 16px; color: var(--jn-muted); font-size: 14px; }
-.jn-submit .jn-head { border-bottom-color: var(--jn-ink); }
-@media (max-width: 860px) {
-  .jn-facts, .jn-types { grid-template-columns: 1fr; }
-  .jn-steps-row { grid-template-columns: 1fr; }
-}
-
-.jn-note { margin: 28px 0 0; color: var(--jn-muted); font-style: italic; }
-html[lang="ar"] .jn-note { font-style: normal; }
-.jn-sec > .jn-wrap > .jn-lead { margin-top: -8px; }
-.jn-prizes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 8px; }
-.jn-prize { background: #fff; border: 1px solid var(--jn-ink); padding: 28px 24px; }
-.jn-prize p { margin: 0; }
-.jn-place { font: 600 13px Inter, sans-serif; letter-spacing: .1em; text-transform: uppercase; color: var(--jn-blue); }
-.jn-amt { font: 500 44px/1.2 Newsreader, Georgia, serif; margin: 10px 0 4px !important; direction: ltr; text-align: start; }
-.jn-cert { color: var(--jn-muted); }
-html[lang="ar"] .jn-place { font-family: Amiri, "Noto Naskh Arabic", serif; font-size: 18px; letter-spacing: 0; text-transform: none; font-weight: 700; }
-html[lang="ar"] .jn-amt { text-align: end; font-family: Newsreader, Georgia, serif; }
-.jn-plain { background: var(--jn-paper); }
-.jn-hint { color: var(--jn-muted); font-size: 13.5px; line-height: 1.6; }
-.jn-f textarea.jn-bio-in { font-family: Inter, system-ui, sans-serif; font-size: 15px; line-height: 1.7; }
-html[lang="ar"] .jn-f textarea.jn-bio-in { font-family: Amiri, "Noto Naskh Arabic", serif; font-size: 19px; }
-html[lang="ar"] .jn-hint { font-size: 16px; }
 .jn-bio { white-space: pre-line; }
-@media (max-width: 860px) { .jn-prizes { grid-template-columns: 1fr; } }
-.jn-timeline { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--jn-rule); }
-.jn-timeline li { display: grid; grid-template-columns: 280px 1fr; gap: 8px 32px; padding: 22px 0; border-bottom: 1px solid var(--jn-rule); }
-.jn-when { margin: 0; font: 600 15px Inter, sans-serif; color: var(--jn-blue); }
-html[lang="ar"] .jn-when { font-family: Amiri, "Noto Naskh Arabic", serif; font-size: 19px; font-weight: 700; }
-.jn-timeline h3 { margin: 0 0 6px; font-size: 24px; line-height: 1.3; }
-.jn-timeline p { margin: 0; color: var(--jn-muted); line-height: 1.7; }
-.jn-timeline .jn-when { color: var(--jn-blue); }
-@media (max-width: 860px) { .jn-timeline li { grid-template-columns: 1fr; } }
-
-/* submission page: no rules, compact, expandable guidelines */
-.page-journal-submit .jn-mast { border-bottom: 0; padding: 112px 0 32px; }
-.page-journal-submit .jn-tight { padding: 28px 0; }
-.page-journal-submit .jn-head { border-bottom: 0; padding-bottom: 0; margin-bottom: 16px; }
-.page-journal-submit .jn-head h2 { font-size: clamp(28px, 3.4vw, 38px); }
-.page-journal-submit .jn-lead { font-size: 17px; margin: 0 0 18px; }
-.page-journal-submit .jn-facts { grid-template-columns: repeat(3, 1fr); gap: 16px; }
-.page-journal-submit .jn-facts > div { border: 0; padding: 20px; background: var(--jn-tint); }
-.page-journal-submit .jn-facts dd { font-size: 15px; line-height: 1.6; }
-.page-journal-submit .jn-prizes { gap: 16px; }
-.page-journal-submit .jn-prize { border: 0; background: var(--jn-tint); padding: 22px 24px; }
-.page-journal-submit .jn-amt { font-size: 38px; }
-.page-journal-submit .jn-timeline { border: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-.page-journal-submit .jn-timeline li { display: block; border: 0; padding: 20px; background: var(--jn-tint); }
-.page-journal-submit .jn-timeline h3 { font-size: 21px; margin: 6px 0 6px; }
-.page-journal-submit .jn-timeline p { font-size: 15px; line-height: 1.6; }
-.page-journal-submit .jn-types { gap: 24px 28px; }
-.page-journal-submit .jn-types h3 { font-size: 21px; margin-bottom: 6px; }
-.page-journal-submit .jn-types p { font-size: 15px; line-height: 1.6; }
-.page-journal-submit .jn-types .jn-len { margin-top: 8px; color: var(--jn-blue); font-weight: 600; font-size: 14px; }
-.page-journal-submit .jn-note { margin: 20px 0 0; font-style: normal; font-size: 15px; }
-.jn-acc { background: var(--jn-tint); margin: 0 0 12px; }
-.jn-acc summary { list-style: none; cursor: pointer; padding: 18px 22px; font: 500 24px/1.3 Newsreader, Georgia, serif; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
-.jn-acc summary::-webkit-details-marker { display: none; }
-.jn-acc summary::after { content: "+"; font: 400 28px/1 Inter, sans-serif; }
-.jn-acc[open] summary::after { content: "\2212"; }
-.jn-acc summary:focus-visible { outline: 2px solid var(--jn-blue); outline-offset: -2px; }
-.jn-acc > :not(summary) { margin-inline: 22px; }
-.jn-acc > :last-child { margin-bottom: 24px; }
-html[lang="ar"] .jn-acc summary { font-family: Amiri, "Noto Naskh Arabic", serif; font-weight: 700; font-size: 26px; }
-.page-journal-submit .jn-submit { padding-top: 28px; }
-.page-journal-submit .jn-form { border: 0; }
-@media (max-width: 860px) {
-  .page-journal-submit .jn-facts, .page-journal-submit .jn-timeline { grid-template-columns: 1fr; }
-  .page-journal-submit .jn-mast { padding: 96px 0 24px; }
-}
+/* journal page: no rules either; rows become flat tinted cards */
+.jn-mast { border-bottom: 0; }
+.jn-head { border-bottom: 0; padding-bottom: 0; margin-bottom: 24px; }
+.jn-list { border-top: 0; margin-top: 24px; display: grid; gap: 12px; }
+.jn-item { border-bottom: 0; background: var(--jn-tint); padding: 24px 28px; }
+.jn-text { border-top: 0; border-bottom: 0; padding: 8px 0; }
+.jn-tag.jn-feat-tag { border-color: var(--jn-ink); }
+.jn-item .jn-tag:not(.jn-feat-tag) { border-color: transparent; background: #fff; }
+@media (max-width: 860px) { .jn-item { padding: 20px; } }

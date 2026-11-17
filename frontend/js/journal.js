@@ -172,6 +172,18 @@
     }).catch(function () { say(MSG.net, 'bad'); }).then(function () { btn.disabled = false; });
   }
 
+  /* guidelines fade in one by one as they are scrolled into view; without the observer (or with reduced motion) everything just shows */
+  function reveal() {
+    var els = document.querySelectorAll('.jn-rv');
+    if (!els.length) return;
+    var still = typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!('IntersectionObserver' in window) || still) { for (var i = 0; i < els.length; i++) els[i].classList.add('in'); return; }
+    document.documentElement.classList.add('rv');
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.25, rootMargin: '0px 0px -8% 0px' });
+    for (var j = 0; j < els.length; j++) io.observe(els[j]);
+  }
   function on(id, ev, fn) { var n = $(id); if (n) n.addEventListener(ev, fn); }
   function init() {
     if ($('jnGenre')) fill($('jnGenre'), GENRES);
@@ -185,6 +197,7 @@
     on('jnClose', 'click', closeReader);
     on('jnReader', 'click', function (e) { if (e.target === $('jnReader')) closeReader(); });
     if ($('jnList')) load();
+    reveal();
   }
   if (typeof document !== 'undefined') { if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init(); }
   if (typeof module !== 'undefined' && module.exports) module.exports = { GENRES: GENRES.map(function (g) { return g[0]; }), PROGRAMMES: PROGRAMMES, MAX_BYTES: MAX_BYTES, MAX_TEXT: MAX_TEXT, MIN_TEXT: MIN_TEXT, BIO_MIN: BIO_MIN, BIO_MAX: BIO_MAX, wordCount: wordCount, norm: norm, arabicShare: arabicShare };
