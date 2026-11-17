@@ -3,7 +3,7 @@
 (function () {
   'use strict';
   var API_URL = 'https://script.google.com/macros/s/AKfycby0AsifBuB_Ad7g1SjDXCipaDU27-BrzYWf67muw5jeY_C0_0uz8AhQYYXdiNRQhvqX/exec';
-  var MAX_BYTES = 7 * 1024 * 1024, MAX_TEXT = 20000, MIN_TEXT = 40;
+  var MAX_BYTES = 7 * 1024 * 1024, MAX_TEXT = 20000, MIN_TEXT = 40, BIO_MIN = 30, BIO_MAX = 200;
   /* [English name used by the server, Arabic name shown large on the cover] */
   var GENRES = [['Poem', 'قصيدة'], ['Short story', 'قصة قصيرة'], ['Essay', 'مقال'], ['Reflection', 'خاطرة'], ['Translation', 'ترجمة'], ['Research paper', 'بحث']];
   var PROGRAMMES = ['Madrasah', 'Academy', 'Skills School', 'Teenagers Building Circle', 'Alumni', 'Guest'];
@@ -15,7 +15,9 @@
     prog: 'Choose your programme, or Guest.',
     short: 'Paste your full text (at least 40 characters).',
     arabic: 'The work must be written in Arabic.',
-    pdf: 'The attachment must be a PDF.',
+    pdf: 'The attachment must be a Word document (.docx).',
+    biolow: 'Write a short bio about yourself (at least 30 words).',
+    biohigh: 'Your bio is over 200 words. Please shorten it.',
     big: 'That file is too large. The limit is 7 MB.',
     own: 'Please confirm this is your own work and that we may publish it.',
     sending: 'Sending…',
@@ -40,6 +42,7 @@
   function genreAr(v) { for (var i = 0; i < GENRES.length; i++) if (GENRES[i][0] === v) return GENRES[i][1]; return v; }
   /* search ignores vowel marks and the different forms of alef, ya and ta marbuta */
   function norm(s) { return String(s || '').toLowerCase().replace(/[ً-ٰٟـ]/g, '').replace(/[أإآٱ]/g, 'ا').replace(/ى/g, 'ي').replace(/ة/g, 'ه'); }
+  function wordCount(s) { var t = String(s || '').trim(); return t ? t.split(/\s+/).length : 0; }
   function arabicShare(s) {
     var ar = (s.match(/[؀-ۿݐ-ݿࢠ-ࣿﭐ-﷿ﹰ-﻿]/g) || []).length, la = (s.match(/[A-Za-z]/g) || []).length;
     return ar + la === 0 ? 0 : ar / (ar + la);
@@ -140,15 +143,16 @@
   function mark(id, bad) { var f = $(id); if (f) { if (bad) f.setAttribute('aria-invalid', 'true'); else f.removeAttribute('aria-invalid'); } }
   function check() {
     var v = { title: $('fTitle').value.trim(), author: $('fAuthor').value.trim(), email: $('fEmail').value.trim(), genre: $('fGenre').value, programme: $('fProg').value,
-              text: $('fText').value.trim(), file: $('fFile').files[0] || null, own: $('fOwn').checked };
+              text: $('fText').value.trim(), bio: $('fBio').value.trim(), file: $('fFile').files[0] || null, own: $('fOwn').checked };
     var rules = [
       ['fTitle', v.title.length >= 3, MSG.title], ['fAuthor', v.author.length >= 2, MSG.author],
       ['fEmail', /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v.email), MSG.email], ['fGenre', !!v.genre, MSG.genre], ['fProg', !!v.programme, MSG.prog],
+      ['fBio', wordCount(v.bio) >= BIO_MIN, MSG.biolow], ['fBio', wordCount(v.bio) <= BIO_MAX, MSG.biohigh],
       ['fText', v.text.length >= MIN_TEXT, MSG.short],
       ['fText', arabicShare(v.text) >= (v.genre === 'Translation' ? 0.2 : 0.5), MSG.arabic],
-      ['fFile', !v.file || /\.pdf$/i.test(v.file.name), MSG.pdf], ['fFile', !v.file || v.file.size <= MAX_BYTES, MSG.big], ['fOwn', v.own, MSG.own]
+      ['fFile', !v.file || /\.docx$/i.test(v.file.name), MSG.pdf], ['fFile', !v.file || v.file.size <= MAX_BYTES, MSG.big], ['fOwn', v.own, MSG.own]
     ];
-    ['fTitle', 'fAuthor', 'fEmail', 'fGenre', 'fProg', 'fText', 'fFile'].forEach(function (id) { mark(id, false); });
+    ['fTitle', 'fAuthor', 'fEmail', 'fGenre', 'fProg', 'fBio', 'fText', 'fFile'].forEach(function (id) { mark(id, false); });
     for (var i = 0; i < rules.length; i++) { if (!rules[i][1]) { mark(rules[i][0], true); $(rules[i][0]).focus(); return { error: rules[i][2] }; } }
     return { v: v };
   }
@@ -159,10 +163,10 @@
     var v = c.v, btn = $('jnSend');
     btn.disabled = true; say(v.file ? MSG.uploading : MSG.sending);
     var base = { action: 'jrn_submit', title: v.title, author: v.author, email: v.email, genre: v.genre, programme: v.programme, studentId: $('fSid').value.trim(), text: $('fText').value,
-                 bio: $('fBio').value.trim(), own: true, website: $('fWeb').value, source: 'website' };
-    var go = v.file ? toBase64(v.file).then(function (b64) { base.file = b64; base.ext = 'pdf'; return base; }) : Promise.resolve(base);
+                 bio: v.bio, own: true, website: $('fWeb').value, source: 'website' };
+    var go = v.file ? toBase64(v.file).then(function (b64) { base.file = b64; base.ext = 'docx'; return base; }) : Promise.resolve(base);
     go.then(post).then(function (j) {
-      if (j && j.ok) { $('jnForm').reset(); $('fCount').textContent = '0 / ' + MAX_TEXT; say(MSG.done, 'good'); }
+      if (j && j.ok) { $('jnForm').reset(); $('fCount').textContent = '0 / ' + MAX_TEXT; $('fBioCount').textContent = '0 / ' + BIO_MAX; say(MSG.done, 'good'); }
       else if (j && j.error) sayRaw(j.error);
       else say(MSG.fail, 'bad');
     }).catch(function () { say(MSG.net, 'bad'); }).then(function () { btn.disabled = false; });
@@ -175,6 +179,7 @@
     if ($('fGenre')) fill($('fGenre'), GENRES);
     if ($('fProg')) fill($('fProg'), PROGRAMMES);
     ['jnQ', 'jnGenre', 'jnProg'].forEach(function (id) { on(id, 'input', render); on(id, 'change', render); });
+    on('fBio', 'input', function () { $('fBioCount').textContent = wordCount($('fBio').value) + ' / ' + BIO_MAX; });
     on('fText', 'input', function () { $('fCount').textContent = $('fText').value.length + ' / ' + MAX_TEXT; });
     on('jnForm', 'submit', submit);
     on('jnClose', 'click', closeReader);
@@ -182,5 +187,5 @@
     if ($('jnList')) load();
   }
   if (typeof document !== 'undefined') { if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init(); }
-  if (typeof module !== 'undefined' && module.exports) module.exports = { GENRES: GENRES.map(function (g) { return g[0]; }), PROGRAMMES: PROGRAMMES, MAX_BYTES: MAX_BYTES, MAX_TEXT: MAX_TEXT, MIN_TEXT: MIN_TEXT, norm: norm, arabicShare: arabicShare };
+  if (typeof module !== 'undefined' && module.exports) module.exports = { GENRES: GENRES.map(function (g) { return g[0]; }), PROGRAMMES: PROGRAMMES, MAX_BYTES: MAX_BYTES, MAX_TEXT: MAX_TEXT, MIN_TEXT: MIN_TEXT, BIO_MIN: BIO_MIN, BIO_MAX: BIO_MAX, wordCount: wordCount, norm: norm, arabicShare: arabicShare };
 })();

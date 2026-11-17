@@ -184,3 +184,67 @@ html[lang="ar"] .jn-facts dt { font-family: Amiri, "Noto Naskh Arabic", serif; f
   .jn-facts, .jn-types { grid-template-columns: 1fr; }
   .jn-steps-row { grid-template-columns: 1fr; }
 }
+
+.jn-note { margin: 28px 0 0; color: var(--jn-muted); font-style: italic; }
+html[lang="ar"] .jn-note { font-style: normal; }
+.jn-sec > .jn-wrap > .jn-lead { margin-top: -8px; }
+.jn-prizes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 8px; }
+.jn-prize { background: #fff; border: 1px solid var(--jn-ink); padding: 28px 24px; }
+.jn-prize p { margin: 0; }
+.jn-place { font: 600 13px Inter, sans-serif; letter-spacing: .1em; text-transform: uppercase; color: var(--jn-blue); }
+.jn-amt { font: 500 44px/1.2 Newsreader, Georgia, serif; margin: 10px 0 4px !important; direction: ltr; text-align: start; }
+.jn-cert { color: var(--jn-muted); }
+html[lang="ar"] .jn-place { font-family: Amiri, "Noto Naskh Arabic", serif; font-size: 18px; letter-spacing: 0; text-transform: none; font-weight: 700; }
+html[lang="ar"] .jn-amt { text-align: end; font-family: Newsreader, Georgia, serif; }
+.jn-plain { background: var(--jn-paper); }
+.jn-hint { color: var(--jn-muted); font-size: 13.5px; line-height: 1.6; }
+.jn-f textarea.jn-bio-in { font-family: Inter, system-ui, sans-serif; font-size: 15px; line-height: 1.7; }
+html[lang="ar"] .jn-f textarea.jn-bio-in { font-family: Amiri, "Noto Naskh Arabic", serif; font-size: 19px; }
+html[lang="ar"] .jn-hint { font-size: 16px; }
+.jn-bio { white-space: pre-line; }
+@media (max-width: 860px) { .jn-prizes { grid-template-columns: 1fr; } }
+.jn-timeline { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--jn-rule); }
+.jn-timeline li { display: grid; grid-template-columns: 280px 1fr; gap: 8px 32px; padding: 22px 0; border-bottom: 1px solid var(--jn-rule); }
+.jn-when { margin: 0; font: 600 15px Inter, sans-serif; color: var(--jn-blue); }
+html[lang="ar"] .jn-when { font-family: Amiri, "Noto Naskh Arabic", serif; font-size: 19px; font-weight: 700; }
+.jn-timeline h3 { margin: 0 0 6px; font-size: 24px; line-height: 1.3; }
+.jn-timeline p { margin: 0; color: var(--jn-muted); line-height: 1.7; }
+.jn-timeline .jn-when { color: var(--jn-blue); }
+@media (max-width: 860px) { .jn-timeline li { grid-template-columns: 1fr; } }
+
+/* submission page: no rules, compact, expandable guidelines */
+.page-journal-submit .jn-mast { border-bottom: 0; padding: 112px 0 32px; }
+.page-journal-submit .jn-tight { padding: 28px 0; }
+.page-journal-submit .jn-head { border-bottom: 0; padding-bottom: 0; margin-bottom: 16px; }
+.page-journal-submit .jn-head h2 { font-size: clamp(28px, 3.4vw, 38px); }
+.page-journal-submit .jn-lead { font-size: 17px; margin: 0 0 18px; }
+.page-journal-submit .jn-facts { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.page-journal-submit .jn-facts > div { border: 0; padding: 20px; background: var(--jn-tint); }
+.page-journal-submit .jn-facts dd { font-size: 15px; line-height: 1.6; }
+.page-journal-submit .jn-prizes { gap: 16px; }
+.page-journal-submit .jn-prize { border: 0; background: var(--jn-tint); padding: 22px 24px; }
+.page-journal-submit .jn-amt { font-size: 38px; }
+.page-journal-submit .jn-timeline { border: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.page-journal-submit .jn-timeline li { display: block; border: 0; padding: 20px; background: var(--jn-tint); }
+.page-journal-submit .jn-timeline h3 { font-size: 21px; margin: 6px 0 6px; }
+.page-journal-submit .jn-timeline p { font-size: 15px; line-height: 1.6; }
+.page-journal-submit .jn-types { gap: 24px 28px; }
+.page-journal-submit .jn-types h3 { font-size: 21px; margin-bottom: 6px; }
+.page-journal-submit .jn-types p { font-size: 15px; line-height: 1.6; }
+.page-journal-submit .jn-types .jn-len { margin-top: 8px; color: var(--jn-blue); font-weight: 600; font-size: 14px; }
+.page-journal-submit .jn-note { margin: 20px 0 0; font-style: normal; font-size: 15px; }
+.jn-acc { background: var(--jn-tint); margin: 0 0 12px; }
+.jn-acc summary { list-style: none; cursor: pointer; padding: 18px 22px; font: 500 24px/1.3 Newsreader, Georgia, serif; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+.jn-acc summary::-webkit-details-marker { display: none; }
+.jn-acc summary::after { content: "+"; font: 400 28px/1 Inter, sans-serif; }
+.jn-acc[open] summary::after { content: "\2212"; }
+.jn-acc summary:focus-visible { outline: 2px solid var(--jn-blue); outline-offset: -2px; }
+.jn-acc > :not(summary) { margin-inline: 22px; }
+.jn-acc > :last-child { margin-bottom: 24px; }
+html[lang="ar"] .jn-acc summary { font-family: Amiri, "Noto Naskh Arabic", serif; font-weight: 700; font-size: 26px; }
+.page-journal-submit .jn-submit { padding-top: 28px; }
+.page-journal-submit .jn-form { border: 0; }
+@media (max-width: 860px) {
+  .page-journal-submit .jn-facts, .page-journal-submit .jn-timeline { grid-template-columns: 1fr; }
+  .page-journal-submit .jn-mast { padding: 96px 0 24px; }
+}

@@ -8,13 +8,36 @@ const page = require('../frontend/js/journal.js');
 
 const FE = path.join(__dirname, '..', 'frontend');
 const POEM = 'يا ليلُ طُلْ أو لا تَطُلْ\nلا بُدَّ للفجرِ أن يُطِلّْ\n\nوالصبحُ يأتي على مهلٍ\nكما تأتي الأمنياتُ';
-const pdf = (n) => Buffer.concat([Buffer.from('%PDF-1.4\n'), Buffer.alloc(n || 3000, 48)]).toString('base64');
-const good = (o) => Object.assign({ action: 'jrn_submit', title: 'ليلٌ وفجر', author: 'عائشة يوسف', email: 'a@example.com', programme: 'Madrasah', genre: 'Poem', text: POEM, own: true }, o || {});
+const BIO = 'I am a quiet person who likes to listen before I speak. I enjoy long walks, tea with my grandmother, and fixing small things around the house. I get nervous in crowds but I love one good conversation. I am learning to be more patient every day.';
+function crc32(buf) { let c, crc = -1; for (let i = 0; i < buf.length; i++) { c = (crc ^ buf[i]) & 255; for (let k = 0; k < 8; k++) c = c & 1 ? (c >>> 1) ^ 0xEDB88320 : c >>> 1; crc = (crc >>> 8) ^ c; } return (crc ^ -1) >>> 0; }
+/* a minimal real zip with the entries given (stored, not compressed): enough to look like a Word file */
+function zip(entries) {
+  const parts = [], central = []; let offset = 0;
+  entries.forEach(([name, data]) => {
+    const n = Buffer.from(name), d = Buffer.from(data), crc = crc32(d), h = Buffer.alloc(30);
+    h.writeUInt32LE(0x04034b50, 0); h.writeUInt16LE(20, 4); h.writeUInt32LE(crc, 14); h.writeUInt32LE(d.length, 18); h.writeUInt32LE(d.length, 22); h.writeUInt16LE(n.length, 26);
+    parts.push(h, n, d);
+    const c = Buffer.alloc(46); c.writeUInt32LE(0x02014b50, 0); c.writeUInt16LE(20, 4); c.writeUInt16LE(20, 6); c.writeUInt32LE(crc, 16); c.writeUInt32LE(d.length, 20); c.writeUInt32LE(d.length, 24); c.writeUInt16LE(n.length, 28); c.writeUInt32LE(offset, 42);
+    central.push(c, n); offset += 30 + n.length + d.length;
+  });
+  const cd = Buffer.concat(central), end = Buffer.alloc(22); end.writeUInt32LE(0x06054b50, 0); end.writeUInt16LE(entries.length, 8); end.writeUInt16LE(entries.length, 10); end.writeUInt32LE(cd.length, 12); end.writeUInt32LE(offset, 16);
+  return Buffer.concat(parts.concat([cd, end]));
+}
+const docx = (n) => zip([['[Content_Types].xml', '<Types/>'], ['word/document.xml', '<w:document>' + 'x'.repeat(n || 3000) + '</w:document>']]).toString('base64');
+const fakeZipNoDoc = () => zip([['readme.txt', 'x'.repeat(3000)]]).toString('base64');
+const good = (o) => Object.assign({ action: 'jrn_submit', title: 'ليلٌ وفجر', author: 'عائشة يوسف', email: 'a@example.com', programme: 'Madrasah', genre: 'Poem', text: POEM, own: true, bio: BIO }, o || {});
 
 function envWithDrive() {
   const env = createEnv(), files = [];
   env.ctx.Utilities.base64Decode = (s) => Array.from(Buffer.from(s, 'base64')).map((b) => (b > 127 ? b - 256 : b));
   env.ctx.Utilities.newBlob = (bytes, mime, name) => ({ bytes, mime, name });
+  env.ctx.Utilities.unzip = (blob) => {
+    const b = Buffer.from(blob.bytes.map((x) => x & 255)), out = [];
+    let i = 0;
+    while (i + 30 <= b.length && b.readUInt32LE(i) === 0x04034b50) { const size = b.readUInt32LE(i + 18), nl = b.readUInt16LE(i + 26), name = b.slice(i + 30, i + 30 + nl).toString(); out.push({ getName: () => name }); i += 30 + nl + size; }
+    if (!out.length) throw new Error('not a zip');
+    return out;
+  };
   env.ctx.Session.getEffectiveUser = () => ({ getEmail: () => 'owner@example.com' });
   const folder = { getId: () => 'FOLDER1', createFile: (b) => { const f = { id: 'F' + (files.length + 1), blob: b, sharing: null, getId() { return this.id; }, setDescription() {}, setSharing(a, p) { this.sharing = [a, p]; } }; files.push(f); return f; } };
   env.ctx.DriveApp = { getFoldersByName: () => ({ hasNext: () => false }), createFolder: () => folder, getFolderById: () => folder, getFileById: (id) => files.filter((f) => f.id === id)[0],
@@ -49,9 +72,9 @@ test('nothing is public until approved; then the list shows an excerpt and the r
   assert.ok(!JSON.stringify(list).includes('a@example.com') && !JSON.stringify(got).includes('a@example.com'));
 });
 
-test('an attached PDF is private until approval, then shared and linked', () => {
+test('an attached Word document is private until approval, then shared and linked', () => {
   const env = envWithDrive();
-  const id = send(env, good({ file: pdf(), ext: 'pdf' })).id;
+  const id = send(env, good({ file: docx(), ext: 'docx' })).id;
   assert.equal(env.files_.length, 1); assert.equal(env.files_[0].sharing, null);
   assert.equal(send(env, { action: 'jrn_get', id }).ok, false);
   approve(env, 0);
@@ -75,13 +98,25 @@ test('a translation may be partly English, but a poem must be mostly Arabic', ()
   assert.equal(send(env, good({ genre: 'Poem', text: mixed, email: 'p@example.com' })).ok, false);
 });
 
-test('PDF checks: only real PDFs, not empty, not too large', () => {
+test('attachment checks: only real Word documents, not empty, not too large', () => {
   const env = envWithDrive();
-  assert.match(send(env, good({ file: pdf(), ext: 'docx' })).error, /PDF/);
-  assert.match(send(env, good({ file: Buffer.from('MZ' + 'x'.repeat(3000)).toString('base64'), ext: 'pdf' })).error, /not a real PDF/);
-  assert.match(send(env, good({ file: pdf(50), ext: 'pdf' })).error, /empty/);
-  assert.match(send(env, good({ file: pdf(8 * 1024 * 1024), ext: 'pdf' })).error, /too large/);
+  assert.match(send(env, good({ file: docx(), ext: 'pdf' })).error, /Word document/);
+  assert.match(send(env, good({ file: Buffer.from('%PDF-1.4' + 'x'.repeat(3000)).toString('base64'), ext: 'docx' })).error, /not a real Word document/);
+  assert.match(send(env, good({ file: fakeZipNoDoc(), ext: 'docx' })).error, /not a real Word document/);
+  assert.match(send(env, good({ file: docx(50).slice(0, 40), ext: 'docx' })).error, /empty|not a real/);
+  assert.match(send(env, good({ file: docx(8 * 1024 * 1024), ext: 'docx' })).error, /too large/);
   assert.equal(env.files_.length, 0);
+});
+
+test('the bio is required, 30 to 200 words, and kept as one paragraph', () => {
+  const env = envWithDrive();
+  assert.match(send(env, good({ bio: '' })).error, /bio/);
+  assert.match(send(env, good({ bio: 'I am kind and quiet.' })).error, /at least 30 words/);
+  assert.match(send(env, good({ bio: 'word '.repeat(201) })).error, /over 200 words/);
+  assert.equal(send(env, good({ bio: 'word '.repeat(200) })).ok, true);
+  assert.equal(send(env, good({ email: 'b@example.com', bio: BIO.replace('. ', '.\n\n') })).ok, true);
+  assert.ok(!/\n/.test(rows(env)[1].Bio));
+  assert.equal(page.wordCount(BIO), BIO.split(' ').length);
 });
 
 test('spam protection: honeypot is silent, and one email cannot flood the sheet', () => {
@@ -107,6 +142,7 @@ test('doPost routes jrn_ actions, and the old research route is gone', () => {
 test('the page and the server use the same lists and limits', () => {
   const env = createEnv();
   assert.deepEqual(page.GENRES, env.run('JR_GENRES')); assert.deepEqual(page.PROGRAMMES, env.run('JR_PROGRAMMES'));
+  assert.equal(page.BIO_MIN, env.run('JR_BIO_MIN')); assert.equal(page.BIO_MAX, env.run('JR_BIO_MAX'));
   assert.equal(page.MAX_BYTES, env.run('JR_MAX_BYTES')); assert.equal(page.MAX_TEXT, env.run('JR_MAX_TEXT')); assert.equal(page.MIN_TEXT, env.run('JR_MIN_TEXT'));
 });
 
@@ -152,8 +188,8 @@ test('every genre has a cover photo and a matching style rule', () => {
 test('the submission page has the guidelines, the form, and Arabic for all of it', () => {
   const html = fs.readFileSync(path.join(FE, 'journal-submit.html'), 'utf8');
   assert.match(html, /<html lang="en" class="site page-journal-submit page-journal">/);
-  ['jnForm', 'fTitle', 'fAuthor', 'fEmail', 'fGenre', 'fProg', 'fSid', 'fText', 'fBio', 'fFile', 'fOwn', 'fWeb', 'jnSend', 'jnMsg', 'fCount'].forEach((id) => assert.ok(html.includes('id="' + id + '"'), id));
-  ['glance', 'types', 'how', 'guidelines', 'before', 'form'].forEach((id) => assert.ok(html.includes('id="' + id + '"'), id));
+  ['jnForm', 'fTitle', 'fAuthor', 'fEmail', 'fGenre', 'fProg', 'fSid', 'fText', 'fBio', 'fBioCount', 'fFile', 'fOwn', 'fWeb', 'jnSend', 'jnMsg', 'fCount'].forEach((id) => assert.ok(html.includes('id="' + id + '"'), id));
+  ['glance', 'prizes', 'types', 'length', 'timelines', 'guidelines', 'seek', 'before', 'form'].forEach((id) => assert.ok(html.includes('id="' + id + '"'), id));
   assert.ok(html.includes('js/journal.js') && html.includes('js/i18n.js') && !/gradient/.test(html));
   const dict = {};
   vmRun(fs.readFileSync(path.join(FE, 'js', 'lang', 'ar', 'journal-submit.js'), 'utf8'), dict);
@@ -170,4 +206,30 @@ test('the submission page has the guidelines, the form, and Arabic for all of it
 test('the spam-trap field is hidden whatever it sits inside', () => {
   const css = fs.readFileSync(path.join(FE, 'css', 'journal.css'), 'utf8');
   assert.match(css, /^\.jn-hp \{[^}]*clip-path/m);
+});
+
+test('the prizes and the Word-only rule are on the page', () => {
+  const html = fs.readFileSync(path.join(FE, 'journal-submit.html'), 'utf8');
+  ['₦50,000', '₦30,000', '₦20,000'].forEach((x) => assert.ok(html.includes(x), x));
+  assert.equal((html.match(/jn-cert">and a certificate/g) || []).length, 3);
+  assert.ok(html.includes('accept=".docx,') && !/pdf/i.test(html.slice(html.indexOf('<main'), html.indexOf('</main>'))));
+});
+
+test('the timelines are real dates in 2027 and in order', () => {
+  const html = fs.readFileSync(path.join(FE, 'journal-submit.html'), 'utf8');
+  const when = [...html.matchAll(/class="jn-when">([^<]+)</g)].map((m) => m[1]);
+  assert.equal(when.length, 6);
+  const dates = [];
+  when.forEach((w) => { [...w.matchAll(/(January|February|March|April|May|June|July|August|September|October|November|December) (\d+)(?:, (\d{4}))?/g)].forEach((m) => dates.push([m[1], +m[2]])); assert.match(w, /2027$/); });
+  const days = { January: 31, February: 28, March: 31, April: 30, May: 31, June: 30, July: 31, August: 31, September: 30, October: 31, November: 30, December: 31 };
+  dates.forEach(([mo, d]) => assert.ok(d >= 1 && d <= days[mo], mo + ' ' + d));
+  assert.ok(html.includes('₦30,000') && !html.includes('₦300,000'));
+});
+
+test('every visible English phrase on the journal page has an Arabic translation', () => {
+  const html = fs.readFileSync(path.join(FE, 'journal.html'), 'utf8'), dict = {};
+  vmRun(fs.readFileSync(path.join(FE, 'js', 'lang', 'ar', 'journal.js'), 'utf8'), dict);
+  const body = html.slice(html.indexOf('<main'), html.indexOf('<footer'));
+  const miss = [...body.matchAll(/>([^<>]*[A-Za-z][^<>]*)</g)].map((m) => m[1].replace(/\s+/g, ' ').trim()).filter((t) => t && !dict[t] && t !== 'Search');   // 'Search' comes from the site-wide common.js
+  assert.deepEqual(miss, []);
 });
