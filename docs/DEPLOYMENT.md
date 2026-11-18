@@ -40,6 +40,7 @@ Last updated: 18 November 2026.
 | [ ] | Teacher "Needs attention" | `node scripts/add-teacher-attention.js` | Today tab lists students who need a word |
 | [ ] | Student note | `node scripts/add-student-note.js` | The note card shows at the top of the Madrasah portal |
 | [ ] | Foreign-currency metadata | `node scripts/add-ngn-metadata.js` | Each checkout's metadata carries `ngn` (see below) |
+| [ ] | Admin and owner dashboard layout | `node scripts/staff-portal-shell.js` (after the teacher script) | Both dashboards show the left menu and summary cards |
 | [ ] | Teacher portal layout | `node scripts/teacher-portal-shell.js` (run this first) | The teacher portal shows the left menu and summary cards |
 | [ ] | Bootcamp lessons link to Telegram | Group link is already set in `Bootcamp.gs`; redeploy, then `node scripts/bootcamp-telegram.js` | A lesson shows "Open Telegram" |
 | [ ] | Bootcamp portal layout | `node scripts/bootcamp-portal-shell.js` | The bootcamp portal shows the left menu and summary cards |

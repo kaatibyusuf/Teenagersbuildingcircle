@@ -12,6 +12,41 @@
 <link rel="stylesheet" href="css/styles.css">
 <link rel="stylesheet" href="css/owner-pay.css">
 <link rel="stylesheet" href="css/dark.css">
+<link rel="stylesheet" href="css/portal-shell.css">
+<script>
+/* Layout settings for js/portal-shell.js (same menu, top bar and cards as the student portal). */
+window.PORTAL_SHELL = {
+  programme: 'Owner dashboard',
+  data: function () { return typeof D === 'undefined' || !D ? null : { student: { Name: (D.me && D.me.Name) || 'Owner', StudentID: (D.me && (D.me.OwnerID || D.me.ID)) || '', PaymentStatus: 'Exempt' } }; },
+  nav: [
+    { label: 'Overview', icon: 'home', tab: 'overview' },
+    { label: 'Fees', icon: 'card', tab: 'fees' },
+    { label: 'Placement tests', icon: 'clip', tab: 'placement' },
+    { label: 'Referrals', icon: 'star', tab: 'referrals' },
+    { label: 'Staff pay', icon: 'pen', tab: 'pay' },
+    { label: 'Sponsors', icon: 'users', tab: 'sponsors' },
+    { label: 'Stories', icon: 'book', tab: 'stories' },
+    { label: 'Growth', icon: 'chart', tab: 'growth' },
+    { label: 'Reset code', icon: 'key', tab: 'reset' },
+    { label: 'Account', icon: 'layers', tab: 'account' },
+    { label: 'Refresh figures', icon: 'out', tab: 'refresh' }
+  ],
+  stats: function (d) {
+    var k = D.kpi || {}, m = Number(k.moneyMonth) || 0;
+    var short = m >= 1e6 ? '₦' + Math.round(m / 1e4) / 100 + 'M' : m >= 1e4 ? '₦' + Math.round(m / 100) / 10 + 'k' : naira(m);   // short form so it fits beside the second figure
+    return [
+      { label: 'Fees this month', value: short, valueClass: 'good', lab: 'collected', alt: { value: k.enrolMonth || 0, label: 'New enrolments' }, foot: 'Confirmed payments only' },
+      { label: 'Active students', value: k.active || 0, lab: 'across all programmes', alt: { value: k.paidUp || 0, label: 'Paid up' }, foot: (k.overdue || 0) + ' overdue' }
+    ];
+  },
+  third: function (d) {
+    var k = D.kpi || {};
+    return { label: 'Fees overdue', value: naira(k.overdueAmount), lab: (k.overdue || 0) + (k.overdue === 1 ? ' student' : ' students'), foot: k.overdue ? 'Their portals are locked until they pay.' : 'Nobody is overdue.' };
+  },
+  hello: function (d) { return { text: 'Your figures come straight from the school sheet. Open Needs your attention on the Overview to see what is waiting for you.' }; }
+};
+</script>
+<script src="js/portal-shell.js" defer></script>
 <script src="js/theme.js"></script>
 <script src="js/auth-guard.js"></script>
 <script src="js/force-change.js"></script>
@@ -304,8 +339,8 @@ function render() {
   const k = D.kpi;
   $('app').innerHTML = `<section class="greet"><div><small>Assalaamu alaykum</small><h1>${esc(D.me.Name || 'Owner')}</h1>
     <div class="chips"><span>${fdate(D.today)}</span>${D.term ? `<span>Madrasah: ${esc(D.term.Label)}</span>` : ''}<span>${plural(k.active, 'active student')}</span><span>${k.overdue} overdue</span><span>${plural(k.enrolMonth, 'enrolment')} this month</span></div></div>
-    <button class="btn btn-line btn-sm" type="button" data-act="refresh">Refresh</button></section>
-  <nav class="tabs" role="tablist" aria-label="Sections">${TABS.map(([t, l]) => `<button role="tab" type="button" data-act="tab" data-t="${t}" aria-selected="${S.tab === t}">${l}</button>`).join('')}</nav>
+    <button class="btn btn-line btn-sm" type="button" data-act="refresh" data-tab="refresh">Refresh</button></section>
+  <nav class="tabs acx-tabs" role="tablist" aria-label="Sections">${TABS.map(([t, l]) => `<button role="tab" type="button" data-act="tab" data-tab="${t}" data-t="${t}" aria-selected="${S.tab === t}">${l}</button>`).join('')}</nav>
   <div id="view">${VIEWS[S.tab]()}</div>
   <p class="foot">Figures come straight from the school sheet. Fees collected counts confirmed payments in the Payments, AcademyPayments and SkillsPayments tabs.</p>`;
 }
