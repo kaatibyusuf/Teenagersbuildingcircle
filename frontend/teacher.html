@@ -102,6 +102,7 @@ function vToday() {
   const queue = [];
   D.assignments.forEach((a) => a.Rows.forEach((r) => { if (r.Status === 'Submitted') queue.push({ a, r }); }));
   return `<div class="grid">
+  ${(D.notices || []).length ? `<article class="c w12" data-notices><h2>Notices</h2><ul class="list">${D.notices.map((a) => `<li style="display:block"><b>${esc(a.Title)}</b> <span style="float:inline-end">${esc(a.Date)}</span><div class="sub">${esc(a.Body)}</div></li>`).join('')}</ul></article>` : ''}
   <article class="c w8"><h2>Attendance</h2><p class="sub">Choose a status for each student, then save. You can come back and correct a day.</p>
     <div class="bar2"><div><label class="fl" for="attDate">Date</label><input class="in" type="date" id="attDate" value="${esc(date)}" max="${esc(D.today)}"></div><button class="btn btn-line btn-sm" data-act="allPresent" type="button">Mark everyone present</button></div>
     ${D.students.length ? `<div class="alist">${D.students.map((s) => `<div class="arow"><div><b>${esc(s.Name)}</b><small>${esc(s.Level || 'No level yet')} · ${attPct(s)}</small></div><div class="segb" data-id="${esc(s.StudentID)}">${ATT.map((x) => `<button type="button" data-act="att" data-v="${x}" class="${marks[s.StudentID] === x ? 'on' : ''}">${x}</button>`).join('')}</div></div>`).join('')}</div>

@@ -244,7 +244,7 @@ function payloadBase_(st) {
     results: mine('Results').filter(function (r) { return r.Subject; }).map(function (r) {
       return { Date: iso_(r.Date), Type: r.Type, Subject: r.Subject, Score: r.Score, OutOf: r.OutOf };
     }).sort(function (a, b) { return a.Date < b.Date ? -1 : 1; }),
-    announcements: table_('Announcements').rows.filter(function (r) { return r.Title && matches_(r.Audience, ['MADRASAH', id]); }).map(function (r) {
+    announcements: table_('Announcements').rows.filter(function (r) { return r.Title && ann_ok_(r.Audience, ['MADRASAH', id, lvl]); }).map(function (r) {
       return { Date: iso_(r.Date), Title: r.Title, Body: r.Body };
     }).sort(function (a, b) { return a.Date < b.Date ? 1 : -1; }).slice(0, 20),
     timetable: typeof tt_forGroup_ === 'function' ? tt_forGroup_(st.Level) : [],   // weekly classes for the student's level (Timetable.gs)

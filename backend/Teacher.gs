@@ -164,6 +164,7 @@ function tchPayload_(me) {
   m.rows.forEach(function (r) { if (String(r.Level).trim()) levels[String(r.Level).trim()] = true; });
   return {
     ok: true, today: today, term: schoolTerm_(),
+    notices: tchNotices_(me),
     teacher: { TeacherID: String(me.TeacherID).trim(), Name: me.Name, Role: admin ? 'Admin' : 'Teacher' },
     students: students,
     hifdh: mine('Hifdh').filter(function (r) { return r.Surah; }).map(function (r) { return { StudentID: sid(r), Surah: r.Surah, Status: r.Status }; }),
