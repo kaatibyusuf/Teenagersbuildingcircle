@@ -32,6 +32,9 @@ const BC_PAGE = 'https://www.himaayahschools.com/hadith-bootcamp';
 const BC_ST_TAB = 'Bootcamp students';
 const BC_ST_HEAD = ['BootcampID', 'Name', 'Email', 'WhatsApp', 'AccessCode', 'Joined', 'Source', 'Amount', 'Reference', 'EventID', 'Active',
                     'Completed', 'CertificateID', 'LastSeen', 'Notes'];
+/* The recordings live in a Telegram group. Paste its invite link here (it starts with https://t.me/). Members see it inside their lessons; it is never shown on the public page.
+   To point one ḥadīth at its own post instead, paste that post's Telegram link in the DriveLink column of the "Bootcamp recordings" tab, on the row for that ḥadīth. */
+const BC_TELEGRAM_URL = '';
 const BC_REC_TAB = 'Bootcamp recordings';
 const BC_REC_HEAD = ['Hadith', 'Part', 'Title', 'DriveLink', 'Minutes', 'Free', 'Notes'];
 const BC_PR_TAB = 'Bootcamp progress';
@@ -148,6 +151,16 @@ function bc_covers_(cell, n) {            // "3", "3-4", "3, 5"
     return n >= Math.min(a, b) && n <= Math.max(a, b);
   });
 }
+function bc_tgOk_(u) { return /^https:\/\/(t|telegram)\.me\/[\w+\/.?=&%-]+$/i.test(String(u || '').trim()); }
+function bc_tgGroup_() { return bc_tgOk_(BC_TELEGRAM_URL) ? String(BC_TELEGRAM_URL).trim() : ''; }
+/* the Telegram link for one ḥadīth: its own post if the sheet has one, otherwise the group; null when none is set up */
+function bc_tg_(n, R) {
+  R = R || bc_rec_();
+  const row = R.rows.filter(function (r) { return bc_covers_(r.Hadith, n) && bc_tgOk_(r.DriveLink); })[0];
+  if (row) return { url: String(row.DriveLink).trim(), post: true };
+  const g = bc_tgGroup_();
+  return g ? { url: g, post: false } : null;
+}
 function bc_recordings_(n, freeOnly, R) {
   R = R || bc_rec_();
   return R.rows.filter(function (r) { return bc_covers_(r.Hadith, n) && bc_driveId_(r.DriveLink) && (!freeOnly || bc_yes_(r.Free)); })
@@ -169,7 +182,7 @@ function bc_info_() {
     if (recs.length) preview.push({ n: h.n, title: h.title, recordings: recs });
   });
   const out = { ok: true, price: BC_PRICE, lessons: BC_CONTENT.length, preview: preview,
-    ready: BC_CONTENT.filter(function (h) { return bc_recordings_(h.n, false, R).length; }).length };
+    ready: bc_tgGroup_() ? BC_CONTENT.length : BC_CONTENT.filter(function (h) { return bc_recordings_(h.n, false, R).length; }).length };
   c.put('bc_info', JSON.stringify(out), 300);
   return out;
 }
@@ -196,7 +209,7 @@ function bc_payload_(who) {
   });
   const passed = list.filter(function (x) { return x.passed; }).length;
   const r = who.row || {};
-  return { ok: true, student: { id: who.id, name: who.name, source: who.source }, price: BC_PRICE, pass: BC_PASS, total: list.length,
+  return { ok: true, telegram: !!bc_tgGroup_() || R.rows.some(function (x) { return bc_tgOk_(x.DriveLink); }), student: { id: who.id, name: who.name, source: who.source }, price: BC_PRICE, pass: BC_PASS, total: list.length,
            passed: passed, listened: list.filter(function (x) { return x.listened; }).length, lessons: list,
            certificate: r.CertificateID ? { id: String(r.CertificateID), completed: iso_(r.Completed) } : null };
 }
@@ -207,7 +220,7 @@ function bc_lesson_(who, p) {
   if (!h) return { ok: false, error: 'Lesson not found.' };
   const pr = bc_progress_(who.id)[h.n] || {};
   return { ok: true, lesson: { n: h.n, title: h.title, narrator: h.narrator, source: h.source, ar: h.ar, en: h.en, lessons: h.lessons,
-    recordings: bc_recordings_(h.n, false),
+    recordings: bc_recordings_(h.n, false), telegram: bc_tg_(h.n),
     quiz: h.quiz.map(function (q, i) { return { i: i, q: q[0], options: bc_shuffle_(q.slice(1)) }; }),
     listened: !!pr.Listened, best: Number(pr.BestScore) || 0, passed: bc_yes_(pr.Passed), attempts: Number(pr.Attempts) || 0 } };
 }

@@ -39,6 +39,7 @@ Last updated: 18 November 2026.
 | [ ] | Student note | `node scripts/add-student-note.js` | The note card shows at the top of the Madrasah portal |
 | [ ] | Foreign-currency metadata | `node scripts/add-ngn-metadata.js` | Each checkout's metadata carries `ngn` (see below) |
 | [ ] | Teacher portal layout | `node scripts/teacher-portal-shell.js` (run this first) | The teacher portal shows the left menu and summary cards |
+| [ ] | Bootcamp lessons link to Telegram | Paste the group link into `BC_TELEGRAM_URL` in `Bootcamp.gs`, redeploy; then `node scripts/bootcamp-telegram.js` | A lesson shows "Open Telegram" |
 | [ ] | Bootcamp portal layout | `node scripts/bootcamp-portal-shell.js` | The bootcamp portal shows the left menu and summary cards |
 | [ ] | Placement phone numbers | extract `api/placement-checkout.mjs` | A +233 number is accepted |
 
