@@ -59,6 +59,7 @@ function qz_quizFor_(st, quizId) {
 function quizRequest(p) {
   const a = auth_(p.id, p.code);
   if (a.error) return { ok: false, error: a.error };
+  if (classLocked_(a.st)) return feeLockRefuse_();
   const st = a.st;
   if (p.op === 'start') return qz_start_(st, p);
   if (p.op === 'submit') return qz_submit_(st, p);

@@ -73,6 +73,7 @@ function academyFromRequest(p) {
     if (/^acd_/.test(a)) {
       const au = acd_studentAuth_(p);
       if (au.error) return { ok: false, error: au.error };
+      if (classLocked_(au.row)) return a === 'acd_login' ? feeLockPayload_(au.row, 'academy') : feeLockRefuse_();   // overdue fee: FeeLock.gs
       let r = { ok: true }, extra = {};
       if (a === 'acd_reading') r = acd_saveReading_(au.row, p);
       else if (a === 'acd_task') r = acd_submitTask_(au.row, p);

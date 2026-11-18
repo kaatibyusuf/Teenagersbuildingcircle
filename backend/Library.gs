@@ -44,6 +44,7 @@ function lib_table_() {
 function libraryRequest(p) {
   const a = auth_(p.id, p.code);
   if (a.error) return { ok: false, error: a.error };
+  if (classLocked_(a.st)) return feeLockRefuse_();
   const st = a.st, lvl = key_(st.Level);
   const items = lib_table_().rows.filter(function (r) {
     return r.Title && /^https?:\/\//i.test(String(r.URL || '').trim()) && key_(r.Active) !== 'FALSE';

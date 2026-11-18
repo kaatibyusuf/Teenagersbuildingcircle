@@ -140,6 +140,7 @@ function tbcStudent_(p) {
   const a = auth_(p.id, p.code);
   if (a.error) return { ok: false, error: a.error };
   if (!tbcIs_(a.st)) return { ok: false, error: 'This login is for the Teenagers Building Circle. Madrasah students sign in on the student dashboard.' };
+  if (classLocked_(a.st)) return p.action === 'tbc_login' ? feeLockPayload_(a.st, 'tbc') : feeLockRefuse_();   // overdue fee: FeeLock.gs
   if (p.action === 'tbc_submit') { const r = submit_(a.st, p); if (!r.ok) return r; }
   return tbc_payload_(a.st);
 }

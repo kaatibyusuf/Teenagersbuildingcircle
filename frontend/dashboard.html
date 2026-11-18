@@ -64,6 +64,7 @@ window.PORTAL_SHELL = {
 <script defer src="/_vercel/insights/script.js"></script>
 <style>.rec-live.paused .rec-dot { animation: none; background: #9A7B3F; box-shadow: 0 0 0 3px rgba(154,123,63,.25); }</style>
 <style>.note p { margin: 0 0 12px; line-height: 1.75; max-width: 72ch; } .note .note-hi { font-weight: 700; color: var(--deep); } .note .note-focus { margin: 4px 0 14px; } .note .note-focus b { display: block; margin-top: 2px; font-size: 16px; font-weight: 600; line-height: 1.5; } .note .note-end { margin: 0; }</style>
+<script src="js/fee-lock.js"></script>
 </head>
 <body>
 <header class="top"><div>
@@ -570,6 +571,7 @@ function rtRecord() {   // jump to the recorder with the lesson filled in
 }
 
 function render(d) {
+  if (d && d.locked) { feeLocked(d); return; }
   window.__lastData = d;
   const openIds = [...document.querySelectorAll('.asg[open]')].map((x) => x.dataset.id);
   const s = d.student, first = String(s.Name).split(' ')[0];
@@ -651,6 +653,7 @@ function render(d) {
 }
 
 function show(data, id, code) {
+  if (data && data.locked) { feeLocked(data); return; }
   sessionStorage.setItem('hs', JSON.stringify({ id, code }));
   $('login').hidden = true; $('app').hidden = false; $('out').hidden = false; render(data); window.scrollTo(0, 0);
 }

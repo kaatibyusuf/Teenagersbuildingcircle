@@ -74,6 +74,7 @@ window.PORTAL_SHELL = {
 .gd-banner{margin:0 0 14px;padding:14px 16px;border-radius:12px;background:#e6f4ea;color:#14532d;font-weight:500}.gd-banner.warn{background:#fff4d6;color:#7a5b00}
 </style>
 <style>.note p { margin: 0 0 12px; line-height: 1.75; max-width: 72ch; } .note .note-hi { font-weight: 700; color: var(--deep); } .note .note-focus { margin: 4px 0 14px; } .note .note-focus b { display: block; margin-top: 2px; font-size: 16px; font-weight: 600; line-height: 1.5; } .note .note-end { margin: 0; }</style>
+<script src="js/fee-lock.js"></script>
 </head>
 <body>
 <header class="top"><div>
@@ -271,6 +272,7 @@ function noteCard(d) {
   </article>`;
 }
 function render(d) {
+  if (d && d.locked) { feeLocked(d); return; }
   LAST = d;
   const openIds = [...document.querySelectorAll('.asg[open]')].map((x) => x.dataset.id);
   const s = d.student, first = String(s.Name).split(' ')[0];
@@ -326,6 +328,7 @@ function render(d) {
 }
 
 function show(data, id, code) {
+  if (data && data.locked) { feeLocked(data); return; }
   sessionStorage.setItem(KEY, JSON.stringify({ id, code }));
   $('login').hidden = true; $('app').hidden = false; $('out').hidden = false; render(data); window.scrollTo(0, 0);
 }

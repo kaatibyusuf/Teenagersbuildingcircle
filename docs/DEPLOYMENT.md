@@ -21,6 +21,7 @@ Last updated: 18 November 2026.
 | [ ] | `PlacementTests.gs` | changed (foreign-currency cards, `placementIssueCode`) | See "Payments" below |
 | [ ] | `CardPayments.gs`, `Fees.gs`, `Guides.gs`, `Sponsors.gs`, `Bootcamp.gs` | changed (foreign-currency cards, alert email) | See "Payments" below |
 | [ ] | `StudentNote.gs` | **new** | A student's portal shows "A note for you" |
+| [ ] | `FeeLock.gs` | **new** (also replace `Code.gs`, `Library.gs`, `Exams.gs`, `Quiz.gs`, `Tracker.gs`, `TBC.gs`, `Skills.gs`, `Academy.gs`) | An overdue student signs in and sees "Fee due, Pay now" only |
 | [ ] | `ProgrammeNotes.gs` | **new** (also replace `TBC.gs`, `Skills.gs`, `Academy.gs`, `Parents.gs`, `Notices.gs`) | TBC, Skills and Academy portals show "A note for you" |
 | [ ] | `ErrorLog.gs` | **new** | Menu **Himaayah > Errors: email me a daily summary**, run it once |
 | [ ] | `Scratch.gs` (the one-off Hadiza script) | delete it | It is no longer in the file list |
@@ -34,6 +35,7 @@ Last updated: 18 November 2026.
 | [ ] | Assignment uploads | `node scripts/add-assignment-files.js` | Madrasah and TBC portals show the file field |
 | [ ] | Recorder pause | `node scripts/add-recorder-pause.js` | Pause and Resume appear while recording |
 | [ ] | Exam notices | `node scripts/add-teacher-notices.js`; run `postExamNotice` once | Teachers see a Notices card |
+| [ ] | Fee lock screen | copy `js/fee-lock.js`, then `node scripts/add-fee-lock.js` | An overdue test student sees "Fee due" and a Pay now button |
 | [ ] | Notes on TBC, Skills, Academy | `node scripts/add-programme-notes.js` | The note card shows at the top of each portal |
 | [ ] | Teacher "Needs attention" | `node scripts/add-teacher-attention.js` | Today tab lists students who need a word |
 | [ ] | Student note | `node scripts/add-student-note.js` | The note card shows at the top of the Madrasah portal |

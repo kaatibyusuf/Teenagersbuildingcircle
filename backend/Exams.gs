@@ -222,6 +222,7 @@ function examsRequest(p) {
   try {
     const a = auth_(p.id, p.code);
     if (a.error) return { ok: false, error: a.error };
+    if (classLocked_(a.st)) return feeLockRefuse_();
     const st = a.st, op = String(p.op || 'list');
     if (op === 'start' || op === 'save' || op === 'submit') {
       const lock = LockService.getScriptLock(); lock.waitLock(20000);

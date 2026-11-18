@@ -55,6 +55,7 @@ window.PORTAL_SHELL = {
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
 <script defer src="/_vercel/insights/script.js"></script>
 <style>.note p { margin: 0 0 12px; line-height: 1.75; max-width: 72ch; } .note .note-hi { font-weight: 700; color: var(--deep); } .note .note-focus { margin: 4px 0 14px; } .note .note-focus b { display: block; margin-top: 2px; font-size: 16px; font-weight: 600; line-height: 1.5; } .note .note-end { margin: 0; }</style>
+<script src="js/fee-lock.js"></script>
 </head>
 <body>
 <header class="top"><div>
@@ -164,6 +165,7 @@ function noteCard(d) {
   </article>`;
 }
 function render(d) {
+  if (d && d.locked) { feeLocked(d); return; }
   window.__lastData = d;
   const s = d.student, first = String(s.Name).split(' ')[0], status = String(s.PaymentStatus || '').toLowerCase();
   const pcls = status === 'paid' || status === 'exempt' ? 'p-paid' : status === 'overdue' ? 'p-over' : 'p-due';
@@ -200,6 +202,7 @@ function render(d) {
 }
 
 function show(data, id, code) {
+  if (data && data.locked) { feeLocked(data); return; }
   sessionStorage.setItem(KEY, JSON.stringify({ id, code }));
   $('login').hidden = true; $('app').hidden = false; $('out').hidden = false; render(data); window.scrollTo(0, 0);
 }

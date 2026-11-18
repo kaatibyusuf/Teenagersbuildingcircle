@@ -336,6 +336,7 @@ function doPost(e) {
     if (p.action === 'quiz') return json_(quizRequest(p));                               // student quizzes (Quiz.gs)
     const a = auth_(p.id, p.code);
     if (a.error) out = { ok: false, error: a.error };
+    else if (classLocked_(a.st)) out = (!p.action || p.action === 'login') ? feeLockPayload_(a.st, 'madrasah') : feeLockRefuse_();   // overdue fee: FeeLock.gs
     else if (tzRemember_(a.st, p.tz), p.action === 'submit') { const r = submit_(a.st, p); out = r.ok ? payload_(a.st) : r; }
     else if (p.action === 'password') { const r = changeCode_(a.st, p); out = r.ok ? payload_(a.st) : r; }
     else if (/^rec_/.test(String(p.action || '')) && typeof recStudentRequest === 'function') out = recStudentRequest(a.st, p);   // recitation recordings (Recordings.gs)

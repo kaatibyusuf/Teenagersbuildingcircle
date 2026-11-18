@@ -76,6 +76,7 @@ function trk_build_(st) {
 function trackerRequest(p) {
   const a = auth_(p.id, p.code);
   if (a.error) return { ok: false, error: a.error };
+  if (classLocked_(a.st)) return feeLockRefuse_();
   const st = a.st;
   if (p.op === 'tick') {
     const today = today_(), portion = String(p.portion || '').trim();

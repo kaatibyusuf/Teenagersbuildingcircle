@@ -43,6 +43,7 @@ function skillsFromRequest(p) {
     if (a === 'sk_login' || a === 'sk_submit') {
       const au = acd_auth_(SK.Students, 'StudentID', p);
       if (au.error) return { ok: false, error: au.error };
+      if (classLocked_(au.row)) return a === 'sk_login' ? feeLockPayload_(au.row, 'skills') : feeLockRefuse_();   // overdue fee: FeeLock.gs
       if (a === 'sk_submit') { const r = sk_submit_(au.row, p); if (!r.ok) return r; }
       return sk_studentPayload_(acd_reload_(SK.Students, 'StudentID', au.row.StudentID));
     }
