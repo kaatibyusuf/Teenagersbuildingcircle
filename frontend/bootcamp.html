@@ -32,6 +32,11 @@ window.PORTAL_SHELL = {
       { label: 'Lessons heard', value: s.listened, lab: 'recordings listened to', alt: { value: s.total, label: 'In all' }, foot: s.listened ? 'Keep going, m\u0101 sh\u0101\u02BE All\u0101h.' : 'Start with the first recording.' }
     ];
   },
+  third: function (d) {   // needs the portal-shell.js change from scripts/teacher-portal-shell.js; without it the payment card shows instead
+    var s = S;
+    return s.certificate ? { label: 'Certificate', value: 'Ready', foot: 'Completed ' + String(s.certificate.completed).slice(0, 10) }
+      : { label: 'Certificate', value: s.total - s.passed + ' to go', lab: 'quizzes left', foot: 'Pass all ' + s.total + ' to unlock it.' };
+  },
   hello: function (d) {
     var s = S, next = s.lessons.find(function (x) { return !x.passed; });
     if (!next) return { text: s.certificate ? 'You have passed every quiz. Your certificate is ready any time you want it.' : 'M\u0101 sh\u0101\u02BE All\u0101h, you have passed every quiz. Get your certificate below.', cta: { label: 'See my certificate', hash: 'cert' } };

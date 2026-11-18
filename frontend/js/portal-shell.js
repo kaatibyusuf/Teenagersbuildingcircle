@@ -239,7 +239,8 @@
 
     var payFoot = el('div', { 'class': 'ps-foot' }, [el('b', { 'class': pay.bad ? 'bad' : '', text: pay.foot })]);
     if (pay.pay && s.StudentID) { payFoot.appendChild(document.createTextNode(' ')); payFoot.appendChild(el('a', { href: 'pay?id=' + encodeURIComponent(s.StudentID), text: 'Pay now' })); }
-    var payCard = { label: 'Next payment', value: pay.value, lab: pay.fee ? 'Amount: ' + pay.fee : '', footNode: payFoot };
+    var third = null; try { third = cfg.third && cfg.third(d); } catch (e) { third = null; }
+    var payCard = third || { label: 'Next payment', value: pay.value, lab: pay.fee ? 'Amount: ' + pay.fee : '', footNode: payFoot };
 
     var stats = el('div', { 'class': 'ps-stats' }, [mine[0] && statCard(mine[0]), mine[1] && statCard(mine[1]), statCard(payCard, true)]);
 
