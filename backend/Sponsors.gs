@@ -168,6 +168,7 @@ function sponsorCardPayment_(p) {
     showName: sp_yes_(p.showName) ? 'Yes' : 'No', message: sp_txt_(p.message || '', 200), eventId: String(p.eventId || ''), checkoutId: String(p.checkoutId || ''),
     chargeId: String(p.chargeId || ''), ref: sp_txt_(p.ref || '', 40)
   };
+  card_normalise_(rec, p.ngn, 0);   // the donor chose the amount, so only the naira amount in the metadata can be trusted
   const paid = /^(SUCCEEDED|ACCEPTED|OVERPAID)$/.test(rec.status) && rec.currency === 'NGN' && rec.amount > 0;
   let result = '', apply = null, q = null, sid = '';
   const lock = LockService.getScriptLock(); lock.waitLock(20000);
@@ -204,6 +205,7 @@ function sponsorCardPayment_(p) {
         ['SponsorshipID', 'Date', 'DonorName', 'DonorEmail', 'DonorPhone', 'Message', 'RequestID', 'StudentID', 'Reference', 'EventID']);
       apply && (apply.sid = sid);
     }
+    result += card_note_(rec);
     const r = log.getLastRow() + 1;
     log.getRange(r, 1, 1, CARD_LOG_HEAD.length).setNumberFormat('@').setValues([[
       iso_(new Date(), true), rec.ref || 'SPONSOR', rec.donorName, 'Sponsorship: ' + rec.type, String(rec.amount), rec.currency, rec.status,
@@ -211,6 +213,7 @@ function sponsorCardPayment_(p) {
     ]]);
   } finally { lock.releaseLock(); }
   CacheService.getScriptCache().remove('sp_list');
+  card_flag_(rec, 'sponsorship', result);
 
   if (apply) { const a = sp_applyFee_(apply.studentId, apply.months, apply.amount, 'Sponsor ' + apply.sid, 'Sponsor'); sp_mark_(apply.sid, a.result); }
   if (paid) {

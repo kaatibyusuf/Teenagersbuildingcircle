@@ -106,6 +106,7 @@ function feeCardPayment_(p) {
     }
     const f = fee_find_(rec.studentId);
     const paid = /^(SUCCEEDED|ACCEPTED|OVERPAID)$/.test(rec.status);
+    if (f) card_normalise_(rec, p.ngn, f.amount * rec.periods);   // a card billed in another currency is credited at the naira fee
     if (!f) result = 'Student not found';
     else if (!paid || rec.currency !== 'NGN') result = 'Not a completed NGN payment';
     else if (rec.amount + 0.001 < f.amount * rec.periods) result = 'Amount below the fee (expected ' + naira_(f.amount * rec.periods) + ')';
@@ -130,12 +131,14 @@ function feeCardPayment_(p) {
         result = 'Recorded; next due ' + (nd || 'unchanged');
       }
     }
+    result += card_note_(rec);
     const r = log.getLastRow() + 1;
     log.getRange(r, 1, 1, CARD_LOG_HEAD.length).setNumberFormat('@').setValues([[
       iso_(new Date(), true), rec.ref || ('FEE ' + rec.studentId), who ? who.name : '', 'Fees' + (who ? ': ' + who.plan : ''), String(rec.amount), rec.currency, rec.status,
       rec.email, rec.checkoutId, rec.chargeId, rec.eventId, result
     ]]);
   } finally { lock.releaseLock(); }
+  card_flag_(rec, 'fee payment', result);
 
   if (who && who.tab === 'Students') { try { applyPayments_(); } catch (e) { console.error(e); } }   // moves NextDue and sends the thank-you email
   else if (who) {

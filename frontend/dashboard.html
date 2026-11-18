@@ -63,6 +63,7 @@ window.PORTAL_SHELL = {
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
 <script defer src="/_vercel/insights/script.js"></script>
 <style>.rec-live.paused .rec-dot { animation: none; background: #9A7B3F; box-shadow: 0 0 0 3px rgba(154,123,63,.25); }</style>
+<style>.note p { margin: 0 0 12px; line-height: 1.75; max-width: 72ch; } .note .note-hi { font-weight: 700; color: var(--deep); } .note .note-focus { margin: 4px 0 14px; } .note .note-focus b { display: block; margin-top: 2px; font-size: 16px; font-weight: 600; line-height: 1.5; } .note .note-end { margin: 0; }</style>
 </head>
 <body>
 <header class="top"><div>
@@ -267,6 +268,17 @@ function recPickMime() {
   return '';
 }
 const recExt = (mime) => /ogg/.test(mime) ? 'ogg' : /mp4|m4a|aac/.test(mime) ? 'm4a' : /mpeg|mp3/.test(mime) ? 'mp3' : /wav/.test(mime) ? 'wav' : 'webm';
+/* A personal note from the school, written from the student's own record (StudentNote.gs). Shown only when the server sends one. */
+function noteCard(d) {
+  const n = d.note; if (!n || !Array.isArray(n.paragraphs) || !n.paragraphs.length) return '';
+  return `<article class="c w12 note" id="note" style="--i:0"><h2>${esc(n.title || 'A note for you')}</h2>
+    <p class="note-hi">${esc(n.greeting || '')}</p>
+    ${n.paragraphs.map((t) => `<p>${esc(t)}</p>`).join('')}
+    ${n.focus ? `<div class="mark note-focus"><div class="k">This week</div><b>${esc(n.focus)}</b></div>` : ''}
+    ${n.closing ? `<p class="sub note-end">${esc(n.closing)}</p>` : ''}
+  </article>`;
+}
+if (window.HS_I18N && HS_I18N.add) HS_I18N.add({ 'A note for you': 'رسالة لك', 'This week': 'هذا الأسبوع' });
 function recCard(d) {
   const R = d.recordings; if (!R || !R.enabled) return '';
   const f = REC.form, sur = window.SURAHS || [], cur = sur.find((x) => x[0] === f.surah), max = cur ? cur[2] : 286;
@@ -580,6 +592,7 @@ function render(d) {
     <a class="btn btn-sky" href="${waHelp}" target="_blank" rel="noopener">Message the Madrasah line</a></section>
   ${remind.length ? `<section class="remind" aria-label="Reminders">${remind.map((r) => `<a href="${r.a}" class="${r.u ? 'urgent' : ''}"${r.k ? ` data-nudge="${r.k}"` : ''}>${r.t}<span>${r.tag}</span></a>`).join('')}</section>` : ''}
   <div class="grid">
+    ${noteCard(d)}
     <article class="c" id="next" style="--i:0"><div class="k">Next class</div>${s.NextClass ? `<div class="big">${fdate(s.NextClass, true)}</div>${safeUrl(s.ClassLink) ? `<p class="sub"><a class="btn btn-ink" style="margin-top:12px" href="${esc(s.ClassLink)}" target="_blank" rel="noopener">Join class</a></p>` : '<p class="sub">Your teacher will share the join link.</p>'}` : '<p class="empty">No class scheduled yet.</p>'}</article>
     <article class="c" id="pay" style="--i:1"><div class="k">Payment</div><span class="pill ${pcls}">${esc(s.PaymentStatus || 'Due')}</span>
       ${status === 'exempt' ? '<div class="big" style="margin-top:12px">Nothing to pay</div>' : `<div class="big" style="margin-top:12px">${isNaN(due) ? 'No date set' : fdate(s.NextDue)}</div><p class="sub">Next payment due${s.MonthlyFee ? ': ' + naira(s.MonthlyFee) : ''}. Pay by card and this page updates straight away. If you pay by bank transfer, send the receipt on <a href="https://wa.me/${PAYMENT_WA}" target="_blank" rel="noopener" class="lnk">WhatsApp</a>.</p><p class="pay-btns"><a class="btn ${status === 'paid' ? 'btn-line' : 'btn-ink'}" href="pay?id=${encodeURIComponent(s.StudentID)}">${status === 'paid' ? 'Pay ahead by card' : 'Pay by card'}</a></p>`}</article>

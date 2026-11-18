@@ -28,6 +28,45 @@ const CARD_NOTIFY = true;         // email the school account about each card pa
 const CARD_LOG_TAB = 'Card payments';
 const CARD_LOG_HEAD = ['Received', 'Reference', 'Student', 'Plan', 'Amount', 'Currency', 'Status', 'PayerEmail', 'CheckoutID', 'ChargeID', 'EventID', 'Result'];
 
+/* ===== CARDS BILLED IN ANOTHER CURRENCY, AND PAYMENTS THAT NEED A HUMAN =====
+   Our checkouts are always priced in naira. A card from abroad can be billed in cedis, dollars, pounds and so on, and then the
+   payment event carries that currency and a different number (GHS 25 for a N3,000 fee). The checkout now stores the naira price it
+   charged ("ngn" in the metadata). card_normalise_ turns such an event back into naira so the rest of the code can stay as it is.
+   Without the "ngn" field (a payment started before this change) it falls back to the price we expect for fixed-price items. */
+function card_ngn_(currency, amount, ngn, expected) {
+  currency = String(currency || '').toUpperCase(); amount = Number(amount) || 0;
+  if (currency === 'NGN') return amount;
+  if (!currency || !(amount > 0)) return 0;
+  const n = Number(ngn);
+  if (n > 0) return n;
+  return Number(expected) || 0;
+}
+/* rec.amount and rec.currency become the naira credit; rec.foreign keeps what the buyer actually paid. Returns true if it converted. */
+function card_normalise_(rec, ngn, expected) {
+  if (!rec.currency || rec.currency === 'NGN') return false;
+  const eff = card_ngn_(rec.currency, rec.amount, ngn, expected);
+  if (!(eff > 0)) return false;
+  rec.foreign = rec.currency + ' ' + rec.amount; rec.amount = eff; rec.currency = 'NGN';
+  return true;
+}
+function card_note_(rec) { return rec.foreign ? ' [paid ' + rec.foreign + ', credited as ' + naira_(rec.amount) + ': confirm in Bachs]' : ''; }
+
+/* A payment arrived but nothing was issued or recorded: tell the owner at once, with everything needed to put it right. */
+const CARD_PROBLEM_RE = /^(Not a completed|Paid less|Unknown book|Amount below|Student not found|No valid email|Request not found|No enrolment|Amount did not match)/i;
+function card_flag_(rec, what, result) {
+  if (!CARD_PROBLEM_RE.test(String(result || ''))) return false;
+  try {
+    const to = Session.getEffectiveUser().getEmail();
+    if (!to || MailApp.getRemainingDailyQuota() <= 0) return false;
+    const paid = rec.foreign || (rec.currency === 'NGN' ? naira_(rec.amount) : rec.currency + ' ' + rec.amount);
+    MailApp.sendEmail({ to: to, name: SCHOOL_NAME, subject: SCHOOL_NAME + ': ATTENTION, a card payment was not matched (' + what + ')',
+      body: 'A card payment came in through the website, but nothing was issued for it.\n\nFor: ' + what + '\nFrom: ' + (rec.name || rec.donorName || rec.student || '-') + ' (' + (rec.email || rec.donorEmail || 'no email') + ', ' + (rec.phone || rec.donorPhone || 'no phone') + ')' +
+            '\nPaid: ' + paid + ' ' + (rec.status || '') + '\nReference: ' + (rec.ref || rec.checkoutId || '-') + '\nWhat happened: ' + result +
+            '\n\nCheck the payment in the Bachs dashboard. If the money really arrived, put it right by hand and reply to the buyer. See the "' + CARD_LOG_TAB + '" tab.' });
+    return true;
+  } catch (e) { console.error(e); return false; }
+}
+
 function cardPaymentFromRequest(p) {
   const secret = PropertiesService.getScriptProperties().getProperty('CARD_SECRET');
   if (!secret || !same_(String(p.secret || ''), secret)) return { ok: false, error: 'Not allowed' };
@@ -47,7 +86,8 @@ function cardPaymentFromRequest(p) {
     email: String(p.email || '').slice(0, 200),
     checkoutId: String(p.checkoutId || ''),
     chargeId: String(p.chargeId || ''),
-    eventId: String(p.eventId || '')
+    eventId: String(p.eventId || ''),
+    ngn: Number(p.ngn) || 0
   };
   const amt = rec.currency === 'NGN' ? naira_(rec.amount) : rec.currency + ' ' + rec.amount;
 
@@ -96,7 +136,9 @@ function card_apply_(sh, row, rec) {
   set('PayMethod', 'Card');
   const status = get('Status'), plan = EN_PLANS[get('Plan')];
   const paid = /^(SUCCEEDED|ACCEPTED|OVERPAID)$/.test(rec.status);
-  const matches = paid && rec.currency === 'NGN' && plan && Number(rec.amount) >= Number(plan[0]) * (plan[1] === '/mo' ? (Number(get('Periods')) || 1) : 1) + (Number(get('RegFee')) || 0);
+  const need = plan ? Number(plan[0]) * (plan[1] === '/mo' ? (Number(get('Periods')) || 1) : 1) + (Number(get('RegFee')) || 0) : 0;
+  const credited = card_ngn_(rec.currency, rec.amount, rec.ngn, need);   // a card billed in another currency is credited at the naira price
+  const matches = paid && plan && credited >= need;
   if (status === 'Account created' || get('StudentID')) return 'Already had an account';
   if (matches && CARD_AUTO_CONFIRM) { set('Status', 'Confirmed'); return 'Confirmed'; }
   set('Status', 'Card paid');

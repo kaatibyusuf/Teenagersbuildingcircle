@@ -67,6 +67,7 @@ export async function POST(request) {
     cancel_url: site + '/hadith-bootcamp?cancelled=1#join',
     reference: ref + '-' + Math.random().toString(36).slice(2, 7),
     metadata: {
+      ngn: String(amount),   // the naira price; used when the card is charged in another currency
       kind: 'bootcamp', ref, plan: clean(q.label || 'Hadith Bootcamp', 100),
       donorName: name, donorEmail: email, donorPhone: clean(b.phone, 30), student: name,
     },

@@ -72,6 +72,7 @@ export async function POST(request) {
     status: d.status || '',
     amount: d.amount || '',
     currency: d.currency || '',
+    ngn: meta.ngn || '',               // the naira price we charged, for cards billed in another currency
     checkoutId: d.checkout_id || '',
     chargeId: d.charge_id || '',
     email: (d.customer && d.customer.email) || '',

@@ -297,11 +297,8 @@ function placementCardPayment_(p) {
     amount: Number(p.amount) || 0, currency: String(p.currency || '').toUpperCase(), status: String(p.status || '').toUpperCase(),
     eventId: String(p.eventId || ''), checkoutId: String(p.checkoutId || ''), chargeId: String(p.chargeId || ''), ref: pt_txt_(p.ref || '', 40)
   };
-  /* The session we create is always priced at PT_FEE in naira. A candidate paying with a foreign card can be charged in their own
-     currency (cedis, dollars...), so the event then carries that currency and a different number. The signature on the webhook has
-     already been checked and only our own checkout can create a session, so a completed payment in another currency is a full payment. */
-  const statusOk = /^(SUCCEEDED|ACCEPTED|OVERPAID)$/.test(rec.status), foreign = !!rec.currency && rec.currency !== 'NGN';
-  const paid = statusOk && ((rec.currency === 'NGN' && rec.amount >= PT_FEE) || (foreign && rec.amount > 0));
+  card_normalise_(rec, p.ngn, PT_FEE);   // a card billed in another currency is credited at the naira fee
+  const paid = /^(SUCCEEDED|ACCEPTED|OVERPAID)$/.test(rec.status) && rec.currency === 'NGN' && rec.amount >= PT_FEE;
   let result = '', created = null;
   const lock = LockService.getScriptLock(); lock.waitLock(20000);
   try {
@@ -318,8 +315,9 @@ function placementCardPayment_(p) {
       append_(T, { Code: code, Name: rec.name, Email: rec.email, WhatsApp: rec.phone, Issued: iso_(new Date(), true), Source: 'Card', Amount: rec.amount,
         Reference: rec.checkoutId || rec.ref, EventID: rec.eventId, Active: true }, ['Code', 'Name', 'Email', 'WhatsApp', 'Issued', 'Reference', 'EventID']);
       created = { code: code, name: rec.name, email: rec.email };
-      result = 'Test code ' + code + ' issued' + (foreign ? ' (paid in ' + rec.currency + ' ' + rec.amount + ', converted by Bachs: confirm the naira amount in Bachs)' : '');
+      result = 'Test code ' + code + ' issued';
     }
+    result += card_note_(rec);
     const r = log.getLastRow() + 1;
     log.getRange(r, 1, 1, CARD_LOG_HEAD.length).setNumberFormat('@').setValues([[
       iso_(new Date(), true), rec.ref || 'PLACEMENT', rec.name, 'Registration form (placement tests)', String(rec.amount), rec.currency, rec.status,
@@ -327,10 +325,11 @@ function placementCardPayment_(p) {
     ]]);
   } finally { lock.releaseLock(); }
   if (created) pt_sendCode_(created);
+  card_flag_(rec, 'placement test registration', result);
   try {
-    MailApp.sendEmail({ to: Session.getEffectiveUser().getEmail(), name: SCHOOL_NAME, subject: SCHOOL_NAME + ': registration fee ' + (foreign ? rec.currency + ' ' + rec.amount : naira_(rec.amount)),
+    MailApp.sendEmail({ to: Session.getEffectiveUser().getEmail(), name: SCHOOL_NAME, subject: SCHOOL_NAME + ': registration fee ' + naira_(rec.amount),
       body: 'A registration fee for the placement tests came in through the website.\n\nFrom: ' + (rec.name || '-') + ' (' + (rec.email || 'no email') + ', ' + (rec.phone || 'no phone') + ')\nAmount: ' +
-            (foreign ? rec.currency + ' ' + rec.amount : naira_(rec.amount)) + ' ' + rec.status + '\nResult: ' + result + '\n\nSee the "' + PT_CODE_TAB + '" tab.' });
+            naira_(rec.amount) + ' ' + rec.status + '\nResult: ' + result + '\n\nSee the "' + PT_CODE_TAB + '" tab.' });
   } catch (e) { console.error(e); }
   return { ok: true, result: result };
 }

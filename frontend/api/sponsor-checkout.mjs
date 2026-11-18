@@ -66,6 +66,7 @@ export async function POST(request) {
     cancel_url: site + '/sponsor?cancelled=1',
     reference: ref + '-' + Math.random().toString(36).slice(2, 7),
     metadata: {
+      ngn: String(amount),   // the naira amount; used when the card is charged in another currency
       kind: 'sponsor', ref, type, requestId: String(q.requestId || ''), months: String(q.months || ''),
       donorName: name, donorEmail: email, donorPhone: clean(b.phone, 30), showName: b.showName ? 'Yes' : 'No', message: clean(b.message, 200),
       student: clean(q.name || '', 60), plan: clean(q.label || '', 100),

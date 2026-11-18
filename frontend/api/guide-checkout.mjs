@@ -48,6 +48,7 @@ export async function POST(request) {
     cancel_url: site + (tbc ? '/tbc-dashboard?guide=cancelled' : store ? '/store?cancelled=1' : '/buy-guide?cancelled=1&g=' + encodeURIComponent(slugs.join(','))),
     reference: ref + '-' + Math.random().toString(36).slice(2, 7),
     metadata: {
+      ngn: String(amount),   // the naira price; used when the card is charged in another currency
       kind: 'guide', ref, plan: clean(slugs.length === 1 ? GUIDES[slugs[0]].title : slugs.length + ' books from the Himaayah Store', 100), guide: slugs.map((s) => GUIDES[s].id).join(','), free: freeSlugs.map((s) => FREE[s].id).join(','),
       donorName: name, donorEmail: email, donorPhone: clean(b.phone, 30), student: name, studentId,
     },

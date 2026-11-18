@@ -45,7 +45,7 @@ export async function POST(request) {
     success_url: site + '/placement?paid=1',
     cancel_url: site + '/placement?cancelled=1',
     reference: ref + '-' + Math.random().toString(36).slice(2, 7),
-    metadata: { kind: 'placement', ref, plan: 'Registration form (placement tests)', donorName: name, donorEmail: email, donorPhone: clean(b.phone, 30), student: name },
+    metadata: { ngn: String(FEE), kind: 'placement', ref, plan: 'Registration form (placement tests)', donorName: name, donorEmail: email, donorPhone: clean(b.phone, 30), student: name },
     expires_in_minutes: 60,
   };
 

@@ -78,6 +78,7 @@ function guideCardPayment_(p) {
   };
   const freeSlugs = String(p.free || '').split(',').map(function (x) { x = x.trim(); for (const s in GD_FREE) if (GD_FREE[s].id === x || s === x) return s; return ''; }).filter(function (s, i, a) { return s && a.indexOf(s) === i; });
   const need = slugs.reduce(function (n, s) { return n + GD_CAT[s].p; }, 0);
+  card_normalise_(rec, p.ngn, need);   // a card billed in another currency is credited at the naira price
   const paid = known && /^(SUCCEEDED|ACCEPTED|OVERPAID)$/.test(rec.status) && rec.currency === 'NGN' && rec.amount >= need && /^\S+@\S+\.\S+$/.test(rec.email);
   let result = '', send = false;
   const lock = LockService.getScriptLock(); lock.waitLock(20000);
@@ -94,12 +95,14 @@ function guideCardPayment_(p) {
     else if (rec.currency === 'NGN' && rec.amount > 0 && rec.amount < need) result = 'Paid less than ' + naira_(need) + ': check in Bachs';
     else if (!/^\S+@\S+\.\S+$/.test(rec.email)) result = 'No valid email: contact the buyer';
     else result = 'Not a completed NGN payment';
+    result += card_note_(rec);
     const r = log.getLastRow() + 1;
     log.getRange(r, 1, 1, CARD_LOG_HEAD.length).setNumberFormat('@').setValues([[
       iso_(new Date(), true), rec.ref || 'BOOK', rec.name, 'Books: ' + slugs.join(', '), String(rec.amount), rec.currency, rec.status,
       rec.email, rec.checkoutId, rec.chargeId, rec.eventId, result
     ]]);
   } finally { lock.releaseLock(); }
+  card_flag_(rec, 'children\'s books', result);
   let mailed = false;
   if (send) {
     try { gd_sendBooks_(rec.name, rec.email, rec.ref, slugs, rec.amount, freeSlugs); mailed = true; } catch (e) { console.error(e); }

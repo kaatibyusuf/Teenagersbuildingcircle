@@ -292,6 +292,7 @@ function bootcampCardPayment_(p) {
     amount: Number(p.amount) || 0, currency: String(p.currency || '').toUpperCase(), status: String(p.status || '').toUpperCase(),
     eventId: String(p.eventId || ''), checkoutId: String(p.checkoutId || ''), chargeId: String(p.chargeId || ''), ref: bc_txt_(p.ref || '', 40)
   };
+  card_normalise_(rec, p.ngn, BC_PRICE);   // a card billed in another currency is credited at the naira price
   const paid = /^(SUCCEEDED|ACCEPTED|OVERPAID)$/.test(rec.status) && rec.currency === 'NGN' && rec.amount >= BC_PRICE;
   let result = '', created = null;
   const lock = LockService.getScriptLock(); lock.waitLock(20000);
@@ -313,6 +314,7 @@ function bootcampCardPayment_(p) {
       created = { id: id, code: code, name: rec.name, email: rec.email };
       result = 'Bootcamp account ' + id + ' created';
     }
+    result += card_note_(rec);
     const r = log.getLastRow() + 1;
     log.getRange(r, 1, 1, CARD_LOG_HEAD.length).setNumberFormat('@').setValues([[
       iso_(new Date(), true), rec.ref || 'BOOTCAMP', rec.name, 'Hadith Bootcamp', String(rec.amount), rec.currency, rec.status,
@@ -320,6 +322,7 @@ function bootcampCardPayment_(p) {
     ]]);
   } finally { lock.releaseLock(); }
   if (created) bc_sendLogin_(created);
+  card_flag_(rec, 'Hadith Bootcamp', result);
   try {
     MailApp.sendEmail({ to: Session.getEffectiveUser().getEmail(), name: SCHOOL_NAME, subject: SCHOOL_NAME + ': Hadith Bootcamp payment ' + naira_(rec.amount),
       body: 'A Hadith Bootcamp payment came in through the website.\n\nFrom: ' + (rec.name || '-') + ' (' + (rec.email || 'no email') + ', ' + (rec.phone || 'no phone') + ')\nAmount: ' +

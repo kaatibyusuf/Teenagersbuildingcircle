@@ -55,7 +55,7 @@ export async function POST(request) {
     success_url: back + '&paid=1',
     cancel_url: back + '&cancelled=1',
     reference: 'FEE-' + id + '-' + Date.now().toString(36),
-    metadata: { kind: 'fee', ref: 'FEE-' + id, studentId: q.studentId || id, periods: String(q.periods || periods),
+    metadata: { ngn: String(amount), kind: 'fee', ref: 'FEE-' + id, studentId: q.studentId || id, periods: String(q.periods || periods),
                 months: String(q.months || ''), plan: String(q.plan || ''), programme: String(q.programme || ''), student: String(q.name || '').slice(0, 100) },
     expires_in_minutes: 60,
   };

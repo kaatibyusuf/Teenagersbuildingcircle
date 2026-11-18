@@ -221,7 +221,13 @@ function assignmentsFor_(st, A, S) {
   });
 }
 
+/* The dashboard payload, plus a personal note written from the student's own record (StudentNote.gs). A problem with the note never stops a login. */
 function payload_(st) {
+  const out = payloadBase_(st);
+  try { if (typeof sn_build_ === 'function') out.note = sn_build_(out); } catch (e) { console.error(e); }
+  return out;
+}
+function payloadBase_(st) {
   const id = key_(st.StudentID), lvl = key_(st.Level);
   const mine = function (name) { return table_(name).rows.filter(function (r) { return key_(r.StudentID) === id; }); };
   return {
@@ -337,6 +343,7 @@ function doPost(e) {
     else out = payload_(a.st);   // "login" and anything else
   } catch (err) {
     console.error(err);
+    if (typeof errLog_ === 'function') errLog_('doPost', err, e);   // ErrorLog.gs: the Errors tab, and an email if a card payment failed
     out = { ok: false, error: 'Something went wrong. Please try again.' };
   }
   return json_(out);
@@ -527,6 +534,7 @@ function onOpen() {
       .addItem('Set up or upgrade tabs', 'setupSheets')
       .addItem('Protect access codes (one time)', 'codesProtect')
       .addItem('Install automatic jobs', 'installTriggers')
+      .addItem('Errors: email me a daily summary', 'errorDigestInstall')
       .addItem('Run the daily job now', 'dailyJob')
       .addItem('Set up the Admins tab', 'adminSetup')
       .addItem('Set up the Teenagers Circle tabs', 'tbcSetup')
