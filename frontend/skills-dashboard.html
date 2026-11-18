@@ -54,6 +54,7 @@ window.PORTAL_SHELL = {
 <!-- Vercel Analytics: counts visits once enabled in the Vercel dashboard -->
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
 <script defer src="/_vercel/insights/script.js"></script>
+<style>.note p { margin: 0 0 12px; line-height: 1.75; max-width: 72ch; } .note .note-hi { font-weight: 700; color: var(--deep); } .note .note-focus { margin: 4px 0 14px; } .note .note-focus b { display: block; margin-top: 2px; font-size: 16px; font-weight: 600; line-height: 1.5; } .note .note-end { margin: 0; }</style>
 </head>
 <body>
 <header class="top"><div>
@@ -152,6 +153,16 @@ function projectsHtml(d) {
   }).join('')}</div>`;
 }
 
+/* A personal note from the school, written from the student's own record (ProgrammeNotes.gs). Shown only when the server sends one. */
+function noteCard(d) {
+  const n = d.note; if (!n || !Array.isArray(n.paragraphs) || !n.paragraphs.length) return '';
+  return `<article class="c w12 note" id="note" style="--i:0"><h2>${esc(n.title || 'A note for you')}</h2>
+    <p class="note-hi">${esc(n.greeting || '')}</p>
+    ${n.paragraphs.map((t) => `<p>${esc(t)}</p>`).join('')}
+    ${n.focus ? `<div class="mark note-focus"><div class="k">This week</div><b>${esc(n.focus)}</b></div>` : ''}
+    ${n.closing ? `<p class="sub note-end">${esc(n.closing)}</p>` : ''}
+  </article>`;
+}
 function render(d) {
   window.__lastData = d;
   const s = d.student, first = String(s.Name).split(' ')[0], status = String(s.PaymentStatus || '').toLowerCase();
@@ -169,6 +180,7 @@ function render(d) {
     <div class="gbtn"><a class="btn btn-ghost" href="${waHelp}" target="_blank" rel="noopener">Need help?</a></div></section>
   ${remind.length ? `<section class="remind" aria-label="Reminders">${remind.map((r) => `<a href="${r.a}" class="${r.u ? 'urgent' : ''}">${esc(r.t)}<span>${r.tag}</span></a>`).join('')}</section>` : ''}
   <div class="grid">
+    ${noteCard(d)}
     <article class="c" id="course" style="--i:0"><div class="k">Your course</div>${done ? '<div class="big">Course complete</div>' : s.Week ? `<div class="big">Week ${s.Week}${s.Weeks ? ' of ' + s.Weeks : ''}</div><div class="bar"><i data-w="${pct}"></i></div>` : '<div class="big">Starting soon</div>'}
       <p class="sub">${s.StartDate ? 'Started ' + fdate(s.StartDate) : 'Your tutor will confirm the start date.'}</p>${safeUrl(s.Certificate) ? `<p><a class="btn btn-ink" style="margin-top:12px" href="${esc(s.Certificate)}" target="_blank" rel="noopener">View your certificate</a></p>` : ''}</article>
     <article class="c" id="classes" style="--i:1"><div class="k">Next live class</div>${s.NextClass ? `<div class="big">${fdate(s.NextClass, true)}</div>${safeUrl(s.ClassLink) ? `<p><a class="btn btn-ink" style="margin-top:12px" href="${esc(s.ClassLink)}" target="_blank" rel="noopener">Join the class</a></p>` : '<p class="sub">The join link will appear here.</p>'}` : '<div class="big">Not scheduled</div><p class="sub">Your tutor will post the next class here.</p>'}</article>

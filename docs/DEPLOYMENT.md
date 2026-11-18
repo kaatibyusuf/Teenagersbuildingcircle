@@ -21,6 +21,7 @@ Last updated: 18 November 2026.
 | [ ] | `PlacementTests.gs` | changed (foreign-currency cards, `placementIssueCode`) | See "Payments" below |
 | [ ] | `CardPayments.gs`, `Fees.gs`, `Guides.gs`, `Sponsors.gs`, `Bootcamp.gs` | changed (foreign-currency cards, alert email) | See "Payments" below |
 | [ ] | `StudentNote.gs` | **new** | A student's portal shows "A note for you" |
+| [ ] | `ProgrammeNotes.gs` | **new** (also replace `TBC.gs`, `Skills.gs`, `Academy.gs`, `Parents.gs`, `Notices.gs`) | TBC, Skills and Academy portals show "A note for you" |
 | [ ] | `ErrorLog.gs` | **new** | Menu **Himaayah > Errors: email me a daily summary**, run it once |
 | [ ] | `Scratch.gs` (the one-off Hadiza script) | delete it | It is no longer in the file list |
 
@@ -33,6 +34,8 @@ Last updated: 18 November 2026.
 | [ ] | Assignment uploads | `node scripts/add-assignment-files.js` | Madrasah and TBC portals show the file field |
 | [ ] | Recorder pause | `node scripts/add-recorder-pause.js` | Pause and Resume appear while recording |
 | [ ] | Exam notices | `node scripts/add-teacher-notices.js`; run `postExamNotice` once | Teachers see a Notices card |
+| [ ] | Notes on TBC, Skills, Academy | `node scripts/add-programme-notes.js` | The note card shows at the top of each portal |
+| [ ] | Teacher "Needs attention" | `node scripts/add-teacher-attention.js` | Today tab lists students who need a word |
 | [ ] | Student note | `node scripts/add-student-note.js` | The note card shows at the top of the Madrasah portal |
 | [ ] | Foreign-currency metadata | `node scripts/add-ngn-metadata.js` | Each checkout's metadata carries `ngn` (see below) |
 | [ ] | Teacher portal layout | `node scripts/teacher-portal-shell.js` (run this first) | The teacher portal shows the left menu and summary cards |
@@ -59,7 +62,6 @@ Any payment that cannot be matched now sends you an **ATTENTION** email with the
 - [ ] A scholar reviews the E-Library vetting
 - [ ] Decide whether the journal form is locked to 1 January to 30 March 2027
 - [ ] Decide the judging and announcement process, and add a copyright line, to the submission page
-- [ ] Student note for the TBC, Academy and Skills portals (only the Madrasah portal has it)
 
 ## When something fails
 

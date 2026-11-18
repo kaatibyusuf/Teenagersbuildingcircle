@@ -319,7 +319,7 @@ function acd_board_(C) {   // everyone active, best first
 }
 
 /* ===== STUDENT ===== */
-function acd_studentPayload_(st, viewer) {
+function acdStudentPayloadBase_(st, viewer) {
   const C = acd_ctx_(), id = key_(st.StudentID), track = String(st.Track || ''), group = String(st.Group || ''), keys = acd_keys_(st);
   const tutors = acd_tutorNames_(), status = payStatus_(st), today = today_(), now = acd_now_();
   // class links for the student's group, shown only while fees are not overdue
@@ -1306,3 +1306,6 @@ function academySetup() {
   try { ss.toast(msg.split('\n')[0] + ' The admin login is in the AcademyAdmins tab.', SCHOOL_NAME, 15); } catch (e) {}
   return msg;
 }
+
+/* The Academy dashboard payload with the personal note attached for the student's own view (ProgrammeNotes.gs). */
+function acd_studentPayload_(st, viewer) { const out = acdStudentPayloadBase_(st, viewer); return viewer ? out : pn_attach_('academy', out); }

@@ -127,7 +127,7 @@ function par_payload_(prog, st) {
         hifdh: mine('Hifdh').filter(function (r) { return r.Surah; }).map(function (r) { return { Surah: r.Surah, Status: r.Status }; }),
         results: mine('Results').filter(function (r) { return r.Subject; }).map(function (r) { return { Date: iso_(r.Date), Type: r.Type, Subject: r.Subject, Score: r.Score, OutOf: r.OutOf }; }).sort(function (a, b) { return a.Date < b.Date ? 1 : -1; }).slice(0, 12) },
       work: par_work_(as),
-      announcements: par_news_(table_('Announcements').rows.filter(function (r) { return r.Title && matches_(r.Audience, ['MADRASAH', id]); }).map(function (r) { return { Date: iso_(r.Date), Title: r.Title, Body: r.Body }; }).sort(function (a, b) { return a.Date < b.Date ? 1 : -1; })) };
+      announcements: par_news_(table_('Announcements').rows.filter(function (r) { return r.Title && ann_ok_(r.Audience, ['MADRASAH', id, key_(st.Level)]); }).map(function (r) { return { Date: iso_(r.Date), Title: r.Title, Body: r.Body }; }).sort(function (a, b) { return a.Date < b.Date ? 1 : -1; })) };
   }
   if (prog === 'academy') {
     const p = acd_studentPayload_(st, ''), m = p.metrics || {};

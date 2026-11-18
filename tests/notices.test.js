@@ -28,5 +28,5 @@ test('teachers see only teacher notices; blank audience stays student-only', () 
   const n = e.run("tchNotices_({TeacherID:'T1'})");
   assert.equal(n.length, 1);
   assert.match(n[0].Body, /20 to 24 January 2027/);
-  assert.match(n[0].Body, /5 to 12 December 2026/);
+  assert.match(n[0].Body, /1 to 12 December 2026/);
 });

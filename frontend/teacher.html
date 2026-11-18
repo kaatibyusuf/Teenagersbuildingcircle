@@ -134,6 +134,32 @@ const recWaiting = () => (D.recordings || []).filter((r) => r.Status === 'Waitin
 const mmss = (n) => Math.floor(n / 60) + ':' + String(Math.floor(n % 60)).padStart(2, '0');
 
 /* ---------- views ---------- */
+/* Students who need a word from their teacher: worked out in the browser from the data already on the page. */
+function attention() {
+  const admin = D.teacher.Role === 'Admin', day = (s) => Math.floor(Date.parse(String(s).slice(0, 10) + 'T00:00:00Z') / 86400000), t0 = day(D.today);
+  const recs = D.recordings || [], out = [];
+  D.students.forEach((s) => {
+    const why = []; let w = 0;
+    const att = (D.attendance || []).filter((a) => a.StudentID === s.StudentID).sort((a, b) => (a.Date < b.Date ? 1 : -1));
+    if (att.length >= 3 && att.slice(0, 3).every((a) => a.Status === 'Absent')) { why.push('Absent from the last 3 classes'); w += 4; }
+    else if (att.length >= 2 && att.slice(0, 2).every((a) => a.Status === 'Absent')) { why.push('Absent twice in a row'); w += 2; }
+    const tot = Number(s.AttendanceTotal) || 0, pre = Number(s.AttendancePresent) || 0;
+    if (tot >= 5 && pre / tot < 0.7) { why.push('Attendance ' + Math.round(100 * pre / tot) + '%'); w += 2; }
+    let od = 0; D.assignments.forEach((a) => a.Rows.forEach((r) => { if (r.StudentID === s.StudentID && r.Status === 'Overdue') od++; }));
+    if (od) { why.push(od + ' overdue assignment' + (od === 1 ? '' : 's')); w += Math.min(od, 3); }
+    if (recs.length && !recs.some((r) => r.StudentID === s.StudentID && t0 - day(r.Submitted) <= 14)) { why.push('No recitation sent in 14 days'); w += 1; }
+    if (admin && String(s.PaymentStatus || '').toLowerCase() === 'overdue') { why.push('Fee overdue'); w += 2; }
+    if (why.length) out.push({ s, why, w });
+  });
+  return out.sort((a, b) => b.w - a.w || String(a.s.Name).localeCompare(String(b.s.Name)));
+}
+function attentionCard() {
+  const list = attention(); if (!D.students.length) return '';
+  if (!list.length) return `<article class="c w12" data-attention><h2>Needs attention</h2><p class="sub">Nobody needs a nudge right now, m\u0101 sh\u0101\u02BE All\u0101h.</p></article>`;
+  return `<article class="c w12" data-attention><h2>Needs attention <span class="sub">${list.length} of ${D.students.length}</span></h2>
+    <ul class="list">${list.slice(0, 8).map((x) => `<li><span><b>${esc(x.s.Name)}</b><br><span class="sub">${x.why.map(esc).join(' \u00B7 ')}</span></span><button class="btn btn-line btn-sm" type="button" data-act="goStu" data-id="${esc(x.s.StudentID)}">Open</button></li>`).join('')}</ul>
+    ${list.length > 8 ? `<p class="sub">And ${list.length - 8} more. See the Students tab.</p>` : ''}</article>`;
+}
 function vToday() {
   const date = S.date || D.today, saved = {};
   D.attendance.filter((a) => a.Date === date).forEach((a) => { saved[a.StudentID] = a.Status; });
@@ -141,6 +167,7 @@ function vToday() {
   const queue = [];
   D.assignments.forEach((a) => a.Rows.forEach((r) => { if (r.Status === 'Submitted') queue.push({ a, r }); }));
   return `<div class="grid">
+  ${attentionCard()}
   <article class="c w8"><h2>Attendance</h2><p class="sub">Choose a status for each student, then save. You can come back and correct a day.</p>
     <div class="bar2"><div><label class="fl" for="attDate">Date</label><input class="in" type="date" id="attDate" value="${esc(date)}" max="${esc(D.today)}"></div><button class="btn btn-line btn-sm" data-act="allPresent" type="button">Mark everyone present</button></div>
     ${D.students.length ? `<div class="alist">${D.students.map((s) => `<div class="arow"><div><b>${esc(s.Name)}</b><small>${esc(s.Level || 'No level yet')} · ${attPct(s)}</small></div><div class="segb" data-id="${esc(s.StudentID)}">${ATT.map((x) => `<button type="button" data-act="att" data-v="${x}" class="${marks[s.StudentID] === x ? 'on' : ''}">${x}</button>`).join('')}</div></div>`).join('')}</div>
@@ -289,6 +316,7 @@ app.addEventListener('click', async (e) => {
     if (await act('teacher_attendance', { date: S.date || D.today, marks }, 'Attendance saved.', b)) S.marks = {};
   }
   else if (a === 'selAll') { const boxes = [...document.querySelectorAll('.cls')], all = boxes.every((x) => x.checked); boxes.forEach((x) => { x.checked = !all; }); }
+  else if (a === 'goStu') { S.tab = 'students'; S.openStu[b.dataset.id] = true; render(); const el = [...document.querySelectorAll('.stu')].find((x) => x.dataset.id === b.dataset.id); if (el) el.scrollIntoView({ block: 'center' }); }
   else if (a === 'goMark') { S.tab = 'assignments'; S.openAsg[b.dataset.a] = true; render(); const el = [...document.querySelectorAll('.asg')].find((x) => x.dataset.id === b.dataset.a); if (el) el.scrollIntoView(); }
   else if (a === 'hrm') { if (confirm('Remove ' + b.dataset.surah + '?')) act('teacher_hifdh', { studentId: b.dataset.id, surah: b.dataset.surah, remove: true }, 'Surah removed.'); }
   else if (a === 'archive') act('teacher_assignment_active', { assignmentId: b.dataset.a, active: b.dataset.v === '1' }, b.dataset.v === '1' ? 'Assignment restored.' : 'Assignment archived.', b);

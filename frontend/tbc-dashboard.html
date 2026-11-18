@@ -73,6 +73,7 @@ window.PORTAL_SHELL = {
 .gd-in{width:100%;padding:11px 12px;border:1px solid #cdd9e3;border-radius:10px;font:inherit}
 .gd-banner{margin:0 0 14px;padding:14px 16px;border-radius:12px;background:#e6f4ea;color:#14532d;font-weight:500}.gd-banner.warn{background:#fff4d6;color:#7a5b00}
 </style>
+<style>.note p { margin: 0 0 12px; line-height: 1.75; max-width: 72ch; } .note .note-hi { font-weight: 700; color: var(--deep); } .note .note-focus { margin: 4px 0 14px; } .note .note-focus b { display: block; margin-top: 2px; font-size: 16px; font-weight: 600; line-height: 1.5; } .note .note-end { margin: 0; }</style>
 </head>
 <body>
 <header class="top"><div>
@@ -259,6 +260,16 @@ document.addEventListener('submit', async (e) => {
 
 let LAST = null;
 const GP = new URLSearchParams(location.search).get('guide');
+/* A personal note from the school, written from the student's own record (ProgrammeNotes.gs). Shown only when the server sends one. */
+function noteCard(d) {
+  const n = d.note; if (!n || !Array.isArray(n.paragraphs) || !n.paragraphs.length) return '';
+  return `<article class="c w12 note" id="note" style="--i:0"><h2>${esc(n.title || 'A note for you')}</h2>
+    <p class="note-hi">${esc(n.greeting || '')}</p>
+    ${n.paragraphs.map((t) => `<p>${esc(t)}</p>`).join('')}
+    ${n.focus ? `<div class="mark note-focus"><div class="k">This week</div><b>${esc(n.focus)}</b></div>` : ''}
+    ${n.closing ? `<p class="sub note-end">${esc(n.closing)}</p>` : ''}
+  </article>`;
+}
 function render(d) {
   LAST = d;
   const openIds = [...document.querySelectorAll('.asg[open]')].map((x) => x.dataset.id);
@@ -280,6 +291,7 @@ function render(d) {
     <div class="gbtn"><a class="btn btn-ghost" href="${waHelp}" target="_blank" rel="noopener">Need help?</a></div></section>
   ${remind.length ? `<section class="remind" aria-label="Reminders">${remind.map((r) => `<a href="${r.a}" class="${r.u ? 'urgent' : ''}">${r.t}<span>${r.tag}</span></a>`).join('')}</section>` : ''}
   <div class="grid">
+    ${noteCard(d)}
     <article class="c" id="next" style="--i:0"><div class="k">Next live session</div>${ns ? `<div class="big">${fdate(ns.Start, true)}</div><p class="sub"><b>${esc(ns.Title)}</b>${ns.Pillar ? ' · ' + esc(ns.Pillar) : ''}</p>${ns.Notes ? `<p class="sub">${esc(ns.Notes)}</p>` : ''}${safeUrl(ns.Link) ? `<p><a class="btn btn-ink" style="margin-top:12px" href="${esc(ns.Link)}" target="_blank" rel="noopener">Join the session</a></p>` : '<p class="sub">The join link will appear here.</p>'}` : '<div class="big">Not scheduled</div><p class="sub">Your facilitator will post the next session here.</p>'}</article>
     <article class="c" id="pay" style="--i:1"><div class="k">Payment</div><span class="pill ${pcls}">${esc(s.PaymentStatus || 'Due')}</span>
       ${status === 'exempt' ? '<div class="big" style="margin-top:12px">Nothing to pay</div>' : `<div class="big" style="margin-top:12px">${isNaN(due) ? 'No date set' : fdate(s.NextDue)}</div><p class="sub">Next payment due${s.MonthlyFee ? ' · ' + naira(s.MonthlyFee) + ' a month' : ''}.</p>${status === 'paid' ? `<p class="pay-btns"><a class="btn btn-line" href="${payUrl}">Pay ahead by card</a></p><p class="sub" style="margin-top:8px">Renew early any time. Whatever you pay is added to your current due date.</p>` : `<p class="pay-btns"><a class="btn btn-ink" href="${payUrl}">Pay by card</a><a class="btn btn-line" href="${waPay}" target="_blank" rel="noopener">Send a transfer receipt</a></p>`}`}</article>

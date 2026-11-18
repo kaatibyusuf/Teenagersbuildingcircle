@@ -35,11 +35,11 @@ function postExamNotice() {
     { Title: 'Madrasah examinations: 20 to 24 January 2027',
       Body: 'Bismillah. The Madrasah examinations will hold from 20 to 24 January 2027, in shāʾ Allāh. Keep those days free and revise what you have been taught this term. If anything is unclear, ask your teacher early. The timetable for each paper will follow.',
       Audience: 'MADRASAH, -' + NOTICE_RABIAH_ },
-    { Title: 'Final examinations: 5 to 12 December 2026',
-      Body: 'Bismillah. Your final examinations begin on 5 December and end on 12 December 2026, in shāʾ Allāh. These dates are for Rābiʿah Ibtidāʾiyyah only and come before the rest of the Madrasah. Revise steadily, rest well before each paper, and ask your teacher about anything you are unsure of.',
+    { Title: 'Final examinations: 1 to 12 December 2026',
+      Body: 'Bismillah. Your final examinations begin on 1 December and end on 12 December 2026, in shāʾ Allāh. These dates are for Rābiʿah Ibtidāʾiyyah only and come before the rest of the Madrasah. Revise steadily, rest well before each paper, and ask your teacher about anything you are unsure of.',
       Audience: NOTICE_RABIAH_ },
     { Title: 'Madrasah examination dates',
-      Body: 'The Madrasah examinations hold from 20 to 24 January 2027. The one exception is Rābiʿah Ibtidāʾiyyah, whose final examinations run from 5 to 12 December 2026. Please plan your syllabus and revision so that each class is ready by its date, and make sure your students know which dates apply to them.',
+      Body: 'The Madrasah examinations hold from 20 to 24 January 2027. The one exception is Rābiʿah Ibtidāʾiyyah, whose final examinations run from 1 to 12 December 2026. Please plan your syllabus and revision so that each class is ready by its date, and make sure your students know which dates apply to them.',
       Audience: 'TEACHERS' }
   ];
   let n = 0;

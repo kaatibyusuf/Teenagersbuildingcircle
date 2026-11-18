@@ -112,7 +112,7 @@ function tbcAud_(cell, allowed) {   // announcements: must name TBC, ALL, the co
 }
 
 /* ===== STUDENT ===== */
-function tbc_payload_(st) {
+function tbcPayloadBase_(st) {
   const id = key_(st.StudentID), mine = function (n) { return tbcRows_(n).filter(function (r) { return key_(r.StudentID) === id; }); };
   const cohort = tbcCohort_(st);
   return {
@@ -431,3 +431,6 @@ function tbcFromRequest(p) {
     return { ok: false, error: 'Something went wrong. Please try again.' };
   }
 }
+
+/* The TBC dashboard payload with the personal note attached (ProgrammeNotes.gs). */
+function tbc_payload_(st) { return pn_attach_('tbc', tbcPayloadBase_(st)); }

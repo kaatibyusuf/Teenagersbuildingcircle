@@ -128,7 +128,7 @@ function sk_att_(A, id) {
 }
 
 /* ===== STUDENT ===== */
-function sk_studentPayload_(st) {
+function skStudentPayloadBase_(st) {
   const id = key_(st.StudentID), tutors = sk_tutorNames_();
   return {
     ok: true, today: today_(),
@@ -437,3 +437,6 @@ function skillsSetup() {
   try { ss.toast(msg.split('\n')[0] + ' The admin login is in the SkillsAdmins tab.', SCHOOL_NAME, 15); } catch (e) {}
   return msg;
 }
+
+/* The Skills dashboard payload with the personal note attached (ProgrammeNotes.gs). */
+function sk_studentPayload_(st) { return pn_attach_('skills', skStudentPayloadBase_(st)); }

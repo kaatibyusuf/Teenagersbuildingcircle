@@ -54,6 +54,7 @@ window.PORTAL_SHELL = {
 <!-- Vercel Analytics: counts visits once enabled in the Vercel dashboard -->
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
 <script defer src="/_vercel/insights/script.js"></script>
+<style>.note p { margin: 0 0 12px; line-height: 1.75; max-width: 72ch; } .note .note-hi { font-weight: 700; color: var(--deep); } .note .note-focus { margin: 4px 0 14px; } .note .note-focus b { display: block; margin-top: 2px; font-size: 16px; font-weight: 600; line-height: 1.5; } .note .note-end { margin: 0; }</style>
 </head>
 <body>
 <header class="top"><div>
@@ -181,6 +182,16 @@ function linksHtml(d) {
   return `<div class="k">Class links</div>${L.timetable ? `<p class="sub" style="margin:2px 0 12px"><b style="color:var(--deep)">${esc(L.timetable)}</b></p>` : ''}<div class="acx-links">${safeUrl(L.meet) ? `<a class="btn btn-ink" href="${esc(L.meet)}" target="_blank" rel="noopener">Join on Google Meet</a>` : ''}${safeUrl(L.telegram) ? `<a class="btn btn-line" href="${esc(L.telegram)}" target="_blank" rel="noopener">Open the Telegram group</a>` : ''}</div><p class="sub">Please keep these links within the class.</p>`;
 }
 
+/* A personal note from the school, written from the student's own record (ProgrammeNotes.gs). Shown only when the server sends one. */
+function noteCard(d) {
+  const n = d.note; if (!n || !Array.isArray(n.paragraphs) || !n.paragraphs.length) return '';
+  return `<article class="c w12 note" id="note" style="--i:0"><h2>${esc(n.title || 'A note for you')}</h2>
+    <p class="note-hi">${esc(n.greeting || '')}</p>
+    ${n.paragraphs.map((t) => `<p>${esc(t)}</p>`).join('')}
+    ${n.focus ? `<div class="mark note-focus"><div class="k">This week</div><b>${esc(n.focus)}</b></div>` : ''}
+    ${n.closing ? `<p class="sub note-end">${esc(n.closing)}</p>` : ''}
+  </article>`;
+}
 function vOverview(d) {
   const s = d.student, due = new Date(s.NextDue), status = String(s.PaymentStatus || '').toLowerCase();
   const pcls = status === 'paid' || status === 'exempt' ? 'p-paid' : status === 'overdue' ? 'p-over' : 'p-due';
@@ -188,6 +199,7 @@ function vOverview(d) {
   const payUrl = 'pay?id=' + encodeURIComponent(s.StudentID);
   const waPay = 'https://wa.me/' + PAYMENT_WA + '?text=' + encodeURIComponent('Assalaamu alaykum. This is my payment receipt. Name: ' + s.Name + ', ID: ' + s.StudentID + '.');
   return `<div class="grid">
+    ${noteCard(d)}
     <article class="c w12" id="perf" style="--i:0"><h2>Your performance</h2>${perfHtml(d)}</article>
     <article class="c" id="exam" style="--i:1"><div class="k">Exam countdown</div>${examDays === null ? '<div class="big">Date not set</div><p class="sub">Your mentor will add your exam date.</p>' : examDays < 0 ? `<div class="big">Exam done</div><p class="sub">${fdate(s.ExamDate)}</p>` : `<div class="big">${examDays === 0 ? 'Today' : plural(examDays, 'day')}</div><p class="sub">${esc(s.Track || 'Your exam')} · ${fdate(s.ExamDate)}</p>${examDays > 0 ? `<p class="sub">About ${plural(Math.ceil(examDays / 7), 'week')} of prep left.</p>` : ''}`}</article>
     <article class="c" id="classes" style="--i:2">${linksHtml(d)}${s.NextClass ? `<p class="sub" style="margin-top:10px">Next class: <b style="color:var(--deep)">${fdate(s.NextClass, true)}</b></p>` : ''}</article>
