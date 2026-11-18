@@ -32,8 +32,10 @@ Last updated: 18 November 2026.
 | [ ] | Homepage link to the journal form | change `journal#submit` to `journal-submit` in `index.html` | The homepage button opens the submission page |
 | [ ] | Assignment uploads | `node scripts/add-assignment-files.js` | Madrasah and TBC portals show the file field |
 | [ ] | Recorder pause | `node scripts/add-recorder-pause.js` | Pause and Resume appear while recording |
+| [ ] | Exam notices | `node scripts/add-teacher-notices.js`; run `postExamNotice` once | Teachers see a Notices card |
 | [ ] | Student note | `node scripts/add-student-note.js` | The note card shows at the top of the Madrasah portal |
 | [ ] | Foreign-currency metadata | `node scripts/add-ngn-metadata.js` | Each checkout's metadata carries `ngn` (see below) |
+| [ ] | Bootcamp portal layout | `node scripts/bootcamp-portal-shell.js` | The bootcamp portal shows the left menu and summary cards |
 | [ ] | Placement phone numbers | extract `api/placement-checkout.mjs` | A +233 number is accepted |
 
 Each script says "NOT changed" and names the spot if it cannot find what it needs. It never half-edits a page. Send me the file if that happens.
