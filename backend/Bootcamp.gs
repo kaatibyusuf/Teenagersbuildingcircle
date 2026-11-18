@@ -34,7 +34,7 @@ const BC_ST_HEAD = ['BootcampID', 'Name', 'Email', 'WhatsApp', 'AccessCode', 'Jo
                     'Completed', 'CertificateID', 'LastSeen', 'Notes'];
 /* The recordings live in a Telegram group. Paste its invite link here (it starts with https://t.me/). Members see it inside their lessons; it is never shown on the public page.
    To point one ḥadīth at its own post instead, paste that post's Telegram link in the DriveLink column of the "Bootcamp recordings" tab, on the row for that ḥadīth. */
-const BC_TELEGRAM_URL = '';
+const BC_TELEGRAM_URL = 'https://t.me/+j3T0tJcXIgRjN2U0';
 const BC_REC_TAB = 'Bootcamp recordings';
 const BC_REC_HEAD = ['Hadith', 'Part', 'Title', 'DriveLink', 'Minutes', 'Free', 'Notes'];
 const BC_PR_TAB = 'Bootcamp progress';

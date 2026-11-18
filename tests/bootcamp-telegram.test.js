@@ -13,12 +13,12 @@ test('only real Telegram links are accepted', () => {
   assert.equal(e.run("bc_tgOk_('')"), false);
 });
 
-test('a ḥadīth with its own Telegram post links to it; others get no link until the group link is set', () => {
+test('a ḥadīth with its own Telegram post links to it; others get the group link', () => {
   const e = createEnv();
   e.run("append_(bc_rec_(), { Hadith: '3', Part: 1, Title: 'Hadith 3', DriveLink: 'https://t.me/c/123456/78' })");
   e.run("append_(bc_rec_(), { Hadith: '5-6', Part: 1, Title: 'x', DriveLink: 'https://evil.example/x' })");
   assert.deepEqual(e.run("bc_tg_(3)"), { url: 'https://t.me/c/123456/78', post: true });
-  assert.equal(e.run("bc_tg_(4)"), null);
-  assert.equal(e.run("bc_tg_(5)"), null);          // a non-Telegram link is never offered
+  assert.deepEqual(e.run("bc_tg_(4)"), { url: 'https://t.me/+j3T0tJcXIgRjN2U0', post: false });
+  assert.equal(e.run("bc_tg_(5).post"), false);   // a non-Telegram link is never offered; the group link is used
   assert.equal(e.run("bc_recordings_(3, false).length"), 0);   // a Telegram post is not a Drive recording
 });
