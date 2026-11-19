@@ -60,6 +60,25 @@ the real amount ("paid GHS 25, credited as ₦3,000: confirm in Bachs"). Order m
 
 Any payment that cannot be matched now sends you an **ATTENTION** email with the buyer's details, so nothing waits silently.
 
+## Himaayah Skills Schools page
+
+`frontend/skills-school.html` is the **Himaayah Skills Schools** page (himaayahschools.com/skills-school). It has a text-only hero with a row of course pictures that runs by itself,
+a Featured tracks card grid, a sideways-scrolling phases section, the track matcher, fees, FAQ and the homepage footer. The eight tracks are
+Cybersecurity, Web Development, Software Engineering, Product Management, Product Design, Graphic Design, UI/UX and Video Creation. Each is eighteen months and ₦200,000.
+
+Each card's **Learn more** opens its own course page: `frontend/skills-school/<track>.html`, shown at `himaayahschools.com/skills-school/<track>`
+(for example `/skills-school/cybersecurity`). The course pages share `frontend/css/skills.css` and the pictures in `frontend/images/skills/`.
+To change a picture, replace the file with the same name (3:2, under 150 KB). To change a course's text, edit its page.
+
+Drop the files in and push. Then run `node scripts/add-skills-to-sitemap.js` from the project root to list the eight course pages in `frontend/sitemap.xml` (safe to run twice).
+
+**Enrolment is not switched on yet.** The "Reserve my place" buttons open WhatsApp (+234 704 722 6487) with the track name filled in. The enrolment page, `api/checkout.mjs`
+and `Skills.gs` still only know the old Public Speaking, Graphic Design and Data Analysis plans, and card payment needs a Bachs product for each new track.
+When those are set up, change `const ENROL_OPEN = false;` to `true` near the top of the script in `skills-school.html` and in each of the eight course pages. The buttons then go to `enroll?programme=skills&plan=<track>`
+with the plan slugs `cybersecurity`, `web-development`, `software-engineering`, `product-management`, `product-design`, `graphic-design`, `ui-ux` and `video-creation`.
+
+Review the track outlines (what each track teaches, the tools and the final project) before launch. They are written to be sensible, not taken from a syllabus of yours.
+
 ## Projection tab (owner portal)
 
 A new **Projection** tab shows income, costs, profit now, the gap to your profit target, the number of new students needed, a six month forecast,

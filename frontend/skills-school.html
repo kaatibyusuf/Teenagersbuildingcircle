@@ -87,95 +87,10 @@
  ]
 }
 </script>
-<style>
-/* Himaayah Skills Schools: built on the homepage layout (home.css + styles.css). Only the pieces the homepage does not have live here. */
-.site .sk-viz{display:flex;flex-direction:column;gap:18px;margin:20px 0;padding:20px}
-.site .sk-k{margin:0 0 8px;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#6B8396}
-.site .sk-can{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:8px 22px}
-.site .sk-can li{position:relative;padding-inline-start:20px;font-size:14px;line-height:1.45;color:#35506A}
-.site .sk-can li::before{content:'';position:absolute;inset-inline-start:0;top:.38em;width:9px;height:9px;border-radius:50%;background:#85CCFF;box-shadow:inset 0 0 0 2px #094570}
-.site .sk-ph{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.site .sk-ph>div{background:#F3F7FA;border-radius:12px;padding:12px 13px}
-.site .sk-ph small{display:block;font-size:11px;color:#6B8396;margin-bottom:3px}
-.site .sk-ph h4{margin:0 0 6px;font:600 14px/1.2 var(--h-f);color:#062F4D;letter-spacing:-.01em}
-.site .sk-ph ul{list-style:none;margin:0;padding:0;display:grid;gap:4px}
-.site .sk-ph li{font-size:12.5px;line-height:1.35;color:#4B6577}
-.site .sk-tools{display:flex;flex-wrap:wrap;gap:6px}
-.site .sk-tools span{font-size:12px;padding:5px 10px;border-radius:99px;background:#E3F2FD;color:#094570}
-.site .sk-proj{margin:0;font-size:13.5px;line-height:1.5;color:#4B6577}
-.site .sk-proj b{color:#062F4D;font-weight:600}
-.site .sk-side-note{margin-top:auto;padding-top:20px;font-size:13px;color:rgba(255,255,255,.6)}
-.site .sk-side-note a{color:#fff;text-decoration:underline;text-underline-offset:3px}
-.site .h-tabs button{padding:10px 14px}
-
-/* matcher */
-.site .sk-quiz{max-width:720px;margin:44px auto 0;background:#fff;border-radius:28px;padding:30px;box-shadow:0 0 0 1px var(--hb-line,#D5E0E8),0 30px 50px -34px rgba(6,47,77,.4);text-align:start}
-.site .sk-qbar{height:4px;border-radius:4px;background:#E3ECF3;margin-bottom:22px;overflow:hidden}
-.site .sk-qbar i{display:block;height:100%;background:#094570;border-radius:4px;transition:width .35s}
-.site .sk-quiz h3{margin:0 0 18px;font:600 clamp(20px,3vw,26px)/1.2 var(--h-f);letter-spacing:-.03em;color:#062F4D}
-.site .sk-opts{display:grid;gap:10px}
-.site .sk-opt{text-align:start;font:500 15px/1.4 var(--h-f);color:#062F4D;background:#F3F7FA;border:0;border-radius:14px;padding:14px 18px;cursor:pointer;box-shadow:0 0 0 1px transparent;transition:background .2s,box-shadow .2s}
-.site .sk-opt:hover{background:#E3F2FD;box-shadow:0 0 0 1px #A9C7DC}
-.site .sk-res{display:grid;gap:10px}
-.site .sk-rc{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;background:#F3F7FA;border-radius:16px;padding:16px 18px}
-.site .sk-rc b{display:block;font:600 17px/1.2 var(--h-f);color:#062F4D}
-.site .sk-rc span{font-size:13px;color:#6B8396}
-.site .sk-again{justify-self:start;background:none;border:0;color:#094570;font:500 14px var(--h-f);cursor:pointer;text-decoration:underline;text-underline-offset:3px;padding:6px 0}
-
-/* price */
-.site .sk-price{display:grid;grid-template-columns:1fr 1.1fr;gap:28px;margin-top:48px;align-items:stretch}
-.site .sk-pbox{background:#094570;color:#fff;border-radius:28px;padding:34px}
-.site .sk-pbox b{display:block;font:600 clamp(40px,6vw,60px)/1 var(--h-f);letter-spacing:-.045em}
-.site .sk-pbox p{margin:14px 0 22px;font-size:15px;line-height:1.55;color:rgba(255,255,255,.78)}
-.site .sk-pbox .sk-fine{font-size:12.5px;margin:22px 0 0;color:rgba(255,255,255,.65)}
-.site .sk-pbox .sk-fine a{color:#fff;text-decoration:underline}
-.site .sk-pbox .h-btn{background:#fff;color:#062F4D}
-.site .sk-incl{list-style:none;margin:0;padding:0;display:grid;gap:12px}
-.site .sk-incl li{display:flex;gap:14px;background:#fff;border-radius:18px;padding:18px 20px;box-shadow:0 0 0 1px #D5E0E8}
-.site .sk-incl svg{flex:none;width:22px;height:22px;padding:4px;border-radius:50%;background:#E3F2FD;fill:none;stroke:#094570;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;margin-top:1px}
-.site .sk-incl b{display:block;font-weight:600;font-size:15.5px;color:#062F4D;margin-bottom:2px}
-.site .sk-incl span{font-size:14px;line-height:1.5;color:#5B7283}
-
-/* values */
-.site .sk-vals{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:48px}
-.site .sk-vals div{background:#fff;border-radius:24px;padding:26px;box-shadow:0 0 0 1px #D5E0E8;text-align:start}
-.site .sk-vals b{display:block;font:600 19px/1.2 var(--h-f);letter-spacing:-.02em;color:#062F4D;margin-bottom:8px}
-.site .sk-vals span{font-size:14.5px;line-height:1.55;color:#5B7283}
-.site .sk-more{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:26px}
-.site .sk-more a{padding:10px 18px;border-radius:99px;background:#E3F2FD;color:#094570;font-size:14px;font-weight:500}
-.site .sk-more a:hover{background:#CFE7FA}
-.site .sk-paper{background:#F1F4F7}
-
-@media (max-width:900px){
-  .site .sk-price,.site .sk-vals{grid-template-columns:1fr}
-  .site .sk-ph{grid-template-columns:1fr}
-  .site .h-tabs{grid-template-columns:1fr 1fr}
-}
-@media (max-width:560px){
-  .site .sk-can{grid-template-columns:1fr}
-  .site .sk-quiz{padding:22px}
-  .site .sk-pbox{padding:26px}
-}
-
-/* hero reveal */
-.site .sk-g{position:relative;z-index:2;list-style:none;margin:56px auto 0;padding:0 24px;max-width:1064px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.site .sk-g li{border-radius:24px;overflow:hidden;background:#E3ECF3;box-shadow:0 0 0 1px #D5E0E8,0 30px 50px -34px rgba(6,47,77,.45);aspect-ratio:3/2;transition:clip-path 1s cubic-bezier(.2,.7,.2,1) calc(var(--i)*.12s),transform .35s}
-.site .sk-g li:hover{transform:translateY(-6px)}
-.site .sk-g a{position:relative;display:block;height:100%}
-.site .sk-g img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 1.4s cubic-bezier(.2,.7,.2,1) calc(var(--i)*.12s)}
-.site .sk-g li:hover img{transform:scale(1.04)}
-.site .sk-g span{position:absolute;inset-inline-start:12px;bottom:12px;background:#fff;color:#062F4D;border-radius:14px;padding:8px 13px;font:600 14px/1.2 var(--h-f);letter-spacing:-.01em;box-shadow:0 8px 18px -10px rgba(6,47,77,.5)}
-.site .sk-g small{display:block;margin-top:2px;font:400 12px/1.3 var(--h-f);color:#6B8396}
-.js .sk-g li:not(.in){clip-path:inset(0 0 100% 0 round 24px)}
-.js .sk-g li:not(.in) img{transform:scale(1.25)}
-.js .sk-g li.in{clip-path:inset(0 0 0 0 round 24px)}
-@media (max-width:900px){.site .sk-g{grid-template-columns:1fr 1fr;gap:12px;margin-top:44px}.site .sk-g li{border-radius:18px}.site .sk-g span{font-size:12.5px;padding:6px 10px;inset-inline-start:8px;bottom:8px}.site .sk-g small{display:none}}
-@media (prefers-reduced-motion:reduce){.js .sk-g li:not(.in){clip-path:none}.js .sk-g li:not(.in) img{transform:none}.site .sk-g li,.site .sk-g img{transition:none}}
-</style>
+<link rel="stylesheet" href="css/skills.css">
 </head>
 <body>
 <script src="js/ticker.js"></script>
-
 <svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
   <symbol id="lg" viewBox="0 0 377.21 459.6"><path d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></symbol>
   <symbol id="go" viewBox="0 0 24 24"><path d="M7 17L17 7M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
@@ -227,118 +142,41 @@
       <button class="h-tog" id="navToggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span></button>
     </div>
   </nav>
-
-
   <div class="h-hero-in">
-    <a class="h-badge" href="#tracks"><em>New</em>Himaayah Skills Schools<svg width="13" height="13" aria-hidden="true"><use href="#go"/></svg></a>
     <h1><span>Learn a real skill in</span> <span><mark class="hx-mark">eighteen months</mark></span></h1>
     <p class="h-lead">Eight career tracks in tech, product and design, and creative work. Live online classes, real projects, and a school that teaches character together with skill.</p>
-
-    <div class="h-cta-row">
-      <a href="#tracks" class="h-btn h-btn-dark"><svg width="15" height="15" aria-hidden="true"><use href="#spark"/></svg>Choose your track</a>
-      <a href="#match" class="h-btn h-btn-white"><span class="h-av" aria-hidden="true"><svg width="12" height="15"><use href="#lg"/></svg></span>Find my track</a>
-    </div>
-    <div class="h-hero-links"><a class="h-scroll" href="https://wa.me/2347047226487?text=Assalaamu%20alaykum.%20I%20have%20a%20question%20about%20Himaayah%20Skills%20Schools." target="_blank" rel="noopener"><svg width="14" height="14" aria-hidden="true"><use href="#wa"/></svg>Ask us on WhatsApp</a></div>
+    <div class="h-cta-row"><a href="#tracks" class="h-btn h-btn-dark"><svg width="15" height="15" aria-hidden="true"><use href="#spark"/></svg>Find your course</a></div>
   </div>
-
-  <ul class="sk-g" aria-label="Skills you can learn">
-    <li style="--i:0"><a href="#web-development" data-go="web-development"><img src="images/skills/web-development.jpg" alt="Web page code on a screen" width="960" height="640" loading="eager" decoding="async"><span>Web Development<small>Code that goes live</small></span></a></li>
-    <li style="--i:1"><a href="#graphic-design" data-go="graphic-design"><img src="images/skills/graphic-design.jpg" alt="Colourful brand and type shapes" width="960" height="640" loading="eager" decoding="async"><span>Graphic Design<small>Brands and visuals</small></span></a></li>
-    <li style="--i:2"><a href="#ui-ux" data-go="ui-ux"><img src="images/skills/ui-ux.jpg" alt="A frame being drawn in a design tool" width="960" height="640" loading="eager" decoding="async"><span>UI/UX<small>Screens people understand</small></span></a></li>
-    <li style="--i:3"><a href="#cybersecurity" data-go="cybersecurity"><img src="images/skills/cybersecurity.jpg" alt="Terminal output on a dark screen" width="960" height="640" loading="lazy" decoding="async"><span>Cybersecurity<small>Defend what matters</small></span></a></li>
-    <li style="--i:4"><a href="#software-engineering" data-go="software-engineering"><img src="images/skills/software-engineering.jpg" alt="Code in an editor with a terminal" width="960" height="640" loading="lazy" decoding="async"><span>Software Engineering<small>Build and ship</small></span></a></li>
-    <li style="--i:5"><a href="#product-design" data-go="product-design"><img src="images/skills/product-design.jpg" alt="Design process and wireframes pinned to a wall" width="960" height="640" loading="lazy" decoding="async"><span>Product Design<small>From research to product</small></span></a></li>
-
-  </ul>
-
-  <div class="hx-steps" aria-label="How it works">
-    <article class="hx-step hx-step-1">
-      <div class="hx-step-ui" aria-hidden="true">
-        <div class="h-ui-tabs"><span class="on">Tech</span><span>Product</span><span>Creative</span></div>
-        <div class="h-ui-btn">Choose track</div>
-      </div>
-      <p class="hx-step-k">Step 1:</p>
-      <p class="hx-step-t">Choose your <b>track</b>: Cybersecurity, Web Development, Design, Video and more.</p>
-    </article>
-    <article class="hx-step hx-step-2">
-      <div class="hx-step-ui" aria-hidden="true">
-        <div class="h-ui-msg"><i></i><span>Place reserved. Welcome!</span></div>
-        <div class="h-ui-msg h-ui-msg-b"><i></i><span>Your teacher will agree your hours.</span></div>
-      </div>
-      <p class="hx-step-k">Step 2:</p>
-      <p class="hx-step-t">Reserve your place and <b>agree your class hours</b> with your teacher.</p>
-    </article>
-    <article class="hx-step hx-step-3">
-      <div class="hx-step-ui" aria-hidden="true">
-        <div class="h-ui-bars"><i style="--h:34%"></i><i style="--h:48%"></i><i style="--h:42%"></i><i style="--h:70%"></i><i style="--h:58%"></i><i style="--h:86%"></i></div>
-      </div>
-      <p class="hx-step-k">Step 3:</p>
-      <p class="hx-step-t">Learn live for eighteen months and <b>finish with a project.</b></p>
-    </article>
-  </div>
-
-  <figure class="h-hero-q">
-    <span class="h-hero-av" aria-hidden="true">H</span>
-    <figcaption class="h-hero-qk">Part of Himaayah Schools</figcaption>
-    <blockquote>Skill, with character. We teach the craft and the manners together, so that a good professional is honest, on time and kind.</blockquote>
-    <small>Deen, knowledge and skill, taught in one place</small>
-  </figure>
-
-  <div class="h-exams" aria-label="At a glance">
-    <p>At a glance</p>
-    <ul><li>8 tracks</li><li>18 months each</li><li>&#8358;200,000 a track</li><li>Live online</li></ul>
-  </div>
-
-  <!-- The school window: one programme at a time -->
-  <div class="h-win" id="tracks">
-    <div class="h-win-bar" aria-hidden="true"><i></i><i></i><i></i><span><svg width="11" height="14"><use href="#lg"/></svg>Himaayah Skills Schools &middot; tracks</span></div>
-    <div class="h-win-body">
-      <div class="h-win-side">
-        <h2>Eight tracks. Pick yours.</h2>
-        <p>Every track runs for eighteen months and costs the same. Choose one to see what you will learn and build.</p>
-        <div class="h-tabs" role="tablist" aria-label="Tracks" aria-orientation="vertical"><button type="button" role="tab" id="tab-cybersecurity" aria-controls="pan-cybersecurity" aria-selected="true" data-slug="cybersecurity"><b>Cybersecurity</b><small>Protect systems, data and people.</small></button><button type="button" role="tab" id="tab-web-development" aria-controls="pan-web-development" aria-selected="false" tabindex="-1" data-slug="web-development"><b>Web Development</b><small>Build websites and web apps that go live.</small></button><button type="button" role="tab" id="tab-software-engineering" aria-controls="pan-software-engineering" aria-selected="false" tabindex="-1" data-slug="software-engineering"><b>Software Engineering</b><small>Think, code and ship like an engineer.</small></button><button type="button" role="tab" id="tab-product-management" aria-controls="pan-product-management" aria-selected="false" tabindex="-1" data-slug="product-management"><b>Product Management</b><small>Turn problems into products people use.</small></button><button type="button" role="tab" id="tab-product-design" aria-controls="pan-product-design" aria-selected="false" tabindex="-1" data-slug="product-design"><b>Product Design</b><small>Design whole products, from idea to experience.</small></button><button type="button" role="tab" id="tab-graphic-design" aria-controls="pan-graphic-design" aria-selected="false" tabindex="-1" data-slug="graphic-design"><b>Graphic Design</b><small>Make visuals that say the right thing.</small></button><button type="button" role="tab" id="tab-ui-ux" aria-controls="pan-ui-ux" aria-selected="false" tabindex="-1" data-slug="ui-ux"><b>UI/UX</b><small>Design screens people understand at a glance.</small></button><button type="button" role="tab" id="tab-video-creation" aria-controls="pan-video-creation" aria-selected="false" tabindex="-1" data-slug="video-creation"><b>Video Creation</b><small>Plan, shoot and edit videos that hold attention.</small></button></div>
-        <p class="sk-side-note">Not sure yet? <a href="#match">Find my track</a></p>
-      </div>
-      <div class="h-win-main"><section class="h-panel" role="tabpanel" id="pan-cybersecurity" aria-labelledby="tab-cybersecurity"><div class="h-panel-top"><div><h3>Cybersecurity</h3><p>Learn how attacks work so that you can stop them. Cybersecurity is taught as defence, under a strict code of ethics, from the basics of networks to a full security review.</p></div><span class="h-tag h-tag-on">18 months</span></div><div class="h-viz sk-viz"><div><p class="sk-k">You will learn to</p><ul class="sk-can"><li>Explain how computers, networks and the web really work</li><li>Find and fix common weaknesses in websites and systems</li><li>Read logs, spot suspicious activity and respond to it</li><li>Write a clear risk report that a business owner can act on</li></ul></div><div class="sk-ph"><div><small>Months 1 to 6</small><h4>Foundations</h4><ul><li>Computers, networks and Linux</li><li>How the web works</li><li>Security basics and good habits</li></ul></div><div><small>Months 7 to 12</small><h4>Practice</h4><ul><li>Common attacks and how to defend against them</li><li>Web and network security labs</li><li>Monitoring, logs and incident response</li></ul></div><div><small>Months 13 to 18</small><h4>Ship</h4><ul><li>Secure a small system end to end</li><li>Risk assessment and report</li><li>Ethics, law and professional conduct</li></ul></div></div><div class="sk-tools" aria-label="Tools you will meet"><span>Linux</span><span>Wireshark</span><span>Nmap</span><span>Burp Suite</span><span>Python</span></div><p class="sk-proj"><b>Final project.</b> Secure a small web application, test it, fix what you find and present a written security report.</p></div><div class="h-panel-foot"><div class="h-price"><b>&#8358;200,000</b>for the full 18 months</div><a href="https://wa.me/2347047226487?text=Assalaamu%20alaykum.%20I%20would%20like%20to%20reserve%20a%20place%20for%20Cybersecurity%20at%20Himaayah%20Skills%20Schools." target="_blank" rel="noopener" class="h-more" data-enrol="cybersecurity"><span>Reserve my place</span> <svg width="14" height="14" aria-hidden="true"><use href="#go"/></svg></a></div></section><section class="h-panel" role="tabpanel" id="pan-web-development" aria-labelledby="tab-web-development" hidden><div class="h-panel-top"><div><h3>Web Development</h3><p>From a blank file to a live website. You learn the front end, the back end and how to put a real product online.</p></div><span class="h-tag h-tag-on">18 months</span></div><div class="h-viz sk-viz"><div><p class="sk-k">You will learn to</p><ul class="sk-can"><li>Build responsive websites with HTML, CSS and JavaScript</li><li>Create web apps with a database and user accounts</li><li>Use Git and GitHub like a working developer</li><li>Deploy your work so anyone can open it</li></ul></div><div class="sk-ph"><div><small>Months 1 to 6</small><h4>Foundations</h4><ul><li>HTML, CSS and responsive layout</li><li>JavaScript from the ground up</li><li>Git and GitHub</li></ul></div><div><small>Months 7 to 12</small><h4>Practice</h4><ul><li>A front-end framework such as React</li><li>Servers, APIs and databases</li><li>Accounts, forms and security basics</li></ul></div><div><small>Months 13 to 18</small><h4>Ship</h4><ul><li>Plan, build and test a full web app</li><li>Deploy and maintain it</li><li>Portfolio site and code review</li></ul></div></div><div class="sk-tools" aria-label="Tools you will meet"><span>HTML and CSS</span><span>JavaScript</span><span>React</span><span>Node.js</span><span>Git</span><span>Vercel</span></div><p class="sk-proj"><b>Final project.</b> Design, build and launch a complete web app that real people can use.</p></div><div class="h-panel-foot"><div class="h-price"><b>&#8358;200,000</b>for the full 18 months</div><a href="https://wa.me/2347047226487?text=Assalaamu%20alaykum.%20I%20would%20like%20to%20reserve%20a%20place%20for%20Web%20Development%20at%20Himaayah%20Skills%20Schools." target="_blank" rel="noopener" class="h-more" data-enrol="web-development"><span>Reserve my place</span> <svg width="14" height="14" aria-hidden="true"><use href="#go"/></svg></a></div></section><section class="h-panel" role="tabpanel" id="pan-software-engineering" aria-labelledby="tab-software-engineering" hidden><div class="h-panel-top"><div><h3>Software Engineering</h3><p>Go beyond writing code. Learn how software is planned, built, tested and kept running, and how to work on a team.</p></div><span class="h-tag h-tag-on">18 months</span></div><div class="h-viz sk-viz"><div><p class="sk-k">You will learn to</p><ul class="sk-can"><li>Write clean, tested code in a real programming language</li><li>Solve problems with data structures and algorithms</li><li>Design databases and APIs that other people can use</li><li>Work in sprints with version control and code review</li></ul></div><div class="sk-ph"><div><small>Months 1 to 6</small><h4>Foundations</h4><ul><li>Programming fundamentals</li><li>Data structures and algorithms</li><li>Command line and Git</li></ul></div><div><small>Months 7 to 12</small><h4>Practice</h4><ul><li>Databases and APIs</li><li>Testing and debugging</li><li>Software design and architecture</li></ul></div><div><small>Months 13 to 18</small><h4>Ship</h4><ul><li>Build a product in a small team</li><li>Deploy, monitor and improve it</li><li>Technical interviews and portfolio</li></ul></div></div><div class="sk-tools" aria-label="Tools you will meet"><span>Python</span><span>JavaScript</span><span>SQL</span><span>Git</span><span>Docker</span><span>Testing frameworks</span></div><p class="sk-proj"><b>Final project.</b> Build and ship a software product with a team, working in sprints with code review.</p></div><div class="h-panel-foot"><div class="h-price"><b>&#8358;200,000</b>for the full 18 months</div><a href="https://wa.me/2347047226487?text=Assalaamu%20alaykum.%20I%20would%20like%20to%20reserve%20a%20place%20for%20Software%20Engineering%20at%20Himaayah%20Skills%20Schools." target="_blank" rel="noopener" class="h-more" data-enrol="software-engineering"><span>Reserve my place</span> <svg width="14" height="14" aria-hidden="true"><use href="#go"/></svg></a></div></section><section class="h-panel" role="tabpanel" id="pan-product-management" aria-labelledby="tab-product-management" hidden><div class="h-panel-top"><div><h3>Product Management</h3><p>A product manager decides what to build and why. You learn to find real problems, choose what matters most and guide a team to deliver it.</p></div><span class="h-tag h-tag-on">18 months</span></div><div class="h-viz sk-viz"><div><p class="sk-k">You will learn to</p><ul class="sk-can"><li>Research users and define the problem worth solving</li><li>Prioritise features and build a clear roadmap</li><li>Write product requirements that engineers and designers understand</li><li>Measure whether a product is working</li></ul></div><div class="sk-ph"><div><small>Months 1 to 6</small><h4>Foundations</h4><ul><li>What product management is</li><li>User research and problem framing</li><li>Market and competitor analysis</li></ul></div><div><small>Months 7 to 12</small><h4>Practice</h4><ul><li>Roadmaps and prioritisation</li><li>Writing requirements and user stories</li><li>Working with designers and engineers</li></ul></div><div><small>Months 13 to 18</small><h4>Ship</h4><ul><li>Metrics and experiments</li><li>Launch planning</li><li>Present a full product case</li></ul></div></div><div class="sk-tools" aria-label="Tools you will meet"><span>Notion</span><span>Figma</span><span>Spreadsheets</span><span>Trello or Jira</span><span>Analytics tools</span></div><p class="sk-proj"><b>Final project.</b> Take one product idea from research to a launch plan, with a roadmap and success metrics.</p></div><div class="h-panel-foot"><div class="h-price"><b>&#8358;200,000</b>for the full 18 months</div><a href="https://wa.me/2347047226487?text=Assalaamu%20alaykum.%20I%20would%20like%20to%20reserve%20a%20place%20for%20Product%20Management%20at%20Himaayah%20Skills%20Schools." target="_blank" rel="noopener" class="h-more" data-enrol="product-management"><span>Reserve my place</span> <svg width="14" height="14" aria-hidden="true"><use href="#go"/></svg></a></div></section><section class="h-panel" role="tabpanel" id="pan-product-design" aria-labelledby="tab-product-design" hidden><div class="h-panel-top"><div><h3>Product Design</h3><p>Product design looks at the whole experience. You learn to understand people, shape a product and test it until it works.</p></div><span class="h-tag h-tag-on">18 months</span></div><div class="h-viz sk-viz"><div><p class="sk-k">You will learn to</p><ul class="sk-can"><li>Run user interviews and turn them into design decisions</li><li>Map journeys, flows and the shape of a product</li><li>Prototype and test ideas quickly</li><li>Build a small design system and hand it to developers</li></ul></div><div class="sk-ph"><div><small>Months 1 to 6</small><h4>Foundations</h4><ul><li>Design thinking and research</li><li>Visual craft: colour, type and layout</li><li>Sketching and wireframes</li></ul></div><div><small>Months 7 to 12</small><h4>Practice</h4><ul><li>User flows and prototypes</li><li>Usability testing</li><li>Design systems</li></ul></div><div><small>Months 13 to 18</small><h4>Ship</h4><ul><li>An end-to-end product case study</li><li>Working with developers</li><li>Portfolio and presenting your work</li></ul></div></div><div class="sk-tools" aria-label="Tools you will meet"><span>Figma</span><span>FigJam</span><span>Miro</span><span>Maze or similar testing tools</span></div><p class="sk-proj"><b>Final project.</b> Design a product end to end and present it as a full case study with research, prototype and test results.</p></div><div class="h-panel-foot"><div class="h-price"><b>&#8358;200,000</b>for the full 18 months</div><a href="https://wa.me/2347047226487?text=Assalaamu%20alaykum.%20I%20would%20like%20to%20reserve%20a%20place%20for%20Product%20Design%20at%20Himaayah%20Skills%20Schools." target="_blank" rel="noopener" class="h-more" data-enrol="product-design"><span>Reserve my place</span> <svg width="14" height="14" aria-hidden="true"><use href="#go"/></svg></a></div></section><section class="h-panel" role="tabpanel" id="pan-graphic-design" aria-labelledby="tab-graphic-design" hidden><div class="h-panel-top"><div><h3>Graphic Design</h3><p>Layout, colour, type and ideas. You learn to design brands, posters and social content that look professional and carry a clear message.</p></div><span class="h-tag h-tag-on">18 months</span></div><div class="h-viz sk-viz"><div><p class="sk-k">You will learn to</p><ul class="sk-can"><li>Use layout, colour and typography with confidence</li><li>Design logos and complete brand identities</li><li>Create posters, flyers, social kits and print work</li><li>Prepare files for print and screen</li></ul></div><div class="sk-ph"><div><small>Months 1 to 6</small><h4>Foundations</h4><ul><li>Design principles: contrast, alignment, hierarchy</li><li>Colour and typography</li><li>Tools: Illustrator, Photoshop or Canva</li></ul></div><div><small>Months 7 to 12</small><h4>Practice</h4><ul><li>Logos and brand identity</li><li>Posters, flyers and social media kits</li><li>Print and export</li></ul></div><div><small>Months 13 to 18</small><h4>Ship</h4><ul><li>A complete brand for a real or invented client</li><li>Portfolio and presentation</li><li>Freelancing basics</li></ul></div></div><div class="sk-tools" aria-label="Tools you will meet"><span>Adobe Illustrator</span><span>Photoshop</span><span>Canva</span><span>Figma</span></div><p class="sk-proj"><b>Final project.</b> Design a full brand identity with logo, stationery and a social media kit, and present it as a portfolio piece.</p></div><div class="h-panel-foot"><div class="h-price"><b>&#8358;200,000</b>for the full 18 months</div><a href="https://wa.me/2347047226487?text=Assalaamu%20alaykum.%20I%20would%20like%20to%20reserve%20a%20place%20for%20Graphic%20Design%20at%20Himaayah%20Skills%20Schools." target="_blank" rel="noopener" class="h-more" data-enrol="graphic-design"><span>Reserve my place</span> <svg width="14" height="14" aria-hidden="true"><use href="#go"/></svg></a></div></section><section class="h-panel" role="tabpanel" id="pan-ui-ux" aria-labelledby="tab-ui-ux" hidden><div class="h-panel-top"><div><h3>UI/UX</h3><p>Learn how people use apps and websites, then design interfaces that feel simple. You practise research, wireframes, high-fidelity screens and testing.</p></div><span class="h-tag h-tag-on">18 months</span></div><div class="h-viz sk-viz"><div><p class="sk-k">You will learn to</p><ul class="sk-can"><li>Research what users need and where they get stuck</li><li>Design clear wireframes and flows</li><li>Craft polished interfaces for mobile and web</li><li>Test designs with real users and improve them</li></ul></div><div class="sk-ph"><div><small>Months 1 to 6</small><h4>Foundations</h4><ul><li>UX principles and user research</li><li>Information architecture</li><li>Wireframing in Figma</li></ul></div><div><small>Months 7 to 12</small><h4>Practice</h4><ul><li>High-fidelity UI design</li><li>Interactive prototypes</li><li>Accessibility and inclusive design</li></ul></div><div><small>Months 13 to 18</small><h4>Ship</h4><ul><li>Design a mobile or web app</li><li>Usability testing and iteration</li><li>Portfolio and developer handoff</li></ul></div></div><div class="sk-tools" aria-label="Tools you will meet"><span>Figma</span><span>FigJam</span><span>Maze</span><span>Contrast and accessibility checkers</span></div><p class="sk-proj"><b>Final project.</b> Design a mobile or web app with research, prototype and a usability test, and present the results.</p></div><div class="h-panel-foot"><div class="h-price"><b>&#8358;200,000</b>for the full 18 months</div><a href="https://wa.me/2347047226487?text=Assalaamu%20alaykum.%20I%20would%20like%20to%20reserve%20a%20place%20for%20UI/UX%20at%20Himaayah%20Skills%20Schools." target="_blank" rel="noopener" class="h-more" data-enrol="ui-ux"><span>Reserve my place</span> <svg width="14" height="14" aria-hidden="true"><use href="#go"/></svg></a></div></section><section class="h-panel" role="tabpanel" id="pan-video-creation" aria-labelledby="tab-video-creation" hidden><div class="h-panel-top"><div><h3>Video Creation</h3><p>Learn to tell a story with moving pictures. You plan, shoot, edit and publish videos, starting from the phone in your pocket.</p></div><span class="h-tag h-tag-on">18 months</span></div><div class="h-viz sk-viz"><div><p class="sk-k">You will learn to</p><ul class="sk-can"><li>Write scripts and storyboards that hold attention</li><li>Shoot well with a phone or camera, with good light and sound</li><li>Edit videos with cuts, captions, music and effects</li><li>Publish and grow a channel or campaign</li></ul></div><div class="sk-ph"><div><small>Months 1 to 6</small><h4>Foundations</h4><ul><li>Storytelling and scripting</li><li>Camera, framing and light</li><li>Clean audio</li></ul></div><div><small>Months 7 to 12</small><h4>Practice</h4><ul><li>Editing: cuts, pace, captions</li><li>Colour, music and basic motion graphics</li><li>Short-form and long-form formats</li></ul></div><div><small>Months 13 to 18</small><h4>Ship</h4><ul><li>Plan and produce a short film or campaign</li><li>Publishing and audience building</li><li>Portfolio reel</li></ul></div></div><div class="sk-tools" aria-label="Tools you will meet"><span>CapCut</span><span>DaVinci Resolve</span><span>Adobe Premiere Pro</span><span>Phone camera</span></div><p class="sk-proj"><b>Final project.</b> Produce a short film or a small video campaign from script to publication.</p></div><div class="h-panel-foot"><div class="h-price"><b>&#8358;200,000</b>for the full 18 months</div><a href="https://wa.me/2347047226487?text=Assalaamu%20alaykum.%20I%20would%20like%20to%20reserve%20a%20place%20for%20Video%20Creation%20at%20Himaayah%20Skills%20Schools." target="_blank" rel="noopener" class="h-more" data-enrol="video-creation"><span>Reserve my place</span> <svg width="14" height="14" aria-hidden="true"><use href="#go"/></svg></a></div></section></div>
-    </div>
+  <div class="sk-run" aria-label="Courses we offer">
+    <p class="sk-run-k">Explore different courses like</p>
+    <div class="sk-run-view"><ul class="sk-run-track"><li><a href="skills-school/cybersecurity"><img src="images/skills/cybersecurity.jpg" alt="Terminal output on a dark screen" width="480" height="320" loading="eager" decoding="async"><span>Cybersecurity</span></a></li><li><a href="skills-school/web-development"><img src="images/skills/web-development.jpg" alt="Web page code on a screen" width="480" height="320" loading="eager" decoding="async"><span>Web Development</span></a></li><li><a href="skills-school/software-engineering"><img src="images/skills/software-engineering.jpg" alt="Code in an editor with a terminal" width="480" height="320" loading="eager" decoding="async"><span>Software Engineering</span></a></li><li><a href="skills-school/product-management"><img src="images/skills/product-management.jpg" alt="Product brief and a hand-drawn user flow" width="480" height="320" loading="eager" decoding="async"><span>Product Management</span></a></li><li><a href="skills-school/product-design"><img src="images/skills/product-design.jpg" alt="Design process and wireframes pinned to a wall" width="480" height="320" loading="eager" decoding="async"><span>Product Design</span></a></li><li><a href="skills-school/graphic-design"><img src="images/skills/graphic-design.jpg" alt="Colourful brand and type shapes" width="480" height="320" loading="eager" decoding="async"><span>Graphic Design</span></a></li><li><a href="skills-school/ui-ux"><img src="images/skills/ui-ux.jpg" alt="A frame being drawn in a design tool" width="480" height="320" loading="eager" decoding="async"><span>UI/UX</span></a></li><li><a href="skills-school/video-creation"><img src="images/skills/video-creation.jpg" alt="Video editing timeline on a dark screen" width="480" height="320" loading="eager" decoding="async"><span>Video Creation</span></a></li><li aria-hidden="true"><a href="skills-school/cybersecurity" tabindex="-1"><img src="images/skills/cybersecurity.jpg" alt="" width="480" height="320" loading="lazy" decoding="async"><span>Cybersecurity</span></a></li><li aria-hidden="true"><a href="skills-school/web-development" tabindex="-1"><img src="images/skills/web-development.jpg" alt="" width="480" height="320" loading="lazy" decoding="async"><span>Web Development</span></a></li><li aria-hidden="true"><a href="skills-school/software-engineering" tabindex="-1"><img src="images/skills/software-engineering.jpg" alt="" width="480" height="320" loading="lazy" decoding="async"><span>Software Engineering</span></a></li><li aria-hidden="true"><a href="skills-school/product-management" tabindex="-1"><img src="images/skills/product-management.jpg" alt="" width="480" height="320" loading="lazy" decoding="async"><span>Product Management</span></a></li><li aria-hidden="true"><a href="skills-school/product-design" tabindex="-1"><img src="images/skills/product-design.jpg" alt="" width="480" height="320" loading="lazy" decoding="async"><span>Product Design</span></a></li><li aria-hidden="true"><a href="skills-school/graphic-design" tabindex="-1"><img src="images/skills/graphic-design.jpg" alt="" width="480" height="320" loading="lazy" decoding="async"><span>Graphic Design</span></a></li><li aria-hidden="true"><a href="skills-school/ui-ux" tabindex="-1"><img src="images/skills/ui-ux.jpg" alt="" width="480" height="320" loading="lazy" decoding="async"><span>UI/UX</span></a></li><li aria-hidden="true"><a href="skills-school/video-creation" tabindex="-1"><img src="images/skills/video-creation.jpg" alt="" width="480" height="320" loading="lazy" decoding="async"><span>Video Creation</span></a></li></ul></div>
   </div>
 </header>
 
-<section class="h-sec h-paper" id="how">
+<section class="h-sec h-paper" id="tracks">
   <div class="h-wrap">
-    <div class="h-head h-head-c">
-      <p class="h-eye"><i class="h-dot"></i>How it works</p>
-      <h2><span>Eighteen months. Three phases.</span></h2>
-      <p>Each phase builds on the one before, and each ends with something you made.</p>
-    </div>
-    <ol class="h-steps">
-      <li class="h-step">
-        <span class="h-step-n">Months 1 to 6</span>
-        <h3>Foundations</h3>
-        <p>Learn the ground rules and the tools. You start from the basics and finish the phase with a first real piece of work.</p>
-        <div class="h-card h-card-mint" aria-hidden="true"><div class="h-mini"><div class="h-mini-h"><b>Phase 1</b><small>Foundations</small></div>
-          <ul class="h-checks"><li>The core ideas<svg width="13" height="13"><use href="#tick"/></svg></li><li>The tools<svg width="13" height="13"><use href="#tick"/></svg></li><li>Daily practice<svg width="13" height="13"><use href="#tick"/></svg></li><li>A first piece of work<svg width="13" height="13"><use href="#tick"/></svg></li></ul></div></div>
-      </li>
-      <li class="h-step">
-        <span class="h-step-n">Months 7 to 12</span>
-        <h3>Practice</h3>
-        <p>Go deeper with guided projects and honest feedback. You repeat, fix and improve until the work is good.</p>
-        <div class="h-card h-card-deep" aria-hidden="true"><div class="h-mini h-mini-dark"><div class="h-mini-h"><b>Phase 2</b><small>Practice</small></div>
-          <p class="h-mini-big">12<small>months in</small></p>
-          <div class="h-mini-tags"><span>Guided projects</span><span>Feedback</span><span>Revision</span></div></div></div>
-      </li>
-      <li class="h-step">
-        <span class="h-step-n">Months 13 to 18</span>
-        <h3>Ship</h3>
-        <p>Build your final project, present it and prepare your portfolio so that your work speaks for you.</p>
-        <div class="h-card h-card-sand" aria-hidden="true"><div class="h-done"><small>Project delivered.</small><b>Ready to show</b></div><div class="h-mini"><div class="h-mini-h"><b>Phase 3</b></div>
-          <ul class="h-dots"><li>Final project</li><li>Presentation</li><li>Portfolio</li></ul></div></div>
-      </li>
-    </ol>
+    <div class="sk-sec-h"><div><h2>Featured tracks</h2><p>Eight tracks. Finish one with work you can show.</p></div></div>
+    <ul class="sk-c">
+    <li class="sk-card" style="--i:0"><div class="sk-pic"><img src="images/skills/cybersecurity.jpg" alt="Terminal output on a dark screen" width="960" height="640" loading="eager" decoding="async"><b class="sk-tag">Tech</b><b class="sk-badge">&#8358;200,000</b></div><div class="sk-body"><h3>Cybersecurity</h3><p>Protect systems, data and people.</p><div class="sk-meta"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 5v5.2l3.6 2.1-.9 1.5L11 13V7z"/></svg> 18 months</span><span><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="7" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7z"/></svg> Live online</span></div></div><div class="sk-foot"><small>Beginner friendly</small><a href="skills-school/cybersecurity" aria-label="Learn more about Cybersecurity">Learn more <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></li>
+    <li class="sk-card" style="--i:1"><div class="sk-pic"><img src="images/skills/web-development.jpg" alt="Web page code on a screen" width="960" height="640" loading="eager" decoding="async"><b class="sk-tag">Tech</b><b class="sk-badge">&#8358;200,000</b></div><div class="sk-body"><h3>Web Development</h3><p>Build websites and web apps that go live.</p><div class="sk-meta"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 5v5.2l3.6 2.1-.9 1.5L11 13V7z"/></svg> 18 months</span><span><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="7" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7z"/></svg> Live online</span></div></div><div class="sk-foot"><small>Beginner friendly</small><a href="skills-school/web-development" aria-label="Learn more about Web Development">Learn more <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></li>
+    <li class="sk-card" style="--i:2"><div class="sk-pic"><img src="images/skills/software-engineering.jpg" alt="Code in an editor with a terminal" width="960" height="640" loading="eager" decoding="async"><b class="sk-tag">Tech</b><b class="sk-badge">&#8358;200,000</b></div><div class="sk-body"><h3>Software Engineering</h3><p>Think, code and ship like an engineer.</p><div class="sk-meta"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 5v5.2l3.6 2.1-.9 1.5L11 13V7z"/></svg> 18 months</span><span><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="7" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7z"/></svg> Live online</span></div></div><div class="sk-foot"><small>Beginner friendly</small><a href="skills-school/software-engineering" aria-label="Learn more about Software Engineering">Learn more <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></li>
+    <li class="sk-card" style="--i:3"><div class="sk-pic"><img src="images/skills/product-management.jpg" alt="Product brief and a hand-drawn user flow" width="960" height="640" loading="eager" decoding="async"><b class="sk-tag">Product and design</b><b class="sk-badge">&#8358;200,000</b></div><div class="sk-body"><h3>Product Management</h3><p>Turn problems into products people use.</p><div class="sk-meta"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 5v5.2l3.6 2.1-.9 1.5L11 13V7z"/></svg> 18 months</span><span><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="7" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7z"/></svg> Live online</span></div></div><div class="sk-foot"><small>Beginner friendly</small><a href="skills-school/product-management" aria-label="Learn more about Product Management">Learn more <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></li>
+    <li class="sk-card" style="--i:0"><div class="sk-pic"><img src="images/skills/product-design.jpg" alt="Design process and wireframes pinned to a wall" width="960" height="640" loading="lazy" decoding="async"><b class="sk-tag">Product and design</b><b class="sk-badge">&#8358;200,000</b></div><div class="sk-body"><h3>Product Design</h3><p>Design whole products, from idea to experience.</p><div class="sk-meta"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 5v5.2l3.6 2.1-.9 1.5L11 13V7z"/></svg> 18 months</span><span><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="7" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7z"/></svg> Live online</span></div></div><div class="sk-foot"><small>Beginner friendly</small><a href="skills-school/product-design" aria-label="Learn more about Product Design">Learn more <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></li>
+    <li class="sk-card" style="--i:1"><div class="sk-pic"><img src="images/skills/graphic-design.jpg" alt="Colourful brand and type shapes" width="960" height="640" loading="lazy" decoding="async"><b class="sk-tag">Creative</b><b class="sk-badge">&#8358;200,000</b></div><div class="sk-body"><h3>Graphic Design</h3><p>Make visuals that say the right thing.</p><div class="sk-meta"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 5v5.2l3.6 2.1-.9 1.5L11 13V7z"/></svg> 18 months</span><span><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="7" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7z"/></svg> Live online</span></div></div><div class="sk-foot"><small>Beginner friendly</small><a href="skills-school/graphic-design" aria-label="Learn more about Graphic Design">Learn more <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></li>
+    <li class="sk-card" style="--i:2"><div class="sk-pic"><img src="images/skills/ui-ux.jpg" alt="A frame being drawn in a design tool" width="960" height="640" loading="lazy" decoding="async"><b class="sk-tag">Product and design</b><b class="sk-badge">&#8358;200,000</b></div><div class="sk-body"><h3>UI/UX</h3><p>Design screens people understand at a glance.</p><div class="sk-meta"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 5v5.2l3.6 2.1-.9 1.5L11 13V7z"/></svg> 18 months</span><span><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="7" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7z"/></svg> Live online</span></div></div><div class="sk-foot"><small>Beginner friendly</small><a href="skills-school/ui-ux" aria-label="Learn more about UI/UX">Learn more <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></li>
+    <li class="sk-card" style="--i:3"><div class="sk-pic"><img src="images/skills/video-creation.jpg" alt="Video editing timeline on a dark screen" width="960" height="640" loading="lazy" decoding="async"><b class="sk-tag">Creative</b><b class="sk-badge">&#8358;200,000</b></div><div class="sk-body"><h3>Video Creation</h3><p>Plan, shoot and edit videos that hold attention.</p><div class="sk-meta"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 5v5.2l3.6 2.1-.9 1.5L11 13V7z"/></svg> 18 months</span><span><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="7" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7z"/></svg> Live online</span></div></div><div class="sk-foot"><small>Beginner friendly</small><a href="skills-school/video-creation" aria-label="Learn more about Video Creation">Learn more <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></li>
+    </ul>
   </div>
 </section>
 
-<section class="h-sec sk-paper" id="match">
+<section class="h-sec sk-paper" id="how" style="padding-inline:0">
+  <div class="h-wrap"><div class="sk-sec-h"><div><h2>Eighteen months. Three phases.</h2><p>Each phase builds on the one before, and each ends with something you made. Scroll sideways.</p></div>
+    <div class="sk-arrows"><button type="button" id="skPrev" aria-label="Previous"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button><button type="button" id="skNext" aria-label="Next"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></div></div></div>
+  <div class="sk-rail" id="skRail" tabindex="0" role="region" aria-label="The phases, scroll sideways"><article class="sk-pc a"><small>Months 1 to 6</small><p class="n">01</p><h3>Foundations</h3><p>Learn the ground rules and the tools. You start from the basics and finish the phase with a first real piece of work.</p><ul><li>The core ideas</li><li>The tools</li><li>Daily practice</li><li>A first piece of work</li></ul></article><article class="sk-pc b"><small>Months 7 to 12</small><p class="n">02</p><h3>Practice</h3><p>Go deeper with guided projects and honest feedback. You repeat, fix and improve until the work is good.</p><ul><li>Guided projects</li><li>Honest feedback</li><li>Repeat, fix, improve</li></ul></article><article class="sk-pc c"><small>Months 13 to 18</small><p class="n">03</p><h3>Ship</h3><p>Build your final project, present it and prepare your portfolio so that your work speaks for you.</p><ul><li>Your final project</li><li>A presentation</li><li>Your portfolio</li></ul></article><article class="sk-pc d"><small>After month 18</small><p class="n">18</p><h3>Your work speaks</h3><p>You finish with proof of what you can do, and the habit of finishing what you start.</p><ul><li>A finished final project</li><li>A portfolio to show</li><li>A skill you can build on</li></ul></article></div>
+  <div class="h-wrap"><div class="sk-rbar"><i id="skBar"></i></div></div>
+</section>
+
+<section class="h-sec h-paper" id="match">
   <div class="h-wrap">
     <div class="h-head h-head-c">
       <p class="h-eye"><i class="h-dot"></i>Track matcher</p>
@@ -349,7 +187,7 @@
   </div>
 </section>
 
-<section class="h-sec h-paper" id="price">
+<section class="h-sec sk-paper" id="price">
   <div class="h-wrap">
     <div class="h-head h-head-c">
       <p class="h-eye"><i class="h-dot"></i>Fees</p>
@@ -363,17 +201,12 @@
         <a class="h-btn" href="#tracks">Choose your track</a>
         <p class="sk-fine">A one-time registration fee of &#8358;3,000 is added to your first payment. Plans cannot be changed after the registration fee is paid. Read the <a href="policies">refund policy</a>.</p>
       </div>
-      <ul class="sk-incl">
-        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span><b>Live online classes</b>Taught live by your teacher across the full eighteen months.</span></li>
-        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span><b>Times that suit you</b>There is no fixed timetable. After you enrol, your teacher agrees the days and hour with you.</span></li>
-        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span><b>Your own student portal</b>Class links, announcements and your records in one place, after you log in.</span></li>
-        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span><b>Real projects</b>Every phase ends with work you can show.</span></li>
-      </ul>
+      <ul class="sk-incl"><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span><b>Live online classes</b>Taught live by your teacher across the full eighteen months.</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span><b>Times that suit you</b>No fixed timetable. Your teacher agrees the days and hour with you after you enrol.</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span><b>Your own student portal</b>Class links, announcements and your records in one place, after you log in.</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span><b>Real projects</b>Every phase ends with work you can show.</span></li></ul>
     </div>
   </div>
 </section>
 
-<section class="h-sec sk-paper" id="school">
+<section class="h-sec h-paper" id="school">
   <div class="h-wrap">
     <div class="h-head h-head-c">
       <p class="h-eye"><i class="h-dot"></i>Himaayah Schools</p>
@@ -389,7 +222,7 @@
   </div>
 </section>
 
-<section class="h-sec h-paper" id="faq">
+<section class="h-sec sk-paper" id="faq">
   <div class="h-wrap h-faq-grid">
     <div class="h-head">
       <p class="h-eye"><i class="h-dot"></i>FAQ</p>
@@ -397,7 +230,7 @@
       <p>Anything else, ask us directly and we will get back to you.</p>
       <a href="contact" class="h-btn h-btn-dark">Ask us<span class="h-go"><svg width="14" height="14" aria-hidden="true"><use href="#go"/></svg></span></a>
     </div>
-    <div class="h-faq"><details open><summary>Who can join?<svg width="14" height="14" aria-hidden="true"><use href="#chev"/></svg></summary><p>Anyone who wants to learn a skill properly. Every track starts from the basics, so a complete beginner can begin on day one.</p></details><details><summary>What do I need to take part?<svg width="14" height="14" aria-hidden="true"><use href="#chev"/></svg></summary><p>A laptop or computer and a steady internet connection. Video Creation can begin with a phone.</p></details><details><summary>How are classes held?<svg width="14" height="14" aria-hidden="true"><use href="#chev"/></svg></summary><p>Classes are live online. There is no fixed timetable. After you enrol, your teacher agrees the days and hour with you, around school, work and family.</p></details><details><summary>How long is each track?<svg width="14" height="14" aria-hidden="true"><use href="#chev"/></svg></summary><p>Eighteen months, in three phases of six months: Foundations, Practice and Ship.</p></details><details><summary>Can I change my track after I pay?<svg width="14" height="14" aria-hidden="true"><use href="#chev"/></svg></summary><p>Plans cannot be changed after the registration fee is paid. A change means a fresh registration, so choose carefully. The track matcher above can help you decide.</p></details><details><summary>Where do I ask a question?<svg width="14" height="14" aria-hidden="true"><use href="#chev"/></svg></summary><p>Message us on WhatsApp on +234 704 722 6487, or use the <a href="contact" class="txt-link">contact page</a>.</p></details></div>
+    <div class="h-faq"><details open><summary>Who can join?<svg width="14" height="14" aria-hidden="true"><use href="#chev"/></svg></summary><p>Anyone who wants to learn a skill properly. This track starts from the basics, so a complete beginner can begin on day one.</p></details><details><summary>What do I need to take part?<svg width="14" height="14" aria-hidden="true"><use href="#chev"/></svg></summary><p>A laptop or computer and a steady internet connection.</p></details><details><summary>How are classes held?<svg width="14" height="14" aria-hidden="true"><use href="#chev"/></svg></summary><p>Classes are live online. There is no fixed timetable. After you enrol, your teacher agrees the days and hour with you, around school, work and family.</p></details><details><summary>How long is the track?<svg width="14" height="14" aria-hidden="true"><use href="#chev"/></svg></summary><p>Eighteen months, in three phases of six months: Foundations, Practice and Ship.</p></details><details><summary>Can I change my track after I pay?<svg width="14" height="14" aria-hidden="true"><use href="#chev"/></svg></summary><p>Plans cannot be changed after the registration fee is paid. A change means a fresh registration, so choose carefully. The track matcher on the Skills Schools page can help you decide.</p></details><details><summary>Where do I ask a question?<svg width="14" height="14" aria-hidden="true"><use href="#chev"/></svg></summary><p>Message us on WhatsApp on +234 704 722 6487, or use the <a href="contact" class="txt-link">contact page</a>.</p></details></div>
   </div>
 </section>
 
@@ -407,7 +240,7 @@
     <h2><span>Pick a track and begin.</span></h2>
     <p>Eighteen months from now, you could have a skill, a portfolio and the habit of finishing what you start.</p>
     <div class="h-acts h-acts-c">
-      <a href="#tracks" class="h-btn h-btn-light">Choose your track<span class="h-go"><svg width="14" height="14" aria-hidden="true"><use href="#go"/></svg></span></a>
+      <a href="skills-school#tracks" class="h-btn h-btn-light">Choose your track<span class="h-go"><svg width="14" height="14" aria-hidden="true"><use href="#go"/></svg></span></a>
       <a href="contact" class="h-btn h-btn-glass">Talk to us</a>
     </div>
   </div>
@@ -487,12 +320,6 @@
 
 <script>
 (function () {
-  /* Enrolment switch.
-     false = every "Reserve my place" link opens WhatsApp with the track name (works now).
-     true  = the links go to enroll?programme=skills&plan=<track>. Turn it on only after the eight tracks exist as plans
-             in enroll.html, api/checkout.mjs and Skills.gs. */
-  const ENROL_OPEN = false;
-
   const t = document.getElementById('navToggle'), l = document.getElementById('navLinks');
   t.addEventListener('click', () => { const o = l.classList.toggle('open'); t.setAttribute('aria-expanded', o); });
   document.querySelectorAll('.dd').forEach((dd) => { const b = dd.querySelector('.dd-btn'); b.addEventListener('click', () => { const o = dd.classList.toggle('open'); b.setAttribute('aria-expanded', o); }); });
@@ -500,33 +327,49 @@
   const solid = () => nav.classList.toggle('h-solid', window.scrollY > 40);
   solid(); addEventListener('scroll', solid, { passive: true });
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* Enrolment switch. false = "Reserve my place" opens WhatsApp with the track name (works now).
+     true = it goes to enroll?programme=skills&plan=<track>. Turn it on only after the eight tracks exist as plans
+     in enroll.html, api/checkout.mjs and Skills.gs. */
+  const ENROL_OPEN = false;
+  if (ENROL_OPEN) document.querySelectorAll('[data-enrol]').forEach((a) => { a.href = 'enroll?programme=skills&plan=' + a.dataset.enrol; a.removeAttribute('target'); const s = a.querySelector('span'); if (s) s.textContent = 'Enrol now'; });
+  const m = document.getElementById('mark');
+  if (m) { m.addEventListener('pointermove', (e) => { const r = m.getBoundingClientRect(); m.style.setProperty('--sx', ((e.clientX - r.left) / r.width * 100) + '%'); }); m.addEventListener('pointerleave', () => m.style.removeProperty('--sx')); }
+  const w = document.getElementById('waWidget'), b = document.getElementById('waBtn');
+  if (w && b) {
+    b.addEventListener('click', () => { const o = w.classList.toggle('open'); b.setAttribute('aria-expanded', o); });
+    document.addEventListener('click', (e) => { if (!w.contains(e.target)) { w.classList.remove('open'); b.setAttribute('aria-expanded', 'false'); } });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { w.classList.remove('open'); b.setAttribute('aria-expanded', 'false'); b.focus(); } });
+  }
+
   const NAMES = {"cybersecurity": "Cybersecurity", "web-development": "Web Development", "software-engineering": "Software Engineering", "product-management": "Product Management", "product-design": "Product Design", "graphic-design": "Graphic Design", "ui-ux": "UI/UX", "video-creation": "Video Creation"}, QUIZ = [{"t": "Which part of a project sounds best to you?", "o": [["Finding out how things break, and stopping it", {"cybersecurity": 3, "software-engineering": 1}], ["Building something that actually works", {"web-development": 2, "software-engineering": 2}], ["Making things look and feel right", {"graphic-design": 2, "ui-ux": 2, "product-design": 1}], ["Telling a story on camera", {"video-creation": 3, "graphic-design": 1}], ["Turning an idea into a plan others follow", {"product-management": 3, "product-design": 1}]]}, {"t": "How do you like to work?", "o": [["Alone, deep in a problem", {"cybersecurity": 2, "software-engineering": 2, "web-development": 1}], ["With people, guiding the direction", {"product-management": 2, "product-design": 2}], ["With a canvas, a camera or a screen to shape", {"graphic-design": 2, "video-creation": 2, "ui-ux": 1}]]}, {"t": "What do you want to have in eighteen months?", "o": [["Skills for a tech job or freelance clients", {"web-development": 2, "software-engineering": 2, "cybersecurity": 2}], ["A portfolio that clients and employers can see", {"graphic-design": 2, "ui-ux": 2, "video-creation": 2, "product-design": 1}], ["A product or a business of my own", {"product-management": 2, "product-design": 2, "web-development": 1}]]}];
 
-  if (ENROL_OPEN) document.querySelectorAll('[data-enrol]').forEach((a) => { a.href = 'enroll?programme=skills&plan=' + a.dataset.enrol; a.removeAttribute('target'); a.querySelector('span').textContent = 'Enrol now'; });
-
-  /* the tracks window */
-  const tabs = Array.from(document.querySelectorAll('.h-tabs [role=tab]'));
-  function select(slug, o) {
-    o = o || {};
-    tabs.forEach((b) => { const on = b.dataset.slug === slug; b.setAttribute('aria-selected', on); b.tabIndex = on ? 0 : -1; if (on && o.focus) b.focus({ preventScroll: true }); document.getElementById(b.getAttribute('aria-controls')).hidden = !on; });
-    if (o.hash !== false) history.replaceState(null, '', '#' + slug);
-    if (o.scroll) { const w = document.getElementById('tracks'); scrollTo({ top: w.getBoundingClientRect().top + scrollY - 90, behavior: reduce ? 'auto' : 'smooth' }); }
+  /* featured cards fade up when they scroll into view */
+  const gc = document.querySelector('.sk-c');
+  if (gc) {
+    if ('IntersectionObserver' in window) {
+      const gio = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { gc.classList.add('in'); gio.disconnect(); } }), { threshold: .08 });
+      gio.observe(gc);
+    } else gc.classList.add('in');
   }
-  tabs.forEach((b, i) => {
-    b.addEventListener('click', () => select(b.dataset.slug));
-    b.addEventListener('keydown', (e) => {
-      const k = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[e.key];
-      if (k) { e.preventDefault(); select(tabs[(i + k + tabs.length) % tabs.length].dataset.slug, { focus: true }); }
-    });
-  });
-  if (NAMES[location.hash.slice(1)]) select(location.hash.slice(1), { hash: false });
 
-  document.querySelectorAll('.sk-g [data-go]').forEach((a) => a.addEventListener('click', (e) => { e.preventDefault(); select(a.dataset.go, { scroll: true }); }));
-  const gl = Array.from(document.querySelectorAll('.sk-g li'));
-  if ('IntersectionObserver' in window) {
-    const gio = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { gl.forEach((x) => x.classList.add('in')); gio.disconnect(); } }), { threshold: .2 });
-    gio.observe(document.querySelector('.sk-g'));
-  } else gl.forEach((x) => x.classList.add('in'));
+  /* phases: sideways scroller with arrows, drag and a progress bar */
+  const rail = document.getElementById('skRail'), bar = document.getElementById('skBar'), prev = document.getElementById('skPrev'), next = document.getElementById('skNext');
+  if (rail) {
+    const step = () => { const c = rail.querySelector('.sk-pc'); return c ? c.getBoundingClientRect().width + 14 : 360; };
+    const upd = () => {
+      const max = rail.scrollWidth - rail.clientWidth, p = max > 0 ? rail.scrollLeft / max : 0, w = rail.clientWidth / rail.scrollWidth;
+      bar.style.width = Math.max(14, w * 100) + '%'; bar.style.insetInlineStart = (p * (100 - Math.max(14, w * 100))) + '%';
+      prev.disabled = rail.scrollLeft <= 4; next.disabled = rail.scrollLeft >= max - 4;
+    };
+    prev.addEventListener('click', () => rail.scrollBy({ left: -step(), behavior: reduce ? 'auto' : 'smooth' }));
+    next.addEventListener('click', () => rail.scrollBy({ left: step(), behavior: reduce ? 'auto' : 'smooth' }));
+    rail.addEventListener('scroll', upd, { passive: true }); addEventListener('resize', upd); upd();
+    rail.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') { e.preventDefault(); next.click(); } if (e.key === 'ArrowLeft') { e.preventDefault(); prev.click(); } });
+    let down = false, sx = 0, sl = 0, moved = false;
+    rail.addEventListener('pointerdown', (e) => { if (e.pointerType !== 'mouse') return; down = true; moved = false; sx = e.clientX; sl = rail.scrollLeft; });
+    addEventListener('pointermove', (e) => { if (!down) return; const dx = e.clientX - sx; if (Math.abs(dx) > 4) { moved = true; rail.classList.add('drag'); } rail.scrollLeft = sl - dx; });
+    addEventListener('pointerup', () => { if (!down) return; down = false; rail.classList.remove('drag'); });
+  }
 
   /* track matcher */
   const box = document.getElementById('sksQuiz');
@@ -548,25 +391,13 @@
     const order = Object.keys(NAMES).sort((a, b) => (score[b] || 0) - (score[a] || 0)).slice(0, 2), res = el('div', 'sk-res');
     order.forEach((slug, i) => {
       const c = el('div', 'sk-rc'), d = el('div'); d.appendChild(el('b', '', NAMES[slug])); d.appendChild(el('span', '', i === 0 ? 'Your best match' : 'Also a strong fit'));
-      const a = el('a', 'h-btn h-btn-dark', 'See this track'); a.href = '#' + slug; a.addEventListener('click', (e) => { e.preventDefault(); select(slug, { scroll: true }); });
+      const a = el('a', 'h-btn h-btn-dark', 'See this track'); a.href = 'skills-school/' + slug;
       c.appendChild(d); c.appendChild(a); res.appendChild(c);
     });
     const again = el('button', 'sk-again', 'Start again'); again.type = 'button'; again.addEventListener('click', () => { step = 0; score = {}; render(); });
     res.appendChild(again); box.appendChild(res);
   }
   if (box) render();
-
-  /* footer wordmark spotlight */
-  const m = document.getElementById('mark');
-  if (m) { m.addEventListener('pointermove', (e) => { const r = m.getBoundingClientRect(); m.style.setProperty('--sx', ((e.clientX - r.left) / r.width * 100) + '%'); }); m.addEventListener('pointerleave', () => m.style.removeProperty('--sx')); }
-
-  /* WhatsApp widget */
-  const w = document.getElementById('waWidget'), b = document.getElementById('waBtn');
-  if (w && b) {
-    b.addEventListener('click', () => { const o = w.classList.toggle('open'); b.setAttribute('aria-expanded', o); });
-    document.addEventListener('click', (e) => { if (!w.contains(e.target)) { w.classList.remove('open'); b.setAttribute('aria-expanded', 'false'); } });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { w.classList.remove('open'); b.setAttribute('aria-expanded', 'false'); b.focus(); } });
-  }
 })();
 </script>
 </body>
