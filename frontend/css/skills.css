@@ -213,3 +213,9 @@ html[dir="rtl"] .site .sk-run-track{animation-direction:reverse}
 .site .sk-pp.light .sk-seg button[aria-pressed="true"]{background:#094570;color:#fff;font-weight:600}
 .site .sk-pp.light .pr{color:#062F4D}.site .sk-pp.light .sub{color:#5B7283}.site .sk-pp.light .app{color:#6B8396}
 .site .sk-aside .sk-pp{margin-bottom:6px}
+
+.site .sk-lock{flex:none}.site .h-btn .sk-lock{margin-right:2px}
+.site .sk-secure{display:flex;gap:8px;align-items:flex-start;margin:0 0 18px;font-size:12.5px;line-height:1.5}.site .sk-secure svg{margin-top:2px}
+.site .sk-pp.dark .sk-secure{color:rgba(255,255,255,.75)}.site .sk-pp.light .sk-secure{color:#5B7283}
+
+.site .h-btn.is-locked{opacity:.55;cursor:not-allowed;box-shadow:none}.site .h-btn.is-locked:hover{transform:none}

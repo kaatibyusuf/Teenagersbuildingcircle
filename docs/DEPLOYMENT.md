@@ -72,9 +72,9 @@ To change a picture, replace the file with the same name (3:2, under 150 KB). To
 
 Drop the files in and push. Then run `node scripts/add-skills-to-sitemap.js` from the project root to list the eight course pages in `frontend/sitemap.xml` (safe to run twice).
 
-**Enrolment is not switched on yet.** The "Reserve my place" buttons open WhatsApp (+234 704 722 6487) with the track name filled in. The enrolment page, `api/checkout.mjs`
+**Enrolment is not switched on yet.** We are not taking students, so the payment buttons are locked: a padlock and "Enrolment closed", with a "Join the waitlist" link that opens WhatsApp (+234 704 722 6487) with the track name filled in. The enrolment page, `api/checkout.mjs`
 and `Skills.gs` still only know the old Public Speaking, Graphic Design and Data Analysis plans, and card payment needs a Bachs product for each new track, plus the yearly, quarterly and monthly plans for the $400 fee and the $5 application fee, all in US dollars.
-When those are set up, change `const ENROL_OPEN = false;` to `true` near the top of the script in `skills-school.html` and in each of the eight course pages. The buttons then go to `enroll?programme=skills&plan=<track>`
+When those are set up, change `const ENROL_OPEN = false;` to `true` near the top of the script in `skills-school.html` and in each of the eight course pages. The buttons then unlock, lose the padlock, read "Enrol now", the lock line becomes "Payment is taken on a secure page", and they go to `enroll?programme=skills&plan=<track>`
 with the plan slugs `cybersecurity`, `web-development`, `software-engineering`, `product-management`, `product-design`, `graphic-design`, `ui-ux` and `video-creation`.
 
 Review the track outlines (what each track teaches, the tools and the final project) before launch. They are written to be sensible, not taken from a syllabus of yours.

@@ -196,7 +196,7 @@
     </div>
     <div class="sk-price">
       <div class="sk-pbox">
-        <div class="sk-pp dark"><div class="sk-seg" role="group" aria-label="Payment plan"><button type="button" data-plan="full" aria-pressed="true">Full</button><button type="button" data-plan="annual" aria-pressed="false">Yearly</button><button type="button" data-plan="quarter" aria-pressed="false">Quarterly</button><button type="button" data-plan="month" aria-pressed="false">Monthly</button></div><b class="pr" data-amt>$400</b><p class="sub" data-note>Pay once for the full eighteen months.</p><p class="app">Total $400 on any plan. Plus a one-time $5 application fee, paid when you apply.</p></div>
+        <div class="sk-pp dark"><div class="sk-seg" role="group" aria-label="Payment plan"><button type="button" data-plan="full" aria-pressed="true">Full</button><button type="button" data-plan="annual" aria-pressed="false">Yearly</button><button type="button" data-plan="quarter" aria-pressed="false">Quarterly</button><button type="button" data-plan="month" aria-pressed="false">Monthly</button></div><b class="pr" data-amt>$400</b><p class="sub" data-note>Pay once for the full eighteen months.</p><p class="app">Total $400 on any plan. Plus a one-time $5 application fee, paid when you apply.</p><p class="sk-secure"><svg class="sk-lock" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> <span data-secure>Payment is locked. We are not taking students right now.</span></p></div>
         <p>One track, eighteen months. Pick the plan that suits you; the total is the same.</p>
         <a class="h-btn" href="#tracks">Choose your track</a>
         <p class="sk-fine">Plans cannot be changed once you have paid. Read the <a href="policies">refund policy</a>.</p>
@@ -327,11 +327,12 @@
   const solid = () => nav.classList.toggle('h-solid', window.scrollY > 40);
   solid(); addEventListener('scroll', solid, { passive: true });
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  /* Enrolment switch. false = "Reserve my place" opens WhatsApp with the track name (works now).
-     true = it goes to enroll?programme=skills&plan=<track>. Turn it on only after the eight tracks exist as plans
+  /* Enrolment switch. false = payment buttons are locked (padlock, "Enrolment closed") and the waitlist link shows.
+     true = they unlock and go to enroll?programme=skills&plan=<track>. Turn it on only after the eight tracks exist as plans
      in enroll.html, api/checkout.mjs and Skills.gs. */
   const ENROL_OPEN = false;
-  if (ENROL_OPEN) document.querySelectorAll('[data-enrol]').forEach((a) => { a.href = 'enroll?programme=skills&plan=' + a.dataset.enrol; a.removeAttribute('target'); const s = a.querySelector('span'); if (s) s.textContent = 'Enrol now'; });
+  if (ENROL_OPEN) { document.querySelectorAll('[data-enrol]').forEach((a) => { a.href = 'enroll?programme=skills&plan=' + a.dataset.enrol; a.classList.remove('is-locked'); a.removeAttribute('aria-disabled'); a.removeAttribute('role'); a.removeAttribute('tabindex'); const s = a.querySelector('span'); if (s) s.textContent = 'Enrol now'; const l = a.querySelector('.sk-lock'); if (l) l.remove(); }); document.querySelectorAll('[data-secure]').forEach((x) => { x.textContent = 'Payment is taken on a secure page.'; }); document.querySelectorAll('[data-wait]').forEach((x) => { x.textContent = 'Ask us a question first'; x.href = 'contact'; x.removeAttribute('target'); }); }
+  else document.querySelectorAll('.is-locked').forEach((a) => a.addEventListener('click', (e) => e.preventDefault()));
 
   /* payment plans: the amount changes with the plan. The total stays $400. */
   const PLANS = {
