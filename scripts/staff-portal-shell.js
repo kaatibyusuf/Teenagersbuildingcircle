@@ -47,6 +47,7 @@ window.PORTAL_SHELL = {
     { label: 'Placement tests', icon: 'clip', tab: 'placement' },
     { label: 'Referrals', icon: 'star', tab: 'referrals' },
     { label: 'Staff pay', icon: 'pen', tab: 'pay' },
+    { label: 'Projection', icon: 'chart', tab: 'projection' },
     { label: 'Sponsors', icon: 'users', tab: 'sponsors' },
     { label: 'Stories', icon: 'book', tab: 'stories' },
     { label: 'Growth', icon: 'chart', tab: 'growth' },

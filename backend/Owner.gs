@@ -45,6 +45,7 @@ function ownerFromRequest(p) {
     else if (a === 'ow_salundo') r = sal_undo_(p);
     else if (a === 'ow_salslip') r = sal_resend_(p);
     else if (a === 'ow_salbank') r = sal_bank_(p);
+    else if (a === 'ow_projsave') r = typeof pj_save_ === 'function' ? pj_save_(who, p) : { ok: false, error: 'Projection is not set up yet.' };
     else if (a === 'ow_allocate') r = typeof sp_allocate_ === 'function' ? sp_allocate_(who, p) : { ok: false, error: 'Sponsorships are not set up yet.' };
     else if (a === 'ow_request') r = typeof sp_saveRequest_ === 'function' ? sp_saveRequest_(p) : { ok: false, error: 'Sponsorships are not set up yet.' };
     else if (a === 'ow_testimonial') r = typeof tm_save_ === 'function' ? tm_save_(p) : { ok: false, error: 'Testimonials are not set up yet.' };
@@ -57,6 +58,7 @@ function ownerFromRequest(p) {
     if (!r.ok) return r;
     const out = Object.assign(ow_payload_(au.row), { message: r.message || '' });
     try { out.salaries = sal_payload_(p); } catch (e) { console.error(e); out.salaries = null; }
+    try { out.projection = typeof pj_payload_ === 'function' ? pj_payload_(out, out.salaries) : null; } catch (e) { console.error(e); out.projection = null; }
     return out;
   } catch (err) {
     console.error(err);

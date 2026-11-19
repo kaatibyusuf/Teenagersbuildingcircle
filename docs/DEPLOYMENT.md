@@ -60,6 +60,29 @@ the real amount ("paid GHS 25, credited as ₦3,000: confirm in Bachs"). Order m
 
 Any payment that cannot be matched now sends you an **ATTENTION** email with the buyer's details, so nothing waits silently.
 
+## Projection tab (owner portal)
+
+A new **Projection** tab shows income, costs, profit now, the gap to your profit target, the number of new students needed, a six month forecast,
+"if we add students", flat-salary comparisons and a ranked **What to work on** list. It reads the live sheets, so it needs no data entry.
+You set the profit target, other monthly costs (for example Vercel Pro), planned new students a month, the payment charge percentage and your plan notes on the page.
+They are saved in a **Projection** tab that the script creates on first save.
+
+1. In Apps Script, add `Projection.gs` and replace `Owner.gs` (it now has the `ow_projsave` route and passes the projection to the page). `Salaries.gs` from the minimum-pay update must already be deployed.
+2. Deploy → Manage deployments → New version.
+3. Run `node scripts/add-projection-tab.js`, open the owner portal on localhost, check the Projection tab, and push.
+4. If you have not applied the new portal layout to the owner page yet, run `node scripts/staff-portal-shell.js` (it already includes the Projection menu entry).
+
+Income is the monthly fee on record for each active, non-exempt student. A student with no fee on record is listed in the work list until you set it.
+
+## Minimum teacher pay
+
+Teachers and tutors with at least one student are now paid at least **₦10,000 a month** (`SAL_FLOOR` in `Salaries.gs`), otherwise students times rate
+(₦5,000 by default; a person's own **Rate** column still overrides it, for example ₦6,000 for Hifdh teachers). Admins stay on the fixed ₦30,000. A teacher with no
+students is not listed for payment. Change the minimum by editing `SAL_FLOOR`, and set it to `0` to switch it off.
+
+1. Replace `Salaries.gs` in Apps Script and deploy a new version.
+2. Run `node scripts/add-pay-floor.js`, test the owner portal's **Staff pay** tab on localhost, and push.
+
 ## Still pending from earlier work
 
 - [ ] Phone and Enrol Apps Script updates (from earlier sessions)
