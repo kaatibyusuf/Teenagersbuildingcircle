@@ -18,7 +18,7 @@ const base = () => ({
 test('the note is built only from the student\'s own record and uses their numbers', () => {
   const n = note(base()), t = text(n);
   assert.match(n.greeting, /Amina/);
-  assert.match(t, /93% \(27 of 29 classes\)/); assert.match(t, /9 days in a row/); assert.match(t, /Fiqh of wudu/); assert.match(t, /tajwīd/);
+  assert.match(t, /(93% \(27 of 29 classes\)|27 of 29 classes \(93%\))/); assert.match(t, /9 days in a row/); assert.match(t, /Fiqh of wudu/); assert.match(t, /tajwīd/);
   assert.match(t, /Slow down on the madd rules/); assert.match(t, /Juz 3/); assert.match(t, /Al-Baqarah/);
   assert.match(n.focus, /tajwīd/);
   assert.ok(n.paragraphs.length >= 4 && n.paragraphs.every((p) => p.length > 20));

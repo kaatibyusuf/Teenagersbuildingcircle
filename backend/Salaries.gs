@@ -2,7 +2,7 @@
  * Staff pay (Salaries.gs), shown in the owner portal under "Pay".
  *
  * Every teacher, tutor and facilitator who has students is paid SAL_RATE (5,000) for each active student assigned
- * to them. Anyone whose Role is Admin is paid a fixed SAL_ADMIN (30,000) a month instead, whatever their number of
+ * to them, but never less than SAL_FLOOR (10,000) a month once they have at least one student. Set SAL_FLOOR to 0 to switch the minimum off. Anyone whose Role is Admin is paid a fixed SAL_ADMIN (30,000) a month instead, whatever their number of
  * students (their students are still listed). It reads:
  *   Teachers + Students (Teacher column)   Madrasah and Teenagers Building Circle, including admins listed in Teachers
  *   AcademyTutors + AcademyStudents (TutorID)
@@ -21,6 +21,7 @@
 
 const SAL_RATE = 5000;
 const SAL_ADMIN = 30000; // monthly salary of an admin
+const SAL_FLOOR = 10000; // minimum monthly pay for a teacher or tutor with at least one student (0 = no minimum)
 const SAL_EMAIL = true;  // email a payslip to the staff member when a payment is marked paid
 const SAL_TAB = 'Salaries';
 const SAL_HEAD = ['Month', 'StaffKey', 'Name', 'Programme', 'Students', 'Rate', 'Amount', 'Status', 'PaidDate', 'Reference', 'PaidBy', 'Roster'];
@@ -44,6 +45,12 @@ function sal_tab_() {
   const ss = ss_();
   if (!ss.getSheetByName(SAL_TAB)) { const sh = ss.insertSheet(SAL_TAB); sh.getRange(1, 1, 1, SAL_HEAD.length).setValues([SAL_HEAD]).setFontWeight('bold'); sh.setFrozenRows(1); }
   return table_(SAL_TAB);
+}
+/* what one person is owed this month: a fixed salary, or students x rate with the minimum applied */
+function sal_amount_(s) {
+  if (s.Fixed) return s.Rate;
+  const n = s.Students.length; if (!n) return 0;
+  return Math.max(n * s.Rate, SAL_FLOOR);
 }
 function sal_month_(m) { m = String(m || '').trim(); return /^\d{4}-(0[1-9]|1[0-2])$/.test(m) ? m : today_().slice(0, 7); }
 function sal_progOf_(s) { return /tbc|teen/i.test(String(s.Plan || '') + ' ' + String(s.Level || '')) ? 'Teenagers Building Circle' : 'Madrasah'; }
@@ -87,7 +94,7 @@ function sal_payload_(p) {
   P.rows.forEach(function (r) { if (String(r.Month) === month && String(r.Status) === 'Paid') paid[String(r.StaffKey)] = r; });
   let total = 0, paidTotal = 0, studentLinks = 0;
   const staff = sal_staff_().map(function (s) {
-    const pr = paid[s.Key], live = s.Fixed ? s.Rate : s.Students.length * s.Rate;
+    const pr = paid[s.Key], live = sal_amount_(s);
     const o = { Key: s.Key, ID: s.ID, Name: s.Name, Role: s.Role, Programme: s.Programme, Email: s.Email, WhatsApp: s.WhatsApp, Bank: s.Bank, AccountNumber: s.AccountNumber, AccountName: s.AccountName,
       Fixed: s.Fixed, Rate: pr ? Number(pr.Rate) || s.Rate : s.Rate, Students: s.Students, Count: s.Students.length, Amount: live, Status: 'Due', PaidDate: '', Reference: '', RateSet: s.Rate };
     if (pr) {
@@ -95,6 +102,7 @@ function sal_payload_(p) {
       o.Students = String(pr.Roster || '').split('\n').filter(Boolean).map(function (line) { const q = line.split('|'); return { ID: q[0] || '', Name: q[1] || '', Class: q[2] || '' }; });
       o.Changed = live !== o.Amount;
     }
+    o.Floor = !o.Fixed && o.Count > 0 && o.Amount > o.Count * o.Rate;
     total += o.Amount; if (pr) paidTotal += o.Amount; studentLinks += o.Count;
     return o;
   }).filter(function (o) { return o.Count > 0 || o.Fixed || o.Status === 'Paid'; });
@@ -103,7 +111,7 @@ function sal_payload_(p) {
   const idle = sal_staff_().filter(function (s) { return !s.Students.length && !s.Fixed && !paid[s.Key]; }).map(function (s) { return { Key: s.Key, Name: s.Name, Role: s.Role, Programme: s.Programme }; });
   const paidBy = {}; P.rows.forEach(function (r) { if (String(r.Status) === 'Paid') paidBy[String(r.Month)] = (paidBy[String(r.Month)] || 0) + (Number(r.Amount) || 0); });
   const history = []; for (let i = 5; i >= 0; i--) { const m = addMonths_(now + '-01', -i).slice(0, 7); history.push({ Month: m, Paid: paidBy[m] || 0 }); }
-  return { month: month, months: months, history: history, rate: SAL_RATE, adminRate: SAL_ADMIN, total: total, paidTotal: paidTotal, dueTotal: total - paidTotal, staffCount: staff.length, studentLinks: studentLinks,
+  return { month: month, months: months, history: history, rate: SAL_RATE, floor: SAL_FLOOR, adminRate: SAL_ADMIN, total: total, paidTotal: paidTotal, dueTotal: total - paidTotal, staffCount: staff.length, studentLinks: studentLinks,
     paidCount: staff.filter(function (o) { return o.Status === 'Paid'; }).length, staff: staff, idle: idle, live: month === now };
 }
 
@@ -113,7 +121,7 @@ function sal_pay_(who, p) {
   if (!s) return { ok: false, error: 'Staff member not found.' };
   const T = sal_tab_();
   if (T.rows.some(function (r) { return String(r.Month) === month && String(r.StaffKey) === key && String(r.Status) === 'Paid'; })) return { ok: true, message: 'Already marked as paid.' };
-  const amount = s.Fixed ? s.Rate : s.Students.length * s.Rate;
+  const amount = sal_amount_(s);
   if (!(amount > 0)) return { ok: false, error: 'No students assigned, so nothing to pay.' };
   const ref = String(p.reference || '').replace(/[\u0000-\u001f]/g, ' ').trim().slice(0, 80);
   const roster = s.Students.map(function (x) { return [x.ID, x.Name, x.Class].join('|').replace(/\n/g, ' '); }).join('\n');
@@ -155,7 +163,7 @@ function sal_slip_(s, month, amount, count, rate, fixed, roster, ref, paidDate) 
   if (!validEmail_(s.Email)) return 'No valid Email for ' + s.Name + ', so no payslip was sent.';
   if (MailApp.getRemainingDailyQuota() < 1) return 'Email limit reached, so no payslip was sent.';
   const first = String(s.Name || '').replace(/^(ustadh|ustadhah|ustaz|ustazah|mr|mrs|ms|malam|sheikh)\.?\s+/i, '').split(/\s+/)[0] || s.Name;
-  const what = fixed ? 'Monthly salary' : count + ' student' + (count === 1 ? '' : 's') + ' × ' + naira_(rate);
+  const what = fixed ? 'Monthly salary' : amount > count * rate ? 'Minimum monthly pay (' + count + ' student' + (count === 1 ? '' : 's') + ' × ' + naira_(rate) + ' is below it)' : count + ' student' + (count === 1 ? '' : 's') + ' × ' + naira_(rate);
   const acct = String(s.AccountNumber || ''), bank = acct ? (s.Bank ? s.Bank + ' ' : '') + '(account ending ' + acct.slice(-4) + ')' : '';
   const lines = roster.map(function (x) { return '  • ' + x.Name + (x.Class ? ' (' + x.Class + ')' : ''); }).join('\n');
   const text = 'Assalaamu alaykum ' + first + ',\n\nYour payment for ' + sal_monthName_(month) + ' has been sent.\n\n' +
