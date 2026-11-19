@@ -50,12 +50,14 @@ export async function POST(request) {
   else if (/^\S+@\S+\.\S+$/.test(String(q.email || '').trim())) customer.email = String(q.email).trim();
   if (q.name) customer.name = String(q.name).slice(0, 100);
 
+  // Skills School dollar tracks: Fees.gs feeQuote must return currency: 'USD' for those students. Everything else is naira.
+  const cur = String(q.currency || 'NGN').toUpperCase() === 'USD' ? 'USD' : 'NGN';
   const session = {
-    pricing: { currency: 'NGN', amount: amount.toFixed(2) },
+    pricing: { currency: cur, amount: amount.toFixed(2) },
     success_url: back + '&paid=1',
     cancel_url: back + '&cancelled=1',
     reference: 'FEE-' + id + '-' + Date.now().toString(36),
-    metadata: { ngn: String(amount), kind: 'fee', ref: 'FEE-' + id, studentId: q.studentId || id, periods: String(q.periods || periods),
+    metadata: { ...(cur === 'NGN' ? { ngn: String(amount) } : { currency: 'USD' }), kind: 'fee', ref: 'FEE-' + id, studentId: q.studentId || id, periods: String(q.periods || periods),
                 months: String(q.months || ''), plan: String(q.plan || ''), programme: String(q.programme || ''), student: String(q.name || '').slice(0, 100) },
     expires_in_minutes: 60,
   };

@@ -195,6 +195,11 @@
           <select id="periodsSel"></select>
           <p class="pay-periods-note">Paying for more months at once means fewer payments to remember. The fee is the same for every month, and months that have not started can be refunded.</p>
         </div>
+        <div class="pay-periods" id="payPlans" hidden>
+          <label for="payPlanSel">How would you like to pay?</label>
+          <select id="payPlanSel"></select>
+          <p class="pay-periods-note" id="payPlanNote"></p>
+        </div>
         <div class="pay-summary" id="paySummary"></div>
 
         <div class="pay-tabs" role="tablist" aria-label="Payment method">
@@ -354,6 +359,22 @@
         { name: 'Skills School — Data Analysis', tag: '8 weeks', amount: 80000, period: '/2mo',
           bullets: ['Cleaning and organising real, messy datasets', 'Final project: a dashboard built from your own dataset'],
           productIdLive: 'prod_0a4ba5e2488546b4aa8c', productIdSandbox: 'prod_0161d06903fb4680a671' },
+        { name: 'Skills School \u2014 Cybersecurity (18 months)', tag: '18 months · live online', amount: 400, period: '', usd: true, closed: true,
+          bullets: ['Learn how attacks work so that you can stop them. Taught as defence, under a strict code of ethics.', 'Pay in full, yearly, quarterly or monthly. The total is $400.', 'A final project and portfolio'] },
+        { name: 'Skills School \u2014 Web Development (18 months)', tag: '18 months · live online', amount: 400, period: '', usd: true, closed: true,
+          bullets: ['Build real websites and web apps, from the basics to a live project.', 'Pay in full, yearly, quarterly or monthly. The total is $400.', 'A final project and portfolio'] },
+        { name: 'Skills School \u2014 Software Engineering (18 months)', tag: '18 months · live online', amount: 400, period: '', usd: true, closed: true,
+          bullets: ['Learn to write, test and ship working software.', 'Pay in full, yearly, quarterly or monthly. The total is $400.', 'A final project and portfolio'] },
+        { name: 'Skills School \u2014 Product Management (18 months)', tag: '18 months · live online', amount: 400, period: '', usd: true, closed: true,
+          bullets: ['Learn to find a real problem, plan the work and lead a product.', 'Pay in full, yearly, quarterly or monthly. The total is $400.', 'A final project and portfolio'] },
+        { name: 'Skills School \u2014 Product Design (18 months)', tag: '18 months · live online', amount: 400, period: '', usd: true, closed: true,
+          bullets: ['Design products people can use, from research to a tested prototype.', 'Pay in full, yearly, quarterly or monthly. The total is $400.', 'A final project and portfolio'] },
+        { name: 'Skills School \u2014 Graphic Design (18 months)', tag: '18 months · live online', amount: 400, period: '', usd: true, closed: true,
+          bullets: ['Layout, colour and type, building a portfolio of real work.', 'Pay in full, yearly, quarterly or monthly. The total is $400.', 'A final project and portfolio'] },
+        { name: 'Skills School \u2014 UI/UX (18 months)', tag: '18 months · live online', amount: 400, period: '', usd: true, closed: true,
+          bullets: ['Research, wireframes and interfaces that are easy to use.', 'Pay in full, yearly, quarterly or monthly. The total is $400.', 'A final project and portfolio'] },
+        { name: 'Skills School \u2014 Video Creation (18 months)', tag: '18 months · live online', amount: 400, period: '', usd: true, closed: true,
+          bullets: ['Shoot, edit and publish video with a story and a finished portfolio.', 'Pay in full, yearly, quarterly or monthly. The total is $400.', 'A final project and portfolio'] },
       ],
     },
   ];
@@ -373,6 +394,14 @@
     'public-speaking': 'Skills School \u2014 Public Speaking',
     'graphic-design': 'Skills School \u2014 Graphic Design',
     'data-analysis': 'Skills School \u2014 Data Analysis',
+    'sk-cybersecurity': 'Skills School \u2014 Cybersecurity (18 months)',
+    'sk-web-development': 'Skills School \u2014 Web Development (18 months)',
+    'sk-software-engineering': 'Skills School \u2014 Software Engineering (18 months)',
+    'sk-product-management': 'Skills School \u2014 Product Management (18 months)',
+    'sk-product-design': 'Skills School \u2014 Product Design (18 months)',
+    'sk-graphic-design': 'Skills School \u2014 Graphic Design (18 months)',
+    'sk-ui-ux': 'Skills School \u2014 UI/UX (18 months)',
+    'sk-video-creation': 'Skills School \u2014 Video Creation (18 months)',
     'hifdh-group': 'Madrasah \u2014 Hifdh Only (Group)',
     'full-group': 'Madrasah \u2014 Full Madrasah (Group)',
     'full-group-completed': 'Madrasah \u2014 Full Madrasah (Group, hifdh completed elsewhere)',
@@ -409,7 +438,7 @@
   function savedRef() {
     try { const v = JSON.parse(localStorage.getItem(REF_KEY) || 'null'); return v && v.code ? v.code : ''; } catch (e) { return ''; }
   }
-  const state = { periods: 1, step: 1, student: {}, programmeId: initialProgrammeId, plan: initialPlan, ref: null, sent: false, extra: {} };
+  const state = { payPlan: 'full', periods: 1, step: 1, student: {}, programmeId: initialProgrammeId, plan: initialPlan, ref: null, sent: false, extra: {} };
 
   const steps = document.querySelectorAll('.step');
   const stepper = document.getElementById('stepper');
@@ -586,7 +615,7 @@
     if (programme.plans.some((pl) => pl.closed && !pl.notYet)) {
       const note = document.createElement('p');
       note.className = 'plan-closed-note';
-      note.innerHTML = invitedPlan && programme.plans.includes(invitedPlan)
+      note.innerHTML = programme.id === 'skills' ? 'The new 18-month Skills School tracks are not taking students yet. <a class="wl-inline" href="waitlist" target="_blank" rel="noopener">Join the waitlist</a> and we will tell you when a place opens.' : invitedPlan && programme.plans.includes(invitedPlan)
         ? 'Welcome back. Your invite link has opened <strong>' + invitedPlan.name.replace(/^.*\u2014 /, '') + '</strong> for you. Fill in the form as a new student and choose how to pay.'
         : 'Group and one-year Madrasah classes are closed for now. Private (one-on-one) classes are open. <a class="wl-inline" href="waitlist" target="_blank" rel="noopener">Join the waitlist</a> for a group place.';
       planOptions.appendChild(note);
@@ -599,7 +628,7 @@
         <div class="plan-opt-head">
           <div class="plan-opt-radio"></div>
           <div class="plan-opt-name">${plan.name.split('—').pop().trim()}<small>${plan.tag}</small></div>
-          <div class="plan-opt-price">${plan.notYet ? `<span class="plan-opt-shut">Opens ${opensText(plan.opens)}</span>` : plan.closed ? `<a class="plan-opt-shut wl-shut" href="waitlist?plan=${Object.keys(PLAN_SLUGS).find((k) => PLAN_SLUGS[k] === plan.name) || ''}" target="_blank" rel="noopener">Closed · Join waitlist</a>` : '\u20a6' + plan.amount.toLocaleString() + plan.period}</div>
+          <div class="plan-opt-price">${plan.notYet ? `<span class="plan-opt-shut">Opens ${opensText(plan.opens)}</span>` : plan.closed ? `<a class="plan-opt-shut wl-shut" href="waitlist?plan=${Object.keys(PLAN_SLUGS).find((k) => PLAN_SLUGS[k] === plan.name) || ''}" target="_blank" rel="noopener">Closed · Join waitlist</a>` : (plan.usd ? '$' + plan.amount : '\u20a6' + plan.amount.toLocaleString() + plan.period)}</div>
         </div>
         <span class="plan-opt-toggle" data-toggle>Show details</span>
         <div class="plan-opt-details" data-details>
@@ -608,7 +637,7 @@
       `;
       wrap.querySelector('.plan-opt-head').addEventListener('click', () => {
         if (plan.closed) return;
-        state.plan = plan; state.periods = 1;
+        state.plan = plan; state.periods = 1; state.payPlan = 'full';
         planOptions.querySelectorAll('.plan-opt').forEach((el) => el.classList.remove('selected'));
         wrap.classList.add('selected');
         renderExtra();
@@ -744,13 +773,18 @@
     document.getElementById('paySummary').innerHTML = `
       <div class="row"><span>Student</span><b>${escapeHtml(s.studentName || '')}</b></div>
       <div class="row"><span>Plan</span><b>${state.plan.name}</b></div>
-      <div class="row"><span>Programme fee</span><b>${amountText(state.plan)}</b></div>
+      ${isUsd() ? `<div class="row"><span>Track fee</span><b>${usd(400)} for 18 months</b></div>
+      <div class="row"><span>Payment plan</span><b>${USD_PLANS[state.payPlan].label}</b></div>
+      <div class="row"><span>First payment</span><b>${usd(USD_PLANS[state.payPlan].pays[0])}</b></div>
+      <div class="row"><span>Application fee (one-time)</span><b>${usd(APP_FEE_USD)}</b></div>
+      <div class="row"><span>Total to pay now</span><b>${usd(firstTotal(state.plan))}</b></div>` : `<div class="row"><span>Programme fee</span><b>${amountText(state.plan)}</b></div>
       ${periods() > 1 ? `<div class="row"><span>Months paid for</span><b>${periods()} \u00d7 \u20a6${state.plan.amount.toLocaleString()} = \u20a6${(state.plan.amount * periods()).toLocaleString()}</b></div>` : ''}
       ${regFee() ? `<div class="row"><span>Registration fee (one-time)</span><b>\u20a6${REG_FEE.toLocaleString()}</b></div>` : ''}
-      <div class="row"><span>Total to pay now</span><b>\u20a6${firstTotal(state.plan).toLocaleString()}</b></div>
+      <div class="row"><span>Total to pay now</span><b>\u20a6${firstTotal(state.plan).toLocaleString()}</b></div>`}
       <div class="row"><span>Your reference</span><b>${state.ref}</b></div>
     `;
     renderPeriods();
+    renderPayPlans();
     preparePayment();
     cardLabel();
   }
@@ -812,13 +846,37 @@
   // One-time registration fee, added to the first payment of every enrolment.
   // Returning students on an invite link don't pay it. Keep in step with api/checkout.mjs and Enrol.gs.
   const REG_FEE = 3000;
-  function regFee() { return (invitedPlan && state.plan === invitedPlan) || passValid ? 0 : REG_FEE; }
-  function firstTotal(plan) { return plan.amount * periods() + regFee(); }
+  // Skills School 18-month tracks are priced in US dollars. The total is $400 on every plan; the last payment is the smaller balance.
+  // Keep in step with api/checkout.mjs, Enrol.gs and Skills.gs.
+  const APP_FEE_USD = 5;
+  const USD_PLANS = {
+    full: { label: 'Full', pays: [400], gap: 0, note: 'Pay $400 once for the full eighteen months.' },
+    annual: { label: 'Yearly', pays: [267, 133], gap: 12, note: '$267 now, then $133 after twelve months.' },
+    quarter: { label: 'Quarterly', pays: [67, 67, 67, 67, 67, 65], gap: 3, note: '$67 now, then every three months: five payments of $67 and a final $65.' },
+    month: { label: 'Monthly', pays: [23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 9], gap: 1, note: '$23 now, then every month: seventeen payments of $23 and a final $9.' },
+  };
+  const isUsd = () => !!(state.plan && state.plan.usd);
+  const usd = (n) => '$' + (Math.round(n * 100) / 100).toLocaleString('en-US', { minimumFractionDigits: n % 1 ? 2 : 0 });
+  function renderPayPlans() {
+    const box = document.getElementById('payPlans'), sel = document.getElementById('payPlanSel');
+    box.hidden = !isUsd();
+    const sub = document.querySelector('#step3 .step-sub');
+    if (sub) sub.textContent = isUsd() ? 'Choose how you would like to pay, then pay the first payment by card. The later payments are paid when they fall due.' : 'Pay by card in a minute, or by bank transfer and send us your receipt on WhatsApp.';
+    if (!isUsd()) { state.payPlan = 'full'; return; }
+    sel.innerHTML = Object.keys(USD_PLANS).map((k) => `<option value="${k}">${USD_PLANS[k].label}${USD_PLANS[k].pays.length > 1 ? ' (' + usd(USD_PLANS[k].pays[0]) + ' now)' : ' (' + usd(400) + ')'}</option>`).join('');
+    sel.value = state.payPlan;
+    document.getElementById('payPlanNote').textContent = USD_PLANS[state.payPlan].note + ' The total is ' + usd(400) + ' on every plan. The later payments are paid when they fall due.';
+  }
+  document.getElementById('payPlanSel').addEventListener('change', (e) => { state.payPlan = USD_PLANS[e.target.value] ? e.target.value : 'full'; renderPaySummary(); });
+  function regFee() { if (isUsd()) return APP_FEE_USD; return (invitedPlan && state.plan === invitedPlan) || passValid ? 0 : REG_FEE; }
+  function firstTotal(plan) { return plan.usd ? USD_PLANS[state.payPlan].pays[0] + APP_FEE_USD : plan.amount * periods() + regFee(); }
   function amountText(plan) {
+    if (plan.usd) return usd(400) + ' for 18 months';
     const per = plan.period === '/mo' ? ' per month' : plan.period === '/2mo' ? ' every 2 months' : ' (one-time)';
     return '\u20a6' + plan.amount.toLocaleString() + per;
   }
   function firstPayText(plan) {
+    if (plan.usd) return usd(firstTotal(plan)) + ' (' + usd(USD_PLANS[state.payPlan].pays[0]) + ' first payment + ' + usd(APP_FEE_USD) + ' application fee, once)';
     const fee = plan.amount * periods(), feeText = periods() > 1 ? '\u20a6' + fee.toLocaleString() + ' (' + periods() + ' months)' : '\u20a6' + fee.toLocaleString() + ' fee';
     return regFee() ? '\u20a6' + firstTotal(plan).toLocaleString() + ' (' + feeText + ' + \u20a6' + REG_FEE.toLocaleString() + ' registration, once)' : (periods() > 1 ? feeText : amountText(plan));
   }
@@ -833,6 +891,7 @@
       'Reference: ' + state.ref,
       'Programme: ' + programme,
       'Plan: ' + state.plan.name,
+      ...(isUsd() ? ['Payment plan: ' + USD_PLANS[state.payPlan].label] : []),
       'Amount paid: ' + firstPayText(state.plan),
       ...(periods() > 1 ? ['Months paid for: ' + periods()] : []),
       'Paid to: Himaayah Ltd, Wema Bank, 0127584920',
@@ -870,7 +929,7 @@
     const s = state.student;
     const body = {
       action: 'enrol', ref: state.ref, studentName: s.studentName, dob: s.dob, gradeLevel: s.gradeLevel,
-      programme: PROGRAMMES.find((p) => p.id === state.programmeId).name, plan: state.plan.name, periods: periods(),
+      programme: PROGRAMMES.find((p) => p.id === state.programmeId).name, plan: state.plan.name, periods: periods(), payPlan: isUsd() ? state.payPlan : '', currency: isUsd() ? 'USD' : 'NGN',
       kinName: s.kinName, kinRelationship: s.kinRelationship, kinPhone: s.kinPhone, kinEmail: s.kinEmail,
       studentEmail: s.studentEmail || '', website: s.website || '',
       referral: s.referral || '',
@@ -908,6 +967,10 @@
       const d = (n) => { const x = new Date(); x.setDate(x.getDate() + n); return x.toISOString().slice(0, 10); };
       const pu = document.getElementById('paidUntil'); pu.min = d(-7); pu.max = d(70);
     }
+    // US dollar tracks are paid by card only (the bank account is a naira account)
+    const tt = document.querySelector('.pay-tab[data-pay-tab="transfer"]');
+    tt.hidden = isUsd();
+    if (isUsd() && tt.getAttribute('aria-selected') === 'true') document.querySelector('.pay-tab[data-pay-tab="card"]').click();
     document.getElementById('msgPreview').textContent = buildMessage();
     document.getElementById('waLink1').href = waLink(waNum());
     document.getElementById('waNum').textContent = '\u00b7 ' + waShow(waNum());
@@ -957,7 +1020,7 @@
   // the sheet by /api/bachs-webhook once Bachs confirms it.
   // =================================================================
   const cardBtn = document.getElementById('cardBtn');
-  function cardLabel() { if (state.plan) cardBtn.textContent = 'Pay \u20a6' + firstTotal(state.plan).toLocaleString() + ' by card'; }
+  function cardLabel() { if (state.plan) cardBtn.textContent = 'Pay ' + (isUsd() ? usd(firstTotal(state.plan)) : '\u20a6' + firstTotal(state.plan).toLocaleString()) + ' by card'; }
   function cardError(msg) {
     const st = document.getElementById('cardStatus');
     st.textContent = msg + ' You can pay by bank transfer instead.';
@@ -982,7 +1045,7 @@
     try {
       const r = await fetch('/api/checkout', {
         method: 'POST', headers: { 'Content-Type': 'application/json' }, signal: ctl.signal,
-        body: JSON.stringify({ ref: state.ref, plan: state.plan.name, periods: periods(), email: s.studentEmail || s.kinEmail, name: s.kinName, phone: s.kinPhone, studentName: s.studentName, invite: invitedPlan && state.plan === invitedPlan ? INVITE : '', regpass: passValid ? passAsked : '' }),
+        body: JSON.stringify({ ref: state.ref, plan: state.plan.name, periods: periods(), payPlan: isUsd() ? state.payPlan : '', email: s.studentEmail || s.kinEmail, name: s.kinName, phone: s.kinPhone, studentName: s.studentName, invite: invitedPlan && state.plan === invitedPlan ? INVITE : '', regpass: passValid ? passAsked : '' }),
       });
       const j = await r.json().catch(() => null);
       if (j && j.ok && j.url) { window.location.href = j.url; return; }

@@ -74,8 +74,8 @@ Drop the files in and push. Then run `node scripts/add-skills-to-sitemap.js` fro
 
 **Enrolment is not switched on yet.** We are not taking students, so the payment buttons are locked: a padlock and "Enrolment closed", with a "Join the waitlist" link that opens WhatsApp (+234 704 722 6487) with the track name filled in. The enrolment page, `api/checkout.mjs`
 and `Skills.gs` still only know the old Public Speaking, Graphic Design and Data Analysis plans, and card payment needs a Bachs product for each new track, plus the yearly, quarterly and monthly plans for the $400 fee and the $5 application fee, all in US dollars.
-When those are set up, change `const ENROL_OPEN = false;` to `true` near the top of the script in `skills-school.html` and in each of the eight course pages. The buttons then unlock, lose the padlock, read "Enrol now", the lock line becomes "Payment is taken on a secure page", and they go to `enroll?programme=skills&plan=<track>`
-with the plan slugs `cybersecurity`, `web-development`, `software-engineering`, `product-management`, `product-design`, `graphic-design`, `ui-ux` and `video-creation`.
+When those are set up, change `const ENROL_OPEN = false;` to `true` near the top of the script in `skills-school.html` and in each of the eight course pages. The buttons then unlock, lose the padlock, read "Enrol now", the lock line becomes "Payment is taken on a secure page", and they go to `enroll?programme=skills&plan=sk-<track>`
+with the plan slugs `sk-cybersecurity`, `web-development`, `software-engineering`, `product-management`, `product-design`, `graphic-design`, `ui-ux` and `video-creation`.
 
 Review the track outlines (what each track teaches, the tools and the final project) before launch. They are written to be sensible, not taken from a syllabus of yours.
 
@@ -115,3 +115,17 @@ students is not listed for payment. Change the minimum by editing `SAL_FLOOR`, a
 - Open the **Errors** tab in the sheet: time, where, what, which action and student. Access codes are never stored there.
 - A failed card payment emails you straight away. Bachs retries the notification by itself, so check again in an hour before fixing by hand.
 - To issue a placement test code by hand, see the comment above `placementIssueCode` in `PlacementTests.gs`.
+
+## Skills School in US dollars: backend (not live until you open admission)
+
+The eight 18-month tracks are priced in US dollars: $400 on every plan, plus a one-time $5 application fee on the first payment.
+Plans: Full ($400), Yearly ($267, then $133 after 12 months), Quarterly ($67 five times, then $65, every 3 months), Monthly ($23 seventeen times, then $9).
+
+Files changed, which must be kept in step: `enroll.html`, `api/checkout.mjs`, `api/bachs-webhook.mjs`, `Enrol.gs`, `Skills.gs`.
+- The tracks are `closed` in `enroll.html`, `api/checkout.mjs` and `Enrol.gs` (`EN_CLOSED_PLANS`). To open them, remove them from all three, then set `ENROL_OPEN` to `true` on the Skills pages.
+- The first payment is charged by card in USD (`pricing.currency` is `USD`). Bank transfer is hidden for these tracks because the account is a naira account.
+- Later payments are not charged automatically. `Skills.gs` keeps `Currency`, `PayPlan`, `Schedule`, `InstPaid` and `Fee` (the next amount) on each student, sends reminders in dollars, and the admin "confirm payment" step moves the student to the next payment.
+- After pasting `Skills.gs`, run `skillsSetup` once so the four new columns are added to the SkillsStudents tab. After pasting `Enrol.gs`, run `setupEnrolments` once for the PayPlan and Currency columns.
+
+### Dollar tracks on the Pay fees page
+`Fees.gs` has `FEE_USD_ONLINE = false`. While it is false, a dollar student who enters their ID on the Pay fees page is told to message the school, so nobody is quoted a dollar amount as naira. Turn it on only after `pay.html` shows `currency` from the lookup (`$` for `USD`) and only one instalment can be paid at a time (`maxPeriods` is 1 for dollar tracks). Then deploy a new version of the Apps Script web app.

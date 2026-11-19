@@ -28,7 +28,27 @@ const PLANS = {
   'Skills School — Public Speaking':            { amount: 25000, recurring: false, live: 'prod_f6fa17539a43498782c0', sandbox: 'prod_0db88a060ba7464cb18e' },
   'Skills School — Graphic Design':             { amount: 35000, recurring: false, live: 'prod_bad801192e5c47ffae03', sandbox: 'prod_0fcee9e3af2e4d5797f8' },
   'Skills School — Data Analysis':              { amount: 80000, recurring: true, live: 'prod_0a4ba5e2488546b4aa8c', sandbox: 'prod_0161d06903fb4680a671' },
+  // The eight 18-month Skills School tracks are priced in US dollars (see USD_PAYMENT_PLANS). closed: true until admission opens;
+  // to open them, remove closed: true here, in enroll.html and in Enrol.gs (EN_CLOSED_PLANS).
+  'Skills School — Cybersecurity (18 months)': { amount: 400, usd: true, closed: true },
+  'Skills School — Web Development (18 months)': { amount: 400, usd: true, closed: true },
+  'Skills School — Software Engineering (18 months)': { amount: 400, usd: true, closed: true },
+  'Skills School — Product Management (18 months)': { amount: 400, usd: true, closed: true },
+  'Skills School — Product Design (18 months)': { amount: 400, usd: true, closed: true },
+  'Skills School — Graphic Design (18 months)': { amount: 400, usd: true, closed: true },
+  'Skills School — UI/UX (18 months)': { amount: 400, usd: true, closed: true },
+  'Skills School — Video Creation (18 months)': { amount: 400, usd: true, closed: true },
 };
+
+// US dollar tracks: the first payment is charged here; the later payments are collected when they fall due.
+// The total is $400 on every plan and the last payment is the smaller balance. Keep in step with enroll.html, Enrol.gs and Skills.gs.
+const USD_PAYMENT_PLANS = {
+  full: [400],
+  annual: [267, 133],
+  quarter: [67, 67, 67, 67, 67, 65],
+  month: [23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 9],
+};
+const USD_APP_FEE = 5;
 
 // A plan can carry opens: 'YYYY-MM-DD' (West Africa time). It cannot be enrolled in or paid for before that day.
 // Keep in step with enroll.html and Enrol.gs (EN_OPENS).
@@ -63,7 +83,7 @@ export async function POST(request) {
   const invited = !!(plan.invite && String(b.invite || '').toUpperCase() === plan.invite);
   // A paid test code means the registration fee was already paid (placement tests). Checked with Apps Script, never trusted from the browser.
   let passPaid = false;
-  const regpass = String(b.regpass || '').toUpperCase().replace(/[^A-Z0-9-]/g, '').slice(0, 20);
+  const regpass = plan.usd ? '' : String(b.regpass || '').toUpperCase().replace(/[^A-Z0-9-]/g, '').slice(0, 20);
   if (regpass && !invited) {
     try {
       const r = await fetch(process.env.APPS_SCRIPT_URL || DEFAULT_APPS_SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'pt_pass_check', code: regpass, ref: String(b.ref || '') }) });
@@ -77,7 +97,9 @@ export async function POST(request) {
   // Keep in step with enroll.html and Enrol.gs.
   const monthly = plan.recurring && b.plan !== 'Skills School — Data Analysis';
   const periods = monthly && [1, 2, 3, 6, 12].includes(Number(b.periods)) ? Number(b.periods) : 1;
-  const total = plan.amount * periods + (invited || passPaid ? 0 : REG_FEE);
+  const payPlan = plan.usd ? String(b.payPlan || '') : '';
+  if (plan.usd && !USD_PAYMENT_PLANS[payPlan]) return json({ ok: false, error: 'Choose how you would like to pay.' }, 400);
+  const total = plan.usd ? USD_PAYMENT_PLANS[payPlan][0] + USD_APP_FEE : plan.amount * periods + (invited || passPaid ? 0 : REG_FEE);
   const ref = String(b.ref || '');
   if (!/^ENR-[A-Z0-9]{6}$/.test(ref)) return json({ ok: false, error: 'Bad reference.' }, 400);
   const email = String(b.email || '').trim();
@@ -97,13 +119,13 @@ export async function POST(request) {
   const session = {
     // Every plan is charged as a plain naira amount set here, so it works the same in
     // sandbox and live without matching product IDs (the IDs below are kept for reference).
-    pricing: { currency: 'NGN', amount: total.toFixed(2) },
+    pricing: { currency: plan.usd ? 'USD' : 'NGN', amount: total.toFixed(2) },
     customer,
     success_url: site + '/payment-success?ref=' + ref,
     cancel_url: site + '/enroll?card=cancelled',
     // Bachs needs a new reference per attempt; the enrolment reference stays in metadata
     reference: ref + '-' + Date.now().toString(36),
-    metadata: { ref, plan: b.plan, student, periods: String(periods) },
+    metadata: { ref, plan: b.plan, student, periods: String(periods), ...(plan.usd ? { payPlan, currency: 'USD' } : {}) },
     expires_in_minutes: 60,
   };
 

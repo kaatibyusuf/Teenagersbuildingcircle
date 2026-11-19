@@ -59,6 +59,7 @@ export async function POST(request) {
     kind: meta.kind || '',            // 'fee' for the Pay fees page (api/fees-checkout)
     studentId: meta.studentId || '',
     periods: meta.periods || '',
+    payPlan: meta.payPlan || '',       // US dollar Skills School tracks: full, annual, quarter or month
     type: meta.type || '',            // sponsorships (api/sponsor-checkout): 'fund' or 'student'
     requestId: meta.requestId || '',
     free: meta.free || '',           // free store items that were in the cart (listed on the receipt)

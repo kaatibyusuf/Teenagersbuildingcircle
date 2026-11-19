@@ -281,7 +281,7 @@
      true = they unlock and go to enroll?programme=skills&plan=<track>. Turn it on only after the eight tracks exist as plans
      in enroll.html, api/checkout.mjs and Skills.gs. */
   const ENROL_OPEN = false;
-  if (ENROL_OPEN) { document.querySelectorAll('[data-enrol]').forEach((a) => { a.href = 'enroll?programme=skills&plan=' + a.dataset.enrol; a.classList.remove('is-locked'); a.removeAttribute('aria-disabled'); a.removeAttribute('role'); a.removeAttribute('tabindex'); const s = a.querySelector('span'); if (s) s.textContent = 'Enrol now'; const l = a.querySelector('.sk-lock'); if (l) l.remove(); }); document.querySelectorAll('[data-secure]').forEach((x) => { x.textContent = 'Payment is taken on a secure page.'; }); document.querySelectorAll('[data-wait]').forEach((x) => { x.textContent = 'Ask us a question first'; x.href = 'contact'; x.removeAttribute('target'); }); }
+  if (ENROL_OPEN) { document.querySelectorAll('[data-enrol]').forEach((a) => { a.href = 'enroll?programme=skills&plan=sk-' + a.dataset.enrol; a.classList.remove('is-locked'); a.removeAttribute('aria-disabled'); a.removeAttribute('role'); a.removeAttribute('tabindex'); const s = a.querySelector('span'); if (s) s.textContent = 'Enrol now'; const l = a.querySelector('.sk-lock'); if (l) l.remove(); }); document.querySelectorAll('[data-secure]').forEach((x) => { x.textContent = 'Payment is taken on a secure page.'; }); document.querySelectorAll('[data-wait]').forEach((x) => { x.textContent = 'Ask us a question first'; x.href = 'contact'; x.removeAttribute('target'); }); }
   else document.querySelectorAll('.is-locked').forEach((a) => a.addEventListener('click', (e) => e.preventDefault()));
 
   /* payment plans: the amount changes with the plan. The total stays $400. */
