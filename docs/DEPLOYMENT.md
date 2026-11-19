@@ -64,7 +64,7 @@ Any payment that cannot be matched now sends you an **ATTENTION** email with the
 
 `frontend/skills-school.html` is the **Himaayah Skills Schools** page (himaayahschools.com/skills-school). It has a text-only hero with a row of course pictures that runs by itself,
 a Featured tracks card grid, a sideways-scrolling phases section, the track matcher, fees, FAQ and the homepage footer. The eight tracks are
-Cybersecurity, Web Development, Software Engineering, Product Management, Product Design, Graphic Design, UI/UX and Video Creation. Each is eighteen months and ₦200,000.
+Cybersecurity, Web Development, Software Engineering, Product Management, Product Design, Graphic Design, UI/UX and Video Creation. Each is eighteen months and **$400** (US dollars), payable in full, yearly ($267, then $133), quarterly ($67 five times, then $65) or monthly ($23 seventeen times, then $9), plus a one-time **$5 application fee**. The pages no longer mention the ₦3,000 registration fee. A plan picker on the fee section and on every course page switches the amount. The amounts are in the `PLANS` object in each page script.
 
 Each card's **Learn more** opens its own course page: `frontend/skills-school/<track>.html`, shown at `himaayahschools.com/skills-school/<track>`
 (for example `/skills-school/cybersecurity`). The course pages share `frontend/css/skills.css` and the pictures in `frontend/images/skills/`.
@@ -73,7 +73,7 @@ To change a picture, replace the file with the same name (3:2, under 150 KB). To
 Drop the files in and push. Then run `node scripts/add-skills-to-sitemap.js` from the project root to list the eight course pages in `frontend/sitemap.xml` (safe to run twice).
 
 **Enrolment is not switched on yet.** The "Reserve my place" buttons open WhatsApp (+234 704 722 6487) with the track name filled in. The enrolment page, `api/checkout.mjs`
-and `Skills.gs` still only know the old Public Speaking, Graphic Design and Data Analysis plans, and card payment needs a Bachs product for each new track.
+and `Skills.gs` still only know the old Public Speaking, Graphic Design and Data Analysis plans, and card payment needs a Bachs product for each new track, plus the yearly, quarterly and monthly plans for the $400 fee and the $5 application fee, all in US dollars.
 When those are set up, change `const ENROL_OPEN = false;` to `true` near the top of the script in `skills-school.html` and in each of the eight course pages. The buttons then go to `enroll?programme=skills&plan=<track>`
 with the plan slugs `cybersecurity`, `web-development`, `software-engineering`, `product-management`, `product-design`, `graphic-design`, `ui-ux` and `video-creation`.
 

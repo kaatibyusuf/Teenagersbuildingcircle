@@ -17,7 +17,7 @@
 /* price */
 .site .sk-price{display:grid;grid-template-columns:1fr 1.1fr;gap:28px;margin-top:48px;align-items:stretch}
 .site .sk-pbox{background:#094570;color:#fff;border-radius:28px;padding:34px}
-.site .sk-pbox b{display:block;font:600 clamp(40px,6vw,60px)/1 var(--h-f);letter-spacing:-.045em}
+.site .sk-pbox b.pr{display:block;font:600 clamp(40px,6vw,60px)/1 var(--h-f);letter-spacing:-.045em}
 .site .sk-pbox p{margin:14px 0 22px;font-size:15px;line-height:1.55;color:rgba(255,255,255,.78)}
 .site .sk-pbox .sk-fine{font-size:12.5px;margin:22px 0 0;color:rgba(255,255,255,.65)}
 .site .sk-pbox .sk-fine a{color:#fff;text-decoration:underline}
@@ -176,3 +176,40 @@ html[dir="rtl"] .site .sk-run-track{animation-direction:reverse}
   .site .sk-aside{position:static;order:-1}
 }
 @media (max-width:560px){.site .sk-grid2{grid-template-columns:1fr}}
+
+/* tighter spacing between sections */
+.site.page-skills-school .h-hero{padding-bottom:36px}
+.site.page-skills-school .h-sec{padding:56px 0}
+.site.page-skills-school .h-cta{padding:84px 0 96px}
+.site.page-skills-school .h-head h2{font-size:clamp(28px,3.8vw,42px)}
+.site.page-skills-school .h-head>p{margin-top:12px}
+.site.page-skills-school .sk-run{margin-top:44px}
+.site.page-skills-school .sk-price,.site.page-skills-school .sk-vals{margin-top:30px}
+.site.page-skills-school .sk-quiz{margin-top:28px}
+.site.page-skills-school .sk-sec-h{margin-bottom:24px}
+.site.page-skills-school .sk-others{padding:56px 0}
+.site.page-skills-school .sk-s{padding:28px 0}
+.site.page-skills-school .sk-main{padding-bottom:64px}
+@media (max-width:900px){
+  .site.page-skills-school .h-sec{padding:40px 0}
+  .site.page-skills-school .h-cta{padding:64px 0 72px}
+  .site.page-skills-school .sk-others{padding:40px 0}
+  .site.page-skills-school .h-hero{padding-bottom:24px}
+  .site.page-skills-school .sk-run{margin-top:32px}
+}
+
+/* payment plan picker */
+.site .sk-seg{display:flex;gap:4px;padding:4px;border-radius:99px;margin-bottom:20px}
+.site .sk-seg button{flex:1;border:0;background:transparent;cursor:pointer;padding:9px 6px;border-radius:99px;font:500 13.5px var(--h-f);transition:background .2s,color .2s}
+.site .sk-pp .pr{display:block;font:600 clamp(38px,5vw,52px)/1 var(--h-f);letter-spacing:-.045em}
+.site .sk-pp .sub{margin:8px 0 12px;font-size:14.5px;line-height:1.5;min-height:44px}
+.site .sk-pp .app{margin:0 0 20px;font-size:13px;line-height:1.5}
+.site .sk-pp.dark .sk-seg{background:rgba(255,255,255,.12)}
+.site .sk-pp.dark .sk-seg button{color:rgba(255,255,255,.8)}
+.site .sk-pp.dark .sk-seg button[aria-pressed="true"]{background:#fff;color:#062F4D;font-weight:600}
+.site .sk-pp.dark .pr{color:#fff}.site .sk-pp.dark .sub{color:rgba(255,255,255,.8)}.site .sk-pp.dark .app{color:rgba(255,255,255,.65)}
+.site .sk-pp.light .sk-seg{background:#E3F2FD}
+.site .sk-pp.light .sk-seg button{color:#35506A}
+.site .sk-pp.light .sk-seg button[aria-pressed="true"]{background:#094570;color:#fff;font-weight:600}
+.site .sk-pp.light .pr{color:#062F4D}.site .sk-pp.light .sub{color:#5B7283}.site .sk-pp.light .app{color:#6B8396}
+.site .sk-aside .sk-pp{margin-bottom:6px}
