@@ -62,14 +62,19 @@ Any payment that cannot be matched now sends you an **ATTENTION** email with the
 
 ## Himaayah Skills Schools page
 
-`frontend/skills-school.html` is now the **Himaayah Skills Schools** page (same address, himaayahschools.com/skills-school). It replaces the old three-course page with eight tracks:
+`frontend/skills-school.html` is the **Himaayah Skills Schools** page (himaayahschools.com/skills-school). It has a text-only hero with a row of course pictures that runs by itself,
+a Featured tracks card grid, a sideways-scrolling phases section, the track matcher, fees, FAQ and the homepage footer. The eight tracks are
 Cybersecurity, Web Development, Software Engineering, Product Management, Product Design, Graphic Design, UI/UX and Video Creation. Each is eighteen months and ₦200,000.
-The page is built on the homepage layout (same navigation, hero, tracks window, FAQ, closing section, footer and WhatsApp button), with a Featured tracks card section in the hero.
-Drop `skills-school.html` in with the eight pictures in `frontend/images/skills/` (one per track) and push. To change a picture, replace the file with the same name; keep it 3:2 and under 150 KB.
+
+Each card's **Learn more** opens its own course page: `frontend/skills-school/<track>.html`, shown at `himaayahschools.com/skills-school/<track>`
+(for example `/skills-school/cybersecurity`). The course pages share `frontend/css/skills.css` and the pictures in `frontend/images/skills/`.
+To change a picture, replace the file with the same name (3:2, under 150 KB). To change a course's text, edit its page.
+
+Drop the files in and push. Then run `node scripts/add-skills-to-sitemap.js` from the project root to list the eight course pages in `frontend/sitemap.xml` (safe to run twice).
 
 **Enrolment is not switched on yet.** The "Reserve my place" buttons open WhatsApp (+234 704 722 6487) with the track name filled in. The enrolment page, `api/checkout.mjs`
 and `Skills.gs` still only know the old Public Speaking, Graphic Design and Data Analysis plans, and card payment needs a Bachs product for each new track.
-When those are set up, change `const ENROL_OPEN = false;` to `true` near the top of the page script. The buttons then go to `enroll?programme=skills&plan=<track>`
+When those are set up, change `const ENROL_OPEN = false;` to `true` near the top of the script in `skills-school.html` and in each of the eight course pages. The buttons then go to `enroll?programme=skills&plan=<track>`
 with the plan slugs `cybersecurity`, `web-development`, `software-engineering`, `product-management`, `product-design`, `graphic-design`, `ui-ux` and `video-creation`.
 
 Review the track outlines (what each track teaches, the tools and the final project) before launch. They are written to be sensible, not taken from a syllabus of yours.
