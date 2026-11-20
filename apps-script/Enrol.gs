@@ -18,10 +18,10 @@ const EN_SCHOOL_WA = '2347047226487';   // the school's WhatsApp number, used fo
 const EN_STAFF_EMAILS = [];        // extra staff emails to alert when a new student pays (the script owner is always alerted)
 const EN_ADULT_AGE = 18;
 const EN_MAX_PER_HOUR = 8;       // new submissions allowed per email address per hour (retries of the same Ref don't count)
+const EN_USD_TRACKS = ['Skills School \u2014 Cybersecurity (18 months)', 'Skills School \u2014 Web Development (18 months)', 'Skills School \u2014 Software Engineering (18 months)', 'Skills School \u2014 Product Management (18 months)', 'Skills School \u2014 Product Design (18 months)', 'Skills School \u2014 Graphic Design (18 months)', 'Skills School \u2014 UI/UX (18 months)', 'Skills School \u2014 Video Creation (18 months)'];   // the eight 18-month Skills School tracks, priced in US dollars
 const EN_CLOSED_PLANS = ['Madrasah \u2014 Hifdh Only (Group)', 'Madrasah \u2014 Full Madrasah (Group)', 'Madrasah \u2014 Full Madrasah (Group, hifdh completed elsewhere)', 'Madrasah \u2014 One-Year Hifdh'].concat(EN_USD_TRACKS);   // keep in step with enroll.html (remove the Skills tracks from here, enroll.html and api/checkout.mjs to open them)
 const EN_INVITES = { 'Madrasah \u2014 One-Year Hifdh': 'HIFDH-1Y7K' };   // invite code that opens a closed plan for current students (keep in step with api/checkout.mjs)
 
-const EN_USD_TRACKS = ['Skills School \u2014 Cybersecurity (18 months)', 'Skills School \u2014 Web Development (18 months)', 'Skills School \u2014 Software Engineering (18 months)', 'Skills School \u2014 Product Management (18 months)', 'Skills School \u2014 Product Design (18 months)', 'Skills School \u2014 Graphic Design (18 months)', 'Skills School \u2014 UI/UX (18 months)', 'Skills School \u2014 Video Creation (18 months)'];   // the eight 18-month Skills School tracks, priced in US dollars
 const EN_USD_PLANS = {   // payment plans: pays = every payment in order (total $400), gap = months between payments. Keep in step with enroll.html, api/checkout.mjs and Skills.gs
   full: { pays: [400], gap: 0 }, annual: { pays: [267, 133], gap: 12 }, quarter: { pays: [67, 67, 67, 67, 67, 65], gap: 3 },
   month: { pays: [23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 9], gap: 1 },
