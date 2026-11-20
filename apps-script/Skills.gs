@@ -4,7 +4,7 @@
  * Serves the three Skills School portals on the website:
  *   skills-dashboard.html  students   actions sk_login, sk_submit
  *   skills-tutor.html      tutors     actions skt_login, skt_project, skt_mark, skt_attendance, skt_class, skt_complete, skt_password
- *   skills-admin.html      admins     actions ska_login, ska_payment, ska_assign, ska_password
+ *   skills-admin.html      admins     actions ska_login, ska_payment, ska_assign, ska_curriculum, ska_password
  *
  * Add this file to the SAME Apps Script project as Code.gs (it uses Code.gs helpers and
  * en_code from Enrol.gs).
@@ -24,7 +24,7 @@ const SK_COHORTS = ['Cohort 1', 'Cohort 2'];   // offered in the admin "Assign" 
 const SK_PAYMENT_REMINDER_DAYS = [7, 3, 0];
 
 /* ===== TABS AND COLUMNS ===== */
-const SK = { Students: 'SkillsStudents', Tutors: 'SkillsTutors', Admins: 'SkillsAdmins', Projects: 'SkillsProjects', Submissions: 'SkillsSubmissions', Attendance: 'SkillsAttendance', Payments: 'SkillsPayments', Announcements: 'SkillsAnnouncements' };
+const SK = { Students: 'SkillsStudents', Tutors: 'SkillsTutors', Admins: 'SkillsAdmins', Projects: 'SkillsProjects', Submissions: 'SkillsSubmissions', Attendance: 'SkillsAttendance', Payments: 'SkillsPayments', Announcements: 'SkillsAnnouncements', Curriculum: 'SkillsCurriculum' };
 const SK_SHEETS = {
   SkillsStudents: ['StudentID', 'Name', 'AccessCode', 'Course', 'Cohort', 'TutorID', 'StartDate', 'Status', 'PaymentStatus', 'NextDue', 'Fee', 'Period', 'NextClass', 'ClassLink', 'Certificate', 'Email', 'WhatsApp', 'Active', 'Enrolled', 'Ref', 'Currency', 'PayPlan', 'Schedule', 'InstPaid'],
   SkillsTutors: ['TutorID', 'Name', 'AccessCode', 'Role', 'Email', 'WhatsApp', 'Active'],
@@ -33,7 +33,8 @@ const SK_SHEETS = {
   SkillsSubmissions: ['SubmissionID', 'ProjectID', 'StudentID', 'Submitted', 'Link', 'Note', 'Score', 'Feedback', 'Marked', 'MarkedBy'],
   SkillsAttendance: ['StudentID', 'Date', 'Present', 'TutorID', 'Recorded'],
   SkillsPayments: ['PaymentID', 'StudentID', 'Date', 'Amount', 'Months', 'Reference', 'Method', 'ConfirmedBy', 'Recorded'],
-  SkillsAnnouncements: ['Date', 'Title', 'Body', 'Audience']
+  SkillsAnnouncements: ['Date', 'Title', 'Body', 'Audience'],
+  SkillsCurriculum: ['Course', 'Week', 'Title', 'Topics', 'Active']
 };
 
 /* ===== ROUTER (called from doPost in Code.gs) ===== */
@@ -67,6 +68,7 @@ function skillsFromRequest(p) {
       let r = { ok: true };
       if (a === 'ska_payment') r = sk_confirmPayment_(au.row, p);
       else if (a === 'ska_assign') r = sk_assign_(p);
+      else if (a === 'ska_curriculum') r = sk_curriculumSave_(p);
       else if (a === 'ska_password') r = acd_setCode_(au.t, au.row, p.newCode);
       else if (a !== 'ska_login') r = { ok: false, error: 'Unknown action.' };
       if (!r.ok) return r;
@@ -164,8 +166,9 @@ function skStudentPayloadBase_(st) {
     announcements: table_(SK.Announcements).rows.filter(function (r) { return r.Title && matches_(r.Audience, ['SKILLS', key_(st.Course), key_(st.Cohort), id]); })
       .map(function (r) { return { Date: iso_(r.Date), Title: r.Title, Body: r.Body }; })
       .sort(function (a, b) { return a.Date < b.Date ? 1 : -1; }).slice(0, 20),
+    curriculum: sk_curriculumFor_(st.Course),
     payments: table_(SK.Payments).rows.filter(function (r) { return key_(r.StudentID) === id; })
-      .map(function (r) { return { Date: iso_(r.Date), Amount: Number(r.Amount) || 0, Months: Number(r.Months) || 0, Reference: r.Reference }; })
+      .map(function (r) { return { Date: iso_(r.Date), Amount: Number(r.Amount) || 0, Months: Number(r.Months) || 0, Reference: r.Reference, Currency: sk_usd_(st) ? 'USD' : 'NGN' }; })
       .sort(function (a, b) { return a.Date < b.Date ? 1 : -1; }).slice(0, 12)
   };
 }
@@ -312,12 +315,12 @@ function sk_complete_(tu, p) {
 
 /* ===== ADMIN ===== */
 function sk_adminPayload_(ad) {
-  const tutors = sk_tutorNames_(), names = {};
+  const tutors = sk_tutorNames_(), names = {}, cur = {};
   const students = table_(SK.Students).rows.filter(function (s) { return s.StudentID && key_(s.Active) !== 'FALSE'; }).map(function (s) {
-    names[key_(s.StudentID)] = s.Name;
+    names[key_(s.StudentID)] = s.Name; cur[key_(s.StudentID)] = sk_usd_(s) ? 'USD' : 'NGN';
     return {
       StudentID: String(s.StudentID).trim(), Name: s.Name, Plan: String(s.Course || ''), Level: String(s.Cohort || ''), StartDate: iso_(s.StartDate),
-      Fee: Number(s.Fee) || 0, MonthlyFee: Number(s.Fee) || 0, Currency: sk_usd_(s) ? 'USD' : 'NGN', Period: String(s.Period || ''), PaymentStatus: payStatus_(s), NextDue: iso_(s.NextDue),
+      Fee: Number(s.Fee) || 0, MonthlyFee: Number(s.Fee) || 0, Currency: sk_usd_(s) ? 'USD' : 'NGN', InstPaid: Number(s.InstPaid) || 0, Instalments: sk_sched_(s).length, Period: String(s.Period || ''), PaymentStatus: payStatus_(s), NextDue: iso_(s.NextDue),
       TeacherID: String(s.TutorID || '').trim(), Teacher: tutors[key_(s.TutorID)] || '', Status: sk_status_(s)
     };
   });
@@ -326,9 +329,9 @@ function sk_adminPayload_(ad) {
   return {
     ok: true, today: today_(), admin: { AdminID: String(ad.AdminID).trim(), Name: ad.Name }, students: students,
     teachers: table_(SK.Tutors).rows.filter(function (t) { return t.TutorID && key_(t.Active) !== 'FALSE'; }).map(function (t) { return { TeacherID: String(t.TutorID).trim(), Name: t.Name }; }),
-    levels: levels,
+    levels: levels, courses: Object.keys(SK_COURSES).map(function (c) { return { Course: c, Weeks: SK_COURSES[c] }; }), curriculum: sk_curriculumAll_(),
     payments: table_(SK.Payments).rows.filter(function (r) { return r.StudentID; }).map(function (r) {
-      return { Date: iso_(r.Date), StudentID: String(r.StudentID).trim(), Name: names[key_(r.StudentID)] || '', Amount: Number(r.Amount) || 0, Months: Number(r.Months) || 0, Reference: r.Reference };
+      return { Date: iso_(r.Date), StudentID: String(r.StudentID).trim(), Name: names[key_(r.StudentID)] || '', Amount: Number(r.Amount) || 0, Months: Number(r.Months) || 0, Reference: r.Reference, Currency: cur[key_(r.StudentID)] || 'NGN' };
     }).sort(function (a, b) { return a.Date < b.Date ? 1 : -1; }).slice(0, 20)
   };
 }
@@ -377,6 +380,50 @@ function sk_assign_(p) {
     if (cohort) put_(S, s._row, 'Cohort', cohort, true);
     if (start) put_(S, s._row, 'StartDate', start, true);
   });
+  return { ok: true };
+}
+
+/* ===== CURRICULUM (week-by-week outline for each course; students see it on their dashboard) ===== */
+function sk_curriculumFor_(course) {
+  try {
+    const c = key_(course);
+    return table_(SK.Curriculum).rows.filter(function (r) { return r.Title && key_(r.Course) === c && key_(r.Active) !== 'FALSE'; })
+      .map(function (r) { return { Week: Number(r.Week) || 0, Title: String(r.Title), Topics: String(r.Topics || '') }; })
+      .sort(function (a, b) { return a.Week - b.Week; });
+  } catch (e) { return []; }   // tab not created yet: run skillsSetup
+}
+function sk_curriculumAll_() {
+  try {
+    return table_(SK.Curriculum).rows.filter(function (r) { return r.Title && r.Course && key_(r.Active) !== 'FALSE'; })
+      .map(function (r) { return { Course: String(r.Course).trim(), Week: Number(r.Week) || 0, Title: String(r.Title), Topics: String(r.Topics || '') }; })
+      .sort(function (a, b) { return a.Course < b.Course ? -1 : a.Course > b.Course ? 1 : a.Week - b.Week; });
+  } catch (e) { return []; }
+}
+/* p: { course, rows: [{ week, title, topics, remove }] }  (or one week as p.week, p.title, p.topics, p.remove). Existing weeks are updated, new ones added, remove hides a week. */
+function sk_curriculumSave_(p) {
+  const course = String(p.course || '').trim(), weeks = SK_COURSES[course];
+  if (!weeks) return { ok: false, error: 'Choose the course.' };
+  const raw = Array.isArray(p.rows) ? p.rows : [{ week: p.week, title: p.title, topics: p.topics, remove: p.remove }];
+  if (!raw.length) return { ok: false, error: 'Nothing to save.' };
+  if (raw.length > 120) return { ok: false, error: 'Save at most 120 weeks at a time.' };
+  const byWeek = {};
+  for (let i = 0; i < raw.length; i++) {
+    const w = Math.round(Number(raw[i].week)), remove = raw[i].remove === true, title = String(raw[i].title || '').trim().slice(0, 120), topics = String(raw[i].topics || '').trim().slice(0, 2000);
+    if (!(w >= 1 && w <= weeks)) return { ok: false, error: 'The week must be a number from 1 to ' + weeks + ' for ' + course + '.' };
+    if (!remove && !title) return { ok: false, error: 'Week ' + w + ' needs a title.' };
+    byWeek[w] = { week: w, title: title, topics: topics, remove: remove };
+  }
+  const lock = LockService.getScriptLock(); lock.waitLock(20000);
+  try {
+    const T = table_(SK.Curriculum);
+    Object.keys(byWeek).forEach(function (k) {
+      const x = byWeek[k];
+      const ex = T.rows.filter(function (r) { return key_(r.Course) === key_(course) && Number(r.Week) === x.week; })[0];
+      if (x.remove) { if (ex) put_(T, ex._row, 'Active', 'FALSE', true); return; }
+      if (ex) { put_(T, ex._row, 'Title', x.title, true); put_(T, ex._row, 'Topics', x.topics, true); put_(T, ex._row, 'Active', 'TRUE', true); }
+      else append_(T, { Course: course, Week: x.week, Title: x.title, Topics: x.topics, Active: 'TRUE' }, ['Course', 'Title', 'Topics', 'Active']);
+    });
+  } finally { lock.releaseLock(); }
   return { ok: true };
 }
 
@@ -451,6 +498,8 @@ function skillsSetup() {
   dropdown_(ss, SK.Projects, 'Course', Object.keys(SK_COURSES), false);
   dropdown_(ss, SK.Projects, 'Active', ['TRUE', 'FALSE'], true);
   dropdown_(ss, SK.Attendance, 'Present', ['Yes', 'No'], true);
+  dropdown_(ss, SK.Curriculum, 'Course', Object.keys(SK_COURSES), false);
+  dropdown_(ss, SK.Curriculum, 'Active', ['TRUE', 'FALSE'], true);
   const A = table_(SK.Admins);
   let msg = 'Skills School tabs are ready.';
   if (!A.rows.some(function (r) { return r.AdminID; })) {

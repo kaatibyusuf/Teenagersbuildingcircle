@@ -26,6 +26,7 @@ window.PORTAL_SHELL = {
   nav: [
     { label: 'Dashboard', icon: 'home', top: true },
     { label: 'Your course', icon: 'book', hash: 'course' },
+    { label: 'Curriculum', icon: 'layers', hash: 'curriculum' },
     { label: 'Live classes', icon: 'cal', hash: 'classes' },
     { label: 'Projects', icon: 'pen', hash: 'projects' },
     { label: 'Class groups', icon: 'users', groups: true },
@@ -38,6 +39,15 @@ window.PORTAL_SHELL = {
       { label: 'Course progress', value: done ? '100%' : weeks ? Math.round(100 * wk / weeks) + '%' : '\u2013', valueClass: done ? 'good' : '', lab: s.Course || 'Your course', alt: weeks ? { value: weeks, label: 'Weeks' } : null, foot: done ? 'Course complete' : wk ? 'Week ' + wk + ' of ' + weeks : '' },
       { label: 'Projects marked', value: marked, valueClass: marked ? 'good' : '', lab: 'Marked by your tutor', alt: { value: ps.length, label: 'Projects set' }, foot: att.Total ? 'Attendance ' + Math.round(100 * att.Present / att.Total) + '%' : '' }
     ];
+  },
+  third: function (d) {
+    var s = d.student || {};
+    if (String(s.Currency || '').toUpperCase() !== 'USD' || String(s.PaymentStatus || '').toLowerCase() === 'exempt') return null;
+    var inst = Number(s.Instalments) || 0, paidN = Number(s.InstPaid) || 0, due = s.NextDue ? new Date(String(s.NextDue).slice(0, 10) + 'T00:00:00') : null;
+    if (inst > 0 && paidN >= inst) return { label: 'Next payment', value: 'Paid in full', lab: 'All ' + inst + ' payments received', foot: 'Nothing more to pay.' };
+    var days = due && !isNaN(due) ? Math.round((due - new Date(new Date().toDateString())) / 864e5) : null;
+    var foot = days == null ? 'Due' : days < 0 ? 'Overdue by ' + (-days) + ' day' + (days === -1 ? '' : 's') : days === 0 ? 'Due today' : 'Due in ' + days + ' day' + (days === 1 ? '' : 's');
+    return { label: 'Next payment', value: due && !isNaN(due) ? due.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : 'No date set', lab: s.Fee ? 'Amount: $' + Number(s.Fee).toLocaleString('en-US') : '', foot: foot + '. Pay on WhatsApp, we confirm it.' };
   },
   hello: function (d) {
     var s = d.student;
@@ -88,6 +98,7 @@ const $ = (id) => document.getElementById(id);
 const esc = (t) => String(t ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fdate = (iso, t) => { const d = new Date(iso); return isNaN(d) ? esc(iso) : d.toLocaleDateString('en-GB', {weekday:'short', day:'numeric', month:'short', year:'numeric'}) + (t ? ', ' + d.toLocaleTimeString('en-GB', {hour:'2-digit', minute:'2-digit'}) : ''); };
 const naira = (n) => '₦' + Number(n || 0).toLocaleString('en-NG');
+const money = (cur, n) => String(cur || '').toUpperCase() === 'USD' ? '$' + Number(n || 0).toLocaleString('en-US', { minimumFractionDigits: Number(n) % 1 ? 2 : 0, maximumFractionDigits: 2 }) : naira(n);
 const dd = (iso) => Math.round((new Date(String(iso).slice(0, 10) + 'T00:00:00') - new Date(new Date().toDateString())) / 864e5);
 const inDays = (n) => n === 0 ? 'today' : n === 1 ? 'tomorrow' : 'in ' + n + ' days';
 const safeUrl = (u) => /^https?:\/\//i.test(String(u ?? '').trim());
@@ -99,13 +110,14 @@ function demo() {
   const p = (x) => String(x).padStart(2, '0');
   const ymd = (n) => { const d = new Date(); d.setDate(d.getDate() + n); return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()); };
   demoData = { ok: true, today: ymd(0),
-    student: { StudentID: 'DEMO', Name: 'Sample Student', Course: 'Graphic Design', Cohort: 'Cohort 1', Tutor: 'Ustadhah Demo', StartDate: ymd(-15), Weeks: 6, Week: 3, Status: 'In progress', PaymentStatus: 'Paid', NextDue: '', Fee: 35000, Period: 'One-time', NextClass: ymd(1) + 'T17:00', ClassLink: 'https://meet.google.com/', Certificate: '' },
+    student: { StudentID: 'DEMO', Name: 'Sample Student', Course: 'Graphic Design', Cohort: 'Cohort 1', Tutor: 'Ustadhah Demo', StartDate: ymd(-15), Weeks: 6, Week: 3, Status: 'In progress', PaymentStatus: 'Paid', NextDue: '', Fee: 35000, Period: 'One-time', NextClass: ymd(1) + 'T17:00', ClassLink: 'https://meet.google.com/', Certificate: '', Currency: 'NGN', InstPaid: 0, Instalments: 0 },
+    curriculum: [{ Week: 1, Title: 'Principles of layout', Topics: 'Grids, alignment, spacing and hierarchy.' }, { Week: 2, Title: 'Logo concepts', Topics: 'Sketching ideas, black and white first, then colour.' }, { Week: 3, Title: 'Posters', Topics: 'Typeface pairing, colour palettes and print sizes.' }, { Week: 4, Title: 'Social media graphics', Topics: 'Templates, consistency and export settings.' }],
     projects: [
       { ProjectID: 'P1', Title: 'Week 3: A poster for a school event', Brief: 'Design an A3 poster using a grid, two typefaces and a three-colour palette.', Week: 3, Due: ymd(2), Link: '', MaxScore: 20, Status: 'To do', Submission: null },
       { ProjectID: 'P2', Title: 'Week 2: Logo concepts', Brief: 'Three logo ideas for a local business, in black and white first.', Week: 2, Due: ymd(-5), Link: '', MaxScore: 20, Status: 'Marked', Submission: { Submitted: ymd(-6) + 'T20:10', Link: 'https://example.com/work', Note: '', Score: 17, Feedback: 'Strong second concept. Tighten the spacing on the wordmark.', Late: false } } ],
     attendance: { Present: 5, Total: 6, Recent: [{ Date: ymd(-2), Present: true }, { Date: ymd(-5), Present: true }, { Date: ymd(-9), Present: false }] },
     announcements: [{ Date: ymd(-1), Title: 'Sample announcement', Body: 'Notices from your tutor appear here, such as a change of class time.' }],
-    payments: [{ Date: ymd(-20), Amount: 35000, Months: 0, Reference: 'ENR-SAMPLE' }] };
+    payments: [{ Date: ymd(-20), Amount: 35000, Months: 0, Reference: 'ENR-SAMPLE', Currency: 'NGN' }] };
   return JSON.parse(JSON.stringify(demoData));
 }
 function demoSubmit(p) {
@@ -155,6 +167,16 @@ function projectsHtml(d) {
   }).join('')}</div>`;
 }
 
+/* Week-by-week outline of the course. Weeks before the current one show as Done, the current one is open and marked This week. */
+function curriculumHtml(d) {
+  const cs = d.curriculum || [], s = d.student, wk = Number(s.Week) || 0, done = s.Status === 'Completed' || s.Status === 'Finished';
+  if (!cs.length) return '<p class="empty">Your week-by-week curriculum will appear here once the school publishes it.</p>';
+  return `<div class="sits">${cs.map((c) => {
+    const past = done || (wk && c.Week < wk), now = !done && wk && c.Week === wk;
+    return `<details class="sit" data-k="cw${c.Week}"${now ? ' open' : ''}><summary><div><b>Week ${c.Week}: ${esc(c.Title)}</b></div>${past ? '<span class="pill p-paid">Done</span>' : now ? '<span class="pill p-due">This week</span>' : ''}</summary><div class="pbody">${c.Topics ? `<p class="sub">${esc(c.Topics)}</p>` : '<p class="sub">Details to follow.</p>'}</div></details>`;
+  }).join('')}</div>`;
+}
+
 /* A personal note from the school, written from the student's own record (ProgrammeNotes.gs). Shown only when the server sends one. */
 function noteCard(d) {
   const n = d.note; if (!n || !Array.isArray(n.paragraphs) || !n.paragraphs.length) return '';
@@ -176,6 +198,12 @@ function render(d) {
   const waHelp = 'https://wa.me/' + HELP_WA + '?text=' + encodeURIComponent('Assalaamu alaykum. This is ' + s.Name + ' (' + s.StudentID + ') from the Skills School.');
   const payUrl = 'pay?id=' + encodeURIComponent(s.StudentID);
   const waPay = 'https://wa.me/' + PAYMENT_WA + '?text=' + encodeURIComponent('Assalaamu alaykum. This is my payment receipt. Name: ' + s.Name + ', ID: ' + s.StudentID + ', course: ' + s.Course + '.');
+  const usd = String(s.Currency || '').toUpperCase() === 'USD', inst = Number(s.Instalments) || 0, paidN = Number(s.InstPaid) || 0, allPaid = usd && inst > 0 && paidN >= inst;
+  const waUsd = 'https://wa.me/' + PAYMENT_WA + '?text=' + encodeURIComponent('Assalaamu alaykum. I want to pay my Skills School instalment. Name: ' + s.Name + ', ID: ' + s.StudentID + ', course: ' + s.Course + '.');
+  const usdPay = allPaid ? `<div class="big" style="margin-top:12px">Paid in full</div><p class="sub">All ${inst} payment${inst === 1 ? '' : 's'} received. Thank you.</p>`
+    : s.NextDue ? `<div class="big" style="margin-top:12px">${fdate(s.NextDue)}</div><p class="sub">Next payment due · ${money('USD', s.Fee)}${inst ? ' · payment ' + (paidN + 1) + ' of ' + inst : ''}${s.Period ? ' · ' + esc(s.Period) : ''}.</p><div class="bar"><i data-w="${inst ? Math.round(100 * paidN / inst) : 0}"></i></div><p class="pay-btns"><a class="btn btn-ink" href="${waUsd}" target="_blank" rel="noopener">Pay on WhatsApp</a></p><p class="sub" style="margin-top:8px">Dollar payments are confirmed by the school. Send your receipt on WhatsApp and your dashboard updates once it is confirmed.</p>`
+    : `<div class="big" style="margin-top:12px">${status === 'paid' ? 'Paid in full' : 'Payment due'}</div><p class="sub">${s.Fee ? money('USD', s.Fee) + (s.Period ? ' · ' + esc(s.Period) : '') : 'Course fee'}</p>`;
+  const thisWeek = !done && (d.curriculum || []).filter((c) => c.Week === Number(s.Week))[0];
   const open = [...document.querySelectorAll('.sit')].map((x) => x.dataset.k + ':' + x.open);
   $('app').innerHTML = `
   <section class="greet"><div><small>Assalaamu alaykum</small><h1>${esc(first)}, let’s build your skill.</h1>
@@ -185,17 +213,19 @@ function render(d) {
   <div class="grid">
     ${noteCard(d)}
     <article class="c" id="course" style="--i:0"><div class="k">Your course</div>${done ? '<div class="big">Course complete</div>' : s.Week ? `<div class="big">Week ${s.Week}${s.Weeks ? ' of ' + s.Weeks : ''}</div><div class="bar"><i data-w="${pct}"></i></div>` : '<div class="big">Starting soon</div>'}
-      <p class="sub">${s.StartDate ? 'Started ' + fdate(s.StartDate) : 'Your tutor will confirm the start date.'}</p>${safeUrl(s.Certificate) ? `<p><a class="btn btn-ink" style="margin-top:12px" href="${esc(s.Certificate)}" target="_blank" rel="noopener">View your certificate</a></p>` : ''}</article>
+      <p class="sub">${s.StartDate ? 'Started ' + fdate(s.StartDate) : 'Your tutor will confirm the start date.'}</p>${thisWeek ? `<p class="sub"><b>This week:</b> ${esc(thisWeek.Title)}</p>` : ''}${safeUrl(s.Certificate) ? `<p><a class="btn btn-ink" style="margin-top:12px" href="${esc(s.Certificate)}" target="_blank" rel="noopener">View your certificate</a></p>` : ''}</article>
     <article class="c" id="classes" style="--i:1"><div class="k">Next live class</div>${s.NextClass ? `<div class="big">${fdate(s.NextClass, true)}</div>${safeUrl(s.ClassLink) ? `<p><a class="btn btn-ink" style="margin-top:12px" href="${esc(s.ClassLink)}" target="_blank" rel="noopener">Join the class</a></p>` : '<p class="sub">The join link will appear here.</p>'}` : '<div class="big">Not scheduled</div><p class="sub">Your tutor will post the next class here.</p>'}</article>
     <article class="c" id="pay" style="--i:2"><div class="k">Payment</div><span class="pill ${pcls}">${esc(s.PaymentStatus || 'Due')}</span>
-      ${status === 'exempt' ? '<div class="big" style="margin-top:12px">Nothing to pay</div>' : s.NextDue ? `<div class="big" style="margin-top:12px">${fdate(s.NextDue)}</div><p class="sub">Next payment due${s.Fee ? ' · ' + naira(s.Fee) + ' ' + esc(String(s.Period || '').toLowerCase()) : ''}.</p>${status === 'paid' ? `<p class="pay-btns"><a class="btn btn-line" href="${payUrl}">Pay ahead by card</a></p><p class="sub" style="margin-top:8px">Renew early any time. Whatever you pay is added to your current due date.</p>` : `<p class="pay-btns"><a class="btn btn-ink" href="${payUrl}">Pay by card</a><a class="btn btn-line" href="${waPay}" target="_blank" rel="noopener">Send a transfer receipt</a></p>`}` : `<div class="big" style="margin-top:12px">${status === 'paid' ? 'Paid in full' : 'Payment due'}</div><p class="sub">${s.Fee ? naira(s.Fee) + ' · ' + esc(s.Period || 'One-time') : 'One-time course fee'}</p>${status === 'paid' ? '' : `<p class="pay-btns"><a class="btn btn-ink" href="${payUrl}">Pay by card</a><a class="btn btn-line" href="${waPay}" target="_blank" rel="noopener">Send a transfer receipt</a></p>`}`}</article>
+      ${status === 'exempt' ? '<div class="big" style="margin-top:12px">Nothing to pay</div>' : usd ? usdPay : s.NextDue ? `<div class="big" style="margin-top:12px">${fdate(s.NextDue)}</div><p class="sub">Next payment due${s.Fee ? ' · ' + naira(s.Fee) + ' ' + esc(String(s.Period || '').toLowerCase()) : ''}.</p>${status === 'paid' ? `<p class="pay-btns"><a class="btn btn-line" href="${payUrl}">Pay ahead by card</a></p><p class="sub" style="margin-top:8px">Renew early any time. Whatever you pay is added to your current due date.</p>` : `<p class="pay-btns"><a class="btn btn-ink" href="${payUrl}">Pay by card</a><a class="btn btn-line" href="${waPay}" target="_blank" rel="noopener">Send a transfer receipt</a></p>`}` : `<div class="big" style="margin-top:12px">${status === 'paid' ? 'Paid in full' : 'Payment due'}</div><p class="sub">${s.Fee ? naira(s.Fee) + ' · ' + esc(s.Period || 'One-time') : 'One-time course fee'}</p>${status === 'paid' ? '' : `<p class="pay-btns"><a class="btn btn-ink" href="${payUrl}">Pay by card</a><a class="btn btn-line" href="${waPay}" target="_blank" rel="noopener">Send a transfer receipt</a></p>`}`}</article>
+
+    <article class="c w12" id="curriculum" style="--i:3"><h2>Curriculum</h2>${curriculumHtml(d)}</article>
 
     <article class="c w12" id="projects" style="--i:3"><h2>Projects</h2>${projectsHtml(d)}</article>
 
     <article class="c w6" style="--i:4"><h2>Attendance</h2>${att.Total ? `<div class="row"><b style="color:var(--deep)">${att.Present} of ${att.Total} classes</b><span>${attPct}%</span></div><div class="bar"><i data-w="${attPct}"></i></div>
       <ul class="list" style="margin-top:14px">${att.Recent.map((r) => `<li><span>${fdate(r.Date)}</span><span class="pill ${r.Present ? 'p-paid' : 'p-over'}">${r.Present ? 'Present' : 'Absent'}</span></li>`).join('')}</ul>` : '<p class="empty">Your attendance will appear here after your first class.</p>'}</article>
     <article class="c w6" style="--i:5"><h2>Announcements</h2><ul class="list">${(d.announcements || []).map((a) => `<li style="display:block"><b>${esc(a.Title)}</b> <span style="float:inline-end">${fdate(a.Date)}</span><div class="sub">${esc(a.Body)}</div></li>`).join('') || '<li class="empty">No announcements.</li>'}</ul>
-      <h2 style="margin-top:24px">Payment history</h2>${pays.length ? `<table><thead><tr><th>Date</th><th>Reference</th><th>Amount</th></tr></thead><tbody>${pays.map((p) => `<tr><td>${fdate(p.Date)}</td><td>${esc(p.Reference || '')}</td><td><b>${naira(p.Amount)}</b></td></tr>`).join('')}</tbody></table>` : '<p class="empty">No payments recorded yet.</p>'}</article>
+      <h2 style="margin-top:24px">Payment history</h2>${pays.length ? `<table><thead><tr><th>Date</th><th>Reference</th><th>Amount</th></tr></thead><tbody>${pays.map((p) => `<tr><td>${fdate(p.Date)}</td><td>${esc(p.Reference || '')}</td><td><b>${money(p.Currency || s.Currency, p.Amount)}</b></td></tr>`).join('')}</tbody></table>` : '<p class="empty">No payments recorded yet.</p>'}</article>
   </div>
   <p class="foot">${API_URL ? '' : 'Demo mode: this is sample data. '}Your records are updated by your tutor. Questions? Use the Need help? button.</p>`;
   document.querySelectorAll('.sit').forEach((x) => { const o = open.find((k) => k.indexOf(x.dataset.k + ':') === 0); if (o) x.open = o.endsWith('true'); });
