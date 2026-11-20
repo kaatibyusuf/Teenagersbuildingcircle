@@ -1,4 +1,4 @@
-/* =====================================================================
+﻿/* =====================================================================
    Himaayah Schools: one stylesheet for every page
    ---------------------------------------------------------------------
    Each page names itself on its <html> tag, for example
@@ -2061,7 +2061,7 @@ a.txt-link { color: var(--ink); font-weight: 600; border-bottom: 1px solid var(-
      -------------------------------------------------------------- */
   :where(.page-madrasah) .hero-grid { grid-template-columns: 1fr; }
   .hv { max-width: 320px; }
-  :where(.page-madrasah) .ex { grid-template-columns: 1fr; }
+  :where(.page-madrasah) .ex { grid-template-columns: minmax(0, 1fr); }
   .lad { position: static; display: flex; gap: 8px; overflow-x: auto; padding: 10px; scrollbar-width: thin; }
   .lad::before { display: none; }
   .lad li { flex: 0 0 auto; }
