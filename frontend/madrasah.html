@@ -105,6 +105,7 @@
 .site.page-madrasah .sjc[aria-expanded="true"] b{color:#fff}
 .site.page-madrasah .sjc[aria-expanded="true"] i{color:var(--sky)}
 .site.page-madrasah .sjc[aria-expanded="true"] .sjd{display:block}
+.site.page-madrasah .sj-prog .sj-bar{justify-content:flex-end;margin-bottom:10px}
 @media (max-width:600px){.site.page-madrasah .sjc{flex-basis:78%}}
 </style>
 </head>
@@ -152,16 +153,8 @@
 </div></section>
 
 <section class="sec md-alt" id="program"><div class="wrap">
-  <div class="head reveal"><h2>The program.</h2><p>Hifdh Only students take Qur'an memorisation and tajweed. Full Madrasah students take every subject below.</p></div>
-  <div class="md-subj">
-    <article><span>Hifdh</span><b>Qur'an memorisation and tajweed</b><p>With murajaah built in, tests and exams.</p></article>
-    <article><span>Subject</span><b>Tawheed</b></article>
-    <article><span>Subject</span><b>Fiqh</b></article>
-    <article><span>Subject</span><b>Arabiyyah</b></article>
-    <article><span>Subject</span><b>Ṣarf</b></article>
-    <article><span>Subject</span><b>Naḥw</b></article>
-    <article><span>Subject</span><b>Seerah</b></article>
-  </div>
+  <div class="head reveal"><h2>The program.</h2><p>Hifdh Only students take Qur'an memorisation and tajweed. Full Madrasah students take every subject below. Select a card to open it.</p></div>
+  <div class="sj sj-prog"><div class="sj-bar"><span></span><div class="sj-nav"><button type="button" class="sj-prev" aria-label="Previous"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button><button type="button" class="sj-next" aria-label="Next"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></div></div><div class="sj-track"><button type="button" class="sjc" aria-expanded="false" style="--c:#E8A33D"><svg class="sjm" viewBox="0 0 48 48" aria-hidden="true"><rect x="9" y="9" width="30" height="30"/><rect x="9" y="9" width="30" height="30" transform="rotate(45 24 24)"/></svg><b>Hifdh and tajweed</b><i lang="ar">الحفظ والتجويد</i><span class="sjd"><em>Hifdh</em><span>Qur'an memorisation and tajweed, with murajaah built in, tests and exams. Taken in both Hifdh Only and Full Madrasah.</span></span></button><button type="button" class="sjc" aria-expanded="false" style="--c:#E9736B" data-s="Tawheed"><svg class="sjm" viewBox="0 0 48 48" aria-hidden="true"><rect x="9" y="9" width="30" height="30"/><rect x="9" y="9" width="30" height="30" transform="rotate(45 24 24)"/></svg><b>Tawheed</b><i lang="ar">التوحيد</i><span class="sjd"><em>Subject</em><span></span></span></button><button type="button" class="sjc" aria-expanded="false" style="--c:#3A9C8F" data-s="Fiqh"><svg class="sjm" viewBox="0 0 48 48" aria-hidden="true"><rect x="9" y="9" width="30" height="30"/><rect x="9" y="9" width="30" height="30" transform="rotate(45 24 24)"/></svg><b>Fiqh</b><i lang="ar">الفقه</i><span class="sjd"><em>Subject</em><span></span></span></button><button type="button" class="sjc" aria-expanded="false" style="--c:#7BA33A" data-s="Arabiyyah"><svg class="sjm" viewBox="0 0 48 48" aria-hidden="true"><rect x="9" y="9" width="30" height="30"/><rect x="9" y="9" width="30" height="30" transform="rotate(45 24 24)"/></svg><b>Arabiyyah</b><i lang="ar">اللغة العربية</i><span class="sjd"><em>Subject</em><span></span></span></button><button type="button" class="sjc" aria-expanded="false" style="--c:#3E97D9" data-s="Ṣarf"><svg class="sjm" viewBox="0 0 48 48" aria-hidden="true"><rect x="9" y="9" width="30" height="30"/><rect x="9" y="9" width="30" height="30" transform="rotate(45 24 24)"/></svg><b>Ṣarf</b><i lang="ar">الصرف</i><span class="sjd"><em>Subject</em><span></span></span></button><button type="button" class="sjc" aria-expanded="false" style="--c:#8C6BC8" data-s="Naḥw"><svg class="sjm" viewBox="0 0 48 48" aria-hidden="true"><rect x="9" y="9" width="30" height="30"/><rect x="9" y="9" width="30" height="30" transform="rotate(45 24 24)"/></svg><b>Naḥw</b><i lang="ar">النحو</i><span class="sjd"><em>Subject</em><span></span></span></button><button type="button" class="sjc" aria-expanded="false" style="--c:#E8A33D" data-s="Seerah"><svg class="sjm" viewBox="0 0 48 48" aria-hidden="true"><rect x="9" y="9" width="30" height="30"/><rect x="9" y="9" width="30" height="30" transform="rotate(45 24 24)"/></svg><b>Seerah</b><i lang="ar">السيرة</i><span class="sjd"><em>Subject</em><span></span></span></button></div></div>
 </div></section>
 
 
@@ -343,10 +336,10 @@ function sjLevels(x){const n=[];LV.forEach((l,j)=>{if(l.s&&l.s.includes(x))n.pus
 if(n.length===1)return 'Taught in level '+n[0]+'.';
 const run=n.every((v,j)=>j===0||v===n[j-1]+1);
 return run?'Taught in levels '+n[0]+' to '+n[n.length-1]+'.':'Taught in levels '+n.slice(0,-1).join(', ')+' and '+n[n.length-1]+'.'}
-function sjInit(){const t=$('.sj-track');if(!t)return;
+function sjInit(root){root=root||document;const t=root.querySelector('.sj-track');if(!t)return;
 t.querySelectorAll('.sjc').forEach(c=>c.onclick=()=>{const o=c.getAttribute('aria-expanded')!=='true';t.querySelectorAll('.sjc').forEach(x=>x.setAttribute('aria-expanded','false'));c.setAttribute('aria-expanded',o)});
 const step=()=>Math.max(240,t.clientWidth*.7);
-$('.sj-prev').onclick=()=>t.scrollBy({left:-step(),behavior:'smooth'});$('.sj-next').onclick=()=>t.scrollBy({left:step(),behavior:'smooth'})}
+root.querySelector('.sj-prev').onclick=()=>t.scrollBy({left:-step(),behavior:'smooth'});root.querySelector('.sj-next').onclick=()=>t.scrollBy({left:step(),behavior:'smooth'})}
 let cur=2;
 function show(i){cur=i;const v=LV[i],nx=LV[i+1];
 $('#lad').innerHTML=LV.map((x,j)=>`<li class="${j<i?'dn':''}"><button type="button" data-i="${j}" aria-selected="${j===i}"><i>${j<i?'&#10003;':j+1}</i><div><b>${x.n}</b><span>${x.s0?x.s0+'% to join':x.tag}</span></div></button></li>`).join('');
@@ -354,9 +347,12 @@ $('#pan').innerHTML=`<div class="ph"><div><span class="k">Level ${i+1} of ${LV.l
 <div class="sj"><div class="sj-bar"><h4>What you study</h4><div class="sj-nav"><button type="button" class="sj-prev" aria-label="Previous subjects"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button><button type="button" class="sj-next" aria-label="Next subjects"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></div></div><div class="sj-track">${v.s.map((x,k)=>`<button type="button" class="sjc" aria-expanded="false" style="--c:${SJC[k%SJC.length]}"><svg class="sjm" viewBox="0 0 48 48" aria-hidden="true"><rect x="9" y="9" width="30" height="30"/><rect x="9" y="9" width="30" height="30" transform="rotate(45 24 24)"/></svg><b>${x}</b><i lang="ar">${A[x]||''}</i><span class="sjd"><em>Subject</em><span>${SJI[x]?SJI[x]+' ':''}${sjLevels(x)}</span></span></button>`).join('')}</div></div>
 <h4>To join this level</h4><ul class="need">${v.r.map(x=>`<li>${x}</li>`).join('')}</ul>${v.strict?`<div class="strict">${v.strict}</div>`:''}
 <div class="acts"><a class="btn btn-ink" href="enroll?programme=madrasah">Enroll now</a><a class="btn btn-line" target="_blank" rel="noopener" href="https://wa.me/2347025842849?text=${encodeURIComponent('Assalaamu alaykum. I would like to ask about the '+v.n+' level at the Madrasah.')}">Ask about this level</a>${nx?`<button type="button" class="btn btn-line" data-i="${i+1}">Next level: ${nx.n}</button>`:''}</div>`;
-sjInit();const sel=$('#lad [aria-selected=true]');if(sel&&matchMedia('(max-width:900px)').matches){const lad=$('#lad');lad.scrollTo({left:sel.offsetLeft-(lad.clientWidth-sel.offsetWidth)/2})}}  // scroll the level strip only, never the page
+sjInit($('#pan'));const sel=$('#lad [aria-selected=true]');if(sel&&matchMedia('(max-width:900px)').matches){const lad=$('#lad');lad.scrollTo({left:sel.offsetLeft-(lad.clientWidth-sel.offsetWidth)/2})}}  // scroll the level strip only, never the page
 document.addEventListener('click',e=>{const b=e.target.closest('[data-i]');if(b)show(+b.dataset.i)});
 show(2);
+(function(){const root=$('.sj-prog');if(!root)return;
+root.querySelectorAll('.sjc[data-s]').forEach(c=>{c.querySelector('.sjd span').textContent=(SJI[c.dataset.s]?SJI[c.dataset.s]+' ':'')+'Part of the Full Madrasah. '+sjLevels(c.dataset.s)});
+sjInit(root)})();
 /* scroll reveal */
 (function(){const items=$$('.reveal');if('IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion: reduce)').matches){const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;e.target.classList.add('in');io.unobserve(e.target)}),{threshold:.15,rootMargin:'0px 0px -40px 0px'});items.forEach(el=>io.observe(el))}else items.forEach(el=>el.classList.add('in'))})();
 const w=$('#wa'),wb=$('#wab');wb.onclick=()=>{wb.setAttribute('aria-expanded',w.classList.toggle('open'))};
