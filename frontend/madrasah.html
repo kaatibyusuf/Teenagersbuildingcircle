@@ -38,6 +38,51 @@
 <!-- Vercel Analytics: counts visits once enabled in the Vercel dashboard -->
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
 <script defer src="/_vercel/insights/script.js"></script>
+<style>
+.site.page-madrasah .md-w{max-width:1180px;margin:0 auto;padding:0 24px}
+.site.page-madrasah .md-hero{background:#F4F8FB;color:var(--text);padding:0 0 clamp(36px,5vw,64px)}
+.site.page-madrasah .md-hero-in{max-width:1180px;margin:0 auto;padding:150px 24px 48px;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(28px,5vw,72px);align-items:center}
+.site.page-madrasah .md-eye{display:inline-block;font-weight:600;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);margin-bottom:16px}
+.site.page-madrasah .md-hero h1{font-family:var(--display);font-weight:700;font-size:clamp(36px,4.8vw,60px);line-height:1.04;letter-spacing:-.035em;margin:0 0 20px;color:var(--deep)}
+.site.page-madrasah .md-hero p{margin:0 0 30px;max-width:520px;font-size:18px;line-height:1.6;color:var(--muted)}
+.site.page-madrasah .md-cta{display:flex;flex-wrap:wrap;gap:12px}
+.site.page-madrasah .md-btn{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 28px;border-radius:999px;font-weight:600;font-size:15.5px;text-decoration:none;transition:background .2s,color .2s,transform .2s}
+.site.page-madrasah .md-btn:hover{transform:translateY(-1px)}
+.site.page-madrasah .md-btn.ink{background:var(--ink);color:#fff}
+.site.page-madrasah .md-btn.ink:hover{background:var(--deep)}
+.site.page-madrasah .md-btn.line{color:var(--deep);box-shadow:inset 0 0 0 1.5px rgba(6,47,77,.3)}
+.site.page-madrasah .md-btn.line:hover{background:var(--deep);color:#fff}
+.site.page-madrasah .md-img{aspect-ratio:5/4.4;border-radius:28px;background:#CFE6F5 url(images/madrasah-hero-card.jpg) center 35%/cover no-repeat}
+.site.page-madrasah .md-stats{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.site.page-madrasah .md-stats li{background:#fff;border-radius:18px;padding:20px 18px;box-shadow:0 0 0 1px var(--line)}
+.site.page-madrasah .md-stats b{display:block;font-family:var(--display);font-weight:700;font-size:clamp(24px,2.6vw,32px);color:var(--deep);letter-spacing:-.02em}
+.site.page-madrasah .md-stats span{display:block;margin-top:6px;font-size:14px;line-height:1.4;color:var(--muted)}
+.site.page-madrasah .md-alt{background:#F4F8FB}
+.site.page-madrasah #about{background:#fff}
+.site.page-madrasah .md-link{font-weight:600;color:var(--ink);text-decoration:underline;text-underline-offset:4px}
+.site.page-madrasah .md-subj{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.site.page-madrasah .md-subj article{background:#fff;border-radius:20px;padding:24px 22px;box-shadow:0 0 0 1px var(--line);min-height:150px}
+.site.page-madrasah .md-subj article:first-child{grid-column:span 2}
+.site.page-madrasah .md-subj span{display:block;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--sky-d);margin-bottom:12px}
+.site.page-madrasah .md-subj b{display:block;font-family:var(--display);font-weight:700;font-size:21px;line-height:1.2;color:var(--deep)}
+.site.page-madrasah .md-subj p{margin:8px 0 0;color:var(--muted);font-size:15.5px;line-height:1.55}
+.site.page-madrasah .how{counter-reset:md}
+.site.page-madrasah .how .hw{counter-increment:md;position:relative}
+.site.page-madrasah .how .hw::after{content:'0' counter(md);position:absolute;top:22px;inset-inline-end:22px;font-family:var(--display);font-weight:700;font-size:15px;color:var(--sky-d)}
+/* quote band over the photo, flat tint */
+.site.page-madrasah .had{background:#061521 url(images/madrasah-hero.jpg) center 70%/cover no-repeat;position:relative;isolation:isolate}
+.site.page-madrasah .had::before{content:'';position:absolute;inset:0;z-index:-1;background:rgba(6,21,33,.82)}
+.site.page-madrasah .had .ar,.site.page-madrasah .had .en{color:#fff !important}
+.site.page-madrasah .had cite{color:#85CCFF !important}
+@media (max-width:980px){
+ .site.page-madrasah .md-hero-in{grid-template-columns:1fr;padding-top:120px}
+ .site.page-madrasah .md-img{aspect-ratio:16/10}
+ .site.page-madrasah .md-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .site.page-madrasah .md-stats li:last-child{grid-column:span 2}
+ .site.page-madrasah .md-subj{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:520px){.site.page-madrasah .md-cta .md-btn{width:100%}.site.page-madrasah .md-subj{grid-template-columns:1fr}.site.page-madrasah .md-subj article:first-child{grid-column:auto}}
+</style>
 </head>
 <body>
 <script src="js/ticker.js"></script>
@@ -59,39 +104,52 @@
   </div>
 </nav>
 
-<a class="home" href="./" aria-label="Back to home"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Home</a>
-
-<header class="hero">
-  <div class="wrap">
-    <div class="hero-grid">
-      <div class="hc">
-        <h1>Learn the Qur'an and deen, one level at a time.</h1>
-        <p>Qur'an memorisation and tajweed, with Islamic studies alongside. Choose a small group or one-on-one, five classes every week.</p>
-        <div class="acts"><a href="#levels" class="btn btn-ink lift">Find your level</a><a href="enroll?programme=madrasah" class="btn btn-line lift">Enroll now</a></div>
-      </div>
-      <div class="hv" aria-hidden="true">
-        <div class="ring"></div>
-        <div class="disc"></div>
-        <div class="ayah"><b lang="ar">اقْرَأْ</b><span>Read</span></div>
-        <div class="bd bd1"><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span><div><b>5 classes</b>every week</div></div>
-        <div class="bd bd2"><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h6a4 4 0 0 1 4 4v12a3 3 0 0 0-3-3H2z"/><path d="M22 4h-6a4 4 0 0 0-4 4v12a3 3 0 0 1 3-3h7z"/></svg></span><div><b>From ₦12,000</b>a month</div></div>
-      </div>
+<header class="md-hero" id="top">
+  <div class="md-hero-in">
+    <div class="md-hc">
+      <span class="md-eye">Himaayah Madrasah</span>
+      <h1>Learn the Qur'an and deen, one level at a time.</h1>
+      <p>Qur'an memorisation and tajweed, with Islamic studies alongside. Choose a small group or one-on-one, five classes every week.</p>
+      <div class="md-cta"><a href="enroll?programme=madrasah" class="md-btn ink">Enroll now</a><a href="#levels" class="md-btn line">Find your level</a></div>
     </div>
-
-    <div class="facts-wrap">
-      <div class="facts reveal">
-        <div class="fact"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span><div><b>5 classes</b><span>every week</span></div></div>
-        <div class="fact"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg></span><div><b>8 levels</b><span>Rawdah to Iʿdādiyyah</span></div></div>
-        <div class="fact"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg></span><div><b>Live online</b><span>Google Meet &amp; Telegram</span></div></div>
-        <div class="fact"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><path d="M17 5.5a3.2 3.2 0 0 1 0 6"/><path d="M21.5 20c0-2.6-1.6-4.5-3.8-5.3"/></svg></span><div><b>Group or 1:1</b><span>from ₦12,000 a month</span></div></div>
-        <a href="#plans" class="btn btn-ink lift">See plans</a>
-      </div>
-    </div>
+    <div class="md-img" role="img" aria-label="A white mosque courtyard under a blue sky"></div>
   </div>
+  <div class="md-w"><ul class="md-stats">
+    <li><b>5</b><span>classes every week</span></li>
+    <li><b>8</b><span>levels, Rawdah to Iʿdādiyyah</span></li>
+    <li><b>2</b><span>semesters a year, four months each</span></li>
+    <li><b>Live</b><span>on Google Meet and Telegram</span></li>
+    <li><b>₦12,000</b><span>a month, group or one-on-one</span></li>
+  </ul></div>
 </header>
 
-<section class="sec" id="levels"><div class="wrap">
-  <div class="head reveal"><h2>Find your level.</h2><p>From the first Arabic letter to advanced Iʿdādiyyah studies, every student starts at the right level. Pick one to see what it teaches and what it asks.</p><p><a class="btn btn-line lift" href="placement?test=madrasah">Take the placement test</a></p></div>
+<section class="sec" id="about"><div class="wrap">
+  <div class="head reveal"><h2>About the Madrasah.</h2><p>Qur'an memorisation and tajweed, with Tawheed, fiqh, Arabiyyah, Ṣarf, Naḥw and seerah alongside. Classes are live online, so students can join from wherever they are.</p><p><a class="md-link" href="#levels">Find out more</a></p></div>
+</div></section>
+
+<section class="sec md-alt" id="program"><div class="wrap">
+  <div class="head reveal"><h2>The program.</h2><p>Hifdh Only students take Qur'an memorisation and tajweed. Full Madrasah students take every subject below.</p></div>
+  <div class="md-subj">
+    <article><span>Hifdh</span><b>Qur'an memorisation and tajweed</b><p>With murajaah built in, tests and exams.</p></article>
+    <article><span>Subject</span><b>Tawheed</b></article>
+    <article><span>Subject</span><b>Fiqh</b></article>
+    <article><span>Subject</span><b>Arabiyyah</b></article>
+    <article><span>Subject</span><b>Ṣarf</b></article>
+    <article><span>Subject</span><b>Naḥw</b></article>
+    <article><span>Subject</span><b>Seerah</b></article>
+  </div>
+</div></section>
+
+
+
+<section class="had" aria-label="Hadith"><div class="wrap reveal">
+  <p class="ar" lang="ar">مَنْ سَلَكَ طَرِيقًا يَلْتَمِسُ فِيهِ عِلْمًا سَهَّلَ اللَّهُ لَهُ بِهِ طَرِيقًا إِلَى الْجَنَّةِ</p>
+  <p class="en">&ldquo;Whoever follows a path in pursuit of knowledge, Allah will make easy for him a path to Paradise.&rdquo;</p>
+  <cite>Ṣaḥīḥ Muslim</cite>
+</div></section>
+
+<section class="sec md-alt" id="levels"><div class="wrap">
+  <div class="head reveal"><h2>Learning path.</h2><p>From the first Arabic letter to advanced Iʿdādiyyah studies, every student starts at the right level. Pick one to see what it teaches and what it asks.</p><p><a class="btn btn-line lift" href="placement?test=madrasah">Take the placement test</a></p></div>
   <div class="ex"><ol class="lad" id="lad" aria-label="Madrasah levels"></ol><div class="pan" id="pan" aria-live="polite"></div></div>
 </div></section>
 
@@ -128,12 +186,6 @@
       <div class="mur-opt"><span class="mur-l">Group</span><div class="price"><b>₦14,000</b>/ month</div><a href="enroll?programme=madrasah&amp;plan=muraajah-group" class="btn btn-line lift">Enroll now</a></div>
       <div class="mur-opt"><span class="mur-l">Personal</span><div class="price"><b>₦20,000</b>/ month</div><a href="enroll?programme=madrasah&amp;plan=muraajah-personal" class="btn btn-ink lift">Enroll now</a></div>
     </div></div>
-</div></section>
-
-<section class="had" aria-label="Hadith"><div class="wrap reveal">
-  <p class="ar" lang="ar">مَنْ سَلَكَ طَرِيقًا يَلْتَمِسُ فِيهِ عِلْمًا سَهَّلَ اللَّهُ لَهُ بِهِ طَرِيقًا إِلَى الْجَنَّةِ</p>
-  <p class="en">&ldquo;Whoever follows a path in pursuit of knowledge, Allah will make easy for him a path to Paradise.&rdquo;</p>
-  <cite>Ṣaḥīḥ Muslim</cite>
 </div></section>
 
 <section class="sec"><div class="wrap">
@@ -214,7 +266,6 @@
           <a href="about">About</a>
           <a href="about#anthem">Our anthem</a>
           <a href="articles">Articles</a>
-          <a href="journal">Literary Journal</a>
           <a href="resources">Resources</a>
           <a href="dictionary">Student Dictionary</a>
           <a href="calendar">Calendar</a>
@@ -226,7 +277,6 @@
           <a href="sponsor">Sponsor a student</a>
           <a href="timetable">Timetable</a>
           <a href="exam-calendars">Exam Calendars</a>
-          <a href="journal">Journal</a>
           <a href="faq">FAQ</a>
           <a href="contact">Contact</a>
           <a href="library">Madrasah Library</a>
