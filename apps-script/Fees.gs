@@ -19,7 +19,7 @@
 
 const FEE_PAGE_URL = 'https://www.himaayahschools.com/pay.html';
 const FEE_MAX_PERIODS = 12;         // a student can pay up to 12 periods ahead at once
-const FEE_USD_ONLINE = false;       // US dollar Skills School tracks on the Pay fees page. Turn on only after pay.html shows the currency (the lookup returns currency: 'USD')
+const FEE_USD_ONLINE = true;        // US dollar Skills School tracks pay by card on the Pay fees page (pay.html shows the $ amount; api/fees-checkout bills in USD)
 const FEE_LOOKUPS_PER_HOUR = 300;   // simple protection against someone trying many IDs
 
 function feesFromRequest(p) {

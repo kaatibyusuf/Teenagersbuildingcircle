@@ -66,7 +66,6 @@
 <a href="about">About</a>
 <a href="success-stories">Success Stories</a>
 <a href="articles">Articles</a>
-<a href="journal">Journal</a>
 <a href="faq">FAQ</a>
 <a href="contact">Contact</a>
 <a class="h-btn h-btn-light h-nav-cta" href="enroll">Enroll Now</a>
@@ -147,6 +146,7 @@
   const $ = (id) => document.getElementById(id);
   const tr = (s) => s;   // js/i18n.js translates new text on the page by itself (dictionary in i18n/ar/pay.txt)
   const naira = (n) => '\u20A6' + Math.round(Number(n) || 0).toLocaleString('en-NG');
+  const money = (j, n) => j && j.currency === 'USD' ? '$' + (Number(n) || 0).toLocaleString('en-US', { maximumFractionDigits: 2 }) : naira(n);
   const nice = (iso) => {
     if (!iso) return tr('Not set');
     const p = String(iso).slice(0, 10).split('-').map(Number), d = new Date(Date.UTC(p[0], p[1] - 1, p[2]));
@@ -187,7 +187,7 @@
     $('pfName').textContent = j.name; $('pfSid').textContent = j.studentId;
     $('pfProg').textContent = tr(j.programme); $('pfPlan').textContent = j.plan || '—';
     const per = j.months === 0 ? tr('one-time') : j.months === 1 ? tr('per month') : tr('every ' + j.months + ' months');
-    $('pfFee').textContent = j.amount ? naira(j.amount) + ' ' + per : '—';
+    $('pfFee').textContent = j.amount ? money(j, j.amount) + ' ' + per : '—';
     $('pfDue').textContent = j.months === 0 ? (j.status === 'Paid' ? tr('Paid in full') : tr('Before the course starts')) : nice(j.nextDue);
     const st = $('pfStatus'); st.textContent = tr(j.status || ''); st.className = 'pf-pill ' + String(j.status || '').toLowerCase();
     st.hidden = !j.status || j.months === 0;
@@ -197,7 +197,7 @@
     for (let n = 1; n <= (j.maxPeriods || 1); n++) {
       const months = j.months * n, o = document.createElement('option'); o.value = n;
       const what = j.months === 0 ? tr('Full course fee') : months === 1 ? tr('1 month') : tr(months + ' months');
-      o.textContent = what + ' · ' + naira(j.amount * n); sel.appendChild(o);
+      o.textContent = what + ' · ' + money(j, j.amount * n); sel.appendChild(o);
     }
     $('pfPeriodsLabel').hidden = sel.hidden = (j.maxPeriods || 1) < 2;
     update();
@@ -205,8 +205,8 @@
   function update() {
     if (!cur) return;
     const n = Number($('pfPeriods').value) || 1, total = cur.amount * n;
-    $('pfPayBtn').textContent = tr('Pay ' + naira(total) + ' by card'); delete $('pfPayBtn').dataset.label;
-    if (cur.months > 0) {
+    $('pfPayBtn').textContent = tr('Pay ' + money(cur, total) + ' by card'); delete $('pfPayBtn').dataset.label;
+    if (cur.months > 0 && cur.currency !== 'USD') {
       const base = cur.nextDue && cur.nextDue >= cur.today ? cur.nextDue : cur.today;
       $('pfAfter').textContent = tr('After this payment, the next due date becomes ' + nice(addMonths(base, cur.months * n)) + '.');
     } else $('pfAfter').textContent = '';
@@ -273,7 +273,6 @@
           <a href="about">About</a>
           <a href="about#anthem">Our anthem</a>
           <a href="articles">Articles</a>
-          <a href="journal">Literary Journal</a>
           <a href="resources">Resources</a>
           <a href="dictionary">Student Dictionary</a>
           <a href="calendar">Calendar</a>
