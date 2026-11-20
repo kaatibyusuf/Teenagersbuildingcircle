@@ -39,48 +39,157 @@
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
 <script defer src="/_vercel/insights/script.js"></script>
 <style>
-.site .ab-story{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(28px,5vw,72px);align-items:start}
-.site .ab-story h2{font-family:var(--h-f);font-weight:500;letter-spacing:-.035em;line-height:1.04;font-size:clamp(34px,4.6vw,58px);color:var(--h-text);margin:0}
-.site .ab-story p{color:var(--h-muted);font-size:18px;line-height:1.65;margin:0 0 18px}
-.site .ab-story p b{color:var(--h-text);font-weight:600}
-.site .ab-chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
-.site .ab-chips a{display:inline-flex;align-items:center;min-height:44px;padding:0 20px;border-radius:999px;background:#fff;box-shadow:0 0 0 1px rgba(19,33,43,.1);color:var(--h-text);font:600 15px var(--h-f);text-decoration:none}
-.site .ab-chips a:hover{background:var(--h-ink);color:#fff}
-.site .ab-cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin-top:48px}
-.site .ab-card{background:#fff;border-radius:22px;box-shadow:0 0 0 1px rgba(19,33,43,.08);padding:28px 24px}
-.site .ab-card .ic{width:46px;height:46px;border-radius:14px;background:var(--h-ink);color:var(--h-sky);display:flex;align-items:center;justify-content:center;margin-bottom:18px}
-.site .ab-card .ic svg{width:22px;height:22px}
-.site .ab-card h3{font-family:var(--h-f);font-weight:600;font-size:19px;line-height:1.25;letter-spacing:-.01em;color:var(--h-text);margin:0 0 10px}
-.site .ab-card p{margin:0;color:var(--h-muted);font-size:15.5px;line-height:1.6}
-.site .ab-quote{margin:48px auto 0;max-width:820px;text-align:center}
-.site .ab-quote blockquote{margin:0;font-family:var(--h-f);font-weight:500;letter-spacing:-.025em;line-height:1.2;font-size:clamp(24px,3.2vw,38px);color:#fff}
-.site .ab-quote figcaption{margin-top:16px;color:var(--h-sky);font-weight:600}
-.site .ab-nums{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:48px}
-.site .ab-num{border-radius:20px;background:rgba(255,255,255,.07);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14);padding:24px 22px}
-.site .ab-num b{display:block;font:500 clamp(34px,4vw,48px)/1 var(--h-f);letter-spacing:-.03em;color:#fff}
-.site .ab-num span{display:block;margin-top:8px;color:rgba(255,255,255,.75);font-size:15px;line-height:1.4}
-.site .ab-note{margin:22px 0 0;text-align:center;color:rgba(255,255,255,.6);font-size:14px}
-.site .ab-steps{list-style:none;margin:48px auto 0;padding:0;max-width:860px;display:grid;gap:14px;counter-reset:ab}
-.site .ab-steps li{counter-increment:ab;display:grid;grid-template-columns:64px 1fr;gap:20px;align-items:start;background:#fff;border-radius:22px;box-shadow:0 0 0 1px rgba(19,33,43,.08);padding:24px 28px}
-.site .ab-steps li::before{content:counter(ab,decimal-leading-zero);font:600 13px/1 var(--h-f);letter-spacing:.14em;color:var(--h-tide);padding-top:7px}
-.site .ab-steps h3{font-family:var(--h-f);font-weight:600;font-size:20px;color:var(--h-text);margin:0 0 6px}
-.site .ab-steps p{margin:0;color:var(--h-muted);line-height:1.6}
-.site .ab-name{display:grid;grid-template-columns:auto 1fr;gap:clamp(24px,4vw,56px);align-items:center;max-width:960px;margin:0 auto}
-.site .ab-seal{width:170px;height:170px;border-radius:50%;background:rgba(255,255,255,.1);box-shadow:inset 0 0 0 1px rgba(255,255,255,.25);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:#fff}
-.site .ab-seal svg{width:44px;height:54px;fill:#fff}
-.site .ab-seal svg path{fill:#fff}
-.site .ab-seal b{font-size:30px;font-weight:600}
-.site .ab-name h2{font-family:var(--h-f);font-weight:500;letter-spacing:-.03em;font-size:clamp(30px,4vw,48px);color:#fff;margin:0 0 14px}
-.site .ab-name p{margin:0;color:rgba(255,255,255,.85);font-size:18px;line-height:1.65}
-.site .anthem-sec-h{padding-top:0}
-@media(max-width:980px){.site .ab-story{grid-template-columns:1fr}.site .ab-cards,.site .ab-nums{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:620px){.site .ab-cards,.site .ab-nums{grid-template-columns:1fr}.site .ab-name{grid-template-columns:1fr;justify-items:center;text-align:center}.site .ab-steps li{grid-template-columns:1fr;gap:8px}}
+.site.page-hadith-bootcamp{--bx-line:rgba(19,33,43,.12);--bx-card:#fff;--bx-soft:#EEF4F8}
+.site .bx-w{max-width:1160px;margin:0 auto;padding:0 24px}
+.site .bx-sec{padding:clamp(56px,8vw,104px) 0;background:#F6F9FB;color:var(--h-text)}
+.site .bx-sec.alt{background:#fff}
+.site .bx-eye{display:inline-block;font:600 12.5px/1 var(--h-f);letter-spacing:.14em;text-transform:uppercase;color:var(--h-tide);margin:0 0 14px}
+.site .bx-sec h2{font-family:var(--h-f);font-weight:500;letter-spacing:-.035em;line-height:1.05;font-size:clamp(30px,4.2vw,50px);margin:0 0 14px;color:var(--h-text)}
+.site .bx-lead{max-width:640px;color:var(--h-muted);font-size:18px;line-height:1.6;margin:0 0 40px}
+/* hero */
+.site .bx-hero{padding-bottom:0}
+.site .bx-hero-in{max-width:1160px;margin:0 auto;padding:148px 24px 56px;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(32px,5vw,72px);align-items:center;position:relative;z-index:2}
+.site .bx-hero h1{font-family:var(--h-f);font-weight:500;letter-spacing:-.04em;line-height:1.02;font-size:clamp(38px,5.2vw,64px);margin:0 0 20px;color:#fff}
+.site .bx-hero h1 em{font-style:normal;color:var(--h-sky)}
+.site .bx-hero .bx-p{color:rgba(255,255,255,.75);font-size:18px;line-height:1.6;margin:0 0 28px;max-width:540px}
+.site .bx-tag{display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 14px;border-radius:999px;background:rgba(255,255,255,.08);box-shadow:inset 0 0 0 1px rgba(255,255,255,.16);color:#fff;font:500 13px var(--h-f);margin-bottom:22px}
+.site .bx-opens{margin:-10px 0 22px;padding:12px 16px;border-radius:12px;background:rgba(133,204,255,.14);color:#fff;font-size:15px;max-width:540px}
+.site .bx-cta{display:flex;flex-wrap:wrap;gap:12px}
+.site .bx-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:52px;padding:0 26px;border-radius:999px;font:600 15.5px var(--h-f);text-decoration:none;border:0;cursor:pointer;transition:background .2s,color .2s,transform .2s}
+.site .bx-btn:hover{transform:translateY(-1px)}
+.site .bx-btn.sky{background:var(--h-sky);color:var(--h-ink)}
+.site .bx-btn.sky:hover{background:#fff}
+.site .bx-btn.ghost{background:transparent;color:#fff;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.4)}
+.site .bx-btn.ghost:hover{background:rgba(255,255,255,.1)}
+.site .bx-btn.ink{background:var(--h-ink);color:#fff}
+.site .bx-btn.ink:hover{background:var(--h-deep)}
+.site .bx-btn.line{background:transparent;color:var(--h-text);box-shadow:inset 0 0 0 1.5px rgba(19,33,43,.25)}
+.site .bx-btn.line:hover{background:var(--h-ink);color:#fff}
+.site .bx-btn[disabled]{opacity:.55;cursor:not-allowed;transform:none}
+.site .bx-card-ar{background:var(--h-deep);border-radius:28px;padding:clamp(22px,3vw,34px);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14);position:relative}
+.site .bx-card-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;color:rgba(255,255,255,.7);font:500 13.5px var(--h-f)}
+.site .bx-card-top b{display:inline-flex;align-items:center;justify-content:center;min-width:44px;height:44px;border-radius:14px;background:var(--h-sky);color:var(--h-ink);font:600 18px var(--h-f)}
+.site .bx-ar{font-family:'Amiri',serif;direction:rtl;text-align:right;color:#fff;line-height:2.1;font-size:clamp(22px,2.4vw,28px);margin:0}
+.site .bx-card-ar .bx-ar{display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
+.site .bx-card-ar p.bx-tr{margin:18px 0 0;padding-top:18px;border-top:1px solid rgba(255,255,255,.14);color:rgba(255,255,255,.8);font-size:16px;line-height:1.55}
+.site .bx-card-ar small{display:block;margin-top:10px;color:rgba(255,255,255,.5);font-size:13px}
+.site .bx-facts{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid rgba(255,255,255,.14)}
+.site .bx-facts li{padding:26px 24px;border-inline-start:1px solid rgba(255,255,255,.14)}
+.site .bx-facts li:first-child{border-inline-start:0;padding-inline-start:0}
+.site .bx-facts b{display:block;font:500 clamp(30px,3.4vw,44px)/1 var(--h-f);letter-spacing:-.03em;color:#fff}
+.site .bx-facts span{display:block;margin-top:8px;color:rgba(255,255,255,.65);font-size:15px}
+/* steps */
+.site .bx-steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;counter-reset:bx}
+.site .bx-steps li{counter-increment:bx;background:var(--bx-card);border-radius:22px;padding:26px 22px;box-shadow:0 0 0 1px var(--bx-line);position:relative}
+.site .bx-steps li::before{content:counter(bx);display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:14px;background:var(--h-ink);color:var(--h-sky);font:600 18px var(--h-f);margin-bottom:18px}
+.site .bx-steps b{display:block;font:600 19px var(--h-f);letter-spacing:-.01em;margin-bottom:8px}
+.site .bx-steps span{color:var(--h-muted);font-size:15.5px;line-height:1.6}
+/* lesson tabs */
+.site .bx-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.site .bx-tab{min-height:46px;padding:0 22px;border-radius:999px;border:0;background:#fff;box-shadow:inset 0 0 0 1px var(--bx-line);font:600 15px var(--h-f);color:var(--h-text);cursor:pointer}
+.site .bx-tab[aria-selected="true"]{background:var(--h-ink);color:#fff}
+.site .bx-panel{background:#fff;border-radius:26px;box-shadow:0 0 0 1px var(--bx-line);padding:clamp(22px,3.4vw,40px);min-height:300px}
+.site .bx-panel[hidden]{display:none}
+.site .bx-panel h3{font:600 22px var(--h-f);letter-spacing:-.015em;margin:0 0 6px}
+.site .bx-panel .bx-ar{color:var(--h-text);font-size:clamp(22px,2.6vw,30px)}
+.site .bx-panel p{color:var(--h-muted);font-size:16.5px;line-height:1.65;margin:0 0 14px}
+.site .bx-panel .bx-src{font-size:14px}
+.site .bx-rec{margin-top:16px}
+.site .bx-rec b{display:block;margin-bottom:10px;font-size:15px}
+.site .bx-rec iframe{width:100%;height:84px;border:0;border-radius:14px;background:var(--bx-soft)}
+.site .bx-soon{padding:22px;border-radius:14px;background:var(--bx-soft);color:var(--h-muted);margin:0}
+.site .bx-dots{display:flex;gap:10px;margin:18px 0}
+.site .bx-dots i{width:44px;height:44px;border-radius:14px;background:var(--bx-soft);display:flex;align-items:center;justify-content:center;font:600 16px var(--h-f);font-style:normal;color:var(--h-tide)}
+.site .bx-dots i.ok{background:var(--h-tide);color:#fff}
+/* list */
+.site .bx-bar{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:22px}
+.site .bx-search{flex:1;min-width:220px;height:52px;border-radius:999px;border:0;box-shadow:inset 0 0 0 1px rgba(19,33,43,.18);padding:0 22px;font:450 16px var(--h-f);background:#fff;color:var(--h-text)}
+.site .bx-search:focus{outline:2px solid var(--h-tide);outline-offset:2px}
+.site .bx-count{color:var(--h-muted);font-size:14.5px}
+.site .bx-grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.site .bx-grid li{display:grid;grid-template-columns:44px 1fr;gap:14px;align-items:center;background:#fff;border-radius:18px;padding:14px 16px;box-shadow:0 0 0 1px var(--bx-line)}
+.site .bx-grid .n{display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:12px;background:var(--bx-soft);font:600 16px var(--h-f);color:var(--h-tide)}
+.site .bx-grid b{display:block;font:600 15.5px/1.3 var(--h-f);color:var(--h-text)}
+.site .bx-grid i{display:block;font-style:normal;font-family:'Amiri',serif;font-size:19px;color:var(--h-muted);direction:rtl;text-align:right;margin-top:2px}
+.site .bx-none{display:none;padding:24px;color:var(--h-muted)}
+.site .bx-grid li[hidden]{display:none}
+.site.page-hadith-bootcamp .h-hero.bx-hero{color:#fff}
+.site.page-hadith-bootcamp .h-hero.bx-hero{background:var(--h-ink) url(images/hadith-bootcamp-hero.jpg) center 35%/cover no-repeat}
+.site.page-hadith-bootcamp .h-hero.bx-hero::before{content:'';position:absolute;inset:0;z-index:0;background:rgba(6,21,33,.74)}
+.site.page-hadith-bootcamp .h-hero.bx-hero .bx-hero-in,.site.page-hadith-bootcamp .h-hero.bx-hero .bx-w{position:relative;z-index:2}
+.site.page-hadith-bootcamp .h-hero.bx-hero h1{color:#fff}
+.site.page-hadith-bootcamp .h-hero.bx-hero h1 em{color:var(--h-sky)}
+.site.page-hadith-bootcamp .h-hero.bx-hero .bx-p{color:rgba(255,255,255,.78)}
+.site.page-hadith-bootcamp .h-hero.bx-hero .bx-opens{color:rgba(255,255,255,.85);background:none}
+.site.page-hadith-bootcamp .h-hero.bx-hero .bx-card-ar p.bx-tr{color:rgba(255,255,255,.85)}
+.site.page-hadith-bootcamp .h-hero.bx-hero .bx-card-ar small{color:rgba(255,255,255,.55)}
+.site.page-hadith-bootcamp .h-hero.bx-hero .bx-card-ar .bx-ar{color:#fff}
+.site.page-hadith-bootcamp .h-hero.bx-hero .bx-btn.ghost{color:#fff}
+.site .bx-join h2{font-family:var(--h-f);font-weight:500;letter-spacing:-.035em;line-height:1.05;font-size:clamp(30px,4.2vw,50px);margin:0 0 28px;color:#fff}
+.site.page-hadith-bootcamp .bx-join .bx-side p{color:rgba(255,255,255,.75)}
+.site.page-hadith-bootcamp .bx-join .bx-btn.ghost{color:#fff}
+.site .bx-hero-in{display:flex;flex-direction:column;align-items:center;text-align:center;max-width:980px;padding:190px 24px 150px;gap:0}
+.site .bx-hero h1{font-size:clamp(38px,5.6vw,68px);margin-bottom:22px}
+.site .bx-hero .bx-p{max-width:560px;margin:0 auto 34px}
+.site .bx-hero .bx-opens{margin:-14px auto 26px;background:none;padding:0;color:rgba(255,255,255,.85)}
+.site .bx-cta{justify-content:center}
+@media (max-width:980px){.site .bx-hero-in{padding:140px 20px 90px}}
+/* join */
+.site .bx-join{background:var(--h-deep);color:#fff;padding:clamp(56px,8vw,104px) 0}
+.site .bx-join h2{color:#fff}
+.site .bx-join .bx-eye{color:var(--h-sky)}
+.site .bx-jg{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(24px,4vw,56px);align-items:start}
+.site .bx-form{background:#fff;color:var(--h-text);border-radius:28px;padding:clamp(24px,3.4vw,40px)}
+.site .bx-price{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin:0 0 6px}
+.site .bx-price b{font:500 clamp(40px,5vw,56px)/1 var(--h-f);letter-spacing:-.04em}
+.site .bx-price span{color:var(--h-muted);font-size:15.5px}
+.site .bx-inc{list-style:none;margin:18px 0 26px;padding:0;display:grid;gap:10px}
+.site .bx-inc li{display:flex;gap:10px;align-items:flex-start;font-size:15.5px;line-height:1.5}
+.site .bx-inc svg{flex:none;margin-top:2px;color:var(--h-tide)}
+.site .bx-f{margin-bottom:16px}
+.site .bx-f label{display:block;font:600 14px var(--h-f);margin-bottom:7px}
+.site .bx-f input,.site .bx-f select{width:100%;height:52px;border-radius:14px;border:0;box-shadow:inset 0 0 0 1px rgba(19,33,43,.22);padding:0 16px;font:450 16px var(--h-f);background:#fff;color:var(--h-text)}
+.site .bx-f input:focus,.site .bx-f select:focus{outline:2px solid var(--h-tide);outline-offset:1px}
+.site .bx-f small{display:block;margin-top:6px;color:var(--h-muted);font-size:13px}
+.site .bx-form .bx-btn{width:100%}
+.site .bx-err{min-height:20px;margin:12px 0 0;color:#B3261E;font-size:14.5px}
+.site .bx-fine{margin:6px 0 0;color:var(--h-muted);font-size:13.5px}
+.site .bx-side{display:grid;gap:16px}
+.site .bx-side>div{background:rgba(255,255,255,.07);border-radius:24px;padding:26px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)}
+.site .bx-side h3{font:600 20px var(--h-f);margin:0 0 8px;color:#fff}
+.site .bx-side p{color:rgba(255,255,255,.72);margin:0 0 18px;line-height:1.6;font-size:15.5px}
+.site .bx-side .bx-btn{min-height:46px}
+.site .bx-note{margin-bottom:22px}
+.site .bx-note .pf-done,.site .bx-note .pf-warn{margin:0}
+/* faq + verify */
+.site .bx-faq details{background:#fff;border-radius:18px;box-shadow:0 0 0 1px var(--bx-line);margin-bottom:10px;padding:0 22px}
+.site .bx-faq summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px;align-items:center;min-height:62px;font:600 16.5px var(--h-f)}
+.site .bx-faq summary::-webkit-details-marker{display:none}
+.site .bx-faq summary::after{content:'+';font:500 26px/1 var(--h-f);color:var(--h-tide)}
+.site .bx-faq details[open] summary::after{content:'–'}
+.site .bx-faq details p{margin:0 0 20px;color:var(--h-muted);line-height:1.65;font-size:16px}
+.site .bx-vf{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,4vw,56px);align-items:center}
+.site .bx-vf form{display:flex;gap:10px}
+.site .bx-vf input{flex:1;min-width:0;height:52px;border-radius:999px;border:0;box-shadow:inset 0 0 0 1px rgba(19,33,43,.22);padding:0 22px;font:500 16px var(--h-f);letter-spacing:.04em;background:#fff;color:var(--h-text)}
+.site .bx-vf #vfOut{margin-top:16px}
+@media (max-width:980px){
+ .site .bx-hero-in{grid-template-columns:1fr;padding-top:120px}
+ .site .bx-steps{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .site .bx-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .site .bx-jg,.site .bx-vf{grid-template-columns:1fr}
+ .site .bx-facts{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .site .bx-facts li:nth-child(3){border-inline-start:0;padding-inline-start:0}
+ .site .bx-facts li:nth-child(n+3){border-top:1px solid rgba(255,255,255,.14)}
+}
+@media (max-width:620px){
+ .site .bx-steps,.site .bx-grid{grid-template-columns:1fr}
+ .site .bx-cta .bx-btn{width:100%}
+ .site .bx-vf form{flex-direction:column}
+}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Course", "name": "Ḥadīth Bootcamp: al-Arbaʿīn an-Nawawiyyah", "description": "Study all 42 ḥadīth of al-Arbaʿīn an-Nawawiyyah at your own pace: audio lessons, the Arabic text with translation, key lessons, quizzes and a certificate. ₦15,000, free for Himaayah Madrasah students.", "provider": {"@type": "EducationalOrganization", "name": "Himaayah Schools", "sameAs": "https://www.himaayahschools.com/"}, "offers": {"@type": "Offer", "price": "15000", "priceCurrency": "NGN", "category": "Paid", "url": "https://www.himaayahschools.com/hadith-bootcamp"}, "hasCourseInstance": {"@type": "CourseInstance", "courseMode": "Online", "courseWorkload": "PT10H"}}</script>
-</head>
-<body>
+</head><body>
 <script src="js/ticker.js"></script>
-
 <svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
   <symbol id="lg" viewBox="0 0 377.21 459.6"><path d="M0.14 280.14c4.28,65.12 98.42,133.97 163.39,172.42 15.86,9.39 34.24,9.39 50.11,-0.01 52.97,-31.37 159.02,-102.63 163.43,-172.41l-376.92 0zm302.67 -162.41l74.4 105.8 0 -126.48c0,-20.52 -11.85,-38.03 -30.9,-45.66l-125.46 -50.22 81.96 116.56zm-228.42 0l82.79 -117.73 -126.49 51.28c-18.95,7.68 -30.7,25.13 -30.7,45.57l0 126.67 74.4 -105.8zm114.21 -8.75c35.22,0 63.77,28.55 63.77,63.77 0,35.22 -28.55,63.77 -63.77,63.77 -35.22,0 -63.77,-28.55 -63.77,-63.77 0,-35.22 28.55,-63.77 63.77,-63.77z"/></symbol>
   <symbol id="go" viewBox="0 0 24 24"><path d="M7 17L17 7M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
@@ -93,16 +202,8 @@
   <symbol id="x" viewBox="0 0 24 24"><path fill="currentColor" d="M18.24 2H21.5l-7.3 8.34L22.8 22h-6.73l-5.27-6.9L4.7 22H1.4l7.8-8.92L1 2h6.9l4.76 6.3L18.24 2zm-1.18 18h1.86L7.03 3.9H5.03L17.06 20z"/></symbol>
   <symbol id="li" viewBox="0 0 24 24"><path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></symbol>
 </svg>
-
-<a class="home-fab" href="./" aria-label="Back to home">
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
-  Home
-</a>
-
-<!-- ============ Hero ============ -->
-<header class="h-hero" id="top">
+<header class="h-hero bx-hero" id="top">
   <div class="h-aura" aria-hidden="true"></div>
-
   <nav class="h-nav" aria-label="Main">
     <div class="h-pill">
       <a class="h-brand" href="./"><svg width="20" height="25" aria-hidden="true"><use href="#lg"/></svg>Himaayah Schools</a>
@@ -133,104 +234,120 @@
       <button class="h-tog" id="navToggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span></button>
     </div>
   </nav>
-<header class="hero bc-hero">
-  <div class="wrap hero-copy">
-    <h1>The Forty Ḥadīth of Imām an-Nawawī, at your own pace.</h1>
-    <p>Study all 42 ḥadīth of al-Arbaʿīn an-Nawawiyyah with recorded lessons from the Himaayah Madrasah: the Arabic text, a clear translation, the key lessons and a short quiz for each, and a certificate when you finish.</p>
-    <p class="bc-opens" id="bcOpens" hidden>Joining opens on 1 December 2026. Himaayah Madrasah students can log in now.</p>
-    <div class="bc-cta"><a class="btn btn-ink lift" id="bcHeroJoin" href="#join">Join for ₦15,000</a><a class="btn btn-line lift" href="#preview">Listen to a free lesson</a></div>
-    <ul class="bc-facts">
-      <li><b>42</b><span>ḥadīth</span></li><li><b>210</b><span>quiz questions</span></li><li><b>1</b><span>certificate</span></li><li><b>Free</b><span>for Madrasah students</span></li>
-    </ul>
+  <div class="bx-hero-in">
+    <h1>The Forty Ḥadīth of Imām <span style="white-space:nowrap">an-Nawawī,</span> <em>at your own pace.</em></h1>
+    <p class="bx-p">42 ḥadīth with recorded lessons, the Arabic text, a short quiz for each, and a certificate when you finish.</p>
+    <p class="bx-opens" id="bcOpens" hidden>Joining opens on 1 December 2026. Himaayah Madrasah students can log in now.</p>
+    <div class="bx-cta"><a class="bx-btn sky" id="bcHeroJoin" href="#join">Join for ₦15,000</a><a class="bx-btn ghost" href="#lesson">See inside a lesson</a></div>
   </div>
-</header>
+  </header>
 
-<section class="sec bc-sec">
-  <div class="wrap" id="bcNote"></div>
-  <div class="wrap bc-what">
-    <h2>What you get</h2>
-    <div class="bc-cards">
-      <div><span class="bc-ic">1</span><b>Recorded lessons</b><p>Every ḥadīth explained in audio by our teachers, recorded in Madrasah classes. Listen in the portal on any device.</p></div>
-      <div><span class="bc-ic">2</span><b>Text and translation</b><p>The Arabic text of each ḥadīth with full vowels, a clear English translation, the narrator and where it is recorded.</p></div>
-      <div><span class="bc-ic">3</span><b>Key lessons and quizzes</b><p>The main lessons of each ḥadīth, then a five-question quiz. Pass four out of five to move on; retry as often as you need.</p></div>
-      <div><span class="bc-ic">4</span><b>A certificate</b><p>Pass all 42 quizzes to download your certificate, with a number anyone can check on this page.</p></div>
-    </div>
-  </div>
-</section>
-
-<section class="sec bc-sec" id="preview">
-  <div class="wrap bc-preview">
-    <div>
-      <h2>Ḥadīth 1: Actions are by intentions</h2>
-      <p class="bc-ar" lang="ar" dir="rtl" translate="no">عَنْ أَمِيرِ الْمُؤْمِنِينَ أَبِي حَفْصٍ عُمَرَ بْنِ الْخَطَّابِ رَضِيَ اللهُ عَنْهُ قَالَ: سَمِعْتُ رَسُولَ اللَّهِ ﷺ يَقُولُ:  إنَّمَا الْأَعْمَالُ بِالنِّيَّاتِ، وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى، فَمَنْ كَانَتْ هِجْرَتُهُ إلَى اللَّهِ وَرَسُولِهِ فَهِجْرَتُهُ إلَى اللَّهِ وَرَسُولِهِ، وَمَنْ كَانَتْ هِجْرَتُهُ لِدُنْيَا يُصِيبُهَا أَوْ امْرَأَةٍ يَنْكِحُهَا فَهِجْرَتُهُ إلَى مَا هَاجَرَ إلَيْهِ</p>
-      <p class="bc-en">I heard the Messenger of Allah ﷺ say: “Actions are only by intentions, and every person will have only what he intended. So whoever emigrated for Allah and His Messenger, his emigration is for Allah and His Messenger; and whoever emigrated for some worldly thing he wants to gain, or a woman he wants to marry, his emigration is for what he emigrated for.”</p>
-      <p class="bc-src">Narrated by ʿUmar ibn al-Khaṭṭāb. Al-Bukhārī (1) and Muslim (1907).</p>
-    </div>
-    <div class="bc-player" id="bcPreview"><p class="bc-soon">The preview recording will appear here.</p></div>
-  </div>
-</section>
-
-<section class="sec bc-sec">
-  <div class="wrap">
-    <h2>All 42 ḥadīth</h2>
-    <p class="bc-lead">The full Arbaʿīn of Imām an-Nawawī, in his order, from intentions to the vastness of Allah’s forgiveness.</p>
-    <ol class="bc-list"><li><span class="bc-n">1</span><span class="bc-t"><b>Actions are by intentions</b><i lang="ar" dir="rtl" translate="no">إنما الأعمال بالنيات</i></span></li><li><span class="bc-n">2</span><span class="bc-t"><b>Islām, īmān and iḥsān: the ḥadīth of Jibrīl</b><i lang="ar" dir="rtl" translate="no">حديث جبريل: الإسلام والإيمان والإحسان</i></span></li><li><span class="bc-n">3</span><span class="bc-t"><b>The five pillars of Islām</b><i lang="ar" dir="rtl" translate="no">أركان الإسلام الخمسة</i></span></li><li><span class="bc-n">4</span><span class="bc-t"><b>Creation in the womb and the decree</b><i lang="ar" dir="rtl" translate="no">خلق الإنسان والقدر</i></span></li><li><span class="bc-n">5</span><span class="bc-t"><b>Rejecting innovation in the religion</b><i lang="ar" dir="rtl" translate="no">رد المحدثات في الدين</i></span></li><li><span class="bc-n">6</span><span class="bc-t"><b>The lawful, the unlawful and the doubtful</b><i lang="ar" dir="rtl" translate="no">الحلال بيّن والحرام بيّن</i></span></li><li><span class="bc-n">7</span><span class="bc-t"><b>The religion is sincere advice</b><i lang="ar" dir="rtl" translate="no">الدين النصيحة</i></span></li><li><span class="bc-n">8</span><span class="bc-t"><b>The sanctity of a Muslim</b><i lang="ar" dir="rtl" translate="no">حرمة دم المسلم وماله</i></span></li><li><span class="bc-n">9</span><span class="bc-t"><b>Do what you can, avoid what is forbidden</b><i lang="ar" dir="rtl" translate="no">ما نهيتكم عنه فاجتنبوه</i></span></li><li><span class="bc-n">10</span><span class="bc-t"><b>Allah is pure and accepts only what is pure</b><i lang="ar" dir="rtl" translate="no">إن الله طيب لا يقبل إلا طيبًا</i></span></li><li><span class="bc-n">11</span><span class="bc-t"><b>Leave what makes you doubt</b><i lang="ar" dir="rtl" translate="no">دع ما يريبك إلى ما لا يريبك</i></span></li><li><span class="bc-n">12</span><span class="bc-t"><b>Leaving what does not concern you</b><i lang="ar" dir="rtl" translate="no">ترك ما لا يعني</i></span></li><li><span class="bc-n">13</span><span class="bc-t"><b>Love for your brother what you love for yourself</b><i lang="ar" dir="rtl" translate="no">أن تحب لأخيك ما تحب لنفسك</i></span></li><li><span class="bc-n">14</span><span class="bc-t"><b>The sanctity of a Muslim’s life</b><i lang="ar" dir="rtl" translate="no">حرمة دم المسلم</i></span></li><li><span class="bc-n">15</span><span class="bc-t"><b>Speak good, honour your neighbour and guest</b><i lang="ar" dir="rtl" translate="no">قول الخير وإكرام الجار والضيف</i></span></li><li><span class="bc-n">16</span><span class="bc-t"><b>Do not become angry</b><i lang="ar" dir="rtl" translate="no">لا تغضب</i></span></li><li><span class="bc-n">17</span><span class="bc-t"><b>Excellence in everything</b><i lang="ar" dir="rtl" translate="no">الإحسان في كل شيء</i></span></li><li><span class="bc-n">18</span><span class="bc-t"><b>Taqwā wherever you are</b><i lang="ar" dir="rtl" translate="no">اتق الله حيثما كنت</i></span></li><li><span class="bc-n">19</span><span class="bc-t"><b>Be mindful of Allah, He will protect you</b><i lang="ar" dir="rtl" translate="no">احفظ الله يحفظك</i></span></li><li><span class="bc-n">20</span><span class="bc-t"><b>Modesty (ḥayāʾ)</b><i lang="ar" dir="rtl" translate="no">الحياء</i></span></li><li><span class="bc-n">21</span><span class="bc-t"><b>Say: I believe in Allah, then be steadfast</b><i lang="ar" dir="rtl" translate="no">قل آمنت بالله ثم استقم</i></span></li><li><span class="bc-n">22</span><span class="bc-t"><b>The obligations that lead to Paradise</b><i lang="ar" dir="rtl" translate="no">الطريق إلى الجنة بأداء الفرائض</i></span></li><li><span class="bc-n">23</span><span class="bc-t"><b>Purity is half of faith</b><i lang="ar" dir="rtl" translate="no">الطهور شطر الإيمان</i></span></li><li><span class="bc-n">24</span><span class="bc-t"><b>The prohibition of injustice</b><i lang="ar" dir="rtl" translate="no">تحريم الظلم</i></span></li><li><span class="bc-n">25</span><span class="bc-t"><b>Every good deed is charity</b><i lang="ar" dir="rtl" translate="no">كل معروف صدقة</i></span></li><li><span class="bc-n">26</span><span class="bc-t"><b>Charity for every joint</b><i lang="ar" dir="rtl" translate="no">على كل سُلامى صدقة</i></span></li><li><span class="bc-n">27</span><span class="bc-t"><b>Righteousness and sin</b><i lang="ar" dir="rtl" translate="no">البر حسن الخلق</i></span></li><li><span class="bc-n">28</span><span class="bc-t"><b>Hold fast to the Sunnah</b><i lang="ar" dir="rtl" translate="no">الوصية بالسنة</i></span></li><li><span class="bc-n">29</span><span class="bc-t"><b>The deeds that lead to Paradise, and the tongue</b><i lang="ar" dir="rtl" translate="no">أبواب الخير وحفظ اللسان</i></span></li><li><span class="bc-n">30</span><span class="bc-t"><b>The limits set by Allah</b><i lang="ar" dir="rtl" translate="no">حدود الله</i></span></li><li><span class="bc-n">31</span><span class="bc-t"><b>Be detached from the world</b><i lang="ar" dir="rtl" translate="no">الزهد في الدنيا</i></span></li><li><span class="bc-n">32</span><span class="bc-t"><b>No harm and no reciprocating harm</b><i lang="ar" dir="rtl" translate="no">لا ضرر ولا ضرار</i></span></li><li><span class="bc-n">33</span><span class="bc-t"><b>The burden of proof</b><i lang="ar" dir="rtl" translate="no">البينة على المدعي</i></span></li><li><span class="bc-n">34</span><span class="bc-t"><b>Changing what is wrong</b><i lang="ar" dir="rtl" translate="no">تغيير المنكر</i></span></li><li><span class="bc-n">35</span><span class="bc-t"><b>The brotherhood of Muslims</b><i lang="ar" dir="rtl" translate="no">أخوة المسلمين</i></span></li><li><span class="bc-n">36</span><span class="bc-t"><b>Relieving others and seeking knowledge</b><i lang="ar" dir="rtl" translate="no">تفريج الكرب وطلب العلم</i></span></li><li><span class="bc-n">37</span><span class="bc-t"><b>How good and bad deeds are recorded</b><i lang="ar" dir="rtl" translate="no">كتابة الحسنات والسيئات</i></span></li><li><span class="bc-n">38</span><span class="bc-t"><b>The friends of Allah</b><i lang="ar" dir="rtl" translate="no">أولياء الله</i></span></li><li><span class="bc-n">39</span><span class="bc-t"><b>Mistakes, forgetfulness and coercion</b><i lang="ar" dir="rtl" translate="no">رفع الخطأ والنسيان والإكراه</i></span></li><li><span class="bc-n">40</span><span class="bc-t"><b>Be in this world like a stranger</b><i lang="ar" dir="rtl" translate="no">كن في الدنيا كأنك غريب</i></span></li><li><span class="bc-n">41</span><span class="bc-t"><b>Desires that follow the Revelation</b><i lang="ar" dir="rtl" translate="no">اتباع الهوى لما جاء به النبي ﷺ</i></span></li><li><span class="bc-n">42</span><span class="bc-t"><b>The vastness of Allah’s forgiveness</b><i lang="ar" dir="rtl" translate="no">سعة مغفرة الله</i></span></li></ol>
-  </div>
-</section>
-
-<section class="sec bc-sec">
-  <div class="wrap bc-how">
-    <h2>How it works</h2>
-    <ol>
+<section class="bx-sec" id="how">
+  <div class="bx-w">
+    <span class="bx-eye">How it works</span>
+    <h2>Four steps, your own pace.</h2>
+    <p class="bx-lead">At one ḥadīth a day you finish in about six weeks. Your progress is saved, so you can stop and carry on any time.</p>
+    <ol class="bx-steps">
       <li><b>Join</b><span>Pay ₦15,000 once by card or bank transfer. Your Bootcamp ID and access code arrive by email within minutes.</span></li>
       <li><b>Study</b><span>Open a ḥadīth, listen to the lesson, and read the Arabic, the translation and the key lessons.</span></li>
       <li><b>Test yourself</b><span>Take the five-question quiz. Pass four out of five to mark the ḥadīth as done.</span></li>
-      <li><b>Finish</b><span>Pass all 42 and download your certificate.</span></li>
+      <li><b>Finish</b><span>Pass all 42 and download your certificate, in Arabic, with a number anyone can check.</span></li>
     </ol>
   </div>
 </section>
 
-<section class="sec pf-sec" id="join">
-  <div class="wrap pf-wrap">
-    <div class="pf-card">
-      <h2 class="bc-price-h">Join the bootcamp</h2>
-      <p class="bc-price"><b>₦15,000</b><span>one payment, study at your own pace</span></p>
-      <ul class="bc-inc">
-        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>All 42 ḥadīth with recorded lessons</span></li>
-        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Arabic text, translation and key lessons</span></li>
-        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>210 quiz questions, marked straight away</span></li>
-        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>A numbered certificate when you finish</span></li>
-      </ul>
-      <form id="bcForm" novalidate>
-        <div class="wl-f"><label for="bcName">Full name (as it should appear on the certificate)</label><input id="bcName" autocomplete="name" maxlength="100" required></div>
-        <div class="wl-f"><label for="bcEmail">Email (your login is sent here)</label><input id="bcEmail" type="email" autocomplete="email" maxlength="120" required></div>
-        <div class="wl-f"><label for="bcPhone">WhatsApp number</label><input id="bcPhone" type="tel" autocomplete="tel" maxlength="30" placeholder="e.g. 0803 000 0000"></div>
-        <button class="btn btn-ink" id="bcGo" type="submit">Pay ₦15,000</button>
-        <p class="pf-err" id="bcErr" role="alert"></p>
-        <p class="bc-fine">You will pay on our secure payment page, by card or bank transfer.</p>
-      </form>
+<section class="bx-sec alt" id="lesson">
+  <div class="bx-w">
+    <span class="bx-eye">Inside every lesson</span>
+    <h2>Listen. Read. Test yourself.</h2>
+    <p class="bx-lead">Every one of the 42 ḥadīth follows the same three parts. Here is ḥadīth 1.</p>
+    <div class="bx-tabs" role="tablist" aria-label="Parts of a lesson">
+      <button class="bx-tab" role="tab" id="tabL" aria-selected="true" aria-controls="pnL">Listen</button>
+      <button class="bx-tab" role="tab" id="tabR" aria-selected="false" aria-controls="pnR">Read</button>
+      <button class="bx-tab" role="tab" id="tabT" aria-selected="false" aria-controls="pnT">Test yourself</button>
     </div>
-    <aside class="pf-card bc-side">
-      <h3>Himaayah Madrasah student?</h3>
-      <p>The bootcamp is free for you. Log in with the Student ID and access code you use for your dashboard.</p>
-      <a class="btn btn-line" href="bootcamp">Open the bootcamp</a>
-      <h3 class="bc-side-h">Already joined?</h3>
-      <p>Log in with the Bootcamp ID and access code from your email.</p>
-      <a class="btn btn-line" href="bootcamp">Log in</a>
-    </aside>
+    <div class="bx-panel" id="pnL" role="tabpanel" aria-labelledby="tabL">
+      <h3>Recorded in Madrasah classes</h3>
+      <p>Each ḥadīth is explained in audio by our teachers. Play it here, or in the portal on any device.</p>
+      <div id="bcPreview"><p class="bx-soon">The preview recording will appear here.</p></div>
+    </div>
+    <div class="bx-panel" id="pnR" role="tabpanel" aria-labelledby="tabR" hidden>
+      <h3>Ḥadīth 1: Actions are by intentions</h3>
+      <p class="bx-ar" lang="ar" dir="rtl" translate="no">عَنْ أَمِيرِ الْمُؤْمِنِينَ أَبِي حَفْصٍ عُمَرَ بْنِ الْخَطَّابِ رَضِيَ اللهُ عَنْهُ قَالَ: سَمِعْتُ رَسُولَ اللَّهِ ﷺ يَقُولُ:  إنَّمَا الْأَعْمَالُ بِالنِّيَّاتِ، وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى، فَمَنْ كَانَتْ هِجْرَتُهُ إلَى اللَّهِ وَرَسُولِهِ فَهِجْرَتُهُ إلَى اللَّهِ وَرَسُولِهِ، وَمَنْ كَانَتْ هِجْرَتُهُ لِدُنْيَا يُصِيبُهَا أَوْ امْرَأَةٍ يَنْكِحُهَا فَهِجْرَتُهُ إلَى مَا هَاجَرَ إلَيْهِ</p>
+      <p style="margin-top:18px">I heard the Messenger of Allah ﷺ say: “Actions are only by intentions, and every person will have only what he intended. So whoever emigrated for Allah and His Messenger, his emigration is for Allah and His Messenger; and whoever emigrated for some worldly thing he wants to gain, or a woman he wants to marry, his emigration is for what he emigrated for.”</p>
+      <p class="bx-src">Narrated by ʿUmar ibn al-Khaṭṭāb. Al-Bukhārī (1) and Muslim (1907).</p>
+    </div>
+    <div class="bx-panel" id="pnT" role="tabpanel" aria-labelledby="tabT" hidden>
+      <h3>Five questions, marked straight away</h3>
+      <p>Pass four out of five to move on. Retry as often as you need.</p>
+      <div class="bx-dots" aria-hidden="true"><i class="ok">1</i><i class="ok">2</i><i class="ok">3</i><i class="ok">4</i><i>5</i></div>
+      <p>Pass all 42 quizzes and your certificate is ready to download.</p>
+    </div>
   </div>
 </section>
 
-<section class="sec bc-sec">
-  <div class="wrap bc-faqs"><h2>Questions</h2><details class="bc-faq"><summary>Do I need to know Arabic?</summary><p>No. Every ḥadīth comes with the Arabic text and an English translation, and the lessons are explained in English. If you do read Arabic, you will get even more from it.</p></details><details class="bc-faq"><summary>How long does it take?</summary><p>It is self-paced. At one ḥadīth a day you will finish in about six weeks; some students take longer, some go faster. Your progress is saved, so you can stop and continue any time.</p></details><details class="bc-faq"><summary>Can I study on my phone?</summary><p>Yes. The portal works on any phone, tablet or computer with an internet connection. The audio plays in the page.</p></details><details class="bc-faq"><summary>How do I get the certificate?</summary><p>Pass the short quiz after each of the 42 ḥadīth (4 out of 5 correct; you can retry). When all 42 are passed, download your certificate from the portal. Each certificate has a number anyone can check on this page.</p></details><details class="bc-faq"><summary>I paid but did not get my login.</summary><p>Your Bootcamp ID and access code are emailed within a few minutes of payment. Check your spam folder. If it has not arrived after 30 minutes, message the Madrasah line on WhatsApp with your payment email.</p></details><details class="bc-faq"><summary>I am a Himaayah Madrasah student. Do I pay?</summary><p>No. Log in to the bootcamp with the Student ID and access code you already use for your dashboard.</p></details></div>
+<section class="bx-sec" id="list">
+  <div class="bx-w">
+    <span class="bx-eye">The full syllabus</span>
+    <h2>All 42 ḥadīth</h2>
+    <p class="bx-lead">The full Arbaʿīn of Imām an-Nawawī, in his order, from intentions to the vastness of Allah’s forgiveness.</p>
+    <div class="bx-bar"><input class="bx-search" id="bxQ" type="search" placeholder="Search by title or number" aria-label="Search the 42 ḥadīth"><span class="bx-count" id="bxCount">42 ḥadīth</span></div>
+    <ol class="bx-grid"><li><span class="n">1</span><div><b>Actions are by intentions</b><i lang="ar" dir="rtl" translate="no">إنما الأعمال بالنيات</i></div></li><li><span class="n">2</span><div><b>Islām, īmān and iḥsān: the ḥadīth of Jibrīl</b><i lang="ar" dir="rtl" translate="no">حديث جبريل: الإسلام والإيمان والإحسان</i></div></li><li><span class="n">3</span><div><b>The five pillars of Islām</b><i lang="ar" dir="rtl" translate="no">أركان الإسلام الخمسة</i></div></li><li><span class="n">4</span><div><b>Creation in the womb and the decree</b><i lang="ar" dir="rtl" translate="no">خلق الإنسان والقدر</i></div></li><li><span class="n">5</span><div><b>Rejecting innovation in the religion</b><i lang="ar" dir="rtl" translate="no">رد المحدثات في الدين</i></div></li><li><span class="n">6</span><div><b>The lawful, the unlawful and the doubtful</b><i lang="ar" dir="rtl" translate="no">الحلال بيّن والحرام بيّن</i></div></li><li><span class="n">7</span><div><b>The religion is sincere advice</b><i lang="ar" dir="rtl" translate="no">الدين النصيحة</i></div></li><li><span class="n">8</span><div><b>The sanctity of a Muslim</b><i lang="ar" dir="rtl" translate="no">حرمة دم المسلم وماله</i></div></li><li><span class="n">9</span><div><b>Do what you can, avoid what is forbidden</b><i lang="ar" dir="rtl" translate="no">ما نهيتكم عنه فاجتنبوه</i></div></li><li><span class="n">10</span><div><b>Allah is pure and accepts only what is pure</b><i lang="ar" dir="rtl" translate="no">إن الله طيب لا يقبل إلا طيبًا</i></div></li><li><span class="n">11</span><div><b>Leave what makes you doubt</b><i lang="ar" dir="rtl" translate="no">دع ما يريبك إلى ما لا يريبك</i></div></li><li><span class="n">12</span><div><b>Leaving what does not concern you</b><i lang="ar" dir="rtl" translate="no">ترك ما لا يعني</i></div></li><li><span class="n">13</span><div><b>Love for your brother what you love for yourself</b><i lang="ar" dir="rtl" translate="no">أن تحب لأخيك ما تحب لنفسك</i></div></li><li><span class="n">14</span><div><b>The sanctity of a Muslim’s life</b><i lang="ar" dir="rtl" translate="no">حرمة دم المسلم</i></div></li><li><span class="n">15</span><div><b>Speak good, honour your neighbour and guest</b><i lang="ar" dir="rtl" translate="no">قول الخير وإكرام الجار والضيف</i></div></li><li><span class="n">16</span><div><b>Do not become angry</b><i lang="ar" dir="rtl" translate="no">لا تغضب</i></div></li><li><span class="n">17</span><div><b>Excellence in everything</b><i lang="ar" dir="rtl" translate="no">الإحسان في كل شيء</i></div></li><li><span class="n">18</span><div><b>Taqwā wherever you are</b><i lang="ar" dir="rtl" translate="no">اتق الله حيثما كنت</i></div></li><li><span class="n">19</span><div><b>Be mindful of Allah, He will protect you</b><i lang="ar" dir="rtl" translate="no">احفظ الله يحفظك</i></div></li><li><span class="n">20</span><div><b>Modesty (ḥayāʾ)</b><i lang="ar" dir="rtl" translate="no">الحياء</i></div></li><li><span class="n">21</span><div><b>Say: I believe in Allah, then be steadfast</b><i lang="ar" dir="rtl" translate="no">قل آمنت بالله ثم استقم</i></div></li><li><span class="n">22</span><div><b>The obligations that lead to Paradise</b><i lang="ar" dir="rtl" translate="no">الطريق إلى الجنة بأداء الفرائض</i></div></li><li><span class="n">23</span><div><b>Purity is half of faith</b><i lang="ar" dir="rtl" translate="no">الطهور شطر الإيمان</i></div></li><li><span class="n">24</span><div><b>The prohibition of injustice</b><i lang="ar" dir="rtl" translate="no">تحريم الظلم</i></div></li><li><span class="n">25</span><div><b>Every good deed is charity</b><i lang="ar" dir="rtl" translate="no">كل معروف صدقة</i></div></li><li><span class="n">26</span><div><b>Charity for every joint</b><i lang="ar" dir="rtl" translate="no">على كل سُلامى صدقة</i></div></li><li><span class="n">27</span><div><b>Righteousness and sin</b><i lang="ar" dir="rtl" translate="no">البر حسن الخلق</i></div></li><li><span class="n">28</span><div><b>Hold fast to the Sunnah</b><i lang="ar" dir="rtl" translate="no">الوصية بالسنة</i></div></li><li><span class="n">29</span><div><b>The deeds that lead to Paradise, and the tongue</b><i lang="ar" dir="rtl" translate="no">أبواب الخير وحفظ اللسان</i></div></li><li><span class="n">30</span><div><b>The limits set by Allah</b><i lang="ar" dir="rtl" translate="no">حدود الله</i></div></li><li><span class="n">31</span><div><b>Be detached from the world</b><i lang="ar" dir="rtl" translate="no">الزهد في الدنيا</i></div></li><li><span class="n">32</span><div><b>No harm and no reciprocating harm</b><i lang="ar" dir="rtl" translate="no">لا ضرر ولا ضرار</i></div></li><li><span class="n">33</span><div><b>The burden of proof</b><i lang="ar" dir="rtl" translate="no">البينة على المدعي</i></div></li><li><span class="n">34</span><div><b>Changing what is wrong</b><i lang="ar" dir="rtl" translate="no">تغيير المنكر</i></div></li><li><span class="n">35</span><div><b>The brotherhood of Muslims</b><i lang="ar" dir="rtl" translate="no">أخوة المسلمين</i></div></li><li><span class="n">36</span><div><b>Relieving others and seeking knowledge</b><i lang="ar" dir="rtl" translate="no">تفريج الكرب وطلب العلم</i></div></li><li><span class="n">37</span><div><b>How good and bad deeds are recorded</b><i lang="ar" dir="rtl" translate="no">كتابة الحسنات والسيئات</i></div></li><li><span class="n">38</span><div><b>The friends of Allah</b><i lang="ar" dir="rtl" translate="no">أولياء الله</i></div></li><li><span class="n">39</span><div><b>Mistakes, forgetfulness and coercion</b><i lang="ar" dir="rtl" translate="no">رفع الخطأ والنسيان والإكراه</i></div></li><li><span class="n">40</span><div><b>Be in this world like a stranger</b><i lang="ar" dir="rtl" translate="no">كن في الدنيا كأنك غريب</i></div></li><li><span class="n">41</span><div><b>Desires that follow the Revelation</b><i lang="ar" dir="rtl" translate="no">اتباع الهوى لما جاء به النبي ﷺ</i></div></li><li><span class="n">42</span><div><b>The vastness of Allah’s forgiveness</b><i lang="ar" dir="rtl" translate="no">سعة مغفرة الله</i></div></li></ol>
+    <p class="bx-none" id="bxNone">No ḥadīth matches that search.</p>
+  </div>
 </section>
 
-<section class="sec bc-sec" id="verify">
-  <div class="wrap bc-verify">
-    <h2>Check a certificate</h2>
-    <p>Every Ḥadīth Bootcamp certificate has a number such as HBC-7K2M9Q. Enter it to confirm it is genuine.</p>
-    <form id="vfForm" novalidate><input id="vfId" placeholder="HBC-XXXXXX" maxlength="12" autocapitalize="characters" aria-label="Certificate number"><button class="btn btn-ink" type="submit">Check</button></form>
-    <div id="vfOut" role="status"></div>
+<section class="bx-join" id="join">
+  <div class="bx-w">
+    <span class="bx-eye">Join</span>
+    <h2>Start the bootcamp.</h2>
+    <div class="bx-note" id="bcNote"></div>
+    <div class="bx-jg">
+      <div class="bx-form">
+        <p class="bx-price"><b>₦15,000</b><span>one payment, study at your own pace</span></p>
+        <ul class="bx-inc">
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>All 42 ḥadīth with recorded lessons</span></li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Arabic text, translation and key lessons</span></li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>210 quiz questions, marked straight away</span></li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>A numbered certificate when you finish</span></li>
+        </ul>
+        <form id="bcForm" novalidate>
+          <div class="bx-f"><label for="bcName">Full name (as it should appear on the certificate)</label><input id="bcName" autocomplete="name" maxlength="100" required></div>
+          <div class="bx-f"><label for="bcGender">Brother or sister</label><select id="bcGender" required><option value="">Choose</option><option value="m">Brother</option><option value="f">Sister</option></select><small>The Arabic certificate is worded for you (قد أتمّ / قد أتمّت).</small></div>
+          <div class="bx-f"><label for="bcEmail">Email (your login is sent here)</label><input id="bcEmail" type="email" autocomplete="email" maxlength="120" required></div>
+          <div class="bx-f"><label for="bcPhone">WhatsApp number</label><input id="bcPhone" type="tel" autocomplete="tel" maxlength="30" placeholder="e.g. 0803 000 0000"></div>
+          <button class="bx-btn ink" id="bcGo" type="submit">Pay ₦15,000</button>
+          <p class="bx-err" id="bcErr" role="alert"></p>
+          <p class="bx-fine">You will pay on our secure payment page, by card or bank transfer.</p>
+        </form>
+      </div>
+      <aside class="bx-side">
+        <div><h3>Himaayah Madrasah student?</h3><p>The bootcamp is free for you. Log in with the Student ID and access code you use for your dashboard.</p><a class="bx-btn sky" href="bootcamp">Open the bootcamp</a></div>
+        <div><h3>Already joined?</h3><p>Log in with the Bootcamp ID and access code from your email.</p><a class="bx-btn ghost" href="bootcamp">Log in</a></div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="bx-sec" id="faq">
+  <div class="bx-w bx-faq">
+    <span class="bx-eye">Questions</span>
+    <h2>Before you join</h2>
+    <div style="margin-top:28px"><details ><summary>Do I need to know Arabic?</summary><p>No. Every ḥadīth comes with the Arabic text and an English translation, and the lessons are explained in English. If you do read Arabic, you will get even more from it.</p></details><details ><summary>How long does it take?</summary><p>It is self-paced. At one ḥadīth a day you will finish in about six weeks; some students take longer, some go faster. Your progress is saved, so you can stop and continue any time.</p></details><details ><summary>Can I study on my phone?</summary><p>Yes. The portal works on any phone, tablet or computer with an internet connection. The audio plays in the page.</p></details><details ><summary>How do I get the certificate?</summary><p>Pass the short quiz after each of the 42 ḥadīth (4 out of 5 correct; you can retry). When all 42 are passed, download your certificate from the portal. Each certificate has a number anyone can check on this page.</p></details><details ><summary>I paid but did not get my login.</summary><p>Your Bootcamp ID and access code are emailed within a few minutes of payment. Check your spam folder. If it has not arrived after 30 minutes, message the Madrasah line on WhatsApp with your payment email.</p></details><details ><summary>I am a Himaayah Madrasah student. Do I pay?</summary><p>No. Log in to the bootcamp with the Student ID and access code you already use for your dashboard.</p></details></div>
+  </div>
+</section>
+
+<section class="bx-sec alt" id="verify">
+  <div class="bx-w bx-vf">
+    <div>
+      <span class="bx-eye">Verify</span>
+      <h2>Check a certificate</h2>
+      <p class="bx-lead" style="margin:0">Every Ḥadīth Bootcamp certificate has a number such as HBC-7K2M9Q. Enter it to confirm it is genuine.</p>
+    </div>
+    <div>
+      <form id="vfForm" novalidate><input id="vfId" placeholder="HBC-XXXXXX" maxlength="12" autocapitalize="characters" aria-label="Certificate number"><button class="bx-btn ink" type="submit">Check</button></form>
+      <div id="vfOut" role="status"></div>
+    </div>
   </div>
 </section>
 <script>
@@ -262,25 +379,40 @@
   post(API_URL, { action: 'bc_info' }, true).then((d) => {
     if (!d || !d.ok) return;
     const p = (d.preview || [])[0];
-    if (p && p.recordings.length) $('bcPreview').innerHTML = p.recordings.map((r) => `<div class="bc-rec"><b>${esc(r.title || 'Lesson')}</b><iframe src="${esc(r.embed)}" title="${esc(r.title || 'Lesson recording')}" allow="autoplay" loading="lazy"></iframe></div>`).join('');
+    if (p && p.recordings.length) $('bcPreview').innerHTML = p.recordings.map((r) => `<div class="bx-rec"><b>${esc(r.title || 'Lesson')}</b><iframe src="${esc(r.embed)}" title="${esc(r.title || 'Lesson recording')}" allow="autoplay" loading="lazy"></iframe></div>`).join('');
   }).catch(() => {});
 
   $('bcForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const err = $('bcErr'), btn = $('bcGo'); err.textContent = '';
     if (notOpen()) return (err.textContent = 'Joining opens on 1 December 2026.');
-    const name = $('bcName').value.trim(), email = $('bcEmail').value.trim();
+    const name = $('bcName').value.trim(), email = $('bcEmail').value.trim(), gender = $('bcGender').value;
     if (name.length < 3) return (err.textContent = 'Enter your full name for the certificate.');
+    if (gender !== 'm' && gender !== 'f') return (err.textContent = 'Choose brother or sister, so your certificate is worded correctly.');
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return (err.textContent = 'Enter a valid email address. Your login is sent there.');
     const old = btn.textContent; btn.disabled = true; btn.textContent = 'Opening the secure payment page…';
     try {
-      const j = await post('/api/bootcamp-checkout', { name, email, phone: $('bcPhone').value.trim() });
+      const j = await post('/api/bootcamp-checkout', { name, email, phone: $('bcPhone').value.trim(), gender });
       if (j && j.ok && j.url) { location.href = j.url; return; }
       err.textContent = (j && j.error) || 'The payment page could not be opened.';
     } catch (x) { err.textContent = 'Payment isn’t available right now. Please try again, or message the Madrasah line on WhatsApp.'; }
     btn.disabled = false; btn.textContent = old;
   });
   window.addEventListener('pageshow', (e) => { if (e.persisted && !notOpen()) { $('bcGo').disabled = false; $('bcGo').textContent = 'Pay ₦15,000'; } });
+
+
+  // lesson tabs
+  const tabs = document.querySelectorAll('.bx-tab');
+  tabs.forEach((t) => t.addEventListener('click', () => {
+    tabs.forEach((x) => { const on = x === t; x.setAttribute('aria-selected', on); document.getElementById(x.getAttribute('aria-controls')).hidden = !on; });
+  }));
+  // search the 42
+  const q = $('bxQ'), cards = document.querySelectorAll('.bx-grid li');
+  q.addEventListener('input', () => {
+    const v = q.value.trim().toLowerCase(); let n = 0;
+    cards.forEach((c) => { const show = !v || c.textContent.toLowerCase().includes(v); c.hidden = !show; if (show) n++; });
+    $('bxNone').style.display = n ? 'none' : 'block'; $('bxCount').textContent = n + (n === 1 ? ' ḥadīth' : ' ḥadīth');
+  });
 
   async function verify(id) {
     const out = $('vfOut'); out.innerHTML = '<p class="bc-fine">Checking…</p>';
