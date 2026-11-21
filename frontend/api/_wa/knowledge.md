@@ -13,7 +13,7 @@ School details
  Where classes happen  Google Meet and Telegram (Madrasah); live classes with recordings (Academy);
   live sessions on Google Meet (Circle)
  Website  himaayahschools.com
- Email  himaayahschools@gmail.com
+ Email  hello@himaayahschools.com
  General line  +234 704 722 6487 (calls and WhatsApp)
  Academy line  +234 806 604 3320
  Madrasah line  +234 702 584 2849
@@ -638,7 +638,7 @@ place, it may go to the next family.
   refund, because students cannot return them.
  ● Payment provider charges. The charges taken by the payment provider are deducted from every
   refund. You receive the amount you paid less those charges.
- ● How to ask. Email himaayahschools@gmail.com with the student’s name, the plan, and the date
+ ● How to ask. Email hello@himaayahschools.com with the student’s name, the plan, and the date
   and method of payment. Approved refunds go back to the original payment method within one
   week.
  Digital products and the Hadith Bootcamp
@@ -663,7 +663,7 @@ a period that has already started.
  ● Where classes are recorded, recordings are kept only as long as needed for safety, quality and
   resolving complaints, then deleted.
  ● Anyone with a concern about a child’s safety should tell us straight away at
-  himaayahschools@gmail.com or on the general WhatsApp line. Reports are handled in
+  hello@himaayahschools.com or on the general WhatsApp line. Reports are handled in
   confidence, and where a child may be at risk we act at once to protect them and, where
   needed, involve the proper authorities.
  31  Prospectus 2026–2027 · Himaayah Schools · himaayahschools.com
@@ -698,7 +698,7 @@ such as payment and email, may store data outside Nigeria. We share only what ea
  Class recordings  Only as long as needed for safety, quality and
   complaints
 After these periods we delete or anonymise the data. You can ask to see, correct, export or delete
-your or your child’s data, or object to how we use it. Write to himaayahschools@gmail.com and we
+your or your child’s data, or object to how we use it. Write to hello@himaayahschools.com and we
 reply within 30 days. If a data breach is likely to put anyone at risk, we tell those affected, and the
 Nigeria Data Protection Commission where required, without delay.
  32  Prospectus 2026–2027 · Himaayah Schools · himaayahschools.com
@@ -847,7 +847,7 @@ are paid per course.
   or on the Pay fees page. The fee is the same for  less the payment provider’s charges. A month
   every month, with fewer payments to remember.  that has already started is not refundable, so tell
   us before the next month begins if you want to
-  stop. Write to himaayahschools@gmail.com.
+  stop. Write to hello@himaayahschools.com.
   After you pay
   Card payments move your due date forward at once and your dashboard shows it within a
   minute. Card receipts are emailed to you, and Payment history on your dashboard keeps the
@@ -889,7 +889,7 @@ The school’s conduct and privacy rules are on the policies page of the website
   Madrasah classes, Student Affairs and lost  Academy classes, exam tracks and lost Academy
   Madrasah codes  codes
   General line  Email
-  +234 704 722 6487  himaayahschools@gmail.com
+  +234 704 722 6487  hello@himaayahschools.com
   Skills School, Teenagers Building Circle, fees and  Refunds, plan changes and privacy requests
   anything else
 When you message, always include your Student ID and your programme so we can help faster.
