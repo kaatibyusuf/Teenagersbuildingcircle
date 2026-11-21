@@ -107,59 +107,6 @@
 .site.page-madrasah .sjc[aria-expanded="true"] .sjd{display:block}
 .site.page-madrasah .sj-prog .sj-bar{justify-content:flex-end;margin-bottom:10px}
 @media (max-width:600px){.site.page-madrasah .sjc{flex-basis:78%}}
-
-/* ===== Phone layout in the Zad Academy style: left-aligned sections, one facts card, numbered step pills, one subject card at a time. Flat colours only. ===== */
-@media (max-width:600px){
-.site.page-madrasah .head{text-align:start}
-.site.page-madrasah .head h2{display:flex;align-items:center;gap:10px;font-size:26px}
-.site.page-madrasah .head h2::before{content:'';flex:none;width:22px;height:22px;background:var(--sky-d);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 4l12 8-12 8z'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 4l12 8-12 8z'/%3E%3C/svg%3E") center/contain no-repeat}
-.site.page-madrasah .head>p{font-size:17px;line-height:1.75;color:var(--muted)}
-.site.page-madrasah .head .acts-center{justify-content:flex-start}
-.site.page-madrasah .md-link{display:inline-flex;align-items:center;gap:8px;font-weight:600;color:var(--ink);text-decoration:none}
-.site.page-madrasah .md-link::after{content:'\2192';font-size:20px;line-height:1}
-
-/* the five facts: one card, a row each, label on the left and the value on the right */
-.site.page-madrasah .md-stats{display:block;background:#fff;border-radius:26px;padding:6px 20px;box-shadow:0 0 0 1px var(--line)}
-.site.page-madrasah .md-stats li{display:flex;align-items:center;gap:14px;background:none;border-radius:0;box-shadow:none;padding:16px 0;border-bottom:1px solid var(--line)}
-.site.page-madrasah .md-stats li:last-child{border-bottom:0;grid-column:auto}
-.site.page-madrasah .md-stats li::before{content:'';order:1;flex:none;width:26px;height:26px;background:var(--sky-d);-webkit-mask:var(--ic) center/contain no-repeat;mask:var(--ic) center/contain no-repeat}
-.site.page-madrasah .md-stats span{order:2;flex:1;margin:0;font-size:15px;line-height:1.35}
-.site.page-madrasah .md-stats b{order:3;margin-left:auto;font-size:19px;white-space:nowrap;text-align:end}
-.site.page-madrasah .md-stats li:nth-child(1){--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2'/%3E%3Cpath d='M16 2v4M8 2v4M3 10h18'/%3E%3C/svg%3E")}
-.site.page-madrasah .md-stats li:nth-child(2){--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3l9 5-9 5-9-5zM3 13l9 5 9-5'/%3E%3C/svg%3E")}
-.site.page-madrasah .md-stats li:nth-child(3){--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 7v5l3 2'/%3E%3C/svg%3E")}
-.site.page-madrasah .md-stats li:nth-child(4){--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='2' y='4' width='20' height='13' rx='2'/%3E%3Cpath d='M8 21h8M12 17v4'/%3E%3C/svg%3E")}
-.site.page-madrasah .md-stats li:nth-child(5){--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='6' width='18' height='12' rx='2'/%3E%3Cpath d='M3 10h18M7 15h4'/%3E%3C/svg%3E")}
-
-/* how the madrasah runs: numbered pill steps, the number alternating sides */
-.site.page-madrasah .how{display:grid;gap:18px}
-.site.page-madrasah .how .hw{background:#fff;border:1.5px dashed var(--sky-d);border-radius:30px;padding:20px 88px 20px 22px;min-height:112px;box-shadow:none}
-.site.page-madrasah .how .hw:nth-child(even){padding:20px 22px 20px 88px}
-.site.page-madrasah .how .hw .ic{width:34px;height:34px;background:none;margin-bottom:10px;color:var(--sky-d)}
-.site.page-madrasah .how .hw b{font-size:18px}
-.site.page-madrasah .how .hw::after{display:none}
-.site.page-madrasah .how .hw::before{content:'0' counter(md);position:absolute;top:50%;transform:translateY(-50%);inset-inline-end:20px;height:56px;padding-inline-start:16px;border-inline-start:1px solid var(--line);display:flex;align-items:center;font-family:var(--display);font-weight:700;font-size:26px;color:var(--ink)}
-.site.page-madrasah .how .hw:nth-child(even)::before{inset-inline-end:auto;inset-inline-start:20px;padding-inline-start:0;padding-inline-end:16px;border-inline-start:0;border-inline-end:1px solid var(--line)}
-
-/* the subject carousels: one full card at a time, moved with the arrows */
-.site.page-madrasah .sjc{flex-basis:100%}
-}
-
-/* hero: the mosque photo sits behind the text on phones, under one flat navy tint (no gradient) */
-@media (max-width:600px){
-.site.page-madrasah .md-hero{background:#F4F8FB}
-.site.page-madrasah .md-hero-in{position:relative;isolation:isolate;max-width:none;padding:128px 22px 78px;background:#CFE6F5 url(images/madrasah-hero-card.jpg) 60% 40%/cover no-repeat}
-.site.page-madrasah .md-hero-in::before{content:'';position:absolute;inset:0;z-index:-1;background:rgba(6,47,77,.66)}
-.site.page-madrasah .md-img{display:none}
-.site.page-madrasah .md-eye{color:#B9D6EC}
-.site.page-madrasah .md-hero h1{color:#fff}
-.site.page-madrasah .md-hero p{color:rgba(255,255,255,.9)}
-.site.page-madrasah .md-btn.ink{background:#fff;color:var(--deep)}
-.site.page-madrasah .md-btn.ink:hover{background:var(--sky-l)}
-.site.page-madrasah .md-btn.line{color:#fff;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.7)}
-.site.page-madrasah .md-btn.line:hover{background:#fff;color:var(--deep)}
-.site.page-madrasah .md-w{position:relative;margin-top:-34px}
-}
 </style>
 </head>
 <body>
@@ -251,11 +198,6 @@
   </div>
   <div class="year reveal"><div><h3>Want a clear finish line? Take the one-year Hifdh.</h3><p>A focused 12-month Qur'an memorisation track, with a milestone to reach and revise every month.</p></div>
     <div class="yc"><div class="price"><b>₦19,000</b>/ month for 12 months</div><a class="btn btn-locked btn-wl" href="waitlist?plan=one-year" title="Admission is closed for now. Join the waitlist."><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Join the waitlist</a></div></div>
-  <div class="year mur reveal" id="idaadiyyah"><div><h3>Idaadiyyah classes</h3><p>The Idaadiyyah covers the Awwal and Thaaniy levels. Take it on its own, or together with hifdh.</p></div>
-    <div class="yc mur-opts">
-      <div class="mur-opt"><span class="mur-l">Idaadiyyah</span><div class="price"><b>₦18,000</b>/ month</div><a href="enroll?programme=madrasah&amp;plan=idaadiyyah" class="btn btn-line lift">Enroll now</a></div>
-      <div class="mur-opt"><span class="mur-l">Idaadiyyah + Hifdh</span><div class="price"><b>₦28,000</b>/ month</div><a href="enroll?programme=madrasah&amp;plan=idaadiyyah-hifdh" class="btn btn-ink lift">Enroll now</a></div>
-    </div></div>
   <div class="year mur reveal" id="muraajah"><div><span class="mur-k">New</span><h3>Completed the Qur'an? Make it firm with Muraajah.</h3><p>For students who have finished memorising and want to make their hifdh solid and lasting, through steady, structured revision with a teacher. Five classes a week, in a small group or one-on-one.</p></div>
     <div class="yc mur-opts">
       <div class="mur-opt"><span class="mur-l">Group</span><div class="price"><b>₦14,000</b>/ month</div><a href="enroll?programme=madrasah&amp;plan=muraajah-group" class="btn btn-line lift">Enroll now</a></div>
