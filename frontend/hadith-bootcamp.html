@@ -73,11 +73,6 @@
 .site .bx-card-ar .bx-ar{display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
 .site .bx-card-ar p.bx-tr{margin:18px 0 0;padding-top:18px;border-top:1px solid rgba(255,255,255,.14);color:rgba(255,255,255,.8);font-size:16px;line-height:1.55}
 .site .bx-card-ar small{display:block;margin-top:10px;color:rgba(255,255,255,.5);font-size:13px}
-.site .bx-facts{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid rgba(255,255,255,.14)}
-.site .bx-facts li{padding:26px 24px;border-inline-start:1px solid rgba(255,255,255,.14)}
-.site .bx-facts li:first-child{border-inline-start:0;padding-inline-start:0}
-.site .bx-facts b{display:block;font:500 clamp(30px,3.4vw,44px)/1 var(--h-f);letter-spacing:-.03em;color:#fff}
-.site .bx-facts span{display:block;margin-top:8px;color:rgba(255,255,255,.65);font-size:15px}
 /* steps */
 .site .bx-steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;counter-reset:bx}
 .site .bx-steps li{counter-increment:bx;background:var(--bx-card);border-radius:22px;padding:26px 22px;box-shadow:0 0 0 1px var(--bx-line);position:relative}
@@ -103,9 +98,6 @@
 .site.page-hadith-bootcamp .h-hero.bx-hero .bx-card-ar small{color:rgba(255,255,255,.55)}
 .site.page-hadith-bootcamp .h-hero.bx-hero .bx-card-ar .bx-ar{color:#fff}
 .site.page-hadith-bootcamp .h-hero.bx-hero .bx-btn.ghost{color:#fff}
-.site .bx-join h2{font-family:var(--h-f);font-weight:500;letter-spacing:-.035em;line-height:1.05;font-size:clamp(30px,4.2vw,50px);margin:0 0 28px;color:#fff}
-.site.page-hadith-bootcamp .bx-join .bx-side p{color:rgba(255,255,255,.75)}
-.site.page-hadith-bootcamp .bx-join .bx-btn.ghost{color:#fff}
 .site .bx-hero-in{display:flex;flex-direction:column;align-items:center;text-align:center;max-width:980px;padding:190px 24px 150px;gap:0}
 .site .bx-hero h1{font-size:clamp(38px,5.6vw,68px);margin-bottom:22px}
 .site .bx-hero .bx-p{max-width:560px;margin:0 auto 34px}
@@ -143,14 +135,6 @@ html.js .bx-path.in::after{transform:scaleX(1)}
  .site .bx-path li{padding-top:0;padding-left:56px}
  .site .bx-path em{font-size:36px}
 }
-.site .bx-syl{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.9fr);gap:clamp(24px,4vw,56px);align-items:center;background:var(--h-ink);color:#fff;border-radius:32px;padding:clamp(28px,4.5vw,64px);overflow:hidden}
-.site .bx-syl .bx-eye{color:var(--h-sky)}
-.site .bx-syl h2{color:#fff;margin:0 0 14px}
-.site .bx-syl p{color:rgba(255,255,255,.75);font-size:18px;line-height:1.6;margin:0 0 28px;max-width:460px}
-.site .bx-syl-v{display:flex;flex-direction:column;gap:12px;align-items:stretch}
-.site .bx-syl-v span{font-family:'Amiri',serif;font-size:clamp(22px,2.4vw,30px);line-height:1.5;color:#fff;background:rgba(255,255,255,.08);box-shadow:inset 0 0 0 1px rgba(255,255,255,.16);border-radius:16px;padding:10px 22px}
-.site .bx-syl-v span:nth-child(odd){margin-inline-start:28px}
-.site .bx-syl-v span:nth-child(even){margin-inline-end:28px}
 .site .bx-dr{position:fixed;inset:0;z-index:300}
 .site .bx-dr[hidden]{display:none}
 .site .bx-dr-bg{position:absolute;inset:0;background:rgba(6,21,33,.62);opacity:0;transition:opacity .3s}
@@ -170,42 +154,12 @@ html.js .bx-path.in::after{transform:scaleX(1)}
 .site .bx-rows i{font-style:normal;font-family:'Amiri',serif;font-size:20px;color:var(--h-muted);text-align:end;max-width:210px;line-height:1.5}
 .site .bx-none{display:none;padding:20px 4px;color:var(--h-muted)}
 body.bx-lock{overflow:hidden}
-@media (max-width:820px){.site .bx-syl{grid-template-columns:1fr}.site .bx-syl-v span:nth-child(odd),.site .bx-syl-v span:nth-child(even){margin-inline:0}}
 @media (max-width:520px){.site .bx-rows i{display:none}.site .bx-rows li{grid-template-columns:44px minmax(0,1fr)}}
 /* join */
-.site .bx-join{background:var(--h-deep);color:#fff;padding:clamp(56px,8vw,104px) 0}
-.site .bx-join h2{color:#fff}
-.site .bx-join .bx-eye{color:var(--h-sky)}
 .site .bx-jg{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(24px,4vw,56px);align-items:start}
-.site .bx-form{background:#fff;color:var(--h-text);border-radius:28px;padding:clamp(24px,3.4vw,40px)}
-.site .bx-price{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin:0 0 6px}
-.site .bx-price b{font:500 clamp(40px,5vw,56px)/1 var(--h-f);letter-spacing:-.04em}
-.site .bx-price span{color:var(--h-muted);font-size:15.5px}
-.site .bx-inc{list-style:none;margin:18px 0 26px;padding:0;display:grid;gap:10px}
-.site .bx-inc li{display:flex;gap:10px;align-items:flex-start;font-size:15.5px;line-height:1.5}
-.site .bx-inc svg{flex:none;margin-top:2px;color:var(--h-tide)}
-.site .bx-f{margin-bottom:16px}
-.site .bx-f label{display:block;font:600 14px var(--h-f);margin-bottom:7px}
-.site .bx-f input,.site .bx-f select{width:100%;height:52px;border-radius:14px;border:0;box-shadow:inset 0 0 0 1px rgba(19,33,43,.22);padding:0 16px;font:450 16px var(--h-f);background:#fff;color:var(--h-text)}
-.site .bx-f input:focus,.site .bx-f select:focus{outline:2px solid var(--h-tide);outline-offset:1px}
-.site .bx-f small{display:block;margin-top:6px;color:var(--h-muted);font-size:13px}
-.site .bx-form .bx-btn{width:100%}
-.site .bx-err{min-height:20px;margin:12px 0 0;color:#B3261E;font-size:14.5px}
-.site .bx-fine{margin:6px 0 0;color:var(--h-muted);font-size:13.5px}
-.site .bx-side{display:grid;gap:16px}
-.site .bx-side>div{background:rgba(255,255,255,.07);border-radius:24px;padding:26px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)}
-.site .bx-side h3{font:600 20px var(--h-f);margin:0 0 8px;color:#fff}
-.site .bx-side p{color:rgba(255,255,255,.72);margin:0 0 18px;line-height:1.6;font-size:15.5px}
-.site .bx-side .bx-btn{min-height:46px}
 .site .bx-note{margin-bottom:22px}
 .site .bx-note .pf-done,.site .bx-note .pf-warn{margin:0}
 /* faq + verify */
-.site .bx-faq details{background:#fff;border-radius:18px;box-shadow:0 0 0 1px var(--bx-line);margin-bottom:10px;padding:0 22px}
-.site .bx-faq summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px;align-items:center;min-height:62px;font:600 16.5px var(--h-f)}
-.site .bx-faq summary::-webkit-details-marker{display:none}
-.site .bx-faq summary::after{content:'+';font:500 26px/1 var(--h-f);color:var(--h-tide)}
-.site .bx-faq details[open] summary::after{content:'–'}
-.site .bx-faq details p{margin:0 0 20px;color:var(--h-muted);line-height:1.65;font-size:16px}
 .site .bx-vf{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,4vw,56px);align-items:center}
 .site .bx-vf form{display:flex;gap:10px}
 .site .bx-vf input{flex:1;min-width:0;height:52px;border-radius:999px;border:0;box-shadow:inset 0 0 0 1px rgba(19,33,43,.22);padding:0 22px;font:500 16px var(--h-f);letter-spacing:.04em;background:#fff;color:var(--h-text)}
@@ -222,6 +176,81 @@ body.bx-lock{overflow:hidden}
  .site .bx-steps, .site .bx-cta .bx-btn{width:100%}
  .site .bx-vf form{flex-direction:column}
 }
+
+.site .bx-facts{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid rgba(255,255,255,.14)}
+.site .bx-facts li{padding:26px 24px;border-inline-start:1px solid rgba(255,255,255,.14)}
+.site .bx-facts li:first-child{border-inline-start:0;padding-inline-start:0}
+.site .bx-facts b{display:block;font:500 clamp(30px,3.4vw,44px)/1 var(--h-f);letter-spacing:-.03em;color:#fff}
+.site .bx-facts span{display:block;margin-top:8px;color:rgba(255,255,255,.65);font-size:15px}
+.site .bx-faq details{background:#fff;border-radius:18px;box-shadow:0 0 0 1px var(--bx-line);margin-bottom:10px;padding:0 22px}
+.site .bx-faq summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px;align-items:center;min-height:62px;font:600 16.5px var(--h-f)}
+.site .bx-faq summary::-webkit-details-marker{display:none}
+.site .bx-faq summary::after{content:'+';font:500 26px/1 var(--h-f);color:var(--h-tide)}
+.site .bx-faq details[open] summary::after{content:'–'}
+.site .bx-faq details p{margin:0 0 20px;color:var(--h-muted);line-height:1.65;font-size:16px}
+/* Syllabus: three parts (Skills School style) */
+.site .bx-sec.bx-sylsec{background:#F1F4F7}
+.site .bx-sylhead{text-align:center;max-width:640px;margin:0 auto 36px}
+.site .bx-sylhead .bx-eye{color:#5B7283}
+.site .bx-sylhead h2{color:#062F4D;margin:0 0 14px;font-weight:600;letter-spacing:-.04em}
+.site .bx-sylhead h2 mark,.site .bx-join h2 mark{background:#E3F2FD;color:#062F4D;border-radius:18px;padding:0 .28em;white-space:nowrap}
+.site .bx-sylhead p{margin:0;color:#5B7283;font-size:17px;line-height:1.6}
+.site .bx-parts{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.site .bx-part{display:flex;flex-direction:column;border-radius:28px;padding:26px;background:#E3F2FD;color:#062F4D;box-shadow:0 0 0 1px #D5E0E8}
+.site .bx-part.p2{background:#094570;color:#fff;box-shadow:none}
+.site .bx-part.p3{background:#F5E6D3}
+.site .bx-part small{font-size:13px;color:#5B7283}
+.site .bx-part.p2 small{color:rgba(255,255,255,.75)}
+.site .bx-part b.num{display:block;font:600 46px/1 var(--h-f);letter-spacing:-.04em;margin:10px 0 4px}
+.site .bx-part h3{font:600 22px/1.2 var(--h-f);letter-spacing:-.02em;margin:0 0 16px;color:inherit}
+.site .bx-part ol{list-style:none;margin:0;padding:0;border-top:1px solid rgba(6,47,77,.16)}
+.site .bx-part.p2 ol{border-color:rgba(255,255,255,.24)}
+.site .bx-part li{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid rgba(6,47,77,.16);font-size:14.5px;line-height:1.4}
+.site .bx-part.p2 li{border-color:rgba(255,255,255,.24)}
+.site .bx-part li i{font-style:normal;font-weight:600;opacity:.55;width:22px;flex:none}
+.site .bx-part em{font-style:normal;font-size:13.5px;font-weight:500;margin-top:14px}
+.site .bx-pills{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:30px 0 0;padding:0;list-style:none}
+.site .bx-pills li{background:#E3F2FD;color:#094570;border-radius:999px;padding:10px 18px;font-size:14px;font-weight:500}
+.site .bx-sylcta{text-align:center;margin-top:26px}
+.site .bx-sylcta .bx-btn{background:#094570;color:#fff}
+.site .bx-sylcta .bx-btn:hover{background:#062F4D}
+
+/* Join (Skills School style) */
+.site .bx-join{background:#F1F4F7;color:#062F4D;padding:clamp(56px,8vw,104px) 0}
+.site .bx-join .bx-eye{color:#5B7283;display:block;text-align:center}
+.site .bx-join h2{font-family:var(--h-f);color:#062F4D;text-align:center;font-weight:600;letter-spacing:-.04em;line-height:1.08;font-size:clamp(30px,4.2vw,50px);margin:0 0 30px}
+.site .bx-jg{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:28px;align-items:stretch}
+.site .bx-form{background:#094570;color:#fff;border-radius:28px;padding:clamp(24px,3.4vw,36px)}
+.site .bx-price{display:block;margin:0 0 12px}
+.site .bx-price b{display:block;font:600 clamp(42px,6vw,60px)/1 var(--h-f);letter-spacing:-.045em}
+.site .bx-price span{display:block;margin-top:12px;color:rgba(255,255,255,.78);font-size:15px;line-height:1.55}
+.site .bx-fgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 12px;margin-top:20px}
+.site .bx-f{margin-bottom:12px}
+.site .bx-f label{display:block;font:500 13px var(--h-f);margin-bottom:6px;color:rgba(255,255,255,.85)}
+.site .bx-f input,.site .bx-f select{width:100%;height:48px;border-radius:14px;border:0;box-shadow:none;background:rgba(255,255,255,.12);padding:0 14px;font:450 15px var(--h-f);color:#fff}
+.site .bx-f input::placeholder{color:rgba(255,255,255,.5)}
+.site .bx-f select option{color:#062F4D;background:#fff}
+.site .bx-f input:focus,.site .bx-f select:focus{outline:2px solid #fff;outline-offset:1px}
+.site .bx-f small{display:block;margin-top:6px;color:rgba(255,255,255,.7);font-size:12.5px;line-height:1.4}
+.site .bx-fgrid .wide{grid-column:1/-1}
+.site .bx-form .bx-btn{width:100%;background:#fff;color:#062F4D;margin-top:6px}
+.site .bx-form .bx-btn:hover{background:#E3F2FD}
+.site .bx-err{min-height:20px;margin:12px 0 0;color:#FFB4AB;font-size:14.5px}
+.site .bx-fine{margin:6px 0 0;color:rgba(255,255,255,.7);font-size:13px;text-align:center}
+.site .bx-side{display:grid;gap:12px;align-content:start}
+.site .bx-inc{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.site .bx-inc li{display:flex;gap:14px;background:#fff;border-radius:18px;padding:18px 20px;box-shadow:0 0 0 1px #D5E0E8}
+.site .bx-inc svg{flex:none;width:24px;height:24px;padding:5px;border-radius:50%;background:#E3F2FD;color:#094570;margin-top:1px}
+.site .bx-inc b{display:block;font-weight:600;font-size:15.5px;color:#062F4D;margin-bottom:2px}
+.site .bx-inc span{display:block;font-size:14px;line-height:1.5;color:#5B7283}
+.site .bx-mad{background:#fff;border-radius:18px;padding:18px 20px;box-shadow:0 0 0 1px #D5E0E8}
+.site .bx-mad h3{font:600 15.5px var(--h-f);margin:0 0 2px;color:#062F4D}
+.site .bx-mad p{margin:0;color:#5B7283;font-size:14px;line-height:1.5}
+.site .bx-mad .lk{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:10px}
+.site .bx-mad .lk a{color:#094570;font-weight:600;font-size:14.5px;text-decoration:none}
+.site .bx-mad .lk a:hover{text-decoration:underline}
+@media (max-width:980px){.site .bx-parts{grid-template-columns:1fr}.site .bx-jg{grid-template-columns:1fr}}
+@media (max-width:560px){.site .bx-fgrid{grid-template-columns:1fr}.site .bx-part{padding:22px}}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Course", "name": "Ḥadīth Bootcamp: al-Arbaʿīn an-Nawawiyyah", "description": "Study all 42 ḥadīth of al-Arbaʿīn an-Nawawiyyah at your own pace: audio lessons, the Arabic text with translation, key lessons, quizzes and a certificate. ₦15,000, free for Himaayah Madrasah students.", "provider": {"@type": "EducationalOrganization", "name": "Himaayah Schools", "sameAs": "https://www.himaayahschools.com/"}, "offers": {"@type": "Offer", "price": "15000", "priceCurrency": "NGN", "category": "Paid", "url": "https://www.himaayahschools.com/hadith-bootcamp"}, "hasCourseInstance": {"@type": "CourseInstance", "courseMode": "Online", "courseWorkload": "PT10H"}}</script>
 </head><body>
@@ -292,23 +321,16 @@ body.bx-lock{overflow:hidden}
   </div>
 </section>
 
-<section class="bx-sec" id="syllabus">
+<section class="bx-sec bx-sylsec" id="syllabus">
   <div class="bx-w">
-    <div class="bx-syl">
-      <div class="bx-syl-t">
-        <span class="bx-eye">The full syllabus</span>
-        <h2>Take a look at our syllabus</h2>
-        <p>42 ḥadīth, from intentions to the vastness of Allah’s forgiveness, in the order of Imām an-Nawawī.</p>
-        <button type="button" class="bx-btn sky" id="bxOpen" aria-haspopup="dialog" aria-controls="bxDr">View the syllabus</button>
-      </div>
-      <div class="bx-syl-v" aria-hidden="true">
-        <span lang="ar" dir="rtl">إنما الأعمال بالنيات</span>
-        <span lang="ar" dir="rtl">أركان الإسلام الخمسة</span>
-        <span lang="ar" dir="rtl">الدين النصيحة</span>
-        <span lang="ar" dir="rtl">لا تغضب</span>
-        <span lang="ar" dir="rtl">سعة مغفرة الله</span>
-      </div>
+    <div class="bx-sylhead">
+      <span class="bx-eye">The full syllabus</span>
+      <h2>Forty-two ḥadīth. <mark>Three parts.</mark></h2>
+      <p>In the order of Imām an-Nawawī, from intentions to the vastness of Allah’s forgiveness. Each ḥadīth has a recorded lesson and a short quiz.</p>
     </div>
+    <ul class="bx-parts"><li class="bx-part p1"><small>Ḥadīth 1 to 14</small><b class="num">01</b><h3>Part one</h3><ol><li><i>01</i><span>Actions are by intentions</span></li><li><i>02</i><span>Islām, īmān and iḥsān: the ḥadīth of Jibrīl</span></li><li><i>03</i><span>The five pillars of Islām</span></li><li><i>04</i><span>Creation in the womb and the decree</span></li></ol><em>and 10 more</em></li><li class="bx-part p2"><small>Ḥadīth 15 to 28</small><b class="num">02</b><h3>Part two</h3><ol><li><i>15</i><span>Speak good, honour your neighbour and guest</span></li><li><i>16</i><span>Do not become angry</span></li><li><i>17</i><span>Excellence in everything</span></li><li><i>18</i><span>Taqwā wherever you are</span></li></ol><em>and 10 more</em></li><li class="bx-part p3"><small>Ḥadīth 29 to 42</small><b class="num">03</b><h3>Part three</h3><ol><li><i>29</i><span>The deeds that lead to Paradise, and the tongue</span></li><li><i>30</i><span>The limits set by Allah</span></li><li><i>31</i><span>Be detached from the world</span></li><li><i>32</i><span>No harm and no reciprocating harm</span></li></ol><em>and 10 more</em></li></ul>
+    <ul class="bx-pills"><li>42 recorded lessons</li><li>210 quiz questions</li><li>Pass mark 4 out of 5</li><li>Numbered certificate</li></ul>
+    <div class="bx-sylcta"><button type="button" class="bx-btn" id="bxOpen" aria-haspopup="dialog" aria-controls="bxDr">See all 42 ḥadīth</button></div>
   </div>
 </section>
 
@@ -325,30 +347,30 @@ body.bx-lock{overflow:hidden}
 <section class="bx-join" id="join">
   <div class="bx-w">
     <span class="bx-eye">Join</span>
-    <h2>Start the bootcamp.</h2>
+    <h2>Start the <mark>bootcamp.</mark></h2>
     <div class="bx-note" id="bcNote"></div>
     <div class="bx-jg">
       <div class="bx-form">
-        <p class="bx-price"><b>₦15,000</b><span>one payment, study at your own pace</span></p>
-        <ul class="bx-inc">
-          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>All 42 ḥadīth with recorded lessons</span></li>
-          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Arabic text, translation and key lessons</span></li>
-          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>210 quiz questions, marked straight away</span></li>
-          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>A numbered certificate when you finish</span></li>
-        </ul>
+        <p class="bx-price"><b>₦15,000</b><span>One payment. Study at your own pace and finish with a numbered certificate.</span></p>
         <form id="bcForm" novalidate>
-          <div class="bx-f"><label for="bcName">Full name (as it should appear on the certificate)</label><input id="bcName" autocomplete="name" maxlength="100" required></div>
-          <div class="bx-f"><label for="bcGender">Brother or sister</label><select id="bcGender" required><option value="">Choose</option><option value="m">Brother</option><option value="f">Sister</option></select><small>The Arabic certificate is worded for you (قد أتمّ / قد أتمّت).</small></div>
-          <div class="bx-f"><label for="bcEmail">Email (your login is sent here)</label><input id="bcEmail" type="email" autocomplete="email" maxlength="120" required></div>
-          <div class="bx-f"><label for="bcPhone">WhatsApp number</label><input id="bcPhone" type="tel" autocomplete="tel" maxlength="30" placeholder="e.g. 0803 000 0000"></div>
-          <button class="bx-btn ink" id="bcGo" type="submit">Pay ₦15,000</button>
+          <div class="bx-fgrid">
+            <div class="bx-f wide"><label for="bcName">Full name (as it should appear on the certificate)</label><input id="bcName" autocomplete="name" maxlength="100" required></div>
+            <div class="bx-f wide"><label for="bcGender">Brother or sister</label><select id="bcGender" required><option value="">Choose</option><option value="m">Brother</option><option value="f">Sister</option></select><small>The Arabic certificate is worded for you (قد أتمّ / قد أتمّت).</small></div>
+            <div class="bx-f"><label for="bcEmail">Email (your login is sent here)</label><input id="bcEmail" type="email" autocomplete="email" maxlength="120" required></div>
+            <div class="bx-f"><label for="bcPhone">WhatsApp number</label><input id="bcPhone" type="tel" autocomplete="tel" maxlength="30" placeholder="e.g. 0803 000 0000"></div>
+          </div>
+          <button class="bx-btn" id="bcGo" type="submit">Pay ₦15,000</button>
           <p class="bx-err" id="bcErr" role="alert"></p>
           <p class="bx-fine">You will pay on our secure payment page, by card or bank transfer.</p>
         </form>
       </div>
       <aside class="bx-side">
-        <div><h3>Himaayah Madrasah student?</h3><p>The bootcamp is free for you. Log in with the Student ID and access code you use for your dashboard.</p><a class="bx-btn sky" href="bootcamp">Open the bootcamp</a></div>
-        <div><h3>Already joined?</h3><p>Log in with the Bootcamp ID and access code from your email.</p><a class="bx-btn ghost" href="bootcamp">Log in</a></div>
+        <ul class="bx-inc">
+          <li><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><div><b>All 42 ḥadīth with recorded lessons</b><span>Listen, then read the Arabic text, the translation and the key lessons.</span></div></li>
+          <li><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><div><b>210 quiz questions, marked straight away</b><span>Pass four out of five to finish a ḥadīth. Retry as often as you need.</span></div></li>
+          <li><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><div><b>A numbered certificate</b><span>In Arabic, with your name, when you pass all 42 quizzes.</span></div></li>
+        </ul>
+        <div class="bx-mad"><h3>Himaayah Madrasah student?</h3><p>The bootcamp is free for you. Log in with the Student ID and access code you use for your dashboard.</p><div class="lk"><a href="bootcamp">Open the bootcamp →</a><a href="bootcamp">Already joined? Log in →</a></div></div>
       </aside>
     </div>
   </div>
