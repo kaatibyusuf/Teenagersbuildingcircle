@@ -40,6 +40,7 @@ const EN_PLANS = {
   'Teenagers Building Circle \u2014 Full Programme': [40000, '/mo'],
   'Madrasah \u2014 Hifdh Only (Group)': [12000, '/mo'], 'Madrasah \u2014 Full Madrasah (Group)': [20000, '/mo'], 'Madrasah \u2014 Full Madrasah (Group, hifdh completed elsewhere)': [15000, '/mo'],
   'Madrasah \u2014 Hifdh Only (Personal)': [20000, '/mo'], 'Madrasah \u2014 Full Madrasah (Personal)': [35000, '/mo'],
+  'Madrasah \u2014 Idaadiyyah': [18000, '/mo'], 'Madrasah \u2014 Idaadiyyah + Hifdh': [28000, '/mo'],
   'Madrasah \u2014 One-Year Hifdh': [19000, '/mo'],
   'Madrasah \u2014 Muraajah (Group)': [14000, '/mo'], 'Madrasah \u2014 Muraajah (Personal)': [20000, '/mo'],
   'Academy \u2014 UTME': [10000, '/mo'], 'Academy \u2014 Post-UTME': [10000, '/mo'], 'Academy \u2014 A-Levels': [10000, '/mo'], 'Academy \u2014 O-Levels': [10000, '/mo'],

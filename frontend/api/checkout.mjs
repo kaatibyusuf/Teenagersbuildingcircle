@@ -18,6 +18,8 @@ const PLANS = {
   'Madrasah — Full Madrasah (Group, hifdh completed elsewhere)': { amount: 15000, recurring: true, live: 'prod_ec8807ceca5e4cb2a811', sandbox: '', closed: true },   // product created; remove closed:true (here, enroll.html, Enrol.gs) to open for payment
   'Madrasah — Hifdh Only (Personal)':           { amount: 20000, recurring: true, live: 'prod_1debd07326f34dd2bc53', sandbox: 'prod_d2a0efd2bed64f96aa61' },
   'Madrasah — Full Madrasah (Personal)':        { amount: 35000, recurring: true, live: 'prod_fe2428f2c1f647118abc', sandbox: 'prod_84b3e07142ee45b1801d' },
+  'Madrasah — Idaadiyyah':                      { amount: 18000, recurring: true, live: '', sandbox: '' },   // product IDs are reference only; the amount here is what is charged
+  'Madrasah — Idaadiyyah + Hifdh':              { amount: 28000, recurring: true, live: '', sandbox: '' },
   'Madrasah — One-Year Hifdh':                  { amount: 19000, recurring: true, live: 'prod_330d0eede3bf4a4bb39a', sandbox: 'prod_f9d8a4e440074dca896b', closed: true, invite: 'HIFDH-1Y7K' },   // current students sign up with enroll?plan=one-year&invite=HIFDH-1Y7K
   'Madrasah — Muraajah (Group)':                { amount: 14000, recurring: true, live: 'prod_1e019c42c4234c56a24e', sandbox: '' },
   'Madrasah — Muraajah (Personal)':             { amount: 20000, recurring: true, live: 'prod_1209bb063bd94741b579', sandbox: '' },
