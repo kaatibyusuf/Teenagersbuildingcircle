@@ -302,7 +302,6 @@ body.bx-lock{overflow:hidden}
   <div class="bx-hero-in">
     <h1>The Forty Ḥadīth of Imām <span style="white-space:nowrap">an-Nawawī,</span> <em>at your own pace.</em></h1>
     <p class="bx-p">42 ḥadīth with recorded lessons, the Arabic text, a short quiz for each, and a certificate when you finish.</p>
-    <p class="bx-opens" id="bcOpens" hidden>Joining opens on 1 December 2026. Himaayah Madrasah students can log in now.</p>
     <div class="bx-cta"><a class="bx-btn sky" id="bcHeroJoin" href="#join">Join for ₦15,000</a><a class="bx-btn ghost" href="#syllabus" id="bxHeroSyl">View the syllabus</a></div>
   </div>
   </header>
@@ -414,19 +413,9 @@ body.bx-lock{overflow:hidden}
     $('bcNote').scrollIntoView({ block: 'center' });
   } else if (params.get('cancelled')) $('bcNote').innerHTML = '<p class="pf-warn">Your payment was cancelled, so nothing was charged. You can try again below.</p>';
 
-  const OPEN_AT = Date.UTC(2026, 10, 30, 23, 0, 0);   // 1 December 2026, 00:00 in Nigeria (UTC+1)
-  const notOpen = () => Date.now() < OPEN_AT;
-  if (notOpen()) {
-    $('bcOpens').hidden = false;
-    $('bcHeroJoin').textContent = 'Opens 1 December';
-    $('bcGo').disabled = true; $('bcGo').textContent = 'Opens 1 December';
-    $('bcErr').textContent = 'Joining opens on 1 December 2026.';
-  }
-
   $('bcForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const err = $('bcErr'), btn = $('bcGo'); err.textContent = '';
-    if (notOpen()) return (err.textContent = 'Joining opens on 1 December 2026.');
     const name = $('bcName').value.trim(), email = $('bcEmail').value.trim(), gender = $('bcGender').value;
     if (name.length < 3) return (err.textContent = 'Enter your full name for the certificate.');
     if (gender !== 'm' && gender !== 'f') return (err.textContent = 'Choose brother or sister, so your certificate is worded correctly.');
@@ -439,7 +428,8 @@ body.bx-lock{overflow:hidden}
     } catch (x) { err.textContent = 'Payment isn’t available right now. Please try again, or message the Madrasah line on WhatsApp.'; }
     btn.disabled = false; btn.textContent = old;
   });
-  window.addEventListener('pageshow', (e) => { if (e.persisted && !notOpen()) { $('bcGo').disabled = false; $('bcGo').textContent = 'Pay ₦15,000'; } });
+  // coming back from the payment page with the back button: show the pay button again
+  window.addEventListener('pageshow', (e) => { if (e.persisted) { $('bcGo').disabled = false; $('bcGo').textContent = 'Pay ₦15,000'; } });
 
 
   // search the 42
