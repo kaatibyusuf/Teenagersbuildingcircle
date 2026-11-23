@@ -27,6 +27,7 @@
 <!-- Vercel Analytics: counts visits once enabled in the Vercel dashboard -->
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
 <script defer src="/_vercel/insights/script.js"></script>
+<style>.bc-nar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:0 0 14px}.bc-nar span{font:600 12px/1 Inter,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#094570;background:#E3F2FD;border-radius:999px;padding:7px 12px}.bc-nar b{font:600 18px/1.3 Inter,sans-serif;color:#062F4D}.bc-src b{color:#062F4D}</style>
 </head>
 <body>
 <header class="top"><div>
@@ -85,7 +86,7 @@ function home() {
         : `<p class="sub">Pass all ${s.total} quizzes to unlock your certificate. ${s.total - s.passed} to go.</p>`}</article>
     <article class="c w12" style="--i:2"><h2>The 42 ḥadīth</h2>
       <div class="bc-leg"><span class="bc-st-done">Passed</span><span class="bc-st-started">Started</span><span class="bc-st-new">Not started</span></div>
-      <div class="bc-tiles">${s.lessons.map((x) => `<button type="button" class="bc-tile bc-st-${status(x)}" data-open="${x.n}"><span class="bc-tn">${x.n}</span><span class="bc-tt"><b>${esc(x.title)}</b><i lang="ar" dir="rtl" translate="no">${esc(TITLE_AR[x.n - 1] || '')}</i></span>${x.passed ? `<span class="bc-ok" aria-label="Passed">✓</span>` : x.best ? `<span class="bc-sc">${x.best}/5</span>` : ''}${x.recordings ? '' : '<span class="bc-na">Audio soon</span>'}</button>`).join('')}</div></article>
+      <div class="bc-tiles">${s.lessons.map((x) => `<button type="button" class="bc-tile bc-st-${status(x)}" data-open="${x.n}"><span class="bc-tn">${x.n}</span><span class="bc-tt"><b>${esc(x.title)}</b><i lang="ar" dir="rtl" translate="no">${esc(TITLE_AR[x.n - 1] || '')}</i></span>${x.passed ? `<span class="bc-ok" aria-label="Passed">✓</span>` : x.best ? `<span class="bc-sc">${x.best}/5</span>` : ''}${x.recordings || s.telegram ? '' : '<span class="bc-na">Audio soon</span>'}</button>`).join('')}</div></article>
   </div>
   <p class="foot">Your progress is saved after each quiz. Questions? Message the Madrasah line on WhatsApp: +234 702 584 2849.</p>`;
   bars();
@@ -102,6 +103,12 @@ async function openLesson(n) {
     L = d.lesson; history.replaceState(null, '', '#h=' + n); lesson();
   } catch (e) { if (e.message === 'login') return logout(); $('app').innerHTML = '<p class="bc-loading">Could not reach the school server. Please try again.</p>'; }
 }
+/* The lesson recordings are in the Bootcamp Telegram group. The server sends the link only to signed-in members. */
+function tgBlock(x) {
+  const t = x.telegram, ok = t && /^https:\/\/(t|telegram)\.me\//i.test(t.url || '');
+  if (!ok) return '';
+  return `<div class="bc-rec"><b>Listen on Telegram</b><p class="sub" style="margin:0 0 12px">${t.post ? 'This link opens the recording for this \u1E25ad\u012Bth in the Bootcamp Telegram group.' : 'The recordings are in the Bootcamp Telegram group. Open it, find \u1E25ad\u012Bth ' + x.n + ', listen, then come back here to take the quiz.'}</p><a class="btn btn-ink" href="${esc(t.url)}" target="_blank" rel="noopener noreferrer">Open Telegram</a></div>`;
+}
 function lesson() {
   const x = L, prev = x.n > 1 ? x.n - 1 : 0, nxt = x.n < 42 ? x.n + 1 : 0;
   $('app').innerHTML = `
@@ -110,12 +117,13 @@ function lesson() {
     <span class="bc-kick">Ḥadīth ${x.n}</span>
     <h1>${esc(x.title)}</h1><p class="bc-tar" lang="ar" dir="rtl" translate="no">${esc(TITLE_AR[x.n - 1] || '')}</p>
     <section class="bc-audio"><h2>Lesson recording</h2>
-      ${x.recordings.length ? x.recordings.map((r, i) => `<div class="bc-rec"><b>${esc(r.title || ('Part ' + (i + 1)))}${r.minutes ? ` <em>${r.minutes} min</em>` : ''}</b><iframe src="${esc(r.embed)}" title="${esc(r.title || 'Lesson recording')}" allow="autoplay" loading="lazy"></iframe></div>`).join('') : '<p class="sub">The recording for this ḥadīth is being added. You can still read it and take the quiz.</p>'}
-      ${x.recordings.length ? `<button class="btn ${x.listened ? 'btn-line' : 'btn-ink'}" type="button" id="heard" ${x.listened ? 'disabled' : ''}>${x.listened ? '✓ Marked as listened' : 'I have listened to this lesson'}</button>` : ''}</section>
+      ${x.recordings.length ? x.recordings.map((r, i) => `<div class="bc-rec"><b>${esc(r.title || ('Part ' + (i + 1)))}${r.minutes ? ` <em>${r.minutes} min</em>` : ''}</b><iframe src="${esc(r.embed)}" title="${esc(r.title || 'Lesson recording')}" allow="autoplay" loading="lazy"></iframe></div>`).join('') : (x.telegram ? tgBlock(x) : '<p class="sub">The recording for this ḥadīth is being added. You can still read it and take the quiz.</p>')}
+      ${x.recordings.length || x.telegram ? `<button class="btn ${x.listened ? 'btn-line' : 'btn-ink'}" type="button" id="heard" ${x.listened ? 'disabled' : ''}>${x.listened ? '✓ Marked as listened' : 'I have listened to this lesson'}</button>` : ''}</section>
     <section class="bc-text"><h2>The ḥadīth</h2>
+      <p class="bc-nar"><span>Narrator</span><b translate="no">${esc(x.narrator)}</b></p>
       <p class="bc-ar" lang="ar" dir="rtl" translate="no">${esc(x.ar)}</p>
       <p class="bc-en">${esc(x.en)}</p>
-      <p class="bc-src">Narrated by ${esc(x.narrator)}. ${esc(x.source)}.</p></section>
+      <p class="bc-src"><b>Narrated by ${esc(x.narrator)}.</b> Source: ${esc(x.source)}.</p></section>
     <section class="bc-keys"><h2>Key lessons</h2><ul>${x.lessons.map((t) => `<li>${esc(t)}</li>`).join('')}</ul></section>
     <section class="bc-quiz"><h2>Quiz</h2><p class="sub">${x.passed ? `You have passed this quiz (best score ${x.best}/5). You can take it again to practise.` : `Answer all five questions. You need 4 out of 5 to pass.${x.attempts ? ` Best so far: ${x.best}/5.` : ''}`}</p>
       <form id="qf" novalidate>${x.quiz.map((q, i) => `<fieldset class="bc-q" data-i="${i}"><legend><span>${i + 1}</span>${esc(q.q)}</legend>${q.options.map((o, j) => `<label><input type="radio" name="q${i}" value="${esc(o)}"><span>${esc(o)}</span></label>`).join('')}</fieldset>`).join('')}
