@@ -46,6 +46,7 @@ function makeSheet(name, book) {
   sh.setFrozenRows = function (n) { sh.frozen = n; };
   sh.clearContents = function () { sh.data = []; };
   sh.deleteRows = function (at, n) { sh.data.splice(at - 1, n); };
+  sh.deleteRow = function (at) { sh.data.splice(at - 1, 1); };
   sh.autoResizeColumns = function () {};
   sh.setColumnWidth = function () {};
   return sh;

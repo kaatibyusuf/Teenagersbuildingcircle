@@ -203,6 +203,7 @@ function assignmentsFor_(st, A, S) {
   A = A || table_('Assignments'); S = S || table_('Submissions');
   const mine = {};
   S.rows.forEach(function (s) { if (key_(s.StudentID) === id) mine[String(s.AssignmentID)] = s; });
+  let RM = {}; try { RM = typeof rec_assignMap_ === 'function' ? rec_assignMap_(id) : {}; } catch (e) { console.error(e); }   // voice answers (Recordings.gs)
   return A.rows.filter(function (a) {
     return a.AssignmentID && a.Title && key_(a.Active) !== 'FALSE' && matches_(a.Level, [lvl]) && matches_(a.Audience, [id]);
   }).map(function (a) {
@@ -212,7 +213,7 @@ function assignmentsFor_(st, A, S) {
     return {
       AssignmentID: String(a.AssignmentID), Title: a.Title, Instructions: a.Instructions, Subject: a.Subject,
       Assigned: iso_(a.Assigned), Due: due, Link: a.Link, MaxScore: a.MaxScore, Status: status,
-      Submission: s ? { Submitted: iso_(s.Submitted, true), Note: s.Note, Link: s.Link, Score: scored ? s.Score : '', Feedback: s.Feedback, Late: !!(due && iso_(s.Submitted) > due) } : null
+      Submission: s ? { Submitted: iso_(s.Submitted, true), Note: s.Note, Link: s.Link, Score: scored ? s.Score : '', Feedback: s.Feedback, Late: !!(due && iso_(s.Submitted) > due), Rec: RM[String(a.AssignmentID)] || null } : null
     };
   }).sort(function (x, y) {
     const rx = x.Status === 'Marked' ? 1 : 0, ry = y.Status === 'Marked' ? 1 : 0;

@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600;700&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css?v=20261028c">
+<link rel="stylesheet" href="css/styles.css?v=20261126a">
 <link rel="stylesheet" href="css/dark.css">
 <script src="js/theme.js"></script>
 <script src="js/auth-guard.js"></script>
@@ -119,6 +119,7 @@ function demo() {
     materials: [{Title:'Sample revision notes (PDF)',URL:'#'},{Title:'Tajweed rules summary',URL:'#'}],
     assignments: [
       { AssignmentID: 'A1', Title: 'Noon sakinah practice', Subject: 'Tajweed', Instructions: 'Recite Al-Baqarah 1 to 5 and write down each rule you applied.', Assigned: ymd(-3), Due: ymd(2), Link: '#', MaxScore: 20, Status: 'To do', Submission: null },
+      { AssignmentID: 'A5', Title: 'Recite Hadith 1 of an-Nawawi', Subject: 'Hadith', Instructions: 'Record yourself reciting Hadith 1 (Innamal aʿmālu bin-niyyāt) from memory.', Assigned: ymd(-1), Due: ymd(4), Link: '', MaxScore: 10, Status: 'To do', Submission: null },
       { AssignmentID: 'A2', Title: 'Seerah questions', Subject: 'Seerah', Instructions: 'Answer questions 1 to 5 from the handout.', Assigned: ymd(-7), Due: ymd(-1), Link: '', MaxScore: 10, Status: 'Overdue', Submission: null },
       { AssignmentID: 'A3', Title: 'Aqeedah worksheet', Subject: 'Tawheed', Instructions: 'Complete the worksheet and submit a photo link.', Assigned: ymd(-6), Due: ymd(3), Link: '', MaxScore: 20, Status: 'Submitted', Submission: { Submitted: day(-1, 20), Note: 'Done, Alhamdulillah.', Link: '', Score: '', Feedback: '', Late: false } },
       { AssignmentID: 'A4', Title: 'Fiqh of wudu', Subject: 'Fiqh', Instructions: 'Write the obligatory acts of wudu.', Assigned: ymd(-14), Due: ymd(-9), Link: '', MaxScore: 20, Status: 'Marked', Submission: { Submitted: day(-10, 18), Note: 'My answers are attached.', Link: '', Score: 17, Feedback: 'Good work. Revise the order of the acts.', Late: false } }],
@@ -146,6 +147,16 @@ function demoRec(action, p) {
     if (!x) return { ok: false, error: 'Recording not found.' };
     if (x.Status === 'Marked') return { ok: false, error: 'This recording has already been marked.' };
     R.items = R.items.filter((i) => i !== x); demoData = d; return demo();
+  }
+  if (p.assignmentId) {   // a recording handed in as the answer to an assignment
+    const a = d.assignments.find((x) => x.AssignmentID === p.assignmentId);
+    if (!a) return { ok: false, error: 'Assignment not found.' };
+    if (a.Status === 'Marked') return { ok: false, error: 'This assignment has already been marked.' };
+    const rid = 'R-' + Math.random().toString(36).slice(2, 8).toUpperCase();
+    demoAudio[rid] = { mime: p.mime || 'audio/webm', audio: p.audio };
+    a.Status = 'Submitted';
+    a.Submission = { Submitted: new Date().toISOString(), Note: p.note || 'Voice recording', Link: '', Score: '', Feedback: '', Late: a.Due < new Date().toISOString().slice(0, 10), Rec: { RecID: rid, Seconds: p.seconds || 0, Submitted: new Date().toISOString() } };
+    demoData = d; return demo();
   }
   if (!p.surah) return { ok: false, error: 'Choose the surah.' };
   if (R.items.filter((i) => i.Status === 'Waiting').length >= 5) return { ok: false, error: 'You have 5 recordings waiting for your teacher. Please wait for them to be marked.' };
@@ -211,10 +222,10 @@ function assignmentHtml(a) {
       ${a.Instructions ? `<p>${esc(a.Instructions)}</p>` : ''}
       ${safeUrl(a.Link) ? `<p><a class="lnk" href="${esc(a.Link)}" target="_blank" rel="noopener">Open the resource</a></p>` : ''}
       ${marked ? `<div class="mark"><div class="k">Marked by your teacher</div><b>${esc(sb.Score)}${a.MaxScore ? '/' + esc(a.MaxScore) : ''}</b>${sb.Feedback ? `<p>${esc(sb.Feedback)}</p>` : ''}</div>` : ''}
-      ${sb ? `<div class="mine"><div class="k">Your submission${sb.Late ? ' (late)' : ''}, ${fdate(sb.Submitted, true)}</div>${sb.Note ? `<p>${esc(sb.Note)}</p>` : ''}${safeUrl(sb.Link) ? `<p><a class="lnk" href="${esc(sb.Link)}" target="_blank" rel="noopener">Your file or link</a></p>` : ''}</div>` : ''}
-      ${marked ? '' : `<form class="subm" data-id="${esc(a.AssignmentID)}" novalidate>
+      ${sb ? `<div class="mine"><div class="k">Your submission${sb.Late ? ' (late)' : ''}, ${fdate(sb.Submitted, true)}</div>${sb.Note ? `<p>${esc(sb.Note)}</p>` : ''}${safeUrl(sb.Link) ? `<p><a class="lnk" href="${esc(sb.Link)}" target="_blank" rel="noopener">Your file or link</a></p>` : ''}${sb.Rec ? `<p class="asg-rec"><span class="k">Your voice answer \u00B7 ${mmss(sb.Rec.Seconds || 0)}</span><span class="rec-play" data-id="${esc(sb.Rec.RecID)}">${REC.playing[sb.Rec.RecID] ? `<audio controls preload="auto" src="${REC.playing[sb.Rec.RecID]}"></audio>` : `<button type="button" class="btn btn-line btn-sm" data-rec="play" data-id="${esc(sb.Rec.RecID)}">Listen</button>`}</span></p>` : ''}</div>` : ''}
+      ${marked ? '' : `${((window.__lastData || {}).recordings || {}).enabled ? `<div class="asg-voice"><button type="button" class="btn btn-ink btn-sm" data-rec="forasg" data-id="${esc(a.AssignmentID)}">${sb && sb.Rec ? 'Record my answer again' : 'Answer with a recording'}</button><span class="sub">Record your voice or upload a voice note. No typing needed.</span></div>` : ''}<form class="subm" data-id="${esc(a.AssignmentID)}" novalidate>
         <label for="n-${esc(a.AssignmentID)}">${sb ? 'Change your note' : 'Note to your teacher'}</label>
-        <textarea id="n-${esc(a.AssignmentID)}" name="note" rows="3" maxlength="2000" placeholder="Write your answer or a short note">${esc(sb ? sb.Note : '')}</textarea>
+        <textarea id="n-${esc(a.AssignmentID)}" name="note" rows="3" maxlength="2000" placeholder="Write your answer or a short note">${esc(sb && sb.Note !== 'Voice recording' ? sb.Note : '')}</textarea>
         <label for="l-${esc(a.AssignmentID)}">Link to your work (optional)</label>
         <input id="l-${esc(a.AssignmentID)}" name="link" type="url" placeholder="https://..." value="${esc(sb ? sb.Link : '')}">
         <label for="f-${esc(a.AssignmentID)}">File (optional): a photo, Word document or PDF, up to 7 MB</label>
@@ -260,9 +271,10 @@ function ttCard(d) {
 }
 /* ===== Recite to your teacher (all Madrasah students) =====
    The recorder keeps its state here, outside render(), so a re-render never loses a recording. */
-const REC = { form: { type: 'New lesson', surah: '', from: '', to: '', note: '' }, blob: null, url: '', secs: 0, mime: '', ext: '', fileName: '', mr: null, stream: null, t0: 0, acc: 0, paused: false, wl: null, tick: null, sending: false, playing: {} };
+const REC = { form: { type: 'New lesson', surah: '', from: '', to: '', note: '', assignment: '' }, blob: null, url: '', secs: 0, mime: '', ext: '', fileName: '', mr: null, stream: null, t0: 0, acc: 0, paused: false, wl: null, tick: null, sending: false, playing: {} };
 const REC_TYPES = ['New lesson', 'Revision', 'Test'];
 const mmss = (n) => Math.floor(n / 60) + ':' + String(Math.floor(n % 60)).padStart(2, '0');
+const recBtnLabel = () => REC.form.assignment ? 'Hand in as my answer' : 'Send to my teacher';
 const recOK = () => !!(window.MediaRecorder && navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
 function recPickMime() {
   const c = ['audio/webm;codecs=opus', 'audio/ogg;codecs=opus', 'audio/mp4', 'audio/webm'];
@@ -285,10 +297,14 @@ function recCard(d) {
   const R = d.recordings; if (!R || !R.enabled) return '';
   const f = REC.form, sur = window.SURAHS || [], cur = sur.find((x) => x[0] === f.surah), max = cur ? cur[2] : 286;
   const items = R.items || [], waiting = items.filter((x) => x.Status === 'Waiting').length;
+  const openAsg = (d.assignments || []).filter((a) => a.Status !== 'Marked');   // a recording can be handed in as the answer to any assignment that is not marked yet
+  if (f.assignment && !openAsg.some((a) => a.AssignmentID === f.assignment)) f.assignment = '';
   const scoreLine = (x) => ['Memorisation', 'Tajwid', 'Fluency'].filter((k) => x[k] !== null && x[k] !== undefined).map((k) => `<span>${k === 'Tajwid' ? 'Tajwīd' : k} <b>${esc(x[k])}/${k === 'Fluency' ? 5 : 10}</b></span>`).join('');
   return `<article class="c w12" id="recite" style="--i:3"><h2>Recite to your teacher${waiting ? ` <span class="pill st-sub" style="font-size:12px;vertical-align:middle">${waiting} waiting</span>` : ''}</h2>
-    <p class="sub">Record your new lesson or revision, or upload a voice note. Your teacher listens, gives you a score and tells you what to work on.</p>
-    <form class="recf" id="recForm" novalidate>
+    <p class="sub">Record your new lesson or revision, or upload a voice note. You can also use it to answer an assignment that asks for a recording. Your teacher listens, gives you a score and tells you what to work on.</p>
+    <form class="recf${f.assignment ? ' for-asg' : ''}" id="recForm" novalidate>
+      ${openAsg.length ? `<div><label for="rFor">This recording is for</label><select id="rFor" name="for"><option value="">My recitation practice</option>${openAsg.map((a) => `<option value="${esc(a.AssignmentID)}"${f.assignment === a.AssignmentID ? ' selected' : ''}>Assignment: ${esc(a.Title)}${a.Status === 'Overdue' ? ' (overdue)' : a.Status === 'Submitted' ? ' (replaces my answer)' : ''}</option>`).join('')}</select></div>
+      <p class="sub asg-only">Your recording will be handed in as your answer to this assignment. Your teacher listens to it and gives you a score.</p>` : ''}
       <div class="rec-types" role="radiogroup" aria-label="What are you reciting?">${REC_TYPES.map((t) => `<label><input type="radio" name="rtype" value="${t}"${f.type === t ? ' checked' : ''}><span>${t}</span></label>`).join('')}</div>
       <div class="rec-row">
         <div><label for="rSurah">Surah</label><select id="rSurah" name="surah"><option value="">Choose a surah</option>${sur.map((s, i) => `<option value="${esc(s[0])}"${f.surah === s[0] ? ' selected' : ''}>${i + 1}. ${esc(s[0])} · ${esc(s[1])}</option>`).join('')}</select></div>
@@ -299,7 +315,7 @@ function recCard(d) {
       <label for="rNote">Note to your teacher (optional)</label>
       <textarea id="rNote" name="note" rows="2" maxlength="500" placeholder="For example: I was not sure about ayah 5.">${esc(f.note)}</textarea>
       <div class="msg" id="recMsg" role="status"></div>
-      <button class="btn btn-ink" type="submit" id="recSend"${REC.blob && !REC.sending ? '' : ' disabled'}>Send to my teacher</button>
+      <button class="btn btn-ink" type="submit" id="recSend"${REC.blob && !REC.sending ? '' : ' disabled'}>${recBtnLabel()}</button>
     </form>
     <h3 class="rec-h">My recitations</h3>
     ${items.length ? `<div class="rec-list">${items.map((x) => `<div class="rec-item" data-id="${esc(x.RecID)}">
@@ -325,6 +341,14 @@ function recBoxHtml() {
     <p class="sub rec-tip">Find a quiet place and hold the phone about a hand’s length away. Up to ${maxMin} minutes. You can pause and carry on.</p></div>`;
 }
 function recMount() { const b = $('recBox'); if (b) b.innerHTML = recBoxHtml(); const s = $('recSend'); if (s) s.disabled = !REC.blob || REC.sending || !!REC.mr; }
+function recForSync() {   // the form changes shape when the recording is for an assignment
+  const f = $('recForm'); if (f) f.classList.toggle('for-asg', !!REC.form.assignment);
+  const b = $('recSend'); if (b && !REC.sending) b.textContent = recBtnLabel();
+}
+function recForAssignment(id) {   // the "Answer with a recording" button on an assignment
+  REC.form.assignment = id; const sel = $('rFor'); if (sel) sel.value = id; recForSync();
+  const card = $('recite'); if (card) { card.scrollIntoView({ behavior: 'smooth', block: 'start' }); setTimeout(() => { const b = card.querySelector('[data-rec=start]'); if (b) b.focus({ preventScroll: true }); }, 500); }
+}
 function recSay(t, good) { const m = $('recMsg'); if (m) { m.textContent = t; m.className = 'msg' + (t ? (good ? ' good' : ' bad') : ''); } }
 function recSetBlob(blob, secs, name) {
   if (REC.url) URL.revokeObjectURL(REC.url);
@@ -387,26 +411,26 @@ function recFile(input) {
 }
 const toB64 = (blob) => new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(String(r.result).split(',')[1] || ''); r.onerror = rej; r.readAsDataURL(blob); });
 async function recSend() {
-  const f = REC.form;
-  if (!f.surah) return recSay('Choose the surah you recited.');
-  if (f.from && f.to && Number(f.to) < Number(f.from)) return recSay('The last ayah cannot come before the first.');
-  if (!REC.blob) return recSay('Record your recitation or upload a voice note first.');
+  const f = REC.form, asg = f.assignment;
+  if (!asg && !f.surah) return recSay('Choose the surah you recited.');
+  if (!asg && f.from && f.to && Number(f.to) < Number(f.from)) return recSay('The last ayah cannot come before the first.');
+  if (!REC.blob) return recSay(asg ? 'Record your answer or upload a voice note first.' : 'Record your recitation or upload a voice note first.');
   let saved = null; try { saved = JSON.parse(sessionStorage.getItem('hs') || 'null'); } catch (x) {}
   if (!saved) return recSay('Please log in again.');
   REC.sending = true; recMount(); const btn = $('recSend'); if (btn) btn.textContent = 'Sending…';
   recSay('Sending ' + (REC.blob.size / 1048576).toFixed(1) + ' MB. Please keep this page open.', true);
   try {
     const audio = await toB64(REC.blob);
-    const d = await api(saved.id, saved.code, 'rec_submit', { type: f.type, surah: f.surah, fromAyah: f.from, toAyah: f.to, note: f.note, audio, mime: REC.mime, ext: REC.ext, seconds: REC.secs });
+    const d = await api(saved.id, saved.code, 'rec_submit', Object.assign({ note: f.note, audio, mime: REC.mime, ext: REC.ext, seconds: REC.secs }, asg ? { assignmentId: asg } : { type: f.type, surah: f.surah, fromAyah: f.from, toAyah: f.to }));
     REC.sending = false;
     if (d.ok) {
-      recSetBlob(null); REC.form = { type: f.type, surah: '', from: '', to: '', note: '' };
-      render(d); recSay('Sent. Your teacher will listen and mark it, in shāʾa Allāh.', true);
+      recSetBlob(null); REC.form = { type: f.type, surah: '', from: '', to: '', note: '', assignment: '' };
+      render(d); recSay(asg ? 'Handed in. Your teacher will listen to it and score it, in shāʾa Allāh.' : 'Sent. Your teacher will listen and mark it, in shāʾa Allāh.', true);
       return;
     }
     recMount(); recSay(d.error || 'Could not send. Please try again.');
   } catch (e) { REC.sending = false; recMount(); recSay('Could not reach the school server. Check your internet and try again.'); }
-  const b2 = $('recSend'); if (b2) b2.textContent = 'Send to my teacher';
+  const b2 = $('recSend'); if (b2) b2.textContent = recBtnLabel();
 }
 async function recPlay(id, btn) {
   let saved = null; try { saved = JSON.parse(sessionStorage.getItem('hs') || 'null'); } catch (x) {}
@@ -561,6 +585,7 @@ function rtCount(id) {
 }
 function rtRecord() {   // jump to the recorder with the lesson filled in
   const d = window.__lastData || {}, s = d.student || {}, type = RT.kind === 'muraajah' ? 'Revision' : 'New lesson';
+  REC.form.assignment = ''; const fo = $('rFor'); if (fo) fo.value = ''; recForSync();
   const r = document.querySelector(`input[name="rtype"][value="${type}"]`); if (r) { r.checked = true; r.dispatchEvent(new Event('change', { bubbles: true })); }
   const sel = $('rSurah');
   if (sel && s.CurrentSurah && !sel.value) {
@@ -683,11 +708,13 @@ $('app').addEventListener('click', (e) => {
   else if (k === 'discard') { recSetBlob(null); recSay(''); }
   else if (k === 'play') recPlay(b.dataset.id, b);
   else if (k === 'withdraw') recWithdraw(b.dataset.id, b);
+  else if (k === 'forasg') recForAssignment(b.dataset.id);
 });
 $('app').addEventListener('change', (e) => {
   const t = e.target;
   if (t.id === 'recFile') { recFile(t); t.value = ''; }
   else if (t.name === 'rtype') REC.form.type = t.value;
+  else if (t.id === 'rFor') { REC.form.assignment = t.value; recForSync(); }
   else if (t.id === 'rSurah') {
     REC.form.surah = t.value; const s = (window.SURAHS || []).find((x) => x[0] === t.value), max = s ? s[2] : 286;
     ['rFrom', 'rTo'].forEach((id) => { const el = $(id); if (el) el.max = max; }); const to = $('rTo'); if (to) to.placeholder = max;

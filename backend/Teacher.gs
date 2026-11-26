@@ -135,6 +135,7 @@ function tchPayload_(me) {
   }).sort(function (a, b) { return String(a.Name).toLowerCase() < String(b.Name).toLowerCase() ? -1 : 1; });
   const A = table_('Assignments'), S = table_('Submissions'), sub = {};
   S.rows.forEach(function (s) { sub[String(s.AssignmentID) + '|' + key_(s.StudentID)] = s; });
+  let RM = {}; try { RM = typeof rec_assignMapAll_ === 'function' ? rec_assignMapAll_() : {}; } catch (e) { console.error(e); }   // voice answers (Recordings.gs)
   const assignments = [];
   A.rows.forEach(function (a) {
     if (!a.AssignmentID || !a.Title) return;
@@ -147,7 +148,7 @@ function tchPayload_(me) {
       return {
         StudentID: sid(s), Name: s.Name,
         Status: scored ? 'Marked' : x ? 'Submitted' : (due && due < today) ? 'Overdue' : 'To do',
-        Submission: x ? { Submitted: iso_(x.Submitted, true), Note: x.Note, Link: x.Link, Score: scored ? x.Score : '', Feedback: x.Feedback, Late: !!(due && iso_(x.Submitted) > due) } : null
+        Submission: x ? { Submitted: iso_(x.Submitted, true), Note: x.Note, Link: x.Link, Score: scored ? x.Score : '', Feedback: x.Feedback, Late: !!(due && iso_(x.Submitted) > due), Rec: RM[String(a.AssignmentID) + '|' + key_(s.StudentID)] || null } : null
       };
     });
     assignments.push({

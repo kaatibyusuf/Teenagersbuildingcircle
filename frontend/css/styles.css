@@ -4802,6 +4802,15 @@ html[dir="rtl"] :is(.page-hadith-bootcamp, .page-bootcamp) :is(.bc-t, .bc-tt) i,
 .rec-types span { display: inline-block; padding: 8px 16px; border-radius: 999px; background: var(--wash); font-size: 14px; font-weight: 600; color: var(--ink); border: 1.5px solid transparent; }
 .rec-types input:checked + span { background: var(--ink); color: #fff; }
 .rec-types input:focus-visible + span { border-color: var(--sky, #85CCFF); }
+.recf.for-asg .rec-types, .recf.for-asg .rec-row { display: none; }
+.recf .asg-only { display: none; margin: 0; }
+.recf.for-asg .asg-only { display: block; }
+.asg-voice { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin: 6px 0 12px; }
+.asg-voice .sub { margin: 0; }
+.asg-rec { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin: 8px 0 0; }
+.asg-rec .k { margin: 0; }
+.asg-rec .rq-play, .asg-rec .rec-play { flex: 1 1 260px; max-width: 420px; min-width: 0; }
+.asg-rec audio { width: 100%; max-width: 420px; height: 40px; }
 .rec-row { display: grid; grid-template-columns: minmax(0, 2.2fr) minmax(0, 1fr) minmax(0, 1fr); gap: 10px; }
 .rec-row > div { display: grid; gap: 6px; }
 .rec-box { background: #F4F9FD; border: 1.5px dashed #BFD6E6; border-radius: 18px; padding: 18px; }

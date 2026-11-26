@@ -18,13 +18,14 @@
 /* ===== SETTINGS ===== */
 const REC_TAB = 'Recordings';
 const REC_HEADERS = ['RecID', 'StudentID', 'Submitted', 'Type', 'Surah', 'FromAyah', 'ToAyah', 'Portion', 'Note', 'FileID', 'Mime', 'SizeKB', 'Seconds',
-  'Memorisation', 'Tajwid', 'Fluency', 'Result', 'Feedback', 'MarkedBy', 'Marked'];
+  'Memorisation', 'Tajwid', 'Fluency', 'Result', 'Feedback', 'MarkedBy', 'Marked', 'AssignmentID'];   // AssignmentID: set when the recording was handed in as an assignment
 const REC_FOLDER_NAME = 'Himaayah Recitations';        // created in the school Google Drive by setupRecordings
 const REC_MAX_BYTES = 30 * 1024 * 1024;               // largest file a student can send (browser recording is about 22 MB for an hour)
 const REC_MAX_SECONDS = 60 * 60;                       // longest recording the dashboard allows (60 minutes)
 const REC_MAX_PER_DAY = 6;                             // submissions per student per day
 const REC_MAX_WAITING = 5;                             // unmarked recordings a student can have at once
 const REC_TYPES = ['New lesson', 'Revision', 'Test'];
+const REC_ASSIGN_TYPE = 'Assignment';                   // Type given to a recording handed in for an assignment (marked from the Assignments tab, not the Recitations tab)
 const REC_RESULTS = ['Pass', 'Repeat'];
 const REC_ALL_MADRASAH = true;                              // true: every Madrasah student gets the card. false: only the plans or levels below
 const REC_PLANS = /hif[dzẓ]|tahf[iīe]|mur[aā]+ja|revision/i;   // used when REC_ALL_MADRASAH is false (Hifdh, Hifz, Tahfeez, Muraajah, Muraja'ah...)
@@ -71,7 +72,31 @@ function rec_eligible_(st) {
 }
 function rec_table_() {
   if (!ss_().getSheetByName(REC_TAB)) tchEnsure_(ss_(), REC_TAB, REC_HEADERS);
-  return table_(REC_TAB);
+  const t = table_(REC_TAB);
+  if (t.head.indexOf('AssignmentID') < 0) { tchEnsure_(ss_(), REC_TAB, REC_HEADERS); return table_(REC_TAB); }   // older tab: add the new column by itself
+  return t;
+}
+/* Which recording a student handed in for which assignment: { assignmentId: { RecID, Seconds, Submitted } } (newest one wins) */
+function rec_assignMap_(studentKey) {
+  const out = {};
+  if (!ss_().getSheetByName(REC_TAB)) return out;
+  table_(REC_TAB).rows.forEach(function (r) {
+    if (!r.RecID || !String(r.AssignmentID || '').trim() || key_(r.StudentID) !== studentKey) return;
+    const k = String(r.AssignmentID).trim(), cur = out[k];
+    if (!cur || String(iso_(r.Submitted, true)) > cur.Submitted) out[k] = { RecID: String(r.RecID), Seconds: Number(r.Seconds) || 0, Submitted: iso_(r.Submitted, true) };
+  });
+  return out;
+}
+/* Same for the teacher pages, for every student: { 'assignmentId|STUDENTID': { RecID, Seconds, Submitted } } */
+function rec_assignMapAll_() {
+  const out = {};
+  if (!ss_().getSheetByName(REC_TAB)) return out;
+  table_(REC_TAB).rows.forEach(function (r) {
+    if (!r.RecID || !String(r.AssignmentID || '').trim()) return;
+    const k = String(r.AssignmentID).trim() + '|' + key_(r.StudentID), cur = out[k];
+    if (!cur || String(iso_(r.Submitted, true)) > cur.Submitted) out[k] = { RecID: String(r.RecID), Seconds: Number(r.Seconds) || 0, Submitted: iso_(r.Submitted, true) };
+  });
+  return out;
 }
 function rec_folder_() {
   const props = PropertiesService.getScriptProperties(), id = props.getProperty('REC_FOLDER_ID');
@@ -101,7 +126,7 @@ function rec_view_(r, withName) {
     Surah: String(r.Surah || ''), FromAyah: rec_num_(r.FromAyah), ToAyah: rec_num_(r.ToAyah), Portion: String(r.Portion || ''), Note: String(r.Note || ''),
     Seconds: Number(r.Seconds) || 0, SizeKB: Number(r.SizeKB) || 0, Status: marked ? 'Marked' : 'Waiting',
     Memorisation: rec_num_(r.Memorisation), Tajwid: rec_num_(r.Tajwid), Fluency: rec_num_(r.Fluency), Total: marked ? rec_total_(r) : null,
-    Result: String(r.Result || ''), Feedback: String(r.Feedback || ''), Marked: iso_(r.Marked, true)
+    Result: String(r.Result || ''), Feedback: String(r.Feedback || ''), Marked: iso_(r.Marked, true), AssignmentID: String(r.AssignmentID || '')
   };
   if (withName) o.Name = withName;
   return o;
@@ -113,19 +138,30 @@ function rec_forStudent_(st) {
   if (!rec_eligible_(st) || !ss_().getSheetByName(REC_TAB)) return { enabled: rec_eligible_(st), items: [] };
   const id = key_(st.StudentID);
   return { enabled: true, maxSeconds: REC_MAX_SECONDS, maxMB: REC_MAX_BYTES / 1048576,
-    items: table_(REC_TAB).rows.filter(function (r) { return r.RecID && key_(r.StudentID) === id; }).map(function (r) { return rec_view_(r); }).sort(rec_newest_).slice(0, 30) };
+    items: table_(REC_TAB).rows.filter(function (r) { return r.RecID && key_(r.StudentID) === id && !String(r.AssignmentID || '').trim(); }).map(function (r) { return rec_view_(r); }).sort(rec_newest_).slice(0, 30) };
 }
 
 /* ===== STUDENT SENDS A RECORDING ===== */
 function rec_submit_(st, p) {
   if (!rec_eligible_(st)) return { ok: false, error: 'Recordings are for Madrasah students.' };
-  const type = String(p.type || ''), surah = tchClean_(p.surah, 60), note = tchClean_(p.note, 500);
-  if (REC_TYPES.indexOf(type) < 0) return { ok: false, error: 'Choose what you are reciting.' };
-  if (!surah) return { ok: false, error: 'Choose the surah.' };
-  const from = tchNum_(p.fromAyah), to = tchNum_(p.toAyah);
-  const okAyah = function (n) { return isNaN(n) || (n >= 1 && n <= 286 && Math.floor(n) === n); };
-  if (!okAyah(from) || !okAyah(to)) return { ok: false, error: 'Ayah numbers must be whole numbers from 1 to 286.' };
-  if (!isNaN(from) && !isNaN(to) && to < from) return { ok: false, error: 'The last ayah cannot come before the first.' };
+  /* An assignment id means the recording is the student's answer to that assignment: no surah or ayah is needed */
+  const aid = tchClean_(p.assignmentId, 40);
+  let asg = null;
+  if (aid) {
+    asg = assignmentsFor_(st).filter(function (x) { return x.AssignmentID === aid; })[0];
+    if (!asg) return { ok: false, error: 'Assignment not found.' };
+    if (asg.Status === 'Marked') return { ok: false, error: 'This assignment has already been marked.' };
+  }
+  const type = asg ? REC_ASSIGN_TYPE : String(p.type || ''), surah = asg ? '' : tchClean_(p.surah, 60), note = tchClean_(p.note, 500);
+  let from = NaN, to = NaN;
+  if (!asg) {
+    if (REC_TYPES.indexOf(type) < 0) return { ok: false, error: 'Choose what you are reciting.' };
+    if (!surah) return { ok: false, error: 'Choose the surah.' };
+    from = tchNum_(p.fromAyah); to = tchNum_(p.toAyah);
+    const okAyah = function (n) { return isNaN(n) || (n >= 1 && n <= 286 && Math.floor(n) === n); };
+    if (!okAyah(from) || !okAyah(to)) return { ok: false, error: 'Ayah numbers must be whole numbers from 1 to 286.' };
+    if (!isNaN(from) && !isNaN(to) && to < from) return { ok: false, error: 'The last ayah cannot come before the first.' };
+  }
   const data = String(p.audio || ''), ext = tchClean_(p.ext, 6).toLowerCase().replace(/[^a-z0-9]/g, '');
   let mime = tchClean_(p.mime, 60).toLowerCase().split(';')[0];
   if (!/^audio\//.test(mime)) mime = REC_MIMES[ext] || (mime === 'video/webm' ? 'audio/webm' : mime === 'video/mp4' ? 'audio/mp4' : '');
@@ -140,22 +176,39 @@ function rec_submit_(st, p) {
   const id = key_(st.StudentID), t = rec_table_(), today = today_();
   const mine = t.rows.filter(function (r) { return r.RecID && key_(r.StudentID) === id; });
   if (mine.filter(function (r) { return iso_(r.Submitted) === today; }).length >= REC_MAX_PER_DAY) return { ok: false, error: 'You can send up to ' + REC_MAX_PER_DAY + ' recordings a day. Please try again tomorrow.' };
-  if (mine.filter(function (r) { return !String(r.Result || '').trim(); }).length >= REC_MAX_WAITING) return { ok: false, error: 'You have ' + REC_MAX_WAITING + ' recordings waiting for your teacher. Please wait for them to be marked.' };
+  if (mine.filter(function (r) { return !String(r.Result || '').trim() && !String(r.AssignmentID || '').trim(); }).length >= REC_MAX_WAITING) return { ok: false, error: 'You have ' + REC_MAX_WAITING + ' recordings waiting for your teacher. Please wait for them to be marked.' };
 
   const recId = 'R-' + Utilities.getUuid().replace(/-/g, '').slice(0, 8).toUpperCase();
-  const portion = rec_portion_(surah, isNaN(from) ? '' : from, isNaN(to) ? '' : to);
+  const portion = asg ? tchClean_(asg.Title, 80) : rec_portion_(surah, isNaN(from) ? '' : from, isNaN(to) ? '' : to);
   const fname = String(st.StudentID).trim() + ' ' + today + ' ' + portion.replace(/[^\w؀-ۿ\- ]+/g, '-') + ' ' + recId + '.' + (Object.keys(REC_MIMES).filter(function (k) { return REC_MIMES[k] === mime; })[0] || 'audio');
   const file = rec_studentFolder_(String(st.StudentID).trim()).createFile(Utilities.newBlob(bytes, mime, fname));
   file.setDescription(st.Name + ' · ' + type + ' · ' + portion);
 
   const lock = LockService.getScriptLock(); lock.waitLock(15000);
+  const oldFiles = [];
   try {
+    const ft = rec_table_();
+    if (asg) {   // handing in again replaces the earlier recording for this assignment
+      ft.rows.filter(function (x) { return x.RecID && String(x.AssignmentID || '').trim() === aid && key_(x.StudentID) === id; })
+        .sort(function (a, b) { return b._row - a._row; }).forEach(function (x) { oldFiles.push(String(x.FileID)); ft.sh.deleteRow(x._row); });
+    }
     append_(rec_table_(), {
       RecID: recId, StudentID: String(st.StudentID).trim(), Submitted: new Date(), Type: type, Surah: surah, FromAyah: isNaN(from) ? '' : from, ToAyah: isNaN(to) ? '' : to,
-      Portion: portion, Note: note, FileID: file.getId(), Mime: mime, SizeKB: Math.round(bytes.length / 1024), Seconds: secs
-    }, ['Surah', 'Portion', 'Note', 'FileID']);
+      Portion: portion, Note: note, FileID: file.getId(), Mime: mime, SizeKB: Math.round(bytes.length / 1024), Seconds: secs, AssignmentID: aid
+    }, ['Surah', 'Portion', 'Note', 'FileID', 'AssignmentID']);
+    if (asg) rec_markSubmitted_(st, aid, note);
   } finally { lock.releaseLock(); }
+  oldFiles.forEach(function (fid) { try { DriveApp.getFileById(fid).setTrashed(true); } catch (e) {} });
   return { ok: true };
+}
+
+/* The assignment now shows as Submitted for the student and the teacher (same row a typed answer would make in the Submissions tab) */
+function rec_markSubmitted_(st, aid, note) {
+  const t = table_('Submissions'), sid = key_(st.StudentID), now = new Date();
+  const ex = t.rows.filter(function (r) { return String(r.AssignmentID) === aid && key_(r.StudentID) === sid; })[0];
+  const text = note || 'Voice recording';
+  if (ex) { put_(t, ex._row, 'Submitted', now); put_(t, ex._row, 'Note', text, true); }
+  else append_(t, { SubmissionID: 'S-' + Utilities.getUuid().slice(0, 8).toUpperCase(), AssignmentID: aid, StudentID: sid, Submitted: now, Note: text, Link: '' }, ['Note', 'Link']);
 }
 
 /* A student withdraws a recording that has not been marked yet (the file goes to the Drive bin) */
@@ -164,6 +217,7 @@ function rec_withdraw_(st, p) {
   const r = t.rows.filter(function (x) { return String(x.RecID) === rid && key_(x.StudentID) === key_(st.StudentID); })[0];
   if (!r) return { ok: false, error: 'Recording not found.' };
   if (String(r.Result || '').trim()) return { ok: false, error: 'This recording has already been marked.' };
+  if (String(r.AssignmentID || '').trim()) return { ok: false, error: 'This recording is your answer to an assignment. Record again from the assignment to replace it.' };
   try { DriveApp.getFileById(String(r.FileID)).setTrashed(true); } catch (e) {}
   const lock = LockService.getScriptLock(); lock.waitLock(15000);
   try {   // read the tab again inside the lock, so the row number is still right
@@ -204,7 +258,7 @@ function rec_forTeacher_(me, students) {
   if (!ss_().getSheetByName(REC_TAB)) return [];
   const names = {};
   students.forEach(function (s) { names[key_(s.StudentID)] = s.Name; });
-  return table_(REC_TAB).rows.filter(function (r) { return r.RecID && names[key_(r.StudentID)]; })
+  return table_(REC_TAB).rows.filter(function (r) { return r.RecID && names[key_(r.StudentID)] && !String(r.AssignmentID || '').trim(); })
     .map(function (r) { return rec_view_(r, names[key_(r.StudentID)]); })
     .sort(function (a, b) { if ((a.Status === 'Waiting') !== (b.Status === 'Waiting')) return a.Status === 'Waiting' ? -1 : 1; return a.Status === 'Waiting' ? (a.Submitted < b.Submitted ? -1 : 1) : rec_newest_(a, b); })
     .slice(0, 300);
@@ -220,6 +274,7 @@ function rec_teacherAudio_(me, p) { return rec_audio_(rec_teacherRow_(me, p.recI
 /* Teacher marks a recording. A blank result takes the mark off. */
 function rec_mark_(me, p) {
   const o = rec_teacherRow_(me, p.recId), t = o.t, r = o.r, result = String(p.result || '');
+  if (String(r.AssignmentID || '').trim()) tchFail_('This recording is an assignment. Score it from the Assignments tab.');
   const feedback = tchClean_(p.feedback, 1000);
   if (!result) {
     ['Memorisation', 'Tajwid', 'Fluency', 'Result', 'MarkedBy', 'Marked'].forEach(function (k) { put_(t, r._row, k, ''); });
