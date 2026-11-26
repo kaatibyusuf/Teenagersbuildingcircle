@@ -969,7 +969,7 @@ function acd_loginEmail_(to, name, id, code, page, what) {
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(String(to || ''))) return 'No email address';
   try {
     if (MailApp.getRemainingDailyQuota() < 1) return 'Email limit reached';
-    MailApp.sendEmail({ to: String(to).trim(), name: SCHOOL_NAME, subject: SCHOOL_NAME + ': your ' + what + ' login',
+    mail_({ to: String(to).trim(), name: SCHOOL_NAME, subject: SCHOOL_NAME + ': your ' + what + ' login',
       body: 'Assalaamu alaykum ' + String(name).split(' ')[0] + ',\n\nHere are your login details for the Himaayah Academy ' + what + ' portal.\n\nID: ' + id + '\nAccess code: ' + code + '\n\nSign in here: ' + page +
             '\n\nKeep the access code private. You can change it after signing in.\n\nJazakumullahu khayran,\n' + SCHOOL_NAME });
     return 'Emailed';

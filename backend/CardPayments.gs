@@ -59,7 +59,7 @@ function card_flag_(rec, what, result) {
     const to = Session.getEffectiveUser().getEmail();
     if (!to || MailApp.getRemainingDailyQuota() <= 0) return false;
     const paid = rec.foreign || (rec.currency === 'NGN' ? naira_(rec.amount) : rec.currency + ' ' + rec.amount);
-    MailApp.sendEmail({ to: to, name: SCHOOL_NAME, subject: SCHOOL_NAME + ': ATTENTION, a card payment was not matched (' + what + ')',
+    mail_({ to: to, name: SCHOOL_NAME, subject: SCHOOL_NAME + ': ATTENTION, a card payment was not matched (' + what + ')',
       body: 'A card payment came in through the website, but nothing was issued for it.\n\nFor: ' + what + '\nFrom: ' + (rec.name || rec.donorName || rec.student || '-') + ' (' + (rec.email || rec.donorEmail || 'no email') + ', ' + (rec.phone || rec.donorPhone || 'no phone') + ')' +
             '\nPaid: ' + paid + ' ' + (rec.status || '') + '\nReference: ' + (rec.ref || rec.checkoutId || '-') + '\nWhat happened: ' + result +
             '\n\nCheck the payment in the Bachs dashboard. If the money really arrived, put it right by hand and reply to the buyer. See the "' + CARD_LOG_TAB + '" tab.' });
@@ -136,17 +136,13 @@ function card_apply_(sh, row, rec) {
   set('PayMethod', 'Card');
   const status = get('Status'), plan = EN_PLANS[get('Plan')];
   const paid = /^(SUCCEEDED|ACCEPTED|OVERPAID)$/.test(rec.status);
-  // US dollar Skills School tracks: the first payment plus the application fee, in dollars. Only a USD payment of at least that amount matches,
-  // so a small or foreign-currency payment can never confirm an enrolment by accident.
-  const usdPlan = !!plan && plan[1] === 'usd', sched = usdPlan ? EN_USD_PLANS[get('PayPlan')] : null;
-  const need = usdPlan ? (sched ? sched.pays[0] + (Number(get('RegFee')) || 0) : 0) : plan ? Number(plan[0]) * (plan[1] === '/mo' ? (Number(get('Periods')) || 1) : 1) + (Number(get('RegFee')) || 0) : 0;
-  const credited = usdPlan ? (rec.currency === 'USD' ? Number(rec.amount) || 0 : 0) : card_ngn_(rec.currency, rec.amount, rec.ngn, need);   // a card billed in another currency is credited at the naira price
-  const matches = paid && plan && need > 0 && credited >= need;
+  const need = plan ? Number(plan[0]) * (plan[1] === '/mo' ? (Number(get('Periods')) || 1) : 1) + (Number(get('RegFee')) || 0) : 0;
+  const credited = card_ngn_(rec.currency, rec.amount, rec.ngn, need);   // a card billed in another currency is credited at the naira price
+  const matches = paid && plan && credited >= need;
   if (status === 'Account created' || get('StudentID')) return 'Already had an account';
   if (matches && CARD_AUTO_CONFIRM) { set('Status', 'Confirmed'); return 'Confirmed'; }
   set('Status', 'Card paid');
-  if (!matches && usdPlan) set('Notes', 'Card payment of ' + amt + ' does not match the dollar price (' + (need > 0 ? '$' + need : 'unknown payment plan') + '). Check it in Bachs, then confirm.');
-  else if (!matches) set('Notes', 'Card payment of ' + amt + ' does not match the plan price (' + (plan ? naira_(plan[0] * (plan[1] === '/mo' ? (Number(get('Periods')) || 1) : 1)) : 'unknown plan') + '). Check it in Bachs, then confirm.');
+  if (!matches) set('Notes', 'Card payment of ' + amt + ' does not match the plan price (' + (plan ? naira_(plan[0] * (plan[1] === '/mo' ? (Number(get('Periods')) || 1) : 1)) : 'unknown plan') + '). Check it in Bachs, then confirm.');
   return matches ? 'Waiting for staff to confirm' : 'Amount did not match the plan';
 }
 
@@ -167,7 +163,7 @@ function card_finish_(sh, confirmRow, rec, result) {
         const what = account ? 'The account ' + account + ' was created and the login details were emailed.'
           : result === 'No enrolment with this reference' ? 'No Enrolments row has this reference yet. If the enrolment arrives later (or you add the row by hand), it is matched automatically, or run Himaayah → Match card payments to enrolments.'
           : result + '. Check it in the Bachs dashboard and confirm the enrolment.';
-        MailApp.sendEmail({
+        mail_({
           to: to, name: SCHOOL_NAME,
           subject: SCHOOL_NAME + ': card payment ' + amt + (rec.ref ? ' (' + rec.ref + ')' : ''),
           body: 'A card payment came in through the website.\n\n' +

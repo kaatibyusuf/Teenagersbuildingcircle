@@ -290,7 +290,7 @@ function rp_send_(key, maxMs) {
     if (!x) { put_(t, r._row, 'Status', 'Not active'); continue; }
     try {
       const rep = rp_build_(x, key, ctx), mail = rp_email_(rep);
-      MailApp.sendEmail({ to: to.join(','), subject: mail.subject, body: mail.text, htmlBody: mail.html, name: SCHOOL_NAME });
+      mail_({ to: to.join(','), subject: mail.subject, body: mail.text, htmlBody: mail.html, name: SCHOOL_NAME });
       put_(t, r._row, 'Status', 'Sent'); put_(t, r._row, 'Sent', iso_(new Date(), true), true);
       put_(t, r._row, 'Summary', rep.highlights.join(' · ').slice(0, 300), true);
       rp_saveSnap_(key, x.id, rep.snap);
@@ -331,7 +331,7 @@ function rp_sample_(rawId, to) {
   if (!x) return 'No active student with the ID ' + rawId + '.';
   if (!validEmail_(to)) return 'Could not find your email address.';
   const key = rp_prevMonth_(rp_monthKey_(today_())), rep = rp_build_(x, key, rp_ctx_()), mail = rp_email_(rep);
-  MailApp.sendEmail({ to: to, subject: '[Sample] ' + mail.subject, body: mail.text, htmlBody: mail.html, name: SCHOOL_NAME });
+  mail_({ to: to, subject: '[Sample] ' + mail.subject, body: mail.text, htmlBody: mail.html, name: SCHOOL_NAME });
   const would = rp_to_(x, rp_emailMap_());
   return 'Sample sent to ' + to + '. The real report would go to: ' + (would.join(', ') || 'nobody (no email on file)') + '.';
 }

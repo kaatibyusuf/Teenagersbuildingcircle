@@ -65,7 +65,7 @@ function cm_post_(p) {
       ['ID', 'Submitted', 'Article', 'Name', 'Email', 'Comment', 'Reply']);
   } finally { lock.releaseLock(); }
   try {
-    if (MailApp.getRemainingDailyQuota() > 5) MailApp.sendEmail({ to: Session.getEffectiveUser().getEmail(), name: SCHOOL_NAME, subject: SCHOOL_NAME + ': new article comment from ' + name,
+    if (MailApp.getRemainingDailyQuota() > 5) mail_({ to: Session.getEffectiveUser().getEmail(), name: SCHOOL_NAME, subject: SCHOOL_NAME + ': new article comment from ' + name,
       body: name + ' commented on ' + CM_SITE + slug + ':\n\n"' + text + '"\n\nTo publish it, open the Comments tab and set its Status to Approved.' });
   } catch (e) { console.error(e); }
   return { ok: true, held: true };

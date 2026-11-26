@@ -82,13 +82,13 @@ function amb_apply_(p) {
   } finally { lock.releaseLock(); }
   try {
     const to = amb_staff_();
-    if (to && MailApp.getRemainingDailyQuota() > 3) MailApp.sendEmail({ to: to, name: SCHOOL_NAME, subject: SCHOOL_NAME + ': new Ambassador application from ' + d.name,
+    if (to && MailApp.getRemainingDailyQuota() > 3) mail_({ to: to, name: SCHOOL_NAME, subject: SCHOOL_NAME + ': new Ambassador application from ' + d.name,
       body: ['A new Ambassador application is waiting for approval.', '', 'Name: ' + d.name + ' (' + (d.age === '16-17' ? '16 to 17, parent consent given' : '18 or older') + ')', 'Role: ' + d.role, 'Where: ' + d.community,
         'Phone: ' + d.wa + '   Email: ' + d.email, 'Referee: ' + d.refName + ' ' + d.refPhone, d.age === '16-17' ? 'Parent: ' + d.parentName + ' ' + d.parentPhone : '', '', 'Why: ' + d.why, '',
         'To decide, open the "' + AMB_TAB + '" tab, find ' + id + ' and set Status to Approved or Declined. Approving sends the applicant their link and login automatically.'].join('\n') });
   } catch (e) { console.error(e); }
   try {
-    if (MailApp.getRemainingDailyQuota() > 1) MailApp.sendEmail({ to: d.email, name: SCHOOL_NAME, subject: SCHOOL_NAME + ': we received your Ambassador application',
+    if (MailApp.getRemainingDailyQuota() > 1) mail_({ to: d.email, name: SCHOOL_NAME, subject: SCHOOL_NAME + ': we received your Ambassador application',
       body: 'Assalaamu alaykum ' + d.name.split(' ')[0] + ',\n\nThank you for applying to become a Himaayah Ambassador. Our team will read your application and contact your referee. We will email you once a decision is made.\n\nJazakumullahu khayran,\n' + SCHOOL_NAME });
   } catch (e) { console.error(e); }
   return { ok: true, id: id };
@@ -131,7 +131,7 @@ function amb_approve_(T, r) {
   put_(T, r._row, 'Code', code, true); put_(T, r._row, 'Decided', iso_(new Date(), true), true);
   try {
     if (MailApp.getRemainingDailyQuota() < 1) { put_(T, r._row, 'Note', 'Approved but email not sent (daily limit). Send the login by hand.'); return; }
-    MailApp.sendEmail({ to: email, name: SCHOOL_NAME, subject: 'Welcome, Himaayah Ambassador', body:
+    mail_({ to: email, name: SCHOOL_NAME, subject: 'Welcome, Himaayah Ambassador', body:
       'Assalaamu alaykum ' + String(r.Name).split(' ')[0] + ',\n\nCongratulations. You are now a Himaayah Ambassador, and we are glad to have you.\n\n' +
       'YOUR DETAILS\nYour link: ' + REF_LINK + code + '\nYour referral code: ' + code + '\nYour access code: ' + access + '\nYour dashboard: ' + REF_PAGE + '\n\n' +
       'HOW IT WORKS\nWhen someone enrols through your link or code and their payment is confirmed, you earn ' + REF_PERCENT + '% of the first fee, sent to the bank account you gave us. Your dashboard shows every referral and payment.\n\n' +
@@ -144,7 +144,7 @@ function amb_decline_(T, r) {
   put_(T, r._row, 'Decided', iso_(new Date(), true), true);
   try {
     if (MailApp.getRemainingDailyQuota() < 1 || !validEmail_(r.Email)) return;
-    MailApp.sendEmail({ to: String(r.Email), name: SCHOOL_NAME, subject: SCHOOL_NAME + ': your Ambassador application',
+    mail_({ to: String(r.Email), name: SCHOOL_NAME, subject: SCHOOL_NAME + ': your Ambassador application',
       body: 'Assalaamu alaykum ' + String(r.Name).split(' ')[0] + ',\n\nThank you for your interest in becoming a Himaayah Ambassador. We are not able to take your application forward at this time. You are still welcome to share Himaayah through Refer and Earn at ' + REF_PAGE.replace('ambassadors', 'refer') + ', and to apply again later.\n\nJazakumullahu khayran,\n' + SCHOOL_NAME });
   } catch (e) { console.error(e); }
 }

@@ -235,7 +235,7 @@ function grp_notify_(w, g, post, wantEmail) {
     if (!SEND_EMAILS || out.quotaStopped) return;
     try {
       if (MailApp.getRemainingDailyQuota() <= GRP_EMAIL_RESERVE) { out.quotaStopped = true; return; }
-      MailApp.sendEmail({ to: String(s.Email).trim(), name: SCHOOL_NAME, subject: (SCHOOL_NAME + ': ' + what).replace(/\s+/g, ' ').slice(0, 150),
+      mail_({ to: String(s.Email).trim(), name: SCHOOL_NAME, subject: (SCHOOL_NAME + ': ' + what).replace(/\s+/g, ' ').slice(0, 150),
         body: text + '\n\n' + SCHOOL_NAME });
       out.emailed++;
     } catch (err) { console.error(err); out.noEmail++; }

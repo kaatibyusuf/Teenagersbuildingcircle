@@ -87,13 +87,13 @@ function waitlistFromRequest(p) {
     if (isNew) {
       try {
         if (MailApp.getRemainingDailyQuota() > 1) {
-          MailApp.sendEmail({ to: d.email, name: SCHOOL_NAME, subject: SCHOOL_NAME + ': you are on the waitlist for ' + short,
+          mail_({ to: d.email, name: SCHOOL_NAME, subject: SCHOOL_NAME + ': you are on the waitlist for ' + short,
             body: 'Assalaamu alaykum ' + d.parent.split(' ')[0] + ',\n\n' + d.student + ' is on the waitlist for Madrasah ' + short + ' (number ' + place + ' in line). ' +
                   'We will email you as soon as a place opens, with a link to enrol.\n\nYour reference: ' + ref + '\n\n' +
                   'While you wait, private (one-on-one) classes are open now: https://www.himaayahschools.com/madrasah.html#plans\n\nJazakumullahu khayran,\n' + SCHOOL_NAME });
           if (WL_NOTIFY_STAFF) {
             const to = Session.getEffectiveUser().getEmail();
-            if (to) MailApp.sendEmail({ to: to, name: SCHOOL_NAME, subject: SCHOOL_NAME + ': new waitlist entry (' + short + ')',
+            if (to) mail_({ to: to, name: SCHOOL_NAME, subject: SCHOOL_NAME + ': new waitlist entry (' + short + ')',
               body: d.student + ' joined the waitlist for ' + d.plan + ' (number ' + place + ').\nParent: ' + d.parent + '\nEmail: ' + d.email + '\nWhatsApp: ' + d.phone +
                     (d.times ? '\nPreferred times: ' + d.times : '') + (d.note ? '\nNote: ' + d.note : '') + '\nReference: ' + ref });
           }
@@ -120,7 +120,7 @@ function emailWaitlist() {
     if (MailApp.getRemainingDailyQuota() < 1) { skipped++; return; }
     const short = plan.replace(/^Madrasah — /, ''), link = 'https://www.himaayahschools.com/enroll.html?programme=madrasah&plan=' + (WL_PLAN_SLUGS[plan] || '');
     try {
-      MailApp.sendEmail({ to: String(r[col('Email')]), name: SCHOOL_NAME, subject: SCHOOL_NAME + ': ' + short + ' is open, enrol now',
+      mail_({ to: String(r[col('Email')]), name: SCHOOL_NAME, subject: SCHOOL_NAME + ': ' + short + ' is open, enrol now',
         body: 'Assalaamu alaykum ' + String(r[col('ParentName')]).split(' ')[0] + ',\n\nGood news: Madrasah ' + short + ' is taking new students again, and ' + r[col('StudentName')] +
               ' was on our waitlist. Places are limited and go in order of enrolment.\n\nEnrol here: ' + link + '\n\nYour waitlist reference: ' + r[col('Ref')] + '\n\nJazakumullahu khayran,\n' + SCHOOL_NAME });
       sh.getRange(i + 2, col('Status') + 1).setValue('Notified');

@@ -213,7 +213,7 @@ function rs_reset_(who, p) {
     else {
       try {
         if (MailApp.getRemainingDailyQuota() < 1) emailed = 'Quota reached';
-        else { MailApp.sendEmail({ to: email, subject: SCHOOL_NAME + ': your new access code', body: message, name: SCHOOL_NAME }); emailed = 'Sent'; }
+        else { mail_({ to: email, subject: SCHOOL_NAME + ': your new access code', body: message, name: SCHOOL_NAME }); emailed = 'Sent'; }
       } catch (e) { console.error(e); emailed = 'Error'; }
     }
   }

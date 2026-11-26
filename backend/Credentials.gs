@@ -75,7 +75,7 @@ function cr_sweepTab_(cfg) {
     if (!SEND_EMAILS) { put_(t, r._row, 'LoginSent', 'Email off: use LoginWhatsApp link'); return; }
     try {
       if (MailApp.getRemainingDailyQuota() < 1) { put_(t, r._row, 'LoginSent', 'Waiting (email limit)'); return; }
-      MailApp.sendEmail({ to: email, name: SCHOOL_NAME, subject: 'Your ' + SCHOOL_NAME + ' student login', htmlBody: msg.html, body: msg.text });
+      mail_({ to: email, name: SCHOOL_NAME, subject: 'Your ' + SCHOOL_NAME + ' student login', htmlBody: msg.html, body: msg.text });
       put_(t, r._row, 'LoginSent', 'Emailed ' + stamp); sent++;
     } catch (err) { put_(t, r._row, 'LoginSent', 'Email failed: ' + String(err.message).slice(0, 80)); }
   });

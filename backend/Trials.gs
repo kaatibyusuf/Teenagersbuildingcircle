@@ -123,7 +123,7 @@ function tr_book_(p) {
   cache.put(k, String(n + 1), 86400);
   tr_confirm_({ Ref: ref, Programme: d.programme, StudentName: d.studentName, ParentName: d.parentName, Email: d.email, Slot: chosen ? chosen.Slot : '', Link: chosen ? chosen.Link : '', Preferred: d.preferred });
   try {
-    if (MailApp.getRemainingDailyQuota() > 0) MailApp.sendEmail({ to: Session.getEffectiveUser().getEmail(), name: SCHOOL_NAME, subject: SCHOOL_NAME + ': free class ' + (chosen ? 'booked' : 'requested') + ' (' + d.programme + ')',
+    if (MailApp.getRemainingDailyQuota() > 0) mail_({ to: Session.getEffectiveUser().getEmail(), name: SCHOOL_NAME, subject: SCHOOL_NAME + ': free class ' + (chosen ? 'booked' : 'requested') + ' (' + d.programme + ')',
       body: 'Student: ' + d.studentName + (d.age ? ', ' + d.age : '') + '\nProgramme: ' + d.programme + (d.plan ? ' — ' + d.plan : '') + '\nParent: ' + d.parentName + '\nEmail: ' + d.email + '\nWhatsApp: ' + d.whatsapp +
             '\n' + (chosen ? 'Time: ' + tr_when_(chosen.Slot) + (chosen.Link ? '' : '\n\nThis slot has no join link yet: send it on WhatsApp before the class.') : 'Preferred times: ' + d.preferred + '\n\nAgree a time on WhatsApp, then set it on the owner dashboard (Trials).') + '\n\nReference: ' + ref });
   } catch (e) { console.error(e); }
@@ -137,7 +137,7 @@ function tr_confirm_(b) {
       'Classes are live on Google Meet or Telegram. Please join a few minutes early from a quiet place, with a notebook. We will remind you on the day.'
     : 'Thank you for asking for a free ' + b.Programme + ' class for ' + kid + '. We will message you on WhatsApp within a day to agree a time' + (b.Preferred ? ' (you said: ' + b.Preferred + ')' : '') + '.';
   try {
-    MailApp.sendEmail({ to: b.Email, name: SCHOOL_NAME, subject: SCHOOL_NAME + ': your free class' + (b.Slot ? ' on ' + tr_when_(b.Slot) : ''),
+    mail_({ to: b.Email, name: SCHOOL_NAME, subject: SCHOOL_NAME + ': your free class' + (b.Slot ? ' on ' + tr_when_(b.Slot) : ''),
       body: 'Assalaamu alaykum' + (first ? ' ' + first : '') + ',\n\n' + body + '\n\nYour reference is ' + b.Ref + '. Need to change the time? Reply to this email or message us on WhatsApp.\n\nJazakumullahu khayran,\n' + SCHOOL_NAME });
   } catch (e) { console.error(e); }
 }
@@ -162,7 +162,7 @@ function tr_dailyJob_() {
     // reminder on the day
     if (slotDay === today && !b.Reminded && validEmail_(email)) {
       try {
-        MailApp.sendEmail({ to: email, name: SCHOOL_NAME, subject: SCHOOL_NAME + ': your free class is today',
+        mail_({ to: email, name: SCHOOL_NAME, subject: SCHOOL_NAME + ': your free class is today',
           body: 'Assalaamu alaykum,\n\nA reminder that ' + String(b.StudentName || '').split(' ')[0] + "'s free " + b.Programme + ' class is today, ' + tr_when_(b.Slot) + ' (Nigeria time).\n\n' +
                 (b.Link ? 'Join here: ' + b.Link : 'We will send the join link on WhatsApp shortly before the class.') + '\n\nSee you there, in shā’ Allāh.\n' + SCHOOL_NAME });
         put_(t, b._row, 'Reminded', iso_(new Date(), true), true);
@@ -172,7 +172,7 @@ function tr_dailyJob_() {
     const due = slotDay ? dn_(today) - dn_(slotDay) >= TR_FOLLOW_DAYS : dn_(today) - dn_(iso_(b.Booked) || today) >= 7;
     if (due && !b.FollowedUp && st !== 'No-show' && validEmail_(email)) {
       try {
-        MailApp.sendEmail({ to: email, name: SCHOOL_NAME, subject: SCHOOL_NAME + ': how was the class?',
+        mail_({ to: email, name: SCHOOL_NAME, subject: SCHOOL_NAME + ': how was the class?',
           body: 'Assalaamu alaykum,\n\n' + (slotDay ? 'We hope ' + String(b.StudentName || '').split(' ')[0] + ' enjoyed the free ' + b.Programme + ' class.' : 'Thank you again for your interest in the ' + b.Programme + '.') +
                 '\n\nWhen you are ready, you can enrol here: ' + tr_enrolLink_(b.Programme) + '\nIt takes about five minutes, and you can pay by card or bank transfer.\n\nAny questions? Just reply to this email or message us on WhatsApp.\n\nJazakumullahu khayran,\n' + SCHOOL_NAME });
         put_(t, b._row, 'FollowedUp', today, true);

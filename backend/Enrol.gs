@@ -18,15 +18,8 @@ const EN_SCHOOL_WA = '2347047226487';   // the school's WhatsApp number, used fo
 const EN_STAFF_EMAILS = [];        // extra staff emails to alert when a new student pays (the script owner is always alerted)
 const EN_ADULT_AGE = 18;
 const EN_MAX_PER_HOUR = 8;       // new submissions allowed per email address per hour (retries of the same Ref don't count)
-const EN_USD_TRACKS = ['Skills School \u2014 Cybersecurity (18 months)', 'Skills School \u2014 Web Development (18 months)', 'Skills School \u2014 Software Engineering (18 months)', 'Skills School \u2014 Product Management (18 months)', 'Skills School \u2014 Product Design (18 months)', 'Skills School \u2014 Graphic Design (18 months)', 'Skills School \u2014 UI/UX (18 months)', 'Skills School \u2014 Video Creation (18 months)'];   // the eight 18-month Skills School tracks, priced in US dollars
-const EN_CLOSED_PLANS = ['Madrasah \u2014 Hifdh Only (Group)', 'Madrasah \u2014 Full Madrasah (Group)', 'Madrasah \u2014 Full Madrasah (Group, hifdh completed elsewhere)', 'Madrasah \u2014 One-Year Hifdh'].concat(EN_USD_TRACKS);   // keep in step with enroll.html (remove the Skills tracks from here, enroll.html and api/checkout.mjs to open them)
+const EN_CLOSED_PLANS = ['Madrasah \u2014 Hifdh Only (Group)', 'Madrasah \u2014 Full Madrasah (Group)', 'Madrasah \u2014 Full Madrasah (Group, hifdh completed elsewhere)', 'Madrasah \u2014 One-Year Hifdh'];   // keep in step with enroll.html
 const EN_INVITES = { 'Madrasah \u2014 One-Year Hifdh': 'HIFDH-1Y7K' };   // invite code that opens a closed plan for current students (keep in step with api/checkout.mjs)
-
-const EN_USD_PLANS = {   // payment plans: pays = every payment in order (total $400), gap = months between payments. Keep in step with enroll.html, api/checkout.mjs and Skills.gs
-  full: { pays: [400], gap: 0 }, annual: { pays: [267, 133], gap: 12 }, quarter: { pays: [67, 67, 67, 67, 67, 65], gap: 3 },
-  month: { pays: [23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 9], gap: 1 },
-};
-const EN_USD_APP_FEE = 5;   // one-time application fee in dollars, on the first payment of a US dollar track
 
 const EN_OPENS = {};   // plan name -> 'YYYY-MM-DD' it opens (West Africa time). Before then it cannot be enrolled in. Keep in step with enroll.html and api/checkout.mjs. Example: { 'Skills School \u2014 Graphic Design': '2026-12-01' }
 
@@ -34,19 +27,17 @@ const EN_REG_FEE = 3000;   // one-time registration fee on the first payment (wa
 
 const EN_HEADERS = ['Ref', 'Submitted', 'Status', 'StudentName', 'DOB', 'Age', 'GradeLevel', 'Programme', 'Plan', 'Amount', 'Period', 'Periods',
   'KinName', 'KinRelationship', 'KinPhone', 'KinEmail', 'StudentEmail', 'LoginTo', 'LoginEmail', 'StudentID', 'AccountCreated', 'WhatsAppLink', 'Notes',
-  'PayMethod', 'CardPayment', 'Referral', 'PaidUntil', 'RegFee', 'ProgrammeDetails', 'PayPlan', 'Currency'];
+  'PayMethod', 'CardPayment', 'Referral', 'PaidUntil', 'RegFee', 'ProgrammeDetails'];
 
 const EN_PLANS = {
   'Teenagers Building Circle \u2014 Full Programme': [40000, '/mo'],
   'Madrasah \u2014 Hifdh Only (Group)': [12000, '/mo'], 'Madrasah \u2014 Full Madrasah (Group)': [20000, '/mo'], 'Madrasah \u2014 Full Madrasah (Group, hifdh completed elsewhere)': [15000, '/mo'],
   'Madrasah \u2014 Hifdh Only (Personal)': [20000, '/mo'], 'Madrasah \u2014 Full Madrasah (Personal)': [35000, '/mo'],
-  'Madrasah \u2014 Idaadiyyah': [18000, '/mo'], 'Madrasah \u2014 Idaadiyyah + Hifdh': [28000, '/mo'],
   'Madrasah \u2014 One-Year Hifdh': [19000, '/mo'],
   'Madrasah \u2014 Muraajah (Group)': [14000, '/mo'], 'Madrasah \u2014 Muraajah (Personal)': [20000, '/mo'],
   'Academy \u2014 UTME': [10000, '/mo'], 'Academy \u2014 Post-UTME': [10000, '/mo'], 'Academy \u2014 A-Levels': [10000, '/mo'], 'Academy \u2014 O-Levels': [10000, '/mo'],
   'Skills School \u2014 Public Speaking': [25000, ''], 'Skills School \u2014 Graphic Design': [35000, ''], 'Skills School \u2014 Data Analysis': [80000, '/2mo'],
 };
-EN_USD_TRACKS.forEach(function (n) { EN_PLANS[n] = [400, 'usd']; });   // per 'usd': priced in dollars, paid by the plan chosen on enroll.html
 
 /* ------------------------------------------------------------------ */
 /* 1. Receive an enrolment from enroll.html (called from doPost)       */
@@ -71,8 +62,6 @@ function enrolFromRequest(req) {
 
     if (EN_OPENS[d.plan] && Utilities.formatDate(new Date(), 'Africa/Lagos', 'yyyy-MM-dd') < EN_OPENS[d.plan]) return { ok: false, error: 'This programme has not opened yet. It opens on ' + EN_OPENS[d.plan] + '.' };
 
-    const usdPlan = plan[1] === 'usd', payPlan = usdPlan ? en_str(req.payPlan, 10) : '';
-    if (usdPlan && !EN_USD_PLANS[payPlan]) return { ok: false, error: 'Choose how you would like to pay.' };
     const periods = plan[1] === '/mo' && req.payMethod !== 'Already paid' && [1, 2, 3, 6, 12].indexOf(Number(req.periods)) >= 0 ? Number(req.periods) : 1;   // months paid ahead (monthly plans only); keep in step with enroll.html and api/checkout.mjs
     const card = req.payMethod === 'Card';
     const prepaid = req.payMethod === 'Already paid';                                   // current student who paid before the website (invite link only)
@@ -94,8 +83,6 @@ function enrolFromRequest(req) {
       cache.put(key, String(n + 1), 3600);
       const referral = typeof ref_forEnrolment_ === 'function' && req.referral ? ref_forEnrolment_(en_str(req.referral, 20), d) : '';   // Referrals.gs
       if (referral && en_headers(sh).indexOf('Referral') < 0) sh.getRange(1, sh.getLastColumn() + 1).setValue('Referral').setFontWeight('bold');
-      if (en_headers(sh).indexOf('PayPlan') < 0) sh.getRange(1, sh.getLastColumn() + 1).setValue('PayPlan').setFontWeight('bold');
-      if (en_headers(sh).indexOf('Currency') < 0) sh.getRange(1, sh.getLastColumn() + 1).setValue('Currency').setFontWeight('bold');
       if (en_headers(sh).indexOf('RegFee') < 0) sh.getRange(1, sh.getLastColumn() + 1).setValue('RegFee').setFontWeight('bold');
       if (prepaid && en_headers(sh).indexOf('PaidUntil') < 0) sh.getRange(1, sh.getLastColumn() + 1).setValue('PaidUntil').setFontWeight('bold');
       const details = Array.isArray(req.extra) ? req.extra.slice(0, 16).filter(p => Array.isArray(p)).map(p => en_str(p[0], 70) + ': ' + en_str(p[1], 220)).join(' | ') : '';   // programme-specific answers from the enrol form
@@ -107,7 +94,7 @@ function enrolFromRequest(req) {
       const loginTo = adult && d.studentEmail ? d.studentEmail : d.kinEmail;
       en_append(sh, {
         Ref: d.ref, Submitted: en_stamp(new Date()), Status: card ? 'Awaiting card payment' : prepaid ? 'Already paid (check)' : 'Receipt sent', PayMethod: card ? 'Card' : prepaid ? 'Paid before website' : 'Bank transfer', PaidUntil: paidUntil, StudentName: d.name, DOB: d.dob, Age: age === null ? '' : age, GradeLevel: d.grade,
-        RegFee: usdPlan ? EN_USD_APP_FEE : (invited || passPaid) ? 0 : EN_REG_FEE, Programme: d.programme, Plan: d.plan, Amount: usdPlan ? EN_USD_PLANS[payPlan].pays[0] : plan[0], Period: plan[1], Periods: periods, PayPlan: payPlan, Currency: usdPlan ? 'USD' : 'NGN', KinName: d.kinName, KinRelationship: d.kinRel, KinPhone: d.kinPhone,
+        RegFee: (invited || passPaid) ? 0 : EN_REG_FEE, Programme: d.programme, Plan: d.plan, Amount: plan[0], Period: plan[1], Periods: periods, KinName: d.kinName, KinRelationship: d.kinRel, KinPhone: d.kinPhone,
         KinEmail: d.kinEmail, StudentEmail: d.studentEmail, LoginTo: adult ? 'Student (18+)' : 'Parent or guardian', LoginEmail: loginTo, Referral: referral, ProgrammeDetails: details, Notes: invited ? 'Returning student (invite link)' + (prepaid ? '. Says the fee was paid before the website; next due ' + paidUntil + '. Check the old payment, then set Status to Confirmed.' : '') : (passPaid ? 'Registration fee already paid with test code ' + regpass : ''),
       });
     } finally { lock.releaseLock(); }
@@ -151,11 +138,10 @@ function en_createAccount(sh, row) {
     const plan = EN_PLANS[get('Plan')];
     if (!plan) { set('Notes', 'Unknown plan: cannot create account'); return; }
 
-    const unit = plan[0], per = plan[1], usdPlan = per === 'usd', sched = usdPlan ? EN_USD_PLANS[get('PayPlan')] : null;
-    if (usdPlan && !sched) { set('Notes', 'Unknown payment plan: cannot create account'); return; }
+    const unit = plan[0], per = plan[1];
     const periods = per === '/mo' ? (Number(get('Periods')) || 1) : 1;                  // months paid ahead on the first payment
-    const amount = usdPlan ? sched.pays[0] : unit * periods;                                                      // what was actually paid for the programme (registration fee not included)
-    const months = usdPlan ? (sched.pays.length > 1 ? sched.gap : 0) : (per === '/mo' ? 1 : per === '/2mo' ? 2 : 0) * periods;
+    const amount = unit * periods;                                                      // what was actually paid for the programme (registration fee not included)
+    const months = (per === '/mo' ? 1 : per === '/2mo' ? 2 : 0) * periods;
     const today = new Date(), prepaid = get('PayMethod') === 'Paid before website';
     const paidUntil = /^\d{4}-\d{2}-\d{2}$/.test(get('PaidUntil')) ? get('PaidUntil') : '';   // staff can correct this date before confirming
     const nextDue = prepaid && paidUntil ? paidUntil : months ? en_date(en_addMonths(today, months)) : '';
@@ -163,7 +149,7 @@ function en_createAccount(sh, row) {
     const typedPhone = get('KinPhone'), parsedPhone = phone_normalise_(typedPhone);
     const phone = parsedPhone.ok ? parsedPhone.digits : typedPhone.replace(/\D/g, '').replace(/^0(?=\d{10}$)/, '234');   // older rows: the old Nigerian rule, never for a number that is not 11 digits
     const method = get('CardPayment') ? 'Card' : prepaid ? 'Paid before website' : 'Bank transfer';
-    const info = { name: get('StudentName'), plan: get('Plan'), amount: amount, unit: unit, months: months, email: get('LoginEmail'), phone: phone, ref: get('Ref'), method: method, currency: usdPlan ? 'USD' : 'NGN', payPlan: usdPlan ? get('PayPlan') : '', schedule: usdPlan ? sched.pays : null };
+    const info = { name: get('StudentName'), plan: get('Plan'), amount: amount, unit: unit, months: months, email: get('LoginEmail'), phone: phone, ref: get('Ref'), method: method };
     let id, code, dash = EN_DASHBOARD_URL;
 
     if (programme === 'Academy' && typeof acd_createAccount_ === 'function') {          // Academy.gs
@@ -193,7 +179,7 @@ function en_createAccount(sh, row) {
         const g = UrlFetchApp.fetch(EN_GUIDE_URL, { muteHttpExceptions: true });
         if (g.getResponseCode() === 200) mail.attachments = [g.getBlob().setName('Himaayah Schools Student Guide.pdf')];
       } catch (gErr) {}
-      MailApp.sendEmail(mail);
+      mail_(mail);
     } catch (mailErr) { note = 'Email failed: ' + mailErr.message + ' (send the WhatsApp link instead)'; }
     en_alertStaff_(get('StudentName'), id, programme, planShort, phone, get('LoginEmail'), method, get('Ref'), get('KinName'));
     if (get('Referral') && typeof ref_award_ === 'function') { const rn = ref_award_(get('Referral'), info, get('Ref'), programme); if (rn) note = note ? note + ' · ' + rn : rn; }   // Referrals.gs
@@ -218,7 +204,7 @@ function en_alertStaff_(name, id, programme, plan, phone, email, method, ref, pa
     const to = [Session.getEffectiveUser().getEmail()].concat(EN_STAFF_EMAILS).filter(String).filter((v, i, a) => a.indexOf(v) === i).join(',');
     if (!to) return;
     const wa = phone ? 'https://wa.me/' + phone + '?text=' + encodeURIComponent('Assalaamu alaykum. This is ' + EN_SCHOOL + '. We have received payment for ' + name + ' (' + id + ', ' + plan + '). We are assigning a teacher and will share the details shortly.') : '(no phone given)';
-    MailApp.sendEmail({ to: to, name: EN_SCHOOL, subject: 'New paid student needs a teacher: ' + name + ' (' + id + ')',
+    mail_({ to: to, name: EN_SCHOOL, subject: 'New paid student needs a teacher: ' + name + ' (' + id + ')',
       body: ['A new student has paid and now has a login.', '', 'Student: ' + name + ' (' + id + ')', 'Programme: ' + programme, 'Plan: ' + plan, 'Paid by: ' + method + (ref ? ' (ref ' + ref + ')' : ''),
         'Contact: ' + (parent || '') + ' ' + (phone ? '+' + phone : '') + ' ' + (email || ''), '',
         'To do: assign a teacher in the Students tab (Teacher column), then message them:', wa].join('\n') });

@@ -106,7 +106,7 @@ function nl_subscribe_(p) {
 
   if (status !== 'already') {
     try {
-      if (MailApp.getRemainingDailyQuota() > NL_KEEP_QUOTA) MailApp.sendEmail({ to: email, name: SCHOOL_NAME, subject: 'Welcome to the ' + SCHOOL_NAME + ' newsletter',
+      if (MailApp.getRemainingDailyQuota() > NL_KEEP_QUOTA) mail_({ to: email, name: SCHOOL_NAME, subject: 'Welcome to the ' + SCHOOL_NAME + ' newsletter',
         body: 'Assalaamu alaykum' + (name ? ' ' + name.split(' ')[0] : '') + ',\n\nThank you for subscribing. We will email you when we publish a new article, and when new terms and classes open. Not often, and never spam.\n\n' +
               'Read the latest articles: https://www.himaayahschools.com/articles.html\n\nJazakumullahu khayran,\n' + SCHOOL_NAME + '\n\n' + nl_footer_(token) });
     } catch (err) { console.error(err); }
@@ -155,7 +155,7 @@ function nl_body_(cmp, name, token) {
 function newsletterTest() {
   const cmp = nl_campaign_(true), to = Session.getEffectiveUser().getEmail();
   if (!cmp) { nl_say_('Write a newsletter on the "Newsletter" tab first (Subject and Body).'); return; }
-  MailApp.sendEmail({ to: to, name: SCHOOL_NAME, subject: '[TEST] ' + cmp.subject, body: nl_body_(cmp, '', 'test-link-not-active') });
+  mail_({ to: to, name: SCHOOL_NAME, subject: '[TEST] ' + cmp.subject, body: nl_body_(cmp, '', 'test-link-not-active') });
   nl_say_('Test sent to ' + to + '.');
 }
 
@@ -176,7 +176,7 @@ function newsletterSend() {
     if (cmp.audience !== 'All' && String(r[s('Interests')]).split(',').map(function (x) { return x.trim(); }).indexOf(cmp.audience) < 0) continue;
     if (MailApp.getRemainingDailyQuota() <= NL_KEEP_QUOTA || Date.now() - t0 > 240000) { left++; continue; }
     try {
-      MailApp.sendEmail({ to: String(r[s('Email')]), name: SCHOOL_NAME, subject: cmp.subject, body: nl_body_(cmp, r[s('Name')], String(r[s('Token')])) });
+      mail_({ to: String(r[s('Email')]), name: SCHOOL_NAME, subject: cmp.subject, body: nl_body_(cmp, r[s('Name')], String(r[s('Token')])) });
       subs.getRange(i + 2, s('LastCampaign') + 1).setValue(cmp.id);
       sent++;
     } catch (err) { console.error(err); left++; }

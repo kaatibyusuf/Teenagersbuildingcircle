@@ -64,7 +64,7 @@ function gd_sendBooks_(name, email, ref, slugs, amount, freeSlugs) {
     '<p><a href="' + receipt + '">View or print your receipt</a></p>' +
     '<p>Tip: print on A4 paper or open on a tablet. Keep this email, because the links work again whenever you need them.</p>' +
     '<p>Any problem? <a href="' + wa + '">Message us on WhatsApp</a>.</p><p>' + gd_esc_(SCHOOL_NAME) + '</p></div>';
-  MailApp.sendEmail({ to: email, name: SCHOOL_NAME, subject: 'Your receipt and download' + (list.length > 1 ? 's' : '') + ' from the Himaayah Store (' + ref + ')', body: text, htmlBody: html });
+  mail_({ to: email, name: SCHOOL_NAME, subject: 'Your receipt and download' + (list.length > 1 ? 's' : '') + ' from the Himaayah Store (' + ref + ')', body: text, htmlBody: html });
 }
 
 /* ===== PAYMENT ARRIVES (from cardPaymentFromRequest in CardPayments.gs, after the secret check) ===== */
@@ -108,7 +108,7 @@ function guideCardPayment_(p) {
     try { gd_sendBooks_(rec.name, rec.email, rec.ref, slugs, rec.amount, freeSlugs); mailed = true; } catch (e) { console.error(e); }
   }
   try {
-    MailApp.sendEmail({ to: Session.getEffectiveUser().getEmail(), name: SCHOOL_NAME,
+    mail_({ to: Session.getEffectiveUser().getEmail(), name: SCHOOL_NAME,
       subject: SCHOOL_NAME + ': book sale ' + naira_(rec.amount) + (send && !mailed ? ' (EMAIL FAILED: send manually)' : ''),
       body: 'A children’s book was bought on the website.\n\nBooks: ' + slugs.map(function (s) { return (GD_CAT[s] ? GD_CAT[s].t : s); }).join(', ') + '\nFrom: ' + (rec.name || '-') + ' (' + (rec.email || 'no email') + ', ' + (rec.phone || 'no phone') + ')\nAmount: ' + naira_(rec.amount) + '\nReference: ' + rec.ref + '\nResult: ' + result +
         (send && !mailed ? '\n\nThe download email could NOT be sent. Send these links to the buyer:\n' + slugs.map(function (s) { return GD_CAT[s].t + ': ' + gd_link_(s, rec.ref); }).join('\n') : '') });

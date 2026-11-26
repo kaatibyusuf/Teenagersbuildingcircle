@@ -92,7 +92,7 @@ function tm_submit_(p) {
       ['ID', 'Submitted', 'Name', 'StudentID', 'Result', 'Text', 'Email', 'Source']);
   } finally { lock.releaseLock(); }
   try {
-    if (MailApp.getRemainingDailyQuota() > 0) MailApp.sendEmail({ to: Session.getEffectiveUser().getEmail(), name: SCHOOL_NAME, subject: SCHOOL_NAME + ': new testimonial from ' + d.name,
+    if (MailApp.getRemainingDailyQuota() > 0) mail_({ to: Session.getEffectiveUser().getEmail(), name: SCHOOL_NAME, subject: SCHOOL_NAME + ': new testimonial from ' + d.name,
       body: d.name + ' (' + d.role + ', ' + d.programme + (d.result ? ', ' + d.result : '') + ') rated ' + d.rating + '/5:\n\n"' + d.text + '"\n\nApprove it on the owner dashboard (Stories) to show it on the website.' });
   } catch (e) { console.error(e); }
   return { ok: true };
@@ -141,7 +141,7 @@ function tm_ask_() {
     if (MailApp.getRemainingDailyQuota() < reserve + to.length) { left++; return; }
     const first = String(x.s.Name || '').split(' ')[0], link = TM_SHARE_URL + '?share=1&id=' + encodeURIComponent(x.id) + '&p=' + encodeURIComponent(x.programme) + '#share';
     try {
-      MailApp.sendEmail({ to: to.join(','), name: SCHOOL_NAME, subject: SCHOOL_NAME + ': how is ' + first + ' getting on?',
+      mail_({ to: to.join(','), name: SCHOOL_NAME, subject: SCHOOL_NAME + ': how is ' + first + ' getting on?',
         body: 'Assalaamu alaykum,\n\nWe would love to hear how ' + first + "'s time in the " + x.programme + ' has been. A few sentences about what has changed or what you have liked helps other families decide, and helps us improve.\n\n' +
               'Share your experience here (it takes two minutes): ' + link + '\n\nYou can choose to show only your initials. Nothing is published without your permission.\n\nJazakumullahu khayran,\n' + SCHOOL_NAME });
       to.forEach(function (e) { append_(A, { Email: e, StudentID: x.id, Asked: today_() }, ['Email', 'StudentID', 'Asked']); last[e] = today_(); });

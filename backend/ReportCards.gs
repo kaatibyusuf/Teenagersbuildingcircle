@@ -136,7 +136,7 @@ function rc_send_(term, maxMs) {
       const card = rc_build_(s, term);
       if (!card) { put_(t, r._row, 'Status', 'No scores'); continue; }
       const mail = rc_email_(card);
-      MailApp.sendEmail({ to: to.join(','), subject: mail.subject, body: mail.text, htmlBody: mail.html, name: SCHOOL_NAME });
+      mail_({ to: to.join(','), subject: mail.subject, body: mail.text, htmlBody: mail.html, name: SCHOOL_NAME });
       put_(t, r._row, 'Status', 'Sent'); put_(t, r._row, 'Sent', iso_(new Date(), true), true);
       put_(t, r._row, 'Summary', (card.rep.average != null ? 'Average ' + card.rep.average : '') + (card.rep.gpa != null ? ' · GPA ' + Number(card.rep.gpa).toFixed(2) : ''), true);
       sent++;
@@ -182,7 +182,7 @@ function rc_sample_(rawId, term, to) {
   const card = rc_build_(s, term);
   if (!card) return s.Name + ' has no published or typed scores for ' + term + ', so there is no card yet.';
   const mail = rc_email_(card);
-  MailApp.sendEmail({ to: to, subject: '[Sample] ' + mail.subject, body: mail.text, htmlBody: mail.html, name: SCHOOL_NAME });
+  mail_({ to: to, subject: '[Sample] ' + mail.subject, body: mail.text, htmlBody: mail.html, name: SCHOOL_NAME });
   const would = rp_to_({ s: s, id: String(s.StudentID).trim() }, rp_emailMap_());
   return 'Sample sent to ' + to + '. The real card would go to: ' + (would.join(', ') || 'nobody (no email on file)') + '.';
 }

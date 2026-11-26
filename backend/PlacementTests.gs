@@ -272,8 +272,8 @@ function pt_email_(row, r) {
              : 'You have not reached the ' + r.pass + '% cut-off yet, but you can still join the Academy. That is exactly what it is for: live classes six days a week, daily and weekly timed mocks and mentorship from previous top scorers. Your mentor will use this result to plan where you start. Enrol at https://www.himaayahschools.com/enroll.html?plan=utme or message the Academy line on WhatsApp: +234 806 604 3320.');
     const body = 'Assalaamu alaykum ' + first + ',\n\nHere is your result for the ' + r.title + ' placement test.\n\nScore: ' + r.score + ' / ' + r.total + ' (' + r.percent + '%)\nPass mark: ' + r.pass + '%\nResult: ' + (r.passed ? 'Passed' : 'Not yet') +
       '\n\nBy subject:\n' + lines + '\n\n' + next + '\n\nYou can take the same test again after ' + PT_RETAKE_HOURS + ' hours: ' + PT_PAGE + '\n\nYour reference is ' + r.ref + '.\n\nJazakumullahu khayran,\n' + SCHOOL_NAME;
-    if (validEmail_(row.Email)) MailApp.sendEmail({ to: String(row.Email), name: SCHOOL_NAME, subject: SCHOOL_NAME + ': your placement test result (' + r.percent + '%)', body: body });
-    MailApp.sendEmail({ to: Session.getEffectiveUser().getEmail(), name: SCHOOL_NAME, subject: SCHOOL_NAME + ': placement test ' + (r.passed ? 'passed' : 'taken') + ': ' + row.Name + ' (' + r.title + ', ' + r.percent + '%)',
+    if (validEmail_(row.Email)) mail_({ to: String(row.Email), name: SCHOOL_NAME, subject: SCHOOL_NAME + ': your placement test result (' + r.percent + '%)', body: body });
+    mail_({ to: Session.getEffectiveUser().getEmail(), name: SCHOOL_NAME, subject: SCHOOL_NAME + ': placement test ' + (r.passed ? 'passed' : 'taken') + ': ' + row.Name + ' (' + r.title + ', ' + r.percent + '%)',
       body: 'Name: ' + row.Name + (row.Age ? ', ' + row.Age : '') + '\nEmail: ' + row.Email + '\nWhatsApp: ' + row.WhatsApp + '\nTest: ' + r.title + '\nScore: ' + r.score + '/' + r.total + ' (' + r.percent + '%) ' + (r.passed ? 'PASSED' : 'not yet') +
             (r.late ? '\nFlag: submitted after the time limit' : '') + '\nTime taken: ' + r.timeTaken + '\n\n' + lines + '\n\nReference: ' + r.ref + '\nWhatsApp them: ' + waLink_(row.WhatsApp, 'Assalaamu alaykum ' + first + ', this is Himaayah Schools about your placement test.') });
   } catch (e) { console.error(e); }
@@ -327,7 +327,7 @@ function placementCardPayment_(p) {
   if (created) pt_sendCode_(created);
   card_flag_(rec, 'placement test registration', result);
   try {
-    MailApp.sendEmail({ to: Session.getEffectiveUser().getEmail(), name: SCHOOL_NAME, subject: SCHOOL_NAME + ': registration fee ' + naira_(rec.amount),
+    mail_({ to: Session.getEffectiveUser().getEmail(), name: SCHOOL_NAME, subject: SCHOOL_NAME + ': registration fee ' + naira_(rec.amount),
       body: 'A registration fee for the placement tests came in through the website.\n\nFrom: ' + (rec.name || '-') + ' (' + (rec.email || 'no email') + ', ' + (rec.phone || 'no phone') + ')\nAmount: ' +
             naira_(rec.amount) + ' ' + rec.status + '\nResult: ' + result + '\n\nSee the "' + PT_CODE_TAB + '" tab.' });
   } catch (e) { console.error(e); }
@@ -337,7 +337,7 @@ function pt_sendCode_(a) {
   if (!validEmail_(a.email)) return false;
   try {
     if (MailApp.getRemainingDailyQuota() < 1) return false;
-    MailApp.sendEmail({ to: a.email, name: SCHOOL_NAME, subject: 'Your Himaayah registration form and test code',
+    mail_({ to: a.email, name: SCHOOL_NAME, subject: 'Your Himaayah registration form and test code',
       body: 'Assalaamu alaykum' + (a.name ? ' ' + String(a.name).split(' ')[0] : '') + ',\n\nJazakallahu khayran. Your registration fee of ' + naira_(PT_FEE) + ' is received.\n\n' +
             'Registration form number and test code: ' + a.code + '\n\n' +
             '1. Take your placement test: ' + PT_PAGE + '\n   Enter this code with the same email address you paid with (' + a.email + ').\n' +

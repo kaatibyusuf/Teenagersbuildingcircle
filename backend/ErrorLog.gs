@@ -35,7 +35,7 @@ function errAlertPayment_(msg) {
     if (cache.get('err_pay_alert')) return;
     cache.put('err_pay_alert', '1', 3600);
     const to = Session.getEffectiveUser().getEmail();
-    if (to && MailApp.getRemainingDailyQuota() > 0) MailApp.sendEmail({ to: to, name: SCHOOL_NAME, subject: SCHOOL_NAME + ': ATTENTION, a card payment failed to record',
+    if (to && MailApp.getRemainingDailyQuota() > 0) mail_({ to: to, name: SCHOOL_NAME, subject: SCHOOL_NAME + ': ATTENTION, a card payment failed to record',
       body: 'A card payment reached the school system, but recording it failed:\n\n' + msg + '\n\nBachs will try again automatically, so it may fix itself. If it does not, check the payment in the Bachs dashboard and look at the "' + ERR_TAB + '" tab.' });
   } catch (x) { console.error(x); }
 }
@@ -51,7 +51,7 @@ function errorDigest() {
   rows.forEach(function (r) { const k = r[1] + ' / ' + (r[4] || 'unknown action') + ': ' + r[2]; count[k] = (count[k] || 0) + 1; });
   const lines = Object.keys(count).sort(function (a, b) { return count[b] - count[a]; }).slice(0, 10).map(function (k) { return count[k] + ' x ' + k; });
   const to = Session.getEffectiveUser().getEmail();
-  if (to && MailApp.getRemainingDailyQuota() > 0) MailApp.sendEmail({ to: to, name: SCHOOL_NAME, subject: SCHOOL_NAME + ': ' + rows.length + ' error' + (rows.length === 1 ? '' : 's') + ' in the last 24 hours',
+  if (to && MailApp.getRemainingDailyQuota() > 0) mail_({ to: to, name: SCHOOL_NAME, subject: SCHOOL_NAME + ': ' + rows.length + ' error' + (rows.length === 1 ? '' : 's') + ' in the last 24 hours',
     body: 'Here is what failed in the school system in the last 24 hours:\n\n' + lines.join('\n') + '\n\nFull details are in the "' + ERR_TAB + '" tab.' });
   return rows.length;
 }

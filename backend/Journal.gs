@@ -206,7 +206,7 @@ function jr_submit_(p) {
       Year: Number(iso_(new Date()).slice(0, 4)), FileID: fileId, FileName: fileName, SizeKB: Math.round(bytes.length / 1024), Status: 'New', Featured: '', Shared: '', Source: d.source || 'website' }, JR_TEXTS);
   } finally { lock.releaseLock(); }
   try {
-    if (MailApp.getRemainingDailyQuota() > 0) MailApp.sendEmail({ to: Session.getEffectiveUser().getEmail(), name: SCHOOL_NAME, subject: SCHOOL_NAME + ': new journal submission, ' + d.title,
+    if (MailApp.getRemainingDailyQuota() > 0) mail_({ to: Session.getEffectiveUser().getEmail(), name: SCHOOL_NAME, subject: SCHOOL_NAME + ': new journal submission, ' + d.title,
       body: d.author + ' (' + d.programme + ') sent: ' + d.genre + '\n\n' + d.title + '\n\n' + jr_excerpt_(d.text) + '\n\nWord document: https://drive.google.com/file/d/' + fileId + '/view (private until you approve it)\n' +
             'Contact: ' + d.email + '\n\nOpen the "Journal" tab of the sheet (ID ' + id + '). Read it first for language, accuracy and the school\'s Sunni standards. Set Status to Accepted to keep it for the issue without showing it yet, Rejected to decline it, or Approved to publish it on the site now.' });
   } catch (e) { console.error(e); }

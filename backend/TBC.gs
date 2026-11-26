@@ -58,7 +58,7 @@ function tbcRetryWaiting() {   // runs by itself every morning; can also be run 
     if (!r.to.length) { tbcRpSave_(me, month, st, null, null, { Status: 'No email' }); return; }
     if (MailApp.getRemainingDailyQuota() - r.to.length < TBC_RESERVE || Date.now() - t0 > 240000) { left++; return; }
     try {
-      MailApp.sendEmail({ to: r.to.join(','), name: SCHOOL_NAME, subject: 'Teenagers Building Circle: ' + r.first + '’s report for ' + r.monthName, body: tbcRpText_(r, false), htmlBody: tbcRpHtml_(r) });
+      mail_({ to: r.to.join(','), name: SCHOOL_NAME, subject: 'Teenagers Building Circle: ' + r.first + '’s report for ' + r.monthName, body: tbcRpText_(r, false), htmlBody: tbcRpHtml_(r) });
       tbcRpSave_(me, month, st, null, null, { Status: 'Sent', Sent: new Date(), To: r.to.join(', ') }); sent++;
     } catch (e) { console.error(e); tbcRpSave_(me, month, st, null, null, { Status: 'Failed' }); }
   });
@@ -409,7 +409,7 @@ function tbcf_reportEnd_(me, p) {
     if (!r.to.length) { tbcRpSave_(me, month, st, null, null, { Status: 'No email' }); results.push({ StudentID: id, Result: 'No email' }); return; }
     if (MailApp.getRemainingDailyQuota() - r.to.length < TBC_RESERVE || Date.now() - t0 > 240000) { tbcRpSave_(me, month, st, null, null, { Status: 'Waiting' }); results.push({ StudentID: id, Result: 'Waiting' }); return; }
     try {
-      MailApp.sendEmail({ to: r.to.join(','), name: SCHOOL_NAME, subject: 'Teenagers Building Circle: ' + r.first + '’s report for ' + r.monthName, body: tbcRpText_(r, false), htmlBody: tbcRpHtml_(r) });
+      mail_({ to: r.to.join(','), name: SCHOOL_NAME, subject: 'Teenagers Building Circle: ' + r.first + '’s report for ' + r.monthName, body: tbcRpText_(r, false), htmlBody: tbcRpHtml_(r) });
       tbcRpSave_(me, month, st, null, null, { Status: 'Sent', Sent: new Date(), To: r.to.join(', ') });
       results.push({ StudentID: id, Result: 'Sent' });
     } catch (e) { console.error(e); tbcRpSave_(me, month, st, null, null, { Status: 'Failed' }); results.push({ StudentID: id, Result: 'Failed' }); }

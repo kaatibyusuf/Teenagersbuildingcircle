@@ -27,7 +27,7 @@ function wa_clean_(v, n) { return String(v == null ? '' : v).replace(/[\u0000-\u
 function wa_mail_(subject, body) {
   try {
     const to = [Session.getEffectiveUser().getEmail()].concat(WA_STAFF).filter(String).join(',');
-    if (to && MailApp.getRemainingDailyQuota() > 2) MailApp.sendEmail({ to: to, name: 'Himaayah Schools', subject: subject, body: body });
+    if (to && MailApp.getRemainingDailyQuota() > 2) mail_({ to: to, name: 'Himaayah Schools', subject: subject, body: body });
   } catch (e) {}
 }
 function wa_row_(sh, row) { sh.getRange(sh.getLastRow() + 1, 1, 1, row.length).setNumberFormat('@').setValues([row]); }

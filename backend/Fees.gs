@@ -19,7 +19,6 @@
 
 const FEE_PAGE_URL = 'https://www.himaayahschools.com/pay.html';
 const FEE_MAX_PERIODS = 12;         // a student can pay up to 12 periods ahead at once
-const FEE_USD_ONLINE = true;        // US dollar Skills School tracks pay by card on the Pay fees page (pay.html shows the $ amount; api/fees-checkout bills in USD)
 const FEE_LOOKUPS_PER_HOUR = 300;   // simple protection against someone trying many IDs
 
 function feesFromRequest(p) {
@@ -39,8 +38,8 @@ function feesFromRequest(p) {
       const f = fee_find_(p.id);
       if (!f) return { ok: false, error: 'Student not found.' };
       if (!f.payable) return { ok: false, error: f.reason };
-      const periods = f.currency === 'USD' ? 1 : Math.max(1, Math.min(FEE_MAX_PERIODS, Math.round(Number(p.periods) || 1)));   // dollar tracks pay one instalment at a time
-      return { ok: true, currency: f.currency, studentId: f.id, name: f.name, programme: f.programme, plan: f.plan, email: f.email,
+      const periods = Math.max(1, Math.min(FEE_MAX_PERIODS, Math.round(Number(p.periods) || 1)));
+      return { ok: true, studentId: f.id, name: f.name, programme: f.programme, plan: f.plan, email: f.email,
                periods: periods, months: f.months * periods, amount: f.amount * periods, tab: f.tab };
     }
     return { ok: false, error: 'Unknown action.' };
@@ -60,9 +59,7 @@ function fee_find_(rawId) {
     { tab: 'AcademyStudents', programme: function () { return 'Academy'; },
       fee: function (s) { return { amount: Number(s.MonthlyFee) || 0, months: 1 }; } },
     { tab: 'SkillsStudents', programme: function () { return 'Skills School'; },
-      fee: function (s) {
-        if (sk_usd_(s)) return { amount: Number(s.Fee) || 0, months: sk_gap_(s), currency: 'USD', done: (Number(s.InstPaid) || 0) >= sk_sched_(s).length };   // dollar track: Fee is the next instalment
-        const m = /(\d+)/.exec(String(s.Period || '')); return { amount: Number(s.Fee) || 0, months: /one-time/i.test(String(s.Period || '')) ? 0 : (m ? Number(m[1]) : 1) }; } }
+      fee: function (s) { const m = /(\d+)/.exec(String(s.Period || '')); return { amount: Number(s.Fee) || 0, months: /one-time/i.test(String(s.Period || '')) ? 0 : (m ? Number(m[1]) : 1) }; } }
   ];
   for (let i = 0; i < tabs.length; i++) {
     let t; try { t = table_(tabs[i].tab); } catch (e) { continue; }
@@ -72,25 +69,22 @@ function fee_find_(rawId) {
     let payable = active && fee.amount > 0, reason = '';
     if (!active) reason = 'This student account is not active. Please message the school.';
     else if (String(s.PaymentStatus || '').trim().toLowerCase() === 'exempt') { payable = false; reason = 'This student is exempt from fees.'; }
-    else if (fee.done) { payable = false; reason = 'This course is paid in full. There is nothing to pay.'; }
-    else if (fee.currency === 'USD' && !FEE_USD_ONLINE) { payable = false; reason = 'Your instalments are paid through the school. Please message us on WhatsApp: +234 704 722 6487.'; }
     else if (!fee.amount) reason = 'There is no fee set for this student yet. Please message the school.';
     else if (fee.months === 0 && status === 'Paid') { payable = false; reason = 'This course is paid in full. There is nothing to pay.'; }
     return { tab: tabs[i].tab, t: t, row: s, id: String(s.StudentID).trim(), name: String(s.Name || ''), programme: tabs[i].programme(s),
-             plan: String(s.Plan || s.Track || s.Course || ''), email: String(s.Email || ''), amount: fee.amount, months: fee.months, currency: fee.currency || 'NGN',
+             plan: String(s.Plan || s.Track || s.Course || ''), email: String(s.Email || ''), amount: fee.amount, months: fee.months,
              nextDue: iso_(s.NextDue), status: status, payable: payable, reason: reason };
   }
   return null;
 }
-function fee_money_(currency, n) { return String(currency || '').toUpperCase() === 'USD' ? '$' + (Number(n) % 1 ? Number(n).toFixed(2) : String(Number(n))) : naira_(n); }
 function fee_mask_(name) {
   const parts = String(name || '').trim().split(/\s+/).filter(Boolean);
   if (!parts.length) return '';
   return parts[0] + (parts.length > 1 ? ' ' + parts[parts.length - 1].charAt(0).toUpperCase() + '.' : '');
 }
 function fee_public_(f) {
-  return { ok: true, studentId: f.id, name: fee_mask_(f.name), programme: f.programme, plan: f.plan, amount: f.amount, months: f.months, currency: f.currency,
-           nextDue: f.nextDue, payFrom: payBase_(f.nextDue, today_()), status: f.status, payable: f.payable, reason: f.reason, maxPeriods: f.months && f.currency !== 'USD' ? FEE_MAX_PERIODS : 1, today: today_() };
+  return { ok: true, studentId: f.id, name: fee_mask_(f.name), programme: f.programme, plan: f.plan, amount: f.amount, months: f.months,
+           nextDue: f.nextDue, payFrom: payBase_(f.nextDue, today_()), status: f.status, payable: f.payable, reason: f.reason, maxPeriods: f.months ? FEE_MAX_PERIODS : 1, today: today_() };
 }
 
 /* Called by cardPaymentFromRequest (CardPayments.gs) for kind "fee", after the secret check. */
@@ -112,14 +106,13 @@ function feeCardPayment_(p) {
     }
     const f = fee_find_(rec.studentId);
     const paid = /^(SUCCEEDED|ACCEPTED|OVERPAID)$/.test(rec.status);
-    const usdFee = !!f && f.currency === 'USD';   // Skills School dollar track: one instalment, paid in dollars
-    if (f && !usdFee) card_normalise_(rec, p.ngn, f.amount * rec.periods);   // a card billed in another currency is credited at the naira fee
+    if (f) card_normalise_(rec, p.ngn, f.amount * rec.periods);   // a card billed in another currency is credited at the naira fee
     if (!f) result = 'Student not found';
-    else if (!paid || rec.currency !== (usdFee ? 'USD' : 'NGN')) result = 'Not a completed ' + (usdFee ? 'USD' : 'NGN') + ' payment';
-    else if (rec.amount + 0.001 < f.amount * (usdFee ? 1 : rec.periods)) result = 'Amount below the fee (expected ' + fee_money_(f.currency, f.amount * (usdFee ? 1 : rec.periods)) + ')';
+    else if (!paid || rec.currency !== 'NGN') result = 'Not a completed NGN payment';
+    else if (rec.amount + 0.001 < f.amount * rec.periods) result = 'Amount below the fee (expected ' + naira_(f.amount * rec.periods) + ')';
     else {
       who = f;
-      const months = f.months * (usdFee ? 1 : rec.periods), today = today_(), reference = rec.ref || rec.checkoutId || rec.eventId;
+      const months = f.months * rec.periods, today = today_(), reference = rec.ref || rec.checkoutId || rec.eventId;
       if (f.tab === 'Students') {
         const pay = table_('Payments');
         append_(pay, { PaymentID: 'P-' + Utilities.getUuid().slice(0, 6).toUpperCase(), StudentID: f.id, Date: today, Amount: rec.amount, Months: Math.max(1, months),
@@ -127,8 +120,7 @@ function feeCardPayment_(p) {
         result = 'Recorded; next due date updates now';
       } else {
         const payTab = f.tab === 'AcademyStudents' ? 'AcademyPayments' : 'SkillsPayments';
-        if (usdFee) { nd = sk_advance_(f.t, f.row, today); }
-        else if (months > 0) {
+        if (months > 0) {
           const base = payBase_(f.row.NextDue, today);
           nd = addMonths_(base, months);
           put_(f.t, f.row._row, 'NextDue', nd, true); f.row.NextDue = nd;
@@ -150,15 +142,15 @@ function feeCardPayment_(p) {
 
   if (who && who.tab === 'Students') { try { applyPayments_(); } catch (e) { console.error(e); } }   // moves NextDue and sends the thank-you email
   else if (who) {
-    sendEmail_(who.row, SCHOOL_NAME + ': payment received', 'Assalaamu alaykum ' + String(who.name).split(' ')[0] + '. We have received your card payment of ' + fee_money_(who.currency, rec.amount) + '.' +
+    sendEmail_(who.row, SCHOOL_NAME + ': payment received', 'Assalaamu alaykum ' + String(who.name).split(' ')[0] + '. We have received your card payment of ' + naira_(rec.amount) + '.' +
       (nd ? ' Your next payment is due on ' + nice_(nd) + '.' : '') + ' Jazakumullahu khayran.');
   }
   if (CARD_NOTIFY) {
     try {
       const to = Session.getEffectiveUser().getEmail();
-      if (to && MailApp.getRemainingDailyQuota() > 0) MailApp.sendEmail({ to: to, name: SCHOOL_NAME,
-        subject: SCHOOL_NAME + ': fee paid online ' + fee_money_(who ? who.currency : 'NGN', rec.amount) + ' (' + rec.studentId + ')',
-        body: 'A fee payment came in through the Pay fees page.\n\nStudent: ' + (who ? who.name + ' (' + who.id + ')' : rec.studentId) + '\nAmount: ' + fee_money_(who ? who.currency : 'NGN', rec.amount) +
+      if (to && MailApp.getRemainingDailyQuota() > 0) mail_({ to: to, name: SCHOOL_NAME,
+        subject: SCHOOL_NAME + ': fee paid online ' + naira_(rec.amount) + ' (' + rec.studentId + ')',
+        body: 'A fee payment came in through the Pay fees page.\n\nStudent: ' + (who ? who.name + ' (' + who.id + ')' : rec.studentId) + '\nAmount: ' + naira_(rec.amount) +
               '\nResult: ' + result + '\nBachs checkout: ' + (rec.checkoutId || '-') });
     } catch (err) { console.error(err); }
   }

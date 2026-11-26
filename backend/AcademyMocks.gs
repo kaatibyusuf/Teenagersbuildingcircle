@@ -114,7 +114,7 @@ function academyMockWeekly(sundayIso) {
   } finally { lock.releaseLock(); }
 }
 function academyMockCreateNow() { return academyMockWeekly(); }
-function acm_alert_(msg) { if (!ACM_ADMIN_EMAIL) return; try { MailApp.sendEmail({ to: ACM_ADMIN_EMAIL, name: SCHOOL_NAME, subject: SCHOOL_NAME + ' Academy mock: attention', body: msg }); } catch (e) {} }
+function acm_alert_(msg) { if (!ACM_ADMIN_EMAIL) return; try { mail_({ to: ACM_ADMIN_EMAIL, name: SCHOOL_NAME, subject: SCHOOL_NAME + ' Academy mock: attention', body: msg }); } catch (e) {} }
 
 /* ---------- standings (used by the leaderboard and the report) ---------- */
 function acm_series_(C) {   // [{ series, opens, closes, closed, testIds }] newest first
@@ -194,10 +194,10 @@ function academyMockReport(force) {
     } else if (ACM_REPORT_ABSENT) {
       absent++; subject = 'You missed this Sunday\'s UTME mock'; body = 'Assalaamu alaykum ' + first + ',\n\nYou did not sit the UTME Sunday mock of ' + date + '. The Academy average was ' + avg + ' / 400 across ' + list.length + ' students.\n\nThe answers and explanations are in the CBT tab of your dashboard, so you can still work through the paper. Please make the next one: it counts towards your mock record and the leaderboard.';
     } else return;
-    try { MailApp.sendEmail({ to: String(s.Email).trim(), name: SCHOOL_NAME, subject: subject, body: body + '\n\n' + SCHOOL_NAME + '\n' + ACD_DASHBOARD_URL }); sent++; } catch (e) { console.error(e); }
+    try { mail_({ to: String(s.Email).trim(), name: SCHOOL_NAME, subject: subject, body: body + '\n\n' + SCHOOL_NAME + '\n' + ACD_DASHBOARD_URL }); sent++; } catch (e) { console.error(e); }
   });
   props.setProperty(flag, new Date().toISOString());
-  if (ACM_ADMIN_EMAIL) { try { MailApp.sendEmail({ to: ACM_ADMIN_EMAIL, name: SCHOOL_NAME, subject: SCHOOL_NAME + ' UTME mock summary ' + ser.series.replace('MOCK-', ''), body: list.length + ' students sat the mock. Average ' + avg + ' / 400. Top three:\n' + top3 + '\n' + absent + ' did not sit. ' + sent + ' reports sent.' }); } catch (e) {} }
+  if (ACM_ADMIN_EMAIL) { try { mail_({ to: ACM_ADMIN_EMAIL, name: SCHOOL_NAME, subject: SCHOOL_NAME + ' UTME mock summary ' + ser.series.replace('MOCK-', ''), body: list.length + ' students sat the mock. Average ' + avg + ' / 400. Top three:\n' + top3 + '\n' + absent + ' did not sit. ' + sent + ' reports sent.' }); } catch (e) {} }
   acm_say_('Mock report sent: ' + sent + ' email(s). ' + list.length + ' sat, ' + absent + ' absent.');
 }
 function academyMockReportAgain() { academyMockReport(true); }

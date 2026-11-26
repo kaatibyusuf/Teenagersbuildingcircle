@@ -126,10 +126,10 @@ function sp_apply_(p) {
   } finally { lock.releaseLock(); }
   try {
     if (MailApp.getRemainingDailyQuota() > 1) {
-      MailApp.sendEmail({ to: d.email, name: SCHOOL_NAME, subject: SCHOOL_NAME + ': we received your request for support',
+      mail_({ to: d.email, name: SCHOOL_NAME, subject: SCHOOL_NAME + ': we received your request for support',
         body: 'Assalaamu alaykum ' + d.parentName.split(' ')[0] + ',\n\nThank you for reaching out. We have received your request for support for ' + d.studentName + ' (' + d.programme + ').\n' +
               'Your reference is ' + id + '. A member of staff will contact you on WhatsApp within a few days.\n\nJazakumullahu khayran,\n' + SCHOOL_NAME });
-      MailApp.sendEmail({ to: Session.getEffectiveUser().getEmail(), name: SCHOOL_NAME, subject: SCHOOL_NAME + ': new sponsorship request ' + id,
+      mail_({ to: Session.getEffectiveUser().getEmail(), name: SCHOOL_NAME, subject: SCHOOL_NAME + ': new sponsorship request ' + id,
         body: 'Student: ' + d.studentName + (d.studentId ? ' (' + d.studentId + ')' : '') + '\nProgramme: ' + d.programme + (d.plan ? ' — ' + d.plan : '') + '\nParent: ' + d.parentName +
               '\nEmail: ' + d.email + '\nWhatsApp: ' + d.whatsapp + '\nAgrees to share progress with a sponsor: ' + (d.consent ? 'Yes' : 'No') + '\n\n' + d.reason +
               '\n\nReview it on the owner dashboard (Sponsors) or in the "' + SP_REQ_TAB + '" tab.' });
@@ -219,7 +219,7 @@ function sponsorCardPayment_(p) {
   if (paid) {
     sp_thank_(rec, q);
     try {
-      MailApp.sendEmail({ to: Session.getEffectiveUser().getEmail(), name: SCHOOL_NAME, subject: SCHOOL_NAME + ': new sponsorship ' + naira_(rec.amount),
+      mail_({ to: Session.getEffectiveUser().getEmail(), name: SCHOOL_NAME, subject: SCHOOL_NAME + ': new sponsorship ' + naira_(rec.amount),
         body: 'A sponsorship came in through the website.\n\nFrom: ' + (rec.donorName || '-') + ' (' + (rec.donorEmail || 'no email') + ')\nAmount: ' + naira_(rec.amount) +
               '\nFor: ' + result + (rec.message ? '\nMessage: ' + rec.message : '') + '\n\nSee it on the owner dashboard (Sponsors).' });
     } catch (e) { console.error(e); }
@@ -238,7 +238,7 @@ function sp_thank_(rec, q) {
     const what = rec.type === 'Student' && q ? 'Your gift covers ' + rec.months + ' month' + (rec.months === 1 ? '' : 's') + ' of ' + (q.Programme || 'school') + ' fees for ' + q.PublicName + '.' +
       (sp_yes_(q.Consent) ? ' We will send you a short update on ' + String(q.PublicName).split(/[ ,]/)[0] + "'s progress each month, in shā’ Allāh." : '')
       : 'Your gift goes into the Himaayah Sponsorship Fund, which pays fees for students whose families cannot afford them. We will email you when it is used.';
-    MailApp.sendEmail({ to: rec.donorEmail, name: SCHOOL_NAME, subject: SCHOOL_NAME + ': thank you for your gift of ' + naira_(rec.amount),
+    mail_({ to: rec.donorEmail, name: SCHOOL_NAME, subject: SCHOOL_NAME + ': thank you for your gift of ' + naira_(rec.amount),
       body: 'Assalaamu alaykum' + (first ? ' ' + first : '') + ',\n\nJazakallahu khayran. We have received your gift of ' + naira_(rec.amount) + '.\n\n' + what +
             '\n\nThe Prophet ﷺ said: "When a person dies, his deeds end except for three: an ongoing charity, knowledge that is benefited from, or a righteous child who prays for him." (Sahih Muslim 1631)\n\n' +
             'May Allah accept it from you and make it heavy on your scales.\n\n' + SCHOOL_NAME + '\n' + SP_PAGE });
@@ -309,7 +309,7 @@ function sp_allocate_(by, p) {
     const e = String(u.s.DonorEmail || '');
     if (!validEmail_(e) || MailApp.getRemainingDailyQuota() < 1) return;
     try {
-      MailApp.sendEmail({ to: e, name: SCHOOL_NAME, subject: SCHOOL_NAME + ': your gift is at work',
+      mail_({ to: e, name: SCHOOL_NAME, subject: SCHOOL_NAME + ': your gift is at work',
         body: 'Assalaamu alaykum' + (u.s.DonorName ? ' ' + String(u.s.DonorName).split(' ')[0] : '') + ',\n\nAlhamdulillah, ' + naira_(u.take) + ' of your gift to the Sponsorship Fund has just paid ' +
               (f.months ? f.months * periods + ' month' + (f.months * periods === 1 ? '' : 's') + ' of ' : '') + f.programme + ' fees for a student whose family could not afford them.' +
               (Number(u.s.Remaining) - u.take > 0 ? '\n\n' + naira_(Number(u.s.Remaining) - u.take) + ' of your gift is still waiting to help the next student.' : '') +
@@ -370,7 +370,7 @@ function sp_progressUpdate_(x, rep, key) {
     const rows = byEmail[e], donor = String(rows[0].DonorName || '').split(' ')[0];
     const lines = rep.highlights.length ? rep.highlights.map(function (h) { return '• ' + h; }).join('\n') : '• Classes continued as normal this month.';
     try {
-      MailApp.sendEmail({ to: e, name: SCHOOL_NAME,
+      mail_({ to: e, name: SCHOOL_NAME,
         subject: rep.milestone ? SCHOOL_NAME + ': alhamdulillah, ' + name + ' ' + rep.milestone : SCHOOL_NAME + ': ' + name + "'s month at Himaayah (" + rep.month + ')',
         body: 'Assalaamu alaykum' + (donor ? ' ' + donor : '') + ',\n\n' + (rep.milestone ? 'Good news: ' + name + ', the student you sponsor, has ' + rep.milestone + '. Alhamdulillah.\n\n' : '') +
               'Here is how ' + name + ' did in ' + rep.month + ' (' + rep.programme + '):\n' + lines + '\n\n' +

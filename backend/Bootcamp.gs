@@ -31,7 +31,7 @@ const BC_PORTAL = 'https://www.himaayahschools.com/bootcamp';
 const BC_PAGE = 'https://www.himaayahschools.com/hadith-bootcamp';
 const BC_ST_TAB = 'Bootcamp students';
 const BC_ST_HEAD = ['BootcampID', 'Name', 'Email', 'WhatsApp', 'AccessCode', 'Joined', 'Source', 'Amount', 'Reference', 'EventID', 'Active',
-                    'Completed', 'CertificateID', 'LastSeen', 'Notes', 'Gender'];
+                    'Completed', 'CertificateID', 'LastSeen', 'Notes'];
 /* The recordings live in a Telegram group. Paste its invite link here (it starts with https://t.me/). Members see it inside their lessons; it is never shown on the public page.
    To point one ḥadīth at its own post instead, paste that post's Telegram link in the DriveLink column of the "Bootcamp recordings" tab, on the row for that ḥadīth. */
 const BC_TELEGRAM_URL = 'https://t.me/+j3T0tJcXIgRjN2U0';
@@ -82,7 +82,7 @@ function bootcampFromRequest(p) {
     if (a === 'bc_lesson') return bc_lesson_(who, p);
     if (a === 'bc_listened') return bc_listened_(who, p);
     if (a === 'bc_quiz') return bc_quiz_(who, p);
-    if (a === 'bc_cert') return bc_cert_(who, p);
+    if (a === 'bc_cert') return bc_cert_(who);
     return { ok: false, error: 'Unknown action.' };
   } catch (err) {
     console.error(err);
@@ -126,7 +126,7 @@ function bc_member_(st) {
       r = T2.rows.filter(function (x) { return key_(x.BootcampID) === sid; })[0];
       if (!r) {
         append_(T2, { BootcampID: sid, Name: String(st.Name || ''), Email: String(st.Email || ''), WhatsApp: String(st.WhatsApp || ''), Joined: iso_(new Date(), true),
-          Source: 'Madrasah', Amount: 0, Active: true, Gender: bc_gender_(st.Gender) }, ['BootcampID', 'Name', 'Email', 'WhatsApp', 'Joined']);
+          Source: 'Madrasah', Amount: 0, Active: true }, ['BootcampID', 'Name', 'Email', 'WhatsApp', 'Joined']);
         r = bc_st_().rows.filter(function (x) { return key_(x.BootcampID) === sid; })[0];
       }
     } finally { lock.releaseLock(); }
@@ -211,7 +211,7 @@ function bc_payload_(who) {
   const r = who.row || {};
   return { ok: true, telegram: !!bc_tgGroup_() || R.rows.some(function (x) { return bc_tgOk_(x.DriveLink); }), student: { id: who.id, name: who.name, source: who.source }, price: BC_PRICE, pass: BC_PASS, total: list.length,
            passed: passed, listened: list.filter(function (x) { return x.listened; }).length, lessons: list,
-           certificate: r.CertificateID ? { id: String(r.CertificateID), completed: iso_(r.Completed), url: bc_gender_(r.Gender) ? bc_certUrl_(who, String(r.CertificateID), iso_(r.Completed), bc_gender_(r.Gender)) : '' } : null };
+           certificate: r.CertificateID ? { id: String(r.CertificateID), completed: iso_(r.Completed) } : null };
 }
 function bc_shuffle_(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); const t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
 function bc_find_(n) { n = Math.round(Number(n)); return BC_CONTENT.filter(function (h) { return h.n === n; })[0]; }
@@ -263,22 +263,16 @@ function bc_quiz_(who, p) {
   });
   return { ok: true, score: score, outOf: h.quiz.length, passed: passed, best: best, everPassed: nowPassed, attempts: attempts, marks: marks, pass: BC_PASS };
 }
-function bc_cert_(who, p) {
+function bc_cert_(who) {
   const prog = bc_progress_(who.id);
   const left = BC_CONTENT.filter(function (h) { return !(prog[h.n] && bc_yes_(prog[h.n].Passed)); }).map(function (h) { return h.n; });
   if (left.length) return { ok: false, error: 'Pass every quiz first. Still to pass: ' + left.slice(0, 10).join(', ') + (left.length > 10 ? '…' : '') + '.' };
-  let id = '', date = '', first = false, gender = '';
+  let id = '', date = '', first = false;
   const lock = LockService.getScriptLock(); lock.waitLock(20000);
   try {
     const T = bc_st_();
     const r = T.rows.filter(function (x) { return key_(x.BootcampID) === who.id; })[0];
     if (!r) return { ok: false, error: 'Your bootcamp record was not found. Please contact the school.' };
-    gender = bc_gender_(r.Gender);
-    if (!gender) {
-      const g = bc_gender_(p && p.gender);
-      if (!g) return { ok: false, needGender: true, error: 'Are you a brother or a sister? We need this to word your Arabic certificate.' };
-      gender = g; put_(T, r._row, 'Gender', gender, true);
-    }
     id = String(r.CertificateID || ''); date = iso_(r.Completed);
     if (!id) {
       const have = {}; T.rows.forEach(function (x) { have[key_(x.CertificateID)] = 1; });
@@ -290,10 +284,10 @@ function bc_cert_(who, p) {
   } finally { lock.releaseLock(); }
   if (first) {
     try {
-      MailApp.sendEmail({ to: Session.getEffectiveUser().getEmail(), name: SCHOOL_NAME, subject: SCHOOL_NAME + ': ' + who.name + ' completed the Hadith Bootcamp',
+      mail_({ to: Session.getEffectiveUser().getEmail(), name: SCHOOL_NAME, subject: SCHOOL_NAME + ': ' + who.name + ' completed the Hadith Bootcamp',
         body: who.name + ' (' + who.id + ') passed all ' + BC_CONTENT.length + ' quizzes of the ' + BC_NAME + '.\nCertificate: ' + id + '\n\nMasha Allah.' });
       if (validEmail_(who.email) && MailApp.getRemainingDailyQuota() > 0) {
-        MailApp.sendEmail({ to: who.email, name: SCHOOL_NAME, subject: 'Mā shāʾ Allāh: you completed the Hadith Bootcamp',
+        mail_({ to: who.email, name: SCHOOL_NAME, subject: 'Mā shāʾ Allāh: you completed the Hadith Bootcamp',
           body: 'Assalaamu alaykum ' + String(who.name).split(' ')[0] + ',\n\nCongratulations. You have studied and passed all ' + BC_CONTENT.length + ' ḥadīth of al-Arbaʿīn an-Nawawiyyah.\n\n' +
                 'Your certificate number is ' + id + '. You can download your certificate any time from ' + BC_PORTAL + ', and anyone can check it at ' + BC_PAGE + '?verify=' + id + '\n\n' +
                 'The Prophet ﷺ said: "May Allah brighten the face of a person who hears something from us and conveys it as he heard it." (at-Tirmidhī 2657)\n\n' +
@@ -301,16 +295,7 @@ function bc_cert_(who, p) {
       }
     } catch (e) { console.error(e); }
   }
-  const url = bc_certUrl_(who, id, date, gender);
-  return { ok: true, certificate: { id: id, completed: date, name: who.name, course: BC_NAME, url: url } };
-}
-function bc_gender_(v) { const g = String(v || '').trim().toLowerCase(); return g === 'f' ? 'f' : g === 'm' ? 'm' : ''; }
-/* The certificate itself lives in the Certificates tab (Certificates.gs), in Arabic, keeping the HBC- number. Issuing again returns the same one. */
-function bc_certUrl_(who, id, date, gender) {
-  try {
-    const c = cert_issue_({ id: id, name: who.name, programme: 'Ḥadīth Bootcamp', course: 'معسكر الحديث: الأربعون النووية', lang: 'ar', gender: gender, date: date, studentId: who.id });
-    return c && c.ok ? c.url : '';
-  } catch (e) { console.error(e); return ''; }
+  return { ok: true, certificate: { id: id, completed: date, name: who.name, course: BC_NAME } };
 }
 
 /* ===== PAYMENT ARRIVES (from cardPaymentFromRequest in CardPayments.gs, after the secret check) ===== */
@@ -318,7 +303,7 @@ function bootcampCardPayment_(p) {
   const rec = {
     name: bc_txt_(p.donorName || p.student || '', 100), email: bc_txt_(p.donorEmail || p.email || '', 120).toLowerCase(), phone: bc_txt_(p.donorPhone || '', 30),
     amount: Number(p.amount) || 0, currency: String(p.currency || '').toUpperCase(), status: String(p.status || '').toUpperCase(),
-    eventId: String(p.eventId || ''), checkoutId: String(p.checkoutId || ''), chargeId: String(p.chargeId || ''), ref: bc_txt_(p.ref || '', 40), gender: p.gender
+    eventId: String(p.eventId || ''), checkoutId: String(p.checkoutId || ''), chargeId: String(p.chargeId || ''), ref: bc_txt_(p.ref || '', 40)
   };
   card_normalise_(rec, p.ngn, BC_PRICE);   // a card billed in another currency is credited at the naira price
   const paid = /^(SUCCEEDED|ACCEPTED|OVERPAID)$/.test(rec.status) && rec.currency === 'NGN' && rec.amount >= BC_PRICE;
@@ -337,7 +322,7 @@ function bootcampCardPayment_(p) {
       const T = bc_st_();
       const id = bc_newId_(T), code = bc_newCode_();
       append_(T, { BootcampID: id, Name: rec.name, Email: rec.email, WhatsApp: rec.phone, AccessCode: code, Joined: iso_(new Date(), true), Source: 'Card',
-        Amount: rec.amount, Reference: rec.checkoutId || rec.ref, EventID: rec.eventId, Active: true, Gender: bc_gender_(rec.gender) },
+        Amount: rec.amount, Reference: rec.checkoutId || rec.ref, EventID: rec.eventId, Active: true },
         ['BootcampID', 'Name', 'Email', 'WhatsApp', 'AccessCode', 'Joined', 'Reference', 'EventID']);
       created = { id: id, code: code, name: rec.name, email: rec.email };
       result = 'Bootcamp account ' + id + ' created';
@@ -352,7 +337,7 @@ function bootcampCardPayment_(p) {
   if (created) bc_sendLogin_(created);
   card_flag_(rec, 'Hadith Bootcamp', result);
   try {
-    MailApp.sendEmail({ to: Session.getEffectiveUser().getEmail(), name: SCHOOL_NAME, subject: SCHOOL_NAME + ': Hadith Bootcamp payment ' + naira_(rec.amount),
+    mail_({ to: Session.getEffectiveUser().getEmail(), name: SCHOOL_NAME, subject: SCHOOL_NAME + ': Hadith Bootcamp payment ' + naira_(rec.amount),
       body: 'A Hadith Bootcamp payment came in through the website.\n\nFrom: ' + (rec.name || '-') + ' (' + (rec.email || 'no email') + ', ' + (rec.phone || 'no phone') + ')\nAmount: ' +
             naira_(rec.amount) + ' ' + rec.status + '\nResult: ' + result + '\n\nSee the "' + BC_ST_TAB + '" tab.' });
   } catch (e) { console.error(e); }
@@ -362,8 +347,8 @@ function bc_sendLogin_(a) {
   if (!validEmail_(a.email)) return false;
   try {
     if (MailApp.getRemainingDailyQuota() < 1) return false;
-    MailApp.sendEmail({ to: a.email, name: SCHOOL_NAME, subject: 'Your Hadith Bootcamp login',
-      body: 'Assalaamualaykum Warahmatulllah Wabarakaatuh' + (a.name ? ' ' + String(a.name).split(' ')[0] : '') + ',\n\nJazakallahu khayran for joining the ' + BC_NAME + '.\n\n' +
+    mail_({ to: a.email, name: SCHOOL_NAME, subject: 'Your Hadith Bootcamp login',
+      body: 'Assalaamu alaykum' + (a.name ? ' ' + String(a.name).split(' ')[0] : '') + ',\n\nJazakallahu khayran for joining the ' + BC_NAME + '.\n\n' +
             'Log in here: ' + BC_PORTAL + '\nBootcamp ID: ' + a.id + '\nAccess code: ' + a.code + '\n\n' +
             'Keep these details private. Work through the ḥadīth at your own pace: listen to the lesson, read the text and notes, then pass the short quiz. ' +
             'Pass all ' + BC_CONTENT.length + ' quizzes to receive your certificate.\n\n' +

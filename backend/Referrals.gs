@@ -104,7 +104,7 @@ function ref_join_(p) {
 function ref_mailDetails_(to, name, code, access, welcome) {
   try {
     if (MailApp.getRemainingDailyQuota() < 1) return;
-    MailApp.sendEmail({ to: to, name: SCHOOL_NAME, subject: SCHOOL_NAME + ': your referral link',
+    mail_({ to: to, name: SCHOOL_NAME, subject: SCHOOL_NAME + ': your referral link',
       body: 'Assalaamu alaykum ' + String(name).split(' ')[0] + ',\n\n' + (welcome ? 'Thank you for joining Refer and Earn. ' : '') +
             'Share your link with anyone who wants to learn with us. When someone enrols through it and their payment is confirmed, you earn ' + REF_PERCENT + '% of the fee they paid, sent to your bank account.\n\n' +
             'Your link: ' + REF_LINK + code + '\nYour referral code: ' + code + '\nAccess code (to see your referrals): ' + access + '\nYour referral page: ' + REF_PAGE + '\n\nJazakumullahu khayran,\n' + SCHOOL_NAME });
@@ -201,11 +201,11 @@ function ref_award_(code, info, enrolRef, programme) {
             ['EarningID', 'Code', 'Referrer', 'EnrolmentRef', 'Student', 'Programme', 'Plan', 'Created']);
     try {
       if (MailApp.getRemainingDailyQuota() > 1) {
-        MailApp.sendEmail({ to: String(f.r.Email), name: SCHOOL_NAME, subject: SCHOOL_NAME + ': you earned ' + naira_(amount),
+        mail_({ to: String(f.r.Email), name: SCHOOL_NAME, subject: SCHOOL_NAME + ': you earned ' + naira_(amount),
           body: 'Assalaamu alaykum ' + String(f.r.Name).split(' ')[0] + ',\n\nGood news: ' + ref_short_(info.name) + ' has enrolled through your referral link and their payment is confirmed. You have earned ' +
                 naira_(amount) + ' (' + REF_PERCENT + '% of ' + naira_(fee) + ').\n\nWe will send it to your account (' + f.r.BankName + ', ending ' + String(f.r.AccountNumber).slice(-4) + ') and let you know when it is paid.\n\nSee your referrals: ' + REF_PAGE + '\n\nJazakumullahu khayran,\n' + SCHOOL_NAME });
         const staff = Session.getEffectiveUser().getEmail();
-        if (staff) MailApp.sendEmail({ to: staff, name: SCHOOL_NAME, subject: SCHOOL_NAME + ': referral payout due ' + naira_(amount) + ' to ' + f.r.Name,
+        if (staff) mail_({ to: staff, name: SCHOOL_NAME, subject: SCHOOL_NAME + ': referral payout due ' + naira_(amount) + ' to ' + f.r.Name,
           body: 'A referred student has enrolled.\n\nStudent: ' + info.name + ' (' + info.plan + ')\nFee paid: ' + naira_(fee) + '\nReferrer: ' + f.r.Name + ' (' + f.r.Code + ')\nAmount due: ' + naira_(amount) +
                 '\n\nPay to:\n' + f.r.AccountName + '\n' + f.r.BankName + '\n' + f.r.AccountNumber + '\n\nAfter paying, set the row to Paid in the "Referral earnings" tab and add the date and transfer reference.' });
       }
@@ -223,7 +223,7 @@ function emailReferralPayouts() {
     if (String(e.Status) !== 'Paid' || e.Notified) return;
     const r = by[key_(e.Code)]; if (!r || MailApp.getRemainingDailyQuota() < 1) return;
     try {
-      MailApp.sendEmail({ to: String(r.Email), name: SCHOOL_NAME, subject: SCHOOL_NAME + ': referral payment sent ' + naira_(e.Amount),
+      mail_({ to: String(r.Email), name: SCHOOL_NAME, subject: SCHOOL_NAME + ': referral payment sent ' + naira_(e.Amount),
         body: 'Assalaamu alaykum ' + String(r.Name).split(' ')[0] + ',\n\nWe have sent ' + naira_(e.Amount) + ' to your account (' + r.BankName + ', ending ' + String(r.AccountNumber).slice(-4) + ') for referring ' + ref_short_(e.Student) + '.' +
               (e.PaidReference ? '\nTransfer reference: ' + e.PaidReference : '') + '\n\nThank you for sharing Himaayah Schools.\n' + REF_PAGE + '\n\n' + SCHOOL_NAME });
       put_(E, e._row, 'Notified', iso_(new Date(), true), true); n++;

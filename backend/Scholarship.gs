@@ -156,14 +156,14 @@ function scholarshipFromRequest(p) {
     if (isNew) {
       try {
         if (MailApp.getRemainingDailyQuota() > 1) {
-          MailApp.sendEmail({ to: d.email, name: SCHOOL_NAME, subject: SCHOOL_NAME + ' Scholarship: we received your application (' + ref + ')',
+          mail_({ to: d.email, name: SCHOOL_NAME, subject: SCHOOL_NAME + ' Scholarship: we received your application (' + ref + ')',
             body: 'Assalaamu alaykum ' + d.name.split(' ')[0] + ',\n\nThank you for applying for the Himaayah Schools Scholarship (free 2027 UTME form). Your reference is ' + ref + '.\n\n' +
                   'What happens next:\n1. We check your O\'level result' + (two ? 's' : '') + '. Every grade must be A1, B2 or B3' + (two ? ', and both sittings must be from the same examination body' : '') + '.\n2. If you qualify, we invite you to the scholarship exam, which is on ' + SCH_EXAM_DATE + ', InshAllah. We will send the time and details by email and WhatsApp.\n' +
                   '3. You must score above ' + SCH_PASS_ABOVE + ' (out of 400). The ' + SCH_PLACES + ' highest scorers who meet every requirement are awarded.\n\nYou can read the full requirements at https://www.himaayahschools.com/scholarship\n\nJazakumullahu khayran,\n' + SCHOOL_NAME });
         }
         if (SCH_NOTIFY_STAFF && MailApp.getRemainingDailyQuota() > 1) {
           const to = Session.getEffectiveUser().getEmail();
-          if (to) MailApp.sendEmail({ to: to, name: SCHOOL_NAME, subject: SCHOOL_NAME + ': new scholarship application (' + ref + ')',
+          if (to) mail_({ to: to, name: SCHOOL_NAME, subject: SCHOOL_NAME + ': new scholarship application (' + ref + ')',
             body: d.name + ' applied.\n' + d.body + ' ' + d.year + ', number ' + d.examNo + (two ? '\nSecond sitting: ' + d.body + ' ' + d.year2 + ', number ' + d.examNo2 : '') + ', ' + d.subjects + ' subjects in total.\nWhatsApp: ' + d.phone + '\nEmail: ' + d.email + '\nCourse: ' + d.course + ' (' + d.uni + ')\nAge: ' + age + '\nReference: ' + ref + '\nOpen the Scholarship tab to check the result' + (two ? 's' : '') + '.' });
         }
       } catch (err) { console.error(err); }
@@ -189,7 +189,7 @@ function scholarshipEmailInvited() {
     if (String(r[col('Status')]) !== 'Verified') return;
     if (MailApp.getRemainingDailyQuota() < 1) { skipped++; return; }
     try {
-      MailApp.sendEmail({ to: String(r[col('Email')]), name: SCHOOL_NAME, subject: SCHOOL_NAME + ' Scholarship: you are invited to the exam',
+      mail_({ to: String(r[col('Email')]), name: SCHOOL_NAME, subject: SCHOOL_NAME + ' Scholarship: you are invited to the exam',
         body: 'Assalaamu alaykum ' + String(r[col('Name')]).split(' ')[0] + ',\n\nYour O\'level result has been verified and you are invited to the scholarship exam.\n\nExam: ' + when +
               '\n\nIt is scored out of 400. You need above ' + SCH_PASS_ABOVE + ' to qualify. The ' + SCH_PLACES + ' highest scorers who meet every requirement receive a free 2027 UTME form. You can sit the exam once.\n\nHow to sit it: open https://www.himaayahschools.com/scholarship-exam at the time above and sign in with your reference and this email address. The exam is on a computer or phone with a steady internet connection. It has 180 questions, the timer is ' + SCX_MINUTES + ' minutes, and you choose your track (the subjects for the course you want) just before you start.\n\nYour reference: ' + r[col('Ref')] + '\n\nJazakumullahu khayran,\n' + SCHOOL_NAME });
       sh.getRange(i + 2, col('Status') + 1).setValue('Invited');

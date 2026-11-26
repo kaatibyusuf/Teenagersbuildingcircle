@@ -180,7 +180,7 @@ function sal_slip_(s, month, amount, count, rate, fixed, roster, ref, paidDate) 
     (roster.length ? '<p style="margin:16px 0 6px;font-weight:700">Students this month</p><table style="width:100%;border-collapse:collapse;font-size:14px">' + rowsHtml + '</table>' : '') +
     '<p style="margin:18px 0 0;font-size:13px;color:#4B6577">JazakAllahu khayran for your work with our students.</p></div></div>';
   try {
-    MailApp.sendEmail({ to: String(s.Email).trim(), name: SCHOOL_NAME, subject: SCHOOL_NAME + ': payslip for ' + sal_monthName_(month) + ' (' + naira_(amount) + ')', body: text, htmlBody: html });
+    mail_({ to: String(s.Email).trim(), name: SCHOOL_NAME, subject: SCHOOL_NAME + ': payslip for ' + sal_monthName_(month) + ' (' + naira_(amount) + ')', body: text, htmlBody: html });
     return '';
   } catch (e) { return 'Payslip email failed: ' + e.message; }
 }

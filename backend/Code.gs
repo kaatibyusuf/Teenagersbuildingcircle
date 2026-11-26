@@ -399,7 +399,7 @@ function sendEmail_(s, subject, body) {
   if (!validEmail_(s.Email)) return 'No email';
   try {
     if (MailApp.getRemainingDailyQuota() < 1) return 'Quota reached';
-    MailApp.sendEmail({ to: String(s.Email).trim(), subject: subject, body: body + '\n\n' + SCHOOL_NAME + '\n' + DASHBOARD_URL, name: SCHOOL_NAME });
+    mail_({ to: String(s.Email).trim(), subject: subject, body: body + '\n\n' + SCHOOL_NAME + '\n' + DASHBOARD_URL, name: SCHOOL_NAME });
     return 'Sent';
   } catch (err) { console.error(err); return 'Error'; }
 }
@@ -526,7 +526,7 @@ function setupSheets() {
 }
 function testEmail() {
   const to = Session.getEffectiveUser().getEmail();
-  MailApp.sendEmail(to, SCHOOL_NAME + ': test email', 'Assalaamu alaykum. This is a test from your dashboard script. Reminders will be sent the same way.');
+  mail_(to, SCHOOL_NAME + ': test email', 'Assalaamu alaykum. This is a test from your dashboard script. Reminders will be sent the same way.');
   try { ss_().toast('Test email sent to ' + to, SCHOOL_NAME); } catch (e) {}
 }
 function onOpen() {
