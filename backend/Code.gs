@@ -320,6 +320,7 @@ function doPost(e) {
     if (p.action === 'waChat') return json_(waChatFromRequest(p));                      // WhatsApp assistant (WhatsApp.gs)
     if (p.action === 'cardPayment') return json_(cardPaymentFromRequest(p));             // Bachs card payments from the website (CardPayments.gs)
     if (/^adm_/.test(String(p.action || ''))) return json_(admissionsFromRequest(p));       // admissions tracker (Admissions.gs)
+    if (/^ha_/.test(String(p.action || ''))) return json_(haarisFromRequest(p));            // Haaris account help and Telegram linking (Haaris.gs)
     if (/^par_/.test(String(p.action || ''))) return json_(parentsFromRequest(p));         // parent view (Parents.gs)
     if (/^grp_/.test(String(p.action || ''))) return json_(groupsFromRequest(p));          // class groups (Groups.gs)
     if (/^acd/.test(String(p.action || ''))) return json_(academyFromRequest(p));        // Academy portals (Academy.gs)
@@ -455,6 +456,7 @@ function runReminders_() {
   if (!todo.length) return 0;
   const rows = todo.map(function (x) {
     const status = sendEmail_(x.s, SCHOOL_NAME + ': ' + x.type.toLowerCase() + ' reminder', x.msg);
+    try { if (typeof tg_push_ === 'function') tg_push_(x.s.StudentID, x.msg); } catch (e) { console.error(e); }   // also to their Telegram, if linked (Haaris.gs)
     const cells = { Date: today, StudentID: x.s.StudentID, Name: x.s.Name, Type: x.type, Message: x.msg, WhatsAppLink: waLink_(x.s.WhatsApp, x.msg), EmailStatus: status, Done: '', Key: x.key };
     return R.head.map(function (h) { return cells[h] === undefined ? '' : cells[h]; });
   });

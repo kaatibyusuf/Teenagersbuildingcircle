@@ -10,10 +10,10 @@
     "api/guide-download.mjs": {
       "includeFiles": "api/_paid/**"
     },
-    "api/whatsapp.mjs": {
+    "api/chat.mjs": {
       "includeFiles": "api/_wa/**"
     },
-    "api/chat.mjs": {
+    "api/telegram.mjs": {
       "includeFiles": "api/_wa/**"
     }
   },

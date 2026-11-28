@@ -179,6 +179,7 @@ async function api(id, code, action, extra) {
     if (id.toUpperCase() !== 'DEMO' || code !== 'demo') return { ok: false, error: 'Wrong ID or access code.' };
     if (action === 'password') return String(extra.newCode || '').length < 8 ? { ok: false, error: 'Your new code must be 8 to 40 characters.' } : demo();
     if (/^rec_/.test(action || '')) return demoRec(action, extra || {});
+    if (action === 'ha_tgtoken') return { ok: true, url: 'https://t.me/', linked: false };
     if (action === 'rt_save') { const d = demo(), R = d.routine, full = extra.done.length >= extra.steps; R.done = extra.done.slice(); R.counts = Object.assign({}, extra.counts);
       const last = R.strip[R.strip.length - 1]; last.done = R.done.length; last.steps = extra.steps; const was = last.full; last.full = full;
       if (full && !was) { R.streak += 1; R.best = Math.max(R.best, R.streak); } else if (!full && was) R.streak -= 1;
@@ -660,6 +661,8 @@ function render(d) {
     <article class="c w6" style="--i:8"><h2>Announcements</h2><ul class="list">${(d.announcements || []).map((a) => `<li style="display:block"><b>${esc(a.Title)}</b> <span style="float:inline-end">${fdate(a.Date)}</span><div class="sub">${esc(a.Body)}</div></li>`).join('') || '<li class="empty">Nothing new.</li>'}</ul></article>
     <article class="c w6" style="--i:9"><h2>Materials</h2><ul class="list">${(d.materials || []).map((m) => `<li>${safeUrl(m.URL) ? `<a href="${esc(m.URL)}" target="_blank" rel="noopener">${esc(m.Title)}</a>` : esc(m.Title)}</li>`).join('') || '<li class="empty">No materials yet.</li>'}</ul></article>
 
+    <article class="c w12" id="telegram" style="--i:11"><h2>Haaris on Telegram</h2><p class="sub">Connect Telegram to chat with Haaris about your own classes, fees and assignments, and get your reminders there too. It takes one tap, and you can disconnect any time by sending /unlink to the bot.</p>
+      <div class="tgc" style="display:flex;flex-wrap:wrap;gap:12px;align-items:center"><button class="btn btn-ink" type="button" data-tg="go">Connect Telegram</button><span class="msg" role="status" style="margin:0"></span></div></article>
     <article class="c w12" id="account" style="--i:11"><h2>Your access code</h2><p class="sub">Change the code you sign in with. Use 8 characters or more, and keep it private. Your Student ID (${esc(s.StudentID)}) stays the same.</p>
       <form class="subm codef" novalidate style="max-width:420px">
         <label for="nc1">New access code</label><input id="nc1" name="newCode" type="password" autocomplete="new-password" minlength="8" maxlength="40">
@@ -725,6 +728,23 @@ $('app').addEventListener('input', (e) => {
   if (map[t.id]) REC.form[map[t.id]] = t.value;
 });
 $('app').addEventListener('submit', (e) => { if (e.target.id === 'recForm') { e.preventDefault(); if (!REC.sending) recSend(); } });
+
+/* Connect Telegram: asks for a one-time link (valid 15 minutes) and shows it as a button to tap */
+document.addEventListener('click', async (e) => {
+  const b = e.target.closest && e.target.closest('[data-tg="go"]'); if (!b) return;
+  const box = b.closest('.tgc'), msg = box.querySelector('.msg');
+  let saved = null; try { saved = JSON.parse(sessionStorage.getItem('hs') || 'null'); } catch (x) {}
+  if (!saved) { msg.className = 'msg bad'; msg.textContent = 'Please log in again.'; return; }
+  b.disabled = true; msg.className = 'msg'; msg.textContent = 'One moment…';
+  try {
+    const d = await api(saved.id, saved.code, 'ha_tgtoken');
+    if (d && d.ok && /^https:\/\/t\.me\//.test(d.url || '')) {
+      msg.textContent = '';
+      const a = document.createElement('a'); a.className = 'btn btn-ink'; a.href = d.url; a.target = '_blank'; a.rel = 'noopener'; a.textContent = d.linked ? 'Open Telegram to reconnect' : 'Open Telegram';
+      box.insertBefore(a, b); b.hidden = true; msg.className = 'msg good'; msg.textContent = 'Tap the button, then press Start in Telegram. This link works for 15 minutes.';
+    } else { msg.className = 'msg bad'; msg.textContent = (d && d.error) || 'Could not start. Please try again.'; b.disabled = false; }
+  } catch (err) { msg.className = 'msg bad'; msg.textContent = 'Could not reach the school server. Please try again.'; b.disabled = false; }
+});
 
 /* Change access code */
 async function changeCode(f) {

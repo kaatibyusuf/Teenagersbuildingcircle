@@ -1,9 +1,9 @@
 /**
- * WhatsApp assistant (api/whatsapp on the website)
+ * Haaris assistant records (website chat and Telegram; the name WhatsApp stays because the tabs and action are already in use)
  *
- * The website receives each WhatsApp message from Meta, asks Claude for an answer, and uses this file to
+ * The website (api/chat) and the Telegram bot (api/telegram) ask Claude for an answer, and use this file to
  *   - log every message on the "WhatsApp chats" tab (so the bot remembers the last few turns),
- *   - skip messages Meta sends twice,
+ *   - skip messages that arrive twice,
  *   - save enrolment enquiries on the "WhatsApp enquiries" tab and email the school,
  *   - email the school when a person needs a human (handover).
  * Both tabs are created automatically.
@@ -47,7 +47,7 @@ function waChatFromRequest(p) {
       return { ok: true };
     } finally { lock0.releaseLock(); }
   }
-  const phone = wa_clean_(p.phone, 20).replace(/\D/g, ''), now = new Date();
+  const phone = /^tg\d{1,20}$/.test(String(p.phone || '')) ? String(p.phone) : wa_clean_(p.phone, 20).replace(/\D/g, ''), now = new Date();   // "tg123" = a Telegram chat
   if (!phone) return { ok: false, error: 'No phone' };
   const stamp = Utilities.formatDate(now, Session.getScriptTimeZone(), 'yyyy-MM-dd HH:mm');
   const lock = LockService.getScriptLock(); lock.waitLock(20000);

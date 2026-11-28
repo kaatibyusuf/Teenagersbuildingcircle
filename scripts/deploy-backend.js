@@ -39,6 +39,7 @@ console.log('Saving a copy of what is in Apps Script now to: ' + backup);
 try { run('clasp clone ' + SCRIPT_ID, backup); }
 catch (e) { fail('clasp could not read the project:\n' + String(e.stderr || e.message).trim() + '\nCheck: clasp login (as the account that owns the script).'); }
 
+if (!fs.existsSync(path.join(backup, 'appsscript.json'))) fail('clasp did not download the project (the copy in ' + backup + ' is empty), so nothing was uploaded.\nThe usual cause is an expired sign-in. Run: clasp logout   then: clasp login   (as abdulsamad@himaayahschools.com), then run this again.');
 fs.rmSync(stage, { recursive: true, force: true });
 fs.cpSync(backup, stage, { recursive: true });
 

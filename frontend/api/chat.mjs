@@ -1,6 +1,7 @@
 // Website chat assistant ("Ask our assistant" in the green Chat with us menu).
 // Same brain as the WhatsApp bot (api/_wa/core.mjs). Needs ANTHROPIC_API_KEY and APPS_SCRIPT_SECRET in Vercel.
 import { LINES, converse } from './_wa/core.mjs';
+// A signed-in student (their Student ID and access code, sent by the dashboard pages) lets Haaris answer about their own record.
 
 const DEFAULT_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby0AsifBuB_Ad7g1SjDXCipaDU27-BrzYWf67muw5jeY_C0_0uz8AhQYYXdiNRQhvqX/exec';
 const hits = new Map();                                  // very small per-instance rate limit: 20 messages per 10 minutes per visitor
@@ -29,9 +30,17 @@ export async function POST(request) {
   const last = all.pop();
   if (!last || last.role !== 'user' || !last.text.trim()) return json({ error: 'Type a question first.' }, 400);
 
+  let account = null;
+  const au = b.auth;
+  if (au && typeof au.id === 'string' && typeof au.code === 'string' && au.id.trim() && au.code.trim()) {
+    try {
+      const r = await fetch(process.env.APPS_SCRIPT_URL || DEFAULT_APPS_SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'ha_me', id: au.id.slice(0, 40), code: au.code.slice(0, 80) }) }).then((x) => x.json()).catch(() => null);
+      if (r && r.ok) account = r.summary;
+    } catch { /* answer as a visitor */ }
+  }
   let handover = null;
   try {
-    const reply = await converse({ channel: 'web', history: all, text: last.text, onTool: async (tool, input) => {
+    const reply = await converse({ channel: 'web', history: all, text: last.text, account, onTool: async (tool, input) => {
       if (tool === 'save_enquiry') {
         const r = await sheet({ op: 'weblead', name: input.name || '', programme: input.programme || '', contact: input.contact || '', detail: input.detail || '' });
         return r && r.ok ? 'Saved. Staff will follow up.' : 'Could not save; tell the person to use himaayahschools.com/enroll.html or message the General line.';
@@ -44,7 +53,7 @@ export async function POST(request) {
       }
       return 'Done.';
     } });
-    return json({ reply: reply || 'Sorry, I could not answer that. Please message the General line on WhatsApp.', handover });
+    return json({ signedIn: !!account, reply: reply || 'Sorry, I could not answer that. Please message the General line on WhatsApp.', handover });
   } catch (e) {
     console.error('chat error', e);
     return json({ error: 'Sorry, something went wrong. Please message us on WhatsApp.' }, 500);

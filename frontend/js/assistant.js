@@ -69,7 +69,8 @@
     var chips = log.querySelector('.hsa-chips'); if (chips) chips.remove();
     msgs.push({ role: 'user', text: text }); add('user', text); save();
     var dots = el('div', 'hsa-dots', '…'); log.appendChild(dots); log.scrollTop = log.scrollHeight;
-    var body = JSON.stringify({ messages: msgs.slice(-10).map(function (m) { return { role: m.role, text: m.text }; }) });
+    var auth = null; try { var sv = JSON.parse(sessionStorage.getItem('hs') || 'null'); if (sv && sv.id && sv.code) auth = { id: String(sv.id), code: String(sv.code) }; } catch (e) {}   // a signed-in student lets Haaris answer about their own record
+    var body = JSON.stringify({ messages: msgs.slice(-10).map(function (m) { return { role: m.role, text: m.text }; }), auth: auth });
     fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: body })
       .then(function (r) { return r.json().catch(function () { return {}; }); })
       .then(function (j) {
