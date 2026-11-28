@@ -3,6 +3,7 @@
 // and always when the Vercel variable HAARIS_MODE is set to "menu".
 // The wording below comes from the 2026-2027 prospectus (knowledge.md). When fees or policies change, update this file too.
 import { LINES } from './core.mjs';
+import { matchFaq, faqById } from './faq.mjs';
 
 const SITE = 'himaayahschools.com';
 const NOTE = '\n\nFees and availability can change; ' + SITE + ' always shows the latest.';
@@ -37,10 +38,10 @@ const TOPICS = { fees: FEES, enrol: ENROL, programmes: PROGRAMMES, placement: PL
 
 const RULES = [
   [/\b(my|mine)\b.*\b(fee|fees|payment|payments|due|balance)\b|\bwhen.*(fee|payment).*due\b/, 'myfees'],
-  [/next class|my class|\bwhen.*(is|are).*(class|lesson)|class link|join.*class/, 'myclass'],
-  [/assignment|homework/, 'myassign'],
-  [/\b(my )?(result|results|score|scores|grade|grades)\b/, 'myresults'],
-  [/announce|notice|news/, 'mynews'],
+  [/\bnext (class|lesson)|\bmy (class|classes|lesson|lessons|class link)\b|\bclass link\b/, 'myclass'],
+  [/\b(my|mine)\b.*(assignment|homework)|\b(assignments?|homework)\b.*\b(do i|have i|am i)\b|^(assignments?|homework)$/, 'myassign'],
+  [/\b(my|mine)\b.*\b(result|results|score|scores|grade|grades)\b|^(results?|scores?|grades?)$/, 'myresults'],
+  [/\b(my|latest|new|any)\b.*(announcement|announcements|notice|notices)|^(announcements?|news)$/, 'mynews'],
   [/refund|money back/, 'refunds'],
   [/wait ?list/, 'waitlist'],
   [/access code|student id|password|log ?in|login|sign ?in|forgot|reset/, 'login'],
@@ -54,18 +55,28 @@ const RULES = [
 const ACCOUNT_KEYS = ['myfees', 'myclass', 'myassign', 'myresults', 'mynews'];
 const GREET = /^(hi|hello|hey|salaam|salam|assalaam\S*|as-?salaam\S*|menu|help|start|options|good (morning|afternoon|evening))\b/;
 
-/** text: what the person typed or the chip value ("topic:fees"). account: the signed-in summary or null. Returns { text, chips }. */
+/** text: what the person typed or the chip value ("topic:fees", "faq:m_plans"). account: the signed-in summary or null. Returns { text, chips }. */
 export function menuReply(text, account) {
   const t = String(text || '').trim().toLowerCase().slice(0, 300);
   const mainChips = chips(account ? [...CHIPS_ACCOUNT, ...CHIPS_PUBLIC] : CHIPS_PUBLIC);
-  const intro = (account ? `Assalaamu alaykum ${String(account.name || '').split(' ')[0]}. ` : 'Assalaamu alaykum. ') + 'I am Haaris, the Himaayah Schools assistant (an AI, not a person). Choose a topic below.';
+  const intro = (account ? `Assalaamu alaykum ${String(account.name || '').split(' ')[0]}. ` : 'Assalaamu alaykum. ') + 'I am Haaris, the Himaayah Schools assistant (an AI, not a person). Ask me a question, or choose a topic below.';
   if (!t || GREET.test(t) && t.length < 25) return { text: intro, chips: mainChips };
+  if (t.startsWith('faq:')) { const e = faqById(t.slice(4)); if (e) return { text: e[3], chips: mainChips }; }
   let key = t.startsWith('topic:') ? t.slice(6) : '';
-  if (!key) { for (const [re, k] of RULES) if (re.test(t)) { key = k; break; } }
+  const own = () => { for (const [re, k] of RULES) if (ACCOUNT_KEYS.includes(k) && re.test(t)) return k; return ''; };
+  if (!key && account) key = own();                                              // a signed-in student asking "my fees", "next class" gets their own record first
+  if (!key) {                                                                    // a specific question: look through the 100+ answers
+    const hits = matchFaq(t, 3);
+    const short = t.split(/\s+/).length <= 2;                                    // one or two words are usually too vague to pick one answer
+    if (hits.length && hits[0].score >= 2 && (hits[0].score >= 6 || !hits[1] || hits[0].score - hits[1].score >= (short ? 3 : 1))) return { text: hits[0].entry[3], chips: mainChips };
+    if (hits.length > 1 && hits[0].score >= 2) return { text: 'I am not sure which one you mean. Is it one of these?', chips: hits.map((h) => ({ label: h.entry[1].slice(0, 60), text: 'faq:' + h.entry[0] })) };
+    key = own();
+    if (!key) for (const [re, k] of RULES) if (re.test(t)) { key = k; break; }
+  }
   if (ACCOUNT_KEYS.includes(key)) {
-    if (!account) return { text: 'To see your own fees, classes, assignments or results, sign in to your dashboard on ' + SITE + ' and open this chat there, or connect Telegram from your dashboard. For anything else, choose a topic below.', chips: chips(CHIPS_PUBLIC) };
+    if (!account) return { text: 'To see your own fees, classes, assignments or results, sign in to your dashboard on ' + SITE + ' and open this chat there, or connect Telegram from your dashboard. For anything else, ask me a question or choose a topic below.', chips: chips(CHIPS_PUBLIC) };
     return { text: ACCOUNT[key](account), chips: mainChips };
   }
   if (TOPICS[key]) return { text: TOPICS[key], chips: mainChips };
-  return { text: 'I can answer on these topics right now. Please choose one, or talk to our team.\n\n' + line('general'), chips: mainChips };
+  return { text: 'I could not match that to an answer I have. Please choose a topic below, or talk to our team.\n\n' + line('general'), chips: mainChips };
 }
