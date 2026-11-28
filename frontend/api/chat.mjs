@@ -1,6 +1,7 @@
 // Website chat assistant ("Ask our assistant" in the green Chat with us menu).
 // Same brain as the WhatsApp bot (api/_wa/core.mjs). Needs ANTHROPIC_API_KEY and APPS_SCRIPT_SECRET in Vercel.
 import { LINES, converse } from './_wa/core.mjs';
+import { menuReply } from './_wa/menu.mjs';
 // A signed-in student (their Student ID and access code, sent by the dashboard pages) lets Haaris answer about their own record.
 
 const DEFAULT_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby0AsifBuB_Ad7g1SjDXCipaDU27-BrzYWf67muw5jeY_C0_0uz8AhQYYXdiNRQhvqX/exec';
@@ -20,7 +21,6 @@ const json = (o, status = 200) => new Response(JSON.stringify(o), { status, head
 export async function POST(request) {
   const origin = request.headers.get('origin') || '';
   if (origin && !/^https:\/\/(www\.)?himaayahschools\.com$|^http:\/\/localhost(:\d+)?$/.test(origin)) return json({ error: 'Not allowed' }, 403);
-  if (!process.env.ANTHROPIC_API_KEY) return json({ error: 'The assistant is not switched on yet.' }, 503);
   const ip = (request.headers.get('x-forwarded-for') || '').split(',')[0].trim() || 'anon';
   if (limited(ip)) return json({ error: 'You have sent a lot of messages. Please wait a few minutes, or message us on WhatsApp.' }, 429);
 
@@ -38,6 +38,9 @@ export async function POST(request) {
       if (r && r.ok) account = r.summary;
     } catch { /* answer as a visitor */ }
   }
+  // Without AI (no key, no credit, or HAARIS_MODE=menu) Haaris answers from fixed topics, so the chat keeps working.
+  const menu = () => { const m = menuReply(last.text, account); return json({ signedIn: !!account, reply: m.text, chips: m.chips, mode: 'menu' }); };
+  if (process.env.HAARIS_MODE === 'menu' || !process.env.ANTHROPIC_API_KEY) return menu();
   let handover = null;
   try {
     const reply = await converse({ channel: 'web', history: all, text: last.text, account, onTool: async (tool, input) => {
@@ -56,6 +59,6 @@ export async function POST(request) {
     return json({ signedIn: !!account, reply: reply || 'Sorry, I could not answer that. Please message the General line on WhatsApp.', handover });
   } catch (e) {
     console.error('chat error', e);
-    return json({ error: 'Sorry, something went wrong. Please message us on WhatsApp.' }, 500);
+    return menu();                                                  // Claude not reachable (for example no credit): answer from the topics instead
   }
 }

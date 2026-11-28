@@ -60,22 +60,28 @@
     if (!msgs.length) { var c = el('div', 'hsa-chips'); T.chips.forEach(function (q) { var b = el('button', 'hsa-chip', q); b.type = 'button'; b.onclick = function () { ask(q); }; c.appendChild(b); }); log.appendChild(c); }
     msgs.forEach(function (m) { add(m.role, m.text, m.go); });
   }
-  var RESTING = true;                                              // set to false the day Haaris goes live
+  var RESTING = false;                                             // set to true to put Haaris back on istiraaha (rest)
   if (RESTING) { input.disabled = true; send.disabled = true; input.placeholder = T.restPh; }
   var busy = false;
-  function ask(text) {
+  function ask(text, label) {
     text = String(text || '').trim(); if (!text || busy) return;
     busy = true; send.disabled = true; input.value = '';
     var chips = log.querySelector('.hsa-chips'); if (chips) chips.remove();
-    msgs.push({ role: 'user', text: text }); add('user', text); save();
+    msgs.push({ role: 'user', text: label || text, raw: text }); add('user', label || text); save();
     var dots = el('div', 'hsa-dots', '…'); log.appendChild(dots); log.scrollTop = log.scrollHeight;
     var auth = null; try { var sv = JSON.parse(sessionStorage.getItem('hs') || 'null'); if (sv && sv.id && sv.code) auth = { id: String(sv.id), code: String(sv.code) }; } catch (e) {}   // a signed-in student lets Haaris answer about their own record
-    var body = JSON.stringify({ messages: msgs.slice(-10).map(function (m) { return { role: m.role, text: m.text }; }), auth: auth });
+    var body = JSON.stringify({ messages: msgs.slice(-10).map(function (m) { return { role: m.role, text: m.raw || m.text }; }), auth: auth });
     fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: body })
       .then(function (r) { return r.json().catch(function () { return {}; }); })
       .then(function (j) {
         dots.remove();
-        if (j.reply) { msgs.push({ role: 'assistant', text: j.reply, go: j.handover || null }); add('assistant', j.reply, j.handover); }
+        if (j.reply) {
+          msgs.push({ role: 'assistant', text: j.reply, go: j.handover || null }); add('assistant', j.reply, j.handover);
+          if (j.chips && j.chips.length) {                       // topic buttons when Haaris answers from fixed topics
+            var cc = el('div', 'hsa-chips'); j.chips.forEach(function (q) { var b = el('button', 'hsa-chip', q.label); b.type = 'button'; b.onclick = function () { ask(q.text, q.label); }; cc.appendChild(b); });
+            log.appendChild(cc); log.scrollTop = log.scrollHeight;
+          }
+        }
         else add('assistant', j.error || T.err, { name: 'WhatsApp', url: 'https://wa.me/2347047226487' });
       })
       .catch(function () { dots.remove(); add('assistant', T.err, { name: 'WhatsApp', url: 'https://wa.me/2347047226487' }); })
